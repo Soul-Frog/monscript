@@ -1,5 +1,6 @@
-[gd_scene load_steps=28 format=3 uid="uid://cvgnhh25ki1j7"]
+[gd_scene load_steps=29 format=3 uid="uid://cvgnhh25ki1j7"]
 
+[ext_resource type="Script" path="res://battle.gd" id="1_85t5n"]
 [ext_resource type="Texture2D" uid="uid://bklubekxfne1h" path="res://assets/isometric/tilemap/tile-test.png" id="1_cm50e"]
 [ext_resource type="PackedScene" uid="uid://kc411ugxoslx" path="res://mon.tscn" id="1_to5wv"]
 [ext_resource type="Texture2D" uid="uid://d3stk7g8144hl" path="res://assets/isometric/tilemap/tile-glitch-northeast.png" id="2_d1yi7"]
@@ -84,8 +85,9 @@ sources/12 = SubResource("TileSetAtlasSource_3c50h")
 sources/13 = SubResource("TileSetAtlasSource_y8kj3")
 sources/14 = SubResource("TileSetAtlasSource_qll6v")
 
-[node name="Node2D" type="Node2D"]
+[node name="Battle" type="Node2D"]
 y_sort_enabled = true
+script = ExtResource("1_85t5n")
 
 [node name="Left" type="Node" parent="."]
 

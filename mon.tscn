@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://kc411ugxoslx"]
 
-[ext_resource type="Texture2D" uid="uid://bx5bpjff8sx2s" path="res://assets/isometric/sprites/magnetfrog.png" id="1_520pp"]
+[ext_resource type="Texture2D" uid="uid://omuk1ct8em7w" path="res://assets/isometric/sprites/magnetfrog.png" id="1_520pp"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tsc0c"]
 height = 34.0
