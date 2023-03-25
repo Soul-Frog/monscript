@@ -6,7 +6,6 @@
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(104, 64)
 script = ExtResource("1_jtbcb")
-speed = 100
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_fu87h")
