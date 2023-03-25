@@ -89,55 +89,15 @@ sources/14 = SubResource("TileSetAtlasSource_qll6v")
 y_sort_enabled = true
 script = ExtResource("1_85t5n")
 
-[node name="Left" type="Node" parent="."]
-
-[node name="magnetFrog" parent="Left" instance=ExtResource("1_to5wv")]
-z_index = 4
-y_sort_enabled = true
-position = Vector2(108, 110)
-
-[node name="magnetFrog2" parent="Left" instance=ExtResource("1_to5wv")]
-z_index = 3
-y_sort_enabled = true
-position = Vector2(131, 89)
-
-[node name="magnetFrog3" parent="Left" instance=ExtResource("1_to5wv")]
-z_index = 2
-y_sort_enabled = true
-position = Vector2(110, 67)
-
-[node name="magnetFrog4" parent="Left" instance=ExtResource("1_to5wv")]
+[node name="magnetFrog" parent="." instance=ExtResource("1_to5wv")]
 z_index = 1
 y_sort_enabled = true
-position = Vector2(133, 46)
+position = Vector2(121, 91)
 
-[node name="Right" type="Node" parent="."]
-
-[node name="magnetFrog" parent="Right" instance=ExtResource("1_to5wv")]
-z_index = 5
-y_sort_enabled = true
-position = Vector2(204, 114)
-rotation = -3.14159
-scale = Vector2(1, -1)
-
-[node name="magnetFrog2" parent="Right" instance=ExtResource("1_to5wv")]
-z_index = 3
-y_sort_enabled = true
-position = Vector2(182, 88)
-rotation = -3.14159
-scale = Vector2(1, -1)
-
-[node name="magnetFrog3" parent="Right" instance=ExtResource("1_to5wv")]
-z_index = 2
-y_sort_enabled = true
-position = Vector2(203, 65)
-rotation = -3.14159
-scale = Vector2(1, -1)
-
-[node name="magnetFrog4" parent="Right" instance=ExtResource("1_to5wv")]
+[node name="magnetFrog (Enemy)" parent="." instance=ExtResource("1_to5wv")]
 z_index = 1
 y_sort_enabled = true
-position = Vector2(177, 46)
+position = Vector2(199, 91)
 rotation = -3.14159
 scale = Vector2(1, -1)
 

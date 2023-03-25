@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://kc411ugxoslx"]
+[gd_scene load_steps=4 format=3 uid="uid://kc411ugxoslx"]
 
 [ext_resource type="Texture2D" uid="uid://omuk1ct8em7w" path="res://assets/isometric/sprites/magnetfrog.png" id="1_520pp"]
+[ext_resource type="Script" path="res://mon.gd" id="1_b37uy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tsc0c"]
 height = 34.0
 
-[node name="Mon" type="Node2D"]
+[node name="Mon" type="CharacterBody2D"]
+script = ExtResource("1_b37uy")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
