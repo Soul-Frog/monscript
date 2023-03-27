@@ -5,7 +5,7 @@ extends CharacterBody2D
 func _ready():
 	assert(speed > 0)
 
-func update_velocity(delta):
+func update_velocity(_delta):
 	var input_direction = Input.get_vector("left", "right", "up", "down")
 	velocity = speed * input_direction
 
