@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://tyq4h1hibc0w"]
+
+[ext_resource type="Texture2D" uid="uid://m6lm74qw017b" path="res://assets/enemy.png" id="1_2o6of"]
+[ext_resource type="Script" path="res://overworld_mon.gd" id="1_xua0i"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fnryn"]
+radius = 8.0
+height = 32.0
+
+[node name="OverworldMon" type="CharacterBody2D"]
+script = ExtResource("1_xua0i")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_2o6of")
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_fnryn")
+
+[node name="MovementTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="MovementTimer" to="." method="_on_movement_timer_timeout"]
