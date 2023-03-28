@@ -1,6 +1,8 @@
 extends CharacterBody2D
 
-@export var speed = 20
+signal collided_with_player_start_battle
+
+@export var speed = 200
 
 # time the mon is stationary before attempting to move
 @export var min_stationary_time = 3
@@ -32,7 +34,9 @@ func _randomize_direction():
 	velocity = speed * input_direction
 
 func _physics_process(_delta):
-	move_and_slide()
+	var collided = move_and_slide()
+	if collided:
+		_stop_wandering()
 
 func _on_movement_timer_timeout():
 	# if moving, stop. if not moving, start
@@ -40,3 +44,6 @@ func _on_movement_timer_timeout():
 		_start_wandering()
 	else:
 		_stop_wandering()
+
+func _on_battle_start_hitbox_body_entered(body):
+	emit_signal("collided_with_player_start_battle")

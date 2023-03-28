@@ -1,22 +1,35 @@
-[gd_scene load_steps=4 format=3 uid="uid://tyq4h1hibc0w"]
+[gd_scene load_steps=5 format=3 uid="uid://tyq4h1hibc0w"]
 
 [ext_resource type="Texture2D" uid="uid://m6lm74qw017b" path="res://assets/enemy.png" id="1_2o6of"]
 [ext_resource type="Script" path="res://overworld_mon.gd" id="1_xua0i"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fnryn"]
-radius = 8.0
-height = 32.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a43a7"]
+size = Vector2(16, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2mp07"]
+size = Vector2(6, 13)
 
 [node name="OverworldMon" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 4
+safe_margin = 8.0
 script = ExtResource("1_xua0i")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_2o6of")
 
-[node name="Hitbox" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_fnryn")
-
 [node name="MovementTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="CollisionHitbox" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_a43a7")
+
+[node name="BattleStartHitbox" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BattleStartHitbox"]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_2mp07")
+
 [connection signal="timeout" from="MovementTimer" to="." method="_on_movement_timer_timeout"]
+[connection signal="body_entered" from="BattleStartHitbox" to="." method="_on_battle_start_hitbox_body_entered"]
