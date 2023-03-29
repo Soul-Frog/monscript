@@ -2,17 +2,17 @@ extends CharacterBody2D
 
 signal collided_with_player_start_battle
 
-@export var speed = 200
+@export var speed = 20
 
 # time the mon is stationary before attempting to move
-@export var min_stationary_time = 3
-@export var max_stationary_time = 6
+@export var min_stationary_time = 1
+@export var max_stationary_time = 4
 
 # time to mon moves before stopping
-@export var min_move_time = 1 
+@export var min_move_time = 0.5 
 @export var max_move_time = 2
 
-@onready var movementTimer = get_node("MovementTimer");
+@onready var movementTimer = $MovementTimer
 
 var rng = RandomNumberGenerator.new()
 
@@ -35,8 +35,6 @@ func _randomize_direction():
 
 func _physics_process(_delta):
 	var collided = move_and_slide()
-	if collided:
-		_stop_wandering()
 
 func _on_movement_timer_timeout():
 	# if moving, stop. if not moving, start

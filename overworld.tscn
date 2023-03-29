@@ -49,10 +49,11 @@ collision_layer = 4
 collision_mask = 0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-position = Vector2(128, 72)
+position = Vector2(232, 96)
 polygon = PackedVector2Array(8, -8, -32, -8, -32, 24, 8, 24)
 
 [node name="OverworldMon" parent="." instance=ExtResource("4_l17pm")]
-position = Vector2(56, 72)
+position = Vector2(160, 96)
+metadata/_edit_group_ = true
 
 [connection signal="collided_with_player_start_battle" from="OverworldMon" to="." method="_on_overworld_mon_collided_with_player_start_battle"]
