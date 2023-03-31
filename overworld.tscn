@@ -49,11 +49,38 @@ collision_layer = 4
 collision_mask = 0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-position = Vector2(232, 96)
+position = Vector2(224, 56)
 polygon = PackedVector2Array(8, -8, -32, -8, -32, 24, 8, 24)
 
 [node name="OverworldMon" parent="." instance=ExtResource("4_l17pm")]
 position = Vector2(160, 96)
 metadata/_edit_group_ = true
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(48, 48)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D2"]
+position = Vector2(16, 48)
+polygon = PackedVector2Array(8, -8, -32, -8, -32, 24, 8, 24)
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2(48, 48)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D3"]
+position = Vector2(128, 88)
+polygon = PackedVector2Array(8, -8, -32, -8, -32, 24, 8, 24)
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="."]
+position = Vector2(48, 48)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D4"]
+position = Vector2(216, -16)
+polygon = PackedVector2Array(8, -8, -32, -8, -32, 24, 8, 24)
 
 [connection signal="collided_with_player_start_battle" from="OverworldMon" to="." method="_on_overworld_mon_collided_with_player_start_battle"]
