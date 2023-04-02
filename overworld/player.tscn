@@ -1,6 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://cbgagp5enisir"]
+[gd_scene load_steps=4 format=3 uid="uid://ci01g4cytxbh5"]
 
-[ext_resource type="Script" path="res://player.gd" id="1_7ejku"]
+[ext_resource type="Script" path="res://overworld/player.gd" id="1_7ejku"]
 [ext_resource type="Texture2D" uid="uid://bi55kt2af3mop" path="res://assets/char.png" id="2_fu87h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q04qu"]

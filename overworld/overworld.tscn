@@ -1,8 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dkmctxbo2iw6f"]
+[gd_scene load_steps=7 format=3 uid="uid://cs8rgwl47cbf0"]
 
 [ext_resource type="Texture2D" uid="uid://cexmucj0yinf2" path="res://assets/tile.png" id="2_5a381"]
-[ext_resource type="PackedScene" uid="uid://cbgagp5enisir" path="res://player.tscn" id="3_nbwo1"]
-[ext_resource type="PackedScene" uid="uid://tyq4h1hibc0w" path="res://overworld_mon.tscn" id="4_l17pm"]
+[ext_resource type="PackedScene" uid="uid://ci01g4cytxbh5" path="res://overworld/player.tscn" id="3_nbwo1"]
+[ext_resource type="PackedScene" uid="uid://dxm8offy8tuur" path="res://overworld/overworld_mon.tscn" id="4_l17pm"]
 
 [sub_resource type="GDScript" id="GDScript_f2w5u"]
 script/source = "extends Node2D
