@@ -12,7 +12,6 @@ class Drawable extends Node:
 		
 	func on_timeout():
 		should_be_deleted = true
-		print("done")
 
 class Line extends Drawable:
 	var point1

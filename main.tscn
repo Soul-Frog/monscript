@@ -1,9 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://3htv01x04srv"]
+[gd_scene load_steps=4 format=3 uid="uid://b7egl38hp62tw"]
 
-[ext_resource type="PackedScene" uid="uid://cs8rgwl47cbf0" path="res://overworld/overworld.tscn" id="1_gqwfl"]
+[ext_resource type="PackedScene" uid="uid://bvdaqsvqen1q" path="res://overworld/Overworld.tscn" id="1_gqwfl"]
 [ext_resource type="Script" path="res://main.gd" id="1_sv5wa"]
+[ext_resource type="PackedScene" uid="uid://ckcjqswo41luw" path="res://debug/DebugConsole.tscn" id="3_cw4c6"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_sv5wa")
 
 [node name="Overworld" parent="." instance=ExtResource("1_gqwfl")]
+process_mode = 1
+
+[node name="DebugConsole" parent="." instance=ExtResource("3_cw4c6")]
+
+[connection signal="debug_console_closed" from="DebugConsole" to="." method="_on_debug_console_debug_console_closed"]
+[connection signal="debug_console_opened" from="DebugConsole" to="." method="_on_debug_console_debug_console_opened"]

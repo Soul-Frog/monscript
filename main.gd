@@ -1,11 +1,9 @@
 extends Node2D
 
+func _on_debug_console_debug_console_opened():
+	assert(get_tree().paused == false)
+	get_tree().paused = true
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	pass
+func _on_debug_console_debug_console_closed():
+	assert(get_tree().paused == true)
+	get_tree().paused = false

@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://ckcjqswo41luw"]
+
+[ext_resource type="FontFile" uid="uid://bryfoqgq010qd" path="res://assets/bn-plateau.ttf" id="1_ke27h"]
+[ext_resource type="Script" path="res://debug/DebugConsole.gd" id="1_uqlvl"]
+
+[node name="DebugConsole" type="LineEdit"]
+process_mode = 3
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 312.0
+offset_bottom = 39.0
+theme_override_fonts/font = ExtResource("1_ke27h")
+theme_override_font_sizes/font_size = 22
+script = ExtResource("1_uqlvl")
+
+[connection signal="text_submitted" from="." to="." method="_on_text_submitted"]
