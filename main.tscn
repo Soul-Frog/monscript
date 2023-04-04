@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://0c7cucxr276a"]
 
-[ext_resource type="PackedScene" uid="uid://bvdaqsvqen1q" path="res://overworld/Overworld.tscn" id="1_gqwfl"]
-[ext_resource type="Script" path="res://Main.gd" id="1_sv5wa"]
+[ext_resource type="PackedScene" path="res://overworld/overworld.tscn" id="1_gqwfl"]
+[ext_resource type="Script" path="res://main.gd" id="1_sv5wa"]
 [ext_resource type="PackedScene" uid="uid://ckcjqswo41luw" path="res://debug/DebugConsole.tscn" id="3_cw4c6"]
 
 [node name="Main" type="Node2D"]
