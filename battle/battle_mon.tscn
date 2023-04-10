@@ -1,18 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://dxbnrybq5ngok"]
+[gd_scene load_steps=4 format=3 uid="uid://cumhbwtxqoeme"]
 
-[ext_resource type="Texture2D" uid="uid://omuk1ct8em7w" path="res://assets/isometric/sprites/magnetfrog.png" id="1_520pp"]
-[ext_resource type="Script" path="res://battle/mon.gd" id="1_b37uy"]
+[ext_resource type="Script" path="res://battle/battle_mon.gd" id="1_cu0b3"]
+[ext_resource type="Texture2D" uid="uid://omuk1ct8em7w" path="res://assets/isometric/sprites/magnetfrog.png" id="2_qbnpj"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tsc0c"]
 height = 34.0
 
 [node name="Mon" type="CharacterBody2D"]
-script = ExtResource("1_b37uy")
+script = ExtResource("1_cu0b3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(0, -1)
-texture = ExtResource("1_520pp")
+texture = ExtResource("2_qbnpj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -2)

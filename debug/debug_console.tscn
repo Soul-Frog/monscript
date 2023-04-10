@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://ckcjqswo41luw"]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="FontFile" uid="uid://bryfoqgq010qd" path="res://assets/bn-plateau.ttf" id="1_ke27h"]
-[ext_resource type="Script" path="res://debug/DebugConsole.gd" id="1_uqlvl"]
+[ext_resource type="Script" path="res://debug/debug_console.gd" id="1_uqlvl"]
 
 [node name="DebugConsole" type="LineEdit"]
 process_mode = 3

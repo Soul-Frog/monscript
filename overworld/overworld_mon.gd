@@ -113,7 +113,6 @@ func _physics_process(_delta):
 	elif state == MOVING:
 		var collided = move_and_slide()
 		if position.distance_to(target) < speed/75.0 or collided:
-			# assert(not collided, "collided? should not happen without dynamic terrain...")
 			_start_idling()
 
 

@@ -29,7 +29,7 @@ func _ready():
 	is_defending = false
 
 # Called once for each mon by battle.gd at a regular time interval
-func _battle_tick():
+func battle_tick():
 	if not is_defeated():
 		action_points += speed
 		if action_points >= ACTION_POINTS_PER_TURN:
@@ -45,9 +45,11 @@ func take_action(friends, foes):
 	# eventually, logic here will use script to determine action
 	# for now, target a random foe with basic attack
 	var attack_target = foes[rng.randi() % foes.size()]
+	perform_attack(foes[attack_target])
 
 # perform this mon's special action 
 func special():
+	@warning_ignore("integer_division")
 	current_health += max_health / 10
 	current_health = min(current_health, max_health)
 

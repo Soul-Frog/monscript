@@ -1,8 +1,8 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=6 format=3 uid="uid://cbl634y7iiugv"]
 
 [ext_resource type="Texture2D" uid="uid://m6lm74qw017b" path="res://assets/enemy.png" id="1_2o6of"]
 [ext_resource type="Script" path="res://overworld/overworld_mon.gd" id="1_xua0i"]
-[ext_resource type="PackedScene" uid="uid://dfyy6sxodjbwq" path="res://debug/DebugTool.tscn" id="3_p11my"]
+[ext_resource type="PackedScene" path="res://debug/debug_tool.tscn" id="3_p11my"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a43a7"]
 size = Vector2(16, 20)
