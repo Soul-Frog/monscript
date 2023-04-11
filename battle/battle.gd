@@ -2,50 +2,57 @@ extends Node2D
 
 signal battle_ended
 
-var friends
-var foes
+var player_mons
+var computer_mons
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# later, this needs to be updated; when battle loads, update these
-	friends = [$magnetFrog]
-	foes = [$"magnetFrog (Enemy)"]
+	player_mons = [$magnetFrog]
+	computer_mons = [$"magnetFrog (Enemy)"]
 	
 	var timer = Timer.new()
 	timer.autostart = true
 	add_child(timer)
-	timer.wait_time = 1.0
+	timer.wait_time = 0.5
 	timer.timeout.connect(_battle_tick)
 
 func _battle_tick():
 	# let everyone update/action
-	for friend in friends:
-		friend.battle_tick()
-	for foe in foes:
-		foe.battle_tick()
+	for player_mon in player_mons:
+		player_mon.battle_tick()
+	for computer_mon in computer_mons:
+		computer_mon.battle_tick()
 
 	# check if the battle is over
-	var friends_alive = _are_any_friends_alive()
-	var foes_alive = _are_any_foes_alive()
+	var player_mons_alive = _are_any_player_mons_alive()
+	var computer_mons_alive = _are_any_computer_mons_alive()
 	
-	if friends_alive and not foes_alive:
+	if player_mons_alive and not computer_mons_alive:
 		print("Battle Win") # player wins
 		emit_signal("battle_ended")
-	elif not friends_alive and foes_alive:
+	elif not player_mons_alive and computer_mons_alive:
 		print("Battle Lose") # player loses
 		emit_signal("battle_ended")
-	else:
-		print("Battle Win") # player ties?
+	elif not player_mons_alive and not computer_mons_alive:
+		print("Battle Tie") # player ties?
 		emit_signal("battle_ended")
 
-func _are_any_foes_alive():
-	for foe in foes:
-		if not foe.is_defeated():
-			return false
-	return true
+func _are_any_computer_mons_alive():
+	for computer_mon in computer_mons:
+		if not computer_mon.is_defeated():
+			return true
+	return false
 
-func _are_any_friends_alive():
-	for friend in friends:
-		if not friend.is_defeated():
-			return false
-	return true
+func _are_any_player_mons_alive():
+	for player_mon in player_mons:
+		if not player_mon.is_defeated():
+			return true
+	return false
+
+
+func _on_mon_ready_to_take_turn(mon):
+	if mon in player_mons: 
+		mon.take_action(player_mons, computer_mons)
+	else:
+		mon.take_action(computer_mons, player_mons)

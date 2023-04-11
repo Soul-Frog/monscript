@@ -4,6 +4,8 @@ signal ready_to_take_turn
 signal try_to_escape
 
 const ACTION_POINTS_PER_TURN = 100
+const HEALTH_LABEL_FORMAT = "[center]%d/%d[/center]"
+const AP_LABEL_FORMAT = "[center]%d/100[/center]"
 
 # how many action points are accured each tick (how often you get to take a turn)
 @export var speed = 10
@@ -27,25 +29,28 @@ func _ready():
 	action_points = 0;
 	current_health = max_health;
 	is_defending = false
+	_update_labels();
 
 # Called once for each mon by battle.gd at a regular time interval
 func battle_tick():
 	if not is_defeated():
 		action_points += speed
+		_update_labels();
 		if action_points >= ACTION_POINTS_PER_TURN:
-			action_points = 0
-			emit_signal("ready_to_take_turn") # signal that it's time for this mon to act
+			emit_signal("ready_to_take_turn", self) # signal that it's time for this mon to act
 
 func is_defeated():
 	assert(current_health >= 0, "Mon's health is somehow negative")
 	return current_health == 0
 
 func take_action(friends, foes):
+	action_points = 0
 	is_defending = false
 	# eventually, logic here will use script to determine action
 	# for now, target a random foe with basic attack
 	var attack_target = foes[rng.randi() % foes.size()]
-	perform_attack(foes[attack_target])
+	perform_attack(attack_target)
+	_update_labels();
 
 # perform this mon's special action 
 func special():
@@ -67,8 +72,9 @@ func take_attack(raw_damage):
 	current_health = max(current_health, 0);
 	
 	if current_health == 0:
-		print("ded")
 		action_points = 0
+	
+	_update_labels();
 
 # A defend action reduces the damage taken by this mon by half until their next action
 func perform_defend():
@@ -77,6 +83,11 @@ func perform_defend():
 
 # Signal to battle.gd to try to escape the battle
 func perform_run():
+	assert(not is_defeated())
 	emit_signal("try_to_escape")
+
+func _update_labels():
+	$ActionPointsLabel.text = AP_LABEL_FORMAT % [action_points]
+	$HealthLabel.text = HEALTH_LABEL_FORMAT % [current_health, max_health]
 
 
