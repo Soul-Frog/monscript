@@ -9,8 +9,16 @@ script/source = "extends Node2D
 
 signal battle_started
 
-func _on_overworld_mon_collided_with_player_start_battle():
-	emit_signal(\"battle_started\")
+var overworld_mon_battling_with = null
+
+func _on_overworld_mon_collided_with_player_start_battle(overworld_mon_collided_with):
+	overworld_mon_battling_with = overworld_mon_collided_with
+	emit_signal(\"battle_started\", overworld_mon_collided_with)
+
+func handle_battle_results(won_battle):
+	assert(overworld_mon_battling_with != null, \"Must be battling against an overworld mon!\")
+	if won_battle:
+		remove_child(overworld_mon_battling_with)
 "
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_olnl5"]

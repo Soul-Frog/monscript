@@ -121,4 +121,4 @@ func _on_movement_timer_timeout():
 	state = MOVING_SOON
 
 func _on_battle_start_hitbox_body_entered(_body):
-	emit_signal("collided_with_player_start_battle")
+	emit_signal("collided_with_player_start_battle", self)

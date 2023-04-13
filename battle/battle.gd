@@ -14,7 +14,7 @@ func _ready():
 	var timer = Timer.new()
 	timer.autostart = true
 	add_child(timer)
-	timer.wait_time = 0.5
+	timer.wait_time = 0.05
 	timer.timeout.connect(_battle_tick)
 
 func _battle_tick():
@@ -29,14 +29,11 @@ func _battle_tick():
 	var computer_mons_alive = _are_any_computer_mons_alive()
 	
 	if player_mons_alive and not computer_mons_alive:
-		print("Battle Win") # player wins
-		emit_signal("battle_ended")
+		emit_signal("battle_ended", true)
 	elif not player_mons_alive and computer_mons_alive:
-		print("Battle Lose") # player loses
-		emit_signal("battle_ended")
+		emit_signal("battle_ended", false)
 	elif not player_mons_alive and not computer_mons_alive:
-		print("Battle Tie") # player ties?
-		emit_signal("battle_ended")
+		emit_signal("battle_ended", true) #for now a tie counts as a win
 
 func _are_any_computer_mons_alive():
 	for computer_mon in computer_mons:
