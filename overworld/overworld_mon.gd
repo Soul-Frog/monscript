@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name OverworldMon
 
 signal collided_with_player_start_battle
 

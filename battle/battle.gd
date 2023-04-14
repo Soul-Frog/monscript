@@ -8,8 +8,8 @@ var computer_mons
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# later, this needs to be updated; when battle loads, update these
-	player_mons = [$magnetFrog]
-	computer_mons = [$"magnetFrog (Enemy)"]
+	player_mons = [$PlayerMons/magnetFrog]
+	computer_mons = [$"ComputerMons/magnetFrog (Enemy)"]
 	
 	var timer = Timer.new()
 	timer.autostart = true

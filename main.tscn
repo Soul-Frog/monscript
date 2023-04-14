@@ -2,20 +2,22 @@
 
 [ext_resource type="Script" path="res://main.gd" id="1_sv5wa"]
 [ext_resource type="PackedScene" uid="uid://c2pho1llac8o7" path="res://overworld/overworld.tscn" id="2_kjijl"]
-[ext_resource type="PackedScene" path="res://debug/debug_console.tscn" id="3_cw4c6"]
+[ext_resource type="PackedScene" uid="uid://cwa8fi3cy5vut" path="res://debug/debug_console.tscn" id="3_cw4c6"]
 [ext_resource type="PackedScene" uid="uid://dtpehdp2rfsuh" path="res://battle/battle.tscn" id="3_ucmr6"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_sv5wa")
 
-[node name="Overworld" parent="." instance=ExtResource("2_kjijl")]
+[node name="Scenes" type="Node" parent="."]
 
-[node name="Battle" parent="." instance=ExtResource("3_ucmr6")]
+[node name="Overworld" parent="Scenes" instance=ExtResource("2_kjijl")]
+
+[node name="Battle" parent="Scenes" instance=ExtResource("3_ucmr6")]
 
 [node name="DebugConsole" parent="." instance=ExtResource("3_cw4c6")]
-visible = false
+z_index = 1
 
-[connection signal="battle_started" from="Overworld" to="." method="_on_battle_started"]
-[connection signal="battle_ended" from="Battle" to="." method="_on_battle_ended"]
+[connection signal="battle_started" from="Scenes/Overworld" to="." method="_on_battle_started"]
+[connection signal="battle_ended" from="Scenes/Battle" to="." method="_on_battle_ended"]
 [connection signal="debug_console_closed" from="DebugConsole" to="." method="_on_debug_console_debug_console_closed"]
 [connection signal="debug_console_opened" from="DebugConsole" to="." method="_on_debug_console_debug_console_opened"]

@@ -72,3 +72,17 @@ func _draw():
 
 func _process(_delta):
 	queue_redraw()
+
+func dump(node):
+	_dump_helper(node, 0)
+
+func _dump_helper(node, indent_level):
+	print(_repeat_str("  ", indent_level), node.name)
+	for child in node.get_children():
+		_dump_helper(child, indent_level + 1)
+
+func _repeat_str(s, n):
+	var r = ""
+	for i in range(0, n):
+		r += s
+	return r

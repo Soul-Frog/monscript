@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=3 format=3 uid="uid://cwa8fi3cy5vut"]
 
 [ext_resource type="FontFile" uid="uid://bryfoqgq010qd" path="res://assets/bn-plateau.ttf" id="1_ke27h"]
 [ext_resource type="Script" path="res://debug/debug_console.gd" id="1_uqlvl"]

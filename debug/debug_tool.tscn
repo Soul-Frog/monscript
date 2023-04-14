@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=2 format=3 uid="uid://diodlu0baosyk"]
 
 [ext_resource type="Script" path="res://debug/debug_tool.gd" id="1_ju1c0"]
 
