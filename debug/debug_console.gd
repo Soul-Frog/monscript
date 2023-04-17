@@ -49,8 +49,8 @@ func _on_text_submitted(new_text):
 	var battle_computer_mons = battle_scene.get_node("ComputerMons").get_children()
 	
 	new_text = new_text.to_lower().replace(" ", "").replace("_", "")
-	
 	print("Debug Command: " + new_text)
+	
 	var success = true
 	
 	# cause an immediate breakpoint
