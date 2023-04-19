@@ -7,32 +7,35 @@ const ACTION_POINTS_PER_TURN = 100
 const HEALTH_LABEL_FORMAT = "[center]%d/%d[/center]"
 const AP_LABEL_FORMAT = "[center]%d/100[/center]"
 
-# how many action points are accured each tick (how often you get to take a turn)
-@export var speed = 10
-# base damage for attacks
-@export var attack = 10
-# reduces amount of damage taken
-@export var defense = 5
-# health pool
-@export var max_health = 20
+# The underlying Mon Object this battle mon scene represents
+# Set this with init_mon before doing anything else with this scene
+var base_mon = null
 
-
-# current action points - increases by SPEED each tick
+# current action points - increases by speed each tick
 # when this reaches 100, signals to take a turn
-var action_points
-var current_health
-var is_defending
+var action_points = 0
 
-var rng = RandomNumberGenerator.new()
+var is_defending = false
 
-func _ready():
-	action_points = 0;
-	current_health = max_health;
-	is_defending = false
+var max_health = -1
+var current_health = -1
+var speed = -1
+var attack = -1
+var defense = -1
+
+func init_mon(mon):
+	base_mon = mon
+	current_health = mon.get_max_health()
+	max_health = mon.get_max_health()
+	attack = mon.get_attack()
+	defense = mon.get_defense()
+	speed = mon.get_speed()
 	_update_labels();
 
 # Called once for each mon by battle.gd at a regular time interval
 func battle_tick():
+	assert(base_mon != null, "Didn't add a mon with init_mon!")
+	assert(attack != -1 and speed != -1 and defense != -1 and max_health != -1, "Stats were never initialized?")
 	if not is_defeated():
 		action_points += speed
 		_update_labels();
@@ -48,18 +51,20 @@ func take_action(friends, foes):
 	is_defending = false
 	# eventually, logic here will use script to determine action
 	# for now, target a random foe with basic attack
-	var attack_target = foes[rng.randi() % foes.size()]
+	var attack_target = foes[Global.RNG.randi() % foes.size()]
 	perform_attack(attack_target)
 	_update_labels();
 
 # perform this mon's special action 
-func special():
+func perform_special():
+	assert(not is_defeated())
 	@warning_ignore("integer_division")
 	current_health += max_health / 10
 	current_health = min(current_health, max_health)
 
 # perform an attack at the given target
 func perform_attack(target):
+	assert(not is_defeated())
 	target.take_attack(attack)
 
 # Called when this mon is attacked

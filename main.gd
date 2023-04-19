@@ -20,30 +20,27 @@ func _on_debug_console_debug_console_opened():
 func _on_debug_console_debug_console_closed():
 	assert(get_tree().paused == true)
 	get_tree().paused = false
-	
 
-func _on_battle_started(overworld_mon_battling_with):
-	print("Start battle!!!")
-	
+func _on_battle_started(computer_encounter_team):
 	state = State.BATTLE
+	battle_scene.setup_battle(PlayerData.team, computer_encounter_team);
 	
 	# switch to battle scene
 	$Scenes.call_deferred("remove_child", overworld_scene)
 	$Scenes.call_deferred("add_child", battle_scene)
-	
-	# todo - call some battle update here; setting up mons in battle scene before switch
-	# use overworld_mon_battling_with for this
-
 
 func _on_battle_ended(won_battle):
-	print("End battle...")
-	
 	state = State.OVERWORLD
 	
 	overworld_scene.handle_battle_results(won_battle)
 	
+	# todo: give XP to the player's mons here
+	
 	if not won_battle:
-		assert(false, "Need to handle this case somehow")
+		assert(false, "Need to handle this case somehow") #todo
+	
+	# clean up the battle scene
+	battle_scene.clear_battle();
 	
 	# switch back to overworld scene
 	$Scenes.call_deferred("remove_child", battle_scene)

@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://c3lxl7h1i3dmx"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_sv5wa"]
-[ext_resource type="PackedScene" uid="uid://c2pho1llac8o7" path="res://overworld/overworld.tscn" id="2_kjijl"]
+[ext_resource type="PackedScene" uid="uid://bdawc3abe5gi3" path="res://overworld/overworld.tscn" id="2_kjijl"]
 [ext_resource type="PackedScene" uid="uid://cwa8fi3cy5vut" path="res://debug/debug_console.tscn" id="3_cw4c6"]
 [ext_resource type="PackedScene" uid="uid://dtpehdp2rfsuh" path="res://battle/battle.tscn" id="3_ucmr6"]
 

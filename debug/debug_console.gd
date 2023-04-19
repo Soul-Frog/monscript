@@ -14,7 +14,8 @@ func _ready():
 	active = false
 	self.visible = false
 	self.set("theme_override_colors/font_color", DEFAULT_COLOR)
-	main_scene = get_tree().get_root().get_child(0)	
+	main_scene = get_tree().get_root().get_node("Main")
+	assert(main_scene != null)
 
 func _input(event):
 	if event.is_action_released("open_debug_console"):
@@ -34,7 +35,6 @@ func _on_text_submitted(new_text):
 	# perform some checks to ensure certain nodes are findable by debug console
 	# these checks will fail if certain nodes are renamed or moved
 	# in that case... modify either debug console or undo those changes
-	assert(main_scene != null)
 	assert(main_scene.overworld_scene != null, "Debug Console can't get Overworld scene; was it renamed/moved?")
 	assert(main_scene.overworld_scene.get_node("Player") != null, "Debug Console can't get Player from Overworld; was it renamed/moved?")
 	assert(main_scene.battle_scene != null, "Debug Console can't get Battle scene; was it renamed/moved?")
@@ -53,8 +53,11 @@ func _on_text_submitted(new_text):
 	
 	var success = true
 	
+	# close the application immediately
+	if text == "exit" or text == "quit" or text == "q":
+		get_tree().quit()
 	# cause an immediate breakpoint
-	if text == "break" or text == "breakpoint" or text == "b" or text == "brk":
+	elif text == "break" or text == "breakpoint" or text == "b" or text == "brk":
 		breakpoint
 	# print hello world :)
 	elif text == "helloworld" or text == "hello":
@@ -62,7 +65,7 @@ func _on_text_submitted(new_text):
 	# spawns an overworld enemy
 	elif text == "spawn":
 		# load the mon from a script file and make an instance; set position
-		var new_mon = load("res://overworld/overworld_mon.tscn").instantiate()
+		var new_mon = load("res://overworld/overworld_encounter.tscn").instantiate()
 		new_mon.position = Vector2(player.position + Vector2(30, 30)) # make this more clever someday
 		# this mon is being added... abnormally, so we must also hook up the signal causing collisions to start a battle
 		# without this next part, the enemies still collide but don't start battles (overworld doesn't see the collisions)
@@ -75,7 +78,7 @@ func _on_text_submitted(new_text):
 			if child is OverworldMon:
 				overworld_scene.remove_child(child)
 	# wins a battle instantly
-	elif text == "winbattle" or text == "winbattle"  or text == "win":
+	elif text == "winbattle"  or text == "win" or text == "w":
 		if main_scene.state != main_scene.State.BATTLE:
 			print("Not in a battle!")
 			success = false
@@ -83,7 +86,7 @@ func _on_text_submitted(new_text):
 			for computer_mon in battle_computer_mons:
 				computer_mon.current_health = 0
 	# loses a battle instantly
-	elif text == "losebattle" or text == "losebattle" or text == "lose":
+	elif text == "losebattle" or text == "lose" or text == "l":
 		if main_scene.state != main_scene.State.BATTLE:
 			print("Not in a battle!")
 			success = false
@@ -94,5 +97,4 @@ func _on_text_submitted(new_text):
 		success = false
 	
 	self.set("theme_override_colors/font_color", SUCCESS_COLOR if success else FAIL_COLOR)
-	
 	self.text = ""

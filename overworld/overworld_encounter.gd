@@ -7,13 +7,23 @@ enum {
 	MOVING_SOON, MOVING, IDLE
 }
 
+# the mons in this battle composition
+@export_group("Mons")
+@export var mon1Type = MonData.MonType.NONE
+@export var mon1Level = 0
+@export var mon2Type = MonData.MonType.NONE
+@export var mon2Level = 0
+@export var mon3Type = MonData.MonType.NONE
+@export var mon3Level = 0
+@export var mon4Type = MonData.MonType.NONE
+@export var mon4Level = 0
+
+@export_group("Overworld Movement")
 # mon's speed while moving
 @export var speed = 100
-
 # how far the mon is allowed to wander when moving
 @export var min_wander_range = 50
 @export var max_wander_range = 150
-
 # time the mon is stationary before attempting to move
 @export var min_time_between_movement = 0
 @export var max_time_between_movement = 0.2
@@ -23,13 +33,29 @@ enum {
 var rng = RandomNumberGenerator.new()
 var state = IDLE
 var target = Vector2.ZERO
+var mons = []
 
 func _ready():
+	assert(mon1Type != MonData.MonType.NONE, "Lead mon cannot be None!")
+	assert(mon1Level >= 0 and mon1Level <= 64, "Illegal level for mon1!")
+	assert(mon2Level >= 0 and mon2Level <= 64, "Illegal level for mon2!")
+	assert(mon3Level >= 0 and mon3Level <= 64, "Illegal level for mon3!")
+	assert(mon4Level >= 0 and mon4Level <= 64, "Illegal level for mon4!")	
 	assert(min_time_between_movement >= 0 && max_time_between_movement >= 0, "Don't use negative values for time.")
 	assert(min_time_between_movement <= max_time_between_movement, "Min time is larger than max time, flip that.")
 	assert(min_wander_range >= 0 && max_wander_range >= 0, "Don't use negative values for movement range.")
 	assert(min_wander_range <= max_wander_range, "Min wander range is larger than max wander range, flip that.")
 	_start_idling()
+	
+	# create mons for battle formation
+	mons.append(MonData.createMon(mon1Type, mon1Level))
+	if mon2Type != MonData.MonType.NONE:
+		mons.append(MonData.createMon(mon2Type, mon2Level))
+	if mon3Type != MonData.MonType.NONE:
+		mons.append(MonData.createMon(mon3Type, mon3Level))	
+	if mon4Type != MonData.MonType.NONE:
+		mons.append(MonData.createMon(mon4Type, mon4Level))
+	assert(not mons.is_empty(), "All mons are None!")
 
 func _randomize_wander_target():
 	var success = false
