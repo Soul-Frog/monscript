@@ -11,9 +11,24 @@ enum {
 var state
 @onready var timer = $Timer
 
+# positions of mons in battle scene
+var PLAYER_MON_POSITIONS
+var COMPUTER_MON_POSITIONS
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	state = EMPTY
+	PLAYER_MON_POSITIONS = [$PlayerMons/Mon1.position, $PlayerMons/Mon2.position, $PlayerMons/Mon3.position, $PlayerMons/Mon4.position]
+	COMPUTER_MON_POSITIONS = [$ComputerMons/Mon1.position, $PlayerMons/Mon2.position, $PlayerMons/Mon3.position, $PlayerMons/Mon4.position]
+	state = FINISHED
+	clear_battle();
+
+func _create_and_setup_mon(mon, teamNode, position):
+	var new_mon = load("res://battle/battle_mon.tscn").instantiate()
+	new_mon.init_mon(mon)
+	teamNode.add_child(new_mon)
+	new_mon.ready_to_take_turn.connect(self._on_mon_ready_to_take_turn)
+	new_mon.try_to_escape.connect(self._on_mon_ready_to_take_turn)
+	new_mon.position = position
 
 # Sets up a new battle scene
 func setup_battle(player_team, computer_team):
@@ -22,21 +37,12 @@ func setup_battle(player_team, computer_team):
 	assert($ComputerMons.get_child_count() == 0, "Shouldn't have any mons at start of setup! (forgot to clear_battle()?)")
 	
 	# add mons for the new battle
-	for mon in player_team:
-		var new_mon = load("res://battle/battle_mon.tscn").instantiate()
-		new_mon.init_mon(mon)
-		$PlayerMons.add_child(new_mon)
-		new_mon.ready_to_take_turn.connect(self._on_mon_ready_to_take_turn)
-		new_mon.try_to_escape.connect(self._on_mon_ready_to_take_turn)
-		new_mon.position = Vector2(121, 91)
-	
-	for mon in computer_team:
-		var new_mon = load("res://battle/battle_mon.tscn").instantiate()
-		new_mon.init_mon(mon)
-		$ComputerMons.add_child(new_mon)
-		new_mon.ready_to_take_turn.connect(self._on_mon_ready_to_take_turn)
-		new_mon.try_to_escape.connect(self._on_mon_ready_to_take_turn)
-		new_mon.position = Vector2(199, 91)
+	for i in player_team.size():
+		assert(i < PLAYER_MON_POSITIONS.size(), "Too many mons in player team!")
+		_create_and_setup_mon(player_team[i], $PlayerMons, PLAYER_MON_POSITIONS[i])
+	for i in computer_team.size():
+		assert(i < COMPUTER_MON_POSITIONS.size(), "Too many mons in computer team!")
+		_create_and_setup_mon(computer_team[i], $ComputerMons, COMPUTER_MON_POSITIONS[i])
 	
 	assert($PlayerMons.get_child_count() != 0, "No player mons!")
 	assert($ComputerMons.get_child_count() != 0, "No computer mons!")

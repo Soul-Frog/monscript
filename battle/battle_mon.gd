@@ -23,6 +23,7 @@ var speed = -1
 var attack = -1
 var defense = -1
 
+# Initializes this battle_mon with an underlying mon object
 func init_mon(mon):
 	base_mon = mon
 	current_health = mon.get_max_health()
@@ -43,9 +44,10 @@ func battle_tick():
 			emit_signal("ready_to_take_turn", self) # signal that it's time for this mon to act
 
 func is_defeated():
-	assert(current_health >= 0, "Mon's health is somehow negative")
+	assert(current_health >= 0, "Mon's health is somehow negative.")
 	return current_health == 0
 
+# Take a single turn in battle
 func take_action(friends, foes):
 	action_points = 0
 	is_defending = false
