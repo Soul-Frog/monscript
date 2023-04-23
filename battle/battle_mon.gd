@@ -31,7 +31,7 @@ func init_mon(mon):
 	max_health = mon.get_max_health()
 	attack = mon.get_attack()
 	defense = mon.get_defense()
-	speed = mon.gesst_speed()
+	speed = mon.get_speed()
 	_update_labels();
 
 # Called once for each mon by battle.gd at a regular time interval

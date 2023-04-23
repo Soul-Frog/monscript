@@ -93,6 +93,9 @@ func _on_text_submitted(new_text):
 		else:
 			for player_mon in battle_player_mons:
 				player_mon.current_health = 0
+	# toggle debug tool on/off
+	elif text == "debug" or text == "debugtool" or text == "d":
+		Global.DEBUG_TOOL_ACTIVE = not Global.DEBUG_TOOL_ACTIVE
 	else:
 		success = false
 	

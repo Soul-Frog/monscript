@@ -40,15 +40,15 @@ func _ready():
 	print("DebugTool loaded in " + get_parent().name)
 
 # adds a new point to be drawn
-func add_debug_point(at, color = Color.BLACK):
+func add_point(at, color = Color.BLACK):
 	_add_drawable(Point.new(at, color))
 
 # adds a new line to be drawn
-func add_debug_line(from, to, color = Color.BLACK):
+func add_line(from, to, color = Color.BLACK):
 	_add_drawable(Line.new(from, to, color))
 
 # removes all things currently being drawn
-func clear_debug_drawables():
+func clear_drawables():
 	drawables.clear()
 	
 func _add_drawable(drawable):
@@ -61,20 +61,32 @@ func _clean_drawables():
 			drawables.remove_at(i)
 
 func _draw():
-	for drawable in drawables:
-		if drawable is Point:
-			draw_circle(drawable.point - get_parent().position, 1, drawable.point_color)
-		elif drawable is Line:
-			draw_line(drawable.point1 - get_parent().position, drawable.point2 - get_parent().position, drawable.line_color, 1.0)
-		else:
-			assert(false, "Illegal object in DebugTool")
+	if Global.DEBUG_TOOL_ACTIVE:
+		for drawable in drawables:
+			if drawable is Point:
+				draw_circle(drawable.point - get_parent().position, 1, drawable.point_color)
+			elif drawable is Line:
+				draw_line(drawable.point1 - get_parent().position, drawable.point2 - get_parent().position, drawable.line_color, 1.0)
+			else:
+				assert(false, "Illegal object in DebugTool")
 	_clean_drawables()
+
+# print
+func p(str):
+	if Global.DEBUG_TOOL_ACTIVE:
+		print(str)
+
+# print that also includes the object being printed from
+func pr(parent, str):
+	if Global.DEBUG_TOOL_ACTIVE:
+		print("%s: %s" % [parent, str])
 
 func _process(_delta):
 	queue_redraw()
 
 func dump(node):
-	_dump_helper(node, 0)
+	if Global.DEBUG_TOOL_ACTIVE:
+		_dump_helper(node, 0)
 
 func _dump_helper(node, indent_level):
 	print(_repeat_str("  ", indent_level), node.name) 
