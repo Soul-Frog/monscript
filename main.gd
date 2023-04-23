@@ -29,15 +29,15 @@ func _on_battle_started(computer_encounter_team):
 	$Scenes.call_deferred("remove_child", overworld_scene)
 	$Scenes.call_deferred("add_child", battle_scene)
 
-func _on_battle_ended(won_battle):
+func _on_battle_ended(battle_result):
+	assert(battle_result.end_condition != Global.BattleEndCondition.NONE, "End condition was not set before battle ended.")
 	state = State.OVERWORLD
 	
-	overworld_scene.handle_battle_results(won_battle)
-	
-	# todo: give XP to the player's mons here
-	
-	if not won_battle:
-		assert(false, "Need to handle this case somehow") #todo
+	# delete overworld encounter if win; respawn player if lose; handle running
+	overworld_scene.handle_battle_results(battle_result.end_condition)
+	# give experience to player's mons who participated in battle
+	for mon in PlayerData.team: 
+		mon.gain_XP(battle_result.xp_earned)
 	
 	# clean up the battle scene
 	battle_scene.clear_battle();

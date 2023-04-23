@@ -1,25 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bdawc3abe5gi3"]
+[gd_scene load_steps=6 format=3 uid="uid://bdawc3abe5gi3"]
 
 [ext_resource type="Texture2D" uid="uid://cexmucj0yinf2" path="res://assets/tile.png" id="2_5a381"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player.tscn" id="3_nbwo1"]
 [ext_resource type="PackedScene" uid="uid://csxx1veiemf58" path="res://overworld/overworld_encounter.tscn" id="4_l17pm"]
-
-[sub_resource type="GDScript" id="GDScript_f2w5u"]
-script/source = "extends Node2D
-
-signal battle_started
-
-var overworld_encounter_battling_with = null
-
-func _on_overworld_mon_collided_with_player_start_battle(overworld_encounter_collided_with):
-	overworld_encounter_battling_with = overworld_encounter_collided_with
-	emit_signal(\"battle_started\", overworld_encounter_collided_with.mons)
-
-func handle_battle_results(won_battle):
-	assert(overworld_encounter_battling_with != null, \"Must be battling against an overworld mon!\")
-	if won_battle:
-		remove_child(overworld_encounter_battling_with)
-"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_olnl5"]
 texture = ExtResource("2_5a381")
@@ -43,7 +26,6 @@ physics_layer_0/collision_mask = 0
 sources/3 = SubResource("TileSetAtlasSource_olnl5")
 
 [node name="Overworld" type="Node2D"]
-script = SubResource("GDScript_f2w5u")
 
 [node name="World" type="TileMap" parent="."]
 position = Vector2(64, 64)
@@ -64,6 +46,9 @@ polygon = PackedVector2Array(8, -8, -32, -8, -32, 24, 8, 24)
 
 [node name="OverworldMon" parent="." instance=ExtResource("4_l17pm")]
 position = Vector2(160, 96)
+mon2Type = 1
+mon3Type = 1
+mon4Type = 1
 metadata/_edit_group_ = true
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="."]

@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 signal ready_to_take_turn
 signal try_to_escape
+signal zero_health
 
 const ACTION_POINTS_PER_TURN = 100
 const HEALTH_LABEL_FORMAT = "[center]%d/%d[/center]"
@@ -30,7 +31,7 @@ func init_mon(mon):
 	max_health = mon.get_max_health()
 	attack = mon.get_attack()
 	defense = mon.get_defense()
-	speed = mon.get_speed()
+	speed = mon.gesst_speed()
 	_update_labels();
 
 # Called once for each mon by battle.gd at a regular time interval
@@ -49,6 +50,8 @@ func is_defeated():
 
 # Take a single turn in battle
 func take_action(friends, foes):
+	assert(friends.size() != 0, "No friends?")
+	assert(foes.size() != 0, "No foes?")
 	action_points = 0
 	is_defending = false
 	# eventually, logic here will use script to determine action
@@ -80,6 +83,7 @@ func take_attack(raw_damage):
 	
 	if current_health == 0:
 		action_points = 0
+		emit_signal("zero_health", self)
 	
 	_update_labels();
 

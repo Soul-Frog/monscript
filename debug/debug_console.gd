@@ -65,13 +65,13 @@ func _on_text_submitted(new_text):
 	# spawns an overworld enemy
 	elif text == "spawn":
 		# load the mon from a script file and make an instance; set position
-		var new_mon = load("res://overworld/overworld_encounter.tscn").instantiate()
-		new_mon.position = Vector2(player.position + Vector2(30, 30)) # make this more clever someday
+		var new_encounter = load("res://overworld/overworld_encounter.tscn").instantiate()
+		new_encounter.position = Vector2(player.position + Vector2(30, 30)) # make this more clever someday
 		# this mon is being added... abnormally, so we must also hook up the signal causing collisions to start a battle
 		# without this next part, the enemies still collide but don't start battles (overworld doesn't see the collisions)
-		new_mon.collided_with_player_start_battle.connect(overworld_scene._on_overworld_mon_collided_with_player_start_battle)
+		new_encounter.collided_with_player_start_battle.connect(overworld_scene._on_overworld_mon_collided_with_player_start_battle)
 		# finally, add mon to scene
-		overworld_scene.add_child(new_mon)
+		overworld_scene.add_child(new_encounter)
 	# clears all overworld enemies
 	elif text == "wipe" or text == "clear":
 		for child in overworld_scene.get_children():

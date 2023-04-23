@@ -11,6 +11,10 @@ enum MonType
 	NONE, MAGNETFROG
 }
 
+# Calculates the amount of experience needed to gain a level
+func XP_for_level(level):
+	return level * level
+
 # The base type (for example, magnetFrog) of a Mon instance.
 # One MonBase exists for each type of mon. It is shared amongst all Mons of that type.
 # For example, EACH magnetFrog Mon shares the magnetFrog MonBase.
@@ -46,16 +50,16 @@ class MonBase:
 	
 	# functions to determine a mon's stat value for a given level
 	func health_for_level(level):
-		return (level / MAX_LEVEL * (health64 - health0)) + health0
+		return int((float(level) / MAX_LEVEL * (health64 - health0)) + health0)
 	
 	func attack_for_level(level):
-		return (level / MAX_LEVEL * (attack64 - attack0)) + attack0
+		return int((float(level) / MAX_LEVEL * (attack64 - attack0)) + attack0)
 		
 	func defense_for_level(level):
-		return (level / MAX_LEVEL * (defense64 - defense0)) + defense0
+		return int((float(level) / MAX_LEVEL * (defense64 - defense0)) + defense0)
 		
 	func speed_for_level(level):
-		return (level / MAX_LEVEL * (speed64 - speed0)) + speed0
+		return int((float(level) / MAX_LEVEL * (speed64 - speed0)) + speed0)
 	
 
 # Represents an actual Mon in the game, for example in the player's party or in an overworld formation
@@ -63,12 +67,12 @@ class Mon:
 	var base
 	var level
 	var nickname
-	#todo other stuff
+	var xp
 	
 	func _init(mon_base, starting_level, mon_nickname = ""):
 		self.base = mon_base
 		self.level = starting_level
-		self.nickname = mon_nickname
+		self.xp = 0
 	
 	func get_name():
 		if nickname == "":
@@ -89,6 +93,15 @@ class Mon:
 	
 	func get_speed():
 		return base.speed_for_level(level)
+	
+	# adds XP and potentially applies level up
+	func gain_XP(xp_gained):
+		print("gained XP!")
+		xp += xp_gained
+		while xp >= MonData.XP_for_level(level + 1):
+			level += 1
+			xp -= MonData.XP_for_level(level + 1)
+			print("Level up!")
 
 # List of MonBases, each is a static and constant representation of a Mon's essential characteristics
 var _MAGNETFROG_BASE = MonBase.new("magnetFrog", 40, 200, 10, 100, 5, 50, 6, 20)

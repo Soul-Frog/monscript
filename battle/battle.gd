@@ -2,6 +2,14 @@ extends Node2D
 
 signal battle_ended
 
+class BattleResult:
+	var end_condition
+	var xp_earned
+	
+	func _init():
+		end_condition = Global.BattleEndCondition.NONE
+		xp_earned = 0
+
 enum {
 	EMPTY, # this battle scene has no mons; it's ready for a call to setup_battle
 	BATTLING, # this battle scene is ready to go (after setup_battle, before battle has ended)
@@ -15,20 +23,25 @@ var state
 var PLAYER_MON_POSITIONS
 var COMPUTER_MON_POSITIONS
 
+# returned at the end of battle; update with battle results and add XP when mons are defeated
+var battle_result
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	PLAYER_MON_POSITIONS = [$PlayerMons/Mon1.position, $PlayerMons/Mon2.position, $PlayerMons/Mon3.position, $PlayerMons/Mon4.position]
-	COMPUTER_MON_POSITIONS = [$ComputerMons/Mon1.position, $PlayerMons/Mon2.position, $PlayerMons/Mon3.position, $PlayerMons/Mon4.position]
+	COMPUTER_MON_POSITIONS = [$ComputerMons/Mon1.position, $ComputerMons/Mon2.position, $ComputerMons/Mon3.position, $ComputerMons/Mon4.position]
 	state = FINISHED
+	battle_result = BattleResult.new()
 	clear_battle();
 
-func _create_and_setup_mon(mon, teamNode, position):
+func _create_and_setup_mon(mon, teamNode, pos):
 	var new_mon = load("res://battle/battle_mon.tscn").instantiate()
 	new_mon.init_mon(mon)
 	teamNode.add_child(new_mon)
 	new_mon.ready_to_take_turn.connect(self._on_mon_ready_to_take_turn)
 	new_mon.try_to_escape.connect(self._on_mon_ready_to_take_turn)
-	new_mon.position = position
+	new_mon.zero_health.connect(self._on_mon_zero_health)
+	new_mon.position = pos
 
 # Sets up a new battle scene
 func setup_battle(player_team, computer_team):
@@ -73,13 +86,16 @@ func _battle_tick():
 	
 	if player_mons_alive and not computer_mons_alive:
 		state = FINISHED
-		emit_signal("battle_ended", true)
+		battle_result.end_condition = Global.BattleEndCondition.WIN
+		emit_signal("battle_ended", battle_result)
 	elif not player_mons_alive and computer_mons_alive:
 		state = FINISHED
-		emit_signal("battle_ended", false)
+		battle_result.end_condition = Global.BattleEndCondition.LOSE
+		emit_signal("battle_ended", battle_result)
 	elif not player_mons_alive and not computer_mons_alive:
 		state = FINISHED
-		emit_signal("battle_ended", true) #for now a tie counts as a win
+		battle_result.end_condition = Global.BattleEndCondition.WIN
+		emit_signal("battle_ended", battle_result) # tie also counts as a win
 
 func _are_any_computer_mons_alive():
 	for computer_mon in $ComputerMons.get_children():
@@ -93,14 +109,42 @@ func _are_any_player_mons_alive():
 			return true
 	return false
 
-
 func _on_mon_ready_to_take_turn(mon):
 	assert(state == BATTLING)
-	if mon in $PlayerMons.get_children(): 
-		mon.take_action($PlayerMons.get_children(), $ComputerMons.get_children())
+	
+	# get living player mons
+	var player_mons = []
+	for m in $PlayerMons.get_children():
+		if not m.is_defeated():
+			player_mons.append(m)
+	
+	# get living computer mons
+	var computer_mons = []
+	for m in $ComputerMons.get_children():
+		if not m.is_defeated():
+			computer_mons.append(m)
+	
+	# todo - remove this when moving to a queue system
+	# for now, neceessary in the situation where last mon dies, but we haven't
+	# checked battle end condition yet
+	if player_mons.size() == 0 or computer_mons.size() == 0:
+		return
+	
+	if mon in player_mons: 
+		mon.take_action(player_mons, computer_mons)
 	else:
-		mon.take_action($ComputerMons.get_children(), $PlayerMons.get_children())
+		mon.take_action(computer_mons, player_mons)
 
 func _on_mon_try_to_escape(mon):
 	assert(state == BATTLING)
-	pass #todo lol
+	battle_result.end_condition = Global.BattleEndCondition.RUN
+	emit_signal("battle_ended", battle_result)
+
+func _on_mon_zero_health(mon):
+	assert(state == BATTLING)
+	# increment xp earned from battle
+	# min exp earn is 1; so level 0 mons still provide 1 xp
+	battle_result.xp_earned += max(mon.base_mon.level, 1) 
+	# hide this mon to 'remove' it from the scene
+	# removing from scene here with something like queue_free would cause errors
+	mon.visible = false
