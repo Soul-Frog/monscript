@@ -69,6 +69,7 @@ func clear_battle():
 	for mon in $ComputerMons.get_children():
 		mon.queue_free();
 	state = EMPTY
+	battle_result = BattleResult.new()
 	timer.start() # sets timer to 0 again
 
 func _battle_tick():
@@ -142,9 +143,10 @@ func _on_mon_try_to_escape(mon):
 
 func _on_mon_zero_health(mon):
 	assert(state == BATTLING)
-	# increment xp earned from battle
+	# increment xp earned from battle if this was a computer mon
 	# min exp earn is 1; so level 0 mons still provide 1 xp
-	battle_result.xp_earned += max(mon.base_mon.level, 1) 
+	if mon in $ComputerMons.get_children():
+		battle_result.xp_earned += max(mon.base_mon.level, 1) 
 	# hide this mon to 'remove' it from the scene
 	# removing from scene here with something like queue_free would cause errors
 	mon.visible = false

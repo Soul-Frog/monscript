@@ -36,14 +36,16 @@ func _on_text_submitted(new_text):
 	# these checks will fail if certain nodes are renamed or moved
 	# in that case... modify either debug console or undo those changes
 	assert(main_scene.overworld_scene != null, "Debug Console can't get Overworld scene; was it renamed/moved?")
-	assert(main_scene.overworld_scene.get_node("Player") != null, "Debug Console can't get Player from Overworld; was it renamed/moved?")
+	assert(main_scene.overworld_scene.get_node("Area")!= null, "Debug Console can't get Area from Overworld; was it renamed/moved?")	
+	assert(main_scene.overworld_scene.get_node("Area").get_node("Player") != null, "Debug Console can't get Player from Overworld->Area; was it renamed/moved?")
 	assert(main_scene.battle_scene != null, "Debug Console can't get Battle scene; was it renamed/moved?")
 	assert(main_scene.battle_scene.get_node("PlayerMons") != null, "Debug Console can't get PlayerMons from battle scene; was it renamed/moved?")
 	assert(main_scene.battle_scene.get_node("ComputerMons") != null, "Debug Console can't get ComputerMons from battle scene; was it renamed/moved?")
 	
 	# collect some variables that are likely to be useful...
 	var overworld_scene = main_scene.overworld_scene
-	var player = overworld_scene.get_node("Player")
+	var current_area = main_scene.overworld_scene.get_node("Area")
+	var player = current_area.get_node("Player")
 	var battle_scene = main_scene.battle_scene
 	var battle_player_mons = battle_scene.get_node("PlayerMons").get_children()
 	var battle_computer_mons = battle_scene.get_node("ComputerMons").get_children()
@@ -69,9 +71,9 @@ func _on_text_submitted(new_text):
 		new_encounter.position = Vector2(player.position + Vector2(30, 30)) # make this more clever someday
 		# this mon is being added... abnormally, so we must also hook up the signal causing collisions to start a battle
 		# without this next part, the enemies still collide but don't start battles (overworld doesn't see the collisions)
-		new_encounter.collided_with_player_start_battle.connect(overworld_scene._on_overworld_mon_collided_with_player_start_battle)
+		new_encounter.collided_with_player.connect(current_area._on_overworld_encounter_collided_with_player)
 		# finally, add mon to scene
-		overworld_scene.add_child(new_encounter)
+		current_area.add_child(new_encounter)
 	# clears all overworld enemies
 	elif text == "wipe" or text == "clear":
 		for child in overworld_scene.get_children():
@@ -84,7 +86,7 @@ func _on_text_submitted(new_text):
 			success = false
 		else:
 			for computer_mon in battle_computer_mons:
-				computer_mon.current_health = 0
+				computer_mon.take_damage(88888888)
 	# loses a battle instantly
 	elif text == "losebattle" or text == "lose" or text == "l":
 		if main_scene.state != main_scene.State.BATTLE:
@@ -92,7 +94,7 @@ func _on_text_submitted(new_text):
 			success = false
 		else:
 			for player_mon in battle_player_mons:
-				player_mon.current_health = 0
+				player_mon.take_damage(88888888)
 	# toggle debug tool on/off
 	elif text == "debug" or text == "debugtool" or text == "d":
 		Global.DEBUG_TOOL_ACTIVE = not Global.DEBUG_TOOL_ACTIVE

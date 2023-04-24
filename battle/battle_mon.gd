@@ -70,11 +70,11 @@ func perform_special():
 # perform an attack at the given target
 func perform_attack(target):
 	assert(not is_defeated())
-	target.take_attack(attack)
+	target.take_damage(attack)
 
 # Called when this mon is attacked
 # Damage taken is reduced by defense, then further divided by 2 if defending
-func take_attack(raw_damage):
+func take_damage(raw_damage):
 	var damage_taken = raw_damage - defense
 	if is_defending:
 		damage_taken /= 2

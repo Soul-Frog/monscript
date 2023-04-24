@@ -96,12 +96,10 @@ class Mon:
 	
 	# adds XP and potentially applies level up
 	func gain_XP(xp_gained):
-		print("gained XP!")
 		xp += xp_gained
 		while xp >= MonData.XP_for_level(level + 1):
-			level += 1
 			xp -= MonData.XP_for_level(level + 1)
-			print("Level up!")
+			level += 1
 
 # List of MonBases, each is a static and constant representation of a Mon's essential characteristics
 var _MAGNETFROG_BASE = MonBase.new("magnetFrog", 40, 200, 10, 100, 5, 50, 6, 20)

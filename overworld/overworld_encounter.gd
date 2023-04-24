@@ -1,7 +1,7 @@
 extends CharacterBody2D
 class_name OverworldMon
 
-signal collided_with_player_start_battle
+signal collided_with_player
 
 enum {
 	MOVING_SOON, MOVING, IDLE
@@ -148,4 +148,4 @@ func _on_movement_timer_timeout():
 	state = MOVING_SOON
 
 func _on_battle_start_hitbox_body_entered(_body):
-	emit_signal("collided_with_player_start_battle", self)
+	emit_signal("collided_with_player", self)

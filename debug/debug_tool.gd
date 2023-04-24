@@ -77,9 +77,9 @@ func p(str):
 		print(str)
 
 # print that also includes the object being printed from
-func pr(parent, str):
+func pr(parent, s):
 	if Global.DEBUG_TOOL_ACTIVE:
-		print("%s: %s" % [parent, str])
+		print("%s: %s" % [parent, s])
 
 func _process(_delta):
 	queue_redraw()
