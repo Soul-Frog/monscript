@@ -36,6 +36,9 @@ var target = Vector2.ZERO
 var mons = []
 
 func _ready():
+	assert($Sprite.texture != null, "No sprite texture assigned in editor!")
+	assert($BattleStartHitbox/CollisionShape2D.shape != null, "No battle start hitbox shape assigned in editor!")
+	assert($CollisionHitbox.shape != null, "No collision hitbox shape assigned in editor!")	
 	assert(mon1Type != MonData.MonType.NONE, "Lead mon cannot be None!")
 	assert(mon1Level >= 0 and mon1Level <= 64, "Illegal level for mon1!")
 	assert(mon2Level >= 0 and mon2Level <= 64, "Illegal level for mon2!")
@@ -46,6 +49,12 @@ func _ready():
 	assert(min_wander_range >= 0 && max_wander_range >= 0, "Don't use negative values for movement range.")
 	assert(min_wander_range <= max_wander_range, "Min wander range is larger than max wander range, flip that.")
 	_start_idling()
+	
+	# Add connection through code; this makes it so that you can just drag and drop
+	# mons into Areas without having to wire up the signals every time in the editor
+	var areaNode = get_parent()
+	assert(areaNode.name == "Area", "OverworldMon must be a child of an Area!")
+	self.collided_with_player.connect(areaNode._on_overworld_encounter_collided_with_player)
 	
 	# create mons for battle formation
 	mons.append(MonData.createMon(mon1Type, mon1Level))

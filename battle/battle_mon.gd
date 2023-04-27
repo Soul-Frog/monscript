@@ -24,6 +24,10 @@ var speed = -1
 var attack = -1
 var defense = -1
 
+func _ready():
+	assert($Sprite2D.texture != null, "No sprite texture assigned in editor!")
+	assert($CollisionShape2D.shape != null, "No collision shape assigned in editor!")
+
 # Initializes this battle_mon with an underlying mon object
 func init_mon(mon):
 	base_mon = mon

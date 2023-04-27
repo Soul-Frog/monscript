@@ -35,7 +35,7 @@ func _ready():
 	clear_battle();
 
 func _create_and_setup_mon(mon, teamNode, pos):
-	var new_mon = load("res://battle/battle_mon.tscn").instantiate()
+	var new_mon = load(mon.get_battle_scene()).instantiate()
 	new_mon.init_mon(mon)
 	teamNode.add_child(new_mon)
 	new_mon.ready_to_take_turn.connect(self._on_mon_ready_to_take_turn)

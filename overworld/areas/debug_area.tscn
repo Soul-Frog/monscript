@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bdawc3abe5gi3"]
+[gd_scene load_steps=8 format=3 uid="uid://bdawc3abe5gi3"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_pir84"]
 [ext_resource type="Texture2D" uid="uid://cexmucj0yinf2" path="res://assets/tile.png" id="2_5a381"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player.tscn" id="3_nbwo1"]
-[ext_resource type="PackedScene" uid="uid://csxx1veiemf58" path="res://overworld/overworld_encounter.tscn" id="4_l17pm"]
+[ext_resource type="PackedScene" uid="uid://du0exi85nr8ue" path="res://overworld/mons/magnetfrogblue.tscn" id="5_cmfu8"]
+[ext_resource type="PackedScene" uid="uid://d4nkd58v3yr" path="res://overworld/mons/magnetfrog.tscn" id="5_qdpc2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_olnl5"]
 texture = ExtResource("2_5a381")
@@ -46,13 +47,6 @@ collision_mask = 0
 position = Vector2(224, 56)
 polygon = PackedVector2Array(8, -8, -32, -8, -32, 24, 8, 24)
 
-[node name="OverworldMon" parent="." instance=ExtResource("4_l17pm")]
-position = Vector2(160, 96)
-mon2Type = 1
-mon3Type = 1
-mon4Type = 1
-metadata/_edit_group_ = true
-
 [node name="StaticBody2D2" type="StaticBody2D" parent="."]
 position = Vector2(48, 48)
 collision_layer = 4
@@ -80,4 +74,15 @@ collision_mask = 0
 position = Vector2(216, -16)
 polygon = PackedVector2Array(8, -8, -32, -8, -32, 24, 8, 24)
 
-[connection signal="collided_with_player" from="OverworldMon" to="." method="_on_overworld_encounter_collided_with_player"]
+[node name="OverworldMon2" parent="." instance=ExtResource("5_cmfu8")]
+position = Vector2(104, 136)
+mon1Type = 2
+mon2Type = 1
+mon3Type = 1
+mon4Type = 2
+
+[node name="OverworldMon" parent="." instance=ExtResource("5_qdpc2")]
+position = Vector2(160, 80)
+
+[node name="OverworldMon3" parent="." instance=ExtResource("5_cmfu8")]
+position = Vector2(224, 152)

@@ -1,37 +1,25 @@
-[gd_scene load_steps=6 format=3 uid="uid://csxx1veiemf58"]
+[gd_scene load_steps=3 format=3 uid="uid://csxx1veiemf58"]
 
 [ext_resource type="Script" path="res://overworld/overworld_encounter.gd" id="1_akpas"]
-[ext_resource type="Texture2D" uid="uid://m6lm74qw017b" path="res://assets/enemy.png" id="2_nnnqc"]
 [ext_resource type="PackedScene" uid="uid://diodlu0baosyk" path="res://debug/debug_tool.tscn" id="3_ajp4n"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_a43a7"]
-size = Vector2(16, 20)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2mp07"]
-size = Vector2(6, 13)
 
 [node name="OverworldMon" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 4
 safe_margin = 0.001
 script = ExtResource("1_akpas")
-mon1Type = 1
 
 [node name="Sprite" type="Sprite2D" parent="."]
-texture = ExtResource("2_nnnqc")
 
 [node name="MovementTimer" type="Timer" parent="."]
 one_shot = true
 
 [node name="CollisionHitbox" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_a43a7")
 
 [node name="BattleStartHitbox" type="Area2D" parent="."]
 collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BattleStartHitbox"]
-position = Vector2(0, 1.5)
-shape = SubResource("RectangleShape2D_2mp07")
 
 [node name="DebugTool" parent="." instance=ExtResource("3_ajp4n")]
 

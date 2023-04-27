@@ -6,11 +6,6 @@ extends Node
 const MIN_LEVEL = 0
 const MAX_LEVEL = 64
 
-enum MonType
-{
-	NONE, MAGNETFROG
-}
-
 # Calculates the amount of experience needed to gain a level
 func XP_for_level(level):
 	return level * level
@@ -23,8 +18,7 @@ func XP_for_level(level):
 # MonBases are basically constants, so you should NEVER update the values here during gameplay.
 class MonBase:
 	var species
-	#todo: var overworld_sprite
-	#todo: var battle_sprite
+	var battle_scene # the scene that represents this mon in battle
 	var attack0
 	var attack64
 	var defense0
@@ -36,9 +30,10 @@ class MonBase:
 	#todo: var special_action
 	#todo: var passive_ability
 	
-	func _init(monSpecies, 
+	func _init(monSpecies, scene_in_battle,
 		healthAt0, healthAt64, attackAt0, attackAt64, defenseAt0, defenseAt64, speedAt0, speedAt64):
 		self.species = monSpecies
+		self.battle_scene = scene_in_battle
 		self.health0 = healthAt0
 		self.health64 = healthAt64
 		self.attack0 = attackAt0
@@ -82,6 +77,9 @@ class Mon:
 	func get_species():
 		return base.species
 	
+	func get_battle_scene():
+		return base.battle_scene
+	
 	func get_max_health():
 		return base.health_for_level(level)
 	
@@ -102,7 +100,13 @@ class Mon:
 			level += 1
 
 # List of MonBases, each is a static and constant representation of a Mon's essential characteristics
-var _MAGNETFROG_BASE = MonBase.new("magnetFrog", 40, 200, 10, 100, 5, 50, 6, 20)
+var _MAGNETFROG_BASE = MonBase.new("magnetFrog", "res://battle/mons/magnetfrog.tscn", 40, 200, 10, 100, 5, 50, 6, 20)
+var _MAGNETFROGBLUE_BASE = MonBase.new("magnetFrogBLUE", "res://battle/mons/magnetfrogblue.tscn", 40, 200, 10, 100, 5, 50, 6, 20)
+
+enum MonType
+{
+	NONE, MAGNETFROG, MAGNETFROGBLUE
+}
 
 func createMon(montype, level):
 	assert(montype != MonType.NONE)
@@ -110,5 +114,7 @@ func createMon(montype, level):
 	match montype:
 		MonType.MAGNETFROG:
 			return Mon.new(_MAGNETFROG_BASE, level)
+		MonType.MAGNETFROGBLUE:
+			return Mon.new(_MAGNETFROGBLUE_BASE, level)
 	
 	assert(false, "Missing case in createMon match statement!")
