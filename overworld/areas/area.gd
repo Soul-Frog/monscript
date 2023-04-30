@@ -14,4 +14,4 @@ func handle_battle_results(battle_end_condition):
 	if battle_end_condition == Global.BattleEndCondition.WIN:
 		remove_child(overworld_encounter_battling_with)
 	
-	# todo: handle Run case here
+	print("TODO - HANDLE ESCAPE FROM BATTLE")

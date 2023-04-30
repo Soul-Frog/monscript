@@ -12,4 +12,4 @@ func handle_battle_results(battle_end_condition):
 	
 	current_area.handle_battle_results(battle_end_condition)
 	
-	# todo: handle Lose case here?
+	print("TODO - HANDLE BATTLE LOSS")

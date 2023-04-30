@@ -9,6 +9,7 @@ const FAIL_COLOR = Color.RED
 const DEFAULT_COLOR = Color.BLACK
 
 var main_scene = null
+var last_command = null
 
 func _ready():
 	active = false
@@ -29,8 +30,8 @@ func _input(event):
 			active = not active
 			self.visible = active
 
-
-func _on_text_submitted(new_text):
+# this param is 'txt' on purpose; because 'text' is already a field of the LineEdit
+func _on_text_submitted(txt):
 	assert(active)
 	
 	# perform some checks to ensure certain nodes are findable by debug console
@@ -51,37 +52,34 @@ func _on_text_submitted(new_text):
 	var battle_player_mons = battle_scene.get_node("PlayerMons").get_children()
 	var battle_computer_mons = battle_scene.get_node("ComputerMons").get_children()
 	
-	new_text = new_text.to_lower().replace(" ", "").replace("_", "")
-	print("Debug Command: " + new_text)
+	txt = txt.to_lower().replace(" ", "").replace("_", "")
+	print("Debug Command: " + txt)
 	
 	var success = true
 	
 	# close the application immediately
-	if text == "exit" or text == "quit" or text == "q":
+	if txt == "exit" or txt == "quit" or txt == "q":
 		get_tree().quit()
 	# cause an immediate breakpoint
-	elif text == "break" or text == "breakpoint" or text == "b" or text == "brk":
+	elif txt == "break" or txt == "breakpoint" or txt == "b" or txt == "brk":
 		breakpoint
 	# print hello world :)
-	elif text == "helloworld" or text == "hello":
+	elif txt == "helloworld" or txt == "hello":
 		print("Hello World!")
 	# spawns an overworld enemy
-	elif text == "spawn":
+	elif txt == "spawn":
 		# load the mon from a script file and make an instance; set position
-		var new_encounter = load("res://overworld/overworld_encounter.tscn").instantiate()
+		var new_encounter = load("res://overworld/mons/magnetfrogblue.tscn").instantiate()
 		new_encounter.position = Vector2(player.position + Vector2(30, 30)) # make this more clever someday
-		# this mon is being added... abnormally, so we must also hook up the signal causing collisions to start a battle
-		# without this next part, the enemies still collide but don't start battles (overworld doesn't see the collisions)
-		new_encounter.collided_with_player.connect(current_area._on_overworld_encounter_collided_with_player)
 		# finally, add mon to scene
 		current_area.add_child(new_encounter)
 	# clears all overworld enemies
-	elif text == "wipe" or text == "clear":
-		for child in overworld_scene.get_children():
+	elif txt == "wipe" or txt == "clear":
+		for child in current_area.get_children():
 			if child is OverworldMon:
-				overworld_scene.remove_child(child)
+				current_area.remove_child(child)
 	# wins a battle instantly
-	elif text == "winbattle"  or text == "win" or text == "w":
+	elif txt == "winbattle"  or txt == "win" or txt == "w":
 		if main_scene.state != main_scene.State.BATTLE:
 			print("Not in a battle!")
 			success = false
@@ -89,18 +87,20 @@ func _on_text_submitted(new_text):
 			for computer_mon in battle_computer_mons:
 				computer_mon.take_damage(88888888)
 	# loses a battle instantly
-	elif text == "losebattle" or text == "lose" or text == "l":
+	elif txt == "losebattle" or txt == "lose" or txt == "l":
 		if main_scene.state != main_scene.State.BATTLE:
 			print("Not in a battle!")
 			success = false
 		else:
 			for player_mon in battle_player_mons:
 				player_mon.take_damage(88888888)
-	# toggle debug tool on/off
-	elif text == "debug" or text == "debugtool" or text == "d":
-		Global.DEBUG_TOOL_ACTIVE = not Global.DEBUG_TOOL_ACTIVE
+	# repeat the previous command
+	elif last_command != null and (txt == "r" or txt == "repeat"):
+		_on_text_submitted(last_command)
 	else:
 		success = false
 	
+	if txt != "r" and txt != "repeat":
+		self.last_command = txt
 	self.set("theme_override_colors/font_color", SUCCESS_COLOR if success else FAIL_COLOR)
-	self.text = ""
+	self.clear()
