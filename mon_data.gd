@@ -19,6 +19,7 @@ func XP_for_level(level):
 class MonBase:
 	var species
 	var battle_scene # the scene that represents this mon in battle
+	var default_script_path
 	var attack0
 	var attack64
 	var defense0
@@ -30,10 +31,11 @@ class MonBase:
 	#todo: var special_action
 	#todo: var passive_ability
 	
-	func _init(monSpecies, scene_in_battle,
+	func _init(monSpecies, scene_in_battle, default_script_file_path,
 		healthAt0, healthAt64, attackAt0, attackAt64, defenseAt0, defenseAt64, speedAt0, speedAt64):
 		self.species = monSpecies
 		self.battle_scene = scene_in_battle
+		self.default_script_path = default_script_file_path
 		self.health0 = healthAt0
 		self.health64 = healthAt64
 		self.attack0 = attackAt0
@@ -63,11 +65,13 @@ class Mon:
 	var level
 	var nickname
 	var xp
+	var monscript
 	
 	func _init(mon_base, starting_level, mon_nickname = ""):
 		self.base = mon_base
 		self.level = starting_level
 		self.xp = 0
+		self.monscript = ScriptData.MonScript.new(Global.file_to_string(mon_base.default_script_path))
 	
 	func get_name():
 		if nickname == "":
@@ -100,8 +104,10 @@ class Mon:
 			level += 1
 
 # List of MonBases, each is a static and constant representation of a Mon's essential characteristics
-var _MAGNETFROG_BASE = MonBase.new("magnetFrog", "res://battle/mons/magnetfrog.tscn", 40, 200, 10, 100, 5, 50, 6, 20)
-var _MAGNETFROGBLUE_BASE = MonBase.new("magnetFrogBLUE", "res://battle/mons/magnetfrogblue.tscn", 40, 200, 10, 100, 5, 50, 6, 20)
+var _MAGNETFROG_BASE = MonBase.new("magnetFrog", "res://battle/mons/magnetfrog.tscn", "res://monscripts/attack.txt", 
+	40, 200, 10, 100, 5, 50, 6, 20)
+var _MAGNETFROGBLUE_BASE = MonBase.new("magnetFrogBLUE", "res://battle/mons/magnetfrogblue.tscn", "res://monscripts/attack.txt",
+	40, 200, 10, 100, 5, 50, 6, 20)
 
 enum MonType
 {

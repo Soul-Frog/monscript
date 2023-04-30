@@ -1,5 +1,8 @@
 extends Node
 
+const INT_MAX = 9223372036854775806
+const INT_MIN = -9223372036854775807
+
 var RNG = RandomNumberGenerator.new()
 
 # change this to turn debug tool (debug_tool.tscn) functionality on/off

@@ -58,10 +58,10 @@ func take_action(friends, foes):
 	assert(foes.size() != 0, "No foes?")
 	action_points = 0
 	is_defending = false
-	# eventually, logic here will use script to determine action
-	# for now, target a random foe with basic attack
-	var attack_target = foes[Global.RNG.randi() % foes.size()]
-	perform_attack(attack_target)
+	
+	# tell our script to go ahead and run
+	base_mon.monscript.execute(self, friends, foes)
+
 	_update_labels();
 
 # perform this mon's special action 

@@ -1,17 +1,17 @@
 # ScriptData stores information about the scripts used in battle
 # Every Mon has a Script
 # A script has some number of Lines
-# Each Line has three Blocks (IF, DO, and TO)
+# Each Line has three Blocks (If, Dd, and To)
 
 extends Node
 
 # TODO - remove this lol
 @onready var TEST_SCRIPT = MonScript.new(Global.file_to_string("res://monscripts/attack.txt"))
 
-const SCRIPT_START = "START"
-const SCRIPT_END = "END"
-const LINE_DELIMITER = "\n"
-const BLOCK_DELIMITER = " "
+const SCRIPT_START = "START"	# all scripts must start with
+const SCRIPT_END = "END"		# all scripts must end with
+const LINE_DELIMITER = "\n"		# all lines are separated by
+const BLOCK_DELIMITER = " "		# the 3 blocks on a line are separated by
 
 class MonScript:
 	var lines
@@ -41,10 +41,10 @@ class MonScript:
 		
 		# parse each line
 		for line_string in line_strings:
+			line_string = line_string.strip_edges() #be a little lenient with whitespace
 			if line_string == SCRIPT_START or line_string == SCRIPT_END:
 				continue
 			lines.append(Line.new(line_string))
-		print(self.as_string())
 
 class Line:
 	var ifBlock
@@ -109,6 +109,7 @@ class Block:
 		self.function = blockFunction
 
 # IF FUNCTIONS
+# Determine whether a line should be executed
 #      self       friends      foes            whether to execute line or not
 # func(BattleMon, [BattleMon], [BattleMon]) -> bool
 var IF_BLOCK_LIST = [
@@ -119,6 +120,8 @@ var IF_BLOCK_LIST = [
 
 # DO FUNCTIONS
 # Perform a battle action 
+#      self       friends      foes            function should perform a battle action
+# func(BattleMon, [BattleMon], [BattleMon]) -> void
 var DO_BLOCK_LIST = [
 	Block.new(Block.Type.DO, "DoPass", func(mon, friends, foes, target):
 		mon.perform_pass()
@@ -147,16 +150,16 @@ var TO_BLOCK_LIST = [
 		
 	Block.new(Block.Type.TO, "ToRandomFriend", 
 	func(mon, friends, foes):
-		return friends[Global.RNG.randi() % foes.size()]
+		return friends[Global.RNG.randi() % friends.size()]
 		),
 		
 	Block.new(Block.Type.TO, "ToLowestHealthFoe", 
 	func(mon, friends, foes):
 		var lowestHealthFoe = null
-		var lowestHealthFound = -1
+		var lowestHealthFound = Global.INT_MAX
 		for foe in foes:
-			if foe.health < lowestHealthFound:
-				lowestHealthFound = foe.health
+			if foe.current_health < lowestHealthFound:
+				lowestHealthFound = foe.current_health
 				lowestHealthFoe = foe
 		assert(lowestHealthFound > 0)
 		assert(lowestHealthFoe != null)
