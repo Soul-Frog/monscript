@@ -23,6 +23,12 @@ MonSprites="*res://mon_data.gd"
 MonData="*res://mon_data.gd"
 PlayerData="*res://player_data.gd"
 
+[debug]
+
+gdscript/warnings/unused_parameter=0
+gdscript/warnings/assert_always_true=0
+gdscript/warnings/assert_always_false=0
+
 [display]
 
 window/size/viewport_width=320

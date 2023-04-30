@@ -37,7 +37,7 @@ var drawables = []
 
 func _ready():
 	assert(drawable_timeout_time > 0, "Can't have a negative time.")
-	print("DebugTool loaded in " + get_parent().name)
+	pr(self, "DebugTool loaded.")
 
 # adds a new point to be drawn
 func add_point(at, color = Color.BLACK):
@@ -61,7 +61,7 @@ func _clean_drawables():
 			drawables.remove_at(i)
 
 func _draw():
-	if Global.DEBUG_TOOL_ACTIVE:
+	if Global.DEBUG:
 		for drawable in drawables:
 			if drawable is Point:
 				draw_circle(drawable.point - get_parent().position, 1, drawable.point_color)
@@ -72,20 +72,19 @@ func _draw():
 	_clean_drawables()
 
 # print
-func p(str):
-	if Global.DEBUG_TOOL_ACTIVE:
-		print(str)
+func p(s):
+	if Global.DEBUG:
+		print(s)
 
 # print that also includes the object being printed from
 func pr(parent, s):
-	if Global.DEBUG_TOOL_ACTIVE:
-		print("%s: %s" % [parent, s])
+	p("%s: %s" % [parent, s])
 
 func _process(_delta):
 	queue_redraw()
 
 func dump(node):
-	if Global.DEBUG_TOOL_ACTIVE:
+	if Global.DEBUG:
 		_dump_helper(node, 0)
 
 func _dump_helper(node, indent_level):

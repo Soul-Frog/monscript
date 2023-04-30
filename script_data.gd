@@ -5,6 +5,9 @@
 
 extends Node
 
+# TODO - remove this lol
+@onready var TEST_SCRIPT = MonScript.new(Global.file_to_string("res://monscripts/attack.txt"))
+
 const SCRIPT_START = "START"
 const SCRIPT_END = "END"
 const LINE_DELIMITER = "\n"
@@ -13,9 +16,9 @@ const BLOCK_DELIMITER = " "
 class MonScript:
 	var lines
 	
-	func _init(str):
+	func _init(string):
 		lines = []
-		_from_string(str)
+		_from_string(string.strip_edges())
 	
 	func execute(mon, friends, foes):
 		for line in lines:
@@ -23,31 +26,34 @@ class MonScript:
 				return
 	
 	func as_string():
-		var str = "%s%s" % [SCRIPT_START, LINE_DELIMITER]
+		var string = "%s%s" % [SCRIPT_START, LINE_DELIMITER]
 		for line in lines:
-			str += "%s%s" % [line.as_string(), LINE_DELIMITER]
-		str += SCRIPT_END
-		return str
+			string += "%s%s" % [line.as_string(), LINE_DELIMITER]
+		string += SCRIPT_END
+		return string
 	
-	func _from_string(str):
+	func _from_string(string):
 		# break into lines
-		var line_strings = str.split(LINE_DELIMITER)
+		var line_strings = string.split(LINE_DELIMITER)
 		assert(len(line_strings) > 1, "No lines in script")
-		assert(line_strings[0] == "START", "Invalid script start")
-		assert(line_strings[len(line_strings)-1] == "END", "Invalid script end")
+		assert(line_strings[0] == SCRIPT_START, "Invalid script start")
+		assert(line_strings[len(line_strings)-1] == SCRIPT_END, "Invalid script end")
 		
 		# parse each line
 		for line_string in line_strings:
+			if line_string == SCRIPT_START or line_string == SCRIPT_END:
+				continue
 			lines.append(Line.new(line_string))
+		print(self.as_string())
 
 class Line:
 	var ifBlock
 	var doBlock
 	var toBlock
 	
-	func _init(str):
+	func _init(string):
 		# break into blocks
-		var block_strings = str.split(BLOCK_DELIMITER)
+		var block_strings = string.split(BLOCK_DELIMITER)
 		assert(len(block_strings) == 3, "Parsed line does not have exactly 3 blocks")
 		
 		# pull out the 3 blocks
@@ -86,7 +92,7 @@ func get_block_by_name(block_list, block_name):
 	for block in block_list:
 		if block.name == block_name:
 			return block
-	assert(false, "No block found for name %s!" % [block_name])
+	assert(false, "No block found for name %s (likely a typo, or forgot to add new Block to correct list)" % [block_name])
 
 class Block:
 	enum Type{

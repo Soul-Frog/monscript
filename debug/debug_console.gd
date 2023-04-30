@@ -18,15 +18,16 @@ func _ready():
 	assert(main_scene != null)
 
 func _input(event):
-	if event.is_action_released("open_debug_console"):
-		if active:
-			emit_signal("debug_console_closed")
-		else:
-			emit_signal("debug_console_opened")
-			self.grab_focus()
-		self.text = ""
-		active = not active
-		self.visible = active
+	if Global.DEBUG:
+		if event.is_action_released("open_debug_console"):
+			if active:
+				emit_signal("debug_console_closed")
+			else:
+				emit_signal("debug_console_opened")
+				self.grab_focus()
+			self.text = ""
+			active = not active
+			self.visible = active
 
 
 func _on_text_submitted(new_text):
