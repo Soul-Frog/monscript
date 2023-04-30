@@ -74,6 +74,7 @@ func perform_special():
 # perform an attack at the given target
 func perform_attack(target):
 	assert(not is_defeated())
+	assert(not target.is_defeated())
 	target.take_damage(attack)
 
 # Called when this mon is attacked
@@ -100,6 +101,11 @@ func perform_defend():
 func perform_run():
 	assert(not is_defeated())
 	emit_signal("try_to_escape")
+
+# Pass, which skips the turn but keeps half of the action points
+func perform_pass():
+	assert(not is_defeated())
+	action_points = 50
 
 func _update_labels():
 	$ActionPointsLabel.text = AP_LABEL_FORMAT % [action_points]
