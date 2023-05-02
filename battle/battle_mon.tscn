@@ -1,6 +1,60 @@
-[gd_scene load_steps=2 format=3 uid="uid://cumhbwtxqoeme"]
+[gd_scene load_steps=10 format=3 uid="uid://cumhbwtxqoeme"]
 
 [ext_resource type="Script" path="res://battle/battle_mon.gd" id="1_cu0b3"]
+[ext_resource type="Texture2D" uid="uid://db0f2a3sr8n0c" path="res://assets/attack_anims/slash.png" id="2_b8qsc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cgfk4"]
+atlas = ExtResource("2_b8qsc")
+region = Rect2(0, 0, 17, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wwkmw"]
+atlas = ExtResource("2_b8qsc")
+region = Rect2(17, 0, 17, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7cj3x"]
+atlas = ExtResource("2_b8qsc")
+region = Rect2(34, 0, 17, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sxkr3"]
+atlas = ExtResource("2_b8qsc")
+region = Rect2(51, 0, 17, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uamug"]
+atlas = ExtResource("2_b8qsc")
+region = Rect2(68, 0, 17, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_haech"]
+atlas = ExtResource("2_b8qsc")
+region = Rect2(85, 0, 17, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1sok8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cgfk4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wwkmw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7cj3x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sxkr3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uamug")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_haech")
+}],
+"loop": false,
+"name": &"default",
+"speed": 30.0
+}]
 
 [node name="Mon" type="CharacterBody2D"]
 y_sort_enabled = true
@@ -29,3 +83,7 @@ offset_bottom = 40.0
 bbcode_enabled = true
 text = "[center]20/20[/center]"
 autowrap_mode = 0
+
+[node name="AttackedAnimation" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_1sok8")
+frame_progress = 0.489822

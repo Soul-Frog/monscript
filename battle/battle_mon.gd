@@ -86,6 +86,8 @@ func take_damage(raw_damage):
 	current_health -= damage_taken
 	current_health = max(current_health, 0);
 	
+	$AttackedAnimation.play()
+	
 	if current_health == 0:
 		action_points = 0
 		emit_signal("zero_health", self)
@@ -110,5 +112,3 @@ func perform_pass():
 func _update_labels():
 	$ActionPointsLabel.text = AP_LABEL_FORMAT % [action_points]
 	$HealthLabel.text = HEALTH_LABEL_FORMAT % [current_health, max_health]
-
-
