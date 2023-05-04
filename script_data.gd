@@ -5,9 +5,6 @@
 
 extends Node
 
-# TODO - remove this lol
-@onready var TEST_SCRIPT = MonScript.new(Global.file_to_string("res://monscripts/attack.txt"))
-
 const SCRIPT_START = "START"	# all scripts must start with
 const SCRIPT_END = "END"		# all scripts must end with
 const LINE_DELIMITER = "\n"		# all lines are separated by
@@ -128,7 +125,12 @@ var DO_BLOCK_LIST = [
 		),
 		
 	Block.new(Block.Type.DO, "DoAttack", func(mon, friends, foes, target):
+		# play the animation and wait for it to finish
+		mon.play_action_animation()
+		await mon.action_animation_completed
+		# then apply the actual damage from this attack
 		mon.perform_attack(target)
+		mon.alert_turn_over()
 		),
 	
 	Block.new(Block.Type.DO, "DoDefend", func(mon, friends, foes, target):

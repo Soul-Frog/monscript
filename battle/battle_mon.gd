@@ -1,8 +1,19 @@
 extends CharacterBody2D
 
-signal ready_to_take_turn
+# emitted when this mon's ap has been increased to max
+signal ready_to_take_action
+
+# emitted when this mon performs an escape action
 signal try_to_escape
-signal zero_health
+
+# emitted when this mon is defeated
+signal zero_health 
+
+# emitted after this mon takes an action in battle - generally after animation ends
+signal action_completed
+
+# emitted after this mon's animation completes
+signal action_animation_completed
 
 const ACTION_POINTS_PER_TURN = 100
 const HEALTH_LABEL_FORMAT = "[center]%d/%d[/center]"
@@ -44,9 +55,10 @@ func battle_tick():
 	assert(attack != -1 and speed != -1 and defense != -1 and max_health != -1, "Stats were never initialized?")
 	if not is_defeated():
 		action_points += speed
+		action_points = clamp(action_points, 0, 100)
 		_update_labels();
 		if action_points >= ACTION_POINTS_PER_TURN:
-			emit_signal("ready_to_take_turn", self) # signal that it's time for this mon to act
+			emit_signal("ready_to_take_action", self) # signal that it's time for this mon to act
 
 func is_defeated():
 	assert(current_health >= 0, "Mon's health is somehow negative.")
@@ -56,22 +68,31 @@ func is_defeated():
 func take_action(friends, foes):
 	assert(friends.size() != 0, "No friends?")
 	assert(foes.size() != 0, "No foes?")
-	action_points = 0
 	is_defending = false
 	
 	# tell our script to go ahead and run
 	base_mon.monscript.execute(self, friends, foes)
-
+	
 	_update_labels();
 
-# perform this mon's special action 
+func play_action_animation():
+	$AttackedAnimation.play()
+	await $AttackedAnimation.animation_finished
+	emit_signal("action_animation_completed")
+
+func alert_turn_over():
+	assert(action_points == 100)
+	action_points = 0
+	emit_signal("action_completed")
+
+# Perform this mon's special action 
 func perform_special():
 	assert(not is_defeated())
 	@warning_ignore("integer_division")
 	current_health += max_health / 10
 	current_health = min(current_health, max_health)
 
-# perform an attack at the given target
+# Perform an attack at the given target
 func perform_attack(target):
 	assert(not is_defeated())
 	assert(not target.is_defeated())
@@ -85,8 +106,6 @@ func take_damage(raw_damage):
 		damage_taken /= 2
 	current_health -= damage_taken
 	current_health = max(current_health, 0);
-	
-	$AttackedAnimation.play()
 	
 	if current_health == 0:
 		action_points = 0

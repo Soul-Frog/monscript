@@ -23,8 +23,15 @@ var state
 var PLAYER_MON_POSITIONS
 var COMPUTER_MON_POSITIONS
 
-# returned at the end of battle; update with battle results and add XP when mons are defeated
+# Returned at the end of battle; update with battle results and add XP when mons are defeated
 var battle_result
+
+# Queue of mons ready to take actions, in order that turns should be taken
+var action_queue = []
+
+# Tracks whether a mon is currently taking an action
+# Only one mon can take an action at a time (due to animations, etc)
+var is_a_mon_taking_action = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -34,13 +41,15 @@ func _ready():
 	battle_result = BattleResult.new()
 	clear_battle();
 
-func _create_and_setup_mon(mon, teamNode, pos):
-	var new_mon = load(mon.get_battle_scene()).instantiate()
-	new_mon.init_mon(mon)
+# Helper function which creates and connects signals for BattleMon
+func _create_and_setup_mon(base_mon, teamNode, pos):
+	var new_mon = load(base_mon.get_battle_scene()).instantiate()
+	new_mon.init_mon(base_mon)
 	teamNode.add_child(new_mon)
-	new_mon.ready_to_take_turn.connect(self._on_mon_ready_to_take_turn)
-	new_mon.try_to_escape.connect(self._on_mon_ready_to_take_turn)
+	new_mon.ready_to_take_action.connect(self._on_mon_ready_to_take_action)
+	new_mon.try_to_escape.connect(self._on_mon_try_to_escape)
 	new_mon.zero_health.connect(self._on_mon_zero_health)
+	new_mon.action_completed.connect(self._on_mon_action_completed)
 	new_mon.position = pos
 
 # Sets up a new battle scene
@@ -56,9 +65,13 @@ func setup_battle(player_team, computer_team):
 	for i in computer_team.size():
 		assert(i < COMPUTER_MON_POSITIONS.size(), "Too many mons in computer team!")
 		_create_and_setup_mon(computer_team[i], $ComputerMons, COMPUTER_MON_POSITIONS[i])
+	action_queue.clear()
+	is_a_mon_taking_action = false
 	
 	assert($PlayerMons.get_child_count() != 0, "No player mons!")
 	assert($ComputerMons.get_child_count() != 0, "No computer mons!")
+	assert(action_queue.size() == 0)
+	assert(not is_a_mon_taking_action)
 	state = BATTLING
 
 # Should be called after a battle ends, before the next call to setup_battle
@@ -76,27 +89,35 @@ func _battle_tick():
 	assert(state == BATTLING) 	# make sure battle was set up properly
 	
 	# let everyone update/action
+	# mons already in action queue are waiting to take a turn and 
+	# don't need to recieve updates
 	for player_mon in $PlayerMons.get_children():
-		player_mon.battle_tick()
+		if not player_mon in action_queue:
+			player_mon.battle_tick()
 	for computer_mon in $ComputerMons.get_children():
-		computer_mon.battle_tick()
-
-	# check if the battle is over
-	var player_mons_alive = _are_any_player_mons_alive()
-	var computer_mons_alive = _are_any_computer_mons_alive()
+		if not computer_mon in action_queue:
+			computer_mon.battle_tick()
 	
-	if player_mons_alive and not computer_mons_alive:
-		state = FINISHED
-		battle_result.end_condition = Global.BattleEndCondition.WIN
-		emit_signal("battle_ended", battle_result)
-	elif not player_mons_alive and computer_mons_alive:
-		state = FINISHED
-		battle_result.end_condition = Global.BattleEndCondition.LOSE
-		emit_signal("battle_ended", battle_result)
-	elif not player_mons_alive and not computer_mons_alive:
-		state = FINISHED
-		battle_result.end_condition = Global.BattleEndCondition.WIN
-		emit_signal("battle_ended", battle_result) # tie also counts as a win
+	# if no other mon is active, let the mon in front of queue take action
+	if not is_a_mon_taking_action and not action_queue.is_empty():
+		var active_mon = action_queue.front()
+		is_a_mon_taking_action = true
+		
+		# get living player mons
+		var player_mons = []
+		for m in $PlayerMons.get_children():
+			if not m.is_defeated():
+				player_mons.append(m)
+		
+		# get living computer mons
+		var computer_mons = []
+		for m in $ComputerMons.get_children():
+			if not m.is_defeated():
+				computer_mons.append(m)
+		
+		var friends = player_mons if active_mon in player_mons else computer_mons
+		var foes = computer_mons if active_mon in player_mons else player_mons
+		active_mon.take_action(friends, foes)
 
 func _are_any_computer_mons_alive():
 	for computer_mon in $ComputerMons.get_children():
@@ -110,31 +131,10 @@ func _are_any_player_mons_alive():
 			return true
 	return false
 
-func _on_mon_ready_to_take_turn(mon):
+func _on_mon_ready_to_take_action(mon):
 	assert(state == BATTLING)
-	
-	# get living player mons
-	var player_mons = []
-	for m in $PlayerMons.get_children():
-		if not m.is_defeated():
-			player_mons.append(m)
-	
-	# get living computer mons
-	var computer_mons = []
-	for m in $ComputerMons.get_children():
-		if not m.is_defeated():
-			computer_mons.append(m)
-	
-	# todo - remove this when moving to a queue system
-	# for now, neceessary in the situation where last mon dies, but we haven't
-	# checked battle end condition yet
-	if player_mons.size() == 0 or computer_mons.size() == 0:
-		return
-	
-	if mon in player_mons: 
-		mon.take_action(player_mons, computer_mons)
-	else:
-		mon.take_action(computer_mons, player_mons)
+	assert(not mon in action_queue, "Mon is already in queue?")
+	action_queue.append(mon); # add to queue
 
 func _on_mon_try_to_escape(mon):
 	assert(state == BATTLING)
@@ -150,3 +150,33 @@ func _on_mon_zero_health(mon):
 	# hide this mon to 'remove' it from the scene
 	# removing from scene here with something like queue_free would cause errors
 	mon.visible = false
+	
+	# remove this mon from the action queue if needed
+	for i in range(0, action_queue.size()):
+		if action_queue[i] == mon:
+			action_queue.remove_at(i)
+			break
+
+func _on_mon_action_completed():
+	assert(is_a_mon_taking_action)
+	_check_battle_end_condition()
+	action_queue.remove_at(0)
+	is_a_mon_taking_action = false
+	
+# Checks if the battle is over and signals if that is the case
+func _check_battle_end_condition():
+	var player_mons_alive = _are_any_player_mons_alive()
+	var computer_mons_alive = _are_any_computer_mons_alive()
+	
+	if player_mons_alive and not computer_mons_alive:
+		state = FINISHED
+		battle_result.end_condition = Global.BattleEndCondition.WIN
+		emit_signal("battle_ended", battle_result)
+	elif not player_mons_alive and computer_mons_alive:
+		state = FINISHED
+		battle_result.end_condition = Global.BattleEndCondition.LOSE
+		emit_signal("battle_ended", battle_result)
+	elif not player_mons_alive and not computer_mons_alive:
+		state = FINISHED
+		battle_result.end_condition = Global.BattleEndCondition.WIN
+		emit_signal("battle_ended", battle_result) # tie also counts as a win

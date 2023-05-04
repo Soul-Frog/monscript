@@ -53,7 +53,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"default",
-"speed": 30.0
+"speed": 5.0
 }]
 
 [node name="Mon" type="CharacterBody2D"]
@@ -86,4 +86,5 @@ autowrap_mode = 0
 
 [node name="AttackedAnimation" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_1sok8")
-frame_progress = 0.489822
+frame = 6
+frame_progress = 1.0
