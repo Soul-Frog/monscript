@@ -30,7 +30,6 @@ enum {
 
 @onready var movementTimer = $MovementTimer
 
-var rng = RandomNumberGenerator.new()
 var state = IDLE
 var target = Vector2.ZERO
 var mons = []
@@ -74,8 +73,8 @@ func _randomize_wander_target():
 		
 		# choose a random nearby point
 		# generate a value within the set [-max_wander, -min_wander]U(min_wander, max_wander) for both x and y
-		var x_movement = rng.randi_range(min_wander_range, max_wander_range) * (1 if rng.randi_range(0, 1) else -1)
-		var y_movement = rng.randi_range(min_wander_range, max_wander_range) * (1 if rng.randi_range(0, 1) else -1)
+		var x_movement = Global.RNG.randi_range(min_wander_range, max_wander_range) * (1 if Global.RNG.randi_range(0, 1) else -1)
+		var y_movement = Global.RNG.randi_range(min_wander_range, max_wander_range) * (1 if Global.RNG.randi_range(0, 1) else -1)
 		var movement = Vector2(x_movement, y_movement)
 		var trial_target = position + movement
 		
@@ -138,7 +137,7 @@ func _randomize_wander_target():
 func _start_idling():
 	state = IDLE
 	velocity = Vector2.ZERO
-	movementTimer.wait_time = rng.randf_range(min_time_between_movement, max_time_between_movement)
+	movementTimer.wait_time = Global.RNG.randf_range(min_time_between_movement, max_time_between_movement)
 	movementTimer.start()
 
 func _physics_process(_delta):

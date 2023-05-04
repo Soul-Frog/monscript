@@ -69,7 +69,7 @@ open_debug_console={
 [layer_names]
 
 2d_physics/layer_1="Player"
-2d_physics/layer_2="Mon"
+2d_physics/layer_2="OverworldEncounter"
 2d_physics/layer_3="World"
 
 [rendering]

@@ -22,6 +22,7 @@ func _on_debug_console_debug_console_closed():
 	get_tree().paused = false
 
 func _on_battle_started(computer_encounter_team):
+	assert(state == State.OVERWORLD)
 	state = State.BATTLE
 	battle_scene.setup_battle(PlayerData.team, computer_encounter_team);
 	
@@ -31,6 +32,7 @@ func _on_battle_started(computer_encounter_team):
 
 func _on_battle_ended(battle_result):
 	assert(battle_result.end_condition != Global.BattleEndCondition.NONE, "End condition was not set before battle ended.")
+	assert(state == State.BATTLE)
 	state = State.OVERWORLD
 	
 	# delete overworld encounter if win; respawn player if lose; handle running

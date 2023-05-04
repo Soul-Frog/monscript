@@ -30,7 +30,7 @@ sources/3 = SubResource("TileSetAtlasSource_olnl5")
 [node name="Area" type="Node2D"]
 script = ExtResource("1_pir84")
 
-[node name="World" type="TileMap" parent="."]
+[node name="Tiles" type="TileMap" parent="."]
 position = Vector2(64, 64)
 tile_set = SubResource("TileSet_ela0q")
 format = 2
@@ -39,50 +39,24 @@ layer_0/tile_data = PackedInt32Array(-1, 3, 0, 0, 3, 0, -65536, 3, 0, 1, 3, 0, 6
 [node name="Player" parent="." instance=ExtResource("3_nbwo1")]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(48, 48)
+position = Vector2(88, 88)
 collision_layer = 4
 collision_mask = 0
+metadata/_edit_group_ = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-position = Vector2(224, 56)
-polygon = PackedVector2Array(8, -8, -32, -8, -32, 24, 8, 24)
+position = Vector2(176, -24)
+polygon = PackedVector2Array(16, -8, -32, -8, -32, 24, 16, 24)
 
-[node name="StaticBody2D2" type="StaticBody2D" parent="."]
-position = Vector2(48, 48)
-collision_layer = 4
-collision_mask = 0
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D2"]
-position = Vector2(16, 48)
-polygon = PackedVector2Array(8, -8, -32, -8, -32, 24, 8, 24)
-
-[node name="StaticBody2D3" type="StaticBody2D" parent="."]
-position = Vector2(48, 48)
-collision_layer = 4
-collision_mask = 0
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D3"]
-position = Vector2(128, 88)
-polygon = PackedVector2Array(8, -8, -32, -8, -32, 24, 8, 24)
-
-[node name="StaticBody2D4" type="StaticBody2D" parent="."]
-position = Vector2(48, 48)
-collision_layer = 4
-collision_mask = 0
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D4"]
-position = Vector2(216, -16)
-polygon = PackedVector2Array(8, -8, -32, -8, -32, 24, 8, 24)
-
-[node name="OverworldMon2" parent="." instance=ExtResource("5_cmfu8")]
+[node name="Encounter1" parent="." instance=ExtResource("5_cmfu8")]
 position = Vector2(104, 136)
 mon1Type = 2
 mon2Type = 1
 mon3Type = 1
 mon4Type = 2
 
-[node name="OverworldMon" parent="." instance=ExtResource("5_qdpc2")]
+[node name="Encounter2" parent="." instance=ExtResource("5_qdpc2")]
 position = Vector2(160, 80)
 
-[node name="OverworldMon3" parent="." instance=ExtResource("5_cmfu8")]
+[node name="Encounter3" parent="." instance=ExtResource("5_cmfu8")]
 position = Vector2(224, 152)

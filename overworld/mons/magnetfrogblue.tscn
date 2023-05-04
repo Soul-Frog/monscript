@@ -9,7 +9,7 @@ size = Vector2(16, 24)
 [sub_resource type="CircleShape2D" id="CircleShape2D_7oono"]
 radius = 16.0
 
-[node name="OverworldMon" instance=ExtResource("1_lrk40")]
+[node name="MagnetFrogBlue" instance=ExtResource("1_lrk40")]
 mon1Type = 1
 
 [node name="Sprite" parent="." index="0"]
