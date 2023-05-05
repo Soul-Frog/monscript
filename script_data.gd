@@ -17,9 +17,9 @@ class MonScript:
 		lines = []
 		_from_string(string.strip_edges())
 	
-	func execute(mon, friends, foes):
+	func execute(mon, friends, foes, animator):
 		for line in lines:
-			if line.try_execute(mon, friends, foes):
+			if line.try_execute(mon, friends, foes, animator):
 				return
 	
 	func as_string():
@@ -68,14 +68,14 @@ class Line:
 		toBlock = ScriptData.get_block_by_name(ScriptData.TO_BLOCK_LIST, to_block_string)
 		assert(toBlock.type == Block.Type.TO, "Given to_block_string is not a TO block!")
 
-	func try_execute(mon, friends, foes):
+	func try_execute(mon, friends, foes, animator):
 		# check if this line should be executed
 		var conditionIsMet = ifBlock.function.call(mon, friends, foes)
 		if conditionIsMet:
 			# get list of targets
 			var targets = toBlock.function.call(mon, friends, foes)
 			# perform the battle action
-			doBlock.function.call(mon, friends, foes, targets)
+			doBlock.function.call(mon, friends, foes, targets, animator)
 		
 		# return if this line was executed, so script knows not to 
 		# attempt to execute other lines if this one took an action
@@ -117,27 +117,28 @@ var IF_BLOCK_LIST = [
 
 # DO FUNCTIONS
 # Perform a battle action 
-#      self       friends      foes            function should perform a battle action
-# func(BattleMon, [BattleMon], [BattleMon]) -> void
+#      self       friends      foes         animation helper      function should perform a battle action
+# func(BattleMon, [BattleMon], [BattleMon], [Battle/Animator]) -> void
 var DO_BLOCK_LIST = [
-	Block.new(Block.Type.DO, "DoPass", func(mon, friends, foes, target):
+	Block.new(Block.Type.DO, "DoPass", func(mon, friends, foes, target, animator):
 		mon.perform_pass()
 		),
 		
-	Block.new(Block.Type.DO, "DoAttack", func(mon, friends, foes, target):
+	Block.new(Block.Type.DO, "DoAttack", func(mon, friends, foes, target, animator):
 		# play the animation and wait for it to finish
-		mon.play_action_animation()
-		await mon.action_animation_completed
+		animator.slash(target)
+		await animator.animation_finished
+		
 		# then apply the actual damage from this attack
 		mon.perform_attack(target)
 		mon.alert_turn_over()
 		),
 	
-	Block.new(Block.Type.DO, "DoDefend", func(mon, friends, foes, target):
+	Block.new(Block.Type.DO, "DoDefend", func(mon, friends, foes, target, animator):
 		mon.perform_defend()
 		),
 		
-	Block.new(Block.Type.DO, "DoRun", func(mon, friends, foes, target):
+	Block.new(Block.Type.DO, "DoRun", func(mon, friends, foes, target, animator):
 		mon.perform_run()
 		)
 ]

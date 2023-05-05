@@ -65,24 +65,18 @@ func is_defeated():
 	return current_health == 0
 
 # Take a single turn in battle
-func take_action(friends, foes):
+func take_action(friends, foes, animator):
 	assert(friends.size() != 0, "No friends?")
 	assert(foes.size() != 0, "No foes?")
 	is_defending = false
 	
-	# tell our script to go ahead and run
-	base_mon.monscript.execute(self, friends, foes)
-	
-	_update_labels();
-
-func play_action_animation():
-	$AttackedAnimation.play()
-	await $AttackedAnimation.animation_finished
-	emit_signal("action_animation_completed")
+	# tell our script to go ahead and execute an action
+	base_mon.monscript.execute(self, friends, foes, animator)
 
 func alert_turn_over():
 	assert(action_points == 100)
 	action_points = 0
+	_update_labels();
 	emit_signal("action_completed")
 
 # Perform this mon's special action 
