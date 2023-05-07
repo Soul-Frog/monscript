@@ -1,5 +1,5 @@
 # ScriptData stores information about the scripts used in battle
-# Every Mon has a Script
+# Every Mon has a MonScript
 # A script has some number of Lines
 # Each Line has three Blocks (If, Dd, and To)
 
@@ -19,7 +19,7 @@ class MonScript:
 	
 	func execute(mon, friends, foes, animator):
 		for line in lines:
-			if line.try_execute(mon, friends, foes, animator):
+			if await line.try_execute(mon, friends, foes, animator):
 				return
 	
 	func as_string():
@@ -32,7 +32,7 @@ class MonScript:
 	func _from_string(string):
 		# break into lines
 		var line_strings = string.split(LINE_DELIMITER)
-		assert(len(line_strings) > 1, "No lines in script")
+		assert(len(line_strings) > 2, "No lines in script")
 		assert(line_strings[0] == SCRIPT_START, "Invalid script start")
 		assert(line_strings[len(line_strings)-1] == SCRIPT_END, "Invalid script end")
 		
@@ -75,7 +75,8 @@ class Line:
 			# get list of targets
 			var targets = toBlock.function.call(mon, friends, foes)
 			# perform the battle action
-			doBlock.function.call(mon, friends, foes, targets, animator)
+			await doBlock.function.call(mon, friends, foes, targets, animator)
+			mon.alert_turn_over()
 		
 		# return if this line was executed, so script knows not to 
 		# attempt to execute other lines if this one took an action
@@ -83,13 +84,6 @@ class Line:
 	
 	func as_string():
 		return "%s %s %s" % [ifBlock.name, doBlock.name, toBlock.name]
-
-# utility function used to search a list of blocks for a given block by name
-func get_block_by_name(block_list, block_name):
-	for block in block_list:
-		if block.name == block_name:
-			return block
-	assert(false, "No block found for name %s (likely a typo, or forgot to add new Block to correct list)" % [block_name])
 
 class Block:
 	enum Type{
@@ -104,6 +98,14 @@ class Block:
 		self.type = blockType
 		self.name = blockName
 		self.function = blockFunction
+
+# utility function used to search a list of blocks for a given block by name
+func get_block_by_name(block_list, block_name):
+	for block in block_list:
+		if block.name == block_name:
+			return block
+	assert(false, "No block found for name %s (likely a typo, or forgot to add new Block to correct list)" % [block_name])
+
 
 # IF FUNCTIONS
 # Determine whether a line should be executed
@@ -131,7 +133,6 @@ var DO_BLOCK_LIST = [
 		
 		# then apply the actual damage from this attack
 		mon.perform_attack(target)
-		mon.alert_turn_over()
 		),
 	
 	Block.new(Block.Type.DO, "DoDefend", func(mon, friends, foes, target, animator):
@@ -145,6 +146,8 @@ var DO_BLOCK_LIST = [
 
 # TO FUNCTIONS
 # Returns a list of targets
+#      self       friends      foes            function should return targets
+# func(BattleMon, [BattleMon], [BattleMon]) -> [BattleMon]
 var TO_BLOCK_LIST = [
 	Block.new(Block.Type.TO, "ToRandomFoe", 
 	func(mon, friends, foes):

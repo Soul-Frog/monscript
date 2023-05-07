@@ -59,7 +59,7 @@ class MonBase:
 		return int((float(level) / MAX_LEVEL * (speed64 - speed0)) + speed0)
 	
 
-# Represents an actual Mon in the game, for example in the player's party or in an overworld formation
+# Represents an actual Mon in the game, in the player's party or in an overworld formation
 class Mon:
 	var base
 	var level
@@ -109,6 +109,7 @@ var _MAGNETFROG_BASE = MonBase.new("magnetFrog", "res://battle/mons/magnetfrog.t
 var _MAGNETFROGBLUE_BASE = MonBase.new("magnetFrogBLUE", "res://battle/mons/magnetfrogblue.tscn", "res://monscripts/attack.txt",
 	40, 200, 10, 100, 5, 50, 6, 20)
 
+# This enum is used by the overworld_encounter.tscn, so don't delete it
 enum MonType
 {
 	NONE, MAGNETFROG, MAGNETFROGBLUE
