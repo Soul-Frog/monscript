@@ -4,6 +4,9 @@ signal collided_with_encounter
 
 var overworld_encounter_battling_with = null
 
+func _ready():
+	$Player/Camera2D.set_limits($TileMap)
+
 func _on_overworld_encounter_collided_with_player(overworld_encounter_collided_with):
 	overworld_encounter_battling_with = overworld_encounter_collided_with
 	emit_signal("collided_with_encounter", overworld_encounter_collided_with.mons)

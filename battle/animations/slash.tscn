@@ -52,7 +52,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"default",
-"speed": 5.0
+"speed": 30.0
 }]
 
 [node name="SlashAnimation" type="AnimatedSprite2D"]
