@@ -86,7 +86,6 @@ func _on_text_submitted(txt):
 		else:
 			for computer_mon in battle_computer_mons:
 				computer_mon.take_damage(88888888)
-			battle_scene._check_battle_end_condition()
 	# loses a battle instantly
 	elif txt == "losebattle" or txt == "lose" or txt == "l":
 		if main_scene.state != main_scene.State.BATTLE:
@@ -95,7 +94,6 @@ func _on_text_submitted(txt):
 		else:
 			for player_mon in battle_player_mons:
 				player_mon.take_damage(88888888)
-			battle_scene._check_battle_end_condition()
 	# repeat the previous command
 	elif last_command != null and (txt == "r" or txt == "repeat"):
 		_on_text_submitted(last_command)

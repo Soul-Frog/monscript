@@ -55,14 +55,10 @@ func battle_tick():
 	assert(attack != -1 and speed != -1 and defense != -1 and max_health != -1, "Stats were never initialized?")
 	if not is_defeated():
 		action_points += speed
-		action_points = clamp(action_points, 0, 100)
+		action_points = clamp(action_points, 0, ACTION_POINTS_PER_TURN)
 		_update_labels();
 		if action_points >= ACTION_POINTS_PER_TURN:
 			emit_signal("ready_to_take_action", self) # signal that it's time for this mon to act
-
-func is_defeated():
-	assert(current_health >= 0, "Mon's health is somehow negative.")
-	return current_health == 0
 
 # Take a single turn in battle
 func take_action(friends, foes, animator):
@@ -78,6 +74,10 @@ func alert_turn_over():
 	action_points = 0
 	_update_labels();
 	emit_signal("action_completed")
+
+func is_defeated():
+	assert(current_health >= 0, "Mon's health is somehow negative.")
+	return current_health == 0
 
 # Perform this mon's special action 
 func perform_special():

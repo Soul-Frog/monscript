@@ -156,10 +156,12 @@ func _on_mon_zero_health(mon):
 		if action_queue[i] == mon:
 			action_queue.remove_at(i)
 			break
+	
+	# a mon was defeated, so is the battle now over?
+	_check_battle_end_condition()
 
 func _on_mon_action_completed():
 	assert(is_a_mon_taking_action)
-	_check_battle_end_condition()
 	action_queue.remove_at(0)
 	is_a_mon_taking_action = false
 	
