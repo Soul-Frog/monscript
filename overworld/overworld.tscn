@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ca2l5wqdhsgdf"]
 
-[ext_resource type="PackedScene" uid="uid://bdawc3abe5gi3" path="res://overworld/areas/debug_area.tscn" id="1_wwtbh"]
+[ext_resource type="PackedScene" uid="uid://bfwx7u1qdd3lc" path="res://overworld/areas/debug_area.tscn" id="1_wwtbh"]
 [ext_resource type="Script" path="res://overworld/overworld.gd" id="1_xol28"]
 
 [node name="Overworld" type="Node2D"]

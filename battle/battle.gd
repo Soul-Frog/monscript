@@ -141,6 +141,11 @@ func _on_mon_try_to_escape(mon):
 	battle_result.end_condition = Global.BattleEndCondition.RUN
 	emit_signal("battle_ended", battle_result)
 
+func _on_mon_action_completed():
+	assert(is_a_mon_taking_action)
+	action_queue.remove_at(0)
+	is_a_mon_taking_action = false
+
 func _on_mon_zero_health(mon):
 	assert(state == BATTLING)
 	# increment xp earned from battle if this was a computer mon
@@ -159,11 +164,6 @@ func _on_mon_zero_health(mon):
 	
 	# a mon was defeated, so is the battle now over?
 	_check_battle_end_condition()
-
-func _on_mon_action_completed():
-	assert(is_a_mon_taking_action)
-	action_queue.remove_at(0)
-	is_a_mon_taking_action = false
 	
 # Checks if the battle is over and signals if that is the case
 func _check_battle_end_condition():

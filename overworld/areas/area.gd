@@ -1,6 +1,7 @@
 extends Node2D
 
 signal collided_with_encounter
+signal change_area
 
 var overworld_encounter_battling_with = null
 
