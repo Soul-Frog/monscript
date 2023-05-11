@@ -17,5 +17,14 @@ func handle_battle_results(battle_end_condition):
 	assert(battle_end_condition != Global.BattleEndCondition.NONE, "Battle end condition was not set.")
 	if battle_end_condition == Global.BattleEndCondition.WIN:
 		remove_child(overworld_encounter_battling_with)
+		overworld_encounter_battling_with.queue_free()
 	
 	print("TODO - HANDLE ESCAPE FROM BATTLE")
+
+func move_player_to(destination_point):
+	var found_destination_point = false
+	for point in $Points.get_children():
+		if point.name.to_lower().strip_edges() == destination_point.to_lower().strip_edges():
+			$Player.position = point.position
+			found_destination_point = true
+	assert(found_destination_point, "Could not find point %s!" % [destination_point])

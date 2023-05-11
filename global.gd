@@ -22,3 +22,6 @@ func file_to_string(file_path):
 
 func string_to_file(file_path, string):
 	FileAccess.open(file_path, FileAccess.WRITE).store_string(string)
+
+func does_file_exist(file_path):
+	return FileAccess.file_exists(file_path)

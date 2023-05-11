@@ -6,6 +6,14 @@ extends Node
 const MIN_LEVEL = 0
 const MAX_LEVEL = 64
 
+func _ready():
+	# do some safety checks
+	# create a mon of every type to make sure createMon isn't missing cases
+	for mon_type in MonType.values():
+		if mon_type == MonType.NONE:
+			continue
+		create_mon(mon_type, 0)
+
 # Calculates the amount of experience needed to gain a level
 func XP_for_level(level):
 	return level * level
@@ -115,7 +123,7 @@ enum MonType
 	NONE, MAGNETFROG, MAGNETFROGBLUE
 }
 
-func createMon(montype, level):
+func create_mon(montype, level):
 	assert(montype != MonType.NONE)
 	
 	match montype:
@@ -124,4 +132,4 @@ func createMon(montype, level):
 		MonType.MAGNETFROGBLUE:
 			return Mon.new(_MAGNETFROGBLUE_BASE, level)
 	
-	assert(false, "Missing case in createMon match statement!")
+	assert(false, "Missing case in create_mon match statement for %s!" % [MonType.find_key(montype)])

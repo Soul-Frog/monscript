@@ -15,5 +15,14 @@ func handle_battle_results(battle_end_condition):
 	print("TODO - HANDLE BATTLE LOSS")
 
 func _on_change_area(new_area, new_spawn_point):
-	print(new_area)
-	print(new_spawn_point)
+	$DebugTool.p("Changing Area!\tArea: %s\tPoint: %s" % [new_area, new_spawn_point])
+	
+	# create the new area scene, move player to point
+	var old_area = current_area
+	current_area = load(GameData.path_for_area(new_area)).instantiate()
+	current_area.move_player_to(new_spawn_point)
+	
+	# add new area
+	call_deferred("add_child", current_area) 
+	# remove and free old area
+	call_deferred("queue_free", old_area) 

@@ -56,13 +56,13 @@ func _ready():
 	self.collided_with_player.connect(areaNode._on_overworld_encounter_collided_with_player)
 	
 	# create mons for battle formation
-	mons.append(MonData.createMon(mon1Type, mon1Level))
+	mons.append(MonData.create_mon(mon1Type, mon1Level))
 	if mon2Type != MonData.MonType.NONE:
-		mons.append(MonData.createMon(mon2Type, mon2Level))
+		mons.append(MonData.create_mon(mon2Type, mon2Level))
 	if mon3Type != MonData.MonType.NONE:
-		mons.append(MonData.createMon(mon3Type, mon3Level))	
+		mons.append(MonData.create_mon(mon3Type, mon3Level))	
 	if mon4Type != MonData.MonType.NONE:
-		mons.append(MonData.createMon(mon4Type, mon4Level))
+		mons.append(MonData.create_mon(mon4Type, mon4Level))
 	assert(not mons.is_empty(), "All mons are None!")
 
 func _randomize_wander_target():
