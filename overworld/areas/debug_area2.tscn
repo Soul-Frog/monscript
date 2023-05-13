@@ -57,7 +57,9 @@ position_smoothing_speed = 10.0
 editor_draw_limits = true
 script = ExtResource("4_wos63")
 
-[node name="Encounter1" parent="." instance=ExtResource("5_28sgp")]
+[node name="OverworldEncounters" type="Node" parent="."]
+
+[node name="Encounter1" parent="OverworldEncounters" instance=ExtResource("5_28sgp")]
 position = Vector2(0, -48)
 mon1Type = 2
 mon2Type = 1

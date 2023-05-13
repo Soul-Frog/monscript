@@ -10,5 +10,3 @@ script = ExtResource("1_xol28")
 [node name="Area" parent="." instance=ExtResource("1_wwtbh")]
 
 [node name="DebugTool" parent="." instance=ExtResource("3_4wxtj")]
-
-[connection signal="collided_with_encounter" from="Area" to="." method="_on_area_collided_with_encounter"]

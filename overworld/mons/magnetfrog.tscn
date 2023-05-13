@@ -11,18 +11,6 @@ size = Vector2(10.75, 16.375)
 
 [node name="MagnetFrog" instance=ExtResource("1_cjcqv")]
 mon1Type = 1
-mon1Level = 0
-mon2Type = 0
-mon2Level = 0
-mon3Type = 0
-mon3Level = 0
-mon4Type = 0
-mon4Level = 0
-speed = 100
-min_wander_range = 50
-max_wander_range = 150
-min_time_between_movement = 0
-max_time_between_movement = 0.2
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource("2_7evjx")

@@ -22,6 +22,7 @@ GameData="*res://game_data.gd"
 ScriptData="*res://script_data.gd"
 MonData="*res://mon_data.gd"
 PlayerData="*res://player_data.gd"
+Events="*res://events.gd"
 
 [debug]
 

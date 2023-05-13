@@ -49,12 +49,6 @@ func _ready():
 	assert(min_wander_range <= max_wander_range, "Min wander range is larger than max wander range, flip that.")
 	_start_idling()
 	
-	# Add connection through code; this makes it so that you can just drag and drop
-	# mons into Areas without having to wire up the signals every time in the editor
-	var areaNode = get_parent()
-	assert(areaNode.name == "Area", "OverworldMon must be a child of an Area!")
-	self.collided_with_player.connect(areaNode._on_overworld_encounter_collided_with_player)
-	
 	# create mons for battle formation
 	mons.append(MonData.create_mon(mon1Type, mon1Level))
 	if mon2Type != MonData.MonType.NONE:

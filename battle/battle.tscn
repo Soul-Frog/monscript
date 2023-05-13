@@ -91,7 +91,7 @@ y_sort_enabled = true
 script = ExtResource("1_85t5n")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.3
+wait_time = 0.028
 autostart = true
 
 [node name="PlayerMons" type="Node2D" parent="."]

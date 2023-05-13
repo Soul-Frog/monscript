@@ -58,17 +58,19 @@ metadata/_edit_group_ = true
 position = Vector2(8, -8)
 polygon = PackedVector2Array(16, -8, -32, -8, -32, 24, 16, 24)
 
-[node name="Encounter1" parent="." instance=ExtResource("5_cmfu8")]
+[node name="OverworldEncounters" type="Node" parent="."]
+
+[node name="Encounter1" parent="OverworldEncounters" instance=ExtResource("5_cmfu8")]
 position = Vector2(-16, -144)
 mon1Type = 2
 mon2Type = 1
 mon3Type = 1
 mon4Type = 2
 
-[node name="Encounter2" parent="." instance=ExtResource("5_qdpc2")]
+[node name="Encounter2" parent="OverworldEncounters" instance=ExtResource("5_qdpc2")]
 position = Vector2(152, -168)
 
-[node name="Encounter3" parent="." instance=ExtResource("5_cmfu8")]
+[node name="Encounter3" parent="OverworldEncounters" instance=ExtResource("5_cmfu8")]
 position = Vector2(136, -96)
 
 [node name="Points" type="Node" parent="."]
