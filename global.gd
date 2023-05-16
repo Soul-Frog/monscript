@@ -11,7 +11,7 @@ var DEBUG = true
 
 # represents the result of a battle
 enum BattleEndCondition {
-	WIN, # the player on the battle
+	WIN, # the player won the battle
 	LOSE, # the player lost the battle
 	ESCAPE, # player escaped from battle
 	NONE # default/error condition; should be set before battle ends

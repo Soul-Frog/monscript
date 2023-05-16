@@ -13,6 +13,7 @@ func _ready():
 	$Scenes.remove_child(battle_scene)
 	state = State.OVERWORLD
 	Events.battle_started.connect(_on_battle_started)
+	Events.battle_ended.connect(_on_battle_ended)
 
 func _on_debug_console_debug_console_opened():
 	assert(get_tree().paused == false)

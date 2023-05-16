@@ -28,6 +28,7 @@ var base_mon = null
 var action_points = 0
 
 var is_defending = false
+var escaped_from_battle = false
 
 var max_health = -1
 var current_health = -1
@@ -47,6 +48,8 @@ func init_mon(mon):
 	attack = mon.get_attack()
 	defense = mon.get_defense()
 	speed = mon.get_speed()
+	is_defending = false
+	escaped_from_battle = false
 	_update_labels();
 
 # Called once for each mon by battle.gd at a regular time interval

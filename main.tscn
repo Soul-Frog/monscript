@@ -17,7 +17,5 @@ script = ExtResource("1_sv5wa")
 [node name="DebugConsole" parent="." instance=ExtResource("3_cw4c6")]
 z_index = 1
 
-[connection signal="battle_started" from="Scenes/Overworld" to="." method="_on_battle_started"]
-[connection signal="battle_ended" from="Scenes/Battle" to="." method="_on_battle_ended"]
 [connection signal="debug_console_closed" from="DebugConsole" to="." method="_on_debug_console_debug_console_closed"]
 [connection signal="debug_console_opened" from="DebugConsole" to="." method="_on_debug_console_debug_console_opened"]

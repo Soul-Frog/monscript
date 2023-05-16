@@ -1,7 +1,5 @@
 extends Node2D
 
-signal battle_ended
-
 class BattleResult:
 	var end_condition
 	var xp_earned
@@ -155,7 +153,7 @@ func _on_mon_try_to_escape(battle_mon):
 		if escape_chance >= Global.RNG.randi_range(1, 100):
 			battle_result.end_condition = Global.BattleEndCondition.ESCAPE
 			state = FINISHED
-			emit_signal("battle_ended", battle_result)
+			Events.emit_signal("battle_ended", battle_result)
 	else:
 		print("Enemy mon tried to escape!")
 
@@ -191,12 +189,12 @@ func _check_battle_end_condition():
 	if player_mons_alive and not computer_mons_alive:
 		state = FINISHED
 		battle_result.end_condition = Global.BattleEndCondition.WIN
-		emit_signal("battle_ended", battle_result)
+		Events.emit_signal("battle_ended", battle_result)
 	elif not player_mons_alive and computer_mons_alive:
 		state = FINISHED
 		battle_result.end_condition = Global.BattleEndCondition.LOSE
-		emit_signal("battle_ended", battle_result)
+		Events.emit_signal("battle_ended", battle_result)
 	elif not player_mons_alive and not computer_mons_alive:
 		state = FINISHED
 		battle_result.end_condition = Global.BattleEndCondition.WIN
-		emit_signal("battle_ended", battle_result) # tie also counts as a win
+		Events.emit_signal("battle_ended", battle_result) # tie also counts as a win

@@ -4,6 +4,9 @@ extends Node
 # but can also be used outside of that
 signal battle_started
 
+# called to signal that the current battle has ended
+signal battle_ended
+
 # called to signal an area change, usually by warp
 signal area_changed
 

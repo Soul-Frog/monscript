@@ -1,7 +1,5 @@
 extends Node2D
 
-signal battle_started
-
 @onready var current_area = $Area
 
 func _ready():
