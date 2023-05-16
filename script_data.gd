@@ -139,8 +139,8 @@ var DO_BLOCK_LIST = [
 		mon.perform_defend()
 		),
 		
-	Block.new(Block.Type.DO, "DoRun", func(mon, friends, foes, target, animator):
-		mon.perform_run()
+	Block.new(Block.Type.DO, "DoEscape", func(mon, friends, foes, target, animator):
+		mon.perform_escape()
 		)
 ]
 

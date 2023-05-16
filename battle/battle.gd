@@ -138,7 +138,11 @@ func _on_mon_ready_to_take_action(mon):
 
 func _on_mon_try_to_escape(mon):
 	assert(state == BATTLING)
-	battle_result.end_condition = Global.BattleEndCondition.RUN
+	
+	print("TODO - attempt to escape based on speed")
+	
+	battle_result.end_condition = Global.BattleEndCondition.ESCAPE
+	state = FINISHED
 	emit_signal("battle_ended", battle_result)
 
 func _on_mon_action_completed():

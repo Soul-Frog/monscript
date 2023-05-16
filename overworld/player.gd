@@ -12,3 +12,4 @@ func update_velocity(_delta):
 func _physics_process(delta):
 	update_velocity(delta)
 	move_and_slide()
+

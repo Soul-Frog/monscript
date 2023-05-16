@@ -113,9 +113,9 @@ func perform_defend():
 	is_defending = true
 
 # Signal to battle.gd to try to escape the battle
-func perform_run():
+func perform_escape():
 	assert(not is_defeated())
-	emit_signal("try_to_escape")
+	emit_signal("try_to_escape", self)
 
 # Pass, which skips the turn but keeps half of the action points
 func perform_pass():

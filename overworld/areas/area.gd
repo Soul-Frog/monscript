@@ -26,7 +26,8 @@ func handle_battle_results(battle_end_condition):
 		$OverworldEncounters.remove_child(overworld_encounter_battling_with)
 		overworld_encounter_battling_with.queue_free()
 	
-	print("TODO - HANDLE ESCAPE FROM BATTLE")
+	if battle_end_condition == Global.BattleEndCondition.ESCAPE:
+		print("HANDLE ESCAPE FROM BATTLE")
 
 func move_player_to(destination_point):
 	var found_destination_point = false

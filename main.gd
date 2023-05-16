@@ -36,7 +36,7 @@ func _on_battle_ended(battle_result):
 	assert(state == State.BATTLE)
 	state = State.OVERWORLD
 	
-	# delete overworld encounter if win; respawn player if lose; handle running
+	# delete overworld encounter if win; respawn player if lose; handle escaping
 	overworld_scene.handle_battle_results(battle_result.end_condition)
 	
 	# give experience to player's mons who participated in battle
