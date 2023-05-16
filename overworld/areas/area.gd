@@ -6,18 +6,10 @@ var overworld_encounter_battling_with = null
 
 func _ready():
 	$Player/Camera2D.set_limits($TileMap)
-	
-	# connect to each overworld encounter
-	for overworld_encounter in $OverworldEncounters.get_children():
-		overworld_encounter.collided_with_player.connect(_on_overworld_encounter_collided_with_player)
-	
+	Events.collided_with_overworld_encounter.connect(_on_overworld_encounter_collided_with_player)
 
 func _on_overworld_encounter_collided_with_player(overworld_encounter_collided_with):
 	overworld_encounter_battling_with = overworld_encounter_collided_with
-
-	# start a battle
-	Events.emit_signal("battle_started", overworld_encounter_collided_with.mons)
-
 
 func handle_battle_results(battle_end_condition):
 	assert(overworld_encounter_battling_with != null, "Must be battling against an overworld mon!")
@@ -27,7 +19,7 @@ func handle_battle_results(battle_end_condition):
 		overworld_encounter_battling_with.queue_free()
 	
 	if battle_end_condition == Global.BattleEndCondition.ESCAPE:
-		print("HANDLE ESCAPE FROM BATTLE")
+		$Player.notify_escaped_from_battle()
 
 func move_player_to(destination_point):
 	var found_destination_point = false

@@ -16,12 +16,6 @@ one_shot = true
 
 [node name="CollisionHitbox" type="CollisionShape2D" parent="."]
 
-[node name="BattleStartHitbox" type="Area2D" parent="."]
-collision_layer = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BattleStartHitbox"]
-
 [node name="DebugTool" parent="." instance=ExtResource("3_ajp4n")]
 
 [connection signal="timeout" from="MovementTimer" to="." method="_on_movement_timer_timeout"]
-[connection signal="body_entered" from="BattleStartHitbox" to="." method="_on_battle_start_hitbox_body_entered"]

@@ -1,8 +1,6 @@
 extends CharacterBody2D
 class_name OverworldMon
 
-signal collided_with_player
-
 enum {
 	MOVING_SOON, MOVING, IDLE
 }
@@ -36,7 +34,6 @@ var mons = []
 
 func _ready():
 	assert($Sprite.texture != null, "No sprite texture assigned in editor!")
-	assert($BattleStartHitbox/CollisionShape2D.shape != null, "No battle start hitbox shape assigned in editor!")
 	assert($CollisionHitbox.shape != null, "No collision hitbox shape assigned in editor!")	
 	assert(mon1Type != MonData.MonType.NONE, "Lead mon cannot be None!")
 	assert(mon1Level >= 0 and mon1Level <= 64, "Illegal level for mon1!")
@@ -148,6 +145,3 @@ func _physics_process(_delta):
 func _on_movement_timer_timeout():
 	assert(state == IDLE)
 	state = MOVING_SOON
-
-func _on_battle_start_hitbox_body_entered(_body):
-	emit_signal("collided_with_player", self)
