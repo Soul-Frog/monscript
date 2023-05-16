@@ -112,7 +112,8 @@ func get_block_by_name(block_list, block_name):
 #      self       friends      foes            whether to execute line or not
 # func(BattleMon, [BattleMon], [BattleMon]) -> bool
 var IF_BLOCK_LIST = [
-	Block.new(Block.Type.IF, "IfAlways", func(mon, friends, foes): 
+	Block.new(Block.Type.IF, "IfAlways", 
+	func(mon, friends, foes): 
 		return true
 		)
 ]
@@ -122,11 +123,13 @@ var IF_BLOCK_LIST = [
 #      self       friends      foes         animation helper      function should perform a battle action
 # func(BattleMon, [BattleMon], [BattleMon], [Battle/Animator]) -> void
 var DO_BLOCK_LIST = [
-	Block.new(Block.Type.DO, "DoPass", func(mon, friends, foes, target, animator):
+	Block.new(Block.Type.DO, "DoPass", 
+	func(mon, friends, foes, target, animator):
 		mon.perform_pass()
 		),
 		
-	Block.new(Block.Type.DO, "DoAttack", func(mon, friends, foes, target, animator):
+	Block.new(Block.Type.DO, "DoAttack", 
+	func(mon, friends, foes, target, animator):
 		# play the animation and wait for it to finish
 		animator.slash(target)
 		await animator.animation_finished
@@ -135,11 +138,13 @@ var DO_BLOCK_LIST = [
 		mon.perform_attack(target)
 		),
 	
-	Block.new(Block.Type.DO, "DoDefend", func(mon, friends, foes, target, animator):
+	Block.new(Block.Type.DO, "DoDefend", 
+	func(mon, friends, foes, target, animator):
 		mon.perform_defend()
 		),
 		
-	Block.new(Block.Type.DO, "DoEscape", func(mon, friends, foes, target, animator):
+	Block.new(Block.Type.DO, "DoEscape", 
+	func(mon, friends, foes, target, animator):
 		mon.perform_escape()
 		)
 ]

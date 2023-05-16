@@ -25,3 +25,8 @@ func string_to_file(file_path, string):
 
 func does_file_exist(file_path):
 	return FileAccess.file_exists(file_path)
+
+func call_after_delay(delay_in_secs, function):
+	await get_tree().create_timer(delay_in_secs).timeout
+	function.call()
+	
