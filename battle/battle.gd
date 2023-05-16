@@ -136,14 +136,28 @@ func _on_mon_ready_to_take_action(mon):
 	assert(not mon in action_queue, "Mon is already in queue?")
 	action_queue.append(mon); # add to queue
 
-func _on_mon_try_to_escape(mon):
+func _on_mon_try_to_escape(battle_mon):
 	assert(state == BATTLING)
 	
-	print("TODO - attempt to escape based on speed")
+	var mon = battle_mon.base_mon
 	
-	battle_result.end_condition = Global.BattleEndCondition.ESCAPE
-	state = FINISHED
-	emit_signal("battle_ended", battle_result)
+	# if a player's mon is trying to escape
+	if battle_mon in $PlayerMons.get_children():
+		var my_speed = mon.get_speed()
+		
+		var computer_avg_speed = 0
+		for computer_mon in $ComputerMons.get_children():
+			computer_avg_speed += computer_mon.base_mon.get_speed()
+		computer_avg_speed /= $ComputerMons.get_child_count()
+		
+		var escape_chance = clamp(50 + 3 * (my_speed - computer_avg_speed), 10, 100)
+		
+		if escape_chance >= Global.RNG.randi_range(1, 100):
+			battle_result.end_condition = Global.BattleEndCondition.ESCAPE
+			state = FINISHED
+			emit_signal("battle_ended", battle_result)
+	else:
+		print("Enemy mon tried to escape!")
 
 func _on_mon_action_completed():
 	assert(is_a_mon_taking_action)
@@ -155,7 +169,7 @@ func _on_mon_zero_health(mon):
 	# increment xp earned from battle if this was a computer mon
 	# min exp earn is 1; so level 0 mons still provide 1 xp
 	if mon in $ComputerMons.get_children():
-		battle_result.xp_earned += max(mon.base_mon.level, 1) 
+		battle_result.xp_earned += max(mon.base_mon.level, 1)
 	# hide this mon to 'remove' it from the scene
 	# removing from scene here with something like queue_free would cause errors
 	mon.visible = false
