@@ -18,6 +18,9 @@ class MonScript:
 		_from_string(string.strip_edges())
 	
 	func execute(mon, friends, foes, animator):
+		assert(not mon.is_defeated())
+		assert(not friends.is_empty())
+		assert(not foes.is_empty())
 		for line in lines:
 			if await line.try_execute(mon, friends, foes, animator):
 				return
@@ -125,27 +128,30 @@ var IF_BLOCK_LIST = [
 var DO_BLOCK_LIST = [
 	Block.new(Block.Type.DO, "DoPass", 
 	func(mon, friends, foes, target, animator):
-		mon.perform_pass()
+		mon.action_points = mon.action_points / 2
+		mon.reset_AP_after_action = false # don't reset to 0 after this action
 		),
 		
 	Block.new(Block.Type.DO, "DoAttack", 
 	func(mon, friends, foes, target, animator):
+		assert(not target.is_defeated())
+		
 		# play the animation and wait for it to finish
 		animator.slash(target)
 		await animator.animation_finished
 		
 		# then apply the actual damage from this attack
-		mon.perform_attack(target)
+		target.take_damage(mon.attack)
 		),
 	
 	Block.new(Block.Type.DO, "DoDefend", 
 	func(mon, friends, foes, target, animator):
-		mon.perform_defend()
+		mon.is_defending = true
 		),
 		
 	Block.new(Block.Type.DO, "DoEscape", 
 	func(mon, friends, foes, target, animator):
-		mon.perform_escape()
+		mon.emit_signal("try_to_escape", mon)
 		)
 ]
 

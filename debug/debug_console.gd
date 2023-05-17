@@ -40,6 +40,7 @@ func _on_text_submitted(txt):
 	assert(main_scene.overworld_scene != null, "Debug Console can't get Overworld scene; was it renamed/moved?")
 	assert(main_scene.overworld_scene.get_node("Area")!= null, "Debug Console can't get Area from Overworld; was it renamed/moved?")	
 	assert(main_scene.overworld_scene.get_node("Area").get_node("Player") != null, "Debug Console can't get Player from Overworld->Area; was it renamed/moved?")
+	assert(main_scene.overworld_scene.get_node("Area").get_node("OverworldEncounters") != null, "Debug Console can't get Area->OverworldEncounters, was it renamed/moved?")
 	assert(main_scene.battle_scene != null, "Debug Console can't get Battle scene; was it renamed/moved?")
 	assert(main_scene.battle_scene.get_node("PlayerMons") != null, "Debug Console can't get PlayerMons from battle scene; was it renamed/moved?")
 	assert(main_scene.battle_scene.get_node("ComputerMons") != null, "Debug Console can't get ComputerMons from battle scene; was it renamed/moved?")
@@ -48,6 +49,7 @@ func _on_text_submitted(txt):
 	var overworld_scene = main_scene.overworld_scene
 	var current_area = main_scene.overworld_scene.get_node("Area")
 	var player = current_area.get_node("Player")
+	var overworld_encounters = current_area.get_node("OverworldEncounters")
 	var battle_scene = main_scene.battle_scene
 	var battle_player_mons = battle_scene.get_node("PlayerMons").get_children()
 	var battle_computer_mons = battle_scene.get_node("ComputerMons").get_children()
@@ -72,7 +74,7 @@ func _on_text_submitted(txt):
 		var new_encounter = load("res://overworld/mons/magnetfrogblue.tscn").instantiate()
 		new_encounter.position = Vector2(player.position + Vector2(30, 30)) # make this more clever someday
 		# finally, add mon to scene
-		current_area.add_child(new_encounter)
+		overworld_encounters.add_child(new_encounter)
 	# clears all overworld enemies
 	elif txt == "wipe" or txt == "clear":
 		for child in current_area.get_children():
