@@ -21,14 +21,17 @@ func _ready():
 func _input(event):
 	if Global.DEBUG:
 		if event.is_action_released("open_debug_console"):
-			if active:
-				emit_signal("debug_console_closed")
-			else:
-				emit_signal("debug_console_opened")
-				self.grab_focus()
-			self.text = ""
-			active = not active
-			self.visible = active
+			_toggle()
+
+func _toggle():
+	self.text = ""
+	active = not active
+	self.visible = active
+	if active:
+		emit_signal("debug_console_opened")
+		self.grab_focus()
+	else:
+		emit_signal("debug_console_closed")
 
 # this param is 'txt' on purpose; because 'text' is already a field of the LineEdit
 func _on_text_submitted(txt):
@@ -88,6 +91,7 @@ func _on_text_submitted(txt):
 		else:
 			for computer_mon in battle_computer_mons:
 				computer_mon.take_damage(88888888)
+			_toggle()
 	# loses a battle instantly
 	elif txt == "losebattle" or txt == "lose" or txt == "l":
 		if main_scene.state != main_scene.State.BATTLE:
@@ -96,6 +100,7 @@ func _on_text_submitted(txt):
 		else:
 			for player_mon in battle_player_mons:
 				player_mon.take_damage(88888888)
+			_toggle()
 	# repeat the previous command
 	elif last_command != null and (txt == "r" or txt == "repeat"):
 		_on_text_submitted(last_command)

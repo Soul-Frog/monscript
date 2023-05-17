@@ -14,8 +14,10 @@ script = ExtResource("1_sv5wa")
 
 [node name="Battle" parent="Scenes" instance=ExtResource("3_ucmr6")]
 
-[node name="DebugConsole" parent="." instance=ExtResource("3_cw4c6")]
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="DebugConsole" parent="UI" instance=ExtResource("3_cw4c6")]
 z_index = 1
 
-[connection signal="debug_console_closed" from="DebugConsole" to="." method="_on_debug_console_debug_console_closed"]
-[connection signal="debug_console_opened" from="DebugConsole" to="." method="_on_debug_console_debug_console_opened"]
+[connection signal="debug_console_closed" from="UI/DebugConsole" to="." method="_on_debug_console_debug_console_closed"]
+[connection signal="debug_console_opened" from="UI/DebugConsole" to="." method="_on_debug_console_debug_console_opened"]
