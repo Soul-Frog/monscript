@@ -30,6 +30,10 @@ var action_points = 0
 var is_defending = false
 var escaped_from_battle = false
 
+# whether this mon's AP should be reset after this action ends
+# for example, the pass action sets this to false
+var reset_AP_after_action = true
+
 var max_health = -1
 var current_health = -1
 var speed = -1
@@ -50,6 +54,7 @@ func init_mon(mon):
 	speed = mon.get_speed()
 	is_defending = false
 	escaped_from_battle = false
+	reset_AP_after_action = true
 	_update_labels();
 
 # Called once for each mon by battle.gd at a regular time interval
@@ -73,27 +78,16 @@ func take_action(friends, foes, animator):
 	base_mon.monscript.execute(self, friends, foes, animator)
 
 func alert_turn_over():
-	assert(action_points == 100)
-	action_points = 0
+	assert(action_points == 100 or not reset_AP_after_action)
+	if reset_AP_after_action:
+		action_points = 0
+	reset_AP_after_action = true
 	_update_labels();
 	emit_signal("action_completed")
 
 func is_defeated():
 	assert(current_health >= 0, "Mon's health is somehow negative.")
 	return current_health == 0
-
-# Perform this mon's special action 
-func perform_special():
-	assert(not is_defeated())
-	@warning_ignore("integer_division")
-	current_health += max_health / 10
-	current_health = min(current_health, max_health)
-
-# Perform an attack at the given target
-func perform_attack(target):
-	assert(not is_defeated())
-	assert(not target.is_defeated())
-	target.take_damage(attack)
 
 # Called when this mon is attacked
 # Damage taken is reduced by defense, then further divided by 2 if defending
@@ -109,21 +103,6 @@ func take_damage(raw_damage):
 		emit_signal("zero_health", self)
 	
 	_update_labels();
-
-# A defend action reduces the damage taken by this mon by half until their next action
-func perform_defend():
-	assert(not is_defeated())
-	is_defending = true
-
-# Signal to battle.gd to try to escape the battle
-func perform_escape():
-	assert(not is_defeated())
-	emit_signal("try_to_escape", self)
-
-# Pass, which skips the turn but keeps half of the action points
-func perform_pass():
-	assert(not is_defeated())
-	action_points = 50
 
 func _update_labels():
 	$ActionPointsLabel.text = AP_LABEL_FORMAT % [action_points]
