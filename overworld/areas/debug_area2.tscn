@@ -1,9 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://lkrri07yf2y5"]
+[gd_scene load_steps=12 format=3 uid="uid://lkrri07yf2y5"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_im2oy"]
 [ext_resource type="Texture2D" uid="uid://cexmucj0yinf2" path="res://assets/tile.png" id="2_ebjwg"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player.tscn" id="3_vwmqf"]
-[ext_resource type="Script" path="res://overworld/camera.gd" id="4_wos63"]
 [ext_resource type="PackedScene" uid="uid://du0exi85nr8ue" path="res://overworld/mons/magnetfrogblue.tscn" id="5_28sgp"]
 [ext_resource type="Script" path="res://overworld/warp.gd" id="7_hy517"]
 
@@ -51,11 +50,6 @@ layer_0/tile_data = PackedInt32Array(65535, 3, 0, 0, 3, 0, -65536, 3, 0, -1, 3, 
 
 [node name="Player" parent="." instance=ExtResource("3_vwmqf")]
 position = Vector2(64, 8)
-
-[node name="Camera2D" type="Camera2D" parent="Player"]
-position_smoothing_speed = 10.0
-editor_draw_limits = true
-script = ExtResource("4_wos63")
 
 [node name="OverworldEncounters" type="Node" parent="."]
 
