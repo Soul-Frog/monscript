@@ -94,8 +94,7 @@ script = ExtResource("1_85t5n")
 wait_time = 0.028
 autostart = true
 
-[node name="PlayerMons" type="Node2D" parent="."]
-y_sort_enabled = true
+[node name="PlayerMons" type="Node" parent="."]
 
 [node name="Mon1" parent="PlayerMons" instance=ExtResource("2_eka14")]
 position = Vector2(120, 40)
@@ -109,8 +108,7 @@ position = Vector2(120, 88)
 [node name="Mon4" parent="PlayerMons" instance=ExtResource("2_eka14")]
 position = Vector2(120, 112)
 
-[node name="ComputerMons" type="Node2D" parent="."]
-y_sort_enabled = true
+[node name="ComputerMons" type="Node" parent="."]
 
 [node name="Mon1" parent="ComputerMons" instance=ExtResource("2_eka14")]
 position = Vector2(200, 40)
