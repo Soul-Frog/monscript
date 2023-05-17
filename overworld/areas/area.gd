@@ -18,8 +18,8 @@ func handle_battle_results(battle_end_condition):
 		$OverworldEncounters.remove_child(overworld_encounter_battling_with)
 		overworld_encounter_battling_with.queue_free()
 	
-	if battle_end_condition == Global.BattleEndCondition.ESCAPE:
-		$Player.notify_escaped_from_battle()
+	if battle_end_condition == Global.BattleEndCondition.ESCAPE or battle_end_condition == Global.BattleEndCondition.WIN:
+		$Player.activate_invincibility(battle_end_condition)
 
 func move_player_to(destination_point):
 	var found_destination_point = false

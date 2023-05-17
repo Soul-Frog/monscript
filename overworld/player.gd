@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 const SPEED = 200
 const INVINCIBILITY_AFTER_ESCAPE_SECS = 5
+const INVINCIBILITY_AFTER_WIN_SECS = 2
 var is_invincible = false
 var escaped_recently = false
 
@@ -21,6 +22,10 @@ func _on_area_2d_body_entered(overworld_encounter_collided_with):
 		Events.emit_signal("collided_with_overworld_encounter", overworld_encounter_collided_with)
 		Events.emit_signal("battle_started", overworld_encounter_collided_with.mons)
 
-func notify_escaped_from_battle():
+func activate_invincibility(battle_end_condition):
+	# assert that you went from battle scene -> overworld scene before this function is called?
 	is_invincible = true
-	Global.call_after_delay(INVINCIBILITY_AFTER_ESCAPE_SECS, func(): is_invincible = false)
+	if battle_end_condition == Global.BattleEndCondition.ESCAPE:
+		Global.call_after_delay(INVINCIBILITY_AFTER_ESCAPE_SECS, func(): is_invincible = false)
+	elif battle_end_condition == Global.BattleEndCondition.WIN:
+		Global.call_after_delay(INVINCIBILITY_AFTER_WIN_SECS, func(): is_invincible = false)
