@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
 const SPEED = 200
-const INVINCIBILITY_AFTER_ESCAPE_SECS = 2
-const INVINCIBILITY_AFTER_WIN_SECS = 1
+const INVINCIBILITY_AFTER_ESCAPE_SECS = 0
+const INVINCIBILITY_AFTER_WIN_SECS = 0
 var is_invincible = false
 var escaped_recently = false
 

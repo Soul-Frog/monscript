@@ -47,6 +47,7 @@ func _on_text_submitted(txt):
 	assert(main_scene.battle_scene != null, "Debug Console can't get Battle scene; was it renamed/moved?")
 	assert(main_scene.battle_scene.get_node("PlayerMons") != null, "Debug Console can't get PlayerMons from battle scene; was it renamed/moved?")
 	assert(main_scene.battle_scene.get_node("ComputerMons") != null, "Debug Console can't get ComputerMons from battle scene; was it renamed/moved?")
+	assert(main_scene.battle_scene.get_node("Animator") != null, "Debug Console can't get Animator from battle scene; was it renamed/moved?")	
 	
 	# collect some variables that are likely to be useful...
 	var overworld_scene = main_scene.overworld_scene
@@ -54,8 +55,7 @@ func _on_text_submitted(txt):
 	var player = current_area.get_node("Player")
 	var overworld_encounters = current_area.get_node("OverworldEncounters")
 	var battle_scene = main_scene.battle_scene
-	var battle_player_mons = battle_scene.get_node("PlayerMons").get_children()
-	var battle_computer_mons = battle_scene.get_node("ComputerMons").get_children()
+	var animator = battle_scene.get_node("Animator")
 	
 	txt = txt.to_lower().replace(" ", "").replace("_", "")
 	print("Debug Command: " + txt)
@@ -89,16 +89,30 @@ func _on_text_submitted(txt):
 			print("Not in a battle!")
 			success = false
 		else:
-			for computer_mon in battle_computer_mons:
+			# end the current animation, otherwise something weird might happen if the animation
+			# ends after the target (or user) of the action has been freed from memory
+			animator.emit_signal("animation_finished")
+			# hack - remove/free current animator and make a new one to 'cancel' active animation
+			animator.name = "OLDANIMATOR"
+			animator.queue_free()
+			battle_scene.add_child(load("res://battle/animator.tscn").instantiate())
+			# kill all the computer mons
+			for computer_mon in battle_scene.get_node("ComputerMons").get_children():
 				computer_mon.take_damage(88888888)
-			_toggle()
+			_toggle() # close the debug console
 	# loses a battle instantly
 	elif txt == "losebattle" or txt == "lose" or txt == "l":
 		if main_scene.state != main_scene.State.BATTLE:
 			print("Not in a battle!")
 			success = false
 		else:
-			for player_mon in battle_player_mons:
+			animator.emit_signal("animation_finished")
+			# hack - remove/free current animator and make a new one to 'cancel' active animation
+			animator.name = "OLDANIMATOR"
+			animator.queue_free()
+			battle_scene.add_child(load("res://battle/animator.tscn").instantiate())
+			# kill all the player mons
+			for player_mon in battle_scene.get_node("PlayerMons").get_children():
 				player_mon.take_damage(88888888)
 			_toggle()
 	# repeat the previous command
