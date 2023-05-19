@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://da2b6iu8mmmaw"]
+
+[ext_resource type="Script" path="res://battle/moving_text.gd" id="1_m5bes"]
+
+[node name="MovingText" type="RichTextLabel"]
+z_index = 4000
+offset_left = -216.0
+offset_top = -8.0
+offset_right = 216.0
+offset_bottom = 16.0
+bbcode_enabled = true
+text = "[center]This is my text[/center]"
+script = ExtResource("1_m5bes")
