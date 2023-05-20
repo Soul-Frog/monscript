@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bfwx7u1qdd3lc"]
+[gd_scene load_steps=11 format=3 uid="uid://bfwx7u1qdd3lc"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_pir84"]
 [ext_resource type="Texture2D" uid="uid://cexmucj0yinf2" path="res://assets/tile.png" id="2_5a381"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://du0exi85nr8ue" path="res://overworld/mons/magnetfrogblue.tscn" id="5_cmfu8"]
 [ext_resource type="PackedScene" uid="uid://d4nkd58v3yr" path="res://overworld/mons/magnetfrog.tscn" id="5_qdpc2"]
 [ext_resource type="Script" path="res://overworld/warp.gd" id="7_ip4bp"]
+[ext_resource type="Texture2D" uid="uid://nw52vklqwf6h" path="res://assets/signpost.png" id="7_lcqpv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_olnl5"]
 texture = ExtResource("2_5a381")
@@ -87,3 +88,20 @@ metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/Warp"]
 shape = SubResource("RectangleShape2D_80ub1")
+
+[node name="Signpost" type="Node2D" parent="."]
+position = Vector2(8, 8)
+
+[node name="Sprite2D" type="Sprite2D" parent="Signpost"]
+texture = ExtResource("7_lcqpv")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Signpost"]
+position = Vector2(16, -40)
+collision_layer = 4
+collision_mask = 0
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Signpost/StaticBody2D"]
+position = Vector2(-12, 36)
+scale = Vector2(0.291667, 0.5)
+polygon = PackedVector2Array(13.7143, -7.99999, -41.1429, -7.99999, -41.1429, 24, 13.7143, 24)
