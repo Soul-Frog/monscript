@@ -43,6 +43,8 @@ func activate_invincibility(battle_end_condition):
 	is_invincible = true
 	
 	var length = INVINCIBILITY_AFTER_ESCAPE_SECS if battle_end_condition == Global.BattleEndCondition.ESCAPE else INVINCIBILITY_AFTER_WIN_SECS
+	if Global.DEBUG_NO_INVINCIBLE:
+		length = 0
 	Global.call_after_delay(length, self, func(player): 
 		if is_instance_valid(player):
 			is_invincible = false)
