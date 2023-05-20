@@ -15,7 +15,9 @@ var dashing = false
 func _input(event):
 	if event.is_action_released("dash"):
 		dashing = true
-		Global.call_after_delay(DASH_DURATION, func(): dashing = false)
+		Global.call_after_delay(DASH_DURATION, self, func(node): 
+			if is_instance_valid(node):
+				node.dashing = false)
 
 func _ready():
 	assert(SPEED > 0)

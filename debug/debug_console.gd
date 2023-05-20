@@ -89,9 +89,13 @@ func _on_text_submitted(txt):
 			print("Not in a battle!")
 			success = false
 		else:
+			_toggle() # close the debug console
 			# end the current animation, otherwise something weird might happen if the animation
 			# ends after the target (or user) of the action has been freed from memory
 			animator.emit_signal("animation_finished")
+			# if that attack ended battle, just return
+			if battle_scene.state != battle_scene.BattleState.BATTLING:
+				return
 			# hack - remove/free current animator and make a new one to 'cancel' active animation
 			animator.name = "OLDANIMATOR"
 			animator.queue_free()
@@ -99,14 +103,17 @@ func _on_text_submitted(txt):
 			# kill all the computer mons
 			for computer_mon in battle_scene.get_node("ComputerMons").get_children():
 				computer_mon.take_damage(88888888)
-			_toggle() # close the debug console
 	# loses a battle instantly
 	elif txt == "losebattle" or txt == "lose" or txt == "l":
 		if main_scene.state != main_scene.State.BATTLE:
 			print("Not in a battle!")
 			success = false
 		else:
+			_toggle()
 			animator.emit_signal("animation_finished")
+			# if that attack ended battle, just return
+			if battle_scene.state != battle_scene.BattleState.BATTLING:
+				return
 			# hack - remove/free current animator and make a new one to 'cancel' active animation
 			animator.name = "OLDANIMATOR"
 			animator.queue_free()
@@ -114,7 +121,7 @@ func _on_text_submitted(txt):
 			# kill all the player mons
 			for player_mon in battle_scene.get_node("PlayerMons").get_children():
 				player_mon.take_damage(88888888)
-			_toggle()
+			
 	# repeat the previous command
 	elif last_command != null and (txt == "r" or txt == "repeat"):
 		_on_text_submitted(last_command)

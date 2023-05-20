@@ -8,7 +8,7 @@ class BattleResult:
 		end_condition = Global.BattleEndCondition.NONE
 		xp_earned = 0
 
-enum {
+enum BattleState {
 	EMPTY, # this battle scene has no mons; it's ready for a call to setup_battle
 	BATTLING, # this battle scene is ready to go (after setup_battle, before battle has ended)
 	FINISHED # this battle scene is over; it's ready for a call to clear_battle
@@ -35,7 +35,7 @@ var is_a_mon_taking_action = false
 func _ready():
 	PLAYER_MON_POSITIONS = [$PlayerMons/Mon1.position, $PlayerMons/Mon2.position, $PlayerMons/Mon3.position, $PlayerMons/Mon4.position]
 	COMPUTER_MON_POSITIONS = [$ComputerMons/Mon1.position, $ComputerMons/Mon2.position, $ComputerMons/Mon3.position, $ComputerMons/Mon4.position]
-	state = FINISHED
+	state = BattleState.FINISHED
 	battle_result = BattleResult.new()
 	clear_battle();
 
@@ -52,7 +52,7 @@ func _create_and_setup_mon(base_mon, teamNode, pos):
 
 # Sets up a new battle scene
 func setup_battle(player_team, computer_team):
-	assert(state == EMPTY) # Make sure previous battle was cleaned up
+	assert(state == BattleState.EMPTY) # Make sure previous battle was cleaned up
 	assert($PlayerMons.get_child_count() == 0, "Shouldn't have any mons at start of setup! (forgot to clear_battle()?)")
 	assert($ComputerMons.get_child_count() == 0, "Shouldn't have any mons at start of setup! (forgot to clear_battle()?)")
 	
@@ -70,21 +70,21 @@ func setup_battle(player_team, computer_team):
 	assert($ComputerMons.get_child_count() != 0, "No computer mons!")
 	assert(action_queue.size() == 0)
 	assert(not is_a_mon_taking_action)
-	state = BATTLING
+	state = BattleState.BATTLING
 
 # Should be called after a battle ends, before the next call to setup_battle
 func clear_battle():
-	assert(state == FINISHED) 
+	assert(state == BattleState.FINISHED) 
 	for mon in $PlayerMons.get_children():
 		mon.queue_free()
 	for mon in $ComputerMons.get_children():
 		mon.queue_free();
-	state = EMPTY
+	state = BattleState.EMPTY
 	battle_result = BattleResult.new()
 	timer.start() # sets timer to 0 again
 
 func _battle_tick():
-	assert(state == BATTLING) 	# make sure battle was set up properly
+	assert(state == BattleState.BATTLING) 	# make sure battle was set up properly
 	
 	# let everyone update/action
 	# mons already in action queue are waiting to take a turn and 
@@ -130,12 +130,12 @@ func _are_any_player_mons_alive():
 	return false
 
 func _on_mon_ready_to_take_action(mon):
-	assert(state == BATTLING)
+	assert(state == BattleState.BATTLING)
 	assert(not mon in action_queue, "Mon is already in queue?")
 	action_queue.append(mon); # add to queue
 
 func _on_mon_try_to_escape(battle_mon):
-	assert(state == BATTLING)
+	assert(state == BattleState.BATTLING)
 	
 	var mon = battle_mon.base_mon
 	
@@ -152,7 +152,7 @@ func _on_mon_try_to_escape(battle_mon):
 		
 		if escape_chance >= Global.RNG.randi_range(1, 100):
 			battle_result.end_condition = Global.BattleEndCondition.ESCAPE
-			state = FINISHED
+			state = BattleState.FINISHED
 			Events.emit_signal("battle_ended", battle_result)
 	else:
 		print("Enemy mon tried to escape!")
@@ -163,7 +163,7 @@ func _on_mon_action_completed():
 	is_a_mon_taking_action = false
 
 func _on_mon_zero_health(mon):
-	assert(state == BATTLING)
+	assert(state == BattleState.BATTLING)
 	# increment xp earned from battle if this was a computer mon
 	# min exp earn is 1; so level 0 mons still provide 1 xp
 	if mon in $ComputerMons.get_children():
@@ -187,14 +187,14 @@ func _check_battle_end_condition():
 	var computer_mons_alive = _are_any_computer_mons_alive()
 	
 	if player_mons_alive and not computer_mons_alive:
-		state = FINISHED
+		state = BattleState.FINISHED
 		battle_result.end_condition = Global.BattleEndCondition.WIN
 		Events.emit_signal("battle_ended", battle_result)
 	elif not player_mons_alive and computer_mons_alive:
-		state = FINISHED
+		state = BattleState.FINISHED
 		battle_result.end_condition = Global.BattleEndCondition.LOSE
 		Events.emit_signal("battle_ended", battle_result)
 	elif not player_mons_alive and not computer_mons_alive:
-		state = FINISHED
+		state = BattleState.FINISHED
 		battle_result.end_condition = Global.BattleEndCondition.WIN
 		Events.emit_signal("battle_ended", battle_result) # tie also counts as a win
