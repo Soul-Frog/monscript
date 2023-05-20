@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://dtvj4huypfqgv"]
+
+[ext_resource type="Script" path="res://overworld/interactable.gd" id="1_3pyux"]
+[ext_resource type="Texture2D" uid="uid://nw52vklqwf6h" path="res://assets/signpost.png" id="2_d675f"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_p1feo"]
+radius = 19.0263
+
+[node name="Signpost" type="Node2D"]
+position = Vector2(8, 8)
+script = ExtResource("1_3pyux")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_d675f")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+position = Vector2(4, -4)
+scale = Vector2(0.291667, 0.5)
+polygon = PackedVector2Array(13.7143, -7.99999, -41.1429, -7.99999, -41.1429, 24, 13.7143, 24)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_p1feo")
+
+[node name="Label" type="RichTextLabel" parent="."]
+offset_left = -62.0
+offset_top = -35.0
+offset_right = 61.0
+offset_bottom = -12.0
+bbcode_enabled = true
+text = "[center]This is my text[/center]"
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_body_exit"]
