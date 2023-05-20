@@ -3,8 +3,19 @@ extends CharacterBody2D
 const SPEED = 200
 const INVINCIBILITY_AFTER_ESCAPE_SECS = 2
 const INVINCIBILITY_AFTER_WIN_SECS = 1
+const DASH_DURATION = 0.05
+const DASH_SPEED = SPEED * 4
+
 var is_invincible = false
 var escaped_recently = false
+
+var orientation = Vector2.ZERO
+var dashing = false
+
+func _input(event):
+	if event.is_action_released("dash"):
+		dashing = true
+		Global.call_after_delay(DASH_DURATION, func(): dashing = false)
 
 func _ready():
 	assert(SPEED > 0)
@@ -12,6 +23,10 @@ func _ready():
 func update_velocity(_delta):
 	var input_direction = Input.get_vector("left", "right", "up", "down")
 	velocity = SPEED * input_direction
+	if dashing:
+		velocity = DASH_SPEED * orientation
+	if input_direction != Vector2.ZERO and not dashing:
+		orientation = input_direction
 
 func _physics_process(delta):
 	update_velocity(delta)
