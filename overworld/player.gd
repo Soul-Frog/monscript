@@ -12,12 +12,10 @@ var escaped_recently = false
 var orientation = Vector2.ZERO
 var dashing = false
 
-func dash():
-	if Input.is_action_just_pressed("dash"):
+func _input(event):
+	if event.is_action_released("dash"):
 		dashing = true
-		await get_tree().create_timer(DASH_DURATION).timeout
-		dashing = false
-		print("DASH")
+		Global.call_after_delay(DASH_DURATION, func(): dashing = false)
 
 func _ready():
 	assert(SPEED > 0)
@@ -31,7 +29,6 @@ func update_velocity(_delta):
 		orientation = input_direction
 
 func _physics_process(delta):
-	dash()
 	update_velocity(delta)
 	move_and_slide()
 
