@@ -101,7 +101,7 @@ func take_damage(raw_damage):
 	# make text effect
 	self.add_child(
 		load("res://battle/moving_text.tscn").instantiate()
-		.tx(damage_taken).direction_up().speed(40).time(0.2))
+		.tx(damage_taken).direction_up().speed(40).time(0.2).color(Global.COLOR_RED))
 
 	if current_health == 0:
 		action_points = 0

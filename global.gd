@@ -5,6 +5,9 @@ const INT_MIN = -9223372036854775807
 
 var RNG = RandomNumberGenerator.new()
 
+const COLOR_WHITE = Color.WHITE
+const COLOR_RED = Color.RED
+
 # change this to turn debug tool (debug_tool.tscn) functionality on/off
 # also enables/disables the debug console
 var DEBUG = true

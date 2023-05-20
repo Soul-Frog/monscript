@@ -9,5 +9,4 @@ offset_top = -8.0
 offset_right = 216.0
 offset_bottom = 16.0
 bbcode_enabled = true
-text = "[center]This is my text[/center]"
 script = ExtResource("1_m5bes")
