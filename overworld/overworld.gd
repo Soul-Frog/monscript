@@ -13,7 +13,7 @@ func handle_battle_results(battle_end_condition):
 	print("TODO - HANDLE BATTLE LOSS")
 
 func _on_change_area(new_area, new_spawn_point):
-	$DebugTool.p("Changing Area!\tArea: %s\tPoint: %s" % [new_area, new_spawn_point])
+	Global.p(self, "Changing Area!\tArea: %s\tPoint: %s" % [new_area, new_spawn_point])
 	
 	# if new area is the different from current area...
 	if current_area.scene_file_path != GameData.path_for_area(new_area):
