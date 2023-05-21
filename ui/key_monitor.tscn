@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://ui/key_monitor.gd" id="1_brq1j"]
+
+[node name="KeyMonitor" type="Node2D"]
+script = ExtResource("1_brq1j")

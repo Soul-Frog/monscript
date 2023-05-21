@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://fv5igvwmd4ob"]
+
+[ext_resource type="Script" path="res://ui/script/script_dropdown.gd" id="1_5w5ou"]
+
+[node name="ScriptDropdown" type="Node2D"]
+position = Vector2(32, 16)
+script = ExtResource("1_5w5ou")
+metadata/_edit_group_ = true
+
+[node name="TextEdit" type="TextEdit" parent="."]
+offset_right = 128.0
+offset_bottom = 40.0
+
+[node name="Intellisense" type="ItemList" parent="."]
+offset_top = 40.0
+offset_right = 128.0
+offset_bottom = 120.0
+allow_rmb_select = true
+
+[node name="DropdownButton" type="Button" parent="."]
+offset_left = 96.0
+offset_top = 8.0
+offset_right = 120.0
+offset_bottom = 32.0
+
+[connection signal="text_changed" from="TextEdit" to="." method="_on_text_changed"]
+[connection signal="item_clicked" from="Intellisense" to="." method="_on_intellisense_item_clicked"]
+[connection signal="button_down" from="DropdownButton" to="." method="_on_dropdown_button_clicked"]

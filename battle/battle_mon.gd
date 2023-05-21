@@ -92,7 +92,7 @@ func is_defeated():
 # Called when this mon is attacked
 # Damage taken is reduced by defense, then further divided by 2 if defending
 func take_damage(raw_damage):
-	var damage_taken = raw_damage - defense
+	var damage_taken = max(raw_damage - defense, 0)
 	if is_defending:
 		damage_taken /= 2
 	current_health -= damage_taken
