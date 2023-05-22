@@ -26,8 +26,6 @@ enum {
 @export var min_time_between_movement = 0
 @export var max_time_between_movement = 0.2
 
-@onready var movementTimer = $MovementTimer
-
 var state = IDLE
 var target = Vector2.ZERO
 var mons = []
@@ -128,8 +126,11 @@ func _randomize_wander_target():
 func _start_idling():
 	state = IDLE
 	velocity = Vector2.ZERO
-	movementTimer.wait_time = Global.RNG.randf_range(min_time_between_movement, max_time_between_movement)
-	movementTimer.start()
+	var wait_time = Global.RNG.randf_range(min_time_between_movement, max_time_between_movement)
+	Global.call_after_delay(wait_time, self, func(n): 
+		if is_instance_valid(n):
+			_on_movement_timer_timeout()
+		)
 
 func _physics_process(_delta):
 	if state == MOVING_SOON: 

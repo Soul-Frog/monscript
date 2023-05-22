@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://lkrri07yf2y5"]
+[gd_scene load_steps=13 format=3 uid="uid://lkrri07yf2y5"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_im2oy"]
 [ext_resource type="Texture2D" uid="uid://cexmucj0yinf2" path="res://assets/tile.png" id="2_ebjwg"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player.tscn" id="3_vwmqf"]
-[ext_resource type="PackedScene" uid="uid://du0exi85nr8ue" path="res://overworld/mons/magnetfrogblue.tscn" id="5_28sgp"]
+[ext_resource type="PackedScene" uid="uid://kglgrcl6ddia" path="res://mons/magnetfrogblue.tscn" id="4_pxhjj"]
+[ext_resource type="Script" path="res://overworld/overworld_encounter.gd" id="5_iowbi"]
 [ext_resource type="Script" path="res://overworld/warp.gd" id="7_hy517"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_olnl5"]
@@ -53,12 +54,14 @@ position = Vector2(64, 8)
 
 [node name="OverworldEncounters" type="Node" parent="."]
 
-[node name="Encounter1" parent="OverworldEncounters" instance=ExtResource("5_28sgp")]
-position = Vector2(0, -48)
+[node name="Mon" parent="OverworldEncounters" instance=ExtResource("4_pxhjj")]
+position = Vector2(0, -56)
+safe_margin = 0.08
+script = ExtResource("5_iowbi")
 mon1Type = 2
-mon2Type = 1
-mon3Type = 1
-mon4Type = 2
+mon1Level = 2
+mon2Type = 2
+mon2Level = 2
 
 [node name="Points" type="Node" parent="."]
 

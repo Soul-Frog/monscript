@@ -26,7 +26,7 @@ func XP_for_level(level):
 # MonBases are basically constants, so you should NEVER update the values here during gameplay.
 class MonBase:
 	var species
-	var battle_scene # the scene that represents this mon in battle
+	var scene # the scene that represents this mon
 	var default_script_path
 	var attack0
 	var attack64
@@ -39,10 +39,10 @@ class MonBase:
 	#todo: var special_action
 	#todo: var passive_ability
 	
-	func _init(monSpecies, scene_in_battle, default_script_file_path,
+	func _init(monSpecies, mon_scene, default_script_file_path,
 		healthAt0, healthAt64, attackAt0, attackAt64, defenseAt0, defenseAt64, speedAt0, speedAt64):
 		self.species = monSpecies
-		self.battle_scene = scene_in_battle
+		self.scene = mon_scene
 		self.default_script_path = default_script_file_path
 		self.health0 = healthAt0
 		self.health64 = healthAt64
@@ -89,8 +89,8 @@ class Mon:
 	func get_species():
 		return base.species
 	
-	func get_battle_scene():
-		return base.battle_scene
+	func get_scene():
+		return base.scene
 	
 	func get_max_health():
 		return base.health_for_level(level)
@@ -112,9 +112,9 @@ class Mon:
 			level += 1
 
 # List of MonBases, each is a static and constant representation of a Mon's essential characteristics
-var _MAGNETFROG_BASE = MonBase.new("magnetFrog", "res://battle/mons/magnetfrog.tscn", "res://monscripts/attack.txt", 
+var _MAGNETFROG_BASE = MonBase.new("magnetFrog", "res://mons/magnetfrog.tscn", "res://monscripts/attack.txt", 
 	40, 200, 10, 100, 5, 50, 6, 20)
-var _MAGNETFROGBLUE_BASE = MonBase.new("magnetFrogBLUE", "res://battle/mons/magnetfrogblue.tscn", "res://monscripts/attack.txt",
+var _MAGNETFROGBLUE_BASE = MonBase.new("magnetFrogBLUE", "res://mons/magnetfrogblue.tscn", "res://monscripts/attack.txt",
 	40, 200, 10, 100, 5, 50, 6, 20)
 
 # This enum is used by the overworld_encounter.tscn, so don't delete it

@@ -52,7 +52,7 @@ func _on_text_submitted(txt):
 	# collect some variables that are likely to be useful...
 	var overworld_scene = main_scene.overworld_scene
 	var current_area = main_scene.overworld_scene.get_node("Area")
-	var player = current_area.get_node("Player")
+	var _player = current_area.get_node("Player")
 	var overworld_encounters = current_area.get_node("OverworldEncounters")
 	var battle_scene = main_scene.battle_scene
 	var animator = battle_scene.get_node("Animator")
@@ -71,18 +71,10 @@ func _on_text_submitted(txt):
 	# print hello world :)
 	elif txt == "helloworld" or txt == "hello":
 		print("Hello World!")
-	# spawns an overworld enemy
-	elif txt == "spawn":
-		# load the mon from a script file and make an instance; set position
-		var new_encounter = load("res://overworld/mons/magnetfrogblue.tscn").instantiate()
-		new_encounter.position = Vector2(player.position + Vector2(30, 30)) # make this more clever someday
-		# finally, add mon to scene
-		overworld_encounters.add_child(new_encounter)
 	# clears all overworld enemies
 	elif txt == "wipe" or txt == "clear":
-		for child in current_area.get_children():
-			if child is OverworldMon:
-				current_area.remove_child(child)
+		for child in overworld_encounters.get_children():
+			overworld_encounters.remove_child(child)
 	# wins a battle instantly
 	elif txt == "winbattle"  or txt == "win" or txt == "w":
 		if main_scene.active_scene != main_scene.battle_scene:

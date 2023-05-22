@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=3 uid="uid://dplh3sueuh5a"]
+
+[ext_resource type="PackedScene" uid="uid://diodlu0baosyk" path="res://debug/debug_tool.tscn" id="2_cagr3"]
+
+[node name="Mon" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 4
+safe_margin = 0.001
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+
+[node name="CollisionHitbox" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2)
+
+[node name="BattleComponents" type="Node2D" parent="."]
+
+[node name="HealthLabel" type="RichTextLabel" parent="BattleComponents"]
+visible = false
+offset_left = -56.0
+offset_top = 16.0
+offset_right = 56.0
+offset_bottom = 40.0
+bbcode_enabled = true
+text = "[center]20/20[/center]"
+autowrap_mode = 0
+
+[node name="ActionPointsLabel" type="RichTextLabel" parent="BattleComponents"]
+visible = false
+offset_left = -56.0
+offset_top = -40.0
+offset_right = 56.0
+offset_bottom = -16.0
+bbcode_enabled = true
+text = "[center]100/100[/center]"
+autowrap_mode = 0
+
+[node name="DebugTool" parent="." instance=ExtResource("2_cagr3")]

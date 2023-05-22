@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://kglgrcl6ddia"]
+
+[ext_resource type="PackedScene" uid="uid://dplh3sueuh5a" path="res://mons/mon.tscn" id="1_cywyc"]
+[ext_resource type="Texture2D" uid="uid://ogquuxu5cvqs" path="res://assets/magnetfrog_blue.png" id="2_lsi30"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tvjjy"]
+
+[node name="Mon" instance=ExtResource("1_cywyc")]
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource("2_lsi30")
+
+[node name="CollisionHitbox" parent="." index="1"]
+shape = SubResource("CapsuleShape2D_tvjjy")

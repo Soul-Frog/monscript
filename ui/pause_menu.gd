@@ -1,8 +1,5 @@
 extends Node2D
 
-
-
-
 func _on_teams_button_pressed():
 	print("Teams!")
 

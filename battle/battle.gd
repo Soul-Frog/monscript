@@ -31,6 +31,8 @@ var action_queue = []
 # Only one mon can take an action at a time (due to animations, etc)
 var is_a_mon_taking_action = false
 
+const BATTLE_MON_SCRIPT = preload("res://battle/battle_mon.gd")
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	PLAYER_MON_POSITIONS = [$PlayerMons/Mon1.position, $PlayerMons/Mon2.position, $PlayerMons/Mon3.position, $PlayerMons/Mon4.position]
@@ -41,7 +43,10 @@ func _ready():
 
 # Helper function which creates and connects signals for BattleMon
 func _create_and_setup_mon(base_mon, teamNode, pos):
-	var new_mon = load(base_mon.get_battle_scene()).instantiate()
+	var new_mon = load(base_mon.get_scene()).instantiate()
+	for battle_component in new_mon.get_node("BattleComponents").get_children():
+		battle_component.visible = true
+	new_mon.set_script(BATTLE_MON_SCRIPT)
 	new_mon.init_mon(base_mon)
 	teamNode.add_child(new_mon)
 	new_mon.ready_to_take_action.connect(self._on_mon_ready_to_take_action)

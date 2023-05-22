@@ -41,8 +41,8 @@ var attack = -1
 var defense = -1
 
 func _ready():
-	assert($Sprite2D.texture != null, "No sprite texture assigned in editor!")
-	assert($CollisionShape2D.shape != null, "No collision shape assigned in editor!")
+	assert($Sprite.texture != null, "No sprite texture assigned in editor!")
+	assert($CollisionHitbox.shape != null, "No collision shape assigned in editor!")
 
 # Initializes this battle_mon with an underlying mon object
 func init_mon(mon):
@@ -110,5 +110,5 @@ func take_damage(raw_damage):
 	_update_labels();
 
 func _update_labels():
-	$ActionPointsLabel.text = AP_LABEL_FORMAT % [action_points]
-	$HealthLabel.text = HEALTH_LABEL_FORMAT % [current_health, max_health]
+	$BattleComponents/ActionPointsLabel.text = AP_LABEL_FORMAT % [action_points]
+	$BattleComponents/HealthLabel.text = HEALTH_LABEL_FORMAT % [current_health, max_health]

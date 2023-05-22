@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_pir84"]
 [ext_resource type="Texture2D" uid="uid://cexmucj0yinf2" path="res://assets/tile.png" id="2_5a381"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player.tscn" id="3_nbwo1"]
-[ext_resource type="PackedScene" uid="uid://du0exi85nr8ue" path="res://overworld/mons/magnetfrogblue.tscn" id="5_cmfu8"]
-[ext_resource type="PackedScene" uid="uid://d4nkd58v3yr" path="res://overworld/mons/magnetfrog.tscn" id="5_qdpc2"]
+[ext_resource type="PackedScene" uid="uid://c4l4qf45hxtpl" path="res://mons/magnetfrog.tscn" id="4_6roik"]
+[ext_resource type="Script" path="res://overworld/overworld_encounter.gd" id="5_h77y5"]
 [ext_resource type="PackedScene" uid="uid://dtvj4huypfqgv" path="res://overworld/signpost.tscn" id="7_aq3ag"]
 [ext_resource type="Script" path="res://overworld/warp.gd" id="7_ip4bp"]
 
@@ -45,18 +45,13 @@ position = Vector2(64, 8)
 
 [node name="OverworldEncounters" type="Node" parent="."]
 
-[node name="Encounter1" parent="OverworldEncounters" instance=ExtResource("5_cmfu8")]
-position = Vector2(-16, -144)
-mon1Type = 2
+[node name="Mon" parent="OverworldEncounters" instance=ExtResource("4_6roik")]
+script = ExtResource("5_h77y5")
+mon1Type = 1
+mon1Level = 3
 mon2Type = 1
-mon3Type = 1
+mon2Level = 1
 mon4Type = 2
-
-[node name="Encounter2" parent="OverworldEncounters" instance=ExtResource("5_qdpc2")]
-position = Vector2(152, -168)
-
-[node name="Encounter3" parent="OverworldEncounters" instance=ExtResource("5_cmfu8")]
-position = Vector2(136, -96)
 
 [node name="Points" type="Node" parent="."]
 
@@ -80,3 +75,4 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_80ub1")
 
 [node name="Signpost" parent="." instance=ExtResource("7_aq3ag")]
+position = Vector2(-16, -14)
