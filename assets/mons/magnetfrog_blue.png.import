@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://nw52vklqwf6h"
-path="res://.godot/imported/signpost.png-ed4a545350ac767de53c828b3da89863.ctex"
+uid="uid://ogquuxu5cvqs"
+path="res://.godot/imported/magnetfrog_blue.png-d5f84dc12b4107601f02e71628221286.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/signpost.png"
-dest_files=["res://.godot/imported/signpost.png-ed4a545350ac767de53c828b3da89863.ctex"]
+source_file="res://assets/mons/magnetfrog_blue.png"
+dest_files=["res://.godot/imported/magnetfrog_blue.png-d5f84dc12b4107601f02e71628221286.ctex"]
 
 [params]
 

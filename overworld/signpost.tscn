@@ -1,7 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dtvj4huypfqgv"]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://overworld/interactable.gd" id="1_3pyux"]
-[ext_resource type="Texture2D" uid="uid://nw52vklqwf6h" path="res://assets/signpost.png" id="2_d675f"]
+[ext_resource type="Texture2D" uid="uid://nw52vklqwf6h" path="res://assets/objects/signpost.png" id="2_d675f"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_p1feo"]
 radius = 19.0263

@@ -1,7 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://kglgrcl6ddia"]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="PackedScene" uid="uid://dplh3sueuh5a" path="res://mons/mon.tscn" id="1_cywyc"]
-[ext_resource type="Texture2D" uid="uid://ogquuxu5cvqs" path="res://assets/magnetfrog_blue.png" id="2_lsi30"]
+[ext_resource type="Texture2D" uid="uid://ogquuxu5cvqs" path="res://assets/mons/magnetfrog_blue.png" id="2_lsi30"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tvjjy"]
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cc0ulntfqko8i"]
 
 [ext_resource type="Script" path="res://ui/pause_menu.gd" id="1_17pct"]
-[ext_resource type="PackedScene" uid="uid://c4l4qf45hxtpl" path="res://mons/magnetfrog.tscn" id="2_y8jyx"]
+[ext_resource type="PackedScene" path="res://mons/magnetfrog.tscn" id="2_y8jyx"]
 
 [node name="PauseMenu" type="Node2D"]
 script = ExtResource("1_17pct")
