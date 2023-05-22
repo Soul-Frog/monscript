@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bjs0uf6g07yax"]
+[gd_scene load_steps=6 format=3 uid="uid://bjs0uf6g07yax"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_sv5wa"]
 [ext_resource type="PackedScene" uid="uid://ca2l5wqdhsgdf" path="res://overworld/overworld.tscn" id="2_kjijl"]
 [ext_resource type="PackedScene" uid="uid://cwa8fi3cy5vut" path="res://debug/debug_console.tscn" id="3_cw4c6"]
 [ext_resource type="PackedScene" uid="uid://dtpehdp2rfsuh" path="res://battle/battle.tscn" id="3_ucmr6"]
+[ext_resource type="PackedScene" uid="uid://cc0ulntfqko8i" path="res://ui/pause_menu.tscn" id="4_wdx4t"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_sv5wa")
@@ -13,6 +14,8 @@ script = ExtResource("1_sv5wa")
 [node name="Overworld" parent="Scenes" instance=ExtResource("2_kjijl")]
 
 [node name="Battle" parent="Scenes" instance=ExtResource("3_ucmr6")]
+
+[node name="PauseMenu" parent="Scenes" instance=ExtResource("4_wdx4t")]
 
 [node name="UI" type="CanvasLayer" parent="."]
 

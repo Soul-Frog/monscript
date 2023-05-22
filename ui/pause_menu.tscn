@@ -1,0 +1,47 @@
+[gd_scene load_steps=2 format=3 uid="uid://cc0ulntfqko8i"]
+
+[ext_resource type="Script" path="res://ui/pause_menu.gd" id="1_17pct"]
+
+[node name="PauseMenu" type="Node2D"]
+script = ExtResource("1_17pct")
+
+[node name="TeamsButton" type="Button" parent="."]
+offset_left = 16.0
+offset_top = 88.0
+offset_right = 104.0
+offset_bottom = 119.0
+text = "Teams"
+
+[node name="QuicksaveButton" type="Button" parent="."]
+offset_left = 16.0
+offset_top = 136.0
+offset_right = 104.0
+offset_bottom = 167.0
+text = "Quicksave"
+
+[node name="DatabaseButton" type="Button" parent="."]
+offset_left = 116.0
+offset_top = 113.0
+offset_right = 204.0
+offset_bottom = 144.0
+text = "Database"
+
+[node name="InventoryButton" type="Button" parent="."]
+offset_left = 216.0
+offset_top = 88.0
+offset_right = 304.0
+offset_bottom = 119.0
+text = "Inventory"
+
+[node name="SettingsButton" type="Button" parent="."]
+offset_left = 216.0
+offset_top = 136.0
+offset_right = 304.0
+offset_bottom = 167.0
+text = "Settings"
+
+[connection signal="button_down" from="TeamsButton" to="." method="_on_teams_button_pressed"]
+[connection signal="button_down" from="QuicksaveButton" to="." method="_on_quicksave_button_pressed"]
+[connection signal="button_down" from="DatabaseButton" to="." method="_on_database_button_pressed"]
+[connection signal="button_down" from="InventoryButton" to="." method="_on_inventory_button_pressed"]
+[connection signal="button_down" from="SettingsButton" to="." method="_on_settings_button_pressed"]

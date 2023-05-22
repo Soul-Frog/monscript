@@ -1,19 +1,29 @@
 extends Node2D
 
-enum State
-{
-	OVERWORLD, BATTLE
-}
-
 @onready var overworld_scene = $Scenes/Overworld
 @onready var battle_scene = $Scenes/Battle
-var state
+@onready var pause_menu_scene = $Scenes/PauseMenu
+var active_scene
 
 func _ready():
 	$Scenes.remove_child(battle_scene)
-	state = State.OVERWORLD
+	$Scenes.remove_child(pause_menu_scene)
+	active_scene = overworld_scene
 	Events.battle_started.connect(_on_battle_started)
 	Events.battle_ended.connect(_on_battle_ended)
+
+func _input(event):
+	if Input.is_action_just_released("open_pause_menu"):
+		if active_scene == overworld_scene:
+			_switch_to_scene(pause_menu_scene)
+		elif active_scene == pause_menu_scene:
+			_switch_to_scene(overworld_scene)
+
+func _switch_to_scene(new_scene):
+	assert(active_scene != new_scene)
+	$Scenes.call_deferred("remove_child", active_scene)
+	$Scenes.call_deferred("add_child", new_scene)
+	active_scene = new_scene
 
 func _on_debug_console_debug_console_opened():
 	assert(get_tree().paused == false)
@@ -24,18 +34,12 @@ func _on_debug_console_debug_console_closed():
 	get_tree().paused = false
 
 func _on_battle_started(computer_encounter_team):
-	assert(state == State.OVERWORLD)
-	state = State.BATTLE
 	battle_scene.setup_battle(PlayerData.team, computer_encounter_team);
-	
-	# switch to battle scene
-	$Scenes.call_deferred("remove_child", overworld_scene)
-	$Scenes.call_deferred("add_child", battle_scene)
+	_switch_to_scene(battle_scene)
 
 func _on_battle_ended(battle_result):
 	assert(battle_result.end_condition != Global.BattleEndCondition.NONE, "End condition was not set before battle ended.")
-	assert(state == State.BATTLE)
-	state = State.OVERWORLD
+	assert(active_scene == battle_scene)
 	
 	# delete overworld encounter if win; respawn player if lose; handle escaping
 	overworld_scene.handle_battle_results(battle_result.end_condition)
@@ -47,6 +51,4 @@ func _on_battle_ended(battle_result):
 	# clean up the battle scene
 	battle_scene.clear_battle();
 	
-	# switch back to overworld scene
-	$Scenes.call_deferred("remove_child", battle_scene)
-	$Scenes.call_deferred("add_child", overworld_scene)
+	_switch_to_scene(overworld_scene)

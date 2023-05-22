@@ -20,7 +20,7 @@ func _ready():
 
 func _input(event):
 	if Global.DEBUG_CONSOLE:
-		if event.is_action_released("open_debug_console"):
+		if Input.is_action_just_released("open_debug_console"):
 			_toggle()
 
 func _toggle():
@@ -85,7 +85,7 @@ func _on_text_submitted(txt):
 				current_area.remove_child(child)
 	# wins a battle instantly
 	elif txt == "winbattle"  or txt == "win" or txt == "w":
-		if main_scene.state != main_scene.State.BATTLE:
+		if main_scene.active_scene != main_scene.battle_scene:
 			print("Not in a battle!")
 			success = false
 		else:
@@ -105,7 +105,7 @@ func _on_text_submitted(txt):
 				computer_mon.take_damage(88888888)
 	# loses a battle instantly
 	elif txt == "losebattle" or txt == "lose" or txt == "l":
-		if main_scene.state != main_scene.State.BATTLE:
+		if main_scene.active_scene != main_scene.battle_scene:
 			print("Not in a battle!")
 			success = false
 		else:
