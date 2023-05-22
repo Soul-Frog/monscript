@@ -15,6 +15,7 @@ func _ready():
 func _input(event):
 	if Input.is_action_just_released("open_pause_menu"):
 		if active_scene == overworld_scene:
+			pause_menu_scene.setup()
 			_switch_to_scene(pause_menu_scene)
 		elif active_scene == pause_menu_scene:
 			_switch_to_scene(overworld_scene)

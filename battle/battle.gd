@@ -8,18 +8,20 @@ class BattleResult:
 		end_condition = Global.BattleEndCondition.NONE
 		xp_earned = 0
 
+var state
 enum BattleState {
 	EMPTY, # this battle scene has no mons; it's ready for a call to setup_battle
 	BATTLING, # this battle scene is ready to go (after setup_battle, before battle has ended)
 	FINISHED # this battle scene is over; it's ready for a call to clear_battle
 }
 
-var state
+const BATTLE_MON_SCRIPT = preload("res://battle/battle_mon.gd")
+
 @onready var timer = $Timer
 
 # positions of mons in battle scene
-var PLAYER_MON_POSITIONS
-var COMPUTER_MON_POSITIONS
+@onready var PLAYER_MON_POSITIONS = [$PlayerMons/Mon1.position, $PlayerMons/Mon2.position, $PlayerMons/Mon3.position, $PlayerMons/Mon4.position]
+@onready var COMPUTER_MON_POSITIONS = [$ComputerMons/Mon1.position, $ComputerMons/Mon2.position, $ComputerMons/Mon3.position, $ComputerMons/Mon4.position]
 
 # Returned at the end of battle; update with battle results and add XP when mons are defeated
 var battle_result
@@ -31,12 +33,8 @@ var action_queue = []
 # Only one mon can take an action at a time (due to animations, etc)
 var is_a_mon_taking_action = false
 
-const BATTLE_MON_SCRIPT = preload("res://battle/battle_mon.gd")
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	PLAYER_MON_POSITIONS = [$PlayerMons/Mon1.position, $PlayerMons/Mon2.position, $PlayerMons/Mon3.position, $PlayerMons/Mon4.position]
-	COMPUTER_MON_POSITIONS = [$ComputerMons/Mon1.position, $ComputerMons/Mon2.position, $ComputerMons/Mon3.position, $ComputerMons/Mon4.position]
 	state = BattleState.FINISHED
 	battle_result = BattleResult.new()
 	clear_battle();

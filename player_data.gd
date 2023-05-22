@@ -7,4 +7,4 @@ var team = []
 var mon_storage = []
 
 func _init():
-	team = [MonData.create_mon(MonData.MonType.MAGNETFROG, 5), MonData.create_mon(MonData.MonType.MAGNETFROG, 5), MonData.create_mon(MonData.MonType.MAGNETFROG, 5), MonData.create_mon(MonData.MonType.MAGNETFROG, 5)]
+	team = [MonData.create_mon(MonData.MonType.MAGNETFROG, 5), MonData.create_mon(MonData.MonType.MAGNETFROGBLUE, 5), MonData.create_mon(MonData.MonType.MAGNETFROGBLUE, 5), MonData.create_mon(MonData.MonType.MAGNETFROG, 5)]

@@ -1,9 +1,24 @@
-[gd_scene load_steps=2 format=3 uid="uid://cc0ulntfqko8i"]
+[gd_scene load_steps=3 format=3 uid="uid://cc0ulntfqko8i"]
 
 [ext_resource type="Script" path="res://ui/pause_menu.gd" id="1_17pct"]
+[ext_resource type="PackedScene" uid="uid://c4l4qf45hxtpl" path="res://mons/magnetfrog.tscn" id="2_y8jyx"]
 
 [node name="PauseMenu" type="Node2D"]
 script = ExtResource("1_17pct")
+
+[node name="Mons" type="Node" parent="."]
+
+[node name="Mon1" parent="Mons" instance=ExtResource("2_y8jyx")]
+position = Vector2(64, 40)
+
+[node name="Mon2" parent="Mons" instance=ExtResource("2_y8jyx")]
+position = Vector2(128, 40)
+
+[node name="Mon3" parent="Mons" instance=ExtResource("2_y8jyx")]
+position = Vector2(192, 40)
+
+[node name="Mon4" parent="Mons" instance=ExtResource("2_y8jyx")]
+position = Vector2(256, 40)
 
 [node name="TeamsButton" type="Button" parent="."]
 offset_left = 16.0
