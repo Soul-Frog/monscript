@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://battle/battle.gd" id="1_85t5n"]
 [ext_resource type="Texture2D" uid="uid://bklubekxfne1h" path="res://assets/isometric/tilemap/tile-test.png" id="1_cm50e"]
 [ext_resource type="Texture2D" uid="uid://d3stk7g8144hl" path="res://assets/isometric/tilemap/tile-glitch-northeast.png" id="2_d1yi7"]
-[ext_resource type="PackedScene" uid="uid://c4l4qf45hxtpl" path="res://mons/magnetfrog.tscn" id="2_qhxpi"]
+[ext_resource type="PackedScene" path="res://mons/magnetfrog.tscn" id="2_qhxpi"]
 [ext_resource type="Texture2D" uid="uid://oi4kcqckvfkc" path="res://assets/isometric/tilemap/tile-glitch-northwest.png" id="3_gqa8o"]
 [ext_resource type="Texture2D" uid="uid://ca80q2fnuqafx" path="res://assets/isometric/tilemap/tile-glitch-southeast.png" id="4_st34a"]
 [ext_resource type="Texture2D" uid="uid://bhaoya2y54e0b" path="res://assets/isometric/tilemap/tile-glitch-southwest.png" id="5_wfe3a"]
@@ -96,25 +96,25 @@ autostart = true
 
 [node name="PlayerMons" type="Node" parent="."]
 
-[node name="Mon1" parent="PlayerMons" instance=ExtResource("2_qhxpi")]
+[node name="MONPLACEHOLDER1" parent="PlayerMons" instance=ExtResource("2_qhxpi")]
 position = Vector2(120, 40)
 collision_layer = 1
 collision_mask = 1
 safe_margin = 0.08
 
-[node name="Mon2" parent="PlayerMons" instance=ExtResource("2_qhxpi")]
+[node name="MONPLACEHOLDER2" parent="PlayerMons" instance=ExtResource("2_qhxpi")]
 position = Vector2(120, 64)
 collision_layer = 1
 collision_mask = 1
 safe_margin = 0.08
 
-[node name="Mon3" parent="PlayerMons" instance=ExtResource("2_qhxpi")]
+[node name="MONPLACEHOLDER3" parent="PlayerMons" instance=ExtResource("2_qhxpi")]
 position = Vector2(120, 88)
 collision_layer = 1
 collision_mask = 1
 safe_margin = 0.08
 
-[node name="Mon4" parent="PlayerMons" instance=ExtResource("2_qhxpi")]
+[node name="MONPLACEHOLDER4" parent="PlayerMons" instance=ExtResource("2_qhxpi")]
 position = Vector2(120, 112)
 collision_layer = 1
 collision_mask = 1
@@ -122,25 +122,25 @@ safe_margin = 0.08
 
 [node name="ComputerMons" type="Node" parent="."]
 
-[node name="Mon1" parent="ComputerMons" instance=ExtResource("2_qhxpi")]
+[node name="MONPLACEHOLDER1" parent="ComputerMons" instance=ExtResource("2_qhxpi")]
 position = Vector2(200, 40)
 collision_layer = 1
 collision_mask = 1
 safe_margin = 0.08
 
-[node name="Mon2" parent="ComputerMons" instance=ExtResource("2_qhxpi")]
+[node name="MONPLACEHOLDER2" parent="ComputerMons" instance=ExtResource("2_qhxpi")]
 position = Vector2(200, 64)
 collision_layer = 1
 collision_mask = 1
 safe_margin = 0.08
 
-[node name="Mon3" parent="ComputerMons" instance=ExtResource("2_qhxpi")]
+[node name="MONPLACEHOLDER3" parent="ComputerMons" instance=ExtResource("2_qhxpi")]
 position = Vector2(200, 88)
 collision_layer = 1
 collision_mask = 1
 safe_margin = 0.08
 
-[node name="Mon4" parent="ComputerMons" instance=ExtResource("2_qhxpi")]
+[node name="MONPLACEHOLDER4" parent="ComputerMons" instance=ExtResource("2_qhxpi")]
 position = Vector2(200, 112)
 collision_layer = 1
 collision_mask = 1

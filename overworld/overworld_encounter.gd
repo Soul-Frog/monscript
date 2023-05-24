@@ -33,7 +33,6 @@ var mons = []
 func _ready():
 	assert($Sprite.texture != null, "No sprite texture assigned in editor!")
 	assert($CollisionHitbox.shape != null, "No collision hitbox shape assigned in editor!")	
-	assert(mon1Type != MonData.MonType.NONE, "Lead mon cannot be None!")
 	assert(mon1Level >= 0 and mon1Level <= 64, "Illegal level for mon1!")
 	assert(mon2Level >= 0 and mon2Level <= 64, "Illegal level for mon2!")
 	assert(mon3Level >= 0 and mon3Level <= 64, "Illegal level for mon3!")
@@ -45,14 +44,16 @@ func _ready():
 	_start_idling()
 	
 	# create mons for battle formation
-	mons.append(MonData.create_mon(mon1Type, mon1Level))
-	if mon2Type != MonData.MonType.NONE:
-		mons.append(MonData.create_mon(mon2Type, mon2Level))
-	if mon3Type != MonData.MonType.NONE:
-		mons.append(MonData.create_mon(mon3Type, mon3Level))	
-	if mon4Type != MonData.MonType.NONE:
-		mons.append(MonData.create_mon(mon4Type, mon4Level))
-	assert(not mons.is_empty(), "All mons are None!")
+	assert(not(mon1Type == MonData.MonType.NONE 
+	and mon2Type != MonData.MonType.NONE 
+	and mon3Type != MonData.MonType.NONE 
+	and mon4Type != MonData.MonType.NONE), 
+	"Must have at least one non-NONE mon!")
+	
+	mons.append(MonData.create_mon(mon1Type, mon1Level) if mon1Type != MonData.MonType.NONE else null)
+	mons.append(MonData.create_mon(mon2Type, mon2Level) if mon2Type != MonData.MonType.NONE else null)
+	mons.append(MonData.create_mon(mon3Type, mon3Level) if mon3Type != MonData.MonType.NONE else null)
+	mons.append(MonData.create_mon(mon4Type, mon4Level) if mon4Type != MonData.MonType.NONE else null)
 
 func _randomize_wander_target():
 	var success = false

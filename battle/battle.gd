@@ -20,9 +20,8 @@ const BATTLE_MON_SCRIPT = preload("res://battle/battle_mon.gd")
 @onready var timer = $Timer
 
 # positions of mons in battle scene
-@onready var PLAYER_MON_POSITIONS = [$PlayerMons/Mon1.position, $PlayerMons/Mon2.position, $PlayerMons/Mon3.position, $PlayerMons/Mon4.position]
-@onready var COMPUTER_MON_POSITIONS = [$ComputerMons/Mon1.position, $ComputerMons/Mon2.position, $ComputerMons/Mon3.position, $ComputerMons/Mon4.position]
-
+var PLAYER_MON_POSITIONS = []
+var COMPUTER_MON_POSITIONS = []
 # Returned at the end of battle; update with battle results and add XP when mons are defeated
 var battle_result
 
@@ -35,6 +34,12 @@ var is_a_mon_taking_action = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	assert($PlayerMons.get_children().size() == Global.MONS_PER_TEAM, "Wrong number of player placeholder positions!")
+	assert($ComputerMons.get_children().size() == Global.MONS_PER_TEAM, "Wrong number of computer placeholder positions!")
+	for placeholder in $PlayerMons.get_children():
+		PLAYER_MON_POSITIONS.append(placeholder.position)
+	for placeholder in $ComputerMons.get_children():
+		COMPUTER_MON_POSITIONS.append(placeholder.position)
 	state = BattleState.FINISHED
 	battle_result = BattleResult.new()
 	clear_battle();
@@ -58,19 +63,20 @@ func setup_battle(player_team, computer_team):
 	assert(state == BattleState.EMPTY) # Make sure previous battle was cleaned up
 	assert($PlayerMons.get_child_count() == 0, "Shouldn't have any mons at start of setup! (forgot to clear_battle()?)")
 	assert($ComputerMons.get_child_count() == 0, "Shouldn't have any mons at start of setup! (forgot to clear_battle()?)")
+	assert(player_team.size() == Global.MONS_PER_TEAM, "Wrong num of mons in player team!")
+	assert(computer_team.size() == COMPUTER_MON_POSITIONS.size(), "Wrong num of mons in computer team!")
 	
 	# add mons for the new battle
-	for i in player_team.size():
-		assert(i < PLAYER_MON_POSITIONS.size(), "Too many mons in player team!")
-		_create_and_setup_mon(player_team[i], $PlayerMons, PLAYER_MON_POSITIONS[i])
-	for i in computer_team.size():
-		assert(i < COMPUTER_MON_POSITIONS.size(), "Too many mons in computer team!")
-		_create_and_setup_mon(computer_team[i], $ComputerMons, COMPUTER_MON_POSITIONS[i])
+	for i in Global.MONS_PER_TEAM:
+		if player_team[i] != null:
+			_create_and_setup_mon(player_team[i], $PlayerMons, PLAYER_MON_POSITIONS[i])
+		if computer_team[i] != null:
+			_create_and_setup_mon(computer_team[i], $ComputerMons, COMPUTER_MON_POSITIONS[i])
 	action_queue.clear()
 	is_a_mon_taking_action = false
 	
-	assert($PlayerMons.get_child_count() != 0, "No player mons!")
-	assert($ComputerMons.get_child_count() != 0, "No computer mons!")
+	assert($PlayerMons.get_child_count() != 0, "No valid player mons!")
+	assert($ComputerMons.get_child_count() != 0, "No valid computer mons!")
 	assert(action_queue.size() == 0)
 	assert(not is_a_mon_taking_action)
 	state = BattleState.BATTLING

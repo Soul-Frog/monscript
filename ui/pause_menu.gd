@@ -1,6 +1,11 @@
 extends Node2D
 
-@onready var MON_POSITIONS = [$Mons/Mon1.position, $Mons/Mon2.position, $Mons/Mon3.position, $Mons/Mon4.position]
+var MON_POSITIONS = []
+
+func _ready():
+	assert($Mons.get_children().size() == Global.MONS_PER_TEAM, "Wrong number of placeholder positions!")
+	for placeholder in $Mons.get_children():
+		MON_POSITIONS.append(placeholder.position)
 
 func setup():
 	# remove the existing mons
@@ -8,12 +13,13 @@ func setup():
 		mon.queue_free()
 	
 	# create instances of the mons in the player's party and position them
-	for i in PlayerData.team.size():
-		assert(i < PlayerData.team.size(), "Too many mons in player team!")
+	assert(PlayerData.team.size() <= Global.MONS_PER_TEAM, "Too many mons in player team?")
+	for i in Global.MONS_PER_TEAM:
 		var mon = PlayerData.team[i]
-		var m = load(mon.get_scene()).instantiate()
-		m.position = MON_POSITIONS[i]
-		$Mons.add_child(m)
+		if mon != null:
+			var m = load(mon.get_scene()).instantiate()
+			m.position = MON_POSITIONS[i]
+			$Mons.add_child(m)
 
 func _on_teams_button_pressed():
 	print("Teams!")

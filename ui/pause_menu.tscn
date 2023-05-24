@@ -8,16 +8,16 @@ script = ExtResource("1_17pct")
 
 [node name="Mons" type="Node" parent="."]
 
-[node name="Mon1" parent="Mons" instance=ExtResource("2_y8jyx")]
+[node name="MONPLACEHOLDER1" parent="Mons" instance=ExtResource("2_y8jyx")]
 position = Vector2(64, 40)
 
-[node name="Mon2" parent="Mons" instance=ExtResource("2_y8jyx")]
+[node name="MONPLACEHOLDER2" parent="Mons" instance=ExtResource("2_y8jyx")]
 position = Vector2(128, 40)
 
-[node name="Mon3" parent="Mons" instance=ExtResource("2_y8jyx")]
+[node name="MONPLACEHOLDER3" parent="Mons" instance=ExtResource("2_y8jyx")]
 position = Vector2(192, 40)
 
-[node name="Mon4" parent="Mons" instance=ExtResource("2_y8jyx")]
+[node name="MONPLACEHOLDER4" parent="Mons" instance=ExtResource("2_y8jyx")]
 position = Vector2(256, 40)
 
 [node name="TeamsButton" type="Button" parent="."]

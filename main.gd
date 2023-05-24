@@ -47,7 +47,8 @@ func _on_battle_ended(battle_result):
 	
 	# give experience to player's mons who participated in battle
 	for mon in PlayerData.team: 
-		mon.gain_XP(battle_result.xp_earned)
+		if mon != null:
+			mon.gain_XP(battle_result.xp_earned)
 	
 	# clean up the battle scene
 	battle_scene.clear_battle();

@@ -3,9 +3,9 @@
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_pir84"]
 [ext_resource type="Texture2D" uid="uid://cexmucj0yinf2" path="res://assets/tile.png" id="2_5a381"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player.tscn" id="3_nbwo1"]
-[ext_resource type="PackedScene" uid="uid://c4l4qf45hxtpl" path="res://mons/magnetfrog.tscn" id="4_6roik"]
+[ext_resource type="PackedScene" path="res://mons/magnetfrog.tscn" id="4_6roik"]
 [ext_resource type="Script" path="res://overworld/overworld_encounter.gd" id="5_h77y5"]
-[ext_resource type="PackedScene" uid="uid://dtvj4huypfqgv" path="res://overworld/signpost.tscn" id="7_aq3ag"]
+[ext_resource type="PackedScene" path="res://overworld/signpost.tscn" id="7_aq3ag"]
 [ext_resource type="Script" path="res://overworld/warp.gd" id="7_ip4bp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_olnl5"]
@@ -49,7 +49,6 @@ position = Vector2(64, 8)
 script = ExtResource("5_h77y5")
 mon1Type = 1
 mon1Level = 3
-mon2Type = 1
 mon2Level = 1
 mon4Type = 2
 
