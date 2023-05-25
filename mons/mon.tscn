@@ -15,24 +15,24 @@ position = Vector2(0, -2)
 
 [node name="BattleComponents" type="Node2D" parent="."]
 
-[node name="HealthLabel" type="RichTextLabel" parent="BattleComponents"]
+[node name="ActionPointsBar" type="ProgressBar" parent="BattleComponents"]
 visible = false
-offset_left = -56.0
-offset_top = 16.0
-offset_right = 56.0
-offset_bottom = 40.0
-bbcode_enabled = true
-text = "[center]20/20[/center]"
-autowrap_mode = 0
+modulate = Color(1, 0.639216, 0, 1)
+offset_left = -24.0
+offset_top = -25.0
+offset_right = 24.0
+offset_bottom = -21.0
+value = 50.0
+show_percentage = false
 
-[node name="ActionPointsLabel" type="RichTextLabel" parent="BattleComponents"]
+[node name="HealthBar" type="ProgressBar" parent="BattleComponents"]
 visible = false
-offset_left = -56.0
-offset_top = -40.0
-offset_right = 56.0
-offset_bottom = -16.0
-bbcode_enabled = true
-text = "[center]100/100[/center]"
-autowrap_mode = 0
+modulate = Color(0, 1, 0.286275, 1)
+offset_left = -24.0
+offset_top = 24.0
+offset_right = 24.0
+offset_bottom = 32.0
+value = 50.0
+show_percentage = false
 
 [node name="DebugTool" parent="." instance=ExtResource("2_cagr3")]

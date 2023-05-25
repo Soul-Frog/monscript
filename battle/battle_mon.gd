@@ -16,8 +16,6 @@ signal action_completed
 signal action_animation_completed
 
 const ACTION_POINTS_PER_TURN = 100
-const HEALTH_LABEL_FORMAT = "[center]%d/%d[/center]"
-const AP_LABEL_FORMAT = "[center]%d/100[/center]"
 
 # The underlying Mon Object this battle mon scene represents
 # Set this with init_mon before doing anything else with this scene
@@ -68,6 +66,10 @@ func init_mon(mon):
 	is_defending = false
 	escaped_from_battle = false
 	reset_AP_after_action = true
+	$BattleComponents/ActionPointsBar.max_value = ACTION_POINTS_PER_TURN
+	$BattleComponents/HealthBar.max_value = max_health
+	$BattleComponents/ActionPointsBar.modulate = Color.YELLOW
+	$BattleComponents/HealthBar.modulate = Color.GREEN
 	_update_labels();
 
 # Called once for each mon by battle.gd at a regular time interval
@@ -79,6 +81,7 @@ func battle_tick():
 		action_points = clamp(action_points, 0, ACTION_POINTS_PER_TURN)
 		_update_labels();
 		if action_points >= ACTION_POINTS_PER_TURN:
+			$BattleComponents/ActionPointsBar.modulate = Color.RED
 			emit_signal("ready_to_take_action", self) # signal that it's time for this mon to act
 
 # Take a single turn in battle
@@ -95,6 +98,7 @@ func alert_turn_over():
 	if reset_AP_after_action:
 		action_points = 0
 	reset_AP_after_action = true
+	$BattleComponents/ActionPointsBar.modulate = Color.YELLOW
 	_update_labels();
 	emit_signal("action_completed")
 
@@ -127,8 +131,8 @@ func take_damage(raw_damage):
 	_update_labels();
 
 func _update_labels():
-	$BattleComponents/ActionPointsLabel.text = AP_LABEL_FORMAT % [action_points]
-	$BattleComponents/HealthLabel.text = HEALTH_LABEL_FORMAT % [current_health, max_health]
+	$BattleComponents/ActionPointsBar.value = action_points
+	$BattleComponents/HealthBar.value = current_health
 
 func _process(delta):
 	if is_shaking:
