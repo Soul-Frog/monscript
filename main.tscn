@@ -21,6 +21,8 @@ script = ExtResource("1_sv5wa")
 
 [node name="DebugConsole" parent="UI" instance=ExtResource("3_cw4c6")]
 z_index = 1
+caret_blink = true
+caret_blink_interval = 0.5
 
 [connection signal="debug_console_closed" from="UI/DebugConsole" to="." method="_on_debug_console_debug_console_closed"]
 [connection signal="debug_console_opened" from="UI/DebugConsole" to="." method="_on_debug_console_debug_console_opened"]

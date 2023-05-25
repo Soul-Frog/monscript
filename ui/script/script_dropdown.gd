@@ -16,11 +16,11 @@ func _on_intellisense_item_clicked(index, at_position, mouse_button_index):
 	$TextEdit.emit_signal("text_changed")
 	$Intellisense.visible = false
 
-func _has_prefix(prefix, str):
-	if prefix.length() > str.length():
+func _has_prefix(prefix, s):
+	if prefix.length() > s.length():
 		return false
 	for i in range(0, prefix.length()):
-		if prefix[i] != str[i]:
+		if prefix[i] != s[i]:
 			return false
 	return true
 
