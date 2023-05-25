@@ -40,9 +40,22 @@ var speed = -1
 var attack = -1
 var defense = -1
 
+var original_position
+var is_shaking = false
+var shake_timer
+const SHAKE_TIME = 0.10
+const shake_amount = 3
+const shake_speed = 0.8
+var shake_direction = 1
+
 func _ready():
 	assert($Sprite.texture != null, "No sprite texture assigned in editor!")
 	assert($CollisionHitbox.shape != null, "No collision shape assigned in editor!")
+	original_position = position
+	shake_timer = Timer.new()
+	shake_timer.wait_time = SHAKE_TIME
+	shake_timer.timeout.connect(_stop_shaking)
+	add_child(shake_timer)
 
 # Initializes this battle_mon with an underlying mon object
 func init_mon(mon):
@@ -102,7 +115,11 @@ func take_damage(raw_damage):
 	self.add_child(
 		load("res://battle/moving_text.tscn").instantiate()
 		.tx(damage_taken).direction_up().speed(40).time(0.2).color(Global.COLOR_RED))
-
+	
+	if damage_taken != 0:
+		is_shaking = true
+		shake_timer.start()
+	
 	if current_health == 0:
 		action_points = 0
 		emit_signal("zero_health", self)
@@ -112,3 +129,14 @@ func take_damage(raw_damage):
 func _update_labels():
 	$BattleComponents/ActionPointsLabel.text = AP_LABEL_FORMAT % [action_points]
 	$BattleComponents/HealthLabel.text = HEALTH_LABEL_FORMAT % [current_health, max_health]
+
+func _process(delta):
+	if is_shaking:
+		if position.x >= (original_position.x + shake_amount) or position.x <= (original_position.x - shake_amount):
+			shake_direction = -shake_direction
+		position.x += shake_direction * shake_speed
+
+func _stop_shaking():
+	is_shaking = false
+	position = original_position
+	shake_direction = 1

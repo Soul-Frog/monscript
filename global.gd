@@ -23,6 +23,10 @@ enum BattleEndCondition {
 	NONE # default/error condition; should be set before battle ends
 }
 
+# returns one of the items in the input array at random
+func choose_one(options):
+	return options[RNG.randi_range(0, options.size()-1)]
+
 func file_to_string(file_path):
 	return FileAccess.open(file_path, FileAccess.READ).get_as_text()
 

@@ -1,6 +1,6 @@
 extends Node2D
 
-signal animation_finished
+signal animation_finished 
 
 func _play_fx(fx):
 	add_child(fx)
