@@ -1,10 +1,36 @@
-extends Node2D
+extends Control
 
-var options = ["Test", "Exam", "Trial"]
+signal text_changed
+
+var options = ["ERROR"]
+var type
+
+func assign_type(block_type):
+	type = block_type
+	
+	# get the list of blocks to be added as options
+	var block_list = []
+	match type:
+		ScriptData.Block.Type.IF:
+			block_list = ScriptData.IF_BLOCK_LIST
+		ScriptData.Block.Type.DO:
+			block_list = ScriptData.DO_BLOCK_LIST
+		ScriptData.Block.Type.TO:
+			block_list = ScriptData.TO_BLOCK_LIST
+		_:
+			assert(false, "No match found for block_type!")
+	
+	options.clear()
+	
+	# add each block's name to options
+	for block in block_list:
+		assert(block.type == type, "Types don't match!")
+		options.append(block.name)
+	assert(options.size() != 0, "No options for script dropdown!")
+	
+	_update_intellisense()
 
 func _ready():
-	for option in options:
-		$Intellisense.add_item(option)
 	$Intellisense.visible = false
 
 func _on_dropdown_button_clicked():
@@ -25,6 +51,15 @@ func _has_prefix(prefix, s):
 	return true
 
 func _on_text_changed():
+	emit_signal("text_changed")
+	_update_intellisense()
+	if is_valid():
+		$TextEdit.add_theme_color_override("font_color", Global.COLOR_GREEN)
+	else:
+		$TextEdit.remove_theme_color_override("font_color")
+	
+
+func _update_intellisense():
 	$Intellisense.clear()
 	for option in options:
 		if _has_prefix($TextEdit.text.to_lower(), option.to_lower()):
@@ -34,3 +69,19 @@ func _on_text_changed():
 	
 	if $TextEdit.text.length() == 0:
 		$Intellisense.visible = false
+
+func is_valid():
+	for option in options:
+		if option.to_lower() == $TextEdit.text.to_lower():
+			$TextEdit.text = option
+			$TextEdit.set_caret_column($TextEdit.text.length())
+			return true
+	return false
+
+func next_block_type():
+	if type == ScriptData.Block.Type.IF:
+		return ScriptData.Block.Type.DO
+	elif type == ScriptData.Block.Type.DO:
+		return ScriptData.Block.Type.TO
+	else:
+		return null

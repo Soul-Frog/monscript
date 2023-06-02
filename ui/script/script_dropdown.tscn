@@ -2,8 +2,12 @@
 
 [ext_resource type="Script" path="res://ui/script/script_dropdown.gd" id="1_5w5ou"]
 
-[node name="ScriptDropdown" type="Node2D"]
-position = Vector2(32, 16)
+[node name="ScriptDropdown" type="Control"]
+custom_minimum_size = Vector2(128, 40)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 128.0
+offset_bottom = 40.0
 script = ExtResource("1_5w5ou")
 metadata/_edit_group_ = true
 

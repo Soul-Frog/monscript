@@ -94,8 +94,8 @@ class Block:
 	}
 	
 	var type
-	var function
 	var name
+	var function
 	
 	func _init(blockType, blockName, blockFunction):
 		self.type = blockType

@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://br0pytpyov4wo"]
+
+[ext_resource type="Script" path="res://ui/script/script_line.gd" id="1_dhjl1"]
+
+[node name="LineScroll" type="ScrollContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(320, 0)
+offset_right = 320.0
+offset_bottom = 53.0
+vertical_scroll_mode = 3
+script = ExtResource("1_dhjl1")
+
+[node name="Line" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="GrowLineButton" type="Button" parent="Line"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "+"
+
+[connection signal="pressed" from="Line/GrowLineButton" to="." method="_on_grow_line_button_pressed"]

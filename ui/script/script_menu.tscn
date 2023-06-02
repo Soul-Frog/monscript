@@ -1,3 +1,13 @@
-[gd_scene format=3 uid="uid://da77xvco6xw0l"]
+[gd_scene load_steps=2 format=3 uid="uid://da77xvco6xw0l"]
 
-[node name="ScriptMenu" type="Node2D"]
+[ext_resource type="Script" path="res://ui/script/script_menu.gd" id="1_mpyhe"]
+
+[node name="ScriptHScroll" type="ScrollContainer"]
+offset_right = 320.0
+offset_bottom = 180.0
+horizontal_scroll_mode = 0
+script = ExtResource("1_mpyhe")
+
+[node name="Lines" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(310, 180)
+layout_mode = 2
