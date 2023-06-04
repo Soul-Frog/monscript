@@ -47,36 +47,39 @@ class MonScript:
 			lines.append(Line.new(line_string))
 
 class Line:
-	var ifBlock
-	var doBlock
-	var toBlock
+	var blocks = []
+	var ifBlock = null
+	var doBlock = null
+	var toBlock = null
 	
 	func _init(string):
 		# break into blocks
 		var block_strings = string.split(BLOCK_DELIMITER)
-		assert(len(block_strings) == 3, "Parsed line does not have exactly 3 blocks")
 		
-		# pull out the 3 blocks
-		var if_block_string = block_strings[0]
-		var do_block_string = block_strings[1]
-		var to_block_string = block_strings[2]
+		for block_string in block_strings:
+			var block = ScriptData.get_block_by_name(block_string)
+			assert(block != null, "Block name is invalid! %s " % block_string)
+			blocks.append(block)
 		
-		# search the block lists for these blocks
-		ifBlock = ScriptData.get_block_by_name(if_block_string)
+		assert(blocks.size() == 2 or blocks.size() == 3, "Invalid number of blocks!")
+		
+		ifBlock = blocks[0]
 		assert(ifBlock.type == Block.Type.IF, "Given if_block_string is not an IF block!")
-		
-		doBlock = ScriptData.get_block_by_name(do_block_string)
+		doBlock = blocks[1]
 		assert(doBlock.type == Block.Type.DO, "Given do_block_string is not a DO block!")
-		
-		toBlock = ScriptData.get_block_by_name(to_block_string)
-		assert(toBlock.type == Block.Type.TO, "Given to_block_string is not a TO block!")
+		if blocks.size() == 3:
+			assert(doBlock.next_block_type == Block.Type.TO, "This DO shouldn't have a TO!")
+			toBlock = blocks[2]
+			assert(doBlock.type == Block.Type.DO, "Given do_block_string is not a DO block!")
+		else:
+			assert(doBlock.next_block_type == null, "This DO should have a TO!")
 
 	func try_execute(mon, friends, foes, animator):
 		# check if this line should be executed
 		var conditionIsMet = ifBlock.function.call(mon, friends, foes)
 		if conditionIsMet:
 			# get list of targets
-			var targets = toBlock.function.call(mon, friends, foes)
+			var targets = null if toBlock == null else toBlock.function.call(mon, friends, foes)
 			# perform the battle action
 			await doBlock.function.call(mon, friends, foes, targets, animator)
 			mon.alert_turn_over()
@@ -86,7 +89,10 @@ class Line:
 		return conditionIsMet
 	
 	func as_string():
-		return "%s %s %s" % [ifBlock.name, doBlock.name, toBlock.name]
+		var s = ""
+		for block in blocks:
+			s += "%s " % block.name
+		return s.strip_edges()
 
 class Block:
 	enum Type{
