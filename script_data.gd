@@ -62,13 +62,13 @@ class Line:
 		var to_block_string = block_strings[2]
 		
 		# search the block lists for these blocks
-		ifBlock = ScriptData.get_block_by_name(ScriptData.IF_BLOCK_LIST, if_block_string)
+		ifBlock = ScriptData.get_block_by_name(if_block_string)
 		assert(ifBlock.type == Block.Type.IF, "Given if_block_string is not an IF block!")
 		
-		doBlock = ScriptData.get_block_by_name(ScriptData.DO_BLOCK_LIST, do_block_string)
+		doBlock = ScriptData.get_block_by_name(do_block_string)
 		assert(doBlock.type == Block.Type.DO, "Given do_block_string is not a DO block!")
 		
-		toBlock = ScriptData.get_block_by_name(ScriptData.TO_BLOCK_LIST, to_block_string)
+		toBlock = ScriptData.get_block_by_name(to_block_string)
 		assert(toBlock.type == Block.Type.TO, "Given to_block_string is not a TO block!")
 
 	func try_execute(mon, friends, foes, animator):
@@ -96,26 +96,28 @@ class Block:
 	var type
 	var name
 	var function
+	var next_block_type
 	
-	func _init(blockType, blockName, blockFunction):
+	func _init(blockType, blockName, nextBlockType, blockFunction):
 		self.type = blockType
 		self.name = blockName
+		self.next_block_type = nextBlockType
 		self.function = blockFunction
 
 # utility function used to search a list of blocks for a given block by name
-func get_block_by_name(block_list, block_name):
-	for block in block_list:
-		if block.name == block_name:
-			return block
-	assert(false, "No block found for name %s (likely a typo, or forgot to add new Block to correct list)" % [block_name])
-
+func get_block_by_name(block_name):
+	for block_list in [IF_BLOCK_LIST, DO_BLOCK_LIST, TO_BLOCK_LIST]:
+		for block in block_list:
+			if block.name == block_name:
+				return block
+	return null
 
 # IF FUNCTIONS
 # Determine whether a line should be executed
 #      self       friends      foes            whether to execute line or not
 # func(BattleMon, [BattleMon], [BattleMon]) -> bool
 var IF_BLOCK_LIST = [
-	Block.new(Block.Type.IF, "IfAlways", 
+	Block.new(Block.Type.IF, "IfAlways", Block.Type.DO,  
 	func(mon, friends, foes): 
 		return true
 		)
@@ -126,13 +128,13 @@ var IF_BLOCK_LIST = [
 #      self       friends      foes         animation helper      function should perform a battle action
 # func(BattleMon, [BattleMon], [BattleMon], [Battle/Animator]) -> void
 var DO_BLOCK_LIST = [
-	Block.new(Block.Type.DO, "DoPass", 
+	Block.new(Block.Type.DO, "DoPass", null, 
 	func(mon, friends, foes, target, animator):
 		mon.action_points = mon.action_points / 2
 		mon.reset_AP_after_action = false # don't reset to 0 after this action
 		),
 		
-	Block.new(Block.Type.DO, "DoAttack", 
+	Block.new(Block.Type.DO, "DoAttack", Block.Type.TO, 
 	func(mon, friends, foes, target, animator):
 		assert(not target.is_defeated())
 		
@@ -144,12 +146,12 @@ var DO_BLOCK_LIST = [
 		target.take_damage(mon.attack)
 		),
 	
-	Block.new(Block.Type.DO, "DoDefend", 
+	Block.new(Block.Type.DO, "DoDefend", null, 
 	func(mon, friends, foes, target, animator):
 		mon.is_defending = true
 		),
 		
-	Block.new(Block.Type.DO, "DoEscape", 
+	Block.new(Block.Type.DO, "DoEscape", null, 
 	func(mon, friends, foes, target, animator):
 		mon.emit_signal("try_to_escape", mon)
 		)
@@ -160,17 +162,17 @@ var DO_BLOCK_LIST = [
 #      self       friends      foes            function should return targets
 # func(BattleMon, [BattleMon], [BattleMon]) -> [BattleMon]
 var TO_BLOCK_LIST = [
-	Block.new(Block.Type.TO, "ToRandomFoe", 
+	Block.new(Block.Type.TO, "ToRandomFoe", null, 
 	func(mon, friends, foes):
 		return foes[Global.RNG.randi() % foes.size()]
 		),
 		
-	Block.new(Block.Type.TO, "ToRandomFriend", 
+	Block.new(Block.Type.TO, "ToRandomFriend", null, 
 	func(mon, friends, foes):
 		return friends[Global.RNG.randi() % friends.size()]
 		),
 		
-	Block.new(Block.Type.TO, "ToLowestHealthFoe", 
+	Block.new(Block.Type.TO, "ToLowestHealthFoe", null, 
 	func(mon, friends, foes):
 		var lowestHealthFoe = null
 		var lowestHealthFound = Global.INT_MAX

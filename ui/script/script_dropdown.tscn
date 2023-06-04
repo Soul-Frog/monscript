@@ -12,16 +12,19 @@ script = ExtResource("1_5w5ou")
 metadata/_edit_group_ = true
 
 [node name="TextEdit" type="TextEdit" parent="."]
+layout_mode = 0
 offset_right = 128.0
 offset_bottom = 40.0
 
 [node name="Intellisense" type="ItemList" parent="."]
+layout_mode = 0
 offset_top = 40.0
 offset_right = 128.0
 offset_bottom = 120.0
 allow_rmb_select = true
 
 [node name="DropdownButton" type="Button" parent="."]
+layout_mode = 0
 offset_left = 96.0
 offset_top = 8.0
 offset_right = 120.0

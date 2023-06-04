@@ -5,6 +5,9 @@ signal text_changed
 var options = ["ERROR"]
 var type
 
+# whether this block was valid at one point in time or not
+var was_once_valid = false
+
 func assign_type(block_type):
 	type = block_type
 	
@@ -54,9 +57,14 @@ func _on_text_changed():
 	emit_signal("text_changed")
 	_update_intellisense()
 	if is_valid():
+		was_once_valid = true
 		$TextEdit.add_theme_color_override("font_color", Global.COLOR_GREEN)
 	else:
-		$TextEdit.remove_theme_color_override("font_color")
+		# if we were valid in the past, make it red now
+		if was_once_valid:
+			$TextEdit.add_theme_color_override("font_color", Global.COLOR_RED)
+		else:
+			$TextEdit.remove_theme_color_override("font_color")
 	
 
 func _update_intellisense():
@@ -79,9 +87,7 @@ func is_valid():
 	return false
 
 func next_block_type():
-	if type == ScriptData.Block.Type.IF:
-		return ScriptData.Block.Type.DO
-	elif type == ScriptData.Block.Type.DO:
-		return ScriptData.Block.Type.TO
-	else:
+	var block = ScriptData.get_block_by_name($TextEdit.text)
+	if block == null:
 		return null
+	return block.next_block_type
