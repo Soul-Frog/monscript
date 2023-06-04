@@ -53,6 +53,14 @@ func _has_prefix(prefix, s):
 			return false
 	return true
 
+const EXCLUDED_KEYS = [KEY_SPACE, KEY_TAB, KEY_ENTER]
+func _input(event):
+	# block space and enter inputs to TextEdit
+	if $TextEdit.has_focus():
+		if event is InputEventKey and event.is_pressed():
+			if event.keycode in EXCLUDED_KEYS:
+				get_viewport().set_input_as_handled()
+
 func _on_text_changed():
 	emit_signal("text_changed")
 	_update_intellisense()
