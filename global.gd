@@ -27,19 +27,29 @@ enum BattleEndCondition {
 }
 
 # returns one of the items in the input array at random
-func choose_one(options):
+func choose_one(options : Array):
 	return options[RNG.randi_range(0, options.size()-1)]
 
-func file_to_string(file_path):
+# read a file on the filesystem as a string
+func file_to_string(file_path : String):
 	return FileAccess.open(file_path, FileAccess.READ).get_as_text()
 
-func string_to_file(file_path, string):
+# write a string to a file on the filesystem
+# overwrites previous content in that file
+func string_to_file(file_path : String, string : String):
 	FileAccess.open(file_path, FileAccess.WRITE).store_string(string)
 
-func does_file_exist(file_path):
+func delete_file(file_path : String):
+	DirAccess.remove_absolute(file_path)
+
+# check if a file exists at file_path
+func does_file_exist(file_path : String):
 	return FileAccess.file_exists(file_path)
 
+# call a given function after a delay
 # this function is very dangerous, make sure you know what you are doing.
+# often your function will need to check if that object it originated from
+# hasn't been freed!
 func call_after_delay(delay_in_secs, arg, function):
 	await get_tree().create_timer(delay_in_secs).timeout
 	function.call(arg)
@@ -47,6 +57,13 @@ func call_after_delay(delay_in_secs, arg, function):
 # print that also includes the object being printed from
 func p(node, s):
 	print("%s: %s" % [node, s])
+
+# returns a string of s repeated n times
+func repeat_str(s, n):
+	var r = ""
+	for i in range(0, n):
+		r += s
+	return r
 
 # prints a tree of node and its children
 func dump(node):
@@ -56,10 +73,3 @@ func _dump_helper(node, indent_level):
 	print(repeat_str("  ", indent_level), node.name) 
 	for child in node.get_children():
 		_dump_helper(child, indent_level + 1)
-
-# returns a string of s repeated n times
-func repeat_str(s, n):
-	var r = ""
-	for i in range(0, n):
-		r += s
-	return r
