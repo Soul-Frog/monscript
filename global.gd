@@ -28,10 +28,12 @@ enum BattleEndCondition {
 
 # returns one of the items in the input array at random
 func choose_one(options : Array):
+	assert(options.size() != 0, "No options in array!")
 	return options[RNG.randi_range(0, options.size()-1)]
 
 # read a file on the filesystem as a string
 func file_to_string(file_path : String):
+	assert(does_file_exist(file_path), "File does not exist!")
 	return FileAccess.open(file_path, FileAccess.READ).get_as_text()
 
 # write a string to a file on the filesystem
@@ -40,6 +42,7 @@ func string_to_file(file_path : String, string : String):
 	FileAccess.open(file_path, FileAccess.WRITE).store_string(string)
 
 func delete_file(file_path : String):
+	assert(does_file_exist(file_path), "File does not exist!")
 	DirAccess.remove_absolute(file_path)
 
 # check if a file exists at file_path
@@ -50,26 +53,27 @@ func does_file_exist(file_path : String):
 # this function is very dangerous, make sure you know what you are doing.
 # often your function will need to check if that object it originated from
 # hasn't been freed!
-func call_after_delay(delay_in_secs, arg, function):
+func call_after_delay(delay_in_secs : float, arg, function : Callable):
 	await get_tree().create_timer(delay_in_secs).timeout
 	function.call(arg)
 
 # print that also includes the object being printed from
-func p(node, s):
+func p(node : Node, s : String):
 	print("%s: %s" % [node, s])
 
 # returns a string of s repeated n times
-func repeat_str(s, n):
+func repeat_str(s : String, n : int):
+	assert(n >= 1, "Can't repeat a non-positive number of times!")
 	var r = ""
 	for i in range(0, n):
 		r += s
 	return r
 
 # prints a tree of node and its children
-func dump(node):
+func dump(node : Node):
 	_dump_helper(node, 0)
 
-func _dump_helper(node, indent_level):
+func _dump_helper(node : Node, indent_level : int):
 	print(repeat_str("  ", indent_level), node.name) 
 	for child in node.get_children():
 		_dump_helper(child, indent_level + 1)

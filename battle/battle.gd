@@ -165,7 +165,6 @@ func _on_mon_try_to_escape(battle_mon):
 			Events.emit_signal("battle_ended", battle_result)
 	else:
 		assert(battle_mon in $ComputerMons.get_children(), "Escaping enemy mon isn't in ComputerMons?")
-		print("%s escaped!" % battle_mon)
 		$ComputerMons.remove_child(battle_mon)
 		battle_mon.queue_free()
 		_check_battle_end_condition()
