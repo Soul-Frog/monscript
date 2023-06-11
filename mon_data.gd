@@ -6,14 +6,6 @@ extends Node
 const MIN_LEVEL: int = 0
 const MAX_LEVEL: int = 64
 
-func _ready() -> void:
-	# do some safety checks
-	# create a mon of every type to make sure createMon isn't missing cases
-	for mon_type in MonType.values():
-		if mon_type == MonType.NONE:
-			continue
-		create_mon(mon_type, 0)
-
 # Calculates the amount of experience needed to gain a level
 func XP_for_level(level: int) -> int:
 	return level * level
@@ -44,7 +36,9 @@ class MonBase:
 		defenseAt0: int, defenseAt64: int, speedAt0: int, speedAt64: int) -> void:
 		self._speciesName = monSpecies
 		self._scene_path = mon_scene
+		assert(Global.does_file_exist(_scene_path))
 		self._default_script_path = default_script_file_path
+		assert(Global.does_file_exist(_default_script_path))
 		self._health0 = healthAt0
 		self._health64 = healthAt64
 		self._attack0 = attackAt0
@@ -80,6 +74,7 @@ class Mon:
 		self._base = mon_base
 		self._level = starting_level
 		self._xp = 0
+		self._nickname = mon_nickname
 		self._monscript = ScriptData.MonScript.new(Global.file_to_string(mon_base._default_script_path))
 	
 	func get_name() -> String:
@@ -113,10 +108,16 @@ class Mon:
 	
 	# adds XP and potentially applies level up
 	func gain_XP(xp_gained: int) -> void:
+		if _level == MonData.MAX_LEVEL: # don't try to level past MAX
+			return
+		
 		_xp += xp_gained
 		while _xp >= MonData.XP_for_level(_level + 1):
 			_xp -= MonData.XP_for_level(_level + 1)
 			_level += 1
+			if _level == MonData.MAX_LEVEL: # if we hit MAX, done
+				_xp = 0
+				return
 
 # List of MonBases, each is a static and constant representation of a Mon's essential characteristics
 var _MAGNETFROG_BASE = MonBase.new("magnetFrog", "res://mons/magnetfrog.tscn", "res://monscripts/attack.txt", 
