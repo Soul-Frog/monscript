@@ -1,26 +1,22 @@
 extends GutTest
 
+var mons := []
+
 func before_each():
-	gut.p("ran setup", 2)
-
-func after_each():
-	gut.p("ran teardown", 2)
-
-func before_all():
-	gut.p("ran run setup", 2)
-
-func after_all():
-	gut.p("ran run teardown", 2)
-
-func test_reality():
-	assert_true(true, "I sure hope so.")
+	mons.clear()
+	for mon_type in MonData.MonType.values():
+		if mon_type == MonData.MonType.NONE:
+			continue
+		var mon := MonData.create_mon(mon_type, 0)
+		mons.append(mon)
 
 func test_create_mon():
-	pass
+	for mon in mons:
+		assert_not_null(mon)
 
 func test_stats_for_level():
-	pass
-
+	for mon in mons:
+		
 func test_get_name():
 	pass
 

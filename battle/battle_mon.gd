@@ -91,7 +91,7 @@ func take_action(friends, foes, animator):
 	is_defending = false
 	
 	# tell our script to go ahead and execute an action
-	base_mon.monscript.execute(self, friends, foes, animator)
+	base_mon.get_monscript().execute(self, friends, foes, animator)
 
 func alert_turn_over():
 	assert(action_points == 100 or not reset_AP_after_action)

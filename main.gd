@@ -35,8 +35,11 @@ func _on_debug_console_debug_console_closed():
 	get_tree().paused = false
 
 func _on_battle_started(computer_encounter_team):
-	battle_scene.setup_battle(PlayerData.team, computer_encounter_team);
-	_switch_to_scene(battle_scene)
+	# this check is necessary to prevent bugs when
+	# multiple battle start on the same frame (stacked enemies)
+	if active_scene != battle_scene: 
+		battle_scene.setup_battle(PlayerData.team, computer_encounter_team);
+		_switch_to_scene(battle_scene)
 
 func _on_battle_ended(battle_result):
 	assert(battle_result.end_condition != Global.BattleEndCondition.NONE, "End condition was not set before battle ended.")

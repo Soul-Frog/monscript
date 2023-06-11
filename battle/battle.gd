@@ -8,7 +8,7 @@ class BattleResult:
 		end_condition = Global.BattleEndCondition.NONE
 		xp_earned = 0
 
-var state
+var state = BattleState.FINISHED
 enum BattleState {
 	EMPTY, # this battle scene has no mons; it's ready for a call to setup_battle
 	BATTLING, # this battle scene is ready to go (after setup_battle, before battle has ended)
@@ -180,7 +180,7 @@ func _on_mon_zero_health(mon):
 	# increment xp earned from battle if this was a computer mon
 	# min exp earn is 1; so level 0 mons still provide 1 xp
 	if mon in $ComputerMons.get_children():
-		battle_result.xp_earned += max(mon.base_mon.level, 1)
+		battle_result.xp_earned += max(mon.base_mon.get_level(), 1)
 	# hide this mon to 'remove' it from the scene
 	# removing from scene here with something like queue_free would cause errors
 	mon.visible = false
