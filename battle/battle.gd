@@ -46,7 +46,7 @@ func _ready():
 
 # Helper function which creates and connects signals for BattleMon
 func _create_and_setup_mon(base_mon, teamNode, pos):
-	var new_mon = load(base_mon.get_scene()).instantiate()
+	var new_mon = load(base_mon.get_scene_path()).instantiate()
 	for battle_component in new_mon.get_node("BattleComponents").get_children():
 		battle_component.visible = true
 	new_mon.set_script(BATTLE_MON_SCRIPT)
