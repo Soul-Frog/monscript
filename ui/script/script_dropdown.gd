@@ -80,10 +80,11 @@ func _update_intellisense():
 	for option in options:
 		if _has_prefix($TextEdit.text.to_lower(), option.to_lower()):
 			$Intellisense.add_item(option)
+	
 	if $Intellisense.item_count != 0:
 			$Intellisense.visible = true
 	
-	if $TextEdit.text.length() == 0:
+	if $TextEdit.text.length() == 0 or is_valid():
 		$Intellisense.visible = false
 
 func is_valid():
