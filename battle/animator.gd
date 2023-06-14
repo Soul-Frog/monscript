@@ -1,4 +1,4 @@
-extends Node2D
+class_name BattleAnimator extends Node2D
 
 signal animation_finished 
 

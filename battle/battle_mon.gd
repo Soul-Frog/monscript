@@ -1,3 +1,4 @@
+class_name BattleMon
 extends CharacterBody2D
 
 # emitted when this mon's ap has been increased to max

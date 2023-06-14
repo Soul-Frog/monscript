@@ -63,7 +63,7 @@ func _update_validity_indicator():
 		$Line/ValidityIndicator.color = Global.COLOR_RED
 
 func _update_grow_line_button():
-	if _last_dropdown() == null or (_is_each_dropdown_valid() and _last_dropdown().next_block_type() != null):
+	if _last_dropdown() == null or (_is_each_dropdown_valid() and _last_dropdown().next_block_type() != ScriptData.Block.Type.NONE):
 		$Line/GrowLineButton.visible = true
 	else:
 		$Line/GrowLineButton.visible = false
