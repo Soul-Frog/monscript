@@ -101,3 +101,11 @@ func next_block_type() -> ScriptData.Block.Type:
 	if block == null:
 		return ScriptData.Block.Type.NONE
 	return block.next_block_type
+
+func _on_text_edit_focus_exited():
+	# don't close intellisense if we're clicking on it... otherwise close it
+	if not $Intellisense.get_rect().has_point(get_local_mouse_position()):
+		$Intellisense.visible = false
+
+func _on_text_edit_focus_entered():
+	_update_intellisense()

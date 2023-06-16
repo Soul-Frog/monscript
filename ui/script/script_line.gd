@@ -75,4 +75,3 @@ func _update_grow_line_button() -> void:
 
 func _update_delete_line_button() -> void:
 	$Line/DeleteLineButton.visible = $Line/Blocks.get_children().size() != 0
-	
