@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://fv5igvwmd4ob"]
+[gd_scene load_steps=2 format=3 uid="uid://rs2tm8j6camo"]
 
-[ext_resource type="Script" path="res://ui/script/script_dropdown.gd" id="1_5w5ou"]
+[ext_resource type="Script" path="res://ui/script/script_block.gd" id="1_5w5ou"]
 
 [node name="ScriptDropdown" type="Control"]
 custom_minimum_size = Vector2(128, 40)
@@ -17,14 +17,13 @@ offset_right = 128.0
 offset_bottom = 40.0
 
 [node name="Intellisense" type="ItemList" parent="."]
-layout_mode = 0
 offset_top = 40.0
 offset_right = 128.0
 offset_bottom = 120.0
 allow_rmb_select = true
 
 [node name="DropdownButton" type="Button" parent="."]
-layout_mode = 0
+visible = false
 offset_left = 96.0
 offset_top = 8.0
 offset_right = 120.0

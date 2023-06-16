@@ -4,18 +4,21 @@
 
 [node name="LineScroll" type="ScrollContainer"]
 clip_contents = false
-custom_minimum_size = Vector2(320, 0)
-offset_right = 320.0
-offset_bottom = 53.0
+custom_minimum_size = Vector2(310, 41)
+offset_right = 290.0
+offset_bottom = 41.0
+mouse_filter = 2
 vertical_scroll_mode = 3
 script = ExtResource("1_dhjl1")
 
 [node name="Line" type="HBoxContainer" parent="."]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="ValidityIndicator" type="ColorRect" parent="Line"]
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
+mouse_filter = 2
 
 [node name="DeleteLineButton" type="Button" parent="Line"]
 layout_mode = 2
@@ -23,6 +26,7 @@ text = "X"
 
 [node name="Blocks" type="HBoxContainer" parent="Line"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="GrowLineButton" type="Button" parent="Line"]
 custom_minimum_size = Vector2(0, 40)

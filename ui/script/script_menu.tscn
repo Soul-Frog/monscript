@@ -3,11 +3,15 @@
 [ext_resource type="Script" path="res://ui/script/script_menu.gd" id="1_mpyhe"]
 
 [node name="ScriptHScroll" type="ScrollContainer"]
-offset_right = 320.0
+offset_right = 319.0
 offset_bottom = 180.0
+mouse_filter = 2
 horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
 script = ExtResource("1_mpyhe")
 
 [node name="Lines" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(310, 180)
 layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
