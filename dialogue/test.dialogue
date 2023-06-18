@@ -1,0 +1,24 @@
+~ test
+
+#Nathan: [[Hi|Hello|Howdy]], this is some dialogue.
+#Nathan: Here are some choices.
+#- First one
+#	Nathan: You picked the first one.
+#- Second one
+#	Nathan: You picked the second one.
+#- Start again => this_is_a_node_title
+#- End the conversation => END
+#Nathan: For more information see the online documentation.
+
+Blue Hat: [[Hi|Hello|Howdy]], this is a test dialogue. Select an option below:
+- Option One
+	Blue Hat: You selected "Option One"
+- Option 2
+	Blue Hat: You selected "Option 2"
+- Start Again => test
+- End the Convo
+	Blue Hat: Goodbye!
+	=> END
+Blue Hat: You have successfully made a selection, goodbye!
+
+=> END
