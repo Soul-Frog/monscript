@@ -9,7 +9,7 @@ func _add_new_line() -> void:
 	line.line_started.connect(_on_line_started)
 	line.line_deleted.connect(_on_line_deleted)
 	$Lines.add_child(line)
-
+	
 func _on_line_started() -> void:
 	_add_new_line()
 

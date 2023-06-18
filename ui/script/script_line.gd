@@ -43,7 +43,6 @@ func _on_grow_line_button_pressed() -> void:
 
 func _add_block(block_type: ScriptData.Block.Type) -> void:
 	var new_block: ScriptBlock = load("res://ui/script/script_block.tscn").instantiate()
-	new_block.name = "IF"
 	new_block.assign_type(block_type)
 	new_block.text_changed.connect(_on_block_text_changed)
 	$Line/Blocks.add_child(new_block)

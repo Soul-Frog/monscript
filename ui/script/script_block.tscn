@@ -16,9 +16,10 @@ layout_mode = 0
 offset_right = 128.0
 offset_bottom = 40.0
 
-[node name="Intellisense" type="ItemList" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Intellisense" type="ItemList" parent="CanvasLayer"]
 z_index = 1
-layout_mode = 0
 offset_top = 40.0
 offset_right = 128.0
 offset_bottom = 120.0
@@ -35,5 +36,5 @@ offset_bottom = 32.0
 [connection signal="focus_entered" from="TextEdit" to="." method="_on_text_edit_focus_entered"]
 [connection signal="focus_exited" from="TextEdit" to="." method="_on_text_edit_focus_exited"]
 [connection signal="text_changed" from="TextEdit" to="." method="_on_text_changed"]
-[connection signal="item_clicked" from="Intellisense" to="." method="_on_intellisense_item_clicked"]
+[connection signal="item_clicked" from="CanvasLayer/Intellisense" to="." method="_on_intellisense_item_clicked"]
 [connection signal="button_down" from="DropdownButton" to="." method="_on_dropdown_button_clicked"]
