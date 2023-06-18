@@ -27,7 +27,7 @@ enum BattleEndCondition {
 }
 
 # returns one of the items in the input array at random
-func choose_one(options: Array):
+func choose_one(options: Array[Variant]):
 	assert(options.size() != 0, "No options in array!")
 	return options[RNG.randi_range(0, options.size()-1)]
 

@@ -11,13 +11,13 @@ const LINE_DELIMITER := "\n"		# all lines are separated by
 const BLOCK_DELIMITER := " "		# the 3 blocks on a line are separated by
 
 class MonScript:
-	var lines: Array
+	var lines: Array[Line]
 	
 	func _init(string: String) -> void:
 		lines = []
 		_from_string(string.strip_edges())
 	
-	func execute(mon: BattleMon, friends: Array, foes: Array, animator: BattleAnimator) -> void:
+	func execute(mon: BattleMon, friends: Array[BattleMon], foes: Array[BattleMon], animator: BattleAnimator) -> void:
 		assert(not mon.is_defeated())
 		assert(not friends.is_empty())
 		assert(not foes.is_empty())
@@ -74,7 +74,7 @@ class Line:
 		else:
 			assert(doBlock.next_block_type == Block.Type.NONE, "This DO should have a TO!")
 
-	func try_execute(mon: BattleMon, friends: Array, foes: Array, animator: BattleAnimator) -> bool:
+	func try_execute(mon: BattleMon, friends: Array[BattleMon], foes: Array[BattleMon], animator: BattleAnimator) -> bool:
 		# check if this line should be executed
 		var conditionIsMet = ifBlock.function.call(mon, friends, foes)
 		if conditionIsMet:
