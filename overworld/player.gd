@@ -12,6 +12,8 @@ var escaped_recently = false
 var orientation = Vector2.ZERO
 var dashing = false
 
+var can_move = true
+
 func _input(event):
 	if event.is_action_released("dash"):
 		dashing = true
@@ -31,8 +33,9 @@ func update_velocity(_delta):
 		orientation = input_direction
 
 func _physics_process(delta):
-	update_velocity(delta)
-	move_and_slide()
+	if can_move:
+		update_velocity(delta)
+		move_and_slide()
 
 func _on_area_2d_body_entered(overworld_encounter_collided_with):
 	if not is_invincible: 
@@ -48,3 +51,15 @@ func activate_invincibility(battle_end_condition):
 	Global.call_after_delay(length, self, func(player): 
 		if is_instance_valid(player):
 			is_invincible = false)
+
+func enable_movement():
+	print("enabled")
+	can_move = true
+	$Area2D.monitoring = true
+	$Area2D.monitorable = true
+	
+func disable_movement():
+	print("disabled")
+	can_move = false
+	$Area2D.monitoring = false
+	$Area2D.monitorable = false
