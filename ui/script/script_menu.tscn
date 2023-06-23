@@ -1,18 +1,27 @@
-[gd_scene load_steps=2 format=3 uid="uid://tika2fq8xnfc"]
+[gd_scene load_steps=2 format=3 uid="uid://bivwnc3i5hpa2"]
 
-[ext_resource type="Script" path="res://ui/script/script_window.gd" id="1_4y7fi"]
+[ext_resource type="Script" path="res://ui/script/script_menu.gd" id="1_mpyhe"]
 
 [node name="ScriptMenu" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mpyhe")
+
+[node name="MenuBar" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
 
 [node name="Window" type="ScrollContainer" parent="."]
 layout_mode = 2
+size_flags_vertical = 3
 mouse_filter = 2
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
-script = ExtResource("1_4y7fi")
 
 [node name="Lines" type="VBoxContainer" parent="Window"]
-custom_minimum_size = Vector2(310, 180)
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
