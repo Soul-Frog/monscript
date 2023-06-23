@@ -1,16 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://da77xvco6xw0l"]
+[gd_scene load_steps=2 format=3 uid="uid://tika2fq8xnfc"]
 
-[ext_resource type="Script" path="res://ui/script/script_menu.gd" id="1_mpyhe"]
+[ext_resource type="Script" path="res://ui/script/script_window.gd" id="1_4y7fi"]
 
-[node name="ScriptHScroll" type="ScrollContainer"]
-offset_right = 319.0
-offset_bottom = 180.0
+[node name="ScriptMenu" type="VBoxContainer"]
+
+[node name="Window" type="ScrollContainer" parent="."]
+layout_mode = 2
 mouse_filter = 2
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
-script = ExtResource("1_mpyhe")
+script = ExtResource("1_4y7fi")
 
-[node name="Lines" type="VBoxContainer" parent="."]
+[node name="Lines" type="VBoxContainer" parent="Window"]
 custom_minimum_size = Vector2(310, 180)
 layout_mode = 2
 size_flags_horizontal = 0

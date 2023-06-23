@@ -17,7 +17,7 @@ func setup():
 	for i in Global.MONS_PER_TEAM:
 		var mon = PlayerData.team[i]
 		if mon != null:
-			var m = load(mon.get_scene()).instantiate()
+			var m = load(mon.get_scene_path()).instantiate()
 			m.position = MON_POSITIONS[i]
 			$Mons.add_child(m)
 

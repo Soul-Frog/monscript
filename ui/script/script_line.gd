@@ -53,11 +53,24 @@ func _on_delete_line_button_pressed() -> void:
 
 func _on_block_text_changed() -> void:
 	_update_controls()
+	_try_shrink()
 
 func _update_controls() -> void:
 	_update_grow_line_button()
 	_update_delete_line_button()
 	_update_validity_indicator()
+
+# Checks if the line needs to be shrunk, and shrinks if needed
+# The case where this happens is if the middle (DO) block changes
+# from a block with a TO to a block without a TO.
+func _try_shrink() -> void:
+	for i in range(0, $Line/Blocks.get_child_count() - 1):
+		var block: ScriptBlock = $Line/Blocks.get_child(i) 
+		# if this block is valid and has no next block, delete all remaining blocks
+		if block.is_valid() and block.next_block_type() == ScriptData.Block.Type.NONE:
+			for j in range(i+1, $Line/Blocks.get_child_count()):
+				$Line/Blocks.get_child(j).queue_free()
+			break # don't loop over deleted blocks
 
 func _update_validity_indicator() -> void:
 	$Line/ValidityIndicator.visible = $Line/Blocks.get_children().size() != 0

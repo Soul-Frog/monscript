@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://dnny7onw5aaka"]
+
+[ext_resource type="Script" path="res://ui/script/script_window.gd" id="1_43388"]
+
+[node name="Window" type="ScrollContainer"]
+offset_right = 319.0
+offset_bottom = 180.0
+mouse_filter = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+script = ExtResource("1_43388")
+
+[node name="Lines" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(310, 180)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0

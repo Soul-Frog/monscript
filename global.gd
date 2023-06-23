@@ -63,7 +63,7 @@ func p(node: Node, s: String) -> void:
 
 # returns a string of s repeated n times
 func repeat_str(s: String, n: int) -> String:
-	assert(n >= 1, "Can't repeat a non-positive number of times!")
+	assert(n >= 0, "Can't repeat a negative number of times!")
 	var r = ""
 	for i in range(0, n):
 		r += s

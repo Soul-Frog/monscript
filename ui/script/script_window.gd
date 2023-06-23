@@ -18,3 +18,9 @@ func _on_line_deleted(line: ScriptLine) -> void:
 	$Lines.remove_child(line)
 	if $Lines.get_child_count() == 0:
 		_add_new_line()
+
+func export_script() -> void:
+	pass
+
+func import_script(script: ScriptData.MonScript) -> void:
+	pass
