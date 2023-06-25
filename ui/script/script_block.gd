@@ -39,9 +39,11 @@ func _ready() -> void:
 
 func import(block: ScriptData.Block) -> void:
 	$TextEdit.text = block.as_string()
+	$TextEdit.emit_signal("text_changed")
+	assert(is_valid(), "Imported block is invalid?")
 
-func _on_dropdown_button_clicked() -> void:
-	$CanvasLayer/Intellisense.visible = not $CanvasLayer/Intellisense.visible
+func export() -> String:
+	return $TextEdit.text
 
 func _on_intellisense_item_clicked(index: int, _at_position: Vector2, _mouse_button_index: int) -> void:
 	var selected_suggestion = $CanvasLayer/Intellisense.get_item_text(index)

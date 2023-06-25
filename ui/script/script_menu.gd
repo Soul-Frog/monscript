@@ -3,7 +3,17 @@ extends VBoxContainer
 
 signal closed
 
+var monEdited
+
 func setup(mon: MonData.Mon) -> void:
+	self.monEdited = mon
+	
+	$MenuBar/Left/MonNameLabel.text = mon.get_name()
+	
+	# clear previous data
+	for line in $Window/Lines.get_children():
+		line.queue_free()
+	
 	var script: ScriptData.MonScript = mon.get_monscript()
 	_import(script)
 
@@ -28,9 +38,9 @@ func _on_line_deleted(line: ScriptLine) -> void:
 func _on_line_edited(line: ScriptLine):
 	$MenuBar/Middle/Save.disabled = not line.is_valid()
 
-func _export() -> ScriptData.MonScript:
+func _export_script_to_mon() -> void:
 	# TODO
-	return null
+	pass
 
 func _import(script: ScriptData.MonScript) -> void:
 	for line in script.lines:
@@ -38,8 +48,7 @@ func _import(script: ScriptData.MonScript) -> void:
 		new_line.import(line)
 
 func _on_save_pressed() -> void:
-	#TODO assert script is valid
-	#_export_script()
+	_export_script_to_mon()
 	emit_signal("closed")
 
 func _on_exit_pressed() -> void:

@@ -19,6 +19,17 @@ func import(line: ScriptData.Line):
 	for block in line.blocks:
 		var added_block: ScriptBlock = _add_block(block.type)
 		added_block.import(block)
+	emit_signal("line_edited", self)
+	assert(is_valid(), "Imported line is invalid?")
+
+func export() -> String:
+	var s := ""
+	for i in range(0, $Line/Blocks.get_child_count()):
+		if i != 0: # don't add delimiter to empty string; add after each element but last
+			s += ScriptData.BLOCK_DELIMITER
+		var block: ScriptBlock = $Line/Blocks.get_child(i)
+		s += block.export()
+	return s
 
 # returns if this is a fully complete and valid line
 func is_valid():
