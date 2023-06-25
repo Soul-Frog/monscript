@@ -76,8 +76,8 @@ func _on_text_changed() -> void:
 			$TextEdit.remove_theme_color_override("font_color")
 
 func _update_intellisense() -> void:
-	if(get_parent() != null): # horrible hack
-		var translate = get_parent().position + self.position
+	if(get_parent() != null): # horrible terrible hack
+		var translate = get_parent().position + self.position + Vector2(0, 33)
 		$CanvasLayer.transform = Transform2D(Vector2(1, 0), Vector2(0, 1), translate)
 	
 	$CanvasLayer/Intellisense.clear()

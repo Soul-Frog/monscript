@@ -7,6 +7,9 @@ signal line_started
 # emitted when the line is deleted
 signal line_deleted
 
+# emitted whenever a block in this line is edited
+signal line_edited
+
 func _ready() -> void:
 	_recolor_font($Line/GrowLineButton, Global.COLOR_GREEN)
 	_recolor_font($Line/DeleteLineButton, Global.COLOR_RED)
@@ -18,6 +21,10 @@ func _recolor_font(node: Node, color: Color) -> void:
 	node.add_theme_color_override("font_focus_color", color)
 	node.add_theme_color_override("font_disabled_color", color)
 	node.add_theme_color_override("font_pressed_color", color)
+
+# returns if this is a fully complete and valid line
+func is_valid():
+	return _is_each_block_valid() and _last_block().next_block_type() == ScriptData.Block.Type.NONE
 
 func _is_each_block_valid() -> bool:
 	for child in $Line/Blocks.get_children():
@@ -54,6 +61,7 @@ func _on_delete_line_button_pressed() -> void:
 func _on_block_text_changed() -> void:
 	_update_controls()
 	_try_shrink()
+	emit_signal("line_edited", self)
 
 func _update_controls() -> void:
 	_update_grow_line_button()

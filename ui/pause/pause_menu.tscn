@@ -1,24 +1,50 @@
-[gd_scene load_steps=3 format=3 uid="uid://cc0ulntfqko8i"]
+[gd_scene load_steps=3 format=3 uid="uid://wvcujwhuslip"]
 
-[ext_resource type="Script" path="res://ui/pause_menu.gd" id="1_17pct"]
-[ext_resource type="PackedScene" uid="uid://dic4krsgbv40j" path="res://mons/magnetfrog.tscn" id="2_y8jyx"]
+[ext_resource type="Script" path="res://ui/pause/pause_menu.gd" id="1_2voed"]
+[ext_resource type="PackedScene" uid="uid://dic4krsgbv40j" path="res://mons/magnetfrog.tscn" id="2_oypn0"]
 
 [node name="PauseMenu" type="Node2D"]
-script = ExtResource("1_17pct")
+script = ExtResource("1_2voed")
 
 [node name="Mons" type="Node" parent="."]
 
-[node name="MONPLACEHOLDER1" parent="Mons" instance=ExtResource("2_y8jyx")]
+[node name="MONPLACEHOLDER1" parent="Mons" instance=ExtResource("2_oypn0")]
 position = Vector2(64, 40)
 
-[node name="MONPLACEHOLDER2" parent="Mons" instance=ExtResource("2_y8jyx")]
+[node name="MONPLACEHOLDER2" parent="Mons" instance=ExtResource("2_oypn0")]
 position = Vector2(128, 40)
 
-[node name="MONPLACEHOLDER3" parent="Mons" instance=ExtResource("2_y8jyx")]
+[node name="MONPLACEHOLDER3" parent="Mons" instance=ExtResource("2_oypn0")]
 position = Vector2(192, 40)
 
-[node name="MONPLACEHOLDER4" parent="Mons" instance=ExtResource("2_y8jyx")]
+[node name="MONPLACEHOLDER4" parent="Mons" instance=ExtResource("2_oypn0")]
 position = Vector2(256, 40)
+
+[node name="MonEditButtons" type="Node" parent="."]
+
+[node name="MonEditButon1" type="Button" parent="MonEditButtons"]
+offset_left = 56.0
+offset_top = 64.0
+offset_right = 72.0
+offset_bottom = 72.0
+
+[node name="MonEditButton2" type="Button" parent="MonEditButtons"]
+offset_left = 120.0
+offset_top = 64.0
+offset_right = 136.0
+offset_bottom = 72.0
+
+[node name="MonEditButton3" type="Button" parent="MonEditButtons"]
+offset_left = 184.0
+offset_top = 64.0
+offset_right = 200.0
+offset_bottom = 72.0
+
+[node name="MonEditButton4" type="Button" parent="MonEditButtons"]
+offset_left = 248.0
+offset_top = 64.0
+offset_right = 264.0
+offset_bottom = 72.0
 
 [node name="TeamsButton" type="Button" parent="."]
 offset_left = 16.0

@@ -14,6 +14,36 @@ script = ExtResource("1_mpyhe")
 custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
 
+[node name="Left" type="BoxContainer" parent="MenuBar"]
+custom_minimum_size = Vector2(106, 0)
+layout_mode = 2
+
+[node name="MonNameLabel" type="Label" parent="MenuBar/Left"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Mon Name"
+
+[node name="Middle" type="BoxContainer" parent="MenuBar"]
+custom_minimum_size = Vector2(106, 0)
+layout_mode = 2
+alignment = 1
+
+[node name="Save" type="Button" parent="MenuBar/Middle"]
+layout_mode = 2
+size_flags_horizontal = 0
+disabled = true
+text = "Save"
+
+[node name="Right" type="BoxContainer" parent="MenuBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="Exit" type="Button" parent="MenuBar/Right"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "X"
+
 [node name="Window" type="ScrollContainer" parent="."]
 layout_mode = 2
 size_flags_vertical = 3
@@ -25,3 +55,6 @@ vertical_scroll_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[connection signal="pressed" from="MenuBar/Middle/Save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="MenuBar/Right/Exit" to="." method="_on_exit_pressed"]
