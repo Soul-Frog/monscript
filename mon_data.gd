@@ -85,6 +85,9 @@ class Mon:
 	func get_monscript() -> ScriptData.MonScript:
 		return _monscript
 	
+	func set_monscript(script: ScriptData.MonScript) -> void:
+		_monscript = script
+	
 	func get_level() -> int:
 		return _level
 	
