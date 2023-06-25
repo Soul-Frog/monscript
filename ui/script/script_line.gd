@@ -15,29 +15,14 @@ func _ready() -> void:
 	_recolor_font($Line/DeleteLineButton, Global.COLOR_RED)
 	_update_controls()
 
-func _recolor_font(node: Node, color: Color) -> void:
-	node.add_theme_color_override("font_color", color)
-	node.add_theme_color_override("font_hover_color", color)
-	node.add_theme_color_override("font_focus_color", color)
-	node.add_theme_color_override("font_disabled_color", color)
-	node.add_theme_color_override("font_pressed_color", color)
+func import(line: ScriptData.Line):
+	for block in line.blocks:
+		var added_block: ScriptBlock = _add_block(block.type)
+		added_block.import(block)
 
 # returns if this is a fully complete and valid line
 func is_valid():
 	return _is_each_block_valid() and _last_block().next_block_type() == ScriptData.Block.Type.NONE
-
-func _is_each_block_valid() -> bool:
-	for child in $Line/Blocks.get_children():
-		if child == $Line/GrowLineButton:
-			continue
-		if not child.is_valid():
-			return false
-	return true
-
-func _last_block() -> ScriptBlock:
-	if $Line/Blocks.get_children().size() == 0:
-		return null
-	return $Line/Blocks.get_child($Line/Blocks.get_children().size() - 1)
 
 func _on_grow_line_button_pressed() -> void:
 	var previous_block: ScriptBlock = _last_block()
@@ -48,12 +33,26 @@ func _on_grow_line_button_pressed() -> void:
 		emit_signal("line_started")
 	_update_controls()
 
-func _add_block(block_type: ScriptData.Block.Type) -> void:
+func _is_each_block_valid() -> bool:
+	for child in $Line/Blocks.get_children():
+		if child == $Line/GrowLineButton:
+			continue
+		if not child.is_valid():
+			return false
+	return true
+
+func _add_block(block_type: ScriptData.Block.Type) -> ScriptBlock:
 	var new_block: ScriptBlock = load("res://ui/script/script_block.tscn").instantiate()
 	new_block.assign_type(block_type)
 	new_block.text_changed.connect(_on_block_text_changed)
 	$Line/Blocks.add_child(new_block)
 	_update_controls()
+	return new_block
+
+func _last_block() -> ScriptBlock:
+	if $Line/Blocks.get_children().size() == 0:
+		return null
+	return $Line/Blocks.get_child($Line/Blocks.get_children().size() - 1)
 
 func _on_delete_line_button_pressed() -> void:
 	emit_signal("line_deleted", self)
@@ -95,3 +94,10 @@ func _update_grow_line_button() -> void:
 
 func _update_delete_line_button() -> void:
 	$Line/DeleteLineButton.visible = $Line/Blocks.get_children().size() != 0
+
+func _recolor_font(node: Node, color: Color) -> void:
+	node.add_theme_color_override("font_color", color)
+	node.add_theme_color_override("font_hover_color", color)
+	node.add_theme_color_override("font_focus_color", color)
+	node.add_theme_color_override("font_disabled_color", color)
+	node.add_theme_color_override("font_pressed_color", color)

@@ -109,6 +109,9 @@ class Block:
 		self.name = blockName
 		self.next_block_type = nextBlockType
 		self.function = blockFunction
+	
+	func as_string() -> String:
+		return name
 
 # utility function used to search a list of blocks for a given block by name
 func get_block_by_name(block_name: String) -> Block:

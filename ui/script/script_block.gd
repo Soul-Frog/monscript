@@ -37,6 +37,9 @@ func assign_type(block_type: ScriptData.Block.Type) -> void:
 func _ready() -> void:
 	$CanvasLayer/Intellisense.visible = false
 
+func import(block: ScriptData.Block) -> void:
+	$TextEdit.text = block.as_string()
+
 func _on_dropdown_button_clicked() -> void:
 	$CanvasLayer/Intellisense.visible = not $CanvasLayer/Intellisense.visible
 

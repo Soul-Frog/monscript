@@ -31,7 +31,6 @@ alignment = 1
 [node name="Save" type="Button" parent="MenuBar/Middle"]
 layout_mode = 2
 size_flags_horizontal = 0
-disabled = true
 text = "Save"
 
 [node name="Right" type="BoxContainer" parent="MenuBar"]

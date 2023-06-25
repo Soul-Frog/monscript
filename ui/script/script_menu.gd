@@ -3,18 +3,17 @@ extends VBoxContainer
 
 signal closed
 
-func _ready() -> void:
-	_add_new_line()
-
 func setup(mon: MonData.Mon) -> void:
-	pass
+	var script: ScriptData.MonScript = mon.get_monscript()
+	_import(script)
 
-func _add_new_line() -> void:
+func _add_new_line() -> ScriptLine:
 	var line: ScriptLine = load("res://ui/script/script_line.tscn").instantiate()
 	line.line_started.connect(_on_line_started)
 	line.line_deleted.connect(_on_line_deleted)
 	line.line_edited.connect(_on_line_edited)
 	$Window/Lines.add_child(line)
+	return line
 	
 func _on_line_started() -> void:
 	_add_new_line()
@@ -29,11 +28,14 @@ func _on_line_deleted(line: ScriptLine) -> void:
 func _on_line_edited(line: ScriptLine):
 	$MenuBar/Middle/Save.disabled = not line.is_valid()
 
-func _export_script() -> ScriptData.MonScript:
+func _export() -> ScriptData.MonScript:
+	# TODO
 	return null
 
-func _import_script(script: ScriptData.MonScript) -> void:
-	pass
+func _import(script: ScriptData.MonScript) -> void:
+	for line in script.lines:
+		var new_line: ScriptLine = _add_new_line()
+		new_line.import(line)
 
 func _on_save_pressed() -> void:
 	#TODO assert script is valid
