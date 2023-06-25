@@ -1,5 +1,13 @@
 extends Node2D
 
+# emitted when the script menu should be opened, sends a Mon
+signal script_menu_opened
+
+signal teams_menu_opened
+signal database_menu_opened
+signal settings_menu_opened
+signal inventory_menu_opened
+
 var MON_POSITIONS: Array[Vector2] = []
 var MON_EDIT_BUTTON_POSITIONS: Array[Vector2] = []
 
@@ -31,15 +39,35 @@ func setup() -> void:
 
 func _on_teams_button_pressed() -> void:
 	print("Teams!")
+	emit_signal("teams_menu_opened")
 
 func _on_quicksave_button_pressed() -> void:
 	print("Quicksave!")
 
 func _on_database_button_pressed() -> void:
 	print("Database!")
+	emit_signal("database_menu_opened")
 
 func _on_settings_button_pressed() -> void:
 	print("Settings!")
+	emit_signal("settings_menu_opened")
 
 func _on_inventory_button_pressed() -> void:
 	print("Inventory!")
+	emit_signal("inventory_menu_opened")
+
+func _on_mon_edit_button_1_pressed() -> void:
+	assert(PlayerData.team[0] != null, "Shouldn't be possible to click this...")
+	emit_signal("script_menu_opened", PlayerData.team[0])
+
+func _on_mon_edit_button_2_pressed():
+	assert(PlayerData.team[1] != null, "Shouldn't be possible to click this...")
+	emit_signal("script_menu_opened", PlayerData.team[1])
+
+func _on_mon_edit_button_3_pressed():
+	assert(PlayerData.team[2] != null, "Shouldn't be possible to click this...")
+	emit_signal("script_menu_opened", PlayerData.team[2])
+
+func _on_mon_edit_button_4_pressed():
+	assert(PlayerData.team[3] != null, "Shouldn't be possible to click this...")
+	emit_signal("script_menu_opened",  PlayerData.team[3])

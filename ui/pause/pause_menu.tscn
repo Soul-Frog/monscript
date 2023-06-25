@@ -22,7 +22,7 @@ position = Vector2(256, 40)
 
 [node name="MonEditButtons" type="Node" parent="."]
 
-[node name="MonEditButon1" type="Button" parent="MonEditButtons"]
+[node name="MonEditButton1" type="Button" parent="MonEditButtons"]
 offset_left = 56.0
 offset_top = 64.0
 offset_right = 72.0
@@ -81,6 +81,10 @@ offset_right = 304.0
 offset_bottom = 167.0
 text = "Settings"
 
+[connection signal="pressed" from="MonEditButtons/MonEditButton1" to="." method="_on_mon_edit_button_1_pressed"]
+[connection signal="pressed" from="MonEditButtons/MonEditButton2" to="." method="_on_mon_edit_button_2_pressed"]
+[connection signal="pressed" from="MonEditButtons/MonEditButton3" to="." method="_on_mon_edit_button_3_pressed"]
+[connection signal="pressed" from="MonEditButtons/MonEditButton4" to="." method="_on_mon_edit_button_4_pressed"]
 [connection signal="button_down" from="TeamsButton" to="." method="_on_teams_button_pressed"]
 [connection signal="button_down" from="QuicksaveButton" to="." method="_on_quicksave_button_pressed"]
 [connection signal="button_down" from="DatabaseButton" to="." method="_on_database_button_pressed"]

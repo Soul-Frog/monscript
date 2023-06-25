@@ -1,11 +1,13 @@
 class_name ScriptUI
 extends VBoxContainer
 
-signal exited
-signal saved
+signal closed
 
 func _ready() -> void:
 	_add_new_line()
+
+func setup(mon: MonData.Mon) -> void:
+	pass
 
 func _add_new_line() -> void:
 	var line: ScriptLine = load("res://ui/script/script_line.tscn").instantiate()
@@ -30,12 +32,13 @@ func _on_line_edited(line: ScriptLine):
 func _export_script() -> ScriptData.MonScript:
 	return null
 
-func import_script(script: ScriptData.MonScript) -> void:
+func _import_script(script: ScriptData.MonScript) -> void:
 	pass
-	
-func _on_save_pressed():
-	#TODO assert script is valid
-	emit_signal("saved", _export_script())
 
-func _on_exit_pressed():
-	emit_signal("exited")
+func _on_save_pressed() -> void:
+	#TODO assert script is valid
+	#_export_script()
+	emit_signal("closed")
+
+func _on_exit_pressed() -> void:
+	emit_signal("closed")
