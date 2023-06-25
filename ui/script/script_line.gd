@@ -1,4 +1,4 @@
-class_name ScriptLine
+class_name UIScriptLine
 extends ScrollContainer
 
 # emitted when the first block is created on this line
@@ -17,7 +17,7 @@ func _ready() -> void:
 
 func import(line: ScriptData.Line):
 	for block in line.blocks:
-		var added_block: ScriptBlock = _add_block(block.type)
+		var added_block: UIScriptBlock = _add_block(block.type)
 		added_block.import(block)
 	emit_signal("line_edited", self)
 	assert(is_valid(), "Imported line is invalid?")
@@ -27,7 +27,7 @@ func export() -> String:
 	for i in range(0, $Line/Blocks.get_child_count()):
 		if i != 0: # don't add delimiter to empty string; add after each element but last
 			s += ScriptData.BLOCK_DELIMITER
-		var block: ScriptBlock = $Line/Blocks.get_child(i)
+		var block: UIScriptBlock = $Line/Blocks.get_child(i)
 		s += block.export()
 	return s
 
@@ -36,7 +36,7 @@ func is_valid():
 	return _is_each_block_valid() and _last_block().next_block_type() == ScriptData.Block.Type.NONE
 
 func _on_grow_line_button_pressed() -> void:
-	var previous_block: ScriptBlock = _last_block()
+	var previous_block: UIScriptBlock = _last_block()
 	if previous_block != null:
 		_add_block(previous_block.next_block_type())
 	else:
@@ -52,15 +52,15 @@ func _is_each_block_valid() -> bool:
 			return false
 	return true
 
-func _add_block(block_type: ScriptData.Block.Type) -> ScriptBlock:
-	var new_block: ScriptBlock = load("res://ui/script/script_block.tscn").instantiate()
+func _add_block(block_type: ScriptData.Block.Type) -> UIScriptBlock:
+	var new_block: UIScriptBlock = load("res://ui/script/script_block.tscn").instantiate()
 	new_block.assign_type(block_type)
 	new_block.text_changed.connect(_on_block_text_changed)
 	$Line/Blocks.add_child(new_block)
 	_update_controls()
 	return new_block
 
-func _last_block() -> ScriptBlock:
+func _last_block() -> UIScriptBlock:
 	if $Line/Blocks.get_children().size() == 0:
 		return null
 	return $Line/Blocks.get_child($Line/Blocks.get_children().size() - 1)
@@ -83,7 +83,7 @@ func _update_controls() -> void:
 # from a block with a TO to a block without a TO.
 func _try_shrink() -> void:
 	for i in range(0, $Line/Blocks.get_child_count() - 1):
-		var block: ScriptBlock = $Line/Blocks.get_child(i) 
+		var block: UIScriptBlock = $Line/Blocks.get_child(i) 
 		# if this block is valid and has no next block, delete all remaining blocks
 		if block.is_valid() and block.next_block_type() == ScriptData.Block.Type.NONE:
 			for j in range(i+1, $Line/Blocks.get_child_count()):

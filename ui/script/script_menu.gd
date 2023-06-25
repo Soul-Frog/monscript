@@ -1,4 +1,4 @@
-class_name ScriptUI
+class_name UIScriptMenu
 extends VBoxContainer
 
 signal closed
@@ -17,8 +17,8 @@ func setup(mon: MonData.Mon) -> void:
 	var script: ScriptData.MonScript = mon.get_monscript()
 	_import(script)
 
-func _add_new_line() -> ScriptLine:
-	var line: ScriptLine = load("res://ui/script/script_line.tscn").instantiate()
+func _add_new_line() -> UIScriptLine:
+	var line: UIScriptLine = load("res://ui/script/script_line.tscn").instantiate()
 	line.line_started.connect(_on_line_started)
 	line.line_deleted.connect(_on_line_deleted)
 	line.line_edited.connect(_on_line_edited)
@@ -28,14 +28,14 @@ func _add_new_line() -> ScriptLine:
 func _on_line_started() -> void:
 	_add_new_line()
 
-func _on_line_deleted(line: ScriptLine) -> void:
+func _on_line_deleted(line: UIScriptLine) -> void:
 	line.queue_free()
 	$Window/Lines.remove_child(line)
 	if $Window/Lines.get_child_count() == 0:
 		_add_new_line()
 	$MenuBar/Middle/Save.disabled = not line.is_valid()
 
-func _on_line_edited(line: ScriptLine):
+func _on_line_edited(line: UIScriptLine):
 	$MenuBar/Middle/Save.disabled = not line.is_valid()
 
 func _export_script_to_mon() -> void:
@@ -57,7 +57,7 @@ func _export_script_to_mon() -> void:
 
 func _import(script: ScriptData.MonScript) -> void:
 	for line in script.lines:
-		var new_line: ScriptLine = _add_new_line()
+		var new_line: UIScriptLine = _add_new_line()
 		new_line.import(line)
 
 func _on_save_pressed() -> void:

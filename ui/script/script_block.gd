@@ -1,4 +1,4 @@
-class_name ScriptBlock
+class_name UIScriptBlock
 extends Control
 
 signal text_changed
