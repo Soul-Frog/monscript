@@ -49,6 +49,20 @@ func delete_file(file_path: String) -> void:
 func does_file_exist(file_path: String) -> bool:
 	return FileAccess.file_exists(file_path)
 
+# returns a list of all files in a directory
+func files_in_folder(directory: String) -> Array:
+	return DirAccess.get_files_at(directory)
+
+# returns a list of all file paths in a given directory with a certain extension
+func files_in_folder_by_extension(directory: String, extension: String) -> Array:
+	var out := []
+	
+	for file in files_in_folder(directory):
+		if file.ends_with(extension):
+			out.append(file)
+	
+	return out 
+
 # call a given function after a delay
 # this function is very dangerous, make sure you know what you are doing.
 # often your function will need to check if that object it originated from

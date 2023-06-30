@@ -20,32 +20,32 @@ const ACTION_POINTS_PER_TURN = 100
 
 # The underlying Mon Object this battle mon scene represents
 # Set this with init_mon before doing anything else with this scene
-var base_mon = null
+var base_mon: MonData.Mon = null
 
 # current action points - increases by speed each tick
 # when this reaches 100, signals to take a turn
-var action_points = 0
+var action_points := 0
 
-var is_defending = false
-var escaped_from_battle = false
+var is_defending := false
+var escaped_from_battle := false
 
 # whether this mon's AP should be reset after this action ends
 # for example, the pass action sets this to false
-var reset_AP_after_action = true
+var reset_AP_after_action := true
 
-var max_health = -1
-var current_health = -1
-var speed = -1
-var attack = -1
-var defense = -1
+var max_health := -1
+var current_health := -1
+var speed := -1
+var attack := -1
+var defense := -1
 
-var original_position
-var is_shaking = false
-var shake_timer
-const SHAKE_TIME = 0.10
-const shake_amount = 3
-const shake_speed = 0.8
-var shake_direction = 1
+var original_position: Vector2
+var is_shaking := false
+var shake_timer: Timer
+const SHAKE_TIME := 0.10
+const shake_amount := 3
+const shake_speed := 0.8
+var shake_direction := 1
 
 func _ready():
 	assert($Sprite.texture != null, "No sprite texture assigned in editor!")

@@ -1,21 +1,36 @@
 extends GutTest
 
-const EMPTY_FILE : String = "empty_file"
-const EMPTY_FILE_CONTENTS : String = ""
-const ABC_FILE : String = "abc_file"
-const ABC_FILE_CONTENTS : String = "A1BCD2EFG3\n\n4\nHI5J6KL789MNOP\nQRSTUV\tWX0YZ~"
-const SRC_FILE : String = "source_file"
-var SRC_FILE_CONTENTS : String = FileAccess.open("res://test/unit/test_global.gd", FileAccess.READ).get_as_text()
+const EMPTY_FILE := "empty_file"
+const EMPTY_FILE_CONTENTS := ""
+const ABC_FILE := "abc_file"
+const ABC_FILE_CONTENTS := "A1BCD2EFG3\n\n4\nHI5J6KL789MNOP\nQRSTUV\tWX0YZ~"
+const SRC_FILE := "source_file"
+var SRC_FILE_CONTENTS := FileAccess.open("res://test/unit/test_global.gd", FileAccess.READ).get_as_text()
+
+const TEST_DIR := "res://test_global_dir"
+const TXT_FILES = ["afile.txt", "anotherfile.txt", "lastfile.txt"]
+const SAV_FILES = ["save1.sav"]
 
 func before_all():
 	FileAccess.open(EMPTY_FILE, FileAccess.WRITE).store_string(EMPTY_FILE_CONTENTS)
 	FileAccess.open(ABC_FILE, FileAccess.WRITE).store_string(ABC_FILE_CONTENTS)
 	FileAccess.open(SRC_FILE, FileAccess.WRITE).store_string(SRC_FILE_CONTENTS)
+	DirAccess.make_dir_absolute(TEST_DIR)
+	for file in TXT_FILES:
+		print(TEST_DIR + "/" + file)
+		FileAccess.open(TEST_DIR + "/" + file, FileAccess.WRITE)
+	for file in SAV_FILES:
+		FileAccess.open(TEST_DIR + "/" + file, FileAccess.WRITE)
 
 func after_all():
 	DirAccess.remove_absolute(EMPTY_FILE)
 	DirAccess.remove_absolute(ABC_FILE)
 	DirAccess.remove_absolute(SRC_FILE)
+	for file in TXT_FILES:
+		DirAccess.remove_absolute(TEST_DIR + "/" + file)
+	for file in SAV_FILES:
+		DirAccess.remove_absolute(TEST_DIR + "/" + file)
+	DirAccess.remove_absolute(TEST_DIR)
 
 func test_choose_one():
 	# with one element, always return that element
@@ -56,6 +71,23 @@ func test_file_manip():
 	# now delete it and make sure it's gone
 	Global.delete_file(file)
 	assert_false(Global.does_file_exist(file))
+
+func test_files_in_folder():
+	var all: Array = Global.files_in_folder(TEST_DIR)
+	assert_eq(all.size(), TXT_FILES.size() + SAV_FILES.size())
+	
+	var txt: Array = Global.files_in_folder_by_extension(TEST_DIR, ".txt")
+	assert_eq(txt.size(), TXT_FILES.size())
+	for file in TXT_FILES:
+		assert_ne(txt.find(file), -1)
+	
+	var sav: Array = Global.files_in_folder_by_extension(TEST_DIR, ".sav")
+	assert_eq(sav.size(), SAV_FILES.size())
+	for file in SAV_FILES:
+		assert_ne(sav.find(file), -1)
+		
+	var none: Array = Global.files_in_folder_by_extension(TEST_DIR, ".ben")
+	assert_eq(none.size(), 0)
 
 class CallAfterDelayParam:
 	var wasCalled : bool = false
