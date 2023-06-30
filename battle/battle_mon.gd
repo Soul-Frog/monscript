@@ -16,7 +16,7 @@ signal action_completed
 # emitted after this mon's animation completes
 signal action_animation_completed
 
-const ACTION_POINTS_PER_TURN = 100
+const ACTION_POINTS_PER_TURN := 100
 
 # The underlying Mon Object this battle mon scene represents
 # Set this with init_mon before doing anything else with this scene
@@ -47,9 +47,7 @@ const shake_amount := 3
 const shake_speed := 0.8
 var shake_direction := 1
 
-func _ready():
-	assert($Sprite.texture != null, "No sprite texture assigned in editor!")
-	assert($CollisionHitbox.shape != null, "No collision shape assigned in editor!")
+func _ready() -> void:
 	original_position = position
 	shake_timer = Timer.new()
 	shake_timer.wait_time = SHAKE_TIME
@@ -57,7 +55,7 @@ func _ready():
 	add_child(shake_timer)
 
 # Initializes this battle_mon with an underlying mon object
-func init_mon(mon):
+func init_mon(mon: MonData.Mon) -> void:
 	base_mon = mon
 	current_health = mon.get_max_health()
 	max_health = mon.get_max_health()
@@ -74,7 +72,7 @@ func init_mon(mon):
 	_update_labels();
 
 # Called once for each mon by battle.gd at a regular time interval
-func battle_tick():
+func battle_tick() -> void:
 	assert(base_mon != null, "Didn't add a mon with init_mon!")
 	assert(attack != -1 and speed != -1 and defense != -1 and max_health != -1, "Stats were never initialized?")
 	if not is_defeated():
@@ -86,7 +84,7 @@ func battle_tick():
 			emit_signal("ready_to_take_action", self) # signal that it's time for this mon to act
 
 # Take a single turn in battle
-func take_action(friends, foes, animator):
+func take_action(friends: Array[BattleMon], foes: Array[BattleMon], animator: BattleAnimator) -> void:
 	assert(friends.size() != 0, "No friends?")
 	assert(foes.size() != 0, "No foes?")
 	is_defending = false
@@ -94,7 +92,7 @@ func take_action(friends, foes, animator):
 	# tell our script to go ahead and execute an action
 	base_mon.get_monscript().execute(self, friends, foes, animator)
 
-func alert_turn_over():
+func alert_turn_over() -> void:
 	assert(action_points == 100 or not reset_AP_after_action)
 	if reset_AP_after_action:
 		action_points = 0
@@ -103,13 +101,13 @@ func alert_turn_over():
 	_update_labels();
 	emit_signal("action_completed")
 
-func is_defeated():
+func is_defeated() -> bool:
 	assert(current_health >= 0, "Mon's health is somehow negative.")
 	return current_health == 0
 
 # Called when this mon is attacked
 # Damage taken is reduced by defense, then further divided by 2 if defending
-func take_damage(raw_damage):
+func take_damage(raw_damage: int) -> void:
 	var damage_taken = max(raw_damage - defense, 0)
 	if is_defending:
 		damage_taken /= 2
@@ -131,17 +129,17 @@ func take_damage(raw_damage):
 	
 	_update_labels();
 
-func _update_labels():
+func _update_labels() -> void:
 	$BattleComponents/ActionPointsBar.value = action_points
 	$BattleComponents/HealthBar.value = current_health
 
-func _process(delta):
+func _process(delta: float) -> void:
 	if is_shaking:
 		if position.x >= (original_position.x + shake_amount) or position.x <= (original_position.x - shake_amount):
 			shake_direction = -shake_direction
 		position.x += shake_direction * shake_speed
 
-func _stop_shaking():
+func _stop_shaking() -> void:
 	is_shaking = false
 	position = original_position
 	shake_direction = 1

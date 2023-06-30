@@ -1,16 +1,37 @@
 extends GutTest
 
-func before_each():
-	gut.p("ran setup", 2)
+const MON_SCENE_PATH := "res://mons/magnetfrog.tscn"
+const BATTLE_MON_SCRIPT := preload("res://battle/battle_mon.gd")
 
-func after_each():
-	gut.p("ran teardown", 2)
+# creates and returns a battlemon
+func make_battlemon() -> BattleMon:
+	var mon := MonData.create_mon(MonData.MonType.MAGNETFROG, 5)
+	var bmon = load(MON_SCENE_PATH).instantiate()
+	bmon.set_script(BATTLE_MON_SCRIPT)
+	for battle_component in bmon.get_node("BattleComponents").get_children():
+		battle_component.visible = true
+	bmon.init_mon(mon)
+	return bmon
 
-func before_all():
-	gut.p("ran run setup", 2)
+func test_make_battlemon():
+	var bmon = make_battlemon()
+	assert_not_null(bmon)
+	bmon.free()
 
-func after_all():
-	gut.p("ran run teardown", 2)
-
-func test_reality():
-	assert_true(true, "I sure hope so.")
+func test_battle_tick():
+	var sigcounter = TestingUtils.SignalCounter.new()
+	
+	var battlemon = make_battlemon()
+	battlemon.ready_to_take_action.connect(sigcounter.callback1)
+	
+	var speed = battlemon.speed
+	var ctr = 0
+	
+	while ctr < battlemon.ACTION_POINTS_PER_TURN:
+		battlemon.battle_tick()
+		ctr += speed
+	
+	assert_eq(sigcounter.count(), 1)
+	
+	sigcounter.free()
+	battlemon.free()

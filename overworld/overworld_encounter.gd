@@ -31,8 +31,6 @@ var target = Vector2.ZERO
 var mons = []
 
 func _ready():
-	assert($Sprite.texture != null, "No sprite texture assigned in editor!")
-	assert($CollisionHitbox.shape != null, "No collision hitbox shape assigned in editor!")	
 	assert(mon1Level >= 0 and mon1Level <= 64, "Illegal level for mon1!")
 	assert(mon2Level >= 0 and mon2Level <= 64, "Illegal level for mon2!")
 	assert(mon3Level >= 0 and mon3Level <= 64, "Illegal level for mon3!")

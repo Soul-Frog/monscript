@@ -16,7 +16,7 @@ enum BattleState {
 	FINISHED # this battle scene is over; it's ready for a call to clear_battle
 }
 
-const BATTLE_MON_SCRIPT = preload("res://battle/battle_mon.gd")
+const BATTLE_MON_SCRIPT := preload("res://battle/battle_mon.gd")
 
 @onready var timer = $Timer
 
