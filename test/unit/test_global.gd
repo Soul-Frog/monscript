@@ -76,17 +76,17 @@ func test_files_in_folder():
 	var all: Array = Global.files_in_folder(TEST_DIR)
 	assert_eq(all.size(), TXT_FILES.size() + SAV_FILES.size())
 	
-	var txt: Array = Global.files_in_folder_by_extension(TEST_DIR, ".txt")
+	var txt: Array = Global.files_in_folder_with_extension(TEST_DIR, ".txt")
 	assert_eq(txt.size(), TXT_FILES.size())
 	for file in TXT_FILES:
 		assert_ne(txt.find(file), -1)
 	
-	var sav: Array = Global.files_in_folder_by_extension(TEST_DIR, ".sav")
+	var sav: Array = Global.files_in_folder_with_extension(TEST_DIR, ".sav")
 	assert_eq(sav.size(), SAV_FILES.size())
 	for file in SAV_FILES:
 		assert_ne(sav.find(file), -1)
 		
-	var none: Array = Global.files_in_folder_by_extension(TEST_DIR, ".ben")
+	var none: Array = Global.files_in_folder_with_extension(TEST_DIR, ".ben")
 	assert_eq(none.size(), 0)
 
 class CallAfterDelayParam:

@@ -54,7 +54,7 @@ func files_in_folder(directory: String) -> Array:
 	return DirAccess.get_files_at(directory)
 
 # returns a list of all file paths in a given directory with a certain extension
-func files_in_folder_by_extension(directory: String, extension: String) -> Array:
+func files_in_folder_with_extension(directory: String, extension: String) -> Array:
 	var out := []
 	
 	for file in files_in_folder(directory):
