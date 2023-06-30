@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=2 format=3 uid="uid://c3rjbnkjn3wdd"]
 
 [ext_resource type="Script" path="res://ui/key_monitor.gd" id="1_brq1j"]
 
