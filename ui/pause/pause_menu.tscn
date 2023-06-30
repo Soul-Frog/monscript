@@ -1,7 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://wvcujwhuslip"]
+[gd_scene load_steps=8 format=3 uid="uid://wvcujwhuslip"]
 
 [ext_resource type="Script" path="res://ui/pause/pause_menu.gd" id="1_2voed"]
 [ext_resource type="PackedScene" uid="uid://dic4krsgbv40j" path="res://mons/magnetfrog.tscn" id="2_oypn0"]
+[ext_resource type="Texture2D" uid="uid://b83c3y0frpmlm" path="res://assets/gui/pause_menu/teams.png" id="3_luw2o"]
+[ext_resource type="Texture2D" uid="uid://cbfdqdhwqs4kw" path="res://assets/gui/pause_menu/quicksave.png" id="4_4jat1"]
+[ext_resource type="Texture2D" uid="uid://bhxshbo5v3ri0" path="res://assets/gui/pause_menu/database.png" id="5_j5uid"]
+[ext_resource type="Texture2D" uid="uid://cewqveq6u7i4p" path="res://assets/gui/pause_menu/inventory.png" id="6_h6402"]
+[ext_resource type="Texture2D" uid="uid://cchw582otw5c8" path="res://assets/gui/pause_menu/settings.png" id="7_kkkgf"]
 
 [node name="PauseMenu" type="Node2D"]
 script = ExtResource("1_2voed")
@@ -46,40 +51,40 @@ offset_top = 64.0
 offset_right = 264.0
 offset_bottom = 72.0
 
-[node name="TeamsButton" type="Button" parent="."]
+[node name="TeamsButton" type="TextureButton" parent="."]
 offset_left = 16.0
 offset_top = 88.0
 offset_right = 104.0
 offset_bottom = 119.0
-text = "Teams"
+texture_normal = ExtResource("3_luw2o")
 
-[node name="QuicksaveButton" type="Button" parent="."]
+[node name="QuicksaveButton" type="TextureButton" parent="."]
 offset_left = 16.0
 offset_top = 136.0
 offset_right = 104.0
 offset_bottom = 167.0
-text = "Quicksave"
+texture_normal = ExtResource("4_4jat1")
 
-[node name="DatabaseButton" type="Button" parent="."]
+[node name="DatabaseButton" type="TextureButton" parent="."]
 offset_left = 116.0
 offset_top = 113.0
 offset_right = 204.0
 offset_bottom = 144.0
-text = "Database"
+texture_normal = ExtResource("5_j5uid")
 
-[node name="InventoryButton" type="Button" parent="."]
+[node name="InventoryButton" type="TextureButton" parent="."]
 offset_left = 216.0
 offset_top = 88.0
 offset_right = 304.0
 offset_bottom = 119.0
-text = "Inventory"
+texture_normal = ExtResource("6_h6402")
 
-[node name="SettingsButton" type="Button" parent="."]
+[node name="SettingsButton" type="TextureButton" parent="."]
 offset_left = 216.0
 offset_top = 136.0
 offset_right = 304.0
 offset_bottom = 167.0
-text = "Settings"
+texture_normal = ExtResource("7_kkkgf")
 
 [connection signal="pressed" from="MonEditButtons/MonEditButton1" to="." method="_on_mon_edit_button_1_pressed"]
 [connection signal="pressed" from="MonEditButtons/MonEditButton2" to="." method="_on_mon_edit_button_2_pressed"]
