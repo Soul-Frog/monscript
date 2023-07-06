@@ -11,6 +11,7 @@ const COLOR_PINK = Color.PINK
 const COLOR_YELLOW = Color.YELLOW
 const COLOR_GREEN = Color.GREEN
 const COLOR_WHITE = Color.WHITE
+const COLOR_BLACK = Color.BLACK
 const COLOR_RED = Color.RED
 
 # turns various debug functionality on and off

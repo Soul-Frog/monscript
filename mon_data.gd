@@ -125,8 +125,14 @@ class Mon:
 # List of MonBases, each is a static and constant representation of a Mon's essential characteristics
 var _MAGNETFROG_BASE = MonBase.new("magnetFrog", "res://mons/magnetfrog.tscn", "res://monscripts/attack.txt", 
 	40, 200, 10, 100, 5, 50, 6, 20)
-var _MAGNETFROGBLUE_BASE = MonBase.new("magnetFrogBLUE", "res://mons/magnetfrogblue.tscn", "res://monscripts/attack.txt",
+var _MAGNETFROGBLUE_BASE = MonBase.new("magnetFrogBLUE", "res://mons/magnetfrogblue.tscn", "res://monscripts/attack.txt", 
 	40, 200, 10, 100, 5, 50, 6, 20)
+
+# dictionary mapping MonTypes -> MonBases
+var _MON_MAP := {
+	MonType.MAGNETFROG : _MAGNETFROG_BASE,
+	MonType.MAGNETFROGBLUE : _MAGNETFROGBLUE_BASE
+}
 
 # This enum is used by the overworld_encounter.tscn, so don't delete it
 enum MonType
@@ -134,14 +140,17 @@ enum MonType
 	NONE, MAGNETFROG, MAGNETFROGBLUE
 }
 
+
+func get_texture_for_mon(montype: MonType) -> Texture2D:
+	assert(montype != MonType.NONE)
+	# make an instance of the mon's scene
+	var mon_scene = load(_MON_MAP[montype]._scene_path).instantiate()
+	# get texture from scene
+	var tex = mon_scene.get_texture()
+	# free the scene
+	mon_scene.free()
+	return tex
+
 func create_mon(montype: MonType, level: int) -> Mon:
 	assert(montype != MonType.NONE)
-	
-	match montype:
-		MonType.MAGNETFROG:
-			return Mon.new(_MAGNETFROG_BASE, level)
-		MonType.MAGNETFROGBLUE:
-			return Mon.new(_MAGNETFROGBLUE_BASE, level)
-	
-	assert(false, "Missing case in create_mon match statement for %s!" % [MonType.find_key(montype)])
-	return null
+	return Mon.new(_MON_MAP[montype], level)

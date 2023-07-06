@@ -15,15 +15,19 @@ script = ExtResource("1_2voed")
 
 [node name="MONPLACEHOLDER1" parent="Mons" instance=ExtResource("2_oypn0")]
 position = Vector2(64, 40)
+script = null
 
 [node name="MONPLACEHOLDER2" parent="Mons" instance=ExtResource("2_oypn0")]
 position = Vector2(128, 40)
+script = null
 
 [node name="MONPLACEHOLDER3" parent="Mons" instance=ExtResource("2_oypn0")]
 position = Vector2(192, 40)
+script = null
 
 [node name="MONPLACEHOLDER4" parent="Mons" instance=ExtResource("2_oypn0")]
 position = Vector2(256, 40)
+script = null
 
 [node name="MonEditButtons" type="Node" parent="."]
 

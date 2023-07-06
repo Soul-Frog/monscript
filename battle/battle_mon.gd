@@ -67,8 +67,8 @@ func init_mon(mon: MonData.Mon) -> void:
 	reset_AP_after_action = true
 	$BattleComponents/ActionPointsBar.max_value = ACTION_POINTS_PER_TURN
 	$BattleComponents/HealthBar.max_value = max_health
-	$BattleComponents/ActionPointsBar.modulate = Color.YELLOW
-	$BattleComponents/HealthBar.modulate = Color.GREEN
+	$BattleComponents/ActionPointsBar.modulate = Global.COLOR_YELLOW
+	$BattleComponents/HealthBar.modulate = Global.COLOR_GREEN
 	_update_labels();
 
 # Called once for each mon by battle.gd at a regular time interval
@@ -80,7 +80,7 @@ func battle_tick() -> void:
 		action_points = clamp(action_points, 0, ACTION_POINTS_PER_TURN)
 		_update_labels();
 		if action_points >= ACTION_POINTS_PER_TURN:
-			$BattleComponents/ActionPointsBar.modulate = Color.RED
+			$BattleComponents/ActionPointsBar.modulate = Global.COLOR_RED
 			emit_signal("ready_to_take_action", self) # signal that it's time for this mon to act
 
 # Take a single turn in battle
@@ -97,7 +97,7 @@ func alert_turn_over() -> void:
 	if reset_AP_after_action:
 		action_points = 0
 	reset_AP_after_action = true
-	$BattleComponents/ActionPointsBar.modulate = Color.YELLOW
+	$BattleComponents/ActionPointsBar.modulate = Global.COLOR_YELLOW
 	_update_labels();
 	emit_signal("action_completed")
 

@@ -4,6 +4,7 @@ extends Node2D
 @onready var battle_scene := $Scenes/Battle
 @onready var pause_menu_scene := $Scenes/PauseMenu
 @onready var script_menu_scene := $Scenes/ScriptMenu
+@onready var database_menu_scene := $Scenes/DatabaseMenu
 @onready var active_scene := overworld_scene
 
 func _ready() -> void:
@@ -15,10 +16,6 @@ func _ready() -> void:
 	# hook up some signals
 	Events.battle_started.connect(_on_battle_started)
 	Events.battle_ended.connect(_on_battle_ended)
-	
-	pause_menu_scene.script_menu_opened.connect(_on_script_menu_opened)
-	
-	script_menu_scene.closed.connect(_on_submenu_closed)
 
 func _input(_event) -> void:
 	if Input.is_action_just_released("open_pause_menu"):
@@ -69,6 +66,10 @@ func _on_battle_ended(battle_result: Battle.BattleResult) -> void:
 func _on_script_menu_opened(mon: MonData.Mon) -> void:
 	script_menu_scene.setup(mon)
 	_switch_to_scene(script_menu_scene)
+
+func _on_database_menu_opened() -> void:
+	database_menu_scene.setup()
+	_switch_to_scene(database_menu_scene)
 
 func _on_submenu_closed() -> void:
 	_switch_to_scene(pause_menu_scene)

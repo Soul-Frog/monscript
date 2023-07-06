@@ -1,11 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://dsqri1kkocprw"]
+[gd_scene load_steps=4 format=3 uid="uid://cyr7fpimubkpa"]
 
-[ext_resource type="PackedScene" uid="uid://dplh3sueuh5a" path="res://mons/mon.tscn" id="1_cywyc"]
+[ext_resource type="PackedScene" path="res://mons/mon.tscn" id="1_cywyc"]
 [ext_resource type="Texture2D" uid="uid://cs4uf7eqmtm1w" path="res://assets/mons/magnetfrog_blue.png" id="2_d8ex7"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tvjjy"]
 
-[node name="Mon" instance=ExtResource("1_cywyc")]
+[node name="MagnetFrogBlue" instance=ExtResource("1_cywyc")]
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource("2_d8ex7")

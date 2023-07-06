@@ -1,6 +1,7 @@
 class_name UIScriptMenu
 extends VBoxContainer
 
+# emitted when this menu should be closed
 signal closed
 
 var monEdited: MonData.Mon

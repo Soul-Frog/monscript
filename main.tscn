@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bjs0uf6g07yax"]
+[gd_scene load_steps=8 format=3 uid="uid://bjs0uf6g07yax"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_sv5wa"]
 [ext_resource type="PackedScene" uid="uid://ca2l5wqdhsgdf" path="res://overworld/overworld.tscn" id="2_kjijl"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dtpehdp2rfsuh" path="res://battle/battle.tscn" id="3_ucmr6"]
 [ext_resource type="PackedScene" uid="uid://wvcujwhuslip" path="res://ui/pause/pause_menu.tscn" id="4_wdx4t"]
 [ext_resource type="PackedScene" uid="uid://bivwnc3i5hpa2" path="res://ui/script/script_menu.tscn" id="5_4kn6s"]
+[ext_resource type="PackedScene" uid="uid://ddvxn0puwflgu" path="res://ui/database/database_menu.tscn" id="6_yfjpu"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_sv5wa")
@@ -20,6 +21,8 @@ script = ExtResource("1_sv5wa")
 
 [node name="ScriptMenu" parent="Scenes" instance=ExtResource("5_4kn6s")]
 
+[node name="DatabaseMenu" parent="Scenes" instance=ExtResource("6_yfjpu")]
+
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="DebugConsole" parent="UI" instance=ExtResource("3_cw4c6")]
@@ -27,5 +30,9 @@ z_index = 1
 caret_blink = true
 caret_blink_interval = 0.5
 
+[connection signal="database_menu_opened" from="Scenes/PauseMenu" to="." method="_on_database_menu_opened"]
+[connection signal="script_menu_opened" from="Scenes/PauseMenu" to="." method="_on_script_menu_opened"]
+[connection signal="closed" from="Scenes/ScriptMenu" to="." method="_on_submenu_closed"]
+[connection signal="closed" from="Scenes/DatabaseMenu" to="." method="_on_submenu_closed"]
 [connection signal="debug_console_closed" from="UI/DebugConsole" to="." method="_on_debug_console_debug_console_closed"]
 [connection signal="debug_console_opened" from="UI/DebugConsole" to="." method="_on_debug_console_debug_console_opened"]

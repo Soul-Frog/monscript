@@ -1,9 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://ddvxn0puwflgu"]
+[gd_scene load_steps=3 format=3 uid="uid://ddvxn0puwflgu"]
 
+[ext_resource type="Script" path="res://ui/database/database_menu.gd" id="1_a2u24"]
 [ext_resource type="Texture2D" uid="uid://dos1wnic6bcd7" path="res://assets/mons/magnetfrog.png" id="1_he70k"]
 
 [node name="DatabaseMenu" type="VBoxContainer"]
 custom_minimum_size = Vector2(320, 180)
+script = ExtResource("1_a2u24")
 
 [node name="MenuBar" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(0, 15)
@@ -69,3 +71,5 @@ size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "This is a description of a magnetfrog, they're a pretty OP mon because the designer is using it as a self insert."
 autowrap_mode = 3
+
+[connection signal="pressed" from="MenuBar/Right/Exit" to="." method="_on_exit_pressed"]

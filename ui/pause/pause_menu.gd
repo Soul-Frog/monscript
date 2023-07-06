@@ -3,8 +3,10 @@ extends Node2D
 # emitted when the script menu should be opened, sends a Mon
 signal script_menu_opened
 
-signal teams_menu_opened
+# emitted when the database menu should be opened
 signal database_menu_opened
+
+signal teams_menu_opened
 signal settings_menu_opened
 signal inventory_menu_opened
 
@@ -45,7 +47,6 @@ func _on_quicksave_button_pressed() -> void:
 	print("Quicksave!")
 
 func _on_database_button_pressed() -> void:
-	print("Database!")
 	emit_signal("database_menu_opened")
 
 func _on_settings_button_pressed() -> void:

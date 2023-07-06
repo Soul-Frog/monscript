@@ -1,10 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://tg5harh0rv1m"]
+[gd_scene load_steps=3 format=3 uid="uid://tg5harh0rv1m"]
 
 [ext_resource type="Texture2D" uid="uid://dos1wnic6bcd7" path="res://assets/mons/magnetfrog.png" id="1_3isa0"]
+[ext_resource type="Script" path="res://ui/database/database_entry.gd" id="1_wupum"]
 
-[node name="MonEntry" type="HBoxContainer"]
+[node name="DatabaseEntry" type="HBoxContainer"]
+script = ExtResource("1_wupum")
 
 [node name="MonSprite" type="TextureRect" parent="."]
+modulate = Color(0, 0, 0, 1)
 layout_mode = 2
 texture = ExtResource("1_3isa0")
 stretch_mode = 2
@@ -13,4 +16,5 @@ stretch_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
+step = 1.0
 show_percentage = false
