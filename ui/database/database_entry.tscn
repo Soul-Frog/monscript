@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://tg5harh0rv1m"]
+
+[ext_resource type="Texture2D" uid="uid://dos1wnic6bcd7" path="res://assets/mons/magnetfrog.png" id="1_3isa0"]
+
+[node name="MonEntry" type="HBoxContainer"]
+
+[node name="MonSprite" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("1_3isa0")
+stretch_mode = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+show_percentage = false

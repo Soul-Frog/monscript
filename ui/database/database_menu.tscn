@@ -1,0 +1,71 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddvxn0puwflgu"]
+
+[ext_resource type="Texture2D" uid="uid://dos1wnic6bcd7" path="res://assets/mons/magnetfrog.png" id="1_he70k"]
+
+[node name="DatabaseMenu" type="VBoxContainer"]
+custom_minimum_size = Vector2(320, 180)
+
+[node name="MenuBar" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="Left" type="BoxContainer" parent="MenuBar"]
+layout_mode = 2
+
+[node name="DatabaseLabel" type="Label" parent="MenuBar/Left"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Database"
+
+[node name="Right" type="BoxContainer" parent="MenuBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="Exit" type="Button" parent="MenuBar/Right"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "X"
+
+[node name="Contents" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DatabaseScroll" type="ScrollContainer" parent="Contents"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Database" type="VBoxContainer" parent="Contents/DatabaseScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MonDetails" type="VBoxContainer" parent="Contents"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.67
+
+[node name="SpriteContainer" type="BoxContainer" parent="Contents/MonDetails"]
+layout_mode = 2
+alignment = 1
+
+[node name="MonSprite" type="TextureRect" parent="Contents/MonDetails/SpriteContainer"]
+layout_mode = 2
+texture = ExtResource("1_he70k")
+stretch_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Contents/MonDetails"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DescriptionContainer" type="BoxContainer" parent="Contents/MonDetails/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MonDescription" type="Label" parent="Contents/MonDetails/ScrollContainer/DescriptionContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "This is a description of a magnetfrog, they're a pretty OP mon because the designer is using it as a self insert."
+autowrap_mode = 3
