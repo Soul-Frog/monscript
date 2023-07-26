@@ -1,7 +1,48 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://612i0h3ltb6t"]
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://612i0h3ltb6t"]
 
 [ext_resource type="FontFile" uid="uid://bv5q1sxhpuca3" path="res://assets/fonts/m5x7.ttf" id="1_o4iu0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w0jy1"]
+bg_color = Color(0.854902, 0.878431, 0.917647, 1)
+border_width_left = 2
+border_width_top = 1
+border_width_right = 2
+border_width_bottom = 1
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ttjfk"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 2
+border_width_top = 1
+border_width_right = 2
+border_width_bottom = 1
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kjmi5"]
+bg_color = Color(0.854902, 0.878431, 0.917647, 1)
+border_width_left = 2
+border_width_top = 1
+border_width_right = 2
+border_width_bottom = 1
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jmuu4"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color(0.2, 0.223529, 0.254902, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.854902, 0.878431, 0.917647, 1)
+corner_detail = 1
+anti_aliasing = false
 
 [resource]
 default_font = ExtResource("1_o4iu0")
 default_font_size = 16
+VScrollBar/styles/grabber = SubResource("StyleBoxFlat_w0jy1")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_ttjfk")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_kjmi5")
+VScrollBar/styles/scroll = SubResource("StyleBoxFlat_jmuu4")

@@ -1,75 +1,71 @@
-[gd_scene load_steps=3 format=3 uid="uid://ddvxn0puwflgu"]
+[gd_scene load_steps=7 format=3 uid="uid://bv4m5fa6co5k6"]
 
-[ext_resource type="Script" path="res://ui/database/database_menu.gd" id="1_a2u24"]
-[ext_resource type="Texture2D" uid="uid://dos1wnic6bcd7" path="res://assets/mons/magnetfrog.png" id="1_he70k"]
+[ext_resource type="Texture2D" uid="uid://do6n88h3lljqj" path="res://assets/gui/database/database_background.png" id="1_5p5ep"]
+[ext_resource type="Script" path="res://ui/database/database_menu.gd" id="1_83mbo"]
+[ext_resource type="Texture2D" uid="uid://bc8m1lp1yrj66" path="res://assets/gui/x_button.png" id="2_tlx1r"]
+[ext_resource type="Texture2D" uid="uid://cgjtloxfpfglm" path="res://assets/gui/x_pressed.png" id="3_cipng"]
+[ext_resource type="Texture2D" uid="uid://b28qj586fos3p" path="res://assets/gui/x_hover.png" id="4_q6q3u"]
+[ext_resource type="Texture2D" uid="uid://dos1wnic6bcd7" path="res://assets/mons/magnetfrog.png" id="5_1vbm4"]
 
-[node name="DatabaseMenu" type="VBoxContainer"]
-custom_minimum_size = Vector2(320, 180)
-script = ExtResource("1_a2u24")
+[node name="DatabaseMenu" type="Node2D"]
+script = ExtResource("1_83mbo")
 
-[node name="MenuBar" type="HBoxContainer" parent="."]
-custom_minimum_size = Vector2(0, 15)
-layout_mode = 2
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("1_5p5ep")
+centered = false
 
-[node name="Left" type="BoxContainer" parent="MenuBar"]
-layout_mode = 2
+[node name="XButton" type="TextureButton" parent="."]
+offset_left = 309.0
+offset_right = 320.0
+offset_bottom = 15.0
+focus_mode = 0
+texture_normal = ExtResource("2_tlx1r")
+texture_pressed = ExtResource("3_cipng")
+texture_hover = ExtResource("4_q6q3u")
 
-[node name="DatabaseLabel" type="Label" parent="MenuBar/Left"]
-layout_mode = 2
-size_flags_horizontal = 0
-text = "Database"
-
-[node name="Right" type="BoxContainer" parent="MenuBar"]
-layout_mode = 2
-size_flags_horizontal = 3
-alignment = 2
-
-[node name="Exit" type="Button" parent="MenuBar/Right"]
-layout_mode = 2
-size_flags_horizontal = 4
-text = "X"
-
-[node name="Contents" type="HBoxContainer" parent="."]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="DatabaseScroll" type="ScrollContainer" parent="Contents"]
-layout_mode = 2
+[node name="DatabaseScroll" type="ScrollContainer" parent="."]
+offset_left = 6.0
+offset_top = 15.0
+offset_right = 167.0
+offset_bottom = 175.0
 size_flags_horizontal = 3
 
-[node name="Database" type="VBoxContainer" parent="Contents/DatabaseScroll"]
+[node name="Database" type="VBoxContainer" parent="DatabaseScroll"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="MonDetails" type="VBoxContainer" parent="Contents"]
-layout_mode = 2
+[node name="MonDetails" type="VBoxContainer" parent="."]
+offset_left = 168.0
+offset_top = 16.0
+offset_right = 316.0
+offset_bottom = 175.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.67
 
-[node name="SpriteContainer" type="BoxContainer" parent="Contents/MonDetails"]
+[node name="SpriteContainer" type="BoxContainer" parent="MonDetails"]
 layout_mode = 2
 alignment = 1
 
-[node name="MonSprite" type="TextureRect" parent="Contents/MonDetails/SpriteContainer"]
+[node name="MonSprite" type="TextureRect" parent="MonDetails/SpriteContainer"]
 layout_mode = 2
-texture = ExtResource("1_he70k")
+texture = ExtResource("5_1vbm4")
 stretch_mode = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Contents/MonDetails"]
+[node name="TextScroll" type="ScrollContainer" parent="MonDetails"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="DescriptionContainer" type="BoxContainer" parent="Contents/MonDetails/ScrollContainer"]
+[node name="DescriptionContainer" type="BoxContainer" parent="MonDetails/TextScroll"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="MonDescription" type="Label" parent="Contents/MonDetails/ScrollContainer/DescriptionContainer"]
+[node name="MonDescription" type="Label" parent="MonDetails/TextScroll/DescriptionContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "This is a description of a magnetfrog, they're a pretty OP mon because the designer is using it as a self insert."
 autowrap_mode = 3
 
-[connection signal="pressed" from="MenuBar/Right/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="XButton" to="." method="_on_exit_pressed"]
