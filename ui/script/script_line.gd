@@ -10,6 +10,8 @@ signal line_deleted
 # emitted whenever a block in this line is edited
 signal line_edited
 
+const UI_SCRIPT_BLOCK_SCENE = preload("res://ui/script/script_block.tscn")
+
 func _ready() -> void:
 	_recolor_font($Line/GrowLineButton, Global.COLOR_GREEN)
 	_recolor_font($Line/DeleteLineButton, Global.COLOR_RED)
@@ -53,7 +55,7 @@ func _is_each_block_valid() -> bool:
 	return true
 
 func _add_block(block_type: ScriptData.Block.Type) -> UIScriptBlock:
-	var new_block: UIScriptBlock = load("res://ui/script/script_block.tscn").instantiate()
+	var new_block: UIScriptBlock = UI_SCRIPT_BLOCK_SCENE.instantiate()
 	new_block.assign_type(block_type)
 	new_block.text_changed.connect(_on_block_text_changed)
 	$Line/Blocks.add_child(new_block)

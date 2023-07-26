@@ -6,6 +6,8 @@ signal closed
 
 var monEdited: MonData.Mon
 
+const UI_SCRIPT_LINE_SCENE = preload("res://ui/script/script_line.tscn")
+
 func setup(mon: MonData.Mon) -> void:
 	self.monEdited = mon
 	
@@ -19,7 +21,7 @@ func setup(mon: MonData.Mon) -> void:
 	_import(script)
 
 func _add_new_line() -> UIScriptLine:
-	var line: UIScriptLine = load("res://ui/script/script_line.tscn").instantiate()
+	var line: UIScriptLine = UI_SCRIPT_LINE_SCENE.instantiate()
 	line.line_started.connect(_on_line_started)
 	line.line_deleted.connect(_on_line_deleted)
 	line.line_edited.connect(_on_line_edited)

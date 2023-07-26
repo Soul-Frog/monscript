@@ -44,6 +44,10 @@ window/stretch/mode="canvas_items"
 
 enabled=PackedStringArray("res://addons/gut/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg")
 
+[gui]
+
+theme/custom="res://monscript_theme.tres"
+
 [input]
 
 left={

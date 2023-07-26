@@ -16,6 +16,8 @@ signal action_completed
 # emitted after this mon's animation completes
 signal action_animation_completed
 
+const MOVING_TEXT_SCENE = preload("res://battle/moving_text.tscn")
+
 const ACTION_POINTS_PER_TURN := 100
 
 # The underlying Mon Object this battle mon scene represents
@@ -116,7 +118,7 @@ func take_damage(raw_damage: int) -> void:
 	
 	# make text effect
 	self.add_child(
-		load("res://battle/moving_text.tscn").instantiate()
+		MOVING_TEXT_SCENE.instantiate()
 		.tx(damage_taken).direction_up().speed(40).time(0.2).color(Global.COLOR_RED))
 	
 	if damage_taken != 0:
