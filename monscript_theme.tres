@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=6 format=3 uid="uid://612i0h3ltb6t"]
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://612i0h3ltb6t"]
 
 [ext_resource type="FontFile" uid="uid://bv5q1sxhpuca3" path="res://assets/fonts/m5x7.ttf" id="1_o4iu0"]
 
@@ -39,8 +39,12 @@ border_color = Color(0.854902, 0.878431, 0.917647, 1)
 corner_detail = 1
 anti_aliasing = false
 
+[sub_resource type="FontVariation" id="FontVariation_g8xyp"]
+base_font = ExtResource("1_o4iu0")
+spacing_bottom = -5
+
 [resource]
-default_font = ExtResource("1_o4iu0")
+default_font = SubResource("FontVariation_g8xyp")
 default_font_size = 16
 VScrollBar/styles/grabber = SubResource("StyleBoxFlat_w0jy1")
 VScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_ttjfk")

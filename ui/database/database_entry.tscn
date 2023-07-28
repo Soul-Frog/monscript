@@ -1,20 +1,48 @@
-[gd_scene load_steps=3 format=3 uid="uid://tg5harh0rv1m"]
+[gd_scene load_steps=7 format=3 uid="uid://tg5harh0rv1m"]
 
 [ext_resource type="Texture2D" uid="uid://dos1wnic6bcd7" path="res://assets/mons/magnetfrog.png" id="1_3isa0"]
+[ext_resource type="Texture2D" uid="uid://cgd4ok4efdoau" path="res://assets/gui/database/database_entry_unselected.png" id="1_fqmop"]
+[ext_resource type="Texture2D" uid="uid://2wy01i3nfpl7" path="res://assets/gui/database/database_entry_selected.png" id="1_wpxe2"]
 [ext_resource type="Script" path="res://ui/database/database_entry.gd" id="1_wupum"]
+[ext_resource type="Texture2D" uid="uid://37nw1u1a7hb2" path="res://assets/gui/database/database_progress_bar_under.png" id="2_kcf8x"]
+[ext_resource type="Texture2D" uid="uid://deivh7cuhhed8" path="res://assets/gui/database/database_progress_bar_over.png" id="3_p6m86"]
 
-[node name="DatabaseEntry" type="HBoxContainer"]
+[node name="DatabaseEntry" type="BoxContainer"]
+custom_minimum_size = Vector2(156, 38)
 script = ExtResource("1_wupum")
 
-[node name="MonSprite" type="TextureRect" parent="."]
-modulate = Color(0, 0, 0, 1)
+[node name="BackgroundUnselected" type="Sprite2D" parent="."]
+position = Vector2(78, 19)
+texture = ExtResource("1_fqmop")
+
+[node name="BackgroundSelected" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(78, 19)
+texture = ExtResource("1_wpxe2")
+
+[node name="Free" type="Node2D" parent="."]
+
+[node name="SpriteContainer" type="CenterContainer" parent="Free"]
+custom_minimum_size = Vector2(32, 32)
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 35.0
+offset_bottom = 35.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+
+[node name="MonSprite" type="TextureRect" parent="Free/SpriteContainer"]
 layout_mode = 2
 texture = ExtResource("1_3isa0")
 stretch_mode = 2
 
-[node name="ProgressBar" type="ProgressBar" parent="."]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 1
-step = 1.0
-show_percentage = false
+[node name="ProgressBar" type="TextureProgressBar" parent="Free"]
+offset_left = 39.0
+offset_top = 6.0
+offset_right = 152.0
+offset_bottom = 32.0
+texture_under = ExtResource("2_kcf8x")
+texture_progress = ExtResource("3_p6m86")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
