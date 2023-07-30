@@ -17,7 +17,7 @@ func XP_for_level(level: int) -> int:
 # These sprites and base characteristics can then be shared amongst all magnetFrog instances.
 # MonBases are basically constants, so you should NEVER update the values here during gameplay.
 class MonBase:
-	var _speciesName: String
+	var _species_name: String
 	var _scene_path: String # the scene that represents this mon
 	var _default_script_path: String
 	var _attack0: int
@@ -28,13 +28,18 @@ class MonBase:
 	var _health64: int
 	var _speed0: int
 	var _speed64: int
+	var _special_name: String
+	var _special_description: String
+	var _passive_name: String
+	var _passive_description: String
 	#todo: var special_action
 	#todo: var passive_ability
 	
 	func _init(monSpecies: String, mon_scene: String, default_script_file_path: String,
 		healthAt0: int, healthAt64: int, attackAt0: int, attackAt64: int, 
-		defenseAt0: int, defenseAt64: int, speedAt0: int, speedAt64: int) -> void:
-		self._speciesName = monSpecies
+		defenseAt0: int, defenseAt64: int, speedAt0: int, speedAt64: int,
+		specialName: String, specialDesc: String, passiveName: String, passiveDesc: String) -> void:
+		self._species_name = monSpecies
 		self._scene_path = mon_scene
 		assert(Global.does_file_exist(_scene_path))
 		self._default_script_path = default_script_file_path
@@ -47,6 +52,10 @@ class MonBase:
 		self._defense64 = defenseAt64
 		self._speed0 = speedAt0
 		self._speed64 = speedAt64
+		self._special_name = specialName
+		self._special_description = specialDesc
+		self._passive_name = passiveName
+		self._passive_description = passiveDesc
 	
 	# functions to determine a mon's stat value for a given level
 	func health_for_level(level: int) -> int:
@@ -79,7 +88,7 @@ class Mon:
 	
 	func get_name() -> String:
 		if _nickname == "":
-			return _base._speciesName
+			return _base._species_name
 		return _nickname
 	
 	func get_monscript() -> ScriptData.MonScript:
@@ -92,7 +101,7 @@ class Mon:
 		return _level
 	
 	func get_species_name() -> String:
-		return _base._speciesName
+		return _base._species_name
 	
 	func get_scene_path() -> String:
 		return _base._scene_path
@@ -109,6 +118,12 @@ class Mon:
 	func get_speed() -> int:
 		return _base.speed_for_level(_level)
 	
+	func get_special_description() -> String:
+		return _base._special_description
+	
+	func get_passive_description() -> String:
+		return _base._passive_description
+	
 	# adds XP and potentially applies level up
 	func gain_XP(xp_gained: int) -> void:
 		if _level == MonData.MAX_LEVEL: # don't try to level past MAX
@@ -124,9 +139,13 @@ class Mon:
 
 # List of MonBases, each is a static and constant representation of a Mon's essential characteristics
 var _MAGNETFROG_BASE = MonBase.new("magnetFrog", "res://mons/magnetfrog.tscn", "res://monscripts/attack.txt", 
-	40, 200, 10, 100, 5, 50, 6, 20)
+	40, 200, 10, 100, 5, 50, 6, 20,
+	"Magnetcheeks", "MagnetFrog's special attack information!",
+	"Magnetism", "MagnetFrog's passive ability information!")
 var _MAGNETFROGBLUE_BASE = MonBase.new("magnetFrogBLUE", "res://mons/magnetfrogblue.tscn", "res://monscripts/attack.txt", 
-	40, 200, 10, 100, 5, 50, 6, 20)
+	40, 200, 10, 100, 5, 50, 6, 20,
+	"Blue Burst", "MagnetFrog Blue's special attack information!",
+	"Bluenatism", "MagnetFrog Blue's passive ability information!")
 
 # dictionary mapping MonTypes -> MonBases
 var _MON_MAP := {
@@ -141,7 +160,7 @@ enum MonType
 }
 
 
-func get_texture_for_mon(montype: MonType) -> Texture2D:
+func get_texture_for(montype: MonType) -> Texture2D:
 	assert(montype != MonType.NONE)
 	# make an instance of the mon's scene
 	var mon_scene = load(_MON_MAP[montype]._scene_path).instantiate()
@@ -151,6 +170,39 @@ func get_texture_for_mon(montype: MonType) -> Texture2D:
 	mon_scene.free()
 	return tex
 
+func get_name_for(montype: MonType) -> String:
+	assert(montype != MonType.NONE)
+	return _MON_MAP[montype]._species_name
+
+func get_special_name_for(montype: MonType) -> String:
+	assert(montype != MonType.NONE)
+	return _MON_MAP[montype]._special_name
+
+func get_special_description_for(montype: MonType) -> String:
+	assert(montype != MonType.NONE)
+	return _MON_MAP[montype]._special_description
+
+func get_passive_name_for(montype: MonType) -> String:
+	assert(montype != MonType.NONE)
+	return _MON_MAP[montype]._passive_name
+
+func get_passive_description_for(montype: MonType) -> String:
+	assert(montype != MonType.NONE)
+	return _MON_MAP[montype]._passive_description
+
+func get_health_percentile_for(montype: MonType) -> int:
+	return 50
+
+func get_attack_percentile_for(montype: MonType) -> int:
+	return 0
+
+func get_defense_percentile_for(montype: MonType) -> int:
+	return 75
+
+func get_speed_percentile_for(montype: MonType) -> int:
+	return 100
+
 func create_mon(montype: MonType, level: int) -> Mon:
 	assert(montype != MonType.NONE)
 	return Mon.new(_MON_MAP[montype], level)
+
