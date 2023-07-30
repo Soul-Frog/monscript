@@ -7,11 +7,12 @@ const MONS_PER_TEAM = 4
 
 var RNG = RandomNumberGenerator.new()
 
+const COLOR_GOLDEN = Color(255, 165, 0, 255)
+const COLOR_BLACK = Color(0, 0, 0)
+const COLOR_WHITE = Color.WHITE
 const COLOR_PINK = Color.PINK
 const COLOR_YELLOW = Color.YELLOW
 const COLOR_GREEN = Color.GREEN
-const COLOR_WHITE = Color.WHITE
-const COLOR_BLACK = Color.BLACK
 const COLOR_RED = Color.RED
 
 # turns various debug functionality on and off

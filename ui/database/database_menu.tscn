@@ -32,6 +32,17 @@ texture_normal = ExtResource("2_tlx1r")
 texture_pressed = ExtResource("3_cipng")
 texture_hover = ExtResource("4_q6q3u")
 
+[node name="CompletionLabel" type="RichTextLabel" parent="."]
+offset_left = 61.0
+offset_top = 1.0
+offset_right = 184.0
+offset_bottom = 18.0
+theme_override_colors/default_color = Color(1, 0.647059, 0, 1)
+bbcode_enabled = true
+text = "[center]Completion: 1/50[/center]"
+scroll_active = false
+autowrap_mode = 0
+
 [node name="DatabaseScroll" type="ScrollContainer" parent="."]
 offset_left = 7.0
 offset_top = 16.0

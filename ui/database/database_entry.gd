@@ -60,11 +60,11 @@ func get_defense_bar_value():
 func get_speed_bar_value():
 	return MonData.get_speed_percentile_for(mon_type)
 
-func _selectable() -> bool:
+func is_compiled():
 	return $Free/ProgressBar.value == 100
 
 func _input(event):
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT and is_mouse_over and _selectable():
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT and is_mouse_over and is_compiled():
 		emit_signal("clicked", self)
 
 func _on_mouse_entered():

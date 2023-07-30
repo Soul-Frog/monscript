@@ -23,7 +23,7 @@ func _ready():
 		if montype == MonData.MonType.MAGNETFROG:
 			compilation_progress_per_mon[montype] = 100
 		else:
-			compilation_progress_per_mon[montype] = 50
+			compilation_progress_per_mon[montype] = 100
 
 # function to get script for enum
 func path_for_area(area_enum: GameData.Area) -> String:

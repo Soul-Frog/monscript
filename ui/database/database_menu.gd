@@ -10,6 +10,7 @@ var active_entry = null
 const DATABASE_ENTRY_SCENE := preload("res://ui/database/database_entry.tscn")
 
 const NAME_FORMAT = "[center]%s[/center]"
+const COMPLETION_FORMAT = "[center]Completion: %d/%d[/center]"
 const SPECIAL_NAME_FORMAT = "[center]%s[/center]"
 const PASSIVE_NAME_FORMAT = "[center]%s[/center]"
 const SPECIAL_DESCRIPTION_FORMAT = "%s"
@@ -30,10 +31,21 @@ func _ready() -> void:
 			entry.clicked.connect(_on_entry_clicked)
 			for child in $MonInfo.get_children():
 				child.visible = false
+	_update_completion()
 
 func setup() -> void:
 	for entry in $DatabaseScroll/Database.get_children():
 		entry.refresh() # update progress values of each entry
+	_update_completion()
+
+func _update_completion():
+	var num_entries = $DatabaseScroll/Database.get_child_count()
+	var num_compiled = 0
+	for entry in $DatabaseScroll/Database.get_children():
+		if entry.is_compiled():
+			num_compiled += 1
+	$CompletionLabel.text = COMPLETION_FORMAT % [num_compiled, num_entries]
+	$CompletionLabel.add_theme_color_override("default_color", Global.COLOR_GOLDEN if num_compiled == num_entries else Global.COLOR_WHITE)
 
 func _on_entry_clicked(entry: DatabaseEntry) -> void:
 	$DatabaseMonFileDefault.visible = false
