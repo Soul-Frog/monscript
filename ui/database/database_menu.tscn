@@ -89,9 +89,9 @@ text = "This is the description for the mon's passive ability! It also scrolls!"
 
 [node name="SpecialNameLabel" type="RichTextLabel" parent="MonInfo"]
 offset_left = 234.0
-offset_top = 58.0
+offset_top = 59.0
 offset_right = 307.0
-offset_bottom = 71.0
+offset_bottom = 72.0
 bbcode_enabled = true
 text = "[center]Special Name[/center]"
 scroll_active = false
@@ -99,9 +99,9 @@ autowrap_mode = 0
 
 [node name="PassiveNameLabel" type="RichTextLabel" parent="MonInfo"]
 offset_left = 234.0
-offset_top = 115.0
+offset_top = 116.0
 offset_right = 307.0
-offset_bottom = 128.0
+offset_bottom = 129.0
 bbcode_enabled = true
 text = "[center]Passive Name[/center]"
 scroll_active = false

@@ -9,22 +9,22 @@
 [ext_resource type="Texture2D" uid="uid://de2t70dljitio" path="res://assets/gui/database/database_entry_disabled.png" id="4_aarq6"]
 
 [node name="DatabaseEntry" type="BoxContainer"]
-custom_minimum_size = Vector2(156, 38)
+custom_minimum_size = Vector2(156, 36)
 script = ExtResource("1_wupum")
 
-[node name="BackgroundSelected" type="Sprite2D" parent="."]
+[node name="Free" type="Node2D" parent="."]
+
+[node name="BackgroundSelected" type="Sprite2D" parent="Free"]
 position = Vector2(78, 19)
 texture = ExtResource("1_wpxe2")
 
-[node name="BackgroundUnselected" type="Sprite2D" parent="."]
+[node name="BackgroundUnselected" type="Sprite2D" parent="Free"]
 position = Vector2(78, 19)
 texture = ExtResource("1_fqmop")
 
-[node name="BackgroundDisabled" type="Sprite2D" parent="."]
+[node name="BackgroundDisabled" type="Sprite2D" parent="Free"]
 position = Vector2(78, 19)
 texture = ExtResource("4_aarq6")
-
-[node name="Free" type="Node2D" parent="."]
 
 [node name="SpriteContainer" type="CenterContainer" parent="Free"]
 custom_minimum_size = Vector2(32, 32)

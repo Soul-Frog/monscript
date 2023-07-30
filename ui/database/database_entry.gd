@@ -7,9 +7,9 @@ var is_mouse_over := false
 var mon_type
 
 func ready() -> void:
-	$BackgroundSelected.visible = false
-	$BackgroundUnselected.visible = true
-	$BackgroundDisabled.visible = true
+	$Free/BackgroundSelected.visible = false
+	$Free/BackgroundUnselected.visible = true
+	$Free/BackgroundDisabled.visible = true
 
 func setup(type) -> void:
 	self.mon_type = type
@@ -20,15 +20,15 @@ func refresh() -> void:
 	assert(GameData.compilation_progress_per_mon[mon_type] >= 0 && GameData.compilation_progress_per_mon[mon_type] <= 100)
 	$Free/ProgressBar.value = GameData.compilation_progress_per_mon[mon_type]
 	$Free/SpriteContainer/MonSprite.modulate = Global.COLOR_BLACK if $Free/ProgressBar.value != 100 else Global.COLOR_WHITE
-	$BackgroundDisabled.visible = $Free/ProgressBar.value != 100
+	$Free/BackgroundDisabled.visible = $Free/ProgressBar.value != 100
 
 func select():
-	$BackgroundUnselected.visible = false
-	$BackgroundSelected.visible = true
+	$Free/BackgroundUnselected.visible = false
+	$Free/BackgroundSelected.visible = true
 
 func unselect():
-	$BackgroundUnselected.visible = true
-	$BackgroundSelected.visible = false
+	$Free/BackgroundUnselected.visible = true
+	$Free/BackgroundSelected.visible = false
 
 func get_mon_name():
 	return MonData.get_name_for(mon_type)
