@@ -20,7 +20,10 @@ func _ready():
 	for montype in MonData.MonType.values():
 		if montype == MonData.MonType.NONE:
 			continue
-		compilation_progress_per_mon[montype] = 100
+		if montype == MonData.MonType.MAGNETFROG:
+			compilation_progress_per_mon[montype] = 100
+		else:
+			compilation_progress_per_mon[montype] = 50
 
 # function to get script for enum
 func path_for_area(area_enum: GameData.Area) -> String:

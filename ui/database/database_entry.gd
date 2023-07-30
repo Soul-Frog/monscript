@@ -61,8 +61,7 @@ func get_speed_bar_value():
 	return MonData.get_speed_percentile_for(mon_type)
 
 func _selectable() -> bool:
-	return true
-	#return $Free/ProgressBar.value == 100
+	return $Free/ProgressBar.value == 100
 
 func _input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT and is_mouse_over and _selectable():

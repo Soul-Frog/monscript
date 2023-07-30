@@ -15,17 +15,21 @@ const PASSIVE_NAME_FORMAT = "[center]%s[/center]"
 const SPECIAL_DESCRIPTION_FORMAT = "%s"
 const PASSIVE_DESCRIPTION_FORMAT = "%s"
 
+# a little bit extra added to each bar; makes it so it always shows at least a little green
+const BAR_BUFFER = 10
+
 func _ready() -> void:
 	# create the database entries, one for each mon type
 	for montype in MonData.MonType.values():
-		if montype == MonData.MonType.NONE:
-			continue
-		var entry: DatabaseEntry = DATABASE_ENTRY_SCENE.instantiate()
-		entry.setup(montype)
-		$DatabaseScroll/Database.add_child(entry)
-		entry.clicked.connect(_on_entry_clicked)
-		for child in $MonInfo.get_children():
-			child.visible = false
+		for i in range(0, 10):
+			if montype == MonData.MonType.NONE:
+				continue
+			var entry: DatabaseEntry = DATABASE_ENTRY_SCENE.instantiate()
+			entry.setup(montype)
+			$DatabaseScroll/Database.add_child(entry)
+			entry.clicked.connect(_on_entry_clicked)
+			for child in $MonInfo.get_children():
+				child.visible = false
 
 func setup() -> void:
 	for entry in $DatabaseScroll/Database.get_children():
@@ -43,10 +47,10 @@ func _on_entry_clicked(entry: DatabaseEntry) -> void:
 	$MonInfo/PassiveNameLabel.text = PASSIVE_NAME_FORMAT % active_entry.get_passive_name()
 	$MonInfo/PassiveDescriptionLabel.text = PASSIVE_DESCRIPTION_FORMAT % active_entry.get_passive_description()
 	$MonInfo/SpriteContainer/MonSprite.texture = active_entry.get_sprite()
-	$MonInfo/HealthBar.value = active_entry.get_health_bar_value()
-	$MonInfo/AttackBar.value = active_entry.get_attack_bar_value()
-	$MonInfo/DefenseBar.value = active_entry.get_defense_bar_value()
-	$MonInfo/SpeedBar.value = active_entry.get_speed_bar_value()
+	$MonInfo/HealthBar.value = active_entry.get_health_bar_value() + BAR_BUFFER
+	$MonInfo/AttackBar.value = active_entry.get_attack_bar_value() + BAR_BUFFER
+	$MonInfo/DefenseBar.value = active_entry.get_defense_bar_value() + BAR_BUFFER
+	$MonInfo/SpeedBar.value = active_entry.get_speed_bar_value() + BAR_BUFFER
 	for child in $MonInfo.get_children():
 		child.visible = true
 

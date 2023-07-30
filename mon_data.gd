@@ -139,11 +139,11 @@ class Mon:
 
 # List of MonBases, each is a static and constant representation of a Mon's essential characteristics
 var _MAGNETFROG_BASE = MonBase.new("magnetFrog", "res://mons/magnetfrog.tscn", "res://monscripts/attack.txt", 
-	40, 200, 10, 100, 5, 50, 6, 20,
+	40, 200, 10, 110, 5, 100, 6, 40,
 	"Magnetcheeks", "MagnetFrog's special attack information!",
 	"Magnetism", "MagnetFrog's passive ability information!")
 var _MAGNETFROGBLUE_BASE = MonBase.new("magnetFrogBLUE", "res://mons/magnetfrogblue.tscn", "res://monscripts/attack.txt", 
-	40, 200, 10, 100, 5, 50, 6, 20,
+	40, 250, 10, 100, 5, 50, 6, 20,
 	"Blue Burst", "MagnetFrog Blue's special attack information!",
 	"Bluenatism", "MagnetFrog Blue's passive ability information!")
 
@@ -191,16 +191,52 @@ func get_passive_description_for(montype: MonType) -> String:
 	return _MON_MAP[montype]._passive_description
 
 func get_health_percentile_for(montype: MonType) -> int:
-	return 50
+	assert(montype != MonType.NONE)
+	
+	var lowest_health = Global.INT_MAX
+	var highest_health = Global.INT_MIN
+	for monbase in _MON_MAP.values():
+		var health = monbase.health_for_level(MAX_LEVEL)
+		lowest_health = min(health, lowest_health)
+		highest_health = max(health, highest_health)
+	
+	return float(_MON_MAP[montype].health_for_level(MAX_LEVEL) - lowest_health) / (highest_health- lowest_health) * 100
 
 func get_attack_percentile_for(montype: MonType) -> int:
-	return 0
+	assert(montype != MonType.NONE)
+	
+	var lowest_attack = Global.INT_MAX
+	var highest_attack = Global.INT_MIN
+	for monbase in _MON_MAP.values():
+		var attack = monbase.attack_for_level(MAX_LEVEL)
+		lowest_attack = min(attack, lowest_attack)
+		highest_attack = max(attack, highest_attack)
+	
+	return float(_MON_MAP[montype].attack_for_level(MAX_LEVEL) - lowest_attack) / (highest_attack- lowest_attack) * 100
 
 func get_defense_percentile_for(montype: MonType) -> int:
-	return 75
+	assert(montype != MonType.NONE)
+	
+	var lowest_defense = Global.INT_MAX
+	var highest_defense = Global.INT_MIN
+	for monbase in _MON_MAP.values():
+		var defense = monbase.defense_for_level(MAX_LEVEL)
+		lowest_defense = min(defense, lowest_defense)
+		highest_defense = max(defense, highest_defense)
+	
+	return float(_MON_MAP[montype].defense_for_level(MAX_LEVEL) - lowest_defense) / (highest_defense- lowest_defense) * 100
 
 func get_speed_percentile_for(montype: MonType) -> int:
-	return 100
+	assert(montype != MonType.NONE)
+	
+	var lowest_speed = Global.INT_MAX
+	var highest_speed = Global.INT_MIN
+	for monbase in _MON_MAP.values():
+		var speed = monbase.speed_for_level(MAX_LEVEL)
+		lowest_speed = min(speed, lowest_speed)
+		highest_speed = max(speed, highest_speed)
+	
+	return float(_MON_MAP[montype].speed_for_level(MAX_LEVEL) - lowest_speed) / (highest_speed- lowest_speed) * 100
 
 func create_mon(montype: MonType, level: int) -> Mon:
 	assert(montype != MonType.NONE)
