@@ -34,6 +34,9 @@ func _ready() -> void:
 	_update_completion()
 
 func setup() -> void:
+	active_entry = null
+	for child in $MonInfo.get_children():
+		child.visible = false
 	for entry in $DatabaseScroll/Database.get_children():
 		entry.refresh() # update progress values of each entry
 	_update_completion()
@@ -48,7 +51,6 @@ func _update_completion():
 	$CompletionLabel.add_theme_color_override("default_color", Global.COLOR_GOLDEN if num_compiled == num_entries else Global.COLOR_WHITE)
 
 func _on_entry_clicked(entry: DatabaseEntry) -> void:
-	$DatabaseMonFileDefault.visible = false
 	if active_entry:
 		active_entry.unselect()
 	active_entry = entry
