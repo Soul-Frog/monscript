@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dtpehdp2rfsuh" path="res://battle/battle.tscn" id="3_ucmr6"]
 [ext_resource type="PackedScene" uid="uid://wvcujwhuslip" path="res://ui/pause/pause_menu.tscn" id="4_wdx4t"]
 [ext_resource type="PackedScene" uid="uid://bivwnc3i5hpa2" path="res://ui/script/script_menu.tscn" id="5_4kn6s"]
-[ext_resource type="PackedScene" uid="uid://bv4m5fa6co5k6" path="res://ui/database/database_menu.tscn" id="6_yfjpu"]
+[ext_resource type="PackedScene" uid="uid://bm5tklk7abl5" path="res://ui/database/database_menu.tscn" id="6_yfjpu"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_sv5wa")

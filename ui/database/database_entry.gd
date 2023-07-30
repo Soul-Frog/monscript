@@ -3,32 +3,53 @@ extends BoxContainer
 
 signal clicked
 
+enum Status {
+	SELECTED, UNSELECTED, DISABLED
+}
+
+
 var is_mouse_over := false
 var mon_type
+var _status = Status.DISABLED
+
+func _update_background():
+	for bg in $Free/BGs.get_children():
+		bg.visible = false
+	if _status == Status.DISABLED:
+		$Free/BGs/BackgroundDisabled.visible = true
+	elif _status == Status.UNSELECTED:
+		$Free/BGs/BackgroundUnselected.visible = !is_mouse_over
+		$Free/BGs/BackgroundUnselectedHover.visible = is_mouse_over
+	else:
+		$Free/BGs/BackgroundSelected.visible = !is_mouse_over
+		$Free/BGs/BackgroundSelectedHover.visible = is_mouse_over
 
 func ready() -> void:
-	$Free/BackgroundSelected.visible = false
-	$Free/BackgroundUnselected.visible = true
-	$Free/BackgroundDisabled.visible = true
+	_update_background()
 
 func setup(type) -> void:
 	self.mon_type = type
 	$Free/SpriteContainer/MonSprite.texture = MonData.get_texture_for(mon_type)
 	refresh()
+	_update_background()
 
 func refresh() -> void:
 	assert(GameData.compilation_progress_per_mon[mon_type] >= 0 && GameData.compilation_progress_per_mon[mon_type] <= 100)
 	$Free/ProgressBar.value = GameData.compilation_progress_per_mon[mon_type]
 	$Free/SpriteContainer/MonSprite.modulate = Global.COLOR_BLACK if $Free/ProgressBar.value != 100 else Global.COLOR_WHITE
-	$Free/BackgroundDisabled.visible = $Free/ProgressBar.value != 100
+	if $Free/ProgressBar.value == 100:
+		_status = Status.UNSELECTED
+		_update_background()
 
 func select():
-	$Free/BackgroundUnselected.visible = false
-	$Free/BackgroundSelected.visible = true
+	assert(_status != Status.DISABLED)
+	_status = Status.SELECTED
+	_update_background()
 
 func unselect():
-	$Free/BackgroundUnselected.visible = true
-	$Free/BackgroundSelected.visible = false
+	assert(_status != Status.DISABLED)
+	_status = Status.UNSELECTED
+	_update_background()
 
 func get_mon_name():
 	return MonData.get_name_for(mon_type)
@@ -69,6 +90,8 @@ func _input(event):
 
 func _on_mouse_entered():
 	is_mouse_over = true
+	_update_background()
 
 func _on_mouse_exited():
 	is_mouse_over = false
+	_update_background()
