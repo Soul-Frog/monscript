@@ -7,7 +7,9 @@ const MONS_PER_TEAM = 4
 
 var RNG = RandomNumberGenerator.new()
 
-const COLOR_GOLDEN = Color(255, 165, 0, 255)
+const COLOR_WHITE_TEXT = Color(255.0/255.0, 255.0/255.0, 255.0/255.0, 255)
+const COLOR_GRAY_TEXT = Color(179.0/255.0, 185.0/255.0, 209.0/255.0, 255)
+const COLOR_GOLDEN = Color(255.0/255.0, 165.0/255.0, 0, 255)
 const COLOR_BLACK = Color(0, 0, 0)
 const COLOR_WHITE = Color.WHITE
 const COLOR_PINK = Color.PINK
