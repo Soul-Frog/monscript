@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://c0d6yp7fldlp6"]
+[gd_scene load_steps=38 format=3 uid="uid://c0d6yp7fldlp6"]
 
 [ext_resource type="Texture2D" uid="uid://dl0si4q1ky7ya" path="res://assets/gui/script/script_base.png" id="1_356ca"]
 [ext_resource type="Script" path="res://ui/scriptv2/script_menu.gd" id="1_dsifa"]
@@ -31,6 +31,8 @@
 [ext_resource type="Texture2D" uid="uid://boq8c5wa1l0pk" path="res://assets/gui/script/do_tab_active_hover.png" id="17_6emm1"]
 [ext_resource type="Texture2D" uid="uid://ut830nxq2ya1" path="res://assets/gui/script/do_tab_inactive.png" id="18_qpwv0"]
 [ext_resource type="Texture2D" uid="uid://besr64i0ltfh3" path="res://assets/gui/script/do_tab_inactive_hover.png" id="19_e8f5r"]
+[ext_resource type="Texture2D" uid="uid://cf5jkrufx2hjv" path="res://assets/gui/grey9patch.png" id="19_lq7aa"]
+[ext_resource type="Texture2D" uid="uid://dw4ksdpcf0pf2" path="res://assets/gui/script/do.png" id="20_1lk28"]
 [ext_resource type="Texture2D" uid="uid://dsxioifilcuhi" path="res://assets/gui/script/to_tab_active.png" id="20_b7dge"]
 [ext_resource type="Texture2D" uid="uid://m6el3fvvojlw" path="res://assets/gui/script/to_tab_active_hover.png" id="21_s8u0c"]
 [ext_resource type="Texture2D" uid="uid://dcx2ma73ec0if" path="res://assets/gui/script/to_tab_inactive.png" id="22_yvqja"]
@@ -114,6 +116,7 @@ texture_normal = ExtResource("11_ynigc")
 [node name="Drawers" type="Node" parent="SnippetDrawer"]
 
 [node name="IfDrawer" type="Node2D" parent="SnippetDrawer/Drawers"]
+visible = false
 
 [node name="IfBackground" type="Sprite2D" parent="SnippetDrawer/Drawers/IfDrawer"]
 position = Vector2(10, 119)
@@ -128,7 +131,7 @@ offset_bottom = 174.0
 size_flags_horizontal = 3
 theme = ExtResource("3_6j4tl")
 
-[node name="Snippets" type="VBoxContainer" parent="SnippetDrawer/Drawers/IfDrawer/SnippetScroll"]
+[node name="Snippets" type="FlowContainer" parent="SnippetDrawer/Drawers/IfDrawer/SnippetScroll"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -153,17 +156,915 @@ offset_bottom = 174.0
 size_flags_horizontal = 3
 theme = ExtResource("3_6j4tl")
 
-[node name="Snippets" type="VBoxContainer" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll"]
+[node name="Snippets" type="FlowContainer" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
 
-[node name="FILLER" type="Button" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets"]
-custom_minimum_size = Vector2(120, 300)
+[node name="Block" type="MarginContainer" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets"]
 layout_mode = 2
-mouse_filter = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="BlockClickable" type="Control" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block"]
+custom_minimum_size = Vector2(51, 15)
+layout_mode = 2
+
+[node name="Background" type="NinePatchRect" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block/BlockClickable"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 50.0
+offset_bottom = 14.0
+texture = ExtResource("19_lq7aa")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="Name" type="Label" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block/BlockClickable"]
+layout_mode = 2
+offset_left = 15.0
+offset_top = -1.0
+offset_right = 47.0
+offset_bottom = 13.0
+text = "Attack"
+
+[node name="Do" type="Sprite2D" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block/BlockClickable"]
+position = Vector2(1, 1)
+texture = ExtResource("20_1lk28")
+centered = false
+
+[node name="Block2" type="MarginContainer" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="BlockClickable" type="Control" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block2"]
+custom_minimum_size = Vector2(51, 15)
+layout_mode = 2
+
+[node name="Background" type="NinePatchRect" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block2/BlockClickable"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 50.0
+offset_bottom = 14.0
+texture = ExtResource("19_lq7aa")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="Name" type="Label" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block2/BlockClickable"]
+layout_mode = 2
+offset_left = 15.0
+offset_top = -1.0
+offset_right = 47.0
+offset_bottom = 13.0
+text = "Attack"
+
+[node name="Do" type="Sprite2D" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block2/BlockClickable"]
+position = Vector2(1, 1)
+texture = ExtResource("20_1lk28")
+centered = false
+
+[node name="Block3" type="MarginContainer" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="BlockClickable" type="Control" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block3"]
+custom_minimum_size = Vector2(51, 15)
+layout_mode = 2
+
+[node name="Background" type="NinePatchRect" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block3/BlockClickable"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 50.0
+offset_bottom = 14.0
+texture = ExtResource("19_lq7aa")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="Name" type="Label" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block3/BlockClickable"]
+layout_mode = 2
+offset_left = 15.0
+offset_top = -1.0
+offset_right = 47.0
+offset_bottom = 13.0
+text = "Attack"
+
+[node name="Do" type="Sprite2D" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block3/BlockClickable"]
+position = Vector2(1, 1)
+texture = ExtResource("20_1lk28")
+centered = false
+
+[node name="Block4" type="MarginContainer" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="BlockClickable" type="Control" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block4"]
+custom_minimum_size = Vector2(51, 15)
+layout_mode = 2
+
+[node name="Background" type="NinePatchRect" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block4/BlockClickable"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 50.0
+offset_bottom = 14.0
+texture = ExtResource("19_lq7aa")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="Name" type="Label" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block4/BlockClickable"]
+layout_mode = 2
+offset_left = 15.0
+offset_top = -1.0
+offset_right = 47.0
+offset_bottom = 13.0
+text = "Attack"
+
+[node name="Do" type="Sprite2D" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block4/BlockClickable"]
+position = Vector2(1, 1)
+texture = ExtResource("20_1lk28")
+centered = false
+
+[node name="Block5" type="MarginContainer" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="BlockClickable" type="Control" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block5"]
+custom_minimum_size = Vector2(51, 15)
+layout_mode = 2
+
+[node name="Background" type="NinePatchRect" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block5/BlockClickable"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 50.0
+offset_bottom = 14.0
+texture = ExtResource("19_lq7aa")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="Name" type="Label" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block5/BlockClickable"]
+layout_mode = 2
+offset_left = 15.0
+offset_top = -1.0
+offset_right = 47.0
+offset_bottom = 13.0
+text = "Attack"
+
+[node name="Do" type="Sprite2D" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block5/BlockClickable"]
+position = Vector2(1, 1)
+texture = ExtResource("20_1lk28")
+centered = false
+
+[node name="Block6" type="MarginContainer" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="BlockClickable" type="Control" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block6"]
+custom_minimum_size = Vector2(51, 15)
+layout_mode = 2
+
+[node name="Background" type="NinePatchRect" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block6/BlockClickable"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 50.0
+offset_bottom = 14.0
+texture = ExtResource("19_lq7aa")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="Name" type="Label" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block6/BlockClickable"]
+layout_mode = 2
+offset_left = 15.0
+offset_top = -1.0
+offset_right = 47.0
+offset_bottom = 13.0
+text = "Attack"
+
+[node name="Do" type="Sprite2D" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block6/BlockClickable"]
+position = Vector2(1, 1)
+texture = ExtResource("20_1lk28")
+centered = false
+
+[node name="Block7" type="MarginContainer" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="BlockClickable" type="Control" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block7"]
+custom_minimum_size = Vector2(51, 15)
+layout_mode = 2
+
+[node name="Background" type="NinePatchRect" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block7/BlockClickable"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 50.0
+offset_bottom = 14.0
+texture = ExtResource("19_lq7aa")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="Name" type="Label" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block7/BlockClickable"]
+layout_mode = 2
+offset_left = 15.0
+offset_top = -1.0
+offset_right = 47.0
+offset_bottom = 13.0
+text = "Attack"
+
+[node name="Do" type="Sprite2D" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block7/BlockClickable"]
+position = Vector2(1, 1)
+texture = ExtResource("20_1lk28")
+centered = false
+
+[node name="Block8" type="MarginContainer" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="BlockClickable" type="Control" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block8"]
+custom_minimum_size = Vector2(51, 15)
+layout_mode = 2
+
+[node name="Background" type="NinePatchRect" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block8/BlockClickable"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 50.0
+offset_bottom = 14.0
+texture = ExtResource("19_lq7aa")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="Name" type="Label" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block8/BlockClickable"]
+layout_mode = 2
+offset_left = 15.0
+offset_top = -1.0
+offset_right = 47.0
+offset_bottom = 13.0
+text = "Attack"
+
+[node name="Do" type="Sprite2D" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block8/BlockClickable"]
+position = Vector2(1, 1)
+texture = ExtResource("20_1lk28")
+centered = false
+
+[node name="Block9" type="MarginContainer" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="BlockClickable" type="Control" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block9"]
+custom_minimum_size = Vector2(51, 15)
+layout_mode = 2
+
+[node name="Background" type="NinePatchRect" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block9/BlockClickable"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 50.0
+offset_bottom = 14.0
+texture = ExtResource("19_lq7aa")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="Name" type="Label" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block9/BlockClickable"]
+layout_mode = 2
+offset_left = 15.0
+offset_top = -1.0
+offset_right = 47.0
+offset_bottom = 13.0
+text = "Attack"
+
+[node name="Do" type="Sprite2D" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block9/BlockClickable"]
+position = Vector2(1, 1)
+texture = ExtResource("20_1lk28")
+centered = false
+
+[node name="Block10" type="MarginContainer" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="BlockClickable" type="Control" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block10"]
+custom_minimum_size = Vector2(51, 15)
+layout_mode = 2
+
+[node name="Background" type="NinePatchRect" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block10/BlockClickable"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 50.0
+offset_bottom = 14.0
+texture = ExtResource("19_lq7aa")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="Name" type="Label" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block10/BlockClickable"]
+layout_mode = 2
+offset_left = 15.0
+offset_top = -1.0
+offset_right = 47.0
+offset_bottom = 13.0
+text = "Attack"
+
+[node name="Do" type="Sprite2D" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block10/BlockClickable"]
+position = Vector2(1, 1)
+texture = ExtResource("20_1lk28")
+centered = false
+
+[node name="Block11" type="MarginContainer" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="BlockClickable" type="Control" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block11"]
+custom_minimum_size = Vector2(51, 15)
+layout_mode = 2
+
+[node name="Background" type="NinePatchRect" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block11/BlockClickable"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 50.0
+offset_bottom = 14.0
+texture = ExtResource("19_lq7aa")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="Name" type="Label" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block11/BlockClickable"]
+layout_mode = 2
+offset_left = 15.0
+offset_top = -1.0
+offset_right = 47.0
+offset_bottom = 13.0
+text = "Attack"
+
+[node name="Do" type="Sprite2D" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block11/BlockClickable"]
+position = Vector2(1, 1)
+texture = ExtResource("20_1lk28")
+centered = false
+
+[node name="Block12" type="MarginContainer" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="BlockClickable" type="Control" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block12"]
+custom_minimum_size = Vector2(51, 15)
+layout_mode = 2
+
+[node name="Background" type="NinePatchRect" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block12/BlockClickable"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 50.0
+offset_bottom = 14.0
+texture = ExtResource("19_lq7aa")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="Name" type="Label" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block12/BlockClickable"]
+layout_mode = 2
+offset_left = 15.0
+offset_top = -1.0
+offset_right = 47.0
+offset_bottom = 13.0
+text = "Attack"
+
+[node name="Do" type="Sprite2D" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block12/BlockClickable"]
+position = Vector2(1, 1)
+texture = ExtResource("20_1lk28")
+centered = false
+
+[node name="Block13" type="MarginContainer" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="BlockClickable" type="Control" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block13"]
+custom_minimum_size = Vector2(51, 15)
+layout_mode = 2
+
+[node name="Background" type="NinePatchRect" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block13/BlockClickable"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 50.0
+offset_bottom = 14.0
+texture = ExtResource("19_lq7aa")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="Name" type="Label" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block13/BlockClickable"]
+layout_mode = 2
+offset_left = 15.0
+offset_top = -1.0
+offset_right = 47.0
+offset_bottom = 13.0
+text = "Attack"
+
+[node name="Do" type="Sprite2D" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block13/BlockClickable"]
+position = Vector2(1, 1)
+texture = ExtResource("20_1lk28")
+centered = false
+
+[node name="Block14" type="MarginContainer" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="BlockClickable" type="Control" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block14"]
+custom_minimum_size = Vector2(51, 15)
+layout_mode = 2
+
+[node name="Background" type="NinePatchRect" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block14/BlockClickable"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 50.0
+offset_bottom = 14.0
+texture = ExtResource("19_lq7aa")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="Name" type="Label" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block14/BlockClickable"]
+layout_mode = 2
+offset_left = 15.0
+offset_top = -1.0
+offset_right = 47.0
+offset_bottom = 13.0
+text = "Attack"
+
+[node name="Do" type="Sprite2D" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block14/BlockClickable"]
+position = Vector2(1, 1)
+texture = ExtResource("20_1lk28")
+centered = false
+
+[node name="Block15" type="MarginContainer" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="BlockClickable" type="Control" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block15"]
+custom_minimum_size = Vector2(51, 15)
+layout_mode = 2
+
+[node name="Background" type="NinePatchRect" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block15/BlockClickable"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 50.0
+offset_bottom = 14.0
+texture = ExtResource("19_lq7aa")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="Name" type="Label" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block15/BlockClickable"]
+layout_mode = 2
+offset_left = 15.0
+offset_top = -1.0
+offset_right = 47.0
+offset_bottom = 13.0
+text = "Attack"
+
+[node name="Do" type="Sprite2D" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block15/BlockClickable"]
+position = Vector2(1, 1)
+texture = ExtResource("20_1lk28")
+centered = false
+
+[node name="Block16" type="MarginContainer" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="BlockClickable" type="Control" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block16"]
+custom_minimum_size = Vector2(51, 15)
+layout_mode = 2
+
+[node name="Background" type="NinePatchRect" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block16/BlockClickable"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 50.0
+offset_bottom = 14.0
+texture = ExtResource("19_lq7aa")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="Name" type="Label" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block16/BlockClickable"]
+layout_mode = 2
+offset_left = 15.0
+offset_top = -1.0
+offset_right = 47.0
+offset_bottom = 13.0
+text = "Attack"
+
+[node name="Do" type="Sprite2D" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block16/BlockClickable"]
+position = Vector2(1, 1)
+texture = ExtResource("20_1lk28")
+centered = false
+
+[node name="Block17" type="MarginContainer" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="BlockClickable" type="Control" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block17"]
+custom_minimum_size = Vector2(51, 15)
+layout_mode = 2
+
+[node name="Background" type="NinePatchRect" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block17/BlockClickable"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 50.0
+offset_bottom = 14.0
+texture = ExtResource("19_lq7aa")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="Name" type="Label" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block17/BlockClickable"]
+layout_mode = 2
+offset_left = 15.0
+offset_top = -1.0
+offset_right = 47.0
+offset_bottom = 13.0
+text = "Attack"
+
+[node name="Do" type="Sprite2D" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block17/BlockClickable"]
+position = Vector2(1, 1)
+texture = ExtResource("20_1lk28")
+centered = false
+
+[node name="Block18" type="MarginContainer" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="BlockClickable" type="Control" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block18"]
+custom_minimum_size = Vector2(51, 15)
+layout_mode = 2
+
+[node name="Background" type="NinePatchRect" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block18/BlockClickable"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 50.0
+offset_bottom = 14.0
+texture = ExtResource("19_lq7aa")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="Name" type="Label" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block18/BlockClickable"]
+layout_mode = 2
+offset_left = 15.0
+offset_top = -1.0
+offset_right = 47.0
+offset_bottom = 13.0
+text = "Attack"
+
+[node name="Do" type="Sprite2D" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block18/BlockClickable"]
+position = Vector2(1, 1)
+texture = ExtResource("20_1lk28")
+centered = false
+
+[node name="Block19" type="MarginContainer" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="BlockClickable" type="Control" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block19"]
+custom_minimum_size = Vector2(51, 15)
+layout_mode = 2
+
+[node name="Background" type="NinePatchRect" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block19/BlockClickable"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 50.0
+offset_bottom = 14.0
+texture = ExtResource("19_lq7aa")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="Name" type="Label" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block19/BlockClickable"]
+layout_mode = 2
+offset_left = 15.0
+offset_top = -1.0
+offset_right = 47.0
+offset_bottom = 13.0
+text = "Attack"
+
+[node name="Do" type="Sprite2D" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block19/BlockClickable"]
+position = Vector2(1, 1)
+texture = ExtResource("20_1lk28")
+centered = false
+
+[node name="Block20" type="MarginContainer" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="BlockClickable" type="Control" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block20"]
+custom_minimum_size = Vector2(51, 15)
+layout_mode = 2
+
+[node name="Background" type="NinePatchRect" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block20/BlockClickable"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 50.0
+offset_bottom = 14.0
+texture = ExtResource("19_lq7aa")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="Name" type="Label" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block20/BlockClickable"]
+layout_mode = 2
+offset_left = 15.0
+offset_top = -1.0
+offset_right = 47.0
+offset_bottom = 13.0
+text = "Attack"
+
+[node name="Do" type="Sprite2D" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block20/BlockClickable"]
+position = Vector2(1, 1)
+texture = ExtResource("20_1lk28")
+centered = false
+
+[node name="Block21" type="MarginContainer" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="BlockClickable" type="Control" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block21"]
+custom_minimum_size = Vector2(51, 15)
+layout_mode = 2
+
+[node name="Background" type="NinePatchRect" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block21/BlockClickable"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 50.0
+offset_bottom = 14.0
+texture = ExtResource("19_lq7aa")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="Name" type="Label" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block21/BlockClickable"]
+layout_mode = 2
+offset_left = 15.0
+offset_top = -1.0
+offset_right = 47.0
+offset_bottom = 13.0
+text = "Attack"
+
+[node name="Do" type="Sprite2D" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block21/BlockClickable"]
+position = Vector2(1, 1)
+texture = ExtResource("20_1lk28")
+centered = false
+
+[node name="Block22" type="MarginContainer" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="BlockClickable" type="Control" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block22"]
+custom_minimum_size = Vector2(51, 15)
+layout_mode = 2
+
+[node name="Background" type="NinePatchRect" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block22/BlockClickable"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 50.0
+offset_bottom = 14.0
+texture = ExtResource("19_lq7aa")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="Name" type="Label" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block22/BlockClickable"]
+layout_mode = 2
+offset_left = 15.0
+offset_top = -1.0
+offset_right = 47.0
+offset_bottom = 13.0
+text = "Attack"
+
+[node name="Do" type="Sprite2D" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block22/BlockClickable"]
+position = Vector2(1, 1)
+texture = ExtResource("20_1lk28")
+centered = false
+
+[node name="Block23" type="MarginContainer" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="BlockClickable" type="Control" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block23"]
+custom_minimum_size = Vector2(51, 15)
+layout_mode = 2
+
+[node name="Background" type="NinePatchRect" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block23/BlockClickable"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 50.0
+offset_bottom = 14.0
+texture = ExtResource("19_lq7aa")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="Name" type="Label" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block23/BlockClickable"]
+layout_mode = 2
+offset_left = 15.0
+offset_top = -1.0
+offset_right = 47.0
+offset_bottom = 13.0
+text = "Attack"
+
+[node name="Do" type="Sprite2D" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block23/BlockClickable"]
+position = Vector2(1, 1)
+texture = ExtResource("20_1lk28")
+centered = false
+
+[node name="Block24" type="MarginContainer" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="BlockClickable" type="Control" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block24"]
+custom_minimum_size = Vector2(51, 15)
+layout_mode = 2
+
+[node name="Background" type="NinePatchRect" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block24/BlockClickable"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 50.0
+offset_bottom = 14.0
+texture = ExtResource("19_lq7aa")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="Name" type="Label" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block24/BlockClickable"]
+layout_mode = 2
+offset_left = 15.0
+offset_top = -1.0
+offset_right = 47.0
+offset_bottom = 13.0
+text = "Attack"
+
+[node name="Do" type="Sprite2D" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block24/BlockClickable"]
+position = Vector2(1, 1)
+texture = ExtResource("20_1lk28")
+centered = false
+
+[node name="Block25" type="MarginContainer" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="BlockClickable" type="Control" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block25"]
+custom_minimum_size = Vector2(51, 15)
+layout_mode = 2
+
+[node name="Background" type="NinePatchRect" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block25/BlockClickable"]
+layout_mode = 2
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 50.0
+offset_bottom = 14.0
+texture = ExtResource("19_lq7aa")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="Name" type="Label" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block25/BlockClickable"]
+layout_mode = 2
+offset_left = 15.0
+offset_top = -1.0
+offset_right = 47.0
+offset_bottom = 13.0
+text = "Attack"
+
+[node name="Do" type="Sprite2D" parent="SnippetDrawer/Drawers/DoDrawer/SnippetScroll/Snippets/Block25/BlockClickable"]
+position = Vector2(1, 1)
+texture = ExtResource("20_1lk28")
+centered = false
 
 [node name="ToDrawer" type="Node2D" parent="SnippetDrawer/Drawers"]
+visible = false
 
 [node name="Background" type="Sprite2D" parent="SnippetDrawer/Drawers/ToDrawer"]
 position = Vector2(10, 119)
@@ -178,7 +1079,7 @@ offset_bottom = 174.0
 size_flags_horizontal = 3
 theme = ExtResource("3_6j4tl")
 
-[node name="Snippets" type="VBoxContainer" parent="SnippetDrawer/Drawers/ToDrawer/SnippetScroll"]
+[node name="Snippets" type="FlowContainer" parent="SnippetDrawer/Drawers/ToDrawer/SnippetScroll"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
