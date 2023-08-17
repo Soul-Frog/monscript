@@ -7,6 +7,9 @@ signal closed
 var _active_file_tab = 1
 var _active_drawer_tab = 1
 
+# the block currently picked up; moves with mouse cursor
+var held_block = null
+
 const SCRIPT_BLOCK_SCENE = preload("res://ui/script/script_block.tscn")
 
 func _ready():
@@ -21,11 +24,15 @@ func _ready():
 	_update_file_tabs()
 
 func setup(mon: MonData.Mon):
-	pass
+	held_block = null
 
-func _create_and_add_block_to(drawer: FlowContainer, block_type: ScriptData.Block.Type, block_name: String):
+func _create_block(block_type: ScriptData.Block.Type, block_name: String):
 	var block := SCRIPT_BLOCK_SCENE.instantiate()
 	block.set_data(block_type, block_name)
+	return block
+
+func _create_and_add_block_to(drawer: FlowContainer, block_type: ScriptData.Block.Type, block_name: String):
+	var block = _create_block(block_type, block_name)
 	drawer.add_child(block)
 	block.clicked.connect(_on_block_clicked)
 	block.visible = false
@@ -79,5 +86,19 @@ func _on_to_tab_clicked():
 	_update_drawer()
 
 func _on_block_clicked(block: UIScriptBlock):
-	print(block)
-	
+	# if we aren't already holding a block
+	if held_block == null:
+		# create a duplicate of this block and hold it
+		held_block = _create_block(block.block_type, block.block_name)
+		add_child(held_block)
+		held_block.position = Vector2(-100, -100)
+		held_block.z_index = 100 # draw this on top of everything
+		call_deferred("_set_initial_block_position") # wait a frame to set this so size can update
+func _set_initial_block_position():
+	if(held_block != null):
+		held_block.position = Global.centered_position(held_block, get_viewport().get_mouse_position())
+
+func _input(event):
+	if event is InputEventMouseMotion:
+		if held_block != null:
+			held_block.position = Global.centered_position(held_block, event.position)

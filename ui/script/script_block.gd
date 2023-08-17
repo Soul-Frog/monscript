@@ -8,11 +8,16 @@ const DO_SPRITE := preload("res://assets/gui/script/do.png")
 const TO_SPRITE := preload("res://assets/gui/script/to.png")
 const BASE_SIZE := 16
 
-func set_data(block_type: ScriptData.Block.Type, block_name: String) -> void:
-	_set_block_type(block_type)
-	_set_block_name(block_name)
+var block_type
+var block_name
 
-func _set_block_type(block_type: ScriptData.Block.Type) -> void:
+func set_data(blockType: ScriptData.Block.Type, blockName: String) -> void:
+	self.block_type = blockType
+	self.block_name = blockName
+	_set_block_type()
+	_set_block_name()
+
+func _set_block_type() -> void:
 	match block_type:
 		ScriptData.Block.Type.IF:
 			$BlockClickable/Type.texture = IF_SPRITE
@@ -21,7 +26,7 @@ func _set_block_type(block_type: ScriptData.Block.Type) -> void:
 		ScriptData.Block.Type.TO:
 			$BlockClickable/Type.texture = TO_SPRITE
 
-func _set_block_name(block_name: String) -> void:
+func _set_block_name() -> void:
 	$BlockClickable/Name.text = block_name
 	
 	# We want to resize the rest of the node based on the text size,

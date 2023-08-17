@@ -95,3 +95,7 @@ func _dump_helper(node: Node, indent_level: int) -> void:
 	print(repeat_str("  ", indent_level), node.name) 
 	for child in node.get_children():
 		_dump_helper(child, indent_level + 1)
+
+# returns the position of this node if centered on a given point
+func centered_position(node: Node, point: Vector2):
+	return point - Vector2(node.size.x/2, node.size.y/2)
