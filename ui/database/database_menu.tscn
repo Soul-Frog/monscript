@@ -155,3 +155,5 @@ value = 50.0
 nine_patch_stretch = true
 texture_progress = ExtResource("9_s3meg")
 tint_progress = Color(0.34902, 0.756863, 0.207843, 1)
+
+[connection signal="pressed" from="XButton" to="." method="_on_exit_pressed"]

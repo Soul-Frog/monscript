@@ -1,0 +1,59 @@
+[gd_scene load_steps=2 format=3 uid="uid://duicvpopmj0k5"]
+
+[ext_resource type="Script" path="res://ui/scriptv0/script_menu.gd" id="1_mpyhe"]
+
+[node name="ScriptMenu" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mpyhe")
+
+[node name="MenuBar" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="Left" type="BoxContainer" parent="MenuBar"]
+custom_minimum_size = Vector2(106, 0)
+layout_mode = 2
+
+[node name="MonNameLabel" type="Label" parent="MenuBar/Left"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Mon Name"
+
+[node name="Middle" type="BoxContainer" parent="MenuBar"]
+custom_minimum_size = Vector2(106, 0)
+layout_mode = 2
+alignment = 1
+
+[node name="Save" type="Button" parent="MenuBar/Middle"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Save"
+
+[node name="Right" type="BoxContainer" parent="MenuBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="Exit" type="Button" parent="MenuBar/Right"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "X"
+
+[node name="Window" type="ScrollContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="Lines" type="VBoxContainer" parent="Window"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[connection signal="pressed" from="MenuBar/Middle/Save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="MenuBar/Right/Exit" to="." method="_on_exit_pressed"]
