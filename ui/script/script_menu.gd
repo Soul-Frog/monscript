@@ -27,12 +27,16 @@ func _create_and_add_block_to(drawer: FlowContainer, block_type: ScriptData.Bloc
 	var block := SCRIPT_BLOCK_SCENE.instantiate()
 	block.set_data(block_type, block_name)
 	drawer.add_child(block)
+	block.clicked.connect(_on_block_clicked)
+	block.visible = false
 
 func _update_drawer():
 	_select_one_tab(_active_drawer_tab, $BlockDrawer/Tabs.get_children()) # update the tabs
 	var n := 1
 	for drawer in $BlockDrawer/Drawers.get_children():
 		drawer.visible = n == _active_drawer_tab
+		for block in drawer.find_child("BlockScroll").find_child("Blocks").get_children():
+			block.visible = n == _active_drawer_tab
 		n += 1
 
 func _update_file_tabs():
@@ -73,3 +77,7 @@ func _on_do_tab_clicked():
 func _on_to_tab_clicked():
 	_active_drawer_tab = 3
 	_update_drawer()
+
+func _on_block_clicked(block: UIScriptBlock):
+	print(block)
+	

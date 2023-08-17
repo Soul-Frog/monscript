@@ -1,5 +1,7 @@
-class_name UIScriptBlock2
+class_name UIScriptBlock
 extends MarginContainer
+
+signal clicked
 
 const IF_SPRITE := preload("res://assets/gui/script/if.png")
 const DO_SPRITE := preload("res://assets/gui/script/do.png")
@@ -35,4 +37,7 @@ func _update_size():
 	$BlockClickable/Background.custom_minimum_size.x = $BlockClickable.size.x
 	$BlockClickable/Background.size.x = $BlockClickable.size.x
 	
-	
+func _input(event: InputEvent):
+	if event is InputEventMouseButton:
+		if event.is_pressed() and $BlockClickable.get_global_rect().has_point(event.position) and visible:
+			emit_signal("clicked", self)
