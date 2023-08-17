@@ -16,7 +16,7 @@ func assign_type(block_type: ScriptData.Block.Type) -> void:
 	var block_list := []
 	match type:
 		ScriptData.Block.Type.IF:
-			block_list = ScriptData.IF_BLOCK_LIST
+			block_list = ScriptData.IF_BLOCK_LIST 
 		ScriptData.Block.Type.DO:
 			block_list = ScriptData.DO_BLOCK_LIST
 		ScriptData.Block.Type.TO:

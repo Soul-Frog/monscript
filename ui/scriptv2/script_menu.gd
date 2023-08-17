@@ -4,14 +4,28 @@ extends Node2D
 var _active_file_tab = 1
 var _active_drawer_tab = 1
 
+const SCRIPT_BLOCK_SCENE = preload("res://ui/scriptv2/script_block.tscn")
+
 func _ready():
+	# create blocks
+	for ifBlock in ScriptData.IF_BLOCK_LIST:
+		_create_and_add_block_to($BlockDrawer/Drawers/IfDrawer/BlockScroll/Blocks, ifBlock.type, ifBlock.name)
+	for doBlock in ScriptData.DO_BLOCK_LIST:
+		_create_and_add_block_to($BlockDrawer/Drawers/DoDrawer/BlockScroll/Blocks, doBlock.type, doBlock.name)
+	for toBlock in ScriptData.TO_BLOCK_LIST:
+		_create_and_add_block_to($BlockDrawer/Drawers/ToDrawer/BlockScroll/Blocks, toBlock.type, toBlock.name)
 	_update_drawer()
 	_update_file_tabs()
 
+func _create_and_add_block_to(drawer: FlowContainer, block_type: ScriptData.Block.Type, block_name: String):
+	var block := SCRIPT_BLOCK_SCENE.instantiate()
+	block.set_data(block_type, block_name)
+	drawer.add_child(block)
+
 func _update_drawer():
-	_select_one_tab(_active_drawer_tab, $SnippetDrawer/Tabs.get_children()) # update the tabs
+	_select_one_tab(_active_drawer_tab, $BlockDrawer/Tabs.get_children()) # update the tabs
 	var n := 1
-	for drawer in $SnippetDrawer/Drawers.get_children():
+	for drawer in $BlockDrawer/Drawers.get_children():
 		drawer.visible = n == _active_drawer_tab
 		n += 1
 
