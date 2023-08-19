@@ -7,6 +7,9 @@ signal closed
 var _active_file_tab = 1
 var _active_drawer_tab = 1
 
+# the currently known maximum scroll amount for script scrollbar
+var _max_scroll = -1
+
 # the block currently picked up; moves with mouse cursor
 var held_block = null
 
@@ -23,6 +26,9 @@ func _ready():
 		_create_and_add_block_to($BlockDrawer/Drawers/ToDrawer/BlockScroll/Blocks, toBlock.type, toBlock.name)
 	_update_drawer()
 	_update_file_tabs()
+	
+	# when the scrollbar size changes, move the scrollbar down
+	$ScriptScroll.get_v_scroll_bar().changed.connect(_move_scroll_to_bottom)
 
 func setup(mon: MonData.Mon):
 	held_block = null
@@ -92,7 +98,6 @@ func _on_block_clicked(block: UIScriptBlock):
 	if held_block == null:
 		# create a duplicate of this block and hold it
 		_pickup_held_block(_create_block(block.block_type, block.block_name))
-
 func _set_initial_block_position():
 	if(held_block != null):
 		held_block.position = Global.centered_position(held_block, get_viewport().get_mouse_position())
@@ -127,6 +132,15 @@ func _on_new_line_button_pressed():
 	newline.deleted.connect(_on_line_deleted)
 	$ScriptScroll/Script/ScriptLines.add_child(newline)
 	_update_line_numbers()
+	
+func _move_scroll_to_bottom():
+	# if the scrollbar has grown, we just added a new line
+	# move down to the next line.
+	if _max_scroll < $ScriptScroll.get_v_scroll_bar().max_value:
+		$ScriptScroll.scroll_vertical = $ScriptScroll.get_v_scroll_bar().max_value
+		
+	# either way, update our known scroll size.
+	_max_scroll = $ScriptScroll.get_v_scroll_bar().max_value
 
 func _on_line_deleted(deleted_line: UIScriptLine):
 	deleted_line.get_parent().remove_child(deleted_line)
