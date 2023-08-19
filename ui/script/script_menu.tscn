@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://d0ot7ndx0xjlq"]
+[gd_scene load_steps=37 format=3 uid="uid://d0ot7ndx0xjlq"]
 
 [ext_resource type="Script" path="res://ui/script/script_menu.gd" id="1_mpyhe"]
 [ext_resource type="Texture2D" uid="uid://dl0si4q1ky7ya" path="res://assets/gui/script/script_base.png" id="2_cw38p"]
@@ -35,6 +35,9 @@
 [ext_resource type="Texture2D" uid="uid://hll5u1aj8n0e" path="res://assets/gui/script/clear_clicked.png" id="33_ibe8g"]
 [ext_resource type="Texture2D" uid="uid://5pbgn7fbq0vg" path="res://assets/gui/script/clear_hover.png" id="34_0512m"]
 [ext_resource type="PackedScene" uid="uid://byonngrgtbxr7" path="res://ui/x_button.tscn" id="35_jfbm6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_omyhu"]
+size = Vector2(304, 54)
 
 [node name="ScriptMenu" type="Node2D"]
 script = ExtResource("1_mpyhe")
@@ -243,6 +246,15 @@ texture_hover = ExtResource("34_0512m")
 
 [node name="XButton" parent="." instance=ExtResource("35_jfbm6")]
 
+[node name="DiscardBlockArea" type="Area2D" parent="."]
+collision_layer = 8388608
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="DiscardBlockArea"]
+position = Vector2(163, 147)
+shape = SubResource("RectangleShape2D_omyhu")
+disabled = true
+
 [connection signal="clicked" from="FileTabs/FileTab1" to="." method="_on_file_tab_1_clicked"]
 [connection signal="clicked" from="FileTabs/FileTab2" to="." method="_on_file_tab_2_clicked"]
 [connection signal="clicked" from="FileTabs/FileTab3" to="." method="_on_file_tab_3_clicked"]
@@ -251,3 +263,4 @@ texture_hover = ExtResource("34_0512m")
 [connection signal="clicked" from="BlockDrawer/Tabs/ToTab" to="." method="_on_to_tab_clicked"]
 [connection signal="pressed" from="ClearButton" to="." method="_on_clear_button_pressed"]
 [connection signal="pressed" from="XButton" to="." method="_on_x_button_pressed"]
+[connection signal="input_event" from="DiscardBlockArea" to="." method="_on_discard_block_area_input_event"]

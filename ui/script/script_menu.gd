@@ -25,6 +25,7 @@ func _ready():
 
 func setup(mon: MonData.Mon):
 	held_block = null
+	$DiscardBlockArea/Shape.disabled = true
 
 func _create_block(block_type: ScriptData.Block.Type, block_name: String):
 	var block := SCRIPT_BLOCK_SCENE.instantiate()
@@ -89,11 +90,8 @@ func _on_block_clicked(block: UIScriptBlock):
 	# if we aren't already holding a block
 	if held_block == null:
 		# create a duplicate of this block and hold it
-		held_block = _create_block(block.block_type, block.block_name)
-		add_child(held_block)
-		held_block.position = Vector2(-100, -100)
-		held_block.z_index = 100 # draw this on top of everything
-		call_deferred("_set_initial_block_position") # wait a frame to set this so size can update
+		_pickup_held_block(_create_block(block.block_type, block.block_name))
+
 func _set_initial_block_position():
 	if(held_block != null):
 		held_block.position = Global.centered_position(held_block, get_viewport().get_mouse_position())
@@ -102,3 +100,24 @@ func _input(event):
 	if event is InputEventMouseMotion:
 		if held_block != null:
 			held_block.position = Global.centered_position(held_block, event.position)
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and held_block != null:
+		_discard_held_block()
+
+func _on_discard_block_area_input_event(viewport, event, shape_idx):
+	if event is InputEventMouseButton:
+		if event.pressed and held_block != null:
+			_discard_held_block()
+
+
+func _pickup_held_block(new_held_block: UIScriptBlock):
+	held_block = new_held_block
+	add_child(held_block)
+	new_held_block.position = Vector2(-100, -100)
+	new_held_block.z_index = 100 # draw this on top of everything
+	call_deferred("_set_initial_block_position") # wait a frame to set this so size can update
+	$DiscardBlockArea/Shape.disabled = false
+
+func _discard_held_block():
+	held_block.queue_free()
+	held_block = null
+	$DiscardBlockArea/Shape.disabled = true
