@@ -11,6 +11,7 @@ var _active_drawer_tab = 1
 var held_block = null
 
 const SCRIPT_BLOCK_SCENE = preload("res://ui/script/script_block.tscn")
+const SCRIPT_LINE_SCENE = preload("res://ui/script/script_line.tscn")
 
 func _ready():
 	# create blocks
@@ -108,7 +109,6 @@ func _on_discard_block_area_input_event(viewport, event, shape_idx):
 		if event.pressed and held_block != null:
 			_discard_held_block()
 
-
 func _pickup_held_block(new_held_block: UIScriptBlock):
 	held_block = new_held_block
 	add_child(held_block)
@@ -121,3 +121,20 @@ func _discard_held_block():
 	held_block.queue_free()
 	held_block = null
 	$DiscardBlockArea/Shape.disabled = true
+
+func _on_new_line_button_pressed():
+	var newline = SCRIPT_LINE_SCENE.instantiate()
+	newline.deleted.connect(_on_line_deleted)
+	$ScriptScroll/Script/ScriptLines.add_child(newline)
+	_update_line_numbers()
+
+func _on_line_deleted(deleted_line: UIScriptLine):
+	deleted_line.get_parent().remove_child(deleted_line)
+	deleted_line.queue_free()
+	_update_line_numbers()
+
+func _update_line_numbers():
+	var n := 1
+	for script_line in $ScriptScroll/Script/ScriptLines.get_children():
+		script_line.set_line_number(n)
+		n += 1

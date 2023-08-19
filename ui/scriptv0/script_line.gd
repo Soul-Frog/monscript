@@ -1,4 +1,3 @@
-class_name UIScriptLine
 extends ScrollContainer
 
 # emitted when the first block is created on this line

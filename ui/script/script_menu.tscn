@@ -1,9 +1,12 @@
-[gd_scene load_steps=37 format=3 uid="uid://d0ot7ndx0xjlq"]
+[gd_scene load_steps=40 format=3 uid="uid://d0ot7ndx0xjlq"]
 
 [ext_resource type="Script" path="res://ui/script/script_menu.gd" id="1_mpyhe"]
 [ext_resource type="Texture2D" uid="uid://dl0si4q1ky7ya" path="res://assets/gui/script/script_base.png" id="2_cw38p"]
 [ext_resource type="Theme" uid="uid://beq0588k2fchk" path="res://ui/database/database.tres" id="3_vu3o2"]
 [ext_resource type="Script" path="res://ui/script/tab.gd" id="4_aw0yy"]
+[ext_resource type="Texture2D" uid="uid://bfd0th4tvqih4" path="res://assets/gui/script/line_starter.png" id="4_j6gie"]
+[ext_resource type="Texture2D" uid="uid://dwlmwmx4tf75k" path="res://assets/gui/script/line_starter_pressed.png" id="5_0lunr"]
+[ext_resource type="Texture2D" uid="uid://cgxn7p7mrrvoc" path="res://assets/gui/script/line_starter_hover.png" id="5_dnbwp"]
 [ext_resource type="Texture2D" uid="uid://bmkgp4oghvpxi" path="res://assets/gui/script/file1_tab_active.png" id="5_fk3s2"]
 [ext_resource type="Texture2D" uid="uid://8es1cb0cyt85" path="res://assets/gui/script/file1_tab_active_hover.png" id="6_pxy8k"]
 [ext_resource type="Texture2D" uid="uid://xfwr2ojblgon" path="res://assets/gui/script/file1_tab_inactive.png" id="7_cdth5"]
@@ -62,13 +65,32 @@ theme = ExtResource("3_vu3o2")
 
 [node name="Script" type="VBoxContainer" parent="ScriptScroll"]
 layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="ScriptLines" type="VBoxContainer" parent="ScriptScroll/Script"]
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_constants/separation = 0
 
-[node name="FILLER" type="Button" parent="ScriptScroll/Script"]
-custom_minimum_size = Vector2(120, 500)
+[node name="NewLine" type="HBoxContainer" parent="ScriptScroll/Script"]
 layout_mode = 2
-mouse_filter = 2
+
+[node name="NewLineButton" type="TextureButton" parent="ScriptScroll/Script/NewLine"]
+layout_mode = 2
+texture_normal = ExtResource("4_j6gie")
+texture_pressed = ExtResource("5_0lunr")
+texture_hover = ExtResource("5_dnbwp")
+
+[node name="Plus" type="Label" parent="ScriptScroll/Script/NewLine/NewLineButton"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = -1.0
+offset_right = 15.0
+offset_bottom = 13.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+text = "+"
+horizontal_alignment = 1
 
 [node name="FileTabs" type="Node" parent="."]
 
@@ -255,6 +277,7 @@ position = Vector2(163, 147)
 shape = SubResource("RectangleShape2D_omyhu")
 disabled = true
 
+[connection signal="pressed" from="ScriptScroll/Script/NewLine/NewLineButton" to="." method="_on_new_line_button_pressed"]
 [connection signal="clicked" from="FileTabs/FileTab1" to="." method="_on_file_tab_1_clicked"]
 [connection signal="clicked" from="FileTabs/FileTab2" to="." method="_on_file_tab_2_clicked"]
 [connection signal="clicked" from="FileTabs/FileTab3" to="." method="_on_file_tab_3_clicked"]

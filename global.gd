@@ -96,6 +96,15 @@ func _dump_helper(node: Node, indent_level: int) -> void:
 	for child in node.get_children():
 		_dump_helper(child, indent_level + 1)
 
+# Casts the given num to a string and pads the front with 0s until it
+# is the given length.
+# ex: int_to_str_zero_padded(53, 6) = "000053"
+func int_to_str_zero_padded(num: int, length: int):
+	var ret = str(num)
+	while ret.length() < length:
+		ret = "0" + ret
+	return ret
+
 # returns the position of this node if centered on a given point
 func centered_position(node: Node, point: Vector2):
 	return point - Vector2(node.size.x/2, node.size.y/2)
