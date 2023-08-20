@@ -9,6 +9,7 @@ enum FadeType {
 @export var _max_alpha = 1
 @export var _fade_speed = 0.1
 
+static var global_alpha = 1
 
 enum Direction { 
 	IN, OUT

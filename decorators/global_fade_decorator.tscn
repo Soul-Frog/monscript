@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bgw7lgyhxr3ep"]
+
+[ext_resource type="Script" path="res://decorators/global_fade_decorator.gd" id="1_42jp8"]
+
+[node name="GlobalFadeDecorator" type="Node"]
+script = ExtResource("1_42jp8")
