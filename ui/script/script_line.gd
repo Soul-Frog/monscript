@@ -9,6 +9,9 @@ const NUM_SIZE = 2
 
 @onready var NUMBER_LABEL = $HBox/Margin/Starter/Number
 @onready var DROPZONE = $HBox/DropzoneMargin/Dropzone
+@onready var DROPZONE_IF_INDICATOR = $HBox/DropzoneMargin/Dropzone/IfIndicator
+@onready var DROPZONE_DO_INDICATOR = $HBox/DropzoneMargin/Dropzone/DoIndicator
+@onready var DROPZONE_TO_INDICATOR = $HBox/DropzoneMargin/Dropzone/ToIndicator
 @onready var BLOCK_CONTAINER = $HBox/BlockMargin
 @onready var BLOCKS = $HBox/BlockMargin/Blocks
 @onready var STARTER = $HBox/Margin/Starter
@@ -20,6 +23,7 @@ func _ready():
 	assert(DROPZONE != null)
 	assert(BLOCKS != null)	
 	assert(STARTER != null)
+	_update_dropzone_indicators(null)
 
 func set_line_number(num: int) -> void:
 	assert(num > 0 and num < 100)
@@ -34,6 +38,7 @@ func add_block(block: UIScriptBlock) -> void:
 	BLOCK_CONTAINER.visible = true
 	assert(next_block_types().has(block.block_type))
 	BLOCKS.add_child(block)
+	_update_dropzone_indicators(null)
 
 func next_block_types() -> Array[ScriptData.Block.Type]:
 	# if there are no blocks, the first block can be IF or DO
@@ -50,6 +55,16 @@ func notify_held_block(block: UIScriptBlock) -> void:
 	else:
 		DROPZONE.visible = next_block_types().has(block.block_type)
 		DROPZONE.custom_minimum_size.x = block.size_no_margins().x
+	_update_dropzone_indicators(block)
+
+func _update_dropzone_indicators(held_block: UIScriptBlock) -> void:
+	var valid_types = next_block_types()
+	
+	# if we aren't holding a block, show all options.
+	# if we are holding a block, additionally don't show unless the held block matches.
+	DROPZONE_IF_INDICATOR.visible = valid_types.has(ScriptData.Block.Type.IF) and (held_block == null or held_block.block_type == ScriptData.Block.Type.IF)
+	DROPZONE_DO_INDICATOR.visible = valid_types.has(ScriptData.Block.Type.DO) and (held_block == null or held_block.block_type == ScriptData.Block.Type.DO)
+	DROPZONE_TO_INDICATOR.visible = valid_types.has(ScriptData.Block.Type.TO) and (held_block == null or held_block.block_type == ScriptData.Block.Type.TO)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and not event.pressed:
