@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ct27r3y3ao3um"]
+
+[ext_resource type="Script" path="res://decorators/fade_decorator.gd" id="1_xwgyw"]
+
+[node name="FadeDecorator" type="Node"]
+script = ExtResource("1_xwgyw")

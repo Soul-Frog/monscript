@@ -1,10 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://5ubop8uyjvbt"]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_pir84"]
 [ext_resource type="Texture2D" uid="uid://f2ej122kalmi" path="res://assets/maps/cave1/cave.png" id="2_8pdrq"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player.tscn" id="3_nbwo1"]
 [ext_resource type="Texture2D" uid="uid://b6va77lju8lb7" path="res://assets/maps/cave1/waves.png" id="3_ywp38"]
-[ext_resource type="PackedScene" uid="uid://kjlynvo2e4gy" path="res://overworld/areas/move_decorator.tscn" id="4_v7epi"]
+[ext_resource type="PackedScene" uid="uid://kjlynvo2e4gy" path="res://decorators/move_decorator.tscn" id="4_v7epi"]
 [ext_resource type="PackedScene" uid="uid://dmhm3mwxxspu" path="res://overworld/npcs/blue_hat.tscn" id="5_gw1pb"]
 [ext_resource type="Resource" uid="uid://defy52ihj1vmu" path="res://dialogue/test.dialogue" id="6_g60m2"]
 [ext_resource type="Script" path="res://overworld/warp.gd" id="7_ip4bp"]
