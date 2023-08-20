@@ -9,7 +9,8 @@ const NUM_SIZE = 2
 
 @onready var NUMBER_LABEL = $HBox/Margin/Starter/Number
 @onready var DROPZONE = $HBox/DropzoneMargin/Dropzone
-@onready var BLOCKS = $HBox/Blocks
+@onready var BLOCK_CONTAINER = $HBox/BlockMargin
+@onready var BLOCKS = $HBox/BlockMargin/Blocks
 @onready var STARTER = $HBox/Margin/Starter
 
 @onready var DEFAULT_SIZE = DROPZONE.size.x
@@ -30,9 +31,9 @@ func _set_dropzone_size(dropzone_size: int) -> void:
 	DROPZONE.size.x = dropzone_size
 
 func add_block(block: UIScriptBlock) -> void:
+	BLOCK_CONTAINER.visible = true
 	assert(next_block_types().has(block.block_type))
 	BLOCKS.add_child(block)
-	#TODO update next_block_type
 
 func next_block_types() -> Array[ScriptData.Block.Type]:
 	# if there are no blocks, the first block can be IF or DO

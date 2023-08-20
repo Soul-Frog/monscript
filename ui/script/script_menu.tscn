@@ -65,22 +65,20 @@ theme = ExtResource("3_vu3o2")
 
 [node name="Script" type="VBoxContainer" parent="ScriptScroll"]
 layout_mode = 2
-theme_override_constants/separation = 0
+theme_override_constants/separation = 1
 
 [node name="ScriptLines" type="VBoxContainer" parent="ScriptScroll/Script"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/separation = 0
+theme_override_constants/separation = 1
 
 [node name="NewLineMargin" type="MarginContainer" parent="ScriptScroll/Script"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme_override_constants/margin_left = 1
-theme_override_constants/margin_top = 1
 theme_override_constants/margin_right = 1
-theme_override_constants/margin_bottom = 1
 
 [node name="NewLine" type="HBoxContainer" parent="ScriptScroll/Script/NewLineMargin"]
 layout_mode = 2
@@ -90,6 +88,7 @@ layout_mode = 2
 texture_normal = ExtResource("4_j6gie")
 texture_pressed = ExtResource("5_0lunr")
 texture_hover = ExtResource("5_dnbwp")
+stretch_mode = 3
 
 [node name="Plus" type="Label" parent="ScriptScroll/Script/NewLineMargin/NewLine/NewLineButton"]
 layout_mode = 0
