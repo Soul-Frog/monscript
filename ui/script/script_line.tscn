@@ -1,27 +1,54 @@
-[gd_scene load_steps=3 format=3 uid="uid://fgdwcdg1tdkg"]
+[gd_scene load_steps=4 format=3 uid="uid://fgdwcdg1tdkg"]
 
 [ext_resource type="Texture2D" uid="uid://bfd0th4tvqih4" path="res://assets/gui/script/line_starter.png" id="1_i48si"]
 [ext_resource type="Script" path="res://ui/script/script_line.gd" id="1_okkuo"]
+[ext_resource type="Texture2D" uid="uid://b3ibygh8fax53" path="res://assets/outline9patch.png" id="3_igbdb"]
 
 [node name="ScriptLine" type="MarginContainer"]
-theme_override_constants/margin_left = 0
-theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 0
-theme_override_constants/margin_bottom = 0
+offset_right = 22.0
+offset_bottom = 15.0
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_right = 1
 script = ExtResource("1_okkuo")
 
 [node name="HBox" type="HBoxContainer" parent="."]
 layout_mode = 2
+theme_override_constants/separation = 0
 
-[node name="Starter" type="TextureRect" parent="HBox"]
+[node name="Margin" type="MarginContainer" parent="HBox"]
+layout_mode = 2
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="Starter" type="TextureRect" parent="HBox/Margin"]
 layout_mode = 2
 texture = ExtResource("1_i48si")
+stretch_mode = 3
 
-[node name="Number" type="Label" parent="HBox/Starter"]
-layout_mode = 0
+[node name="Number" type="Label" parent="HBox/Margin/Starter"]
 offset_left = 3.0
 offset_top = -1.0
 offset_right = 15.0
 offset_bottom = 13.0
 text = "NN"
 horizontal_alignment = 1
+
+[node name="Blocks" type="HBoxContainer" parent="HBox"]
+layout_mode = 2
+
+[node name="DropzoneMargin" type="MarginContainer" parent="HBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 2
+
+[node name="Dropzone" type="NinePatchRect" parent="HBox/DropzoneMargin"]
+modulate = Color(1, 0.835294, 0.254902, 1)
+custom_minimum_size = Vector2(5, 0)
+layout_mode = 2
+texture = ExtResource("3_igbdb")
+patch_margin_left = 1
+patch_margin_top = 1
+patch_margin_right = 1
+patch_margin_bottom = 1

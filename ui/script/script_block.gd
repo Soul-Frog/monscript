@@ -26,6 +26,14 @@ func _set_block_type() -> void:
 		ScriptData.Block.Type.TO:
 			$BlockClickable/Type.texture = TO_SPRITE
 
+func size_no_margins() -> Vector2:
+	return $BlockClickable.size
+
+func to_block() -> ScriptData.Block:
+	var block = ScriptData.get_block_by_name(block_name)
+	assert(block != null)
+	return block
+
 func _set_block_name() -> void:
 	$BlockClickable/Name.text = block_name
 	
@@ -34,15 +42,15 @@ func _set_block_name() -> void:
 	# we need to wait a frame before using it. 
 	call_deferred("_update_size")
 
-func _update_size():
+func _update_size() -> void:
 	# change both size (for visuals) and custom minimum size (so container
 	# can't resize this to a smaller size)
 	$BlockClickable.custom_minimum_size.x = BASE_SIZE + $BlockClickable/Name.size.x
 	$BlockClickable.size.x = BASE_SIZE + $BlockClickable/Name.size.x
 	$BlockClickable/Background.custom_minimum_size.x = $BlockClickable.size.x
 	$BlockClickable/Background.size.x = $BlockClickable.size.x
-	
-func _input(event: InputEvent):
+
+func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.is_pressed() and $BlockClickable.get_global_rect().has_point(event.position) and visible:
 			emit_signal("clicked", self)

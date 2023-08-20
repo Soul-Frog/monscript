@@ -73,16 +73,25 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="NewLine" type="HBoxContainer" parent="ScriptScroll/Script"]
+[node name="NewLineMargin" type="MarginContainer" parent="ScriptScroll/Script"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="NewLine" type="HBoxContainer" parent="ScriptScroll/Script/NewLineMargin"]
 layout_mode = 2
 
-[node name="NewLineButton" type="TextureButton" parent="ScriptScroll/Script/NewLine"]
+[node name="NewLineButton" type="TextureButton" parent="ScriptScroll/Script/NewLineMargin/NewLine"]
 layout_mode = 2
 texture_normal = ExtResource("4_j6gie")
 texture_pressed = ExtResource("5_0lunr")
 texture_hover = ExtResource("5_dnbwp")
 
-[node name="Plus" type="Label" parent="ScriptScroll/Script/NewLine/NewLineButton"]
+[node name="Plus" type="Label" parent="ScriptScroll/Script/NewLineMargin/NewLine/NewLineButton"]
 layout_mode = 0
 offset_left = 3.0
 offset_top = -1.0
@@ -277,7 +286,7 @@ position = Vector2(163, 147)
 shape = SubResource("RectangleShape2D_omyhu")
 disabled = true
 
-[connection signal="pressed" from="ScriptScroll/Script/NewLine/NewLineButton" to="." method="_on_new_line_button_pressed"]
+[connection signal="pressed" from="ScriptScroll/Script/NewLineMargin/NewLine/NewLineButton" to="." method="_on_new_line_button_pressed"]
 [connection signal="clicked" from="FileTabs/FileTab1" to="." method="_on_file_tab_1_clicked"]
 [connection signal="clicked" from="FileTabs/FileTab2" to="." method="_on_file_tab_2_clicked"]
 [connection signal="clicked" from="FileTabs/FileTab3" to="." method="_on_file_tab_3_clicked"]
