@@ -7,14 +7,14 @@ signal clicked_dropzone
 # maximum possible size for a number
 const NUM_SIZE = 2
 
-@onready var NUMBER_LABEL = $HBox/Margin/Starter/Number
+@onready var NUMBER_LABEL = $HBox/StarterMargin/Starter/Number
 @onready var DROPZONE = $HBox/DropzoneMargin/Dropzone
 @onready var DROPZONE_IF_INDICATOR = $HBox/DropzoneMargin/Dropzone/IfIndicator
 @onready var DROPZONE_DO_INDICATOR = $HBox/DropzoneMargin/Dropzone/DoIndicator
 @onready var DROPZONE_TO_INDICATOR = $HBox/DropzoneMargin/Dropzone/ToIndicator
 @onready var BLOCK_CONTAINER = $HBox/BlockMargin
 @onready var BLOCKS = $HBox/BlockMargin/Blocks
-@onready var STARTER = $HBox/Margin/Starter
+@onready var STARTER = $HBox/StarterMargin/Starter
 
 @onready var DEFAULT_SIZE = DROPZONE.size.x
 
@@ -23,7 +23,7 @@ func _ready():
 	assert(DROPZONE != null)
 	assert(BLOCKS != null)	
 	assert(STARTER != null)
-	_update_dropzone_indicators(null)
+	_update_dropzone_indicators_and_validity(null)
 
 func set_line_number(num: int) -> void:
 	assert(num > 0 and num < 100)
@@ -38,7 +38,7 @@ func add_block(block: UIScriptBlock) -> void:
 	BLOCK_CONTAINER.visible = true
 	assert(next_block_types().has(block.block_type))
 	BLOCKS.add_child(block)
-	_update_dropzone_indicators(null)
+	_update_dropzone_indicators_and_validity(null)
 
 func next_block_types() -> Array[ScriptData.Block.Type]:
 	# if there are no blocks, the first block can be IF or DO
@@ -55,9 +55,9 @@ func notify_held_block(block: UIScriptBlock) -> void:
 	else:
 		DROPZONE.visible = next_block_types().has(block.block_type)
 		DROPZONE.custom_minimum_size.x = block.size_no_margins().x
-	_update_dropzone_indicators(block)
+	_update_dropzone_indicators_and_validity(block)
 
-func _update_dropzone_indicators(held_block: UIScriptBlock) -> void:
+func _update_dropzone_indicators_and_validity(held_block: UIScriptBlock) -> void:
 	var valid_types = next_block_types()
 	
 	# if we aren't holding a block, show all options.
@@ -65,6 +65,15 @@ func _update_dropzone_indicators(held_block: UIScriptBlock) -> void:
 	DROPZONE_IF_INDICATOR.visible = valid_types.has(ScriptData.Block.Type.IF) and (held_block == null or held_block.block_type == ScriptData.Block.Type.IF)
 	DROPZONE_DO_INDICATOR.visible = valid_types.has(ScriptData.Block.Type.DO) and (held_block == null or held_block.block_type == ScriptData.Block.Type.DO)
 	DROPZONE_TO_INDICATOR.visible = valid_types.has(ScriptData.Block.Type.TO) and (held_block == null or held_block.block_type == ScriptData.Block.Type.TO)
+	
+	if is_line_valid():
+		assert(valid_types.size() == 1)
+		NUMBER_LABEL.add_theme_color_override("font_color", Global.COLOR_GREEN)
+	else:
+		NUMBER_LABEL.remove_theme_color_override("font_color")
+
+func is_line_valid():
+	return next_block_types().has(ScriptData.Block.Type.NONE)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and not event.pressed:

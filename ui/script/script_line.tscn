@@ -16,17 +16,17 @@ script = ExtResource("1_okkuo")
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Margin" type="MarginContainer" parent="HBox"]
+[node name="StarterMargin" type="MarginContainer" parent="HBox"]
 layout_mode = 2
 theme_override_constants/margin_top = 1
 theme_override_constants/margin_bottom = 1
 
-[node name="Starter" type="TextureRect" parent="HBox/Margin"]
+[node name="Starter" type="TextureRect" parent="HBox/StarterMargin"]
 layout_mode = 2
 texture = ExtResource("1_i48si")
 stretch_mode = 3
 
-[node name="Number" type="Label" parent="HBox/Margin/Starter"]
+[node name="Number" type="Label" parent="HBox/StarterMargin/Starter"]
 layout_mode = 0
 offset_left = 3.0
 offset_top = -1.0

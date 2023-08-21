@@ -52,5 +52,5 @@ func _update_size() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
-		if event.is_pressed() and $BlockClickable.get_global_rect().has_point(event.position) and visible:
+		if event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT and $BlockClickable.get_global_rect().has_point(event.position) and visible:
 			emit_signal("clicked", self)
