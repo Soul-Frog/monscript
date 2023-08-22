@@ -10,10 +10,14 @@ enum Area
 # MonType -> int; maps MonType to unlock progress
 var compilation_progress_per_mon := {}
 
+# the maximum number of lines the player can use to build scripts
+var line_limit = 5
+
 var _area_enum_to_path: Dictionary = {
 	Area.DEBUG1 : "res://overworld/areas/debug_area.tscn",
 	Area.DEBUG2 : "res://overworld/areas/debug_area2.tscn"
 }
+
 
 func _ready():
 	# populate the compilation progress map

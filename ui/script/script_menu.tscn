@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://d0ot7ndx0xjlq"]
+[gd_scene load_steps=42 format=3 uid="uid://d0ot7ndx0xjlq"]
 
 [ext_resource type="Script" path="res://ui/script/script_menu.gd" id="1_mpyhe"]
 [ext_resource type="Texture2D" uid="uid://dl0si4q1ky7ya" path="res://assets/gui/script/script_base.png" id="2_cw38p"]
@@ -38,6 +38,8 @@
 [ext_resource type="Texture2D" uid="uid://hll5u1aj8n0e" path="res://assets/gui/script/clear_clicked.png" id="33_ibe8g"]
 [ext_resource type="Texture2D" uid="uid://5pbgn7fbq0vg" path="res://assets/gui/script/clear_hover.png" id="34_0512m"]
 [ext_resource type="PackedScene" uid="uid://byonngrgtbxr7" path="res://ui/x_button.tscn" id="35_jfbm6"]
+[ext_resource type="Script" path="res://ui/script/fade_text.gd" id="39_5ys6j"]
+[ext_resource type="PackedScene" uid="uid://ct27r3y3ao3um" path="res://decorators/fade_decorator.tscn" id="39_7hj41"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_omyhu"]
 size = Vector2(304, 54)
@@ -62,6 +64,7 @@ offset_right = 315.0
 offset_bottom = 117.0
 size_flags_horizontal = 3
 theme = ExtResource("3_vu3o2")
+vertical_scroll_mode = 2
 
 [node name="Script" type="VBoxContainer" parent="ScriptScroll"]
 layout_mode = 2
@@ -160,6 +163,7 @@ offset_right = 315.0
 offset_bottom = 174.0
 size_flags_horizontal = 3
 theme = ExtResource("3_vu3o2")
+vertical_scroll_mode = 2
 
 [node name="Margins" type="MarginContainer" parent="BlockDrawer/Drawers/IfDrawer/BlockScroll"]
 layout_mode = 2
@@ -190,6 +194,7 @@ offset_right = 315.0
 offset_bottom = 174.0
 size_flags_horizontal = 3
 theme = ExtResource("3_vu3o2")
+vertical_scroll_mode = 2
 
 [node name="Margins" type="MarginContainer" parent="BlockDrawer/Drawers/DoDrawer/BlockScroll"]
 layout_mode = 2
@@ -220,6 +225,7 @@ offset_right = 315.0
 offset_bottom = 174.0
 size_flags_horizontal = 3
 theme = ExtResource("3_vu3o2")
+vertical_scroll_mode = 2
 
 [node name="Margins" type="MarginContainer" parent="BlockDrawer/Drawers/ToDrawer/BlockScroll"]
 layout_mode = 2
@@ -309,6 +315,26 @@ position = Vector2(163, 147)
 shape = SubResource("RectangleShape2D_omyhu")
 disabled = true
 
+[node name="LineLimitLabel" type="Label" parent="."]
+offset_left = 191.0
+offset_top = 102.0
+offset_right = 293.0
+offset_bottom = 116.0
+text = "Lines: 0/5"
+horizontal_alignment = 2
+script = ExtResource("39_5ys6j")
+
+[node name="FadeDecoratorOut" parent="LineLimitLabel" instance=ExtResource("39_7hj41")]
+active = false
+fade_type = 1
+fade_speed = 8.0
+
+[node name="FadeDecoratorIn" parent="LineLimitLabel" instance=ExtResource("39_7hj41")]
+active = false
+fade_type = 2
+min_alpha = 0.4
+fade_speed = 10.0
+
 [connection signal="pressed" from="ScriptScroll/Script/NewLineMargin/NewLine/NewLineButton" to="." method="_on_new_line_button_pressed"]
 [connection signal="clicked" from="FileTabs/FileTab1" to="." method="_on_file_tab_1_clicked"]
 [connection signal="clicked" from="FileTabs/FileTab2" to="." method="_on_file_tab_2_clicked"]
@@ -319,3 +345,4 @@ disabled = true
 [connection signal="pressed" from="ClearButton" to="." method="_on_clear_button_pressed"]
 [connection signal="pressed" from="XButton" to="." method="_on_x_button_pressed"]
 [connection signal="input_event" from="DiscardBlockArea" to="." method="_on_discard_block_area_input_event"]
+[connection signal="fade_done" from="LineLimitLabel/FadeDecoratorIn" to="LineLimitLabel" method="_on_fade_decorator_in_fade_done"]

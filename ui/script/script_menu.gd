@@ -13,6 +13,8 @@ var _max_scroll = -1
 # the block currently picked up; moves with mouse cursor
 var held_block = null
 
+const LINE_LIMIT_FORMAT = "Lines: %d/%d"
+
 const SCRIPT_BLOCK_SCENE = preload("res://ui/script/script_block.tscn")
 const SCRIPT_LINE_SCENE = preload("res://ui/script/script_line.tscn")
 
@@ -29,6 +31,9 @@ const SCRIPT_LINE_SCENE = preload("res://ui/script/script_line.tscn")
 
 @onready var FILE_TABS = $FileTabs
 
+@onready var LINE_LIMIT = $LineLimitLabel
+
+@onready var NEWLINE_BUTTON = $ScriptScroll/Script/NewLineMargin/NewLine
 
 func _ready() -> void:
 	assert(SCRIPT_SCROLL != null)
@@ -53,6 +58,8 @@ func _ready() -> void:
 	
 	# when the scrollbar size changes, move the scrollbar down
 	SCRIPT_SCROLL.get_v_scroll_bar().changed.connect(_move_scroll_to_bottom)
+	
+	LINE_LIMIT.text = LINE_LIMIT_FORMAT % [0, GameData.line_limit]
 
 func setup(mon: MonData.Mon) -> void:
 	held_block = null
@@ -177,12 +184,15 @@ func _on_line_deleted(deleted_line: UIScriptLine) -> void:
 	deleted_line.get_parent().remove_child(deleted_line)
 	deleted_line.queue_free()
 	_update_line_numbers()
-
+	
 func _update_line_numbers() -> void:
-	var n := 1
+	var n := 0
 	for script_line in SCRIPT_LINES.get_children():
-		script_line.set_line_number(n)
 		n += 1
+		script_line.set_line_number(n)
+	LINE_LIMIT.text = LINE_LIMIT_FORMAT % [n, GameData.line_limit]
+	LINE_LIMIT.flash()
+	NEWLINE_BUTTON.visible = n != GameData.line_limit
 
 func _on_dropzone_clicked(line: UIScriptLine) -> void:
 	if held_block != null and line.next_block_types().has(held_block.block_type):

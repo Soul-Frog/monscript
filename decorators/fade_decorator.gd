@@ -1,47 +1,54 @@
+class_name FadeDecorator
 extends Node
 
+signal fade_done
+
 enum FadeType {
-	OSCILLATE, ONESHOT_FADE_OUT, ONESHOT_FADE_IN
+	OSCILLATE, FADE_OUT, FADE_IN
 }
 
-@export var _fade_type = FadeType.OSCILLATE
-@export var _min_alpha = 0
-@export var _max_alpha = 1
-@export var _fade_speed = 0.1
+@export var active = true # if this decorator should be playing. After completion, this is set to false.
+@export var fade_type = FadeType.OSCILLATE
+@export var min_alpha = 0.0
+@export var max_alpha = 1.0
+@export var fade_speed = 0.5
 
-static var global_alpha = 1
 
-enum Direction { 
+enum _Direction { 
 	IN, OUT
 }
 
-var _fade_direction = Direction.OUT
-
-var _done = false
+var _fade_direction = _Direction.OUT
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if _fade_type == FadeType.ONESHOT_FADE_IN:
-		get_parent().modulate.a = 0
-		_fade_direction = Direction.IN
-	elif _fade_type == FadeType.ONESHOT_FADE_OUT:
-		get_parent().modulate.a = 1
-		_fade_direction = Direction.OUT
-	
+	if fade_type == FadeType.FADE_IN:
+		get_parent().modulate.a = min_alpha
+		_fade_direction = _Direction.IN
+	elif fade_type == FadeType.FADE_OUT:
+		get_parent().modulate.a = max_alpha
+		_fade_direction = _Direction.OUT
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if not _done:
-		var fade_delta = _fade_speed * delta * (-1 if _fade_direction == Direction.OUT else 1)
+	if active:
+		var fade_delta = fade_speed * delta * (-1 if _fade_direction == _Direction.OUT else 1)
 		get_parent().modulate.a += fade_delta
 		
-		if _fade_direction == Direction.OUT and get_parent().modulate.a <= _min_alpha:
-			if _fade_type == FadeType.ONESHOT_FADE_OUT:
-				_done = true
+		print("fadein" if _fade_direction == _Direction.IN else "fadeout")
+		print(get_parent().modulate.a)
+		
+		if _fade_direction == _Direction.OUT and get_parent().modulate.a <= min_alpha:
+			get_parent().modulate.a = min_alpha
+			if fade_type == FadeType.FADE_OUT:
+				emit_signal("fade_done")
+				active = false
 			else:
-				_fade_direction = Direction.IN
-		elif _fade_direction == Direction.IN and get_parent().modulate.a >= _max_alpha:
-			if _fade_type == FadeType.ONESHOT_FADE_IN:
-				_done = true
+				_fade_direction = _Direction.IN
+		elif _fade_direction == _Direction.IN and get_parent().modulate.a >= max_alpha:
+			get_parent().modulate.a = max_alpha
+			if fade_type == FadeType.FADE_IN:
+				emit_signal("fade_done")
+				active = false
 			else:
-				_fade_direction = Direction.OUT
+				_fade_direction = _Direction.OUT
