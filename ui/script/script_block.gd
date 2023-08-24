@@ -2,6 +2,7 @@ class_name UIScriptBlock
 extends MarginContainer
 
 signal clicked
+signal deleted
 
 const IF_SPRITE := preload("res://assets/gui/script/if.png")
 const DO_SPRITE := preload("res://assets/gui/script/do.png")
@@ -11,9 +12,14 @@ const BASE_SIZE := 16
 var block_type
 var block_name
 
-func set_data(blockType: ScriptData.Block.Type, blockName: String) -> void:
+# if this block can be deleted or not
+# blocks in script lines can be deleted, blocks in drawers cannot
+var _deleteable = false
+
+func set_data(blockType: ScriptData.Block.Type, blockName: String, deleteable: bool) -> void:
 	self.block_type = blockType
 	self.block_name = blockName
+	self._deleteable = deleteable
 	_set_block_type()
 	_set_block_name()
 
@@ -54,3 +60,5 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT and $BlockClickable.get_global_rect().has_point(event.position) and visible:
 			emit_signal("clicked", self)
+		if event.is_pressed() and event.button_index == MOUSE_BUTTON_RIGHT and $BlockClickable.get_global_rect().has_point(event.position) and _deleteable:
+			emit_signal("deleted", self)

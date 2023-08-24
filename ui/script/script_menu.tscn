@@ -64,6 +64,7 @@ offset_right = 315.0
 offset_bottom = 117.0
 size_flags_horizontal = 3
 theme = ExtResource("3_vu3o2")
+horizontal_scroll_mode = 3
 vertical_scroll_mode = 2
 
 [node name="Script" type="VBoxContainer" parent="ScriptScroll"]
@@ -162,6 +163,7 @@ offset_right = 315.0
 offset_bottom = 174.0
 size_flags_horizontal = 3
 theme = ExtResource("3_vu3o2")
+horizontal_scroll_mode = 3
 vertical_scroll_mode = 2
 
 [node name="Margins" type="MarginContainer" parent="BlockDrawer/Drawers/IfDrawer/BlockScroll"]
@@ -193,6 +195,7 @@ offset_right = 315.0
 offset_bottom = 174.0
 size_flags_horizontal = 3
 theme = ExtResource("3_vu3o2")
+horizontal_scroll_mode = 3
 vertical_scroll_mode = 2
 
 [node name="Margins" type="MarginContainer" parent="BlockDrawer/Drawers/DoDrawer/BlockScroll"]
@@ -224,6 +227,7 @@ offset_right = 315.0
 offset_bottom = 174.0
 size_flags_horizontal = 3
 theme = ExtResource("3_vu3o2")
+horizontal_scroll_mode = 3
 vertical_scroll_mode = 2
 
 [node name="Margins" type="MarginContainer" parent="BlockDrawer/Drawers/ToDrawer/BlockScroll"]
@@ -340,6 +344,8 @@ offset_bottom = 15.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 2
+theme_override_constants/separation = 1
+alignment = 1
 
 [connection signal="pressed" from="ScriptScroll/Script/NewLineMargin/NewLine/NewLineButton" to="." method="_on_new_line_button_pressed"]
 [connection signal="clicked" from="FileTabs/FileTab1" to="." method="_on_file_tab_1_clicked"]

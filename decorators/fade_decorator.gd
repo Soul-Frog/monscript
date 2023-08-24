@@ -35,9 +35,6 @@ func _process(delta):
 		var fade_delta = fade_speed * delta * (-1 if _fade_direction == _Direction.OUT else 1)
 		get_parent().modulate.a += fade_delta
 		
-		print("fadein" if _fade_direction == _Direction.IN else "fadeout")
-		print(get_parent().modulate.a)
-		
 		if _fade_direction == _Direction.OUT and get_parent().modulate.a <= min_alpha:
 			get_parent().modulate.a = min_alpha
 			if fade_type == FadeType.FADE_OUT:
