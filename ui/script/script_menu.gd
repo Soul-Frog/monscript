@@ -13,6 +13,8 @@ var _max_scroll = -1
 var _active_file_tab = 1
 var _active_drawer_tab = 1
 
+var _held_anchor := Vector2(0, 0)
+
 const LINE_LIMIT_FORMAT = "Lines: %d/%d"
 const SCRIPT_BLOCK_SCENE = preload("res://ui/script/script_block.tscn")
 const SCRIPT_LINE_SCENE = preload("res://ui/script/script_line.tscn")
@@ -128,16 +130,18 @@ func _on_drawer_block_clicked(block: UIScriptBlock) -> void:
 		# create a duplicate of this block and hold it
 		_pickup_held_block(_create_block(block.block_type, block.block_name, true))
 
-func _on_line_block_clicked(blocks: Array[UIScriptBlock]) -> void:
+func _on_line_block_clicked(blocks: Array[UIScriptBlock], first_position: Vector2) -> void:
 	assert(blocks.size() != 0)
 	assert(HELD.get_child_count() == 0) #we shouldn't be calling this while holding a block
+	_held_anchor = get_viewport().get_mouse_position() - first_position
 	for block in blocks:
 		HELD.add_child(block)
+	_update_held_position()
 	_notify_lines_of_held_blocks()
 
 func _input(event) -> void:
 	if event is InputEventMouseMotion:
-		HELD.position = Global.centered_position(HELD, event.position)
+		_update_held_position()
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and HELD.get_child_count() != 0:
 		_discard_held_blocks(true)
 
@@ -154,11 +158,18 @@ func _pickup_held_block(new_held_block: UIScriptBlock) -> void:
 	DISCARD_ZONE.disabled = false
 func _set_initial_block_position_and_notify_lines() -> void:
 	if(HELD.get_child_count() != 0):
-		HELD.position = Global.centered_position(HELD, get_viewport().get_mouse_position())
+		_held_anchor = Vector2(HELD.size.x/2.0, HELD.size.y/2.0)
+		_update_held_position()
 	_notify_lines_of_held_blocks()
 
+func _update_held_position():
+	HELD.size = Vector2(0, 0)
+	HELD.position = get_viewport().get_mouse_position() - _held_anchor
+
 func _discard_held_blocks(delete: bool) -> void:
-	Global.free_children(HELD) if delete else Global.remove_children(HELD)
+	if delete:
+		Global.free_children(HELD)
+	Global.remove_children(HELD)
 	DISCARD_ZONE.disabled = true
 	_notify_lines_of_held_blocks()
 
@@ -200,7 +211,7 @@ func _update_line_numbers() -> void:
 	NEWLINE_BUTTON.visible = n != GameData.line_limit
 
 func _on_dropzone_clicked(line: UIScriptLine) -> void:
-	var front_block = HELD.get_child(0)
+	var front_block = HELD.get_child(0) if HELD.get_child_count() != 0 else null
 	if front_block != null and line.next_block_types().has(front_block.block_type):
 		for block in HELD.get_children():
 			HELD.remove_child(block)

@@ -24,6 +24,7 @@ func _ready():
 	assert(DROPZONE != null)
 	assert(BLOCKS != null)	
 	assert(STARTER != null)
+	BLOCK_CONTAINER.visible = false
 	_update_dropzone_indicators_and_validity()
 
 func set_line_number(num: int) -> void:
@@ -78,6 +79,10 @@ func _update_dropzone_indicators_and_validity() -> void:
 		NUMBER_LABEL.add_theme_color_override("font_color", Global.COLOR_GREEN)
 	else:
 		NUMBER_LABEL.remove_theme_color_override("font_color")
+	
+	# small visual fix; hides 1 pixel of spacing
+	if BLOCKS.get_child_count() == 0:
+		BLOCK_CONTAINER.visible = false
 
 func is_line_valid():
 	return next_block_types().has(ScriptData.Block.Type.NONE)
@@ -100,16 +105,15 @@ func _on_block_deleted(block: UIScriptBlock) -> void:
 	for b in to_delete:
 		BLOCKS.remove_child(b)
 		b.queue_free()
-		
-	# small visual fix; without this the dropzones are slightly misaligned
-	if BLOCKS.get_child_count() == 0:
-		BLOCK_CONTAINER.visible = false
 	
 	_update_dropzone_indicators_and_validity()
 
 func _on_block_clicked(block: UIScriptBlock) -> void:
 	# don't emit if a block is currently being held
 	if held_blocks.size() == 0:
+		# grab the position of the first block
+		var first_position = block.global_position
+		
 		# remove these blocks from the line and remove their signal connections
 		var to_remove: Array[UIScriptBlock] = [block]
 		to_remove.append_array(_next_blocks_for(block))
@@ -119,7 +123,7 @@ func _on_block_clicked(block: UIScriptBlock) -> void:
 			BLOCKS.remove_child(b)
 		_update_dropzone_indicators_and_validity()
 		
-		emit_signal("block_clicked", to_remove)
+		emit_signal("block_clicked", to_remove, first_position)
 
 # returns all blocks after the given block in the line
 func _next_blocks_for(block: UIScriptBlock) -> Array[UIScriptBlock]:
