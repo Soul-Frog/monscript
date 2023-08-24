@@ -14,7 +14,7 @@ const COLOR_BLACK = Color(0, 0, 0)
 const COLOR_WHITE = Color.WHITE
 const COLOR_PINK = Color.PINK
 const COLOR_YELLOW = Color.YELLOW
-const COLOR_GREEN = Color.GREEN
+const COLOR_GREEN = Color(20.0/255.0, 160.0/255.0, 46.0/255.0)
 const COLOR_RED = Color.RED
 
 # turns various debug functionality on and off
@@ -108,3 +108,11 @@ func int_to_str_zero_padded(num: int, length: int):
 # returns the position of this node if centered on a given point
 func centered_position(node: Node, point: Vector2):
 	return point - Vector2(node.size.x/2, node.size.y/2)
+
+func free_children(node: Node):
+	for child in node.get_children():
+		child.queue_free()
+
+func remove_children(node: Node):
+	for child in node.get_children():
+		node.remove_child(child)

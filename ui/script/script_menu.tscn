@@ -99,7 +99,6 @@ offset_left = 3.0
 offset_top = -1.0
 offset_right = 15.0
 offset_bottom = 13.0
-theme_override_colors/font_color = Color(0, 1, 0, 1)
 text = "+"
 horizontal_alignment = 1
 
@@ -334,6 +333,13 @@ active = false
 fade_type = 2
 min_alpha = 0.4
 fade_speed = 10.0
+
+[node name="Held" type="HBoxContainer" parent="."]
+offset_right = 48.0
+offset_bottom = 15.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
 
 [connection signal="pressed" from="ScriptScroll/Script/NewLineMargin/NewLine/NewLineButton" to="." method="_on_new_line_button_pressed"]
 [connection signal="clicked" from="FileTabs/FileTab1" to="." method="_on_file_tab_1_clicked"]

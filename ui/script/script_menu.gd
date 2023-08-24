@@ -10,9 +10,6 @@ var _active_drawer_tab = 1
 # the currently known maximum scroll amount for script scrollbar
 var _max_scroll = -1
 
-# the block currently picked up; moves with mouse cursor
-var held_block = null
-
 const LINE_LIMIT_FORMAT = "Lines: %d/%d"
 
 const SCRIPT_BLOCK_SCENE = preload("res://ui/script/script_block.tscn")
@@ -34,6 +31,8 @@ const SCRIPT_LINE_SCENE = preload("res://ui/script/script_line.tscn")
 @onready var LINE_LIMIT = $LineLimitLabel
 
 @onready var NEWLINE_BUTTON = $ScriptScroll/Script/NewLineMargin/NewLine
+
+@onready var HELD = $Held
 
 func _ready() -> void:
 	assert(SCRIPT_SCROLL != null)
@@ -62,7 +61,7 @@ func _ready() -> void:
 	LINE_LIMIT.text = LINE_LIMIT_FORMAT % [0, GameData.line_limit]
 
 func setup(mon: MonData.Mon) -> void:
-	held_block = null
+	Global.free_children(HELD)
 	DISCARD_ZONE.disabled = true
 
 func _create_block(block_type: ScriptData.Block.Type, block_name: String) -> UIScriptBlock:
@@ -109,6 +108,7 @@ func _on_file_tab_3_clicked() -> void:
 func _on_clear_button_pressed() -> void:
 	for script_line in SCRIPT_LINES.get_children():
 		script_line.queue_free()
+	_update_line_numbers()
 
 func _on_x_button_pressed() -> void:
 	emit_signal("closed")
@@ -127,39 +127,35 @@ func _on_to_tab_clicked() -> void:
 
 func _on_block_clicked(block: UIScriptBlock) -> void:
 	# if we aren't already holding a block
-	if held_block == null:
+	if HELD.get_child_count() == 0:
 		# create a duplicate of this block and hold it
 		_pickup_held_block(_create_block(block.block_type, block.block_name))
 
 func _input(event) -> void:
 	if event is InputEventMouseMotion:
-		if held_block != null:
-			held_block.position = Global.centered_position(held_block, event.position)
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and held_block != null:
+		HELD.position = Global.centered_position(HELD, event.position)
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and HELD.get_child_count() != 0:
 		_discard_held_block(true)
 
 func _on_discard_block_area_input_event(viewport, event, shape_idx) -> void:
 	if event is InputEventMouseButton:
-		if event.pressed and held_block != null:
+		if event.pressed and HELD.get_child_count() != 0:
 			_discard_held_block(true)
 
 func _pickup_held_block(new_held_block: UIScriptBlock) -> void:
-	held_block = new_held_block
-	add_child(held_block)
+	HELD.add_child(new_held_block)
 	new_held_block.position = Vector2(-100, -100)
 	new_held_block.z_index = 100 # draw this on top of everything
 	call_deferred("_set_initial_block_position_and_notify_lines") # wait a frame to set this so size can update
 	DISCARD_ZONE.disabled = false
 func _set_initial_block_position_and_notify_lines() -> void:
-	if(held_block != null):
-		held_block.position = Global.centered_position(held_block, get_viewport().get_mouse_position())
+	if(HELD.get_child_count() != 0):
+		#held_block.position = Global.centered_position(held_block, get_viewport().get_mouse_position())
 		for script_line in SCRIPT_LINES.get_children():
-			script_line.notify_held_block(held_block)
+			script_line.notify_held_block(HELD.get_child(0))
 
 func _discard_held_block(delete: bool) -> void:
-	if delete:
-		held_block.queue_free()
-	held_block = null
+	Global.free_children(HELD) if delete else Global.remove_children(HELD)
 	DISCARD_ZONE.disabled = true
 	for script_line in SCRIPT_LINES.get_children():
 		script_line.notify_held_block(null)
@@ -185,6 +181,7 @@ func _on_line_deleted(deleted_line: UIScriptLine) -> void:
 	deleted_line.queue_free()
 	_update_line_numbers()
 	
+#todo - rename this to something like _on_num_lines_changed
 func _update_line_numbers() -> void:
 	var n := 0
 	for script_line in SCRIPT_LINES.get_children():
@@ -195,7 +192,14 @@ func _update_line_numbers() -> void:
 	NEWLINE_BUTTON.visible = n != GameData.line_limit
 
 func _on_dropzone_clicked(line: UIScriptLine) -> void:
+	var held_block = HELD.get_child(0)
 	if held_block != null and line.next_block_types().has(held_block.block_type):
-		remove_child(held_block)
+		HELD.remove_child(held_block)
+		held_block.clicked.connect(_on_block_clicked) 
+		#TODO - line should handle this since it needs to pop multiple blocks?
+		#alternatively, a block can know what blocks are next.
+		#then _on_block_clicked can iterate over each of those blocks.
+		#and add each to held!
+		#line still needs to connect to it separately to remove them.
 		line.add_block(held_block)
 		_discard_held_block(false)
