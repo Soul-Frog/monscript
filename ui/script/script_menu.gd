@@ -133,8 +133,7 @@ func _on_line_block_clicked(blocks: Array[UIScriptBlock]) -> void:
 	assert(HELD.get_child_count() == 0) #we shouldn't be calling this while holding a block
 	for block in blocks:
 		HELD.add_child(block)
-	for script_line in SCRIPT_LINES.get_children():
-		script_line.notify_held_block(HELD.get_child(0))
+	_notify_lines_of_held_blocks()
 
 func _input(event) -> void:
 	if event is InputEventMouseMotion:
@@ -156,14 +155,12 @@ func _pickup_held_block(new_held_block: UIScriptBlock) -> void:
 func _set_initial_block_position_and_notify_lines() -> void:
 	if(HELD.get_child_count() != 0):
 		HELD.position = Global.centered_position(HELD, get_viewport().get_mouse_position())
-		for script_line in SCRIPT_LINES.get_children():
-			script_line.notify_held_block(HELD.get_child(0))
+	_notify_lines_of_held_blocks()
 
 func _discard_held_blocks(delete: bool) -> void:
 	Global.free_children(HELD) if delete else Global.remove_children(HELD)
 	DISCARD_ZONE.disabled = true
-	for script_line in SCRIPT_LINES.get_children():
-		script_line.notify_held_block(null)
+	_notify_lines_of_held_blocks()
 
 func _on_new_line_button_pressed() -> void:
 	var newline = SCRIPT_LINE_SCENE.instantiate()
@@ -172,7 +169,12 @@ func _on_new_line_button_pressed() -> void:
 	newline.block_clicked.connect(_on_line_block_clicked)
 	SCRIPT_LINES.add_child(newline)
 	_update_line_numbers()
-	
+	_notify_lines_of_held_blocks()
+
+func _notify_lines_of_held_blocks():
+	for script_line in SCRIPT_LINES.get_children():
+		script_line.notify_held_blocks(HELD.get_children())
+
 func _move_scroll_to_bottom() -> void:
 	# if the scrollbar has grown, we just added a new line
 	# move down to the next line.

@@ -51,25 +51,27 @@ func next_block_types() -> Array[ScriptData.Block.Type]:
 	# otherwise, it's based on the final block
 	return [BLOCKS.get_children()[-1].to_block().next_block_type]
 
-var held_block
-func notify_held_block(block: UIScriptBlock) -> void:
-	held_block = block
-	if held_block == null:
-		#DROPZONE.visible = not next_block_types().has(ScriptData.Block.Type.NONE)
+var held_blocks: Array = []
+func notify_held_blocks(blocks: Array) -> void:
+	held_blocks = blocks
+	if held_blocks.size() == 0:
 		DROPZONE.custom_minimum_size.x = DEFAULT_SIZE
 	else:
-		#DROPZONE.visible = next_block_types().has(held_block.block_type)
-		DROPZONE.custom_minimum_size.x = held_block.size_no_margins().x
+		var dropzone_length = held_blocks.size() - 1 #add 1 px per block for the spaces between blocks
+		for block in held_blocks:
+			dropzone_length += block.size_no_margins().x
+		DROPZONE.custom_minimum_size.x = dropzone_length
 	_update_dropzone_indicators_and_validity()
 
 func _update_dropzone_indicators_and_validity() -> void:
 	var valid_types = next_block_types()
+	var front_block = null if held_blocks.size() == 0 else held_blocks[0]
 	
 	# if we aren't holding a block, show all options.
 	# if we are holding a block, additionally don't show unless the held block matches.
-	DROPZONE_IF_INDICATOR.visible = valid_types.has(ScriptData.Block.Type.IF) and (held_block == null or held_block.block_type == ScriptData.Block.Type.IF)
-	DROPZONE_DO_INDICATOR.visible = valid_types.has(ScriptData.Block.Type.DO) and (held_block == null or held_block.block_type == ScriptData.Block.Type.DO)
-	DROPZONE_TO_INDICATOR.visible = valid_types.has(ScriptData.Block.Type.TO) and (held_block == null or held_block.block_type == ScriptData.Block.Type.TO)
+	DROPZONE_IF_INDICATOR.visible = valid_types.has(ScriptData.Block.Type.IF) and (front_block == null or front_block.block_type == ScriptData.Block.Type.IF)
+	DROPZONE_DO_INDICATOR.visible = valid_types.has(ScriptData.Block.Type.DO) and (front_block == null or front_block.block_type == ScriptData.Block.Type.DO)
+	DROPZONE_TO_INDICATOR.visible = valid_types.has(ScriptData.Block.Type.TO) and (front_block == null or front_block.block_type == ScriptData.Block.Type.TO)
 	
 	if is_line_valid():
 		assert(valid_types.size() == 1)
@@ -107,7 +109,7 @@ func _on_block_deleted(block: UIScriptBlock) -> void:
 
 func _on_block_clicked(block: UIScriptBlock) -> void:
 	# don't emit if a block is currently being held
-	if held_block == null:
+	if held_blocks.size() == 0:
 		# remove these blocks from the line and remove their signal connections
 		var to_remove: Array[UIScriptBlock] = [block]
 		to_remove.append_array(_next_blocks_for(block))
