@@ -1,6 +1,3 @@
 START
-IfAlways DoAttack ToRandomFoe
-IfAlways DoAttack ToRandomFriend
-IfAlways DoPass
-IfAlways DoAttack ToRandomFoe
+Always Attack RandomFoe
 END
