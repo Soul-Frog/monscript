@@ -162,7 +162,7 @@ var IF_BLOCK_LIST := [
 var DO_BLOCK_LIST := [
 	Block.new(Block.Type.DO, "Pass", Block.Type.NONE, 
 	func(mon: BattleMon, friends: Array[BattleMon], foes: Array[BattleMon], target: BattleMon, animator: BattleAnimator) -> void:
-		mon.action_points = int(mon.action_points / 2)
+		mon.action_points = int(mon.action_points / 2.0)
 		mon.reset_AP_after_action = false # don't reset to 0 after this action
 		),
 		

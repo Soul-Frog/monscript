@@ -130,15 +130,6 @@ func _on_drawer_block_clicked(block: UIScriptBlock) -> void:
 		# create a duplicate of this block and hold it
 		_pickup_held_block(_create_block(block.block_type, block.block_name, true))
 
-func _on_line_block_clicked(blocks: Array[UIScriptBlock], first_position: Vector2) -> void:
-	assert(blocks.size() != 0)
-	assert(HELD.get_child_count() == 0) #we shouldn't be calling this while holding a block
-	_held_anchor = get_viewport().get_mouse_position() - first_position
-	for block in blocks:
-		HELD.add_child(block)
-	_update_held_position()
-	_notify_lines_of_held_blocks()
-
 func _input(event) -> void:
 	if event is InputEventMouseMotion:
 		_update_held_position()
@@ -178,6 +169,7 @@ func _on_new_line_button_pressed() -> void:
 	newline.deleted.connect(_on_line_deleted)
 	newline.clicked_dropzone.connect(_on_dropzone_clicked)
 	newline.block_clicked.connect(_on_line_block_clicked)
+	newline.starter_clicked.connect(_on_line_starter_clicked)
 	SCRIPT_LINES.add_child(newline)
 	_update_line_numbers()
 	_notify_lines_of_held_blocks()
@@ -212,8 +204,29 @@ func _update_line_numbers() -> void:
 
 func _on_dropzone_clicked(line: UIScriptLine) -> void:
 	var front_block = HELD.get_child(0) if HELD.get_child_count() != 0 else null
-	if front_block != null and line.next_block_types().has(front_block.block_type):
+	if front_block != null and front_block is UIScriptBlock and line.next_block_types().has(front_block.block_type):
 		for block in HELD.get_children():
 			HELD.remove_child(block)
 			line.add_block(block)
 		_discard_held_blocks(false)
+
+func _on_line_block_clicked(blocks: Array[UIScriptBlock], first_position: Vector2) -> void:
+	assert(blocks.size() != 0)
+	assert(HELD.get_child_count() == 0) #we shouldn't be calling this while holding a block
+	_held_anchor = get_viewport().get_mouse_position() - first_position
+	for block in blocks:
+		HELD.add_child(block)
+	_update_held_position()
+	_notify_lines_of_held_blocks()
+
+func _on_line_starter_clicked(line_pieces: Array, starter_position: Vector2) -> void:
+	assert(line_pieces.size() != 0)
+	assert(HELD.get_child_count() == 0)
+	_held_anchor = get_viewport().get_mouse_position() - starter_position
+	for piece in line_pieces:
+		HELD.add_child(piece)
+	
+	# create line dropzones
+		
+	_update_held_position()
+	_notify_lines_of_held_blocks()

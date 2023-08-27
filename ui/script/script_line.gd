@@ -2,6 +2,7 @@ class_name UIScriptLine
 extends MarginContainer
 
 signal deleted
+signal starter_clicked
 signal block_clicked
 signal clicked_dropzone
 
@@ -55,7 +56,7 @@ func next_block_types() -> Array[ScriptData.Block.Type]:
 var held_blocks: Array = []
 func notify_held_blocks(blocks: Array) -> void:
 	held_blocks = blocks
-	if held_blocks.size() == 0:
+	if held_blocks.size() == 0 or not held_blocks[0] is UIScriptBlock:
 		DROPZONE.custom_minimum_size.x = DEFAULT_SIZE
 	else:
 		var dropzone_length = held_blocks.size() - 1 #add 1 px per block for the spaces between blocks
@@ -70,9 +71,10 @@ func _update_dropzone_indicators_and_validity() -> void:
 	
 	# if we aren't holding a block, show all options.
 	# if we are holding a block, additionally don't show unless the held block matches.
-	DROPZONE_IF_INDICATOR.visible = valid_types.has(ScriptData.Block.Type.IF) and (front_block == null or front_block.block_type == ScriptData.Block.Type.IF)
-	DROPZONE_DO_INDICATOR.visible = valid_types.has(ScriptData.Block.Type.DO) and (front_block == null or front_block.block_type == ScriptData.Block.Type.DO)
-	DROPZONE_TO_INDICATOR.visible = valid_types.has(ScriptData.Block.Type.TO) and (front_block == null or front_block.block_type == ScriptData.Block.Type.TO)
+	# if we are holding a line starter, don't show.
+	DROPZONE_IF_INDICATOR.visible = valid_types.has(ScriptData.Block.Type.IF) and (front_block == null or (front_block is UIScriptBlock and front_block.block_type == ScriptData.Block.Type.IF))
+	DROPZONE_DO_INDICATOR.visible = valid_types.has(ScriptData.Block.Type.DO) and (front_block == null or (front_block is UIScriptBlock and front_block.block_type == ScriptData.Block.Type.DO))
+	DROPZONE_TO_INDICATOR.visible = valid_types.has(ScriptData.Block.Type.TO) and (front_block == null or (front_block is UIScriptBlock and front_block.block_type == ScriptData.Block.Type.TO))
 	
 	if is_line_valid():
 		assert(valid_types.size() == 1)
@@ -90,8 +92,11 @@ func is_line_valid():
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		# check for right click on starter
-		if event.is_pressed() and event.button_index == MOUSE_BUTTON_RIGHT and STARTER.get_global_rect().has_point(event.position):
-			emit_signal("deleted", self)
+		if event.is_pressed() and STARTER.get_global_rect().has_point(event.position):
+			if event.button_index == MOUSE_BUTTON_LEFT:
+				_on_starter_clicked()
+			if event.button_index == MOUSE_BUTTON_RIGHT:
+				emit_signal("deleted", self)
 		# check for left click on dropzone
 		if event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT and DROPZONE.get_global_rect().has_point(event.position):
 			emit_signal("clicked_dropzone", self)
@@ -118,12 +123,32 @@ func _on_block_clicked(block: UIScriptBlock) -> void:
 		var to_remove: Array[UIScriptBlock] = [block]
 		to_remove.append_array(_next_blocks_for(block))
 		for b in to_remove:
-			b.deleted.disconnect(_on_block_deleted)
-			b.clicked.disconnect(_on_block_clicked)
-			BLOCKS.remove_child(b)
+			_remove_block(b)
 		_update_dropzone_indicators_and_validity()
 		
 		emit_signal("block_clicked", to_remove, first_position)
+
+func _on_starter_clicked() -> void:
+	# don't emit if anything is currently beind held
+	if held_blocks.size() == 0:
+		var starter_position = STARTER.global_position
+		
+		var line_pieces: Array = [STARTER]
+		STARTER.get_parent().remove_child(STARTER)
+		line_pieces.append_array(BLOCKS.get_children())
+		
+		for b in BLOCKS.get_children():
+			_remove_block(b)
+		
+		emit_signal("starter_clicked", line_pieces, starter_position)
+		
+		# and delete this line since it is no longer needed
+		emit_signal("deleted", self)
+
+func _remove_block(block: UIScriptBlock):
+	block.deleted.disconnect(_on_block_deleted)
+	block.clicked.disconnect(_on_block_clicked)
+	BLOCKS.remove_child(block)
 
 # returns all blocks after the given block in the line
 func _next_blocks_for(block: UIScriptBlock) -> Array[UIScriptBlock]:
