@@ -95,23 +95,24 @@ func _input(event: InputEvent) -> void:
 		if event.is_pressed() and STARTER.get_global_rect().has_point(event.position):
 			if event.button_index == MOUSE_BUTTON_LEFT:
 				_on_starter_clicked()
-			if event.button_index == MOUSE_BUTTON_RIGHT:
+			if event.button_index == MOUSE_BUTTON_RIGHT and held_blocks.size() == 0:
 				emit_signal("deleted", self)
 		# check for left click on dropzone
 		if event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT and DROPZONE.get_global_rect().has_point(event.position):
 			emit_signal("clicked_dropzone", self)
 
 func _on_block_deleted(block: UIScriptBlock) -> void:
-	# get all blocks connected (on the right) to this deleted block
-	var to_delete = [block]
-	to_delete.append_array(_next_blocks_for(block))
-	
-	# delete all of them
-	for b in to_delete:
-		BLOCKS.remove_child(b)
-		b.queue_free()
-	
-	_update_dropzone_indicators_and_validity()
+	if held_blocks.size() == 0: #don't delete if we're holding a block, since this right click should just delete that block
+		# get all blocks connected (on the right) to this deleted block
+		var to_delete = [block]
+		to_delete.append_array(_next_blocks_for(block))
+
+		# delete all of them
+		for b in to_delete:
+			BLOCKS.remove_child(b)
+			b.queue_free()
+
+		_update_dropzone_indicators_and_validity()
 
 func _on_block_clicked(block: UIScriptBlock) -> void:
 	# don't emit if a block is currently being held
@@ -140,10 +141,10 @@ func _on_starter_clicked() -> void:
 		for b in BLOCKS.get_children():
 			_remove_block(b)
 		
-		emit_signal("starter_clicked", line_pieces, starter_position)
-		
-		# and delete this line since it is no longer needed
+		# delete this line since it is no longer needed
 		emit_signal("deleted", self)
+		
+		emit_signal("starter_clicked", line_pieces, starter_position)
 
 func _remove_block(block: UIScriptBlock):
 	block.deleted.disconnect(_on_block_deleted)

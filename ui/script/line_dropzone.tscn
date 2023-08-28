@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://dcsfu2nhsufde"]
+
+[ext_resource type="Texture2D" uid="uid://b3ibygh8fax53" path="res://assets/outline9patch.png" id="1_6lmgn"]
+[ext_resource type="Script" path="res://ui/script/line_dropzone.gd" id="1_8fdkc"]
+[ext_resource type="PackedScene" uid="uid://bgw7lgyhxr3ep" path="res://decorators/global_fade_decorator.tscn" id="2_wpv5g"]
+
+[node name="LineDropzone" type="MarginContainer"]
+custom_minimum_size = Vector2(5, 9)
+offset_right = 3.0
+offset_bottom = 11.0
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+script = ExtResource("1_8fdkc")
+
+[node name="Indicator" type="NinePatchRect" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("1_6lmgn")
+patch_margin_left = 1
+patch_margin_top = 1
+patch_margin_right = 1
+patch_margin_bottom = 1
+
+[node name="GlobalFadeDecorator" parent="." instance=ExtResource("2_wpv5g")]

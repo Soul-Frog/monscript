@@ -18,6 +18,7 @@ var _held_anchor := Vector2(0, 0)
 const LINE_LIMIT_FORMAT = "Lines: %d/%d"
 const SCRIPT_BLOCK_SCENE = preload("res://ui/script/script_block.tscn")
 const SCRIPT_LINE_SCENE = preload("res://ui/script/script_line.tscn")
+const LINE_DROPZONE_SCENE = preload("res://ui/script/line_dropzone.tscn")
 
 @onready var SCRIPT_SCROLL = $ScriptScroll
 @onready var SCRIPT_LINES = $ScriptScroll/Script/ScriptLines
@@ -162,21 +163,26 @@ func _discard_held_blocks(delete: bool) -> void:
 		Global.free_children(HELD)
 	Global.remove_children(HELD)
 	DISCARD_ZONE.disabled = true
+	_clear_line_dropzones()
 	_notify_lines_of_held_blocks()
 
 func _on_new_line_button_pressed() -> void:
+	SCRIPT_LINES.add_child(_make_line())
+	_update_line_numbers()
+	_notify_lines_of_held_blocks()
+
+func _make_line():
 	var newline = SCRIPT_LINE_SCENE.instantiate()
 	newline.deleted.connect(_on_line_deleted)
 	newline.clicked_dropzone.connect(_on_dropzone_clicked)
 	newline.block_clicked.connect(_on_line_block_clicked)
 	newline.starter_clicked.connect(_on_line_starter_clicked)
-	SCRIPT_LINES.add_child(newline)
-	_update_line_numbers()
-	_notify_lines_of_held_blocks()
+	return newline
 
 func _notify_lines_of_held_blocks():
 	for script_line in SCRIPT_LINES.get_children():
-		script_line.notify_held_blocks(HELD.get_children())
+		if script_line is UIScriptLine:
+			script_line.notify_held_blocks(HELD.get_children())
 
 func _move_scroll_to_bottom() -> void:
 	# if the scrollbar has grown, we just added a new line
@@ -196,8 +202,9 @@ func _on_line_deleted(deleted_line: UIScriptLine) -> void:
 func _update_line_numbers() -> void:
 	var n := 0
 	for script_line in SCRIPT_LINES.get_children():
-		n += 1
-		script_line.set_line_number(n)
+		if script_line is UIScriptLine:
+			n += 1
+			script_line.set_line_number(n)
 	LINE_LIMIT.text = LINE_LIMIT_FORMAT % [n, GameData.line_limit]
 	LINE_LIMIT.flash()
 	NEWLINE_BUTTON.visible = n != GameData.line_limit
@@ -226,7 +233,56 @@ func _on_line_starter_clicked(line_pieces: Array, starter_position: Vector2) -> 
 	for piece in line_pieces:
 		HELD.add_child(piece)
 	
-	# create line dropzones
+	# need to insert a line dropzone after each line in script
+	# get each line and remove
+	var lines = SCRIPT_LINES.get_children()
+	Global.remove_children(SCRIPT_LINES)
+	
+	# now add them all back to the line, but put dropzones in between
+	SCRIPT_LINES.add_child(_make_line_dropzone())
+	for line in lines:
+		SCRIPT_LINES.add_child(line)
+		SCRIPT_LINES.add_child(_make_line_dropzone())
 		
 	_update_held_position()
 	_notify_lines_of_held_blocks()
+
+func _make_line_dropzone():
+	var dropzone = LINE_DROPZONE_SCENE.instantiate()
+	# set the dropzone's size based on held
+	var held_size = HELD.get_children().size() - 1 #spacing pixels
+	for piece in HELD.get_children():
+		held_size += piece.size.x
+	dropzone.custom_minimum_size.x = held_size
+	
+	dropzone.clicked.connect(_on_line_dropzone_clicked)
+	
+	return dropzone
+
+func _on_line_dropzone_clicked(clicked_dropzone) -> void:
+	assert(HELD.get_children().size() != 0) #line dropzones shouldn't be visible
+	assert(HELD.get_child(0) != UIScriptBlock) #first piece should be a starter
+	print("clicked drop!")
+	
+	# place line down
+	# create a new line at the right spot...
+	var n = 0
+	for child in SCRIPT_LINES.get_children():
+		if child == clicked_dropzone:
+			print("Dropped at %d" % [n])
+			var newline = _make_line()
+			SCRIPT_LINES.add_child(newline)
+			HELD.remove_child(HELD.get_child(0)) #remove the starter
+			SCRIPT_LINES.move_child(newline, n) #move to correct spot
+			if HELD.get_child_count() != 0: # if there are blocks in this line
+				_on_dropzone_clicked(newline) # put the held blocks into the newline
+			break
+		n += 1
+	_discard_held_blocks(false) # handle location as if we dropped this box
+	_update_line_numbers()
+
+func _clear_line_dropzones() -> void:
+	for child in SCRIPT_LINES.get_children():
+		if not child is UIScriptLine:
+			SCRIPT_LINES.remove_child(child)
+			child.queue_free()
