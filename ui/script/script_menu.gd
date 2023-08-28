@@ -273,13 +273,14 @@ func _on_line_dropzone_clicked(clicked_dropzone) -> void:
 			SCRIPT_LINES.add_child(newline)
 			HELD.remove_child(HELD.get_child(0)) #remove the starter
 			SCRIPT_LINES.move_child(newline, n) #move to correct spot
-			_on_dropzone_clicked(newline) # put the held blocks into the newline
-			break
+			for block in HELD.get_children():
+				HELD.remove_child(block)
+				newline.add_block(block)
+			_discard_held_blocks(false)
+			_update_line_numbers()
+			return
 		n += 1
-	
-	_clear_line_dropzones()
-	_update_line_numbers()
-	_notify_lines_of_held_blocks()
+	assert(false, "Clicked dropzone isn't a child of SCRIPT_LINES?")
 
 func _clear_line_dropzones() -> void:
 	for child in SCRIPT_LINES.get_children():
