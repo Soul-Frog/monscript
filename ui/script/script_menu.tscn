@@ -339,6 +339,7 @@ min_alpha = 0.4
 fade_speed = 10.0
 
 [node name="Held" type="HBoxContainer" parent="."]
+z_index = 100
 offset_right = 48.0
 offset_bottom = 15.0
 size_flags_horizontal = 4

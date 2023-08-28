@@ -145,7 +145,6 @@ func _on_discard_block_area_input_event(viewport, event, shape_idx) -> void:
 func _pickup_held_block(new_held_block: UIScriptBlock) -> void:
 	HELD.add_child(new_held_block)
 	new_held_block.position = Vector2(-200, -200)
-	new_held_block.z_index = 100 # draw this on top of everything
 	call_deferred("_set_initial_block_position_and_notify_lines") # wait a frame to set this so size can update
 	DISCARD_ZONE.disabled = false
 func _set_initial_block_position_and_notify_lines() -> void:
@@ -244,6 +243,8 @@ func _on_line_starter_clicked(line_pieces: Array, starter_position: Vector2) -> 
 		SCRIPT_LINES.add_child(line)
 		SCRIPT_LINES.add_child(_make_line_dropzone())
 		
+	DISCARD_ZONE.disabled = false
+	
 	_update_held_position()
 	_notify_lines_of_held_blocks()
 
@@ -262,7 +263,6 @@ func _make_line_dropzone():
 func _on_line_dropzone_clicked(clicked_dropzone) -> void:
 	assert(HELD.get_children().size() != 0) #line dropzones shouldn't be visible
 	assert(HELD.get_child(0) != UIScriptBlock) #first piece should be a starter
-	print("clicked drop!")
 	
 	# place line down
 	# create a new line at the right spot...
@@ -274,11 +274,9 @@ func _on_line_dropzone_clicked(clicked_dropzone) -> void:
 			SCRIPT_LINES.add_child(newline)
 			HELD.remove_child(HELD.get_child(0)) #remove the starter
 			SCRIPT_LINES.move_child(newline, n) #move to correct spot
-			if HELD.get_child_count() != 0: # if there are blocks in this line
-				_on_dropzone_clicked(newline) # put the held blocks into the newline
+			_on_dropzone_clicked(newline) # put the held blocks into the newline
 			break
 		n += 1
-	_discard_held_blocks(false) # handle location as if we dropped this box
 	_update_line_numbers()
 
 func _clear_line_dropzones() -> void:
