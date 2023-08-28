@@ -11,7 +11,7 @@ enum Area
 var compilation_progress_per_mon := {}
 
 # the maximum number of lines the player can use to build scripts
-var line_limit = 5
+var line_limit = 15
 
 var _area_enum_to_path: Dictionary = {
 	Area.DEBUG1 : "res://overworld/areas/debug_area.tscn",

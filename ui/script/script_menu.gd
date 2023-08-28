@@ -269,7 +269,6 @@ func _on_line_dropzone_clicked(clicked_dropzone) -> void:
 	var n = 0
 	for child in SCRIPT_LINES.get_children():
 		if child == clicked_dropzone:
-			print("Dropped at %d" % [n])
 			var newline = _make_line()
 			SCRIPT_LINES.add_child(newline)
 			HELD.remove_child(HELD.get_child(0)) #remove the starter
@@ -277,7 +276,10 @@ func _on_line_dropzone_clicked(clicked_dropzone) -> void:
 			_on_dropzone_clicked(newline) # put the held blocks into the newline
 			break
 		n += 1
+	
+	_clear_line_dropzones()
 	_update_line_numbers()
+	_notify_lines_of_held_blocks()
 
 func _clear_line_dropzones() -> void:
 	for child in SCRIPT_LINES.get_children():
