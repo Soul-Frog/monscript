@@ -184,6 +184,10 @@ func _notify_lines_of_held_blocks():
 			script_line.notify_held_blocks(HELD.get_children())
 
 func _move_scroll_to_bottom() -> void:
+	# if we're holding something (a line), don't scroll
+	if HELD.get_child_count() != 0:
+		pass
+	
 	# if the scrollbar has grown, we just added a new line
 	# move down to the next line.
 	if _max_scroll < SCRIPT_SCROLL.get_v_scroll_bar().max_value:
@@ -191,6 +195,9 @@ func _move_scroll_to_bottom() -> void:
 		
 	# either way, update our known scroll size.
 	_max_scroll = SCRIPT_SCROLL.get_v_scroll_bar().max_value
+
+func _adjust_scroll_after_line_pickup():
+	print("Adjust me!")
 
 func _on_line_deleted(deleted_line: UIScriptLine) -> void:
 	deleted_line.get_parent().remove_child(deleted_line)
@@ -225,9 +232,14 @@ func _on_line_block_clicked(blocks: Array[UIScriptBlock], first_position: Vector
 	_update_held_position()
 	_notify_lines_of_held_blocks()
 
-func _on_line_starter_clicked(line_pieces: Array, starter_position: Vector2) -> void:
+func _on_line_starter_clicked(deleted_line: UIScriptLine, line_pieces: Array, starter_position: Vector2) -> void:
 	assert(line_pieces.size() != 0)
 	assert(HELD.get_child_count() == 0)
+	
+	# delete the old line
+	deleted_line.get_parent().remove_child(deleted_line)
+	deleted_line.queue_free()
+	
 	_held_anchor = get_viewport().get_mouse_position() - starter_position
 	for piece in line_pieces:
 		HELD.add_child(piece)
@@ -247,6 +259,7 @@ func _on_line_starter_clicked(line_pieces: Array, starter_position: Vector2) -> 
 	
 	_update_held_position()
 	_notify_lines_of_held_blocks()
+	_adjust_scroll_after_line_pickup()
 
 func _make_line_dropzone():
 	var dropzone = LINE_DROPZONE_SCENE.instantiate()

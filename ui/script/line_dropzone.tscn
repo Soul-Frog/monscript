@@ -8,6 +8,8 @@
 custom_minimum_size = Vector2(5, 9)
 offset_right = 3.0
 offset_bottom = 11.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
 theme_override_constants/margin_left = 1
 theme_override_constants/margin_top = 1
 script = ExtResource("1_8fdkc")

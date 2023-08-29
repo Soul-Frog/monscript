@@ -141,10 +141,7 @@ func _on_starter_clicked() -> void:
 		for b in BLOCKS.get_children():
 			_remove_block(b)
 		
-		# delete this line since it is no longer needed
-		emit_signal("deleted", self)
-		
-		emit_signal("starter_clicked", line_pieces, starter_position)
+		emit_signal("starter_clicked", self, line_pieces, starter_position)
 
 func _remove_block(block: UIScriptBlock):
 	block.deleted.disconnect(_on_block_deleted)
