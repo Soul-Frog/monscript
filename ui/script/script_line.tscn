@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://fgdwcdg1tdkg"]
+[gd_scene load_steps=6 format=3 uid="uid://fgdwcdg1tdkg"]
 
 [ext_resource type="Texture2D" uid="uid://bfd0th4tvqih4" path="res://assets/gui/script/line_starter.png" id="1_i48si"]
 [ext_resource type="Script" path="res://ui/script/script_line.gd" id="1_okkuo"]
 [ext_resource type="Texture2D" uid="uid://b3ibygh8fax53" path="res://assets/outline9patch.png" id="3_igbdb"]
 [ext_resource type="PackedScene" uid="uid://bgw7lgyhxr3ep" path="res://decorators/global_fade_decorator.tscn" id="4_simq8"]
+[ext_resource type="PackedScene" uid="uid://djhn0flf60xvu" path="res://decorators/mouseover_watcher.tscn" id="5_gxm05"]
 
 [node name="ScriptLine" type="MarginContainer"]
 offset_right = 22.0
@@ -89,3 +90,5 @@ patch_margin_right = 1
 patch_margin_bottom = 1
 
 [node name="GlobalFadeDecorator" parent="HBox/DropzoneMargin" instance=ExtResource("4_simq8")]
+
+[node name="MouseoverWatcher" parent="." instance=ExtResource("5_gxm05")]

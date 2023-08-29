@@ -47,6 +47,15 @@ size = Vector2(304, 54)
 [node name="ScriptMenu" type="Node2D"]
 script = ExtResource("1_mpyhe")
 
+[node name="DiscardBlockArea" type="Area2D" parent="."]
+collision_layer = 8388608
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="DiscardBlockArea"]
+position = Vector2(163, 147)
+shape = SubResource("RectangleShape2D_omyhu")
+disabled = true
+
 [node name="Background" type="Sprite2D" parent="."]
 texture = ExtResource("2_cw38p")
 centered = false
@@ -309,15 +318,6 @@ texture_hover = ExtResource("34_0512m")
 
 [node name="XButton" parent="." instance=ExtResource("35_jfbm6")]
 
-[node name="DiscardBlockArea" type="Area2D" parent="."]
-collision_layer = 8388608
-collision_mask = 0
-
-[node name="Shape" type="CollisionShape2D" parent="DiscardBlockArea"]
-position = Vector2(163, 147)
-shape = SubResource("RectangleShape2D_omyhu")
-disabled = true
-
 [node name="LineLimitLabel" type="Label" parent="."]
 offset_left = 191.0
 offset_top = 102.0
@@ -348,6 +348,7 @@ mouse_filter = 2
 theme_override_constants/separation = 1
 alignment = 1
 
+[connection signal="input_event" from="DiscardBlockArea" to="." method="_on_discard_block_area_input_event"]
 [connection signal="pressed" from="ScriptScroll/Script/NewLineMargin/NewLine/NewLineButton" to="." method="_on_new_line_button_pressed"]
 [connection signal="clicked" from="FileTabs/FileTab1" to="." method="_on_file_tab_1_clicked"]
 [connection signal="clicked" from="FileTabs/FileTab2" to="." method="_on_file_tab_2_clicked"]
@@ -357,5 +358,4 @@ alignment = 1
 [connection signal="clicked" from="BlockDrawer/Tabs/ToTab" to="." method="_on_to_tab_clicked"]
 [connection signal="pressed" from="ClearButton" to="." method="_on_clear_button_pressed"]
 [connection signal="pressed" from="XButton" to="." method="_on_x_button_pressed"]
-[connection signal="input_event" from="DiscardBlockArea" to="." method="_on_discard_block_area_input_event"]
 [connection signal="fade_done" from="LineLimitLabel/FadeDecoratorIn" to="LineLimitLabel" method="_on_fade_decorator_in_fade_done"]

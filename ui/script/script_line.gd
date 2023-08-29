@@ -90,9 +90,9 @@ func is_line_valid():
 	return next_block_types().has(ScriptData.Block.Type.NONE)
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseButton:
+	if event is InputEventMouseButton and $MouseoverWatcher.mouse_over():
 		# check for right click on starter
-		if event.is_pressed() and STARTER.get_global_rect().has_point(event.position):
+		if event.is_pressed():
 			if event.button_index == MOUSE_BUTTON_LEFT:
 				_on_starter_clicked()
 			if event.button_index == MOUSE_BUTTON_RIGHT and held_blocks.size() == 0:

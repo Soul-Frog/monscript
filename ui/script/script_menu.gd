@@ -130,12 +130,20 @@ func _on_drawer_block_clicked(block: UIScriptBlock) -> void:
 	if HELD.get_child_count() == 0:
 		# create a duplicate of this block and hold it
 		_pickup_held_block(_create_block(block.block_type, block.block_name, true))
+		call_deferred("_set_initial_block_position_and_notify_lines") # wait a frame to set this so size can update
+func _set_initial_block_position_and_notify_lines() -> void:
+	if(HELD.get_child_count() != 0):
+		_held_anchor = Vector2(HELD.size.x/2.0, HELD.size.y/2.0)
+		_update_held_position()
+	_notify_lines_of_held_blocks()
 
 func _input(event) -> void:
 	if event is InputEventMouseMotion:
 		_update_held_position()
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and HELD.get_child_count() != 0:
 		_discard_held_blocks(true)
+	#if DISCARD_ZONE.disabled == false and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT and DISCARD_ZONE.shape.contains_point(get_global_mouse_position()):
+	#	print("ahhhhh")
 
 func _on_discard_block_area_input_event(viewport, event, shape_idx) -> void:
 	if event is InputEventMouseButton:
@@ -145,13 +153,8 @@ func _on_discard_block_area_input_event(viewport, event, shape_idx) -> void:
 func _pickup_held_block(new_held_block: UIScriptBlock) -> void:
 	HELD.add_child(new_held_block)
 	new_held_block.position = Vector2(-200, -200)
-	call_deferred("_set_initial_block_position_and_notify_lines") # wait a frame to set this so size can update
+	new_held_block.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	DISCARD_ZONE.disabled = false
-func _set_initial_block_position_and_notify_lines() -> void:
-	if(HELD.get_child_count() != 0):
-		_held_anchor = Vector2(HELD.size.x/2.0, HELD.size.y/2.0)
-		_update_held_position()
-	_notify_lines_of_held_blocks()
 
 func _update_held_position():
 	HELD.size = Vector2(0, 0)
@@ -196,8 +199,23 @@ func _move_scroll_to_bottom() -> void:
 	# either way, update our known scroll size.
 	_max_scroll = SCRIPT_SCROLL.get_v_scroll_bar().max_value
 
-func _adjust_scroll_after_line_pickup():
-	print("Adjust me!")
+func _adjust_scroll_after_line_pickup(deleted_position: int) -> void:
+	print("# adjusts %d" % [int(SCRIPT_LINES.get_child_count()/2.0) + 1])
+	print("deleted at %d" % deleted_position)
+	print("scroll is currently %d" % SCRIPT_SCROLL.scroll_vertical)
+	print("max %d" % SCRIPT_SCROLL.get_v_scroll_bar().max_value)
+	
+	print(SCRIPT_LINES.get_child(deleted_position * 2 - 1))
+	
+	# wait a frame, then move the scroll so that the line directly above selected line is at top
+	await get_tree().process_frame
+	if deleted_position == 0: #special case
+		SCRIPT_SCROLL.scroll_vertical = 0
+	else:
+		SCRIPT_SCROLL.ensure_control_visible(SCRIPT_LINES.get_child(deleted_position * 2 - 1))
+	
+	print(get_global_mouse_position())
+	print(SCRIPT_SCROLL.position)
 
 func _on_line_deleted(deleted_line: UIScriptLine) -> void:
 	deleted_line.get_parent().remove_child(deleted_line)
@@ -215,20 +233,28 @@ func _update_line_numbers() -> void:
 	LINE_LIMIT.flash()
 	NEWLINE_BUTTON.visible = n != GameData.line_limit
 
+func _put_held_blocks_in_line(line: UIScriptLine):
+	for block in HELD.get_children():
+		block.mouse_filter = Control.MOUSE_FILTER_STOP
+		HELD.remove_child(block)
+		line.add_block(block)
+	_discard_held_blocks(false)
+
 func _on_dropzone_clicked(line: UIScriptLine) -> void:
 	var front_block = HELD.get_child(0) if HELD.get_child_count() != 0 else null
 	if front_block != null and front_block is UIScriptBlock and line.next_block_types().has(front_block.block_type):
-		for block in HELD.get_children():
-			HELD.remove_child(block)
-			line.add_block(block)
-		_discard_held_blocks(false)
+		_put_held_blocks_in_line(line)
 
 func _on_line_block_clicked(blocks: Array[UIScriptBlock], first_position: Vector2) -> void:
 	assert(blocks.size() != 0)
-	assert(HELD.get_child_count() == 0) #we shouldn't be calling this while holding a block
-	_held_anchor = get_viewport().get_mouse_position() - first_position
+	if HELD.get_child_count() != 0:
+		return #we shouldn't be calling this while holding a block, but it can happen if spam clicking - ignore this
+	
+	
 	for block in blocks:
-		HELD.add_child(block)
+		_pickup_held_block(block)
+		#HELD.add_child(block)
+	_held_anchor = get_viewport().get_mouse_position() - first_position
 	_update_held_position()
 	_notify_lines_of_held_blocks()
 
@@ -237,6 +263,11 @@ func _on_line_starter_clicked(deleted_line: UIScriptLine, line_pieces: Array, st
 	assert(HELD.get_child_count() == 0)
 	
 	# delete the old line
+	var deleted_position = -1
+	for line in SCRIPT_LINES.get_children():
+		deleted_position += 1
+		if line == deleted_line:
+			break
 	deleted_line.get_parent().remove_child(deleted_line)
 	deleted_line.queue_free()
 	
@@ -259,7 +290,7 @@ func _on_line_starter_clicked(deleted_line: UIScriptLine, line_pieces: Array, st
 	
 	_update_held_position()
 	_notify_lines_of_held_blocks()
-	_adjust_scroll_after_line_pickup()
+	_adjust_scroll_after_line_pickup(deleted_position)
 
 func _make_line_dropzone():
 	var dropzone = LINE_DROPZONE_SCENE.instantiate()
@@ -286,10 +317,7 @@ func _on_line_dropzone_clicked(clicked_dropzone) -> void:
 			SCRIPT_LINES.add_child(newline)
 			HELD.remove_child(HELD.get_child(0)) #remove the starter
 			SCRIPT_LINES.move_child(newline, n) #move to correct spot
-			for block in HELD.get_children():
-				HELD.remove_child(block)
-				newline.add_block(block)
-			_discard_held_blocks(false)
+			_put_held_blocks_in_line(newline)
 			_update_line_numbers()
 			return
 		n += 1
@@ -300,3 +328,4 @@ func _clear_line_dropzones() -> void:
 		if not child is UIScriptLine:
 			SCRIPT_LINES.remove_child(child)
 			child.queue_free()
+
