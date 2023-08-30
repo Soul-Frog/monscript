@@ -27,7 +27,7 @@ const LINE_DROPZONE_SCENE = preload("res://ui/script/line_dropzone.tscn")
 @onready var IF_DRAWER = $BlockDrawer/Drawers/IfDrawer/BlockScroll/Margins/Blocks
 @onready var DO_DRAWER = $BlockDrawer/Drawers/DoDrawer/BlockScroll/Margins/Blocks
 @onready var TO_DRAWER = $BlockDrawer/Drawers/ToDrawer/BlockScroll/Margins/Blocks
-@onready var DISCARD_ZONE = $DiscardBlockArea/Shape
+@onready var DISCARD_ZONE = $DiscardZone
 @onready var FILE_TABS = $FileTabs
 @onready var LINE_LIMIT = $LineLimitLabel
 @onready var NEWLINE_BUTTON = $ScriptScroll/Script/NewLineMargin/NewLine
@@ -61,7 +61,7 @@ func _ready() -> void:
 
 func setup(mon: MonData.Mon) -> void:
 	Global.free_children(HELD)
-	DISCARD_ZONE.disabled = true
+	DISCARD_ZONE.visible = false
 
 func _create_block(block_type: ScriptData.Block.Type, block_name: String, deletable: bool) -> UIScriptBlock:
 	var block := SCRIPT_BLOCK_SCENE.instantiate()
@@ -140,10 +140,11 @@ func _set_initial_block_position_and_notify_lines() -> void:
 func _input(event) -> void:
 	if event is InputEventMouseMotion:
 		_update_held_position()
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and HELD.get_child_count() != 0:
-		_discard_held_blocks(true)
-	#if DISCARD_ZONE.disabled == false and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT and DISCARD_ZONE.shape.contains_point(get_global_mouse_position()):
-	#	print("ahhhhh")
+	if event is InputEventMouseButton and event.is_pressed():
+		if event.button_index == MOUSE_BUTTON_RIGHT and HELD.get_child_count() != 0:
+			_discard_held_blocks(true)
+		if event.button_index == MOUSE_BUTTON_LEFT and DISCARD_ZONE.visible and DISCARD_ZONE.get_global_rect().has_point(event.position):
+			_discard_held_blocks(true)
 
 func _on_discard_block_area_input_event(viewport, event, shape_idx) -> void:
 	if event is InputEventMouseButton:
@@ -154,7 +155,10 @@ func _pickup_held_block(new_held_block: UIScriptBlock) -> void:
 	HELD.add_child(new_held_block)
 	new_held_block.position = Vector2(-200, -200)
 	new_held_block.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	DISCARD_ZONE.disabled = false
+	call_deferred("_set_discard_zone_active", true)
+
+func _set_discard_zone_active(is_active: bool):
+	DISCARD_ZONE.visible = is_active
 
 func _update_held_position():
 	HELD.size = Vector2(0, 0)
@@ -164,8 +168,9 @@ func _discard_held_blocks(delete: bool) -> void:
 	if delete:
 		Global.free_children(HELD)
 	Global.remove_children(HELD)
-	DISCARD_ZONE.disabled = true
+	call_deferred("_set_discard_zone_active", false)
 	_clear_line_dropzones()
+	_update_line_numbers()
 	_notify_lines_of_held_blocks()
 
 func _on_new_line_button_pressed() -> void:
@@ -286,7 +291,7 @@ func _on_line_starter_clicked(deleted_line: UIScriptLine, line_pieces: Array, st
 		SCRIPT_LINES.add_child(line)
 		SCRIPT_LINES.add_child(_make_line_dropzone())
 		
-	DISCARD_ZONE.disabled = false
+	call_deferred("_set_discard_zone_active", true)
 	
 	_update_held_position()
 	_notify_lines_of_held_blocks()
@@ -328,4 +333,3 @@ func _clear_line_dropzones() -> void:
 		if not child is UIScriptLine:
 			SCRIPT_LINES.remove_child(child)
 			child.queue_free()
-

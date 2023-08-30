@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://d0ot7ndx0xjlq"]
+[gd_scene load_steps=41 format=3 uid="uid://d0ot7ndx0xjlq"]
 
 [ext_resource type="Script" path="res://ui/script/script_menu.gd" id="1_mpyhe"]
 [ext_resource type="Texture2D" uid="uid://dl0si4q1ky7ya" path="res://assets/gui/script/script_base.png" id="2_cw38p"]
@@ -41,20 +41,17 @@
 [ext_resource type="Script" path="res://ui/script/fade_text.gd" id="39_5ys6j"]
 [ext_resource type="PackedScene" uid="uid://ct27r3y3ao3um" path="res://decorators/fade_decorator.tscn" id="39_7hj41"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_omyhu"]
-size = Vector2(304, 54)
-
 [node name="ScriptMenu" type="Node2D"]
 script = ExtResource("1_mpyhe")
 
-[node name="DiscardBlockArea" type="Area2D" parent="."]
-collision_layer = 8388608
-collision_mask = 0
-
-[node name="Shape" type="CollisionShape2D" parent="DiscardBlockArea"]
-position = Vector2(163, 147)
-shape = SubResource("RectangleShape2D_omyhu")
-disabled = true
+[node name="DiscardZone" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 11.0
+offset_top = 119.0
+offset_right = 315.0
+offset_bottom = 188.0
 
 [node name="Background" type="Sprite2D" parent="."]
 texture = ExtResource("2_cw38p")
@@ -348,7 +345,6 @@ mouse_filter = 2
 theme_override_constants/separation = 1
 alignment = 1
 
-[connection signal="input_event" from="DiscardBlockArea" to="." method="_on_discard_block_area_input_event"]
 [connection signal="pressed" from="ScriptScroll/Script/NewLineMargin/NewLine/NewLineButton" to="." method="_on_new_line_button_pressed"]
 [connection signal="clicked" from="FileTabs/FileTab1" to="." method="_on_file_tab_1_clicked"]
 [connection signal="clicked" from="FileTabs/FileTab2" to="." method="_on_file_tab_2_clicked"]

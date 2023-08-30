@@ -139,14 +139,14 @@ var IF_BLOCK_LIST := [
 		return false
 		),
 	
-	Block.new(Block.Type.IF, "FriendDamaged", Block.Type.DO,  
+	Block.new(Block.Type.IF, "PalDamaged", Block.Type.DO,  
 	func(mon: BattleMon, friends: Array[BattleMon], foes: Array[BattleMon]) -> bool: 
 		for friend in friends:
 			if friend.current_health < friend.max_health:
 				return true
 		return false
 		),
-	Block.new(Block.Type.IF, "FriendHasLowHP", Block.Type.DO,  
+	Block.new(Block.Type.IF, "PalHasLowHP", Block.Type.DO,  
 	func(mon, friends, foes): 
 		for friend in friends:
 			if float(friend.current_health)/float(friend.max_health) <= 0.20:
@@ -208,12 +208,12 @@ var TO_BLOCK_LIST := [
 		return foes[Global.RNG.randi() % foes.size()]
 		),
 		
-	Block.new(Block.Type.TO, "RandomFriend", Block.Type.NONE, 
+	Block.new(Block.Type.TO, "RandomPal", Block.Type.NONE, 
 	func(mon: BattleMon, friends: Array[BattleMon], foes: Array[BattleMon]) -> BattleMon:
 		return friends[Global.RNG.randi() % friends.size()]
 		),
 		
-	Block.new(Block.Type.TO, "LowestHealthFoe", Block.Type.NONE, 
+	Block.new(Block.Type.TO, "LowestHPFoe", Block.Type.NONE, 
 	func(mon: BattleMon, friends: Array[BattleMon], foes: Array[BattleMon]) -> BattleMon:
 		var lowestHealthFoe = null
 		var lowestHealthFound = Global.INT_MAX
@@ -226,7 +226,7 @@ var TO_BLOCK_LIST := [
 		return lowestHealthFoe
 		),
 	
-	Block.new(Block.Type.TO, "LowestHealthFriend", Block.Type.NONE, 
+	Block.new(Block.Type.TO, "LowestHPPal", Block.Type.NONE, 
 	func(mon: BattleMon, friends: Array[BattleMon], foes: Array[BattleMon]) -> BattleMon:
 		var lowestHealthFriend = null
 		var lowestHealthFound = Global.INT_MAX
