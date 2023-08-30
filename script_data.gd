@@ -208,7 +208,7 @@ var TO_BLOCK_LIST := [
 		return foes[Global.RNG.randi() % foes.size()]
 		),
 		
-	Block.new(Block.Type.TO, "RandomPal", Block.Type.NONE, 
+	Block.new(Block.Type.TO, "RandomPalsfsdfasdfsdafsdfsds", Block.Type.NONE, 
 	func(mon: BattleMon, friends: Array[BattleMon], foes: Array[BattleMon]) -> BattleMon:
 		return friends[Global.RNG.randi() % friends.size()]
 		),
@@ -238,4 +238,5 @@ var TO_BLOCK_LIST := [
 		assert(lowestHealthFriend != null)
 		return lowestHealthFriend
 		)
+	
 ]

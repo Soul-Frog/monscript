@@ -58,6 +58,27 @@ func _ready() -> void:
 	
 	# when the scrollbar size changes, move the scrollbar down
 	SCRIPT_SCROLL.get_v_scroll_bar().changed.connect(_move_scroll_to_bottom)
+	
+	# make sure the largest possible line would fit in the window
+	# calculate roughly the maximum space for a line
+	var max_size_x = SCRIPT_SCROLL.size.x - NEWLINE_BUTTON.size.x - SCRIPT_SCROLL.get_v_scroll_bar().size.x
+	
+	# quick lambda finding the largest block in an array
+	var find_largest = func(blocks: Array, chains_to: ScriptData.Block.Type):
+		var largest = null
+		for block in blocks:
+			if largest == null or (block.size.x > largest.size.x and block.to_block().next_block_type() == chains_to):
+				largest = block
+		return largest
+	
+	# find the largest if, do, and to blocks that chain together
+	var largest_if = find_largest.call(IF_DRAWER.get_children(), ScriptData.Block.Type.DO)
+	var largest_do = find_largest.call(DO_DRAWER.get_children(), ScriptData.Block.Type.TO)
+	var largest_to = find_largest.call(TO_DRAWER.get_children(), ScriptData.Block.Type.NONE)
+	var largest_possible_line_x = largest_if.size.x + largest_do.size.x + largest_to.size.x
+	print(largest_possible_line_x)
+	
+	assert(max_size_x >= largest_possible_line_x, "Largest blocks are too large to fit in editor!")
 
 func setup(mon: MonData.Mon) -> void:
 	Global.free_children(HELD)
@@ -254,7 +275,6 @@ func _on_line_block_clicked(blocks: Array[UIScriptBlock], first_position: Vector
 	assert(blocks.size() != 0)
 	if HELD.get_child_count() != 0:
 		return #we shouldn't be calling this while holding a block, but it can happen if spam clicking - ignore this
-	
 	
 	for block in blocks:
 		_pickup_held_block(block)

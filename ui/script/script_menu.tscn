@@ -61,6 +61,7 @@ centered = false
 offset_left = 5.0
 offset_right = 113.0
 offset_bottom = 14.0
+theme_override_font_sizes/font_size = 16
 text = "Magnetfrog's Script"
 
 [node name="ScriptScroll" type="ScrollContainer" parent="."]
