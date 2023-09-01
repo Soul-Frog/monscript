@@ -1,28 +1,33 @@
-[gd_scene load_steps=3 format=3 uid="uid://ckm4oufohy76d"]
+[gd_scene load_steps=4 format=3 uid="uid://d2ovcaisq5qfb"]
 
-[ext_resource type="Script" path="res://ui/tooltip.gd" id="1_brojn"]
-[ext_resource type="Texture2D" uid="uid://bha488om4dvs5" path="res://assets/gui/tooltip9patch.png" id="2_gqly4"]
+[ext_resource type="Script" path="res://ui/tooltip.gd" id="1_60doy"]
+[ext_resource type="Theme" uid="uid://612i0h3ltb6t" path="res://monscript_theme.tres" id="1_tycc3"]
+[ext_resource type="Texture2D" uid="uid://bha488om4dvs5" path="res://assets/gui/tooltip9patch.png" id="2_uq08r"]
 
 [node name="Tooltip" type="MarginContainer"]
-offset_right = 87.0
-offset_bottom = 14.0
-script = ExtResource("1_brojn")
+z_index = 4000
+offset_right = 10.0
+offset_bottom = 15.0
+mouse_filter = 2
+theme = ExtResource("1_tycc3")
+script = ExtResource("1_60doy")
 
-[node name="Indicator" type="NinePatchRect" parent="."]
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
 layout_mode = 2
-size_flags_vertical = 3
-texture = ExtResource("2_gqly4")
+texture = ExtResource("2_uq08r")
 patch_margin_left = 3
 patch_margin_top = 3
 patch_margin_right = 3
 patch_margin_bottom = 3
 
-[node name="TooltipMargin" type="MarginContainer" parent="."]
+[node name="TextMargin" type="MarginContainer" parent="."]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
+theme_override_constants/margin_bottom = 6
 
-[node name="TooltipText" type="Label" parent="TooltipMargin"]
+[node name="TooltipText" type="Label" parent="TextMargin"]
 layout_mode = 2
+text = "ERROR"

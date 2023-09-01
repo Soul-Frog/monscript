@@ -41,3 +41,5 @@ texture = ExtResource("3_044cn")
 centered = false
 
 [node name="MouseoverWatcher" parent="." instance=ExtResource("4_84670")]
+
+[connection signal="mouse_entered" from="." to="." method="_create_tooltip"]

@@ -16,6 +16,8 @@ var block_name
 # blocks in script lines can be deleted, blocks in drawers cannot
 var _deleteable = false
 
+var _tooltip: UITooltip
+
 func set_data(blockType: ScriptData.Block.Type, blockName: String, deleteable: bool) -> void:
 	self.block_type = blockType
 	self.block_name = blockName
@@ -62,3 +64,6 @@ func _input(event: InputEvent) -> void:
 			emit_signal("clicked", self)
 		if event.is_pressed() and event.button_index == MOUSE_BUTTON_RIGHT and $MouseoverWatcher.mouse_over() and _deleteable:
 			emit_signal("deleted", self)
+
+func _create_tooltip():
+	_tooltip = UITooltip.create(self, "This is a test tooltip!", get_global_mouse_position(), get_tree().root, false)
