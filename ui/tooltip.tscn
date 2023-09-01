@@ -28,6 +28,11 @@ theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 6
 
-[node name="TooltipText" type="Label" parent="TextMargin"]
+[node name="TooltipText" type="RichTextLabel" parent="TextMargin"]
+clip_contents = false
 layout_mode = 2
-text = "ERROR"
+mouse_filter = 2
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+shortcut_keys_enabled = false

@@ -76,7 +76,6 @@ func _ready() -> void:
 	var largest_do = find_largest.call(DO_DRAWER.get_children(), ScriptData.Block.Type.TO)
 	var largest_to = find_largest.call(TO_DRAWER.get_children(), ScriptData.Block.Type.NONE)
 	var largest_possible_line_x = largest_if.size.x + largest_do.size.x + largest_to.size.x
-	print(largest_possible_line_x)
 	
 	assert(max_size_x >= largest_possible_line_x, "Largest blocks are too large to fit in editor!")
 
@@ -172,11 +171,12 @@ func _on_discard_block_area_input_event(viewport, event, shape_idx) -> void:
 		if event.pressed and HELD.get_child_count() != 0:
 			_discard_held_blocks(true)
 
-func _pickup_held_block(new_held_block: UIScriptBlock) -> void:
+func _pickup_held_block(new_held_block) -> void:
 	HELD.add_child(new_held_block)
 	new_held_block.position = Vector2(-200, -200)
 	new_held_block.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	call_deferred("_set_discard_zone_active", true)
+	UITooltip.disable_tooltips() #while held, disable
 
 func _set_discard_zone_active(is_active: bool):
 	DISCARD_ZONE.visible = is_active
@@ -193,6 +193,7 @@ func _discard_held_blocks(delete: bool) -> void:
 	_clear_line_dropzones()
 	_update_line_numbers()
 	_notify_lines_of_held_blocks()
+	UITooltip.enable_tooltips() #once no longer held, enable
 
 func _on_new_line_button_pressed() -> void:
 	SCRIPT_LINES.add_child(_make_line())
@@ -278,7 +279,6 @@ func _on_line_block_clicked(blocks: Array[UIScriptBlock], first_position: Vector
 	
 	for block in blocks:
 		_pickup_held_block(block)
-		#HELD.add_child(block)
 	_held_anchor = get_viewport().get_mouse_position() - first_position
 	_update_held_position()
 	_notify_lines_of_held_blocks()
@@ -298,7 +298,7 @@ func _on_line_starter_clicked(deleted_line: UIScriptLine, line_pieces: Array, st
 	
 	_held_anchor = get_viewport().get_mouse_position() - starter_position
 	for piece in line_pieces:
-		HELD.add_child(piece)
+		_pickup_held_block(piece)
 	
 	# need to insert a line dropzone after each line in script
 	# get each line and remove
@@ -310,8 +310,6 @@ func _on_line_starter_clicked(deleted_line: UIScriptLine, line_pieces: Array, st
 	for line in lines:
 		SCRIPT_LINES.add_child(line)
 		SCRIPT_LINES.add_child(_make_line_dropzone())
-		
-	call_deferred("_set_discard_zone_active", true)
 	
 	_update_held_position()
 	_notify_lines_of_held_blocks()
