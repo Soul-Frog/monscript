@@ -6,7 +6,7 @@ static var _ENABLED := true
 static var _ALL_TOOLTIPS: Array[UITooltip] = []
 
 # offset of the tooltip from the mouse
-const _TOOLTIP_OFFSET := Vector2(3, 8)
+const _TOOLTIP_OFFSET := Vector2(3, 5)
 
 # maximum width of a tooltip - note that tooltips can exceed this,
 # but this is around where they will cap.

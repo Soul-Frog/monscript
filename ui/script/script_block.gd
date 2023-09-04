@@ -64,4 +64,4 @@ func _input(event: InputEvent) -> void:
 			emit_signal("deleted", self)
 
 func _create_tooltip():
-	UITooltip.create(self, to_block().tooltip, get_global_mouse_position(), get_tree().root)
+	UITooltip.create(self, to_block().description, get_global_mouse_position(), get_tree().root)

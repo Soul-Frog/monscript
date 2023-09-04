@@ -28,17 +28,14 @@ class MonBase:
 	var _health64: int
 	var _speed0: int
 	var _speed64: int
-	var _special_name: String
-	var _special_description: String
+	var _special_block: ScriptData.Block
 	var _passive_name: String
 	var _passive_description: String
-	#todo: var special_action
-	#todo: var passive_ability
 	
 	func _init(monSpecies: String, mon_scene: String, default_script_file_path: String,
 		healthAt0: int, healthAt64: int, attackAt0: int, attackAt64: int, 
 		defenseAt0: int, defenseAt64: int, speedAt0: int, speedAt64: int,
-		specialName: String, specialDesc: String, passiveName: String, passiveDesc: String) -> void:
+		specialBlock: ScriptData.Block, passiveName: String, passiveDesc: String) -> void:
 		self._species_name = monSpecies
 		self._scene_path = mon_scene
 		assert(Global.does_file_exist(_scene_path))
@@ -52,8 +49,7 @@ class MonBase:
 		self._defense64 = defenseAt64
 		self._speed0 = speedAt0
 		self._speed64 = speedAt64
-		self._special_name = specialName
-		self._special_description = specialDesc
+		self._special_block = specialBlock
 		self._passive_name = passiveName
 		self._passive_description = passiveDesc
 	
@@ -85,6 +81,13 @@ class Mon:
 		self._xp = 0
 		self._nickname = mon_nickname
 		self._monscript = ScriptData.MonScript.new(Global.file_to_string(mon_base._default_script_path))
+	
+	# if this mon can use this block
+	# right now, it just checks if the mon's base uses this block
+	# in the future when you can customize mon specials, 
+	# this function will also check that.
+	func is_block_a_special(block: ScriptData.Block):
+		return _base._special_block == block
 	
 	func get_name() -> String:
 		if _nickname == "":
@@ -118,12 +121,6 @@ class Mon:
 	func get_speed() -> int:
 		return _base.speed_for_level(_level)
 	
-	func get_special_description() -> String:
-		return _base._special_description
-	
-	func get_passive_description() -> String:
-		return _base._passive_description
-	
 	# adds XP and potentially applies level up
 	func gain_XP(xp_gained: int) -> void:
 		if _level == MonData.MAX_LEVEL: # don't try to level past MAX
@@ -140,11 +137,11 @@ class Mon:
 # List of MonBases, each is a static and constant representation of a Mon's essential characteristics
 var _MAGNETFROG_BASE = MonBase.new("magnetFrog", "res://mons/magnetfrog.tscn", "res://monscripts/attack.txt", 
 	40, 200, 10, 110, 5, 100, 6, 40,
-	"Magnetcheeks", "MagnetFrog's special attack information!",
-	"Magnetism", "MagnetFrog's passive ability information!")
+	ScriptData.get_block_by_name("Shellbash"), 
+	"Passive", "Passive desc")
 var _MAGNETFROGBLUE_BASE = MonBase.new("magnetFrogBLUE", "res://mons/magnetfrogblue.tscn", "res://monscripts/attack.txt", 
 	40, 250, 10, 100, 5, 50, 6, 20,
-	"Blue Burst", "MagnetFrog Blue's special attack information!",
+	ScriptData.get_block_by_name("Shellbash"), 
 	"Bluenatism", "MagnetFrog Blue's passive ability information!")
 
 # dictionary mapping MonTypes -> MonBases
@@ -176,11 +173,11 @@ func get_name_for(montype: MonType) -> String:
 
 func get_special_name_for(montype: MonType) -> String:
 	assert(montype != MonType.NONE)
-	return _MON_MAP[montype]._special_name
+	return _MON_MAP[montype]._special_block.name
 
 func get_special_description_for(montype: MonType) -> String:
 	assert(montype != MonType.NONE)
-	return _MON_MAP[montype]._special_description
+	return _MON_MAP[montype]._special_block.description
 
 func get_passive_name_for(montype: MonType) -> String:
 	assert(montype != MonType.NONE)
@@ -190,6 +187,7 @@ func get_passive_description_for(montype: MonType) -> String:
 	assert(montype != MonType.NONE)
 	return _MON_MAP[montype]._passive_description
 
+#TODO - update these so that they calculate the number of mons better/worse and use that as percentile, not raw stats
 func get_health_percentile_for(montype: MonType) -> int:
 	assert(montype != MonType.NONE)
 	

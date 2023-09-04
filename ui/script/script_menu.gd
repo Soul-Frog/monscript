@@ -4,8 +4,6 @@ extends Node2D
 # emitted when this menu should be closed
 signal closed
 
-
-
 # the currently known maximum scroll amount for script scrollbar
 # used to update the scrollbar down when the line is grown at the bottom
 var _max_scroll = -1
@@ -46,42 +44,32 @@ func _ready() -> void:
 	assert(NEWLINE_BUTTON != null)
 	assert(HELD != null)
 	
-	# create blocks
-	for ifBlock in ScriptData.IF_BLOCK_LIST:
-		_create_and_add_block_to(IF_DRAWER, ifBlock.type, ifBlock.name)
-	for doBlock in ScriptData.DO_BLOCK_LIST:
-		_create_and_add_block_to(DO_DRAWER, doBlock.type, doBlock.name)
-	for toBlock in ScriptData.TO_BLOCK_LIST:
-		_create_and_add_block_to(TO_DRAWER, toBlock.type, toBlock.name)
-	_update_drawer()
-	_update_file_tabs()
-	
 	# when the scrollbar size changes, move the scrollbar down
 	SCRIPT_SCROLL.get_v_scroll_bar().changed.connect(_move_scroll_to_bottom)
-	
-	# make sure the largest possible line would fit in the window
-	# calculate roughly the maximum space for a line
-	var max_size_x = SCRIPT_SCROLL.size.x - NEWLINE_BUTTON.size.x - SCRIPT_SCROLL.get_v_scroll_bar().size.x
-	
-	# quick lambda finding the largest block in an array
-	var find_largest = func(blocks: Array, chains_to: ScriptData.Block.Type):
-		var largest = null
-		for block in blocks:
-			if largest == null or (block.size.x > largest.size.x and block.to_block().next_block_type() == chains_to):
-				largest = block
-		return largest
-	
-	# find the largest if, do, and to blocks that chain together
-	var largest_if = find_largest.call(IF_DRAWER.get_children(), ScriptData.Block.Type.DO)
-	var largest_do = find_largest.call(DO_DRAWER.get_children(), ScriptData.Block.Type.TO)
-	var largest_to = find_largest.call(TO_DRAWER.get_children(), ScriptData.Block.Type.NONE)
-	var largest_possible_line_x = largest_if.size.x + largest_do.size.x + largest_to.size.x
-	
-	assert(max_size_x >= largest_possible_line_x, "Largest blocks are too large to fit in editor!")
 
 func setup(mon: MonData.Mon) -> void:
 	Global.free_children(HELD)
 	DISCARD_ZONE.visible = false
+	_active_file_tab = 1
+	_active_drawer_tab = 1
+	
+	# remove all existing blocks
+	Global.free_children(IF_DRAWER)
+	Global.free_children(DO_DRAWER)
+	Global.free_children(TO_DRAWER)
+	
+	# create blocks based on latest unlocks
+	for ifBlock in ScriptData.IF_BLOCK_LIST:
+		if GameData.is_block_unlocked(ifBlock):
+			_create_and_add_block_to(IF_DRAWER, ifBlock.type, ifBlock.name)
+	for doBlock in ScriptData.DO_BLOCK_LIST:
+		if GameData.is_block_unlocked(doBlock) or mon.is_block_a_special(doBlock):
+			_create_and_add_block_to(DO_DRAWER, doBlock.type, doBlock.name)
+	for toBlock in ScriptData.TO_BLOCK_LIST:
+		if GameData.is_block_unlocked(toBlock):
+			_create_and_add_block_to(TO_DRAWER, toBlock.type, toBlock.name)
+	_update_drawer()
+	_update_file_tabs()
 
 func _create_block(block_type: ScriptData.Block.Type, block_name: String, deletable: bool) -> UIScriptBlock:
 	var block := SCRIPT_BLOCK_SCENE.instantiate()

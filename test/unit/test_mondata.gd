@@ -3,7 +3,7 @@ extends GutTest
 var mons := []
 var fakemon: MonData.Mon
 var FAKE_BASE = MonData.MonBase.new("FAKEMON", "res://mons/magnetfrog.tscn", "res://monscripts/attack.txt", 
-	0, 64, 0, 128, 0, 256, 0, 512)
+	0, 64, 0, 128, 0, 256, 0, 512, ScriptData.get_block_by_name("Attack"), "passive", "passivedesc")
 
 func before_each():
 	mons.clear()
@@ -31,7 +31,7 @@ func test_stats_for_level():
 
 # check if nicknames work
 func test_get_name():
-	assert_eq(fakemon.get_name(), FAKE_BASE._speciesName)
+	assert_eq(fakemon.get_name(), FAKE_BASE._species_name)
 	fakemon = MonData.Mon.new(FAKE_BASE, 0, "NICKNAME")
 	assert_eq(fakemon.get_name(), "NICKNAME")
 

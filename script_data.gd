@@ -102,14 +102,14 @@ class Block:
 	var type: Type
 	var name: String
 	var next_block_type: Type
-	var tooltip: String # used for the tooltip in script editor
+	var description: String # used for the tooltip in script editor and as description in database
 	var function # this should be a :Callable, but Godot is bugged and make a warning...
 	
-	func _init(blockType: Type, blockName: String, nextBlockType: Type, blockTooltip: String, blockFunction):
+	func _init(blockType: Type, blockName: String, nextBlockType: Type, blockDescription: String, blockFunction):
 		self.type = blockType
 		self.name = blockName
 		self.next_block_type = nextBlockType
-		self.tooltip = blockTooltip
+		self.description = blockDescription
 		self.function = blockFunction
 	
 	func as_string() -> String:
@@ -121,6 +121,7 @@ func get_block_by_name(block_name: String) -> Block:
 		for block in block_list:
 			if block.name == block_name:
 				return block
+	assert(false, "No block with name %s!" % block_name)
 	return null
 
 # IF FUNCTIONS

@@ -64,8 +64,8 @@ func _on_battle_ended(battle_result: Battle.BattleResult) -> void:
 	_switch_to_scene(overworld_scene)
 
 func _on_script_menu_opened(mon: MonData.Mon) -> void:
-	script_menu_scene.setup(mon)
 	_switch_to_scene(script_menu_scene)
+	script_menu_scene.setup(mon)
 
 func _on_database_menu_opened() -> void:
 	database_menu_scene.setup()

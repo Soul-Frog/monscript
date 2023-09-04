@@ -8,10 +8,10 @@ var line2: String
 var line3: String
 
 func before_all():
-	mockIf = ScriptData.Block.new(ScriptData.Block.Type.IF, "IfMock", ScriptData.Block.Type.DO, null)
-	mockDo = ScriptData.Block.new(ScriptData.Block.Type.DO, "DoMock", ScriptData.Block.Type.TO, null)
-	mockDoNoTo = ScriptData.Block.new(ScriptData.Block.Type.DO, "ToMockNoTo", ScriptData.Block.Type.NONE, null)
-	mockTo = ScriptData.Block.new(ScriptData.Block.Type.TO, "ToMock", ScriptData.Block.Type.NONE, null)
+	mockIf = ScriptData.Block.new(ScriptData.Block.Type.IF, "IfMock", ScriptData.Block.Type.DO, "desc", null)
+	mockDo = ScriptData.Block.new(ScriptData.Block.Type.DO, "DoMock", ScriptData.Block.Type.TO, "desc", null)
+	mockDoNoTo = ScriptData.Block.new(ScriptData.Block.Type.DO, "ToMockNoTo", ScriptData.Block.Type.NONE, "desc", null)
+	mockTo = ScriptData.Block.new(ScriptData.Block.Type.TO, "ToMock", ScriptData.Block.Type.NONE, "desc", null)
 	line2 = "%s%s%s" % [mockIf.name, ScriptData.BLOCK_DELIMITER, mockDoNoTo.name]
 	line3 = "%s%s%s%s%s" % [mockIf.name, ScriptData.BLOCK_DELIMITER, mockDo.name, ScriptData.BLOCK_DELIMITER, mockTo.name]
 	ScriptData.IF_BLOCK_LIST.append(mockIf)
