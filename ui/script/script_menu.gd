@@ -48,15 +48,9 @@ func _ready() -> void:
 	SCRIPT_SCROLL.get_v_scroll_bar().changed.connect(_move_scroll_to_bottom)
 
 func setup(mon: MonData.Mon) -> void:
-	Global.free_children(HELD)
 	DISCARD_ZONE.visible = false
 	_active_file_tab = 1
 	_active_drawer_tab = 1
-	
-	# remove all existing blocks
-	Global.free_children(IF_DRAWER)
-	Global.free_children(DO_DRAWER)
-	Global.free_children(TO_DRAWER)
 	
 	# create blocks based on latest unlocks
 	for ifBlock in ScriptData.IF_BLOCK_LIST:
@@ -70,6 +64,24 @@ func setup(mon: MonData.Mon) -> void:
 			_create_and_add_block_to(TO_DRAWER, toBlock.type, toBlock.name)
 	_update_drawer()
 	_update_file_tabs()
+	
+	# call this a frame later, after we've added this interface to the scene tree
+	call_deferred("_import", mon.get_monscript())
+
+func _import(script: ScriptData.MonScript):
+	# import the mon's existing script into interface
+	for line in script.lines:
+		# add a new line
+		var newline: UIScriptLine = _make_line() 
+		SCRIPT_LINES.add_child(newline)
+		
+		# for each block in this script line, add it to the ui line
+		for block in line.blocks:
+			var newblock = _create_block(block.type, block.name, true)
+			newline.add_block(newblock)
+
+	_update_line_numbers()
+	LINE_LIMIT.flash()
 
 func _create_block(block_type: ScriptData.Block.Type, block_name: String, deletable: bool) -> UIScriptBlock:
 	var block := SCRIPT_BLOCK_SCENE.instantiate()
@@ -119,6 +131,20 @@ func _on_clear_button_pressed() -> void:
 	_update_line_numbers()
 
 func _on_x_button_pressed() -> void:
+	# remove all existing blocks
+	Global.free_children(IF_DRAWER)
+	Global.free_children(DO_DRAWER)
+	Global.free_children(TO_DRAWER)
+	
+	# remove anything held
+	Global.free_children(HELD)
+	
+	# export the script to mon
+	# TODO
+	
+	# delete the script
+	Global.free_children(SCRIPT_LINES)
+	
 	emit_signal("closed")
 
 func _on_if_tab_clicked() -> void:
@@ -188,7 +214,7 @@ func _on_new_line_button_pressed() -> void:
 	_update_line_numbers()
 	_notify_lines_of_held_blocks()
 
-func _make_line():
+func _make_line() -> UIScriptLine:
 	var newline = SCRIPT_LINE_SCENE.instantiate()
 	newline.deleted.connect(_on_line_deleted)
 	newline.clicked_dropzone.connect(_on_dropzone_clicked)
@@ -196,7 +222,7 @@ func _make_line():
 	newline.starter_clicked.connect(_on_line_starter_clicked)
 	return newline
 
-func _notify_lines_of_held_blocks():
+func _notify_lines_of_held_blocks() -> void:
 	for script_line in SCRIPT_LINES.get_children():
 		if script_line is UIScriptLine:
 			script_line.notify_held_blocks(HELD.get_children())
@@ -244,8 +270,12 @@ func _update_line_numbers() -> void:
 		if script_line is UIScriptLine:
 			n += 1
 			script_line.set_line_number(n)
+	
+	# update the line limit text and flash it if it changed
+	var prev_text = LINE_LIMIT.text
 	LINE_LIMIT.text = LINE_LIMIT_FORMAT % [n, GameData.line_limit]
-	LINE_LIMIT.flash()
+	if LINE_LIMIT.text != prev_text:
+		LINE_LIMIT.flash()
 	NEWLINE_BUTTON.visible = n != GameData.line_limit
 
 func _put_held_blocks_in_line(line: UIScriptLine):

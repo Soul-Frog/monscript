@@ -111,6 +111,7 @@ func centered_position(node: Node, point: Vector2):
 
 func free_children(node: Node):
 	for child in node.get_children():
+		node.remove_child(child)
 		child.queue_free()
 
 func remove_children(node: Node):

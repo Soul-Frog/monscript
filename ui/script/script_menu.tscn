@@ -321,7 +321,7 @@ offset_left = 191.0
 offset_top = 102.0
 offset_right = 293.0
 offset_bottom = 116.0
-text = "Lines: 0/5"
+text = "Line Limit Text"
 horizontal_alignment = 2
 script = ExtResource("39_5ys6j")
 
