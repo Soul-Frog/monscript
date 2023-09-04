@@ -35,6 +35,7 @@ static func clear_tooltips():
 static func create(source: Control, text: String, global_mouse_position: Vector2, scene_root: Node) -> void:
 	var tooltip: UITooltip = create_manual(source, text, global_mouse_position, scene_root)
 	source.mouse_exited.connect(tooltip.destroy_tooltip) # add a connect destroying this when mouse exits parent
+	source.tree_exiting.connect(tooltip.destroy_tooltip) # destroy tooltip when parent exits tree (ie parent is deleted)
 
 # call as UITooltip.create(self, "tooltip txt", get_global_mouse_position(), get_tree().root)
 # NOTE - Tooltips created in this way must be manually deleted with destroy_tooltip.
