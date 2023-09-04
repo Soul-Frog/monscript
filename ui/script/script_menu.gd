@@ -13,6 +13,8 @@ var _active_drawer_tab = 1
 
 var _held_anchor := Vector2(0, 0)
 
+var mon: MonData.Mon = null
+
 const LINE_LIMIT_FORMAT = "Lines: %d/%d"
 const SCRIPT_BLOCK_SCENE = preload("res://ui/script/script_block.tscn")
 const SCRIPT_LINE_SCENE = preload("res://ui/script/script_line.tscn")
@@ -47,7 +49,8 @@ func _ready() -> void:
 	# when the scrollbar size changes, move the scrollbar down
 	SCRIPT_SCROLL.get_v_scroll_bar().changed.connect(_move_scroll_to_bottom)
 
-func setup(mon: MonData.Mon) -> void:
+func setup(editing_mon: MonData.Mon) -> void:
+	mon = editing_mon
 	DISCARD_ZONE.visible = false
 	_active_file_tab = 1
 	_active_drawer_tab = 1
@@ -66,9 +69,11 @@ func setup(mon: MonData.Mon) -> void:
 	_update_file_tabs()
 	
 	# call this a frame later, after we've added this interface to the scene tree
-	call_deferred("_import", mon.get_monscript())
+	call_deferred("_import")
 
-func _import(script: ScriptData.MonScript):
+func _import():
+	var script = mon.get_monscript()
+	
 	# import the mon's existing script into interface
 	for line in script.lines:
 		# add a new line
@@ -82,6 +87,21 @@ func _import(script: ScriptData.MonScript):
 
 	_update_line_numbers()
 	LINE_LIMIT.flash()
+
+func _export():
+	# insert header
+	var script_str := ScriptData.SCRIPT_START
+	
+	# insert lines
+	for line in SCRIPT_LINES.get_children():
+		script_str += ScriptData.LINE_DELIMITER
+		script_str += line.export()
+	
+	# insert footer
+	script_str += ScriptData.LINE_DELIMITER + ScriptData.SCRIPT_END
+	
+	# parse str into script and export back to the mon
+	mon.set_monscript(ScriptData.MonScript.new(script_str))
 
 func _create_block(block_type: ScriptData.Block.Type, block_name: String, deletable: bool) -> UIScriptBlock:
 	var block := SCRIPT_BLOCK_SCENE.instantiate()
@@ -140,7 +160,7 @@ func _on_x_button_pressed() -> void:
 	Global.free_children(HELD)
 	
 	# export the script to mon
-	# TODO
+	_export()
 	
 	# delete the script
 	Global.free_children(SCRIPT_LINES)

@@ -159,3 +159,12 @@ func _next_blocks_for(block: UIScriptBlock) -> Array[UIScriptBlock]:
 			next_blocks.append(b)
 	assert(found_start, "Block was not part of line!")
 	return next_blocks
+	
+func export() -> String:
+	var s := ""
+	for i in BLOCKS.get_child_count():
+		if i != 0: # don't add delimiter to empty string; add after each element but last
+			s += ScriptData.BLOCK_DELIMITER
+		var block: UIScriptBlock = BLOCKS.get_child(i)
+		s += block.block_name
+	return s
