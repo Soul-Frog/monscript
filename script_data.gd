@@ -17,7 +17,7 @@ class MonScript:
 		lines = []
 		_from_string(string.strip_edges())
 	
-	func execute(mon: BattleMon, friends: Array[BattleMon], foes: Array[BattleMon], animator: BattleAnimator) -> void:
+	func execute(mon: BattleMon, friends: Array, foes: Array, animator: BattleAnimator) -> void:
 		assert(not mon.is_defeated())
 		assert(not friends.is_empty())
 		assert(not foes.is_empty())
@@ -74,7 +74,7 @@ class Line:
 		else:
 			assert(doBlock.next_block_type == Block.Type.NONE, "This DO should have a TO!")
 
-	func try_execute(mon: BattleMon, friends: Array[BattleMon], foes: Array[BattleMon], animator: BattleAnimator) -> bool:
+	func try_execute(mon: BattleMon, friends: Array, foes: Array, animator: BattleAnimator) -> bool:
 		# check if this line should be executed
 		var conditionIsMet = ifBlock.function.call(mon, friends, foes)
 		if conditionIsMet:
@@ -130,12 +130,12 @@ func get_block_by_name(block_name: String) -> Block:
 # func(BattleMon, [BattleMon], [BattleMon]) -> bool
 var IF_BLOCK_LIST := [
 	Block.new(Block.Type.IF, "Always", Block.Type.DO, "This condition always triggers.",
-	func(mon: BattleMon, friends: Array[BattleMon], foes: Array[BattleMon]) -> bool: 
+	func(mon: BattleMon, friends: Array, foes: Array) -> bool: 
 		return true
 		),
 	
 	Block.new(Block.Type.IF, "FoeHasLowHP", Block.Type.DO,  "Triggers if a foe has <20% health remaining.",
-	func(mon: BattleMon, friends: Array[BattleMon], foes: Array[BattleMon]) -> bool: 
+	func(mon: BattleMon, friends: Array, foes: Array) -> bool: 
 		for foe in foes:
 			if float(foe.current_health)/float(foe.max_health) <= 0.20:
 				return true
@@ -143,7 +143,7 @@ var IF_BLOCK_LIST := [
 		),
 	
 	Block.new(Block.Type.IF, "PalDamaged", Block.Type.DO,  "Triggers if a pal is damaged.",
-	func(mon: BattleMon, friends: Array[BattleMon], foes: Array[BattleMon]) -> bool: 
+	func(mon: BattleMon, friends: Array, foes: Array) -> bool: 
 		for friend in friends:
 			if friend.current_health < friend.max_health:
 				return true
@@ -164,13 +164,13 @@ var IF_BLOCK_LIST := [
 # func(BattleMon, [BattleMon], [BattleMon], BattleMon	Animator]) -> void
 var DO_BLOCK_LIST := [
 	Block.new(Block.Type.DO, "Pass", Block.Type.NONE, "Do nothing, but conserve half of your AP.",
-	func(mon: BattleMon, friends: Array[BattleMon], foes: Array[BattleMon], target: BattleMon, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, animator: BattleAnimator) -> void:
 		mon.action_points = int(mon.action_points / 2.0)
 		mon.reset_AP_after_action = false # don't reset to 0 after this action
 		),
 		
 	Block.new(Block.Type.DO, "Attack", Block.Type.TO, "Deals 100% damage to a single target.",
-	func(mon: BattleMon, friends: Array[BattleMon], foes: Array[BattleMon], target: BattleMon, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, animator: BattleAnimator) -> void:
 		assert(not target.is_defeated())
 		
 		# play the animation and wait for it to finish
@@ -182,17 +182,17 @@ var DO_BLOCK_LIST := [
 		),
 	
 	Block.new(Block.Type.DO, "Defend", Block.Type.NONE, "Do nothing, but reduce damage taken by 50% until your next turn.",
-	func(mon: BattleMon, friends: Array[BattleMon], foes: Array[BattleMon], target: BattleMon, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, animator: BattleAnimator) -> void:
 		mon.is_defending = true
 		),
 		
 	Block.new(Block.Type.DO, "Escape", Block.Type.NONE, "Attempt to escape the battle. Chance of success depends on SPEED.",
-	func(mon: BattleMon, friends: Array[BattleMon], foes: Array[BattleMon], target: BattleMon, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, animator: BattleAnimator) -> void:
 		mon.emit_signal("try_to_escape", mon)
 		),
 		
 	Block.new(Block.Type.DO, "Shellbash", Block.Type.TO, "Attack an enemy for 70% damage, and defend until your next turn.",
-	func(mon: BattleMon, friends: Array[BattleMon], foes: Array[BattleMon], target: BattleMon, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, animator: BattleAnimator) -> void:
 		animator.slash(target)
 		await animator.animation_finished
 		
@@ -206,13 +206,18 @@ var DO_BLOCK_LIST := [
 #      self       friends      foes            function should return targets
 # func(BattleMon, [BattleMon], [BattleMon]) -> [BattleMon]
 var TO_BLOCK_LIST := [
+	Block.new(Block.Type.TO, "ERROR", Block.Type.NONE, "ERROR - do nothing.",
+	func(mon: BattleMon, friends: Array, foes: Array) -> BattleMon:
+		return null
+		),
+	
 	Block.new(Block.Type.TO, "RandomFoe", Block.Type.NONE, "Targets a random foe.",
-	func(mon: BattleMon, friends: Array[BattleMon], foes: Array[BattleMon]) -> BattleMon:
+	func(mon: BattleMon, friends: Array, foes: Array) -> BattleMon:
 		return foes[Global.RNG.randi() % foes.size()]
 		),
 		
 	Block.new(Block.Type.TO, "LowestHPFoe", Block.Type.NONE, "Targets the foe with the least health remaining.",
-	func(mon: BattleMon, friends: Array[BattleMon], foes: Array[BattleMon]) -> BattleMon:
+	func(mon: BattleMon, friends: Array, foes: Array) -> BattleMon:
 		var lowestHealthFoe = null
 		var lowestHealthFound = Global.INT_MAX
 		for foe in foes:
@@ -225,7 +230,7 @@ var TO_BLOCK_LIST := [
 		),
 	
 	Block.new(Block.Type.TO, "LowestHPPal", Block.Type.NONE, "Targets the pal with the least health remaining.",
-	func(mon: BattleMon, friends: Array[BattleMon], foes: Array[BattleMon]) -> BattleMon:
+	func(mon: BattleMon, friends: Array, foes: Array) -> BattleMon:
 		var lowestHealthFriend = null
 		var lowestHealthFound = Global.INT_MAX
 		for friend in friends:

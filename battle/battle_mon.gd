@@ -86,7 +86,7 @@ func battle_tick() -> void:
 			emit_signal("ready_to_take_action", self) # signal that it's time for this mon to act
 
 # Take a single turn in battle
-func take_action(friends: Array[BattleMon], foes: Array[BattleMon], animator: BattleAnimator) -> void:
+func take_action(friends: Array, foes: Array, animator: BattleAnimator) -> void:
 	assert(friends.size() != 0, "No friends?")
 	assert(foes.size() != 0, "No foes?")
 	is_defending = false

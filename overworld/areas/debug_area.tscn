@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://clrokgdo0bo4a"]
+[gd_scene load_steps=12 format=3 uid="uid://clrokgdo0bo4a"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_pir84"]
 [ext_resource type="Texture2D" uid="uid://f2ej122kalmi" path="res://assets/maps/cave1/cave.png" id="2_8pdrq"]
@@ -6,8 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://b6va77lju8lb7" path="res://assets/maps/cave1/waves.png" id="3_ywp38"]
 [ext_resource type="PackedScene" uid="uid://dfrab43qku35w" path="res://decorators/move_decorator.tscn" id="4_v7epi"]
 [ext_resource type="PackedScene" uid="uid://dmhm3mwxxspu" path="res://overworld/npcs/blue_hat.tscn" id="5_gw1pb"]
+[ext_resource type="PackedScene" uid="uid://cyr7fpimubkpa" path="res://mons/magnetfrogblue.tscn" id="6_d6yho"]
 [ext_resource type="Resource" uid="uid://defy52ihj1vmu" path="res://dialogue/test.dialogue" id="6_g60m2"]
 [ext_resource type="Script" path="res://overworld/warp.gd" id="7_ip4bp"]
+[ext_resource type="Script" path="res://overworld/overworld_encounter.gd" id="7_j4ll8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_80ub1"]
 size = Vector2(27, 28)
@@ -31,9 +33,27 @@ up = 2
 down = 1
 
 [node name="Player" parent="." instance=ExtResource("3_nbwo1")]
-position = Vector2(119, 82)
+position = Vector2(37, 84)
 
 [node name="OverworldEncounters" type="Node" parent="."]
+
+[node name="Mon2" parent="OverworldEncounters" instance=ExtResource("6_d6yho")]
+position = Vector2(149, 93)
+safe_margin = 0.08
+script = ExtResource("7_j4ll8")
+mon1Type = 2
+mon1Level = 2
+mon2Type = 2
+mon2Level = 2
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+speed = 45
+min_wander_range = 10
+max_wander_range = 30
+min_time_between_movement = 2
+max_time_between_movement = 3.0
 
 [node name="Points" type="Node" parent="."]
 

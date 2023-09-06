@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_im2oy"]
 [ext_resource type="Texture2D" uid="uid://cexmucj0yinf2" path="res://assets/tile.png" id="2_ebjwg"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player.tscn" id="3_vwmqf"]
-[ext_resource type="PackedScene" uid="uid://dsqri1kkocprw" path="res://mons/magnetfrogblue.tscn" id="4_pxhjj"]
+[ext_resource type="PackedScene" uid="uid://cyr7fpimubkpa" path="res://mons/magnetfrogblue.tscn" id="4_pxhjj"]
 [ext_resource type="Script" path="res://overworld/overworld_encounter.gd" id="5_iowbi"]
 [ext_resource type="Script" path="res://overworld/warp.gd" id="7_hy517"]
 
@@ -62,6 +62,15 @@ mon1Type = 2
 mon1Level = 2
 mon2Type = 2
 mon2Level = 2
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+speed = 100
+min_wander_range = 50
+max_wander_range = 150
+min_time_between_movement = 0
+max_time_between_movement = 0.2
 
 [node name="Points" type="Node" parent="."]
 
