@@ -7,8 +7,8 @@ extends Node
 
 const SCRIPT_START := "START"	# all scripts must start with
 const SCRIPT_END := "END"		# all scripts must end with
-const LINE_DELIMITER := "\n"		# all lines are separated by
-const BLOCK_DELIMITER := " "		# the 3 blocks on a line are separated by
+const LINE_DELIMITER := "\n"	# all lines are separated by
+const BLOCK_DELIMITER := " "	# the 3 blocks on a line are separated by
 
 class MonScript:
 	var lines: Array[Line]
@@ -21,6 +21,9 @@ class MonScript:
 		assert(not mon.is_defeated())
 		assert(not friends.is_empty())
 		assert(not foes.is_empty())
+		if lines.size() == 0: #empty script, just run error
+			await ScriptData._ERROR_DO.function.call(mon, friends, foes, null, animator)
+			mon.alert_turn_over()
 		for line in lines:
 			if await line.try_execute(mon, friends, foes, animator):
 				return
@@ -35,7 +38,6 @@ class MonScript:
 	func _from_string(string: String) -> void:
 		# break into lines
 		var line_strings = string.split(LINE_DELIMITER)
-		assert(len(line_strings) > 2, "No lines in script")
 		assert(line_strings[0] == SCRIPT_START, "Invalid script start")
 		assert(line_strings[len(line_strings)-1] == SCRIPT_END, "Invalid script end")
 		
@@ -54,31 +56,48 @@ class Line:
 	
 	func _init(string: String) -> void:
 		# break into blocks
-		var block_strings = string.split(BLOCK_DELIMITER)
+		var block_strings = string.split(BLOCK_DELIMITER, false)
 		
 		for block_string in block_strings:
 			var block = ScriptData.get_block_by_name(block_string)
 			assert(block != null, "Block name is invalid! %s " % block_string)
 			blocks.append(block)
 		
-		assert(blocks.size() == 2 or blocks.size() == 3, "Invalid number of blocks!")
-		
-		ifBlock = blocks[0]
-		assert(ifBlock.type == Block.Type.IF, "Given if_block_string is not an IF block!")
-		doBlock = blocks[1]
-		assert(doBlock.type == Block.Type.DO, "Given do_block_string is not a DO block!")
-		if blocks.size() == 3:
-			assert(doBlock.next_block_type == Block.Type.TO, "This DO shouldn't have a TO!")
-			toBlock = blocks[2]
-			assert(doBlock.type == Block.Type.DO, "Given do_block_string is not a DO block!")
-		else:
-			assert(doBlock.next_block_type == Block.Type.NONE, "This DO should have a TO!")
+		# parse the blocks one at a time
+		for i in blocks.size():
+			assert(i < 3, "More than 3 blocks in line?")
+			var currentBlock: Block = blocks[i]
+			if currentBlock.type == Block.Type.IF:
+				assert(i == 0, "IF must be first block!")
+				assert(ifBlock == null, "Somehow multiple IF?")
+				ifBlock = currentBlock
+			elif currentBlock.type == Block.Type.DO:
+				assert(i == 0 or (i == 1 and ifBlock != null), "DO block must be first or second after an IF!")
+				assert(doBlock == null, "Somehow multiple DO?")
+				doBlock = currentBlock
+			elif currentBlock.type == Block.Type.TO:
+				assert(doBlock != null and doBlock.next_block_type == Block.Type.TO and (i == 1 or i == 2), "TO must be after")
+				assert(toBlock == null, "Somehow multiple TO?")
+				toBlock = currentBlock
+			else:
+				assert(false, "Something really weird has happened.")
 
 	func try_execute(mon: BattleMon, friends: Array, foes: Array, animator: BattleAnimator) -> bool:
+		# if this line is invalid, terminate with error - invalid cases:
+		# 1: DO does not exist
+		# 2: TO does not exist AND DO requires a TO
+		if doBlock == null or (doBlock.next_block_type == Block.Type.TO and toBlock == null): 
+			await ScriptData._ERROR_DO.function.call(mon, friends, foes, null, animator)
+			mon.alert_turn_over()
+			return true #we 'executed' this line, so return false to stop execution
+		
+		# this line is valid, so do normal processing
 		# check if this line should be executed
-		var conditionIsMet = ifBlock.function.call(mon, friends, foes)
+		# if there is no ifBlock, the line is just a DO-TO, the IF is implicitly true
+		var conditionIsMet = ifBlock.function.call(mon, friends, foes) if ifBlock != null else true
 		if conditionIsMet:
 			# get list of targets
+			# if there is no TO block, this must be a DO which does not require one
 			var targets = null if toBlock == null else toBlock.function.call(mon, friends, foes)
 			# perform the battle action
 			await doBlock.function.call(mon, friends, foes, targets, animator)
@@ -206,11 +225,6 @@ var DO_BLOCK_LIST := [
 #      self       friends      foes            function should return targets
 # func(BattleMon, [BattleMon], [BattleMon]) -> [BattleMon]
 var TO_BLOCK_LIST := [
-	Block.new(Block.Type.TO, "ERROR", Block.Type.NONE, "ERROR - do nothing.",
-	func(mon: BattleMon, friends: Array, foes: Array) -> BattleMon:
-		return null
-		),
-	
 	Block.new(Block.Type.TO, "RandomFoe", Block.Type.NONE, "Targets a random foe.",
 	func(mon: BattleMon, friends: Array, foes: Array) -> BattleMon:
 		return foes[Global.RNG.randi() % foes.size()]
@@ -240,6 +254,12 @@ var TO_BLOCK_LIST := [
 		assert(lowestHealthFound > 0)
 		assert(lowestHealthFriend != null)
 		return lowestHealthFriend
-		)
-	
+		)	
 ]
+
+# Godot warns here but it's wrong, this is being used by an internal class.
+@warning_ignore("unused_private_class_variable")
+var _ERROR_DO := Block.new(Block.Type.DO, "ERROR", Block.Type.NONE, "ERROR - do nothing.",
+	func (mon: BattleMon, friends:Array, foes: Array, target: BattleMon, animator: BattleAnimator):
+		print("ERROR")
+)
