@@ -8,8 +8,8 @@ signal closed
 # used to update the scrollbar down when the line is grown at the bottom
 var _max_scroll = -1
 
-var _active_file_tab = 1
-var _active_drawer_tab = 1
+var _active_file_tab = 0
+var _active_drawer_tab = 0
 
 var _held_anchor := Vector2(0, 0)
 
@@ -52,8 +52,8 @@ func _ready() -> void:
 func setup(editing_mon: MonData.Mon) -> void:
 	mon = editing_mon
 	DISCARD_ZONE.visible = false
-	_active_file_tab = 1
-	_active_drawer_tab = 1
+	_active_file_tab = 0
+	_active_drawer_tab = 0
 	
 	# create blocks based on latest unlocks
 	for ifBlock in ScriptData.IF_BLOCK_LIST:
@@ -65,14 +65,20 @@ func setup(editing_mon: MonData.Mon) -> void:
 	for toBlock in ScriptData.TO_BLOCK_LIST:
 		if GameData.is_block_unlocked(toBlock):
 			_create_and_add_block_to(TO_DRAWER, toBlock.type, toBlock.name)
-	_update_drawer()
+	
+	# switch the file tab to the active script number
+	_active_file_tab = mon.get_active_monscript_index()
 	_update_file_tabs()
 	
 	# call this a frame later, after we've added this interface to the scene tree
 	call_deferred("_import")
+	
+	_update_drawer()
+	_update_file_tabs()
 
 func _import():
-	var script = mon.get_monscript()
+	# get the active script and import it
+	var script = mon.get_active_monscript()
 	
 	# import the mon's existing script into interface
 	for line in script.lines:
@@ -101,7 +107,7 @@ func _export():
 	script_str += ScriptData.LINE_DELIMITER + ScriptData.SCRIPT_END
 	
 	# parse str into script and export back to the mon
-	mon.set_monscript(ScriptData.MonScript.new(script_str))
+	mon.set_active_monscript(ScriptData.MonScript.new(script_str))
 
 func _create_block(block_type: ScriptData.Block.Type, block_name: String, deletable: bool) -> UIScriptBlock:
 	var block := SCRIPT_BLOCK_SCENE.instantiate()
@@ -116,7 +122,7 @@ func _create_and_add_block_to(drawer: FlowContainer, block_type: ScriptData.Bloc
 
 func _update_drawer() -> void:
 	_select_one_tab(_active_drawer_tab, BLOCK_TABS.get_children()) # update the tabs
-	var n := 1
+	var n := 0
 	for drawer in BLOCK_DRAWERS.get_children():
 		drawer.visible = n == _active_drawer_tab
 		for block in drawer.find_child("BlockScroll").find_child("Blocks").get_children():
@@ -127,22 +133,41 @@ func _update_file_tabs() -> void:
 	_select_one_tab(_active_file_tab, FILE_TABS.get_children())
 
 func _select_one_tab(active_tab: int, tab_elements: Array) -> void:
-	var n = 1
+	var n = 0
 	for tab in tab_elements:
 		tab.select() if n == active_tab else tab.unselect()
 		n += 1
 
 func _on_file_tab_1_clicked() -> void:
-	_active_file_tab = 1
+	_active_file_tab = 0
 	_update_file_tabs()
+	_switch_active_monscript(_active_file_tab)
 
 func _on_file_tab_2_clicked() -> void:
-	_active_file_tab = 2
+	_active_file_tab = 1
 	_update_file_tabs()
+	_switch_active_monscript(_active_file_tab)
 
 func _on_file_tab_3_clicked() -> void:
-	_active_file_tab = 3
+	_active_file_tab = 2
 	_update_file_tabs()
+	_switch_active_monscript(_active_file_tab)
+
+func _switch_active_monscript(new_index: int) -> void:
+	# export to current tab
+	_export()
+	
+	# now clear
+	_clear_script()
+	
+	# update state
+	mon.set_active_monscript_index(new_index)
+	
+	# and import
+	_import()
+
+func _clear_script() -> void:
+	Global.free_children(SCRIPT_LINES)
 
 func _on_clear_button_pressed() -> void:
 	for script_line in SCRIPT_LINES.get_children():
@@ -163,20 +188,20 @@ func _on_x_button_pressed() -> void:
 	_export()
 	
 	# delete the script
-	Global.free_children(SCRIPT_LINES)
+	_clear_script()
 	
 	emit_signal("closed")
 
 func _on_if_tab_clicked() -> void:
-	_active_drawer_tab = 1
+	_active_drawer_tab = 0
 	_update_drawer()
 
 func _on_do_tab_clicked() -> void:
-	_active_drawer_tab = 2
+	_active_drawer_tab = 1
 	_update_drawer()
 
 func _on_to_tab_clicked() -> void:
-	_active_drawer_tab = 3
+	_active_drawer_tab = 2
 	_update_drawer()
 
 func _on_drawer_block_clicked(block: UIScriptBlock) -> void:
@@ -261,11 +286,6 @@ func _move_scroll_to_bottom() -> void:
 	_max_scroll = SCRIPT_SCROLL.get_v_scroll_bar().max_value
 
 func _adjust_scroll_after_line_pickup(deleted_position: int) -> void:
-	print("# adjusts %d" % [int(SCRIPT_LINES.get_child_count()/2.0) + 1])
-	print("deleted at %d" % deleted_position)
-	print("scroll is currently %d" % SCRIPT_SCROLL.scroll_vertical)
-	print("max %d" % SCRIPT_SCROLL.get_v_scroll_bar().max_value)
-	
 	print(SCRIPT_LINES.get_child(deleted_position * 2 - 1))
 	
 	# wait a frame, then move the scroll so that the line directly above selected line is at top

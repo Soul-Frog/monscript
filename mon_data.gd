@@ -73,14 +73,18 @@ class Mon:
 	var _level: int
 	var _nickname: String
 	var _xp: int
-	var _monscript: ScriptData.MonScript
+	var _monscripts: Array[ScriptData.MonScript]
+	var _active_monscript_index: int
 	
 	func _init(mon_base: MonBase, starting_level: int, mon_nickname := ""):
 		self._base = mon_base
 		self._level = starting_level
 		self._xp = 0
 		self._nickname = mon_nickname
-		self._monscript = ScriptData.MonScript.new(Global.file_to_string(mon_base._default_script_path))
+		self._monscripts = [ScriptData.MonScript.new(Global.file_to_string(mon_base._default_script_path)),
+			ScriptData.MonScript.new(Global.file_to_string("res://monscripts/test.txt")),
+			ScriptData.MonScript.new(Global.file_to_string(mon_base._default_script_path))]
+		self._active_monscript_index = 1
 	
 	# if this mon can use this block
 	# right now, it just checks if the mon's base uses this block
@@ -94,11 +98,25 @@ class Mon:
 			return _base._species_name
 		return _nickname
 	
-	func get_monscript() -> ScriptData.MonScript:
-		return _monscript
+	func get_active_monscript() -> ScriptData.MonScript:
+		return _monscripts[_active_monscript_index]
 	
-	func set_monscript(script: ScriptData.MonScript) -> void:
-		_monscript = script
+	func get_monscript(index: int) -> ScriptData.MonScript:
+		assert(index > -1 and index < _monscripts.size())
+		return _monscripts[index]
+	
+	func set_active_monscript(script: ScriptData.MonScript) -> void:
+		_monscripts[_active_monscript_index] = script
+	
+	func set_monscript(index: int, script: ScriptData.MonScript) -> void:
+		_monscripts[index] = script
+		
+	func get_active_monscript_index() -> int:
+		return _active_monscript_index
+	
+	func set_active_monscript_index(index: int) -> void:
+		assert(index > -1 and index < _monscripts.size())
+		_active_monscript_index = index
 	
 	func get_level() -> int:
 		return _level
