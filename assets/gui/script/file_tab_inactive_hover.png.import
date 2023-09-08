@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2shaeti5q2jj"
-path="res://.godot/imported/file3_tab_active_hover.png-3770db04d110f8de9a406755820a2f5c.ctex"
+uid="uid://c1mh481xpuooc"
+path="res://.godot/imported/file_tab_inactive_hover.png-c9259e0890a2a2ebea413bb4419164af.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/gui/script/file3_tab_active_hover.png"
-dest_files=["res://.godot/imported/file3_tab_active_hover.png-3770db04d110f8de9a406755820a2f5c.ctex"]
+source_file="res://assets/gui/script/file_tab_inactive_hover.png"
+dest_files=["res://.godot/imported/file_tab_inactive_hover.png-c9259e0890a2a2ebea413bb4419164af.ctex"]
 
 [params]
 

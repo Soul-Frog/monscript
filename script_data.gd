@@ -11,10 +11,9 @@ const LINE_DELIMITER := "\n"	# all lines are separated by
 const BLOCK_DELIMITER := " "	# the 3 blocks on a line are separated by
 
 class MonScript:
-	var lines: Array[Line]
+	var lines: Array[Line] = []
 	
 	func _init(string: String) -> void:
-		lines = []
 		_from_string(string.strip_edges())
 	
 	func execute(mon: BattleMon, friends: Array, foes: Array, animator: BattleAnimator) -> void:
@@ -27,6 +26,16 @@ class MonScript:
 		for line in lines:
 			if await line.try_execute(mon, friends, foes, animator):
 				return
+	
+	func is_valid() -> bool:
+		if lines.size() == 0: #if there are no lines, it's invalid
+			return false
+		
+		for line in lines: #if any line is invalid, it's invalid
+			if not line.is_valid():
+				return false
+		
+		return true
 	
 	func as_string() -> String:
 		var string = "%s%s" % [SCRIPT_START, LINE_DELIMITER]
@@ -82,11 +91,20 @@ class Line:
 			else:
 				assert(false, "Something really weird has happened.")
 
-	func try_execute(mon: BattleMon, friends: Array, foes: Array, animator: BattleAnimator) -> bool:
-		# if this line is invalid, terminate with error - invalid cases:
+	func is_valid() -> bool:
+		# Invalid cases:
 		# 1: DO does not exist
+		if doBlock == null: 
+			return false
+			
 		# 2: TO does not exist AND DO requires a TO
-		if doBlock == null or (doBlock.next_block_type == Block.Type.TO and toBlock == null): 
+		if doBlock.next_block_type == Block.Type.TO and toBlock == null:
+			return false
+		return true
+
+	func try_execute(mon: BattleMon, friends: Array, foes: Array, animator: BattleAnimator) -> bool:
+		# if this line is invalid, terminate with error
+		if not is_valid(): 
 			await ScriptData._ERROR_DO.function.call(mon, friends, foes, null, animator)
 			mon.alert_turn_over()
 			return true #we 'executed' this line, so return false to stop execution

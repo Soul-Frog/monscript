@@ -5,6 +5,7 @@ signal deleted
 signal starter_clicked
 signal block_clicked
 signal clicked_dropzone
+signal modified
 
 # maximum possible size for a number
 const NUM_SIZE = 2
@@ -44,6 +45,7 @@ func add_block(block: UIScriptBlock) -> void:
 	block.clicked.connect(_on_block_clicked)
 	BLOCKS.add_child(block)
 	_update_dropzone_indicators_and_validity()
+	emit_signal("modified")
 
 func next_block_types() -> Array[ScriptData.Block.Type]:
 	# if there are no blocks, the first block can be IF or DO
@@ -97,6 +99,7 @@ func _input(event: InputEvent) -> void:
 				_on_starter_clicked()
 			if event.button_index == MOUSE_BUTTON_RIGHT and held_blocks.size() == 0:
 				emit_signal("deleted", self)
+				emit_signal("modified")
 		# check for left click on dropzone
 		if event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT and DROPZONE.get_global_rect().has_point(event.position):
 			emit_signal("clicked_dropzone", self)
@@ -113,6 +116,7 @@ func _on_block_deleted(block: UIScriptBlock) -> void:
 			b.queue_free()
 
 		_update_dropzone_indicators_and_validity()
+		emit_signal("modified")
 
 func _on_block_clicked(block: UIScriptBlock) -> void:
 	# don't emit if a block is currently being held
@@ -128,6 +132,7 @@ func _on_block_clicked(block: UIScriptBlock) -> void:
 		_update_dropzone_indicators_and_validity()
 		
 		emit_signal("block_clicked", to_remove, first_position)
+		emit_signal("modified")
 
 func _on_starter_clicked() -> void:
 	# don't emit if anything is currently beind held
@@ -142,6 +147,7 @@ func _on_starter_clicked() -> void:
 			_remove_block(b)
 		
 		emit_signal("starter_clicked", self, line_pieces, starter_position)
+		emit_signal("modified")
 
 func _remove_block(block: UIScriptBlock):
 	block.deleted.disconnect(_on_block_deleted)

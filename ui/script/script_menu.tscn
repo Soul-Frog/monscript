@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://d0ot7ndx0xjlq"]
+[gd_scene load_steps=33 format=3 uid="uid://d0ot7ndx0xjlq"]
 
 [ext_resource type="Script" path="res://ui/script/script_menu.gd" id="1_mpyhe"]
 [ext_resource type="Texture2D" uid="uid://dl0si4q1ky7ya" path="res://assets/gui/script/script_base.png" id="2_cw38p"]
@@ -7,18 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://bfd0th4tvqih4" path="res://assets/gui/script/line_starter.png" id="4_j6gie"]
 [ext_resource type="Texture2D" uid="uid://dwlmwmx4tf75k" path="res://assets/gui/script/line_starter_pressed.png" id="5_0lunr"]
 [ext_resource type="Texture2D" uid="uid://cgxn7p7mrrvoc" path="res://assets/gui/script/line_starter_hover.png" id="5_dnbwp"]
-[ext_resource type="Texture2D" uid="uid://bmkgp4oghvpxi" path="res://assets/gui/script/file1_tab_active.png" id="5_fk3s2"]
-[ext_resource type="Texture2D" uid="uid://8es1cb0cyt85" path="res://assets/gui/script/file1_tab_active_hover.png" id="6_pxy8k"]
-[ext_resource type="Texture2D" uid="uid://xfwr2ojblgon" path="res://assets/gui/script/file1_tab_inactive.png" id="7_cdth5"]
-[ext_resource type="Texture2D" uid="uid://c1mh481xpuooc" path="res://assets/gui/script/file1_tab_inactive_hover.png" id="8_gwn0n"]
-[ext_resource type="Texture2D" uid="uid://3jcwm2b12n1e" path="res://assets/gui/script/file2_tab_active.png" id="9_4ll8c"]
-[ext_resource type="Texture2D" uid="uid://g6ec7elcqd1c" path="res://assets/gui/script/file2_tab_active_hover.png" id="10_8xksu"]
-[ext_resource type="Texture2D" uid="uid://bg3ukyh4txx0o" path="res://assets/gui/script/file2_tab_inactive.png" id="11_o8tyv"]
-[ext_resource type="Texture2D" uid="uid://dh7oqgpg33ojt" path="res://assets/gui/script/file2_tab_inactive_hover.png" id="12_5h0nx"]
-[ext_resource type="Texture2D" uid="uid://cbuf64k8rmq2h" path="res://assets/gui/script/file3_tab_active.png" id="13_wfc7y"]
-[ext_resource type="Texture2D" uid="uid://d2shaeti5q2jj" path="res://assets/gui/script/file3_tab_active_hover.png" id="14_c8skp"]
-[ext_resource type="Texture2D" uid="uid://brhg3hxnrjql0" path="res://assets/gui/script/file3_tab_inactive.png" id="15_vxeaq"]
-[ext_resource type="Texture2D" uid="uid://dkwbthreyq3om" path="res://assets/gui/script/file3_tab_inactive_hover.png" id="16_lxgcs"]
+[ext_resource type="Texture2D" uid="uid://bmkgp4oghvpxi" path="res://assets/gui/script/file_tab_active.png" id="8_f4i6a"]
+[ext_resource type="Texture2D" uid="uid://8es1cb0cyt85" path="res://assets/gui/script/file_tab_active_hover.png" id="9_5h130"]
+[ext_resource type="Texture2D" uid="uid://xfwr2ojblgon" path="res://assets/gui/script/file_tab_inactive.png" id="10_k4s78"]
+[ext_resource type="Texture2D" uid="uid://c1mh481xpuooc" path="res://assets/gui/script/file_tab_inactive_hover.png" id="11_hpd40"]
 [ext_resource type="Texture2D" uid="uid://dd2qlextwpbp1" path="res://assets/gui/script/if_drawer.png" id="17_of5vx"]
 [ext_resource type="Texture2D" uid="uid://by7dqeqkd0th5" path="res://assets/gui/script/do_drawer.png" id="18_p73fa"]
 [ext_resource type="Texture2D" uid="uid://d0cuy015kcgyq" path="res://assets/gui/script/to_drawer.png" id="19_g02x1"]
@@ -115,42 +107,61 @@ horizontal_alignment = 1
 [node name="FileTab1" type="Node2D" parent="FileTabs"]
 position = Vector2(118, 3)
 script = ExtResource("4_aw0yy")
-texture_selected = ExtResource("5_fk3s2")
-texture_selected_hover = ExtResource("6_pxy8k")
-texture_unselected = ExtResource("7_cdth5")
-texture_unselected_hover = ExtResource("8_gwn0n")
+texture_selected = ExtResource("8_f4i6a")
+texture_selected_hover = ExtResource("9_5h130")
+texture_unselected = ExtResource("10_k4s78")
+texture_unselected_hover = ExtResource("11_hpd40")
+label_hover_delta = Vector2(0, -1)
 
 [node name="Button" type="TextureButton" parent="FileTabs/FileTab1"]
 offset_right = 49.0
 offset_bottom = 13.0
-texture_normal = ExtResource("5_fk3s2")
+texture_normal = ExtResource("8_f4i6a")
+
+[node name="Label" type="Label" parent="FileTabs/FileTab1"]
+offset_right = 49.0
+offset_bottom = 15.0
+text = "File 1"
+horizontal_alignment = 1
 
 [node name="FileTab2" type="Node2D" parent="FileTabs"]
 position = Vector2(166, 3)
 script = ExtResource("4_aw0yy")
-texture_selected = ExtResource("9_4ll8c")
-texture_selected_hover = ExtResource("10_8xksu")
-texture_unselected = ExtResource("11_o8tyv")
-texture_unselected_hover = ExtResource("12_5h0nx")
+texture_selected = ExtResource("8_f4i6a")
+texture_selected_hover = ExtResource("9_5h130")
+texture_unselected = ExtResource("10_k4s78")
+texture_unselected_hover = ExtResource("11_hpd40")
 
 [node name="Button" type="TextureButton" parent="FileTabs/FileTab2"]
 offset_right = 49.0
 offset_bottom = 13.0
 mouse_filter = 1
-texture_normal = ExtResource("11_o8tyv")
+texture_normal = ExtResource("10_k4s78")
+
+[node name="Label" type="Label" parent="FileTabs/FileTab2"]
+offset_right = 49.0
+offset_bottom = 15.0
+text = "File 2"
+horizontal_alignment = 1
 
 [node name="FileTab3" type="Node2D" parent="FileTabs"]
 position = Vector2(214, 3)
 script = ExtResource("4_aw0yy")
-texture_selected = ExtResource("13_wfc7y")
-texture_selected_hover = ExtResource("14_c8skp")
-texture_unselected = ExtResource("15_vxeaq")
-texture_unselected_hover = ExtResource("16_lxgcs")
+texture_selected = ExtResource("8_f4i6a")
+texture_selected_hover = ExtResource("9_5h130")
+texture_unselected = ExtResource("10_k4s78")
+texture_unselected_hover = ExtResource("11_hpd40")
 
 [node name="Button" type="TextureButton" parent="FileTabs/FileTab3"]
 offset_right = 49.0
 offset_bottom = 13.0
-texture_normal = ExtResource("11_o8tyv")
+texture_normal = ExtResource("10_k4s78")
+
+[node name="Label" type="Label" parent="FileTabs/FileTab3"]
+offset_right = 49.0
+offset_bottom = 15.0
+text = "File 3"
+horizontal_alignment = 1
 
 [node name="BlockDrawer" type="Node" parent="."]
 
@@ -348,6 +359,8 @@ alignment = 1
 
 [connection signal="pressed" from="ScriptScroll/Script/NewLineMargin/NewLine/NewLineButton" to="." method="_on_new_line_button_pressed"]
 [connection signal="clicked" from="FileTabs/FileTab1" to="." method="_on_file_tab_1_clicked"]
+[connection signal="mouse_entered" from="FileTabs/FileTab1/Button" to="FileTabs/FileTab1" method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="FileTabs/FileTab1/Button" to="FileTabs/FileTab1" method="_on_button_mouse_exited"]
 [connection signal="clicked" from="FileTabs/FileTab2" to="." method="_on_file_tab_2_clicked"]
 [connection signal="clicked" from="FileTabs/FileTab3" to="." method="_on_file_tab_3_clicked"]
 [connection signal="clicked" from="BlockDrawer/Tabs/IfTab" to="." method="_on_if_tab_clicked"]

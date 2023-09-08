@@ -20,6 +20,11 @@ const SCRIPT_BLOCK_SCENE = preload("res://ui/script/script_block.tscn")
 const SCRIPT_LINE_SCENE = preload("res://ui/script/script_line.tscn")
 const LINE_DROPZONE_SCENE = preload("res://ui/script/line_dropzone.tscn")
 
+const FILE_LABEL_VALID_COLOR_SELECTED = Color(255/255.0, 255/255.0, 255/255.0)
+const FILE_LABEL_VALID_COLOR_UNSELECTED = Color(179/255.0, 185/255.0, 209/255.0)
+const FILE_LABEL_INVALID_COLOR_SELECTED = Color(180/255.0, 32/255.0, 42/255.0)
+const FILE_LABEL_INVALID_COLOR_UNSELECTED = Color(115/255.0, 23/255.0, 45/255.0)
+
 @onready var SCRIPT_SCROLL = $ScriptScroll
 @onready var SCRIPT_LINES = $ScriptScroll/Script/ScriptLines
 @onready var BLOCK_TABS = $BlockDrawer/Tabs
@@ -68,13 +73,11 @@ func setup(editing_mon: MonData.Mon) -> void:
 	
 	# switch the file tab to the active script number
 	_active_file_tab = mon.get_active_monscript_index()
-	_update_file_tabs()
 	
 	# call this a frame later, after we've added this interface to the scene tree
 	call_deferred("_import")
 	
 	_update_drawer()
-	_update_file_tabs()
 
 func _import():
 	# get the active script and import it
@@ -93,21 +96,28 @@ func _import():
 
 	_update_line_numbers()
 	LINE_LIMIT.flash()
+	
+	_update_file_tabs()
 
-func _export():
+func _generate_script() -> ScriptData.MonScript:
 	# insert header
 	var script_str := ScriptData.SCRIPT_START
 	
 	# insert lines
 	for line in SCRIPT_LINES.get_children():
+		if not line is UIScriptLine: #skip over line dropzones
+			continue
 		script_str += ScriptData.LINE_DELIMITER
 		script_str += line.export()
 	
 	# insert footer
 	script_str += ScriptData.LINE_DELIMITER + ScriptData.SCRIPT_END
 	
+	return ScriptData.MonScript.new(script_str)
+
+func _export() -> void:
 	# parse str into script and export back to the mon
-	mon.set_active_monscript(ScriptData.MonScript.new(script_str))
+	mon.set_active_monscript(_generate_script())
 
 func _create_block(block_type: ScriptData.Block.Type, block_name: String, deletable: bool) -> UIScriptBlock:
 	var block := SCRIPT_BLOCK_SCENE.instantiate()
@@ -130,7 +140,23 @@ func _update_drawer() -> void:
 		n += 1
 
 func _update_file_tabs() -> void:
+	# fancy lambda
+	var set_colors = func(tab, valid) -> void:
+		if valid:
+			tab.set_label_colors(FILE_LABEL_VALID_COLOR_SELECTED, FILE_LABEL_VALID_COLOR_UNSELECTED)
+		else:
+			tab.set_label_colors(FILE_LABEL_INVALID_COLOR_SELECTED, FILE_LABEL_INVALID_COLOR_UNSELECTED)
+	
+	# update tab validity based on script validity
+	for i in FILE_TABS.get_children().size():
+		var tab = FILE_TABS.get_child(i)
+		if i == _active_file_tab: #for the active tab, we need to use the current script
+			set_colors.call(tab, _generate_script().is_valid())
+		else:
+			set_colors.call(tab, mon.get_monscript(i).is_valid())
+	
 	_select_one_tab(_active_file_tab, FILE_TABS.get_children())
+
 
 func _select_one_tab(active_tab: int, tab_elements: Array) -> void:
 	var n = 0
@@ -180,6 +206,7 @@ func _on_clear_button_pressed() -> void:
 		script_line.queue_free()
 		SCRIPT_LINES.remove_child(script_line)
 	_update_line_numbers()
+	_update_file_tabs()
 
 func _on_x_button_pressed() -> void:
 	# remove all existing blocks
@@ -268,6 +295,7 @@ func _on_new_line_button_pressed() -> void:
 	SCRIPT_LINES.add_child(_make_line())
 	_update_line_numbers()
 	_notify_lines_of_held_blocks()
+	_update_file_tabs()
 
 func _make_line() -> UIScriptLine:
 	var newline = SCRIPT_LINE_SCENE.instantiate()
@@ -275,6 +303,7 @@ func _make_line() -> UIScriptLine:
 	newline.clicked_dropzone.connect(_on_dropzone_clicked)
 	newline.block_clicked.connect(_on_line_block_clicked)
 	newline.starter_clicked.connect(_on_line_starter_clicked)
+	newline.modified.connect(_update_file_tabs)
 	return newline
 
 func _notify_lines_of_held_blocks() -> void:
