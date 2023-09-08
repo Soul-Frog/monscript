@@ -263,9 +263,9 @@ texture_unselected = ExtResource("22_3ufwl")
 texture_unselected_hover = ExtResource("23_q5fc8")
 
 [node name="Button" type="TextureButton" parent="BlockDrawer/Tabs/IfTab"]
-offset_left = -115.0
+offset_left = -118.0
 offset_top = 117.0
-offset_right = -108.0
+offset_right = -107.0
 offset_bottom = 135.0
 mouse_filter = 1
 texture_normal = ExtResource("20_38y7j")
@@ -280,9 +280,9 @@ texture_unselected = ExtResource("26_465k2")
 texture_unselected_hover = ExtResource("27_06d0u")
 
 [node name="Button" type="TextureButton" parent="BlockDrawer/Tabs/DoTab"]
-offset_left = -115.0
+offset_left = -118.0
 offset_top = 135.0
-offset_right = -108.0
+offset_right = -107.0
 offset_bottom = 153.0
 mouse_filter = 1
 texture_normal = ExtResource("24_fakgy")
@@ -297,9 +297,9 @@ texture_unselected = ExtResource("30_0v3aq")
 texture_unselected_hover = ExtResource("31_j0bmb")
 
 [node name="Button" type="TextureButton" parent="BlockDrawer/Tabs/ToTab"]
-offset_left = -115.0
+offset_left = -118.0
 offset_top = 153.0
-offset_right = -108.0
+offset_right = -107.0
 offset_bottom = 171.0
 mouse_filter = 1
 texture_normal = ExtResource("28_gh2qe")
