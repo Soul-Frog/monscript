@@ -139,16 +139,22 @@ func _select_one_tab(active_tab: int, tab_elements: Array) -> void:
 		n += 1
 
 func _on_file_tab_1_clicked() -> void:
+	if HELD.get_child_count() != 0:
+		return
 	_active_file_tab = 0
 	_update_file_tabs()
 	_switch_active_monscript(_active_file_tab)
 
 func _on_file_tab_2_clicked() -> void:
+	if HELD.get_child_count() != 0:
+		return
 	_active_file_tab = 1
 	_update_file_tabs()
 	_switch_active_monscript(_active_file_tab)
 
 func _on_file_tab_3_clicked() -> void:
+	if HELD.get_child_count() != 0:
+		return
 	_active_file_tab = 2
 	_update_file_tabs()
 	_switch_active_monscript(_active_file_tab)
