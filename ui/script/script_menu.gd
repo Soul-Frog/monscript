@@ -337,7 +337,7 @@ func _on_line_block_clicked(blocks: Array[UIScriptBlock], first_position: Vector
 	
 	for block in blocks:
 		_pickup_held_block(block)
-	_held_anchor = get_viewport().get_mouse_position() - first_position
+	_held_anchor = Vector2(get_viewport().get_mouse_position().x - first_position.x, blocks[0].size.y / 2.0)
 	_update_held_position()
 	_notify_lines_of_held_blocks()
 
@@ -354,7 +354,7 @@ func _on_line_starter_clicked(deleted_line: UIScriptLine, line_pieces: Array, st
 	deleted_line.get_parent().remove_child(deleted_line)
 	deleted_line.queue_free()
 	
-	_held_anchor = get_viewport().get_mouse_position() - starter_position
+	_held_anchor = Vector2(get_viewport().get_mouse_position().x - starter_position.x, line_pieces[0].size.y / 2.0)
 	for piece in line_pieces:
 		_pickup_held_block(piece)
 	
