@@ -209,10 +209,10 @@ func _on_drawer_block_clicked(block: UIScriptBlock) -> void:
 	if HELD.get_child_count() == 0:
 		# create a duplicate of this block and hold it
 		_pickup_held_block(_create_block(block.block_type, block.block_name, true))
-		call_deferred("_set_initial_block_position_and_notify_lines") # wait a frame to set this so size can update
-func _set_initial_block_position_and_notify_lines() -> void:
+		call_deferred("_set_initial_block_position_and_notify_lines", block.global_position.x) # wait a frame to set this so size can update
+func _set_initial_block_position_and_notify_lines(drawer_block_x: int) -> void:
 	if(HELD.get_child_count() != 0):
-		_held_anchor = Vector2(HELD.size.x/2.0, HELD.size.y/2.0)
+		_held_anchor = Vector2(get_viewport().get_mouse_position().x - drawer_block_x, HELD.size.y/2.0)
 		_update_held_position()
 	_notify_lines_of_held_blocks()
 
@@ -224,6 +224,10 @@ func _input(event) -> void:
 			_discard_held_blocks(true)
 		if event.button_index == MOUSE_BUTTON_LEFT and DISCARD_ZONE.visible and DISCARD_ZONE.get_global_rect().has_point(event.position):
 			_discard_held_blocks(true)
+	if Input.is_action_just_released("tab"):
+		_active_drawer_tab = _active_drawer_tab + 1 if _active_drawer_tab < 2 else 0
+		_update_drawer()
+		UITooltip.clear_tooltips()
 
 func _on_discard_block_area_input_event(viewport, event, shape_idx) -> void:
 	if event is InputEventMouseButton:
