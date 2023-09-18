@@ -37,6 +37,8 @@ const FILE_LABEL_INVALID_COLOR_UNSELECTED = Color(115/255.0, 23/255.0, 45/255.0)
 @onready var LINE_LIMIT = $LineLimitLabel
 @onready var NEWLINE_BUTTON = $ScriptScroll/Script/NewLineMargin/NewLine
 @onready var HELD = $Held
+@onready var CLEAR_POPUP = $ClearPopup
+@onready var EXIT_POPUP = $ExitPopup
 
 func _ready() -> void:
 	assert(SCRIPT_SCROLL != null)
@@ -50,6 +52,7 @@ func _ready() -> void:
 	assert(LINE_LIMIT != null)
 	assert(NEWLINE_BUTTON != null)
 	assert(HELD != null)
+	assert(CLEAR_POPUP != null)
 	
 	# when the scrollbar size changes, move the scrollbar down
 	SCRIPT_SCROLL.get_v_scroll_bar().changed.connect(_move_scroll_to_bottom)
@@ -202,6 +205,14 @@ func _clear_script() -> void:
 	Global.free_children(SCRIPT_LINES)
 
 func _on_clear_button_pressed() -> void:
+	if SCRIPT_LINES.get_child_count() != 0:
+		assert(not CLEAR_POPUP.visible)
+		CLEAR_POPUP.show()
+		# wait for user to select; if they press yes, perform the clear
+		if await CLEAR_POPUP.selection_made:
+			_on_clear()
+
+func _on_clear() -> void:
 	for script_line in SCRIPT_LINES.get_children():
 		script_line.queue_free()
 		SCRIPT_LINES.remove_child(script_line)
@@ -209,6 +220,12 @@ func _on_clear_button_pressed() -> void:
 	_update_file_tabs()
 
 func _on_x_button_pressed() -> void:
+	# if script is invalid, ask before exiting
+	if not _generate_script().is_valid():
+		EXIT_POPUP.show()
+		if not await EXIT_POPUP.selection_made:
+			return # if the user hits no, don't exit
+	
 	# remove all existing blocks
 	Global.free_children(IF_DRAWER)
 	Global.free_children(DO_DRAWER)
