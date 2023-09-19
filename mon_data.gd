@@ -81,10 +81,8 @@ class Mon:
 		self._level = starting_level
 		self._xp = 0
 		self._nickname = mon_nickname
-		self._monscripts = [ScriptData.MonScript.new(Global.file_to_string(mon_base._default_script_path)),
-			ScriptData.MonScript.new(Global.file_to_string("res://monscripts/test.txt")),
-			ScriptData.MonScript.new(Global.file_to_string(mon_base._default_script_path))]
-		self._active_monscript_index = 1
+		self._monscripts = [get_default_monscript(), get_default_monscript(), get_default_monscript()]
+		self._active_monscript_index = 0
 	
 	# if this mon can use this block
 	# right now, it just checks if the mon's base uses this block
@@ -98,22 +96,32 @@ class Mon:
 			return _base._species_name
 		return _nickname
 	
+	# creates and returns the default script for this mon
+	func get_default_monscript() -> ScriptData.MonScript:
+		return ScriptData.MonScript.new(Global.file_to_string(_base._default_script_path))
+	
+	# gets the currently active script for this mon
 	func get_active_monscript() -> ScriptData.MonScript:
 		return _monscripts[_active_monscript_index]
 	
+	# overwrites the current script with the given script
+	func set_active_monscript(script: ScriptData.MonScript) -> void:
+		_monscripts[_active_monscript_index] = script
+	
+	# gets a script for this mon by index
 	func get_monscript(index: int) -> ScriptData.MonScript:
 		assert(index > -1 and index < _monscripts.size())
 		return _monscripts[index]
 	
-	func set_active_monscript(script: ScriptData.MonScript) -> void:
-		_monscripts[_active_monscript_index] = script
-	
+	# overwrites a script for this mon by index with the given script
 	func set_monscript(index: int, script: ScriptData.MonScript) -> void:
 		_monscripts[index] = script
 		
+	# gets the index of the active script
 	func get_active_monscript_index() -> int:
 		return _active_monscript_index
 	
+	# change the index of the active script (change which script is active)
 	func set_active_monscript_index(index: int) -> void:
 		assert(index > -1 and index < _monscripts.size())
 		_active_monscript_index = index

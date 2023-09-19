@@ -38,7 +38,18 @@ func test_get_name():
 func test_get_script():
 	for mon in mons:
 		assert_true(FileAccess.file_exists(mon._base._default_script_path))
-		assert_not_null(mon.get_monscript())
+		assert_not_null(mon.get_default_monscript())
+		var active = mon.get_active_monscript()
+		assert_not_null(active)
+		var script1 = mon.get_monscript(0)
+		assert_not_null(script1)
+		assert_eq(active, script1)
+		var script2 = mon.get_monscript(1)
+		assert_not_null(script2)
+		var script3 = mon.get_monscript(2)
+		assert_not_null(script3)
+		mon.set_active_monscript_index(2)
+		assert_eq(mon.get_active_monscript(), script3)
 
 # make sure that all mons have a script that exists# make sure that all mons have a scene that exists
 func test_get_scene():

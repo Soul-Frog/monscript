@@ -16,6 +16,7 @@ const COLOR_PINK = Color.PINK
 const COLOR_YELLOW = Color.YELLOW
 const COLOR_GREEN = Color(20.0/255.0, 160.0/255.0, 46.0/255.0)
 const COLOR_RED = Color.RED
+const COLOR_DARK_RED = Color.DARK_RED
 
 # turns various debug functionality on and off
 var DEBUG_DRAW = true

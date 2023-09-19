@@ -20,10 +20,10 @@ const SCRIPT_BLOCK_SCENE = preload("res://ui/script/script_block.tscn")
 const SCRIPT_LINE_SCENE = preload("res://ui/script/script_line.tscn")
 const LINE_DROPZONE_SCENE = preload("res://ui/script/line_dropzone.tscn")
 
-const FILE_LABEL_VALID_COLOR_SELECTED = Color(255/255.0, 255/255.0, 255/255.0)
-const FILE_LABEL_VALID_COLOR_UNSELECTED = Color(179/255.0, 185/255.0, 209/255.0)
-const FILE_LABEL_INVALID_COLOR_SELECTED = Color(180/255.0, 32/255.0, 42/255.0)
-const FILE_LABEL_INVALID_COLOR_UNSELECTED = Color(115/255.0, 23/255.0, 45/255.0)
+const FILE_LABEL_VALID_COLOR_SELECTED = Global.COLOR_WHITE_TEXT
+const FILE_LABEL_VALID_COLOR_UNSELECTED = Global.COLOR_GRAY_TEXT
+const FILE_LABEL_INVALID_COLOR_SELECTED = Global.COLOR_RED
+const FILE_LABEL_INVALID_COLOR_UNSELECTED = Global.COLOR_DARK_RED
 
 @onready var SCRIPT_SCROLL = $ScriptScroll
 @onready var SCRIPT_LINES = $ScriptScroll/Script/ScriptLines
@@ -79,14 +79,11 @@ func setup(editing_mon: MonData.Mon) -> void:
 	_active_file_tab = mon.get_active_monscript_index()
 	
 	# call this a frame later, after we've added this interface to the scene tree
-	call_deferred("_import")
+	call_deferred("_import", mon.get_active_monscript())
 	
 	_update_drawer()
 
-func _import():
-	# get the active script and import it
-	var script = mon.get_active_monscript()
-	
+func _import(script: ScriptData.MonScript):
 	# import the mon's existing script into interface
 	for line in script.lines:
 		# add a new line
@@ -194,16 +191,13 @@ func _switch_active_monscript(new_index: int) -> void:
 	_export()
 	
 	# now clear
-	_clear_script()
+	_on_clear()
 	
 	# update state
 	mon.set_active_monscript_index(new_index)
 	
 	# and import
-	_import()
-
-func _clear_script() -> void:
-	Global.free_children(SCRIPT_LINES)
+	_import(mon.get_active_monscript())
 
 func _on_clear_button_pressed() -> void:
 	if SCRIPT_LINES.get_child_count() != 0:
@@ -214,9 +208,7 @@ func _on_clear_button_pressed() -> void:
 			_on_clear()
 
 func _on_clear() -> void:
-	for script_line in SCRIPT_LINES.get_children():
-		script_line.queue_free()
-		SCRIPT_LINES.remove_child(script_line)
+	Global.free_children(SCRIPT_LINES)
 	_update_line_numbers()
 	_update_file_tabs()
 
@@ -239,7 +231,7 @@ func _on_x_button_pressed() -> void:
 	_export()
 	
 	# delete the script
-	_clear_script()
+	_on_clear()
 	
 	emit_signal("closed")
 
