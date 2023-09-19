@@ -35,6 +35,7 @@ const FILE_LABEL_INVALID_COLOR_UNSELECTED = Color(115/255.0, 23/255.0, 45/255.0)
 @onready var DISCARD_ZONE = $DiscardZone
 @onready var FILE_TABS = $FileTabs
 @onready var LINE_LIMIT = $LineLimitLabel
+@onready var NEWLINE_BUTTON_MARGIN = $ScriptScroll/Script/NewLineMargin
 @onready var NEWLINE_BUTTON = $ScriptScroll/Script/NewLineMargin/NewLine
 @onready var HELD = $Held
 @onready var CLEAR_POPUP = $ClearPopup
@@ -366,6 +367,10 @@ func _update_line_numbers() -> void:
 		if script_line is UIScriptLine:
 			n += 1
 			script_line.set_line_number(n)
+	
+	# nasty special handling to make the grow line button 1 pixel longer, 
+	# except if there are no lines :(
+	NEWLINE_BUTTON_MARGIN.add_theme_constant_override("margin_top", 0 if n == 0 else 1)
 	
 	# update the line limit text and flash it if it changed
 	var prev_text = LINE_LIMIT.text

@@ -80,9 +80,9 @@ func _update_dropzone_indicators_and_validity() -> void:
 	
 	if is_line_valid():
 		assert(valid_types.size() == 1)
-		NUMBER_LABEL.add_theme_color_override("font_color", Global.COLOR_GREEN)
-	else:
 		NUMBER_LABEL.remove_theme_color_override("font_color")
+	else:
+		NUMBER_LABEL.add_theme_color_override("font_color", Global.COLOR_RED)
 	
 	# small visual fix; hides 1 pixel of spacing
 	if BLOCKS.get_child_count() == 0:
