@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://d00rb06jyy6qd"]
+
+[ext_resource type="Texture2D" uid="uid://bn1gnxl36qdg" path="res://assets/gui/intro/classroom1.jpg" id="1_3sa4p"]
+[ext_resource type="Script" path="res://ui/intro/visual_novel.gd" id="1_dn0vm"]
+[ext_resource type="Texture2D" uid="uid://b5hujtdrxh0ti" path="res://assets/gui/intro/bus2.jpg" id="1_iaoea"]
+[ext_resource type="Script" path="res://ui/intro/clickable.gd" id="4_iovda"]
+
+[node name="VisualNovel" type="Node2D"]
+script = ExtResource("1_dn0vm")
+
+[node name="Scenes" type="Node" parent="."]
+
+[node name="Classroom" type="Node" parent="Scenes"]
+
+[node name="Background" type="Sprite2D" parent="Scenes/Classroom"]
+position = Vector2(0, 1)
+scale = Vector2(0.08, 0.08)
+texture = ExtResource("1_3sa4p")
+centered = false
+
+[node name="Clickables" type="Node" parent="Scenes/Classroom"]
+
+[node name="Blackboard" type="Area2D" parent="Scenes/Classroom/Clickables"]
+script = ExtResource("4_iovda")
+examine_dialogue = "blackboard"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Scenes/Classroom/Clickables/Blackboard"]
+polygon = PackedVector2Array(134, 49, 212, 52, 210, 81, 134, 76)
+
+[node name="Bus" type="Node" parent="Scenes"]
+
+[node name="Background" type="Sprite2D" parent="Scenes/Bus"]
+visible = false
+position = Vector2(0, -13)
+scale = Vector2(0.08, 0.08)
+texture = ExtResource("1_iaoea")
+centered = false
+
+[node name="Clickables" type="Node" parent="Scenes/Bus"]
+
+[node name="Window" type="Area2D" parent="Scenes/Bus/Clickables"]
+position = Vector2(-4, 30)
+script = ExtResource("4_iovda")
+examine_dialogue = "window"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Scenes/Bus/Clickables/Window"]
+position = Vector2(27, -63)
+polygon = PackedVector2Array(134, 49, 274, 51, 279, 63, 258, 160, 229, 156, 217, 165, 167, 141, 150, 104, 133, 97)
+
+[node name="Seat" type="Area2D" parent="Scenes/Bus/Clickables"]
+position = Vector2(-4, 30)
+script = ExtResource("4_iovda")
+examine_dialogue = "seat"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Scenes/Bus/Clickables/Seat"]
+position = Vector2(-50, -1)
+polygon = PackedVector2Array(134, 66, 228, 54, 247, 101, 276, 129, 225, 145, 151, 164, 137, 131)

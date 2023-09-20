@@ -1,7 +1,5 @@
 extends Label
 
-@onready var FADE_DECORATOR = preload("res://decorators/fade_decorator.tscn")
-
 # how long in seconds the text is fully opaque before fading out again
 const FULL_VISIBILITY_TIME = 1
 var _time_before_fadeout = 0

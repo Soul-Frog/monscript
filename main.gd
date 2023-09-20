@@ -1,11 +1,12 @@
 extends Node2D
 
-@onready var overworld_scene := $Scenes/Overworld
-@onready var battle_scene := $Scenes/Battle
-@onready var pause_menu_scene := $Scenes/PauseMenu
-@onready var script_menu_scene := $Scenes/ScriptMenu
-@onready var database_menu_scene := $Scenes/DatabaseMenu
-@onready var active_scene := overworld_scene
+@onready var OVERWORLD := $Scenes/Overworld
+@onready var BATTLE := $Scenes/Battle
+@onready var PAUSE_MENU := $Scenes/PauseMenu
+@onready var SCRIPT_MENU := $Scenes/ScriptMenu
+@onready var DATABASE_MENU := $Scenes/DatabaseMenu
+@onready var VISUAL_NOVEL := $Scenes/VisualNovel
+@onready var active_scene := VISUAL_NOVEL
 
 func _ready() -> void:
 	# remove all but Overworld scene
@@ -19,11 +20,11 @@ func _ready() -> void:
 
 func _input(_event) -> void:
 	if Input.is_action_just_released("open_pause_menu"):
-		if active_scene == overworld_scene:
-			pause_menu_scene.setup()
-			_switch_to_scene(pause_menu_scene)
-		elif active_scene == pause_menu_scene:
-			_switch_to_scene(overworld_scene)
+		if active_scene == OVERWORLD:
+			PAUSE_MENU.setup()
+			_switch_to_scene(PAUSE_MENU)
+		elif active_scene == PAUSE_MENU:
+			_switch_to_scene(PAUSE_MENU)
 
 func _switch_to_scene(new_scene: Node) -> void:
 	assert(active_scene != new_scene)
@@ -42,16 +43,16 @@ func _on_debug_console_debug_console_closed() -> void:
 func _on_battle_started(computer_encounter_team: Array) -> void:
 	# this check is necessary to prevent bugs when
 	# multiple battle start on the same frame (stacked enemies)
-	if active_scene != battle_scene: 
-		battle_scene.setup_battle(PlayerData.team, computer_encounter_team);
-		_switch_to_scene(battle_scene)
+	if active_scene != BATTLE: 
+		BATTLE.setup_battle(PlayerData.team, computer_encounter_team);
+		_switch_to_scene(BATTLE)
 
 func _on_battle_ended(battle_result: Battle.BattleResult) -> void:
 	assert(battle_result.end_condition != Global.BattleEndCondition.NONE, "End condition was not set before battle ended.")
-	assert(active_scene == battle_scene)
+	assert(active_scene == BATTLE)
 	
 	# delete overworld encounter if win; respawn player if lose; handle escaping
-	overworld_scene.handle_battle_results(battle_result.end_condition)
+	OVERWORLD.handle_battle_results(battle_result.end_condition)
 	
 	# give experience to player's mons who participated in battle
 	for mon in PlayerData.team: 
@@ -59,17 +60,20 @@ func _on_battle_ended(battle_result: Battle.BattleResult) -> void:
 			mon.gain_XP(battle_result.xp_earned)
 	
 	# clean up the battle scene
-	battle_scene.clear_battle();
+	BATTLE.clear_battle();
 	
-	_switch_to_scene(overworld_scene)
+	_switch_to_scene(OVERWORLD)
 
 func _on_script_menu_opened(mon: MonData.Mon) -> void:
-	_switch_to_scene(script_menu_scene)
-	script_menu_scene.setup(mon)
+	_switch_to_scene(SCRIPT_MENU)
+	SCRIPT_MENU.setup(mon)
 
 func _on_database_menu_opened() -> void:
-	database_menu_scene.setup()
-	_switch_to_scene(database_menu_scene)
+	DATABASE_MENU.setup()
+	_switch_to_scene(DATABASE_MENU)
 
 func _on_submenu_closed() -> void:
-	_switch_to_scene(pause_menu_scene)
+	_switch_to_scene(PAUSE_MENU)
+
+func _on_visual_novel_completed() -> void:
+	_switch_to_scene(OVERWORLD)

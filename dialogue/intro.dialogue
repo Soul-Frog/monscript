@@ -1,0 +1,19 @@
+~ ERROR
+do Global.ERROR("No corresponding tilde in dialogue file!")
+=> END
+
+~ start
+Emaan: Wow, this is a nice classroom picture!
+=> END
+
+~ blackboard
+Emaan: This is a blackboard, but not the digital kind. Old-school.
+=> END
+
+~ window
+Emaan: It's still pretty early. I need to get home to work on my project.
+=> END
+
+~ seat
+Emaan: Bus seats. Not the most comfortable, but it'll do.
+=> END
