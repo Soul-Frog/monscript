@@ -94,7 +94,7 @@ script = ExtResource("1_85t5n")
 wait_time = 0.05
 autostart = true
 
-[node name="PlayerMons" type="Node" parent="."]
+[node name="PlayerMons" type="Node2D" parent="."]
 
 [node name="MONPLACEHOLDER1" parent="PlayerMons" instance=ExtResource("2_qhxpi")]
 position = Vector2(120, 40)
@@ -120,7 +120,7 @@ collision_layer = 1
 collision_mask = 1
 safe_margin = 0.08
 
-[node name="ComputerMons" type="Node" parent="."]
+[node name="ComputerMons" type="Node2D" parent="."]
 
 [node name="MONPLACEHOLDER1" parent="ComputerMons" instance=ExtResource("2_qhxpi")]
 position = Vector2(200, 40)

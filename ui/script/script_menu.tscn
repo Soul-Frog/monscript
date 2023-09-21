@@ -105,7 +105,7 @@ offset_bottom = 13.0
 text = "+"
 horizontal_alignment = 1
 
-[node name="FileTabs" type="Node" parent="."]
+[node name="FileTabs" type="Node2D" parent="."]
 
 [node name="FileTab1" type="Node2D" parent="FileTabs"]
 position = Vector2(118, 3)
@@ -166,9 +166,9 @@ offset_bottom = 15.0
 text = "File 3"
 horizontal_alignment = 1
 
-[node name="BlockDrawer" type="Node" parent="."]
+[node name="BlockDrawer" type="Node2D" parent="."]
 
-[node name="Drawers" type="Node" parent="BlockDrawer"]
+[node name="Drawers" type="Node2D" parent="BlockDrawer"]
 
 [node name="IfDrawer" type="Node2D" parent="BlockDrawer/Drawers"]
 
@@ -266,7 +266,7 @@ size_flags_vertical = 3
 theme_override_constants/h_separation = 4
 theme_override_constants/v_separation = 1
 
-[node name="Tabs" type="Node" parent="BlockDrawer"]
+[node name="Tabs" type="Node2D" parent="BlockDrawer"]
 
 [node name="IfTab" type="Node2D" parent="BlockDrawer/Tabs"]
 position = Vector2(118, 3)
@@ -339,15 +339,7 @@ text = "Line Limit Text"
 horizontal_alignment = 2
 script = ExtResource("39_5ys6j")
 
-[node name="FadeDecoratorOut" parent="LineLimitLabel" instance=ExtResource("39_7hj41")]
-active = false
-fade_type = 1
-fade_speed = 8.0
-
-[node name="FadeDecoratorIn" parent="LineLimitLabel" instance=ExtResource("39_7hj41")]
-active = false
-fade_type = 2
-min_alpha = 0.4
+[node name="FadeDecorator" parent="LineLimitLabel" instance=ExtResource("39_7hj41")]
 fade_speed = 10.0
 
 [node name="Held" type="HBoxContainer" parent="."]
@@ -506,7 +498,7 @@ horizontal_alignment = 1
 [connection signal="clicked" from="BlockDrawer/Tabs/ToTab" to="." method="_on_to_tab_clicked"]
 [connection signal="pressed" from="ClearButton" to="." method="_on_clear_button_pressed"]
 [connection signal="pressed" from="XButton" to="." method="_on_x_button_pressed"]
-[connection signal="fade_done" from="LineLimitLabel/FadeDecoratorIn" to="LineLimitLabel" method="_on_fade_decorator_in_fade_done"]
+[connection signal="fade_in_done" from="LineLimitLabel/FadeDecorator" to="LineLimitLabel" method="_on_fade_in_done"]
 [connection signal="pressed" from="ExitPopup/YesButton" to="ExitPopup" method="_on_yes_button_pressed"]
 [connection signal="pressed" from="ExitPopup/NoButton" to="ExitPopup" method="_on_no_button_pressed"]
 [connection signal="pressed" from="ClearPopup/YesButton" to="ClearPopup" method="_on_yes_button_pressed"]

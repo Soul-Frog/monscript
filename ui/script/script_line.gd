@@ -24,7 +24,11 @@ const NUM_SIZE = 2
 func _ready():
 	assert(NUMBER_LABEL != null)
 	assert(DROPZONE != null)
-	assert(BLOCKS != null)	
+	assert(DROPZONE_IF_INDICATOR != null)
+	assert(DROPZONE_DO_INDICATOR != null)
+	assert(DROPZONE_TO_INDICATOR != null)
+	assert(BLOCK_CONTAINER != null)
+	assert(BLOCKS != null)
 	assert(STARTER != null)
 	BLOCK_CONTAINER.visible = false
 	_update_dropzone_indicators_and_validity()

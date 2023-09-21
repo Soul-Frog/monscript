@@ -91,7 +91,7 @@ func clear_battle():
 		mon.queue_free();
 	state = BattleState.EMPTY
 	battle_result = BattleResult.new()
-	timer.start() # sets timer to 0 again
+	timer.start() # sets timer to 0
 
 func _battle_tick():
 	assert(state == BattleState.BATTLING) 	# make sure battle was set up properly
@@ -202,13 +202,16 @@ func _check_battle_end_condition():
 	
 	if player_mons_alive and not computer_mons_alive:
 		state = BattleState.FINISHED
+		timer.stop()
 		battle_result.end_condition = Global.BattleEndCondition.WIN
 		Events.emit_signal("battle_ended", battle_result)
 	elif not player_mons_alive and computer_mons_alive:
 		state = BattleState.FINISHED
+		timer.stop()
 		battle_result.end_condition = Global.BattleEndCondition.LOSE
 		Events.emit_signal("battle_ended", battle_result)
 	elif not player_mons_alive and not computer_mons_alive:
 		state = BattleState.FINISHED
+		timer.stop()
 		battle_result.end_condition = Global.BattleEndCondition.WIN
 		Events.emit_signal("battle_ended", battle_result) # tie also counts as a win

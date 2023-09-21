@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bjs0uf6g07yax"]
+[gd_scene load_steps=9 format=3 uid="uid://bjs0uf6g07yax"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_sv5wa"]
 [ext_resource type="PackedScene" uid="uid://ca2l5wqdhsgdf" path="res://overworld/overworld.tscn" id="2_kjijl"]
@@ -7,26 +7,34 @@
 [ext_resource type="PackedScene" uid="uid://wvcujwhuslip" path="res://ui/pause/pause_menu.tscn" id="4_wdx4t"]
 [ext_resource type="PackedScene" uid="uid://bm5tklk7abl5" path="res://ui/database/database_menu.tscn" id="6_yfjpu"]
 [ext_resource type="PackedScene" uid="uid://d00rb06jyy6qd" path="res://ui/intro/visual_novel.tscn" id="7_s1av8"]
+[ext_resource type="PackedScene" uid="uid://ct27r3y3ao3um" path="res://decorators/fade_decorator.tscn" id="8_h4geq"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_sv5wa")
 
-[node name="Scenes" type="Node" parent="."]
+[node name="Scene" type="Node2D" parent="."]
 
-[node name="Overworld" parent="Scenes" instance=ExtResource("2_kjijl")]
+[node name="Scenes" type="Node2D" parent="Scene"]
 
-[node name="Battle" parent="Scenes" instance=ExtResource("3_ucmr6")]
+[node name="Overworld" parent="Scene/Scenes" instance=ExtResource("2_kjijl")]
 
-[node name="ScriptMenu" parent="Scenes" instance=ExtResource("4_fgg6l")]
+[node name="Battle" parent="Scene/Scenes" instance=ExtResource("3_ucmr6")]
 
-[node name="DatabaseMenu" parent="Scenes" instance=ExtResource("6_yfjpu")]
+[node name="ScriptMenu" parent="Scene/Scenes" instance=ExtResource("4_fgg6l")]
 
-[node name="PauseMenu" parent="Scenes" instance=ExtResource("4_wdx4t")]
+[node name="DatabaseMenu" parent="Scene/Scenes" instance=ExtResource("6_yfjpu")]
 
-[node name="VisualNovel" parent="Scenes" instance=ExtResource("7_s1av8")]
+[node name="PauseMenu" parent="Scene/Scenes" instance=ExtResource("4_wdx4t")]
 
-[connection signal="closed" from="Scenes/ScriptMenu" to="." method="_on_submenu_closed"]
-[connection signal="closed" from="Scenes/DatabaseMenu" to="." method="_on_submenu_closed"]
-[connection signal="database_menu_opened" from="Scenes/PauseMenu" to="." method="_on_database_menu_opened"]
-[connection signal="script_menu_opened" from="Scenes/PauseMenu" to="." method="_on_script_menu_opened"]
-[connection signal="completed" from="Scenes/VisualNovel" to="." method="_on_visual_novel_completed"]
+[node name="VisualNovel" parent="Scene/Scenes" instance=ExtResource("7_s1av8")]
+
+[node name="FadeDecorator" parent="Scene" instance=ExtResource("8_h4geq")]
+active = false
+fade_type = 1
+fade_speed = 5.3
+
+[connection signal="closed" from="Scene/Scenes/ScriptMenu" to="." method="_on_submenu_closed"]
+[connection signal="closed" from="Scene/Scenes/DatabaseMenu" to="." method="_on_submenu_closed"]
+[connection signal="database_menu_opened" from="Scene/Scenes/PauseMenu" to="." method="_on_database_menu_opened"]
+[connection signal="script_menu_opened" from="Scene/Scenes/PauseMenu" to="." method="_on_script_menu_opened"]
+[connection signal="completed" from="Scene/Scenes/VisualNovel" to="." method="_on_visual_novel_completed"]

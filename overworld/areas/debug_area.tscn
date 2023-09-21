@@ -35,7 +35,7 @@ down = 1
 [node name="Player" parent="." instance=ExtResource("3_nbwo1")]
 position = Vector2(37, 84)
 
-[node name="OverworldEncounters" type="Node" parent="."]
+[node name="OverworldEncounters" type="Node2D" parent="."]
 
 [node name="Mon2" parent="OverworldEncounters" instance=ExtResource("6_d6yho")]
 position = Vector2(149, 93)
@@ -55,7 +55,7 @@ max_wander_range = 30
 min_time_between_movement = 2
 max_time_between_movement = 3.0
 
-[node name="Points" type="Node" parent="."]
+[node name="Points" type="Node2D" parent="."]
 
 [node name="Spawnpoint" type="Node2D" parent="Points"]
 visible = false
@@ -65,7 +65,7 @@ position = Vector2(-104, 69)
 visible = false
 position = Vector2(-104, 64)
 
-[node name="Warps" type="Node" parent="."]
+[node name="Warps" type="Node2D" parent="."]
 
 [node name="Warp" type="Area2D" parent="Warps"]
 position = Vector2(72, 49)

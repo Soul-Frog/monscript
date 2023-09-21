@@ -8,9 +8,9 @@
 [node name="VisualNovel" type="Node2D"]
 script = ExtResource("1_dn0vm")
 
-[node name="Scenes" type="Node" parent="."]
+[node name="Scenes" type="Node2D" parent="."]
 
-[node name="Classroom" type="Node" parent="Scenes"]
+[node name="Classroom" type="Node2D" parent="Scenes"]
 
 [node name="Background" type="Sprite2D" parent="Scenes/Classroom"]
 position = Vector2(0, 1)
@@ -18,7 +18,7 @@ scale = Vector2(0.08, 0.08)
 texture = ExtResource("1_3sa4p")
 centered = false
 
-[node name="Clickables" type="Node" parent="Scenes/Classroom"]
+[node name="Clickables" type="Node2D" parent="Scenes/Classroom"]
 
 [node name="Blackboard" type="Area2D" parent="Scenes/Classroom/Clickables"]
 script = ExtResource("4_iovda")
@@ -27,7 +27,7 @@ examine_dialogue = "blackboard"
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Scenes/Classroom/Clickables/Blackboard"]
 polygon = PackedVector2Array(134, 49, 212, 52, 210, 81, 134, 76)
 
-[node name="Bus" type="Node" parent="Scenes"]
+[node name="Bus" type="Node2D" parent="Scenes"]
 
 [node name="Background" type="Sprite2D" parent="Scenes/Bus"]
 visible = false
@@ -36,7 +36,7 @@ scale = Vector2(0.08, 0.08)
 texture = ExtResource("1_iaoea")
 centered = false
 
-[node name="Clickables" type="Node" parent="Scenes/Bus"]
+[node name="Clickables" type="Node2D" parent="Scenes/Bus"]
 
 [node name="Window" type="Area2D" parent="Scenes/Bus/Clickables"]
 position = Vector2(-4, 30)

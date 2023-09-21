@@ -47,7 +47,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="MonInfo" type="Node" parent="."]
+[node name="MonInfo" type="Node2D" parent="."]
 
 [node name="DatabaseMonFile" type="Sprite2D" parent="MonInfo"]
 position = Vector2(186, 6)

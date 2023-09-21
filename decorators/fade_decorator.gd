@@ -2,12 +2,14 @@ class_name FadeDecorator
 extends Node
 
 signal fade_done
+signal fade_out_done
+signal fade_in_done
 
 enum FadeType {
 	OSCILLATE, FADE_OUT, FADE_IN
 }
 
-@export var active = true # if this decorator should be playing. After completion, this is set to false.
+@export var active = true # whether this effect is currently changing alpha; set to false after completing a fade
 @export var fade_type = FadeType.OSCILLATE
 @export var min_alpha = 0.0
 @export var max_alpha = 1.0
@@ -17,9 +19,8 @@ enum _Direction {
 	IN, OUT
 }
 
-var _fade_direction = _Direction.OUT
+var _fade_direction := _Direction.OUT
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	if fade_type == FadeType.FADE_IN:
 		get_parent().modulate.a = min_alpha
@@ -28,7 +29,18 @@ func _ready():
 		get_parent().modulate.a = max_alpha
 		_fade_direction = _Direction.OUT
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+func fade_out():
+	fade_type = FadeType.FADE_OUT
+	active = true
+
+func fade_in():
+	fade_type = FadeType.FADE_IN
+	active = true
+
+func oscillate():
+	fade_type = FadeType.OSCILLATE
+	active = true
+
 func _process(delta):
 	if active:
 		var fade_delta = fade_speed * delta * (-1 if _fade_direction == _Direction.OUT else 1)
@@ -37,14 +49,16 @@ func _process(delta):
 		if _fade_direction == _Direction.OUT and get_parent().modulate.a <= min_alpha:
 			get_parent().modulate.a = min_alpha
 			if fade_type == FadeType.FADE_OUT:
-				emit_signal("fade_done")
 				active = false
+				emit_signal("fade_out_done")
+				emit_signal("fade_done")
 			else:
 				_fade_direction = _Direction.IN
 		elif _fade_direction == _Direction.IN and get_parent().modulate.a >= max_alpha:
 			get_parent().modulate.a = max_alpha
 			if fade_type == FadeType.FADE_IN:
-				emit_signal("fade_done")
 				active = false
+				emit_signal("fade_in_done")
+				emit_signal("fade_done")
 			else:
 				_fade_direction = _Direction.OUT
