@@ -64,6 +64,16 @@ func setup(editing_mon: MonData.Mon) -> void:
 	_active_file_tab = 0
 	_active_drawer_tab = 0
 	
+	# cleanup the last time this menu was opened
+	# remove all existing blocks
+	Global.free_children(IF_DRAWER)
+	Global.free_children(DO_DRAWER)
+	Global.free_children(TO_DRAWER)
+	# remove anything held
+	Global.free_children(HELD)
+	# delete the script
+	_on_clear()
+	
 	# create blocks based on latest unlocks
 	for ifBlock in ScriptData.IF_BLOCK_LIST:
 		if GameData.is_block_unlocked(ifBlock):
@@ -219,19 +229,8 @@ func _on_x_button_pressed() -> void:
 		if not await EXIT_POPUP.selection_made:
 			return # if the user hits no, don't exit
 	
-	# remove all existing blocks
-	Global.free_children(IF_DRAWER)
-	Global.free_children(DO_DRAWER)
-	Global.free_children(TO_DRAWER)
-	
-	# remove anything held
-	Global.free_children(HELD)
-	
 	# export the script to mon
 	_export()
-	
-	# delete the script
-	_on_clear()
 	
 	emit_signal("closed")
 

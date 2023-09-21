@@ -31,7 +31,7 @@ script = ExtResource("1_sv5wa")
 [node name="FadeDecorator" parent="Scene" instance=ExtResource("8_h4geq")]
 active = false
 fade_type = 1
-fade_speed = 5.3
+fade_speed = 6.2
 
 [connection signal="closed" from="Scene/Scenes/ScriptMenu" to="." method="_on_submenu_closed"]
 [connection signal="closed" from="Scene/Scenes/DatabaseMenu" to="." method="_on_submenu_closed"]

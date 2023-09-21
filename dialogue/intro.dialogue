@@ -4,6 +4,7 @@ do Global.ERROR("No corresponding tilde in dialogue file!")
 
 ~ start
 Emaan: Wow, this is a nice classroom picture!
+do DialogueIO.emit("end classroom")
 => END
 
 ~ blackboard
@@ -12,6 +13,7 @@ Emaan: This is a blackboard, but not the digital kind. Old-school.
 
 ~ window
 Emaan: It's still pretty early. I need to get home to work on my project.
+do DialogueIO.emit("examined window")
 => END
 
 ~ seat

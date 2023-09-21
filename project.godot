@@ -24,6 +24,8 @@ MonData="*res://mon_data.gd"
 PlayerData="*res://player_data.gd"
 Events="*res://events.gd"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
+DialogueIO="*res://dialogue_io.gd"
+CutscenePlayer="*res://cutscene_player.gd"
 
 [debug]
 

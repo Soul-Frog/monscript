@@ -5,8 +5,8 @@ extends Node2D
 @onready var PAUSE_MENU := $Scene/Scenes/PauseMenu
 @onready var SCRIPT_MENU := $Scene/Scenes/ScriptMenu
 @onready var DATABASE_MENU := $Scene/Scenes/DatabaseMenu
-@onready var VISUAL_NOVEL := $Scene/Scenes/VisualNovel
-@onready var active_scene := VISUAL_NOVEL
+@onready var VISUAL_NOVEL: VisualNovel = $Scene/Scenes/VisualNovel
+@onready var active_scene: Node = VISUAL_NOVEL
 
 @onready var FADE: FadeDecorator = $Scene/FadeDecorator
 
@@ -27,6 +27,12 @@ func _ready() -> void:
 	# hook up some signals
 	Events.battle_started.connect(_on_battle_started)
 	Events.battle_ended.connect(_on_battle_ended)
+	
+	# give all nodes a frame to get set up
+	call_deferred("start_game")
+
+func start_game():
+	VISUAL_NOVEL.play_intro_cutscene()
 
 func _input(_event) -> void:
 	if Input.is_action_just_released("open_pause_menu") and not FADE.active:
