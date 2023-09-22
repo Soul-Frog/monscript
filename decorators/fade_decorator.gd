@@ -9,11 +9,26 @@ enum FadeType {
 	OSCILLATE, FADE_OUT, FADE_IN
 }
 
-@export var active = true # whether this effect is currently changing alpha; set to false after completing a fade
-@export var fade_type = FadeType.OSCILLATE
-@export var min_alpha = 0.0
-@export var max_alpha = 1.0
-@export var fade_speed = 0.5
+# whether this effect is currently changing alpha; set to false after completing a fade
+@export var active := true 
+
+# behavior of the fade
+@export var fade_type := FadeType.OSCILLATE
+
+# minimum transparency
+@export var min_alpha := 0.0
+
+# maximum opacity
+@export var max_alpha := 1.0
+
+# how fast the fade effect is
+@export var fade_speed := 0.5
+
+# how long (if any) a fade out waits before signaling, or, if oscillating, fading in again
+@export var fade_out_hangtime := 0.0
+
+# how long (if any) a fade in waits before signaling, or, if oscillating, fading out again
+@export var fade_in_hangtime := 0.0
 
 enum _Direction { 
 	IN, OUT
@@ -50,6 +65,7 @@ func _process(delta):
 			get_parent().modulate.a = min_alpha
 			if fade_type == FadeType.FADE_OUT:
 				active = false
+				await Global.delay(fade_out_hangtime)
 				emit_signal("fade_out_done")
 				emit_signal("fade_done")
 			else:
@@ -58,6 +74,7 @@ func _process(delta):
 			get_parent().modulate.a = max_alpha
 			if fade_type == FadeType.FADE_IN:
 				active = false
+				await Global.delay(fade_in_hangtime)
 				emit_signal("fade_in_done")
 				emit_signal("fade_done")
 			else:

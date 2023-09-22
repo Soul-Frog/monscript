@@ -60,4 +60,5 @@ polygon = PackedVector2Array(134, 66, 228, 54, 247, 101, 276, 129, 225, 145, 151
 [node name="FadeDecorator" parent="." instance=ExtResource("5_g2i7w")]
 active = false
 fade_type = 1
-fade_speed = 3.5
+fade_speed = 5.0
+fade_out_hangtime = 0.5

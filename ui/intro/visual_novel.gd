@@ -52,8 +52,7 @@ func _open_dialogue(dialogue: String):
 func _switch_subscene(new_subscene: Node):
 	assert(new_subscene.get_parent() == $Subscenes)
 	
-	FADE.fade_out()
-	await FADE.fade_out_done
+	await fade_out()
 	
 	# change the background
 	_active_subscene.find_child("Background").visible = false
@@ -65,3 +64,7 @@ func _switch_subscene(new_subscene: Node):
 	_active_subscene = new_subscene
 	
 	FADE.fade_in()
+
+func fade_out():
+	FADE.fade_out()
+	await FADE.fade_out_done

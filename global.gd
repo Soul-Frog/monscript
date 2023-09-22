@@ -76,6 +76,11 @@ func call_after_delay(delay_in_secs: float, arg, function: Callable) -> void:
 	await get_tree().create_timer(delay_in_secs).timeout
 	function.call(arg)
 
+# creates a delay of a given time
+# await on this function call
+func delay(delay_in_secs: float):
+	await get_tree().create_timer(delay_in_secs).timeout
+
 # print that also includes the object being printed from
 func p(node: Node, s: String) -> void:
 	print("%s: %s" % [node, s])

@@ -33,3 +33,5 @@ func _CUTSCENE_INTRODUCTION(vn: Node):
 	# wait for the user to examine the window
 	var msg2: String = await DialogueIO.dialogue_signal
 	assert(msg2 == "examined window") # safety assert
+	
+	await vn.fade_out()
