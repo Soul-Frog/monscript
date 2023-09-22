@@ -19,3 +19,12 @@ do DialogueIO.emit("examined window")
 ~ seat
 Emaan: Bus seats. Not the most comfortable, but it'll do.
 => END
+
+~ HOW_TO_DO_IO
+if DialogueIO.IN0 == "TEST":
+	Emaan: {{DialogueIO.IN1}}
+	set DialogueIO.OUT0 = "It was test"
+else:
+	Emaan: {{DialogueIO.IN2}}
+	set DialogueIO.OUT0 = "It wasn't test"
+=> END

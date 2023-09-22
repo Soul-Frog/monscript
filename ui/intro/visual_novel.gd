@@ -44,6 +44,7 @@ func _open_dialogue(dialogue: String):
 	DialogueManager.show_example_dialogue_balloon(_DIALOGUE_FILE, dialogue)
 	await DialogueManager.dialogue_ended
 	
+	
 	_dialogue_active = false
 	_set_interactables_disabled(_active_subscene, false)
 

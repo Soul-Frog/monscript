@@ -37,7 +37,7 @@ var drawables = []
 
 func _ready():
 	assert(drawable_timeout_time > 0, "Can't have a negative time.")
-	Global.p(self, "DebugTool loaded.")
+	#Global.p(self, "DebugTool loaded.")
 
 # adds a new point to be drawn
 func add_point(at, color = Color.BLACK):

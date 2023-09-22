@@ -1,3 +1,4 @@
+class_name Main
 extends Node2D
 
 @onready var OVERWORLD := $Scene/Scenes/Overworld
@@ -44,6 +45,10 @@ func _input(_event) -> void:
 
 func _switch_to_scene(new_scene: Node) -> void:
 	assert(active_scene != new_scene)
+	var old_scene = active_scene
+	
+	# disable the old scene during the fade transition
+	Global.recursive_set_processes(old_scene, false)
 	
 	# fade out and wait for that to complete
 	FADE.fade_out()
@@ -52,6 +57,9 @@ func _switch_to_scene(new_scene: Node) -> void:
 	$Scene/Scenes.call_deferred("remove_child", active_scene)
 	$Scene/Scenes.call_deferred("add_child", new_scene)
 	active_scene = new_scene
+	
+	# re-enable the old scene, we just disabled it while fading
+	Global.recursive_set_processes(old_scene, true)
 	
 	# fade back in
 	FADE.fade_in()

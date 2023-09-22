@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bjs0uf6g07yax"]
+[gd_scene load_steps=10 format=3 uid="uid://bjs0uf6g07yax"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_sv5wa"]
 [ext_resource type="PackedScene" uid="uid://ca2l5wqdhsgdf" path="res://overworld/overworld.tscn" id="2_kjijl"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bm5tklk7abl5" path="res://ui/database/database_menu.tscn" id="6_yfjpu"]
 [ext_resource type="PackedScene" uid="uid://d00rb06jyy6qd" path="res://ui/intro/visual_novel.tscn" id="7_s1av8"]
 [ext_resource type="PackedScene" uid="uid://ct27r3y3ao3um" path="res://decorators/fade_decorator.tscn" id="8_h4geq"]
+[ext_resource type="PackedScene" uid="uid://cwa8fi3cy5vut" path="res://debug/debug_console.tscn" id="9_4qxol"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_sv5wa")
@@ -34,8 +35,14 @@ fade_type = 1
 fade_speed = 10.0
 fade_out_hangtime = 0.1
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="DebugConsole" parent="CanvasLayer" instance=ExtResource("9_4qxol")]
+
 [connection signal="closed" from="Scene/Scenes/ScriptMenu" to="." method="_on_submenu_closed"]
 [connection signal="closed" from="Scene/Scenes/DatabaseMenu" to="." method="_on_submenu_closed"]
 [connection signal="database_menu_opened" from="Scene/Scenes/PauseMenu" to="." method="_on_database_menu_opened"]
 [connection signal="script_menu_opened" from="Scene/Scenes/PauseMenu" to="." method="_on_script_menu_opened"]
 [connection signal="completed" from="Scene/Scenes/VisualNovel" to="." method="_on_visual_novel_completed"]
+[connection signal="debug_console_closed" from="CanvasLayer/DebugConsole" to="." method="_on_debug_console_debug_console_closed"]
+[connection signal="debug_console_opened" from="CanvasLayer/DebugConsole" to="." method="_on_debug_console_debug_console_opened"]
