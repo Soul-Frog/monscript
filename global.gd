@@ -68,14 +68,6 @@ func files_in_folder_with_extension(directory: String, extension: String) -> Arr
 	
 	return out 
 
-# call a given function after a delay
-# this function is very dangerous, make sure you know what you are doing.
-# often your function will need to check if that object it originated from
-# hasn't been freed!
-func call_after_delay(delay_in_secs: float, arg, function: Callable) -> void:
-	await get_tree().create_timer(delay_in_secs).timeout
-	function.call(arg)
-
 # creates a delay of a given time
 # await on this function call
 func delay(delay_in_secs: float):

@@ -126,10 +126,8 @@ func _start_idling():
 	state = IDLE
 	velocity = Vector2.ZERO
 	var wait_time = Global.RNG.randf_range(min_time_between_movement, max_time_between_movement)
-	Global.call_after_delay(wait_time, self, func(n): 
-		if is_instance_valid(n):
-			_on_movement_timer_timeout()
-		)
+	await Global.delay(wait_time)
+	_on_movement_timer_timeout()
 
 func _physics_process(_delta):
 	if state == MOVING_SOON: 

@@ -48,9 +48,8 @@ func _ready():
 		velocity = -move_speed
 	else: #direction == Direction.DOWN:
 		velocity = move_speed
-	Global.call_after_delay(display_time, self, func(node): 
-		if is_instance_valid(node):
-			node.queue_free())
+	await Global.delay(display_time)
+	queue_free()
 
 func _process(delta):
 	position.y += velocity * delta

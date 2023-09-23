@@ -17,9 +17,8 @@ var can_move = true
 func _input(event):
 	if event.is_action_released("dash"):
 		dashing = true
-		Global.call_after_delay(DASH_DURATION, self, func(node): 
-			if is_instance_valid(node):
-				node.dashing = false)
+		await Global.delay(DASH_DURATION)
+		dashing = false
 
 func _ready():
 	assert(SPEED > 0)
@@ -48,9 +47,9 @@ func activate_invincibility(battle_end_condition):
 	var length = INVINCIBILITY_AFTER_ESCAPE_SECS if battle_end_condition == Global.BattleEndCondition.ESCAPE else INVINCIBILITY_AFTER_WIN_SECS
 	if Global.DEBUG_NO_INVINCIBLE:
 		length = 0
-	Global.call_after_delay(length, self, func(player): 
-		if is_instance_valid(player):
-			is_invincible = false)
+	
+	await Global.delay(length)
+	is_invincible = false
 
 func enable_movement():
 	print("enabled")

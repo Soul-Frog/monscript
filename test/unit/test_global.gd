@@ -89,32 +89,6 @@ func test_files_in_folder():
 	var none: Array = Global.files_in_folder_with_extension(TEST_DIR, ".ben")
 	assert_eq(none.size(), 0)
 
-class CallAfterDelayParam:
-	var wasCalled : bool = false
-	var val : int = 0
-
-# tests call_after_delay
-# this test works but takes some time to run...
-func test_call_after_delay():
-	assert_true(true) # test disabled
-#	const delay := 5.0
-#	var param := CallAfterDelayParam.new()
-#
-#	Global.call_after_delay(5, param, func(p : CallAfterDelayParam):
-#		p.wasCalled = true
-#		p.val = 8
-#		)
-#
-#	# make sure function hasn't been called immediately
-#	assert_false(param.wasCalled)
-#	assert_eq(param.val, 0)
-#
-#	await(wait_seconds(delay * 2))
-#
-#	# function should be called by now
-#	assert_true(param.wasCalled)
-#	assert_eq(param.val, 8)
-
 func test_repeat_str():
 	assert_eq(Global.repeat_str("b", 1), "b")
 	assert_eq(Global.repeat_str("be", 2), "bebe")
