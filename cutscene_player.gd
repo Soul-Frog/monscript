@@ -21,17 +21,36 @@ func _CUTSCENE_INTRODUCTION(vn: Node):
 	assert(vn is VisualNovel)
 	
 	# open the initial dialogue
-	vn._open_dialogue("start")
-	
-	# wait for the classroom dialogue to end
-	var msg1: String = await DialogueIO.dialogue_signal
-	assert(msg1 == "end classroom") # safety assert
+	vn.switch_subscene(vn.CLASSROOM_SCENE, false)
+	vn.open_dialogue("classroom")
+	await Dialogue.ended
 	
 	# switch the scene to the bus
-	await vn._switch_subscene(vn.BUS_SCENE)
+	await vn.switch_subscene(vn.BUS_SCENE)
+	vn.open_dialogue("bus")
+	await Dialogue.ended
 	
-	# wait for the user to examine the window
-	var msg2: String = await DialogueIO.dialogue_signal
-	assert(msg2 == "examined window") # safety assert
+	# switch the scene to the classroom
+	await vn.switch_subscene(vn.ROOM_SCENE)
+	vn.open_dialogue("room")
+	
+	# wait for a the second click on the computer
+	var msg: String = await Dialogue.dialogue_signal
+	assert(msg == "examined computer twice")
+	
+	# switch to computer scene and now work on the game a bit
+	await vn.switch_subscene(vn.COMPUTER_SCENE)
+	vn.open_dialogue("work_on_game")
+	await Dialogue.ended
+	
+	# TODO
+	# open the playable game segment
+	# gotta figure this shit out
+	
+	
+	# switch back to room and wait until bed is examined for sleeping
+	await vn.switch_subscene(vn.ROOM_SCENE)
+	var msg2: String = await Dialogue.dialogue_signal
+	assert(msg2 == "sleep")
 	
 	await vn.fade_out()

@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://d00rb06jyy6qd"]
+[gd_scene load_steps=8 format=3 uid="uid://d00rb06jyy6qd"]
 
 [ext_resource type="Texture2D" uid="uid://bn1gnxl36qdg" path="res://assets/gui/intro/classroom1.jpg" id="1_3sa4p"]
 [ext_resource type="Script" path="res://ui/intro/visual_novel.gd" id="1_dn0vm"]
 [ext_resource type="Texture2D" uid="uid://b5hujtdrxh0ti" path="res://assets/gui/intro/bus2.jpg" id="1_iaoea"]
+[ext_resource type="Texture2D" uid="uid://bmxmomtvqv2uf" path="res://assets/gui/intro/placeholderroom.jpg" id="4_f1hbp"]
 [ext_resource type="Script" path="res://ui/intro/clickable.gd" id="4_iovda"]
 [ext_resource type="PackedScene" uid="uid://ct27r3y3ao3um" path="res://decorators/fade_decorator.tscn" id="5_g2i7w"]
+[ext_resource type="Texture2D" uid="uid://c4li05lmsfumf" path="res://assets/gui/intro/computer.png" id="6_4bojj"]
 
 [node name="VisualNovel" type="Node2D"]
 script = ExtResource("1_dn0vm")
@@ -12,6 +14,7 @@ script = ExtResource("1_dn0vm")
 [node name="Subscenes" type="Node2D" parent="."]
 
 [node name="Classroom" type="Node2D" parent="Subscenes"]
+visible = false
 
 [node name="Background" type="Sprite2D" parent="Subscenes/Classroom"]
 position = Vector2(0, 1)
@@ -21,17 +24,10 @@ centered = false
 
 [node name="Clickables" type="Node2D" parent="Subscenes/Classroom"]
 
-[node name="Blackboard" type="Area2D" parent="Subscenes/Classroom/Clickables"]
-script = ExtResource("4_iovda")
-examine_dialogue = "blackboard"
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Subscenes/Classroom/Clickables/Blackboard"]
-polygon = PackedVector2Array(134, 49, 212, 52, 210, 81, 134, 76)
-
 [node name="Bus" type="Node2D" parent="Subscenes"]
+visible = false
 
 [node name="Background" type="Sprite2D" parent="Subscenes/Bus"]
-visible = false
 position = Vector2(0, -13)
 scale = Vector2(0.08, 0.08)
 texture = ExtResource("1_iaoea")
@@ -39,23 +35,44 @@ centered = false
 
 [node name="Clickables" type="Node2D" parent="Subscenes/Bus"]
 
-[node name="Window" type="Area2D" parent="Subscenes/Bus/Clickables"]
+[node name="Room" type="Node2D" parent="Subscenes"]
+visible = false
+
+[node name="Background" type="Sprite2D" parent="Subscenes/Room"]
+scale = Vector2(0.432432, 0.540541)
+texture = ExtResource("4_f1hbp")
+centered = false
+
+[node name="Clickables" type="Node2D" parent="Subscenes/Room"]
+
+[node name="Computer" type="Area2D" parent="Subscenes/Room/Clickables"]
 position = Vector2(-4, 30)
 script = ExtResource("4_iovda")
-examine_dialogue = "window"
+examine_dialogue = "examine_computer"
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Subscenes/Bus/Clickables/Window"]
-position = Vector2(27, -63)
-polygon = PackedVector2Array(134, 49, 274, 51, 279, 63, 258, 160, 229, 156, 217, 165, 167, 141, 150, 104, 133, 97)
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Subscenes/Room/Clickables/Computer"]
+position = Vector2(-14, -15)
+polygon = PackedVector2Array(134, 49, 183, 51, 185, 82, 136, 82)
 
-[node name="Seat" type="Area2D" parent="Subscenes/Bus/Clickables"]
+[node name="Bed" type="Area2D" parent="Subscenes/Room/Clickables"]
 position = Vector2(-4, 30)
 script = ExtResource("4_iovda")
-examine_dialogue = "seat"
+examine_dialogue = "examine_bed"
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Subscenes/Bus/Clickables/Seat"]
-position = Vector2(-50, -1)
-polygon = PackedVector2Array(134, 66, 228, 54, 247, 101, 276, 129, 225, 145, 151, 164, 137, 131)
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Subscenes/Room/Clickables/Bed"]
+position = Vector2(84, 47)
+polygon = PackedVector2Array(134, 49, 178, -37, 214, 49, 136, 82)
+
+[node name="Computer" type="Node2D" parent="Subscenes"]
+visible = false
+
+[node name="Background" type="Sprite2D" parent="Subscenes/Computer"]
+position = Vector2(0, -9.53674e-07)
+scale = Vector2(0.0837039, 0.0875486)
+texture = ExtResource("6_4bojj")
+centered = false
+
+[node name="Clickables" type="Node2D" parent="Subscenes/Computer"]
 
 [node name="FadeDecorator" parent="." instance=ExtResource("5_g2i7w")]
 active = false

@@ -124,7 +124,3 @@ func recursive_set_processes(node: Node, enable: bool):
 	node.set_process_input(enable)
 	for child in node.get_children():
 		recursive_set_processes(child, enable)
-
-# used in the dialoguemanager to show an error
-func ERROR(msg: String):
-	assert(false, msg)

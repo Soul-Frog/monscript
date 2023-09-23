@@ -9,8 +9,9 @@ func _ready():
 func _input(event):
 	if event.is_action_released("interact") and $Area2D.get_overlapping_bodies().size() != 0:
 		$Area2D.get_overlapping_bodies()[0].disable_movement()
-		DialogueManager.show_example_dialogue_balloon(dialogue_resource, dialogue_start)
-		await DialogueManager.dialogue_ended
+		
+		await Dialogue.start(dialogue_resource, dialogue_start)
+		
 		$Area2D.get_overlapping_bodies()[0].enable_movement()
 
 func _on_body_entered(body):

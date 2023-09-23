@@ -1,6 +1,11 @@
 # Stores information about the game world, such as areas, story flags, and other flags. 
-
 extends Node
+
+# Gamestate Flags
+# During the intro, the computer needs to be examined twice to progress. This tracks if the first examine has occured.
+var FLAG_INTRO_EXAMINED_COMPUTER_ONCE = false
+# During the intro, after examining the computer twice and playing the game, this is enabled so we can sleep at the bed.
+var FLAG_INTRO_READY_TO_SLEEP = false
 
 enum Area
 {

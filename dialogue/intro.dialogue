@@ -1,30 +1,80 @@
 ~ ERROR
-do Global.ERROR("No corresponding tilde in dialogue file!")
+do Dialogue.ERROR("No corresponding tilde in dialogue file!")
 => END
 
-~ start
-Emaan: Wow, this is a nice classroom picture!
-do DialogueIO.emit("end classroom")
+
+~ classroom
+Professor: This is a line
+???: (Right... my senior project.)
+Professor: Class dismissed.
 => END
 
-~ blackboard
-Emaan: This is a blackboard, but not the digital kind. Old-school.
+~ bus
+???: It's still pretty early. I need to get home to work on my project.
 => END
 
-~ window
-Emaan: It's still pretty early. I need to get home to work on my project.
-do DialogueIO.emit("examined window")
+~ room
+???: Phew, made it home. I've got a long night ahead of me if I'm gonna get this thing done.
+???: Time to get to work.
+: Click to investigate the room.
 => END
 
-~ seat
-Emaan: Bus seats. Not the most comfortable, but it'll do.
+~ examine_computer
+# first time examining computer
+if not GameData.FLAG_INTRO_EXAMINED_COMPUTER_ONCE
+	NAME: My computer. Well, this game isn't going to finish itself. I better get to work.
+	: If you're done examining the room, click the computer again to proceed.
+	set GameData.FLAG_INTRO_EXAMINED_COMPUTER_ONCE = true
+# second time
+elif not GameData.FLAG_INTRO_READY_TO_SLEEP
+	NAME: Enough procrastinating. I've got to do this.
+	do Dialogue.emit("examined computer twice")
+# after playing the game demo
+else
+	NAME: I'm so fed up with this crap right now. 
+	NAME: Screw coding, I'm done. I just want to go to bed.
 => END
 
+~ work_on_game
+NAME: ...
+NAME: Hmm... 
+NAME: .........
+NAME: I think this should work... right?
+NAME: Well, time to build and give this game a try!
+set GameData.FLAG_INTRO_READY_TO_SLEEP = true
+=> END
+
+~ examine_bed
+if not GameData.FLAG_INTRO_READY_TO_SLEEP: 
+	NAME: My bed. It looks really cozy...\nI wish I could just go to sleep now, but I've got a lot I need to get done tonight.
+else
+	NAME: I don't even know why I bother.
+	NAME: No matter how hard I try...
+	NAME: I'll always fall short.
+	NAME: I'll never be a good programmer.
+	NAME: Why do I even bother...
+	NAME: It's obvious that this isn't for me.
+	NAME: So why do I keep trying?
+	NAME: ...
+	NAME: It doesn't matter anymore. 
+	NAME: I'm screwed. There's no way I'll finish this thing in time...
+	NAME: ...
+	NAME: I'll figure this out tomorrow. 
+	NAME: Maybe I'll just drop out. Run away from this all.
+	NAME: I don't even care anymore. 
+	NAME: It's just pointless.
+	do Dialogue.emit("sleep")
+=> END
+
+
+
+
+# just leaving live notes to myself
 ~ HOW_TO_DO_IO
 if DialogueIO.IN0 == "TEST":
-	Emaan: {{DialogueIO.IN1}}
-	set DialogueIO.OUT0 = "It was test"
+	Emaan: {{Dialogue.IN1}}
+	set Dialogue.OUT0 = "It was test"
 else:
 	Emaan: {{DialogueIO.IN2}}
-	set DialogueIO.OUT0 = "It wasn't test"
+	set Dialogue.OUT0 = "It wasn't test"
 => END
