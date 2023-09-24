@@ -1,12 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://d00rb06jyy6qd"]
+[gd_scene load_steps=9 format=3 uid="uid://d00rb06jyy6qd"]
 
-[ext_resource type="Texture2D" uid="uid://bn1gnxl36qdg" path="res://assets/gui/intro/classroom1.jpg" id="1_3sa4p"]
 [ext_resource type="Script" path="res://ui/intro/visual_novel.gd" id="1_dn0vm"]
-[ext_resource type="Texture2D" uid="uid://b5hujtdrxh0ti" path="res://assets/gui/intro/bus2.jpg" id="1_iaoea"]
-[ext_resource type="Texture2D" uid="uid://bmxmomtvqv2uf" path="res://assets/gui/intro/placeholderroom.jpg" id="4_f1hbp"]
+[ext_resource type="Texture2D" uid="uid://bn1gnxl36qdg" path="res://assets/ui/visual_novel/classroom.jpg" id="2_voode"]
+[ext_resource type="Texture2D" uid="uid://c7dg504mvepmr" path="res://assets/ui/visual_novel/bus.jpg" id="3_bqlat"]
+[ext_resource type="Texture2D" uid="uid://ct640uueqq1pl" path="res://assets/ui/visual_novel/bus_stop.jpg" id="3_v4ulx"]
+[ext_resource type="Texture2D" uid="uid://bmxmomtvqv2uf" path="res://assets/ui/visual_novel/placeholderroom.jpg" id="4_24uig"]
 [ext_resource type="Script" path="res://ui/intro/clickable.gd" id="4_iovda"]
 [ext_resource type="PackedScene" uid="uid://ct27r3y3ao3um" path="res://decorators/fade_decorator.tscn" id="5_g2i7w"]
-[ext_resource type="Texture2D" uid="uid://c4li05lmsfumf" path="res://assets/gui/intro/computer.png" id="6_4bojj"]
+[ext_resource type="Texture2D" uid="uid://c4li05lmsfumf" path="res://assets/ui/visual_novel/computer.png" id="6_uyhtg"]
 
 [node name="VisualNovel" type="Node2D"]
 script = ExtResource("1_dn0vm")
@@ -19,28 +20,50 @@ visible = false
 [node name="Background" type="Sprite2D" parent="Subscenes/Classroom"]
 position = Vector2(0, 1)
 scale = Vector2(0.08, 0.08)
-texture = ExtResource("1_3sa4p")
+texture = ExtResource("2_voode")
 centered = false
 
 [node name="Clickables" type="Node2D" parent="Subscenes/Classroom"]
+
+[node name="BusStop" type="Node2D" parent="Subscenes"]
+visible = false
+
+[node name="Background" type="Sprite2D" parent="Subscenes/BusStop"]
+position = Vector2(1, -193)
+scale = Vector2(0.12, 0.12)
+texture = ExtResource("3_v4ulx")
+centered = false
+
+[node name="Clickables" type="Node2D" parent="Subscenes/BusStop"]
 
 [node name="Bus" type="Node2D" parent="Subscenes"]
 visible = false
 
 [node name="Background" type="Sprite2D" parent="Subscenes/Bus"]
-position = Vector2(0, -13)
+position = Vector2(0, -52)
 scale = Vector2(0.08, 0.08)
-texture = ExtResource("1_iaoea")
+texture = ExtResource("3_bqlat")
 centered = false
 
 [node name="Clickables" type="Node2D" parent="Subscenes/Bus"]
+
+[node name="Computer" type="Node2D" parent="Subscenes"]
+visible = false
+
+[node name="Background" type="Sprite2D" parent="Subscenes/Computer"]
+position = Vector2(0, -3)
+scale = Vector2(0.0837039, 0.0875486)
+texture = ExtResource("6_uyhtg")
+centered = false
+
+[node name="Clickables" type="Node2D" parent="Subscenes/Computer"]
 
 [node name="Room" type="Node2D" parent="Subscenes"]
 visible = false
 
 [node name="Background" type="Sprite2D" parent="Subscenes/Room"]
 scale = Vector2(0.432432, 0.540541)
-texture = ExtResource("4_f1hbp")
+texture = ExtResource("4_24uig")
 centered = false
 
 [node name="Clickables" type="Node2D" parent="Subscenes/Room"]
@@ -62,17 +85,6 @@ examine_dialogue = "examine_bed"
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Subscenes/Room/Clickables/Bed"]
 position = Vector2(84, 47)
 polygon = PackedVector2Array(134, 49, 178, -37, 214, 49, 136, 82)
-
-[node name="Computer" type="Node2D" parent="Subscenes"]
-visible = false
-
-[node name="Background" type="Sprite2D" parent="Subscenes/Computer"]
-position = Vector2(0, -9.53674e-07)
-scale = Vector2(0.0837039, 0.0875486)
-texture = ExtResource("6_4bojj")
-centered = false
-
-[node name="Clickables" type="Node2D" parent="Subscenes/Computer"]
 
 [node name="FadeDecorator" parent="." instance=ExtResource("5_g2i7w")]
 active = false

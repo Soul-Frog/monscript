@@ -4,65 +4,127 @@ do Dialogue.ERROR("No corresponding tilde in dialogue file!")
 
 
 ~ classroom
-Professor: This is a line
-???: (Right... my senior project.)
-Professor: Class dismissed.
+Professor: ...and so, we can represent this series of dependencies as a directed graph of nodes...
+{{GameData.PLAYER_NAME}}: (Another day, another lecture. Algorithms, graphs, nodes. Just fascinating...)
+Professor: ...and by performing a simple traversal of this graph, it should be elementary to see...
+{{GameData.PLAYER_NAME}}: (This is hopeless. I have no idea what this guy is talking about.\nThat's what I get for skipping the reading again.\nAt least class is almost over. Just gotta hang on for a few more minutes.)
+Professor: ...and so we'll leave it there for today. You'll have the chance to implement some of these algorithms yourself in this week's problem set.
+Professor: And before you all leave, don't forget that you should have made some good progress on your senior project by this point...
+{{GameData.PLAYER_NAME}}: (Ah... right. My senior project. I've still got a lot of work to do on that.)
+{{GameData.PLAYER_NAME}}: (I'd always wanted to program a game, but making that my senior project might have been a mistake.)
+Professor: ...so don't leave it to the last minute! I look forward to seeing your progress during our individual meetings next week.
+{{GameData.PLAYER_NAME}}: ("Progress"... yeah, right.)
+Professor: Have a good evening everyone! If you have any questions about today's lecture material, the TAs will be holding extra office hours in the CS lounge next Monday and Wednesday.
+Professor: Class dismissed. 
+{{GameData.PLAYER_NAME}}: (Thank god that's finally over. This classroom is so stuffy.)
+{{GameData.PLAYER_NAME}}: (I'm getting out of here.)
+=> END
+
+~ bus_stop
+{{GameData.PLAYER_NAME}}: (It's a pretty nice night out. The air is crisp and cool.)
+{{GameData.PLAYER_NAME}}: (I can hear the chatter of the other students. Seems like everyone is getting ready for another exciting Friday night.)
+{{GameData.PLAYER_NAME}}: (If only I didn't have so much work to do. I haven't had the chance to get out in ages.)
+{{GameData.PLAYER_NAME}}: (All I do is go to class, go home, sit in front of my computer...)
+{{GameData.PLAYER_NAME}}: (Code. Code. Code. Be confused by code. Code some more.)
+{{GameData.PLAYER_NAME}}: (I'm living life on repeat.)
+{{GameData.PLAYER_NAME}}: (Honestly, some days I don't know why I wanted to study computer science to begin with.)
+{{GameData.PLAYER_NAME}}: (Is this really what I want to do with my life? Type crap into a computer all day?)
+{{GameData.PLAYER_NAME}}: (And yet... I'm on the verge of graduation. Not the best time to get cold feet.)
+{{GameData.PLAYER_NAME}}: ...
+{{GameData.PLAYER_NAME}}: ...
+{{GameData.PLAYER_NAME}}: (Ah. Here's the bus. Better get going.)
 => END
 
 ~ bus
-???: It's still pretty early. I need to get home to work on my project.
+{{GameData.PLAYER_NAME}}: (It's already getting dark out. I need to get home to work on my project.)
+{{GameData.PLAYER_NAME}}: (When we were told that we could choose anything to do for our senior project, my first thought was to make a game. What a great idea, right?)
+{{GameData.PLAYER_NAME}}: (After all, that's why I decided to study computer science in the first place.)
+{{GameData.PLAYER_NAME}}: (I've liked games ever since I was a kid. Playing them, talking about them, writing about them, making my own out of pen and paper...)
+{{GameData.PLAYER_NAME}}: (So, I figured, why not try to make a career out of designing them?)
+{{GameData.PLAYER_NAME}}: (How hard could it be?)
+{{GameData.PLAYER_NAME}}: (...turns out it's way harder than I thought.)
+{{GameData.PLAYER_NAME}}: (At this point, I'm just trying to get through the rest of my degree.)
+{{GameData.PLAYER_NAME}}: (My grades are decent. But it seems like it never gets any easier.)
+{{GameData.PLAYER_NAME}}: (I thought by now I would surely be skilled enough to accomplish my dream of making a game.)
+{{GameData.PLAYER_NAME}}: (After all, I've been studying this stuff for nearly 3 years. If not now, then when?)
+{{GameData.PLAYER_NAME}}: (And so, I decided to do a game as my senior capstone project.)
+{{GameData.PLAYER_NAME}}: (By myself, of course. Another dumb mistake.)
+{{GameData.PLAYER_NAME}}: (Now, it's been three months and I've barely even started. Some 'game designer' I am.)
+{{GameData.PLAYER_NAME}}: (I've only got four weeks left before this thing is due. And if I don't get it done...)
+{{GameData.PLAYER_NAME}}: (I won't graduate.)
+{{GameData.PLAYER_NAME}}: (I can't afford another semester. And I don't even want to think about how my parents would react.)
+{{GameData.PLAYER_NAME}}: (All that, and yet, I just can't do it.\nI can't seem to get anything done, no matter how hard I try.)
+{{GameData.PLAYER_NAME}}: ...
+{{GameData.PLAYER_NAME}}: (...this is my stop. Time to hop off.)
 => END
 
 ~ room
-???: Phew, made it home. I've got a long night ahead of me if I'm gonna get this thing done.
-???: Time to get to work.
+{{GameData.PLAYER_NAME}}: Well, at least I finally made it home. But I don't have any time to relax.\nI've got some long nights ahead of me if I'm gonna get this thing done.
+{{GameData.PLAYER_NAME}}: I just need to clear my head and get down to it...\nI don't have time for another pity party tonight.
+{{GameData.PLAYER_NAME}}: I'd better get to work. 
 : Click to investigate the room.
 => END
 
 ~ examine_computer
 # first time examining computer
 if not GameData.FLAG_INTRO_EXAMINED_COMPUTER_ONCE
-	NAME: My computer. Well, this game isn't going to finish itself. I better get to work.
-	: If you're done examining the room, click the computer again to proceed.
+	{{GameData.PLAYER_NAME}}: My computer. Well, this game isn't going to finish itself, as much as I wish it would.
+	: If you're done examining the room, select the computer again to proceed.
 	set GameData.FLAG_INTRO_EXAMINED_COMPUTER_ONCE = true
 # second time
 elif not GameData.FLAG_INTRO_READY_TO_SLEEP
-	NAME: Enough procrastinating. I've got to do this.
+	{{GameData.PLAYER_NAME}}: Enough procrastinating. I've got to do this thing.
 	do Dialogue.emit("examined computer twice")
 # after playing the game demo
 else
-	NAME: I'm so fed up with this crap right now. 
-	NAME: Screw coding, I'm done. I just want to go to bed.
+	{{GameData.PLAYER_NAME}}: I'm so fed up with this crap right now. 
+	{{GameData.PLAYER_NAME}}: Screw coding, I'm done. I just want to go to bed.
+=> END
+
+~ login1
+{{GameData.PLAYER_NAME}}: Ah, right, my login.
+# TODO - player name input here soon
+=> END
+
+~ login2
+{{GameData.PLAYER_NAME}}: ...and no need for a password, of course. I'm not studying cybersecurity.
+{{GameData.PLAYER_NAME}}: It's coding time!
 => END
 
 ~ work_on_game
-NAME: ...
-NAME: Hmm... 
-NAME: .........
-NAME: I think this should work... right?
-NAME: Well, time to build and give this game a try!
+{{GameData.PLAYER_NAME}}: ...
+{{GameData.PLAYER_NAME}}: Hmm... 
+{{GameData.PLAYER_NAME}}: .........
+{{GameData.PLAYER_NAME}}: I think this should work... right?
+{{GameData.PLAYER_NAME}}: Well, time to build and give this game a try!
+# TOOD - transition to a little crappy game demo that doesn't work properly and bugs out
 set GameData.FLAG_INTRO_READY_TO_SLEEP = true
 => END
 
 ~ examine_bed
 if not GameData.FLAG_INTRO_READY_TO_SLEEP: 
-	NAME: My bed. It looks really cozy...\nI wish I could just go to sleep now, but I've got a lot I need to get done tonight.
+	{{GameData.PLAYER_NAME}}: My bed. It looks really cozy.\nI'd like to just go to sleep now, but I've got a lot I need to get done tonight.
 else
-	NAME: I don't even know why I bother.
-	NAME: No matter how hard I try...
-	NAME: I'll always fall short.
-	NAME: I'll never be a good programmer.
-	NAME: Why do I even bother...
-	NAME: It's obvious that this isn't for me.
-	NAME: So why do I keep trying?
-	NAME: ...
-	NAME: It doesn't matter anymore. 
-	NAME: I'm screwed. There's no way I'll finish this thing in time...
-	NAME: ...
-	NAME: I'll figure this out tomorrow. 
-	NAME: Maybe I'll just drop out. Run away from this all.
-	NAME: I don't even care anymore. 
-	NAME: It's just pointless.
+	{{GameData.PLAYER_NAME}}: I don't even know why I bother.
+	{{GameData.PLAYER_NAME}}: No matter how hard I try...
+	{{GameData.PLAYER_NAME}}: I'll always fall short.
+	{{GameData.PLAYER_NAME}}: I'll never be a good programmer.
+	{{GameData.PLAYER_NAME}}: It's obvious that this isn't for me.
+	{{GameData.PLAYER_NAME}}: So why do I keep trying?
+	{{GameData.PLAYER_NAME}}: ...
+	{{GameData.PLAYER_NAME}}: It doesn't matter anymore. 
+	{{GameData.PLAYER_NAME}}: I'm screwed. There's no way I'll finish this thing in time...
+	{{GameData.PLAYER_NAME}}: I'll have to figure this out tomorrow. 
+	{{GameData.PLAYER_NAME}}: Maybe I can just drop out. Run away from it all.
+	{{GameData.PLAYER_NAME}}: I don't even care anymore.
+	{{GameData.PLAYER_NAME}}: I'm a failure.
+	{{GameData.PLAYER_NAME}}: I just want to fall asleep, and forget about all of this.
+	{{GameData.PLAYER_NAME}}: Escape to a different world... another reality.
+	{{GameData.PLAYER_NAME}}: ...what a stupid thought.
+	{{GameData.PLAYER_NAME}}: ...
+	{{GameData.PLAYER_NAME}}: ......
+	{{GameData.PLAYER_NAME}}: .........
+	{{GameData.PLAYER_NAME}}: ..................
 	do Dialogue.emit("sleep")
 => END
 

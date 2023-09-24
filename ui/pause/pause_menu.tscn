@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" path="res://ui/pause/pause_menu.gd" id="1_2voed"]
 [ext_resource type="PackedScene" uid="uid://dic4krsgbv40j" path="res://mons/magnetfrog.tscn" id="2_oypn0"]
-[ext_resource type="Texture2D" uid="uid://b83c3y0frpmlm" path="res://assets/gui/pause_menu/teams.png" id="3_luw2o"]
-[ext_resource type="Texture2D" uid="uid://cbfdqdhwqs4kw" path="res://assets/gui/pause_menu/quicksave.png" id="4_4jat1"]
-[ext_resource type="Texture2D" uid="uid://bhxshbo5v3ri0" path="res://assets/gui/pause_menu/database.png" id="5_j5uid"]
-[ext_resource type="Texture2D" uid="uid://cewqveq6u7i4p" path="res://assets/gui/pause_menu/inventory.png" id="6_h6402"]
-[ext_resource type="Texture2D" uid="uid://cchw582otw5c8" path="res://assets/gui/pause_menu/settings.png" id="7_kkkgf"]
+[ext_resource type="Texture2D" uid="uid://b83c3y0frpmlm" path="res://assets/ui/pause_menu/teams.png" id="3_luw2o"]
+[ext_resource type="Texture2D" uid="uid://cbfdqdhwqs4kw" path="res://assets/ui/pause_menu/quicksave.png" id="4_4jat1"]
+[ext_resource type="Texture2D" uid="uid://bhxshbo5v3ri0" path="res://assets/ui/pause_menu/database.png" id="5_j5uid"]
+[ext_resource type="Texture2D" uid="uid://cewqveq6u7i4p" path="res://assets/ui/pause_menu/inventory.png" id="6_h6402"]
+[ext_resource type="Texture2D" uid="uid://cchw582otw5c8" path="res://assets/ui/pause_menu/settings.png" id="7_kkkgf"]
 
 [node name="PauseMenu" type="Node2D"]
 script = ExtResource("1_2voed")

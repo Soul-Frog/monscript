@@ -20,33 +20,44 @@ func play_cutscene(id: CutsceneID, node: Node):
 func _CUTSCENE_INTRODUCTION(vn: Node):
 	assert(vn is VisualNovel)
 	
-	# open the initial dialogue
+	# open the initial dialogue in classroom
 	vn.switch_subscene(vn.CLASSROOM_SCENE, false)
 	vn.open_dialogue("classroom")
-	await Dialogue.ended
+	await vn.dialogue_completed
+	
+	# switch the scene to the bus stop
+	await vn.switch_subscene(vn.BUS_STOP_SCENE)
+	vn.open_dialogue("bus_stop")
+	await vn.dialogue_completed
 	
 	# switch the scene to the bus
 	await vn.switch_subscene(vn.BUS_SCENE)
 	vn.open_dialogue("bus")
-	await Dialogue.ended
+	await vn.dialogue_completed
 	
-	# switch the scene to the classroom
+	# switch the scene to the room
 	await vn.switch_subscene(vn.ROOM_SCENE)
 	vn.open_dialogue("room")
+	await vn.dialogue_completed
 	
 	# wait for a the second click on the computer
 	var msg: String = await Dialogue.dialogue_signal
 	assert(msg == "examined computer twice")
+	await vn.dialogue_completed
 	
-	# switch to computer scene and now work on the game a bit
+	# TODO - switch screen to computer login
+	vn.open_dialogue("login1")
+	await vn.dialogue_completed
+	#TODO - login
+	vn.open_dialogue("login2")
+	await vn.dialogue_completed
+	# switch background to ide
 	await vn.switch_subscene(vn.COMPUTER_SCENE)
 	vn.open_dialogue("work_on_game")
-	await Dialogue.ended
+	await vn.dialogue_completed
 	
-	# TODO
-	# open the playable game segment
-	# gotta figure this shit out
-	
+	# TODO - playable game segment
+	# switch scene in VN and wait for signal
 	
 	# switch back to room and wait until bed is examined for sleeping
 	await vn.switch_subscene(vn.ROOM_SCENE)

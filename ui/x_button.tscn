@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://byonngrgtbxr7"]
 
-[ext_resource type="Texture2D" uid="uid://bc8m1lp1yrj66" path="res://assets/gui/x_button.png" id="1_04pbb"]
-[ext_resource type="Texture2D" uid="uid://cgjtloxfpfglm" path="res://assets/gui/x_pressed.png" id="2_njh86"]
-[ext_resource type="Texture2D" uid="uid://b28qj586fos3p" path="res://assets/gui/x_hover.png" id="3_ne27g"]
+[ext_resource type="Texture2D" uid="uid://bc8m1lp1yrj66" path="res://assets/ui/x_button.png" id="1_04pbb"]
+[ext_resource type="Texture2D" uid="uid://cgjtloxfpfglm" path="res://assets/ui/x_pressed.png" id="2_njh86"]
+[ext_resource type="Texture2D" uid="uid://b28qj586fos3p" path="res://assets/ui/x_hover.png" id="3_ne27g"]
 
 [node name="XButton" type="TextureButton"]
 offset_left = 309.0

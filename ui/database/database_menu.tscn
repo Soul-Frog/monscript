@@ -1,13 +1,13 @@
 [gd_scene load_steps=9 format=3 uid="uid://bm5tklk7abl5"]
 
-[ext_resource type="Texture2D" uid="uid://do6n88h3lljqj" path="res://assets/gui/database/database_background.png" id="1_5p5ep"]
+[ext_resource type="Texture2D" uid="uid://do6n88h3lljqj" path="res://assets/ui/database/database_background.png" id="1_5p5ep"]
 [ext_resource type="Script" path="res://ui/database/database_menu.gd" id="1_83mbo"]
 [ext_resource type="PackedScene" uid="uid://byonngrgtbxr7" path="res://ui/x_button.tscn" id="4_ugcor"]
 [ext_resource type="Theme" uid="uid://beq0588k2fchk" path="res://ui/database/database.tres" id="7_d3l6e"]
-[ext_resource type="Texture2D" uid="uid://gb1sri3mlr14" path="res://assets/gui/database/database_mon_file.png" id="7_fmfrw"]
-[ext_resource type="Texture2D" uid="uid://bab8iuw0duj82" path="res://assets/gui/database/database_mon_file_default.png" id="8_dgrnb"]
+[ext_resource type="Texture2D" uid="uid://gb1sri3mlr14" path="res://assets/ui/database/database_mon_file.png" id="7_fmfrw"]
+[ext_resource type="Texture2D" uid="uid://bab8iuw0duj82" path="res://assets/ui/database/database_mon_file_default.png" id="8_dgrnb"]
 [ext_resource type="Texture2D" uid="uid://dos1wnic6bcd7" path="res://assets/mons/magnetfrog.png" id="8_rdcdi"]
-[ext_resource type="Texture2D" uid="uid://bftq7jcwjnjbx" path="res://assets/gui/pixel.png" id="9_s3meg"]
+[ext_resource type="Texture2D" uid="uid://bftq7jcwjnjbx" path="res://assets/ui/pixel.png" id="9_s3meg"]
 
 [node name="DatabaseMenu" type="Node2D"]
 script = ExtResource("1_83mbo")

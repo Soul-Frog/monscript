@@ -2,11 +2,13 @@ class_name VisualNovel
 extends Node2D
 
 signal completed
+signal dialogue_completed
 
 const _DIALOGUE_FILE = preload("res://dialogue/intro.dialogue")
 
-@onready var BUS_SCENE = $Subscenes/Bus
 @onready var CLASSROOM_SCENE = $Subscenes/Classroom
+@onready var BUS_SCENE = $Subscenes/Bus
+@onready var BUS_STOP_SCENE = $Subscenes/BusStop
 @onready var ROOM_SCENE = $Subscenes/Room
 @onready var COMPUTER_SCENE = $Subscenes/Computer
 
@@ -39,7 +41,7 @@ func _set_interactables_disabled(scene: Node, disabled: bool):
 
 func open_dialogue(dialogue: String):
 	if _dialogue_active:
-		return
+		assert(false)
 	
 	_set_interactables_disabled(_active_subscene, true)
 	_dialogue_active = true
@@ -48,6 +50,8 @@ func open_dialogue(dialogue: String):
 	
 	_dialogue_active = false
 	_set_interactables_disabled(_active_subscene, false)
+	
+	emit_signal("dialogue_completed")
 
 # switch to a new scene
 # fade controls whether we do a fading transition or not

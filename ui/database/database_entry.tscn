@@ -1,14 +1,14 @@
 [gd_scene load_steps=10 format=3 uid="uid://tg5harh0rv1m"]
 
 [ext_resource type="Texture2D" uid="uid://dos1wnic6bcd7" path="res://assets/mons/magnetfrog.png" id="1_3isa0"]
-[ext_resource type="Texture2D" uid="uid://cgd4ok4efdoau" path="res://assets/gui/database/database_entry_unselected.png" id="1_fqmop"]
-[ext_resource type="Texture2D" uid="uid://2wy01i3nfpl7" path="res://assets/gui/database/database_entry_selected.png" id="1_wpxe2"]
+[ext_resource type="Texture2D" uid="uid://cgd4ok4efdoau" path="res://assets/ui/database/database_entry_unselected.png" id="1_fqmop"]
+[ext_resource type="Texture2D" uid="uid://2wy01i3nfpl7" path="res://assets/ui/database/database_entry_selected.png" id="1_wpxe2"]
 [ext_resource type="Script" path="res://ui/database/database_entry.gd" id="1_wupum"]
-[ext_resource type="Texture2D" uid="uid://37nw1u1a7hb2" path="res://assets/gui/database/database_progress_bar_under.png" id="2_kcf8x"]
-[ext_resource type="Texture2D" uid="uid://dyetrnm5te2ay" path="res://assets/gui/database/database_entry_selected_hover.png" id="3_0hdpk"]
-[ext_resource type="Texture2D" uid="uid://deivh7cuhhed8" path="res://assets/gui/database/database_progress_bar_over.png" id="3_p6m86"]
-[ext_resource type="Texture2D" uid="uid://de2t70dljitio" path="res://assets/gui/database/database_entry_disabled.png" id="4_aarq6"]
-[ext_resource type="Texture2D" uid="uid://bw0wsjpyu33yb" path="res://assets/gui/database/database_entry_unselected_hover.png" id="5_lwron"]
+[ext_resource type="Texture2D" uid="uid://37nw1u1a7hb2" path="res://assets/ui/database/database_progress_bar_under.png" id="2_kcf8x"]
+[ext_resource type="Texture2D" uid="uid://dyetrnm5te2ay" path="res://assets/ui/database/database_entry_selected_hover.png" id="3_0hdpk"]
+[ext_resource type="Texture2D" uid="uid://deivh7cuhhed8" path="res://assets/ui/database/database_progress_bar_over.png" id="3_p6m86"]
+[ext_resource type="Texture2D" uid="uid://de2t70dljitio" path="res://assets/ui/database/database_entry_disabled.png" id="4_aarq6"]
+[ext_resource type="Texture2D" uid="uid://bw0wsjpyu33yb" path="res://assets/ui/database/database_entry_unselected_hover.png" id="5_lwron"]
 
 [node name="DatabaseEntry" type="BoxContainer"]
 custom_minimum_size = Vector2(158, 38)

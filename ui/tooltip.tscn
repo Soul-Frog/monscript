@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://ui/tooltip.gd" id="1_60doy"]
 [ext_resource type="Theme" uid="uid://612i0h3ltb6t" path="res://monscript_theme.tres" id="1_tycc3"]
-[ext_resource type="Texture2D" uid="uid://bha488om4dvs5" path="res://assets/gui/tooltip9patch.png" id="2_uq08r"]
+[ext_resource type="Texture2D" uid="uid://bha488om4dvs5" path="res://assets/ui/tooltip9patch.png" id="2_uq08r"]
 
 [node name="Tooltip" type="MarginContainer"]
 z_index = 4000

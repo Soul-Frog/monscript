@@ -4,9 +4,9 @@ extends MarginContainer
 signal clicked
 signal deleted
 
-const IF_SPRITE := preload("res://assets/gui/script/if.png")
-const DO_SPRITE := preload("res://assets/gui/script/do.png")
-const TO_SPRITE := preload("res://assets/gui/script/to.png")
+const IF_SPRITE := preload("res://assets/ui/script_menu/if.png")
+const DO_SPRITE := preload("res://assets/ui/script_menu/do.png")
+const TO_SPRITE := preload("res://assets/ui/script_menu/to.png")
 const BASE_SIZE := 16
 
 var block_type
