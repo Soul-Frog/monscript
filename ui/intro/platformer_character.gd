@@ -1,9 +1,9 @@
 extends CharacterBody2D
 
 const _SPEED = 60.0
-const _JUMP_VELOCITY = -300.0
+const _JUMP_VELOCITY = -260.0
 
-var _gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var _gravity = 800
 
 var _enabled = true
 

@@ -77,28 +77,84 @@ elif not GameData.FLAG_INTRO_READY_TO_SLEEP
 	do Dialogue.emit("examined computer twice")
 # after playing the game demo
 else
-	{{GameData.PLAYER_NAME}}: I'm so fed up with this crap right now. 
-	{{GameData.PLAYER_NAME}}: Screw coding, I'm done. I just want to go to bed.
+	{{GameData.PLAYER_NAME}}: I don't want to see that code ever again.
+	{{GameData.PLAYER_NAME}}: Screw programming, I'm done. I just want to go to bed.
 => END
 
 ~ login1
 {{GameData.PLAYER_NAME}}: Ah, right, my login.
-# TODO - player name input here soon
 => END
 
 ~ login2
 {{GameData.PLAYER_NAME}}: {{GameData.PLAYER_NAME}}. Yup, that's me.
 {{GameData.PLAYER_NAME}}: No need for a password, of course. I'm not studying cybersecurity.
-{{GameData.PLAYER_NAME}}: It's coding time.
+{{GameData.PLAYER_NAME}}: Now, it's coding time!
 => END
 
 ~ work_on_game
-{{GameData.PLAYER_NAME}}: ...
 {{GameData.PLAYER_NAME}}: Hmm... 
-{{GameData.PLAYER_NAME}}: .........
+{{GameData.PLAYER_NAME}}: ...
 {{GameData.PLAYER_NAME}}: I think this should work... right?
-{{GameData.PLAYER_NAME}}: Well, time to build and give this game a try!
-# TOOD - transition to a little crappy game demo that doesn't work properly and bugs out
+{{GameData.PLAYER_NAME}}: .........
+{{GameData.PLAYER_NAME}}: Alright, that looks goodl. Let's compile and give this game a try.
+=> END
+
+~ badgame1
+{{GameData.PLAYER_NAME}}: Everything looks good so far.
+{{GameData.PLAYER_NAME}}: I mean, the graphics could use some work, but it's something.
+{{GameData.PLAYER_NAME}}: Now, to navigate over to the goal...
+=> END
+
+~ badgame2
+{{GameData.PLAYER_NAME}}: Huh? What just happened?
+{{GameData.PLAYER_NAME}}: Hmm, I swear I did this right.
+{{GameData.PLAYER_NAME}}: Let me just reset this real quick...
+do Dialogue.emit("reset")
+{{GameData.PLAYER_NAME}}: ...maybe it'll work this time.
+=> END
+
+~ badgame3
+{{GameData.PLAYER_NAME}}: Seriously? What did I do wrong?
+{{GameData.PLAYER_NAME}}: Three years and I can't even make a solid freaking platform.
+{{GameData.PLAYER_NAME}}: This has to be like, Game Design 101, right?
+{{GameData.PLAYER_NAME}}: It's ridiculous. I'm never going to get this project done at this rate.
+=> END
+
+~ badgame4
+{{GameData.PLAYER_NAME}}: ...
+=> END
+
+~ badgame5
+{{GameData.PLAYER_NAME}}: What is even happening?
+{{GameData.PLAYER_NAME}}: I don't understand this at all... why is everything moving around like this?
+{{GameData.PLAYER_NAME}}: It just doesn't make any sense.
+=> END
+
+~ badgame6
+{{GameData.PLAYER_NAME}}: You know what? 
+{{GameData.PLAYER_NAME}}: I just can't do this anymore. 
+{{GameData.PLAYER_NAME}}: How am I this bad? 
+{{GameData.PLAYER_NAME}}: And I'm supposed to have a prototype by next week? Yeah right.
+{{GameData.PLAYER_NAME}}: Screw that. I'm done. 
+=> END
+
+~ post_badgame
+{{GameData.PLAYER_NAME}}: It's unbelievable really. That I'm this crap at programming.
+{{GameData.PLAYER_NAME}}: I can't take it anymore. Pretending that I'll somehow ever be able to make a game.
+{{GameData.PLAYER_NAME}}: It's just delusional.
+{{GameData.PLAYER_NAME}}: A lost cause. 
+{{GameData.PLAYER_NAME}}: Completely hopeless. 
+{{GameData.PLAYER_NAME}}: Because I can't. I know I can't. I'll never be able to. 
+{{GameData.PLAYER_NAME}}: I just need to admit it to myself. This isn't for me.
+{{GameData.PLAYER_NAME}}: It's one thing to want something but...
+{{GameData.PLAYER_NAME}}: Another thing entirely to actually accomplish it.
+{{GameData.PLAYER_NAME}}: And the truth is, no matter how badly I want to do this...
+{{GameData.PLAYER_NAME}}: It'll never happen. 
+{{GameData.PLAYER_NAME}}: I'm not good enough. I'll never be.
+{{GameData.PLAYER_NAME}}: ...
+{{GameData.PLAYER_NAME}}: I've reached my limit. I can't deal with this anymore.
+{{GameData.PLAYER_NAME}}: There's no reason for me to to struggle. I'm giving up.
+{{GameData.PLAYER_NAME}}: ...I just want to go to bed. 
 set GameData.FLAG_INTRO_READY_TO_SLEEP = true
 => END
 
@@ -107,14 +163,14 @@ if not GameData.FLAG_INTRO_READY_TO_SLEEP:
 	{{GameData.PLAYER_NAME}}: My bed. It looks really cozy.\nI'd like to just go to sleep now, but I've got a lot I need to get done tonight.
 else
 	{{GameData.PLAYER_NAME}}: I don't even know why I bother.
-	{{GameData.PLAYER_NAME}}: No matter how hard I try...
+	{{GameData.PLAYER_NAME}}: No matter how hard I try.
 	{{GameData.PLAYER_NAME}}: I'll always fall short.
 	{{GameData.PLAYER_NAME}}: I'll never be a good programmer.
 	{{GameData.PLAYER_NAME}}: It's obvious that this isn't for me.
 	{{GameData.PLAYER_NAME}}: So why do I keep trying?
 	{{GameData.PLAYER_NAME}}: ...
 	{{GameData.PLAYER_NAME}}: It doesn't matter anymore. 
-	{{GameData.PLAYER_NAME}}: I'm screwed. There's no way I'll finish this thing in time...
+	{{GameData.PLAYER_NAME}}: I'm screwed. There's no way I'll finish this game in time...
 	{{GameData.PLAYER_NAME}}: I'll have to figure this out tomorrow. 
 	{{GameData.PLAYER_NAME}}: Maybe I can just drop out. Run away from it all.
 	{{GameData.PLAYER_NAME}}: I don't even care anymore.
@@ -124,9 +180,9 @@ else
 	{{GameData.PLAYER_NAME}}: ...what a stupid thought.
 	{{GameData.PLAYER_NAME}}: ...
 	{{GameData.PLAYER_NAME}}: ......
+	do Dialogue.emit("sleep")
 	{{GameData.PLAYER_NAME}}: .........
 	{{GameData.PLAYER_NAME}}: ..................
-	do Dialogue.emit("sleep")
 => END
 
 

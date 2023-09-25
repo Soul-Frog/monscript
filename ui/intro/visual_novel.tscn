@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://d00rb06jyy6qd"]
+[gd_scene load_steps=16 format=3 uid="uid://d00rb06jyy6qd"]
 
 [ext_resource type="Script" path="res://ui/intro/visual_novel.gd" id="1_dn0vm"]
 [ext_resource type="Texture2D" uid="uid://bn1gnxl36qdg" path="res://assets/ui/visual_novel/classroom.jpg" id="2_voode"]
@@ -11,8 +11,10 @@
 [ext_resource type="Script" path="res://ui/intro/badgame.gd" id="8_2qdnu"]
 [ext_resource type="Texture2D" uid="uid://dbp3rcrt6ajfc" path="res://assets/ui/visual_novel/badgame/badgame_bg.png" id="8_kkttt"]
 [ext_resource type="PackedScene" uid="uid://dlvbu647qggor" path="res://ui/intro/platformer_character.tscn" id="9_pjxf0"]
-
-[sub_resource type="Theme" id="Theme_rm2oa"]
+[ext_resource type="Texture2D" uid="uid://b2x8bdjxoa08w" path="res://assets/ui/visual_novel/badgame/badgame_flag.png" id="11_aaei8"]
+[ext_resource type="Texture2D" uid="uid://3n6cnkt8rrqp" path="res://assets/ui/visual_novel/badgame/badgame_platform1.png" id="12_2atus"]
+[ext_resource type="Texture2D" uid="uid://7ta02nsa3xbo" path="res://assets/ui/visual_novel/badgame/badgame_platform2.png" id="13_iwxf3"]
+[ext_resource type="Texture2D" uid="uid://c6p12i7ibsy6i" path="res://assets/ui/visual_novel/badgame/badgame_platform3.png" id="14_26bo4"]
 
 [node name="VisualNovel" type="Node2D"]
 script = ExtResource("1_dn0vm")
@@ -98,70 +100,114 @@ script = ExtResource("8_2qdnu")
 position = Vector2(160, 90)
 texture = ExtResource("8_kkttt")
 
+[node name="ControlsLabel" type="Label" parent="Subscenes/BadGame"]
+offset_left = 22.0
+offset_top = 9.0
+offset_right = 155.0
+offset_bottom = 39.0
+text = "Hold A or D to move
+Space to jump"
+
+[node name="DesignedByLabel" type="Label" parent="Subscenes/BadGame"]
+offset_left = 210.0
+offset_top = 3.0
+offset_right = 317.0
+offset_bottom = 35.0
+text = "Game designed by
+<NAME>"
+
+[node name="GoalLabel" type="RichTextLabel" parent="Subscenes/BadGame"]
+offset_left = 274.0
+offset_top = 49.0
+offset_right = 296.0
+offset_bottom = 65.0
+theme_override_colors/default_color = Color(1, 0.996078, 0.27451, 1)
+text = "Goal"
+
 [node name="Clickables" type="Node2D" parent="Subscenes/BadGame"]
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Subscenes/BadGame"]
+[node name="Collision" type="StaticBody2D" parent="Subscenes/BadGame"]
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Subscenes/BadGame/StaticBody2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Subscenes/BadGame/Collision"]
 position = Vector2(0, -16)
-polygon = PackedVector2Array(8, 16, 16, 16, 16, 104, 8, 104)
+polygon = PackedVector2Array(8, 16, 16, 16, 12, 103, 8, 104)
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Subscenes/BadGame/StaticBody2D"]
-position = Vector2(0, -16)
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Subscenes/BadGame/Collision"]
+position = Vector2(-1.35909, -16.0002)
+scale = Vector2(0.869318, 1)
 polygon = PackedVector2Array(16, 104, 16, 112, 104, 112, 104, 104)
 
-[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Subscenes/BadGame/StaticBody2D"]
-position = Vector2(0, -16)
-polygon = PackedVector2Array(112, 72, 112, 80, 144, 80, 144, 72)
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Subscenes/BadGame/Collision"]
+position = Vector2(41, -16.0001)
+scale = Vector2(0.625, 1)
+polygon = PackedVector2Array(112.086, 72, 112, 80, 144, 80, 144, 72)
 
-[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Subscenes/BadGame/StaticBody2D"]
-position = Vector2(0, -16)
-polygon = PackedVector2Array(176, 72, 176, 80, 232, 80, 232, 72)
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Subscenes/BadGame/Collision"]
+position = Vector2(91.148, -16)
+scale = Vector2(0.381238, 1)
+polygon = PackedVector2Array(175.355, 76, 176, 80, 232, 80, 233.062, 60)
 
-[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="Subscenes/BadGame/StaticBody2D"]
-polygon = PackedVector2Array(272, 104, 272, 16, 264, 16, 264, 104)
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="Subscenes/BadGame/Collision"]
+polygon = PackedVector2Array(272, 104, 272, 16, 264, 16, 267, 69)
 
-[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="Subscenes/BadGame/StaticBody2D"]
-position = Vector2(0, -16)
-polygon = PackedVector2Array(200, 104, 200, 112, 240, 112, 240, 104)
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="Subscenes/BadGame/Collision"]
+position = Vector2(5, -8)
+scale = Vector2(1, 1)
+polygon = PackedVector2Array(200, 123, 201, 132, 212, 126, 211, 112)
 
-[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="Subscenes/BadGame/StaticBody2D"]
+[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="Subscenes/BadGame/Collision"]
+position = Vector2(-6, -97)
+scale = Vector2(1, 1)
+polygon = PackedVector2Array(200, 104, 205, 107, 213, 126, 240, 104)
+
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="Subscenes/BadGame/Collision"]
 position = Vector2(-96, -73)
-polygon = PackedVector2Array(112, 72, 112, 80, 360, 89, 381, 78)
+polygon = PackedVector2Array(112, 72, 112, 80, 260, 76, 368, 89, 358, 74)
+
+[node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="Subscenes/BadGame/Collision"]
+position = Vector2(34, -35)
+scale = Vector2(1, 1)
+polygon = PackedVector2Array(200, 123, 201, 132, 212, 129, 212, 122)
+
+[node name="CollisionPolygon2D10" type="CollisionPolygon2D" parent="Subscenes/BadGame/Collision"]
+position = Vector2(-136, 19)
+scale = Vector2(1, 1)
+polygon = PackedVector2Array(204, 114, 209, 124, 220, 134, 218, 117)
+
+[node name="CollisionPolygon2D11" type="CollisionPolygon2D" parent="Subscenes/BadGame/Collision"]
+position = Vector2(62, -62)
+scale = Vector2(0.283769, 1)
+polygon = PackedVector2Array(172.676, 67.9999, 176, 80, 232, 80, 233.062, 67)
 
 [node name="PlatformerCharacter" parent="Subscenes/BadGame" instance=ExtResource("9_pjxf0")]
-position = Vector2(28, 25)
+position = Vector2(27, 44)
 
 [node name="FallenArea" type="Area2D" parent="Subscenes/BadGame"]
 
 [node name="Polygon2D" type="CollisionPolygon2D" parent="Subscenes/BadGame/FallenArea"]
 polygon = PackedVector2Array(0, 91, 15, 90, 17, 167, 304, 168, 304, 105, 274, 103, 272, 96, 318, 97, 320, 182, 1, 180)
 
-[node name="ControlsLabel" type="Label" parent="Subscenes/BadGame"]
-offset_left = 25.0
-offset_top = 14.0
-offset_right = 158.0
-offset_bottom = 44.0
-text = "Press A or D to move
-Space to jump"
+[node name="Flag" type="Sprite2D" parent="Subscenes/BadGame"]
+position = Vector2(272, 64)
+texture = ExtResource("11_aaei8")
+centered = false
 
-[node name="GoalLabel" type="RichTextLabel" parent="Subscenes/BadGame"]
-offset_left = 271.0
-offset_top = 39.0
-offset_right = 311.0
-offset_bottom = 64.0
-theme_override_colors/default_color = Color(1, 0.996078, 0.27451, 1)
-text = "Goal
-  V"
+[node name="Platform1" type="Sprite2D" parent="Subscenes/BadGame"]
+position = Vector2(16, 88)
+texture = ExtResource("12_2atus")
+centered = false
 
-[node name="Button" type="Button" parent="Subscenes/BadGame"]
-offset_left = 286.0
-offset_top = 5.0
-offset_right = 302.0
-offset_bottom = 18.0
-theme = SubResource("Theme_rm2oa")
+[node name="Platform2" type="Sprite2D" parent="Subscenes/BadGame"]
+position = Vector2(8, 16)
+texture = ExtResource("13_iwxf3")
+centered = false
+
+[node name="Platform3" type="Sprite2D" parent="Subscenes/BadGame"]
+position = Vector2(112, 56)
+texture = ExtResource("14_26bo4")
+centered = false
 
 [node name="NameInput" type="LineEdit" parent="."]
 visible = false
