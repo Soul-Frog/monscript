@@ -87,8 +87,9 @@ else
 => END
 
 ~ login2
-{{GameData.PLAYER_NAME}}: ...and no need for a password, of course. I'm not studying cybersecurity.
-{{GameData.PLAYER_NAME}}: It's coding time!
+{{GameData.PLAYER_NAME}}: {{GameData.PLAYER_NAME}}. Yup, that's me.
+{{GameData.PLAYER_NAME}}: No need for a password, of course. I'm not studying cybersecurity.
+{{GameData.PLAYER_NAME}}: It's coding time.
 => END
 
 ~ work_on_game

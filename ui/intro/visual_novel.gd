@@ -1,8 +1,14 @@
 class_name VisualNovel
 extends Node2D
 
+# emitted after the visual novel segment ends
 signal completed
+
+# emitted after a dialogue has completed
 signal dialogue_completed
+
+# emitted after a name is submitted into the name input field
+signal name_inputted
 
 const _DIALOGUE_FILE = preload("res://dialogue/intro.dialogue")
 
@@ -11,8 +17,11 @@ const _DIALOGUE_FILE = preload("res://dialogue/intro.dialogue")
 @onready var BUS_STOP_SCENE = $Subscenes/BusStop
 @onready var ROOM_SCENE = $Subscenes/Room
 @onready var COMPUTER_SCENE = $Subscenes/Computer
+@onready var BADGAME_SCENE = $Subscenes/BadGame
 
 @onready var FADE = $FadeDecorator
+
+@onready var _NAME_INPUT = $NameInput
 
 @onready var _active_subscene = $Subscenes/Classroom
 var _dialogue_active := false
@@ -29,11 +38,23 @@ func _ready():
 		# connect so we can see when a clickable is clicked to launch a dialogue
 		for clickable in subscene.find_child("Clickables").get_children():
 			clickable.clicked.connect(open_dialogue)
+	_NAME_INPUT.visible = false
+	
+	BADGAME_SCENE.visible = true
 
 func play_intro_cutscene():
 	# start the intro cutscene
 	await CutscenePlayer.play_cutscene(CutscenePlayer.CutsceneID.INTRO, self)
 	emit_signal("completed")
+
+func display_name_input():
+	_set_interactables_disabled(_active_subscene, true)
+	_NAME_INPUT.visible = true
+	_NAME_INPUT.grab_focus()
+
+func hide_name_input():
+	_set_interactables_disabled(_active_subscene, false)
+	_NAME_INPUT.visible = false
 
 func _set_interactables_disabled(scene: Node, disabled: bool):
 	for clickable in scene.find_child("Clickables").get_children():
@@ -76,3 +97,7 @@ func switch_subscene(new_subscene: Node, fade := true):
 func fade_out():
 	FADE.fade_out()
 	await FADE.fade_out_done
+
+
+func _on_name_input_text_submitted(new_text):
+	emit_signal("name_inputted", new_text)

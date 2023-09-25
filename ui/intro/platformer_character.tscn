@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dlvbu647qggor"]
+
+[ext_resource type="Script" path="res://ui/intro/platformer_character.gd" id="1_5f0el"]
+[ext_resource type="Texture2D" uid="uid://leep11jmaptd" path="res://assets/ui/visual_novel/badgame/godot_avatar.png" id="1_t1nah"]
+
+[node name="PlatformerCharacter" type="CharacterBody2D"]
+collision_mask = 4
+script = ExtResource("1_5f0el")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_t1nah")
+centered = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(1, 8, 14, 8, 10, 19, 5, 19)

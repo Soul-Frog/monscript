@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://d00rb06jyy6qd"]
+[gd_scene load_steps=13 format=3 uid="uid://d00rb06jyy6qd"]
 
 [ext_resource type="Script" path="res://ui/intro/visual_novel.gd" id="1_dn0vm"]
 [ext_resource type="Texture2D" uid="uid://bn1gnxl36qdg" path="res://assets/ui/visual_novel/classroom.jpg" id="2_voode"]
@@ -8,6 +8,11 @@
 [ext_resource type="Script" path="res://ui/intro/clickable.gd" id="4_iovda"]
 [ext_resource type="PackedScene" uid="uid://ct27r3y3ao3um" path="res://decorators/fade_decorator.tscn" id="5_g2i7w"]
 [ext_resource type="Texture2D" uid="uid://c4li05lmsfumf" path="res://assets/ui/visual_novel/computer.png" id="6_uyhtg"]
+[ext_resource type="Script" path="res://ui/intro/badgame.gd" id="8_2qdnu"]
+[ext_resource type="Texture2D" uid="uid://dbp3rcrt6ajfc" path="res://assets/ui/visual_novel/badgame/badgame_bg.png" id="8_kkttt"]
+[ext_resource type="PackedScene" uid="uid://dlvbu647qggor" path="res://ui/intro/platformer_character.tscn" id="9_pjxf0"]
+
+[sub_resource type="Theme" id="Theme_rm2oa"]
 
 [node name="VisualNovel" type="Node2D"]
 script = ExtResource("1_dn0vm")
@@ -86,8 +91,93 @@ examine_dialogue = "examine_bed"
 position = Vector2(84, 47)
 polygon = PackedVector2Array(134, 49, 178, -37, 214, 49, 136, 82)
 
+[node name="BadGame" type="Node2D" parent="Subscenes"]
+script = ExtResource("8_2qdnu")
+
+[node name="Background" type="Sprite2D" parent="Subscenes/BadGame"]
+position = Vector2(160, 90)
+texture = ExtResource("8_kkttt")
+
+[node name="Clickables" type="Node2D" parent="Subscenes/BadGame"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Subscenes/BadGame"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Subscenes/BadGame/StaticBody2D"]
+position = Vector2(0, -16)
+polygon = PackedVector2Array(8, 16, 16, 16, 16, 104, 8, 104)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Subscenes/BadGame/StaticBody2D"]
+position = Vector2(0, -16)
+polygon = PackedVector2Array(16, 104, 16, 112, 104, 112, 104, 104)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Subscenes/BadGame/StaticBody2D"]
+position = Vector2(0, -16)
+polygon = PackedVector2Array(112, 72, 112, 80, 144, 80, 144, 72)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Subscenes/BadGame/StaticBody2D"]
+position = Vector2(0, -16)
+polygon = PackedVector2Array(176, 72, 176, 80, 232, 80, 232, 72)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="Subscenes/BadGame/StaticBody2D"]
+polygon = PackedVector2Array(272, 104, 272, 16, 264, 16, 264, 104)
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="Subscenes/BadGame/StaticBody2D"]
+position = Vector2(0, -16)
+polygon = PackedVector2Array(200, 104, 200, 112, 240, 112, 240, 104)
+
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="Subscenes/BadGame/StaticBody2D"]
+position = Vector2(-96, -73)
+polygon = PackedVector2Array(112, 72, 112, 80, 360, 89, 381, 78)
+
+[node name="PlatformerCharacter" parent="Subscenes/BadGame" instance=ExtResource("9_pjxf0")]
+position = Vector2(28, 25)
+
+[node name="FallenArea" type="Area2D" parent="Subscenes/BadGame"]
+
+[node name="Polygon2D" type="CollisionPolygon2D" parent="Subscenes/BadGame/FallenArea"]
+polygon = PackedVector2Array(0, 91, 15, 90, 17, 167, 304, 168, 304, 105, 274, 103, 272, 96, 318, 97, 320, 182, 1, 180)
+
+[node name="ControlsLabel" type="Label" parent="Subscenes/BadGame"]
+offset_left = 25.0
+offset_top = 14.0
+offset_right = 158.0
+offset_bottom = 44.0
+text = "Press A or D to move
+Space to jump"
+
+[node name="GoalLabel" type="RichTextLabel" parent="Subscenes/BadGame"]
+offset_left = 271.0
+offset_top = 39.0
+offset_right = 311.0
+offset_bottom = 64.0
+theme_override_colors/default_color = Color(1, 0.996078, 0.27451, 1)
+text = "Goal
+  V"
+
+[node name="Button" type="Button" parent="Subscenes/BadGame"]
+offset_left = 286.0
+offset_top = 5.0
+offset_right = 302.0
+offset_bottom = 18.0
+theme = SubResource("Theme_rm2oa")
+
+[node name="NameInput" type="LineEdit" parent="."]
+visible = false
+offset_left = 104.0
+offset_top = 68.0
+offset_right = 216.0
+offset_bottom = 88.0
+placeholder_text = "Enter Your Name"
+alignment = 1
+max_length = 15
+
 [node name="FadeDecorator" parent="." instance=ExtResource("5_g2i7w")]
 active = false
 fade_type = 1
 fade_speed = 5.0
 fade_out_hangtime = 0.5
+
+[connection signal="body_entered" from="Subscenes/BadGame/FallenArea" to="Subscenes/BadGame" method="_on_fallen_area_body_entered"]
+[connection signal="text_submitted" from="NameInput" to="." method="_on_name_input_text_submitted"]

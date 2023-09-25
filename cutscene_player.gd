@@ -45,13 +45,16 @@ func _CUTSCENE_INTRODUCTION(vn: Node):
 	assert(msg == "examined computer twice")
 	await vn.dialogue_completed
 	
-	# TODO - switch screen to computer login
+	# Get name from player
 	vn.open_dialogue("login1")
 	await vn.dialogue_completed
-	#TODO - login
+	vn.display_name_input()
+	GameData.PLAYER_NAME = await vn.name_inputted
+	vn.hide_name_input()
 	vn.open_dialogue("login2")
 	await vn.dialogue_completed
-	# switch background to ide
+	
+	# switch background to IDE
 	await vn.switch_subscene(vn.COMPUTER_SCENE)
 	vn.open_dialogue("work_on_game")
 	await vn.dialogue_completed
