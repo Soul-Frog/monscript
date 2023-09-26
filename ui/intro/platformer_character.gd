@@ -9,6 +9,8 @@ var _enabled = true
 
 @onready var _starting_position = position
 
+@onready var _SPRITE = $Sprite
+
 func reset():
 	position = _starting_position
 
@@ -17,6 +19,12 @@ func enable():
 
 func disable():
 	_enabled = false
+
+func offset_sprite(offset_vector: Vector2):
+	_SPRITE.offset = offset_vector
+
+func is_sprite_offset() -> bool:
+	return _SPRITE.offset != Vector2.ZERO
 
 func _physics_process(delta):
 	if _enabled and visible:

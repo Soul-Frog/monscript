@@ -39,6 +39,8 @@ func _ready():
 		for clickable in subscene.find_child("Clickables").get_children():
 			clickable.clicked.connect(open_dialogue)
 	_NAME_INPUT.visible = false
+	
+	BADGAME_SCENE.visible = true
 
 func play_intro_cutscene():
 	# start the intro cutscene

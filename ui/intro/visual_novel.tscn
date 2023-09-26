@@ -119,7 +119,7 @@ text = "Game designed by
 [node name="GoalLabel" type="RichTextLabel" parent="Subscenes/BadGame"]
 offset_left = 274.0
 offset_top = 49.0
-offset_right = 296.0
+offset_right = 304.0
 offset_bottom = 65.0
 theme_override_colors/default_color = Color(1, 0.996078, 0.27451, 1)
 text = "Goal"
@@ -130,7 +130,7 @@ text = "Goal"
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Subscenes/BadGame/Collision"]
+[node name="CollisionLeftWall" type="CollisionPolygon2D" parent="Subscenes/BadGame/Collision"]
 position = Vector2(0, -16)
 polygon = PackedVector2Array(8, 16, 16, 16, 12, 103, 8, 104)
 
@@ -194,17 +194,17 @@ position = Vector2(272, 64)
 texture = ExtResource("11_aaei8")
 centered = false
 
-[node name="Platform1" type="Sprite2D" parent="Subscenes/BadGame"]
+[node name="BottomPlatform" type="Sprite2D" parent="Subscenes/BadGame"]
 position = Vector2(16, 88)
 texture = ExtResource("12_2atus")
 centered = false
 
-[node name="Platform2" type="Sprite2D" parent="Subscenes/BadGame"]
+[node name="LeftPlatform" type="Sprite2D" parent="Subscenes/BadGame"]
 position = Vector2(8, 16)
 texture = ExtResource("13_iwxf3")
 centered = false
 
-[node name="Platform3" type="Sprite2D" parent="Subscenes/BadGame"]
+[node name="FloatingPlatform" type="Sprite2D" parent="Subscenes/BadGame"]
 position = Vector2(112, 56)
 texture = ExtResource("14_26bo4")
 centered = false

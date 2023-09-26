@@ -5,7 +5,7 @@ const INT_MIN = -9223372036854775807
 
 const MONS_PER_TEAM = 4
 
-var RNG = RandomNumberGenerator.new()
+var RNG := RandomNumberGenerator.new()
 
 const COLOR_WHITE_TEXT = Color(255.0/255.0, 255.0/255.0, 255.0/255.0, 255)
 const COLOR_GRAY_TEXT = Color(179.0/255.0, 185.0/255.0, 209.0/255.0, 255)
@@ -30,6 +30,10 @@ enum BattleEndCondition {
 	ESCAPE, # player escaped from battle
 	NONE # default/error condition; should be set before battle ends
 }
+
+func choose_char(options: String):
+	assert(options.length() != 0, "No options in string!")
+	return options[RNG.randi_range(0, options.length()-1)]
 
 # returns one of the items in the input array at random
 func choose_one(options: Array[Variant]):
