@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://d00rb06jyy6qd"]
+[gd_scene load_steps=18 format=3 uid="uid://d00rb06jyy6qd"]
 
 [ext_resource type="Script" path="res://ui/intro/visual_novel.gd" id="1_dn0vm"]
 [ext_resource type="Texture2D" uid="uid://bn1gnxl36qdg" path="res://assets/ui/visual_novel/classroom.jpg" id="2_voode"]
@@ -15,6 +15,8 @@
 [ext_resource type="Texture2D" uid="uid://3n6cnkt8rrqp" path="res://assets/ui/visual_novel/badgame/badgame_platform1.png" id="12_2atus"]
 [ext_resource type="Texture2D" uid="uid://7ta02nsa3xbo" path="res://assets/ui/visual_novel/badgame/badgame_platform2.png" id="13_iwxf3"]
 [ext_resource type="Texture2D" uid="uid://c6p12i7ibsy6i" path="res://assets/ui/visual_novel/badgame/badgame_platform3.png" id="14_26bo4"]
+[ext_resource type="Texture2D" uid="uid://b1bga7kc0lb8p" path="res://assets/ui/visual_novel/badgame/badgame_error.png" id="15_cb1nt"]
+[ext_resource type="Script" path="res://decorators/fade_decorator.gd" id="16_scigv"]
 
 [node name="VisualNovel" type="Node2D"]
 script = ExtResource("1_dn0vm")
@@ -150,7 +152,7 @@ scale = Vector2(0.381238, 1)
 polygon = PackedVector2Array(175.355, 76, 176, 80, 232, 80, 233.062, 60)
 
 [node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="Subscenes/BadGame/Collision"]
-polygon = PackedVector2Array(272, 104, 272, 16, 264, 16, 267, 69)
+polygon = PackedVector2Array(283, 139, 277.486, 77.3437, 272, 16, 264, 16, 267, 69)
 
 [node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="Subscenes/BadGame/Collision"]
 position = Vector2(5, -8)
@@ -187,7 +189,7 @@ position = Vector2(27, 44)
 [node name="FallenArea" type="Area2D" parent="Subscenes/BadGame"]
 
 [node name="Polygon2D" type="CollisionPolygon2D" parent="Subscenes/BadGame/FallenArea"]
-polygon = PackedVector2Array(0, 91, 15, 90, 17, 167, 304, 168, 304, 105, 274, 103, 272, 96, 318, 97, 320, 182, 1, 180)
+polygon = PackedVector2Array(8, -12, 8, 89, 17, 167, 304, 168, 304, 105, 274, 103, 272, 96, 322, 95, 323, 196, -16, 193, -14, -11)
 
 [node name="Flag" type="Sprite2D" parent="Subscenes/BadGame"]
 position = Vector2(272, 64)
@@ -208,6 +210,85 @@ centered = false
 position = Vector2(112, 56)
 texture = ExtResource("14_26bo4")
 centered = false
+
+[node name="OOMError" type="Sprite2D" parent="Subscenes/BadGame"]
+visible = false
+position = Vector2(106, 2)
+texture = ExtResource("15_cb1nt")
+centered = false
+
+[node name="Text" type="Label" parent="Subscenes/BadGame/OOMError"]
+offset_left = 2.0
+offset_top = 9.0
+offset_right = 79.0
+offset_bottom = 39.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Out of Memory
+Error on line 213
+>Game.loop(): 213"
+
+[node name="NullPtrError" type="Sprite2D" parent="Subscenes/BadGame"]
+visible = false
+position = Vector2(24, 28)
+texture = ExtResource("15_cb1nt")
+centered = false
+
+[node name="Text" type="Label" parent="Subscenes/BadGame/NullPtrError"]
+offset_left = 2.0
+offset_top = 9.0
+offset_right = 79.0
+offset_bottom = 39.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Null Pointer Error
+on line 84
+>Player.move(): 84"
+
+[node name="ArrayOutOfBoundsError" type="Sprite2D" parent="Subscenes/BadGame"]
+visible = false
+position = Vector2(129, 50)
+texture = ExtResource("15_cb1nt")
+centered = false
+
+[node name="Text" type="Label" parent="Subscenes/BadGame/ArrayOutOfBoundsError"]
+offset_left = 2.0
+offset_top = 9.0
+offset_right = 92.0
+offset_bottom = 54.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Array Index Out
+Of Bounds Error
+on line 37"
+
+[node name="StackOverflowError" type="Sprite2D" parent="Subscenes/BadGame"]
+visible = false
+position = Vector2(212, 18)
+texture = ExtResource("15_cb1nt")
+centered = false
+
+[node name="Text" type="Label" parent="Subscenes/BadGame/StackOverflowError"]
+offset_left = 2.0
+offset_top = 9.0
+offset_right = 92.0
+offset_bottom = 54.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Stack Overflow
+Error on line 312
+>Goal.draw(): 312"
+
+[node name="NameInputBlackout" type="ColorRect" parent="."]
+visible = false
+modulate = Color(0, 0, 0, 1)
+offset_left = -18.0
+offset_top = -20.0
+offset_right = 340.0
+offset_bottom = 198.0
+
+[node name="FadeDecorator" type="Node" parent="NameInputBlackout"]
+script = ExtResource("16_scigv")
+active = false
+fade_type = 2
+max_alpha = 0.8
+fade_speed = 2.0
 
 [node name="NameInput" type="LineEdit" parent="."]
 visible = false

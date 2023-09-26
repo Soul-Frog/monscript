@@ -96,7 +96,7 @@ else
 {{GameData.PLAYER_NAME}}: ...
 {{GameData.PLAYER_NAME}}: I think this should work... right?
 {{GameData.PLAYER_NAME}}: .........
-{{GameData.PLAYER_NAME}}: Alright, that looks goodl. Let's compile and give this game a try.
+{{GameData.PLAYER_NAME}}: Alright, that looks good. Let's compile and give this game a try.
 => END
 
 ~ badgame1

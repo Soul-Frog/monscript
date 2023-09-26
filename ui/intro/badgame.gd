@@ -11,11 +11,16 @@ signal fallen
 @onready var CONTROLS_LABEL = $ControlsLabel
 @onready var GOAL_LABEL = $GoalLabel
 
+@onready var ERROR1 = $OOMError
+@onready var ERROR2 = $NullPtrError
+@onready var ERROR3 = $ArrayOutOfBoundsError
+@onready var ERROR4 = $StackOverflowError
+
 @onready var COLLISION_LEFT_WALL = $Collision/CollisionLeftWall
 
 const _GIBBERISH_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@#~+&%><"
 
-var _buggy = true
+var _buggy = false
 
 const DESIGNED_BY_FORMAT = "Game designed by\n%s"
 
@@ -35,6 +40,9 @@ func bug_out():
 	_buggy = true
 	
 	#disable the left wall collision too
+	call_deferred("_disable_left_wall")
+
+func _disable_left_wall():
 	COLLISION_LEFT_WALL.disabled = true
 
 func _physics_process(delta: float):
@@ -95,6 +103,14 @@ func _physics_process(delta: float):
 				else:
 					GOAL_LABEL.text[i] = GOAL_LABEL.text[i].to_lower()
 
+func start_displaying_errors():
+	ERROR1.visible = true
+	await Global.delay(0.5)
+	ERROR2.visible = true
+	await Global.delay(0.25)
+	ERROR3.visible = true
+	await Global.delay(0.1)
+	ERROR4.visible = true
 
 func _on_fallen_area_body_entered(body):
 	emit_signal("fallen")

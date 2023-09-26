@@ -22,6 +22,8 @@ const _DIALOGUE_FILE = preload("res://dialogue/intro.dialogue")
 @onready var FADE = $FadeDecorator
 
 @onready var _NAME_INPUT = $NameInput
+@onready var _NAME_INPUT_BLACKOUT = $NameInputBlackout
+@onready var _NAME_INPUT_BLACKOUT_FADE = $NameInputBlackout/FadeDecorator
 
 @onready var _active_subscene = $Subscenes/Classroom
 var _dialogue_active := false
@@ -39,8 +41,6 @@ func _ready():
 		for clickable in subscene.find_child("Clickables").get_children():
 			clickable.clicked.connect(open_dialogue)
 	_NAME_INPUT.visible = false
-	
-	BADGAME_SCENE.visible = true
 
 func play_intro_cutscene():
 	# start the intro cutscene
@@ -51,10 +51,15 @@ func display_name_input():
 	_set_interactables_disabled(_active_subscene, true)
 	_NAME_INPUT.visible = true
 	_NAME_INPUT.grab_focus()
+	_NAME_INPUT_BLACKOUT.visible = true
+	_NAME_INPUT_BLACKOUT_FADE.fade_in()
 
 func hide_name_input():
 	_set_interactables_disabled(_active_subscene, false)
 	_NAME_INPUT.visible = false
+	_NAME_INPUT_BLACKOUT_FADE.fade_out()
+	await _NAME_INPUT_BLACKOUT_FADE.fade_done
+	_NAME_INPUT_BLACKOUT.visible = false
 
 func _set_interactables_disabled(scene: Node, disabled: bool):
 	for clickable in scene.find_child("Clickables").get_children():

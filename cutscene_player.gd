@@ -84,7 +84,7 @@ func _CUTSCENE_INTRODUCTION(vn: Node):
 	vn.BADGAME_SCENE.reset()
 
 	# let the player fall a few times.
-	for i in 2:
+	for i in 3:
 		await vn.BADGAME_SCENE.fallen
 		if i == 0: #play text on the first fall here
 			vn.open_dialogue("badgame4")
@@ -99,11 +99,13 @@ func _CUTSCENE_INTRODUCTION(vn: Node):
 	vn.BADGAME_SCENE.reset()
 
 	# let the player fall a few times in the buggy scene
-	for i in 2:
+	var times_to_fall = 3
+	for i in times_to_fall:
 		await vn.BADGAME_SCENE.fallen
-		if i != 1:
+		if i != times_to_fall-1:
 			vn.BADGAME_SCENE.reset()
-	#and we're done
+	#start displaying errors, and we're done
+	vn.BADGAME_SCENE.start_displaying_errors()
 	vn.open_dialogue("badgame6")
 	await vn.dialogue_completed
 	
