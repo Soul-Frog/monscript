@@ -1,15 +1,16 @@
-[gd_scene load_steps=18 format=3 uid="uid://d00rb06jyy6qd"]
+[gd_scene load_steps=19 format=3 uid="uid://d00rb06jyy6qd"]
 
 [ext_resource type="Script" path="res://ui/intro/visual_novel.gd" id="1_dn0vm"]
 [ext_resource type="Texture2D" uid="uid://bn1gnxl36qdg" path="res://assets/ui/visual_novel/classroom.jpg" id="2_voode"]
 [ext_resource type="Texture2D" uid="uid://c7dg504mvepmr" path="res://assets/ui/visual_novel/bus.jpg" id="3_bqlat"]
 [ext_resource type="Texture2D" uid="uid://ct640uueqq1pl" path="res://assets/ui/visual_novel/bus_stop.jpg" id="3_v4ulx"]
 [ext_resource type="Texture2D" uid="uid://bmxmomtvqv2uf" path="res://assets/ui/visual_novel/placeholderroom.jpg" id="4_24uig"]
-[ext_resource type="Script" path="res://ui/intro/clickable.gd" id="4_iovda"]
 [ext_resource type="PackedScene" uid="uid://ct27r3y3ao3um" path="res://decorators/fade_decorator.tscn" id="5_g2i7w"]
 [ext_resource type="Texture2D" uid="uid://c4li05lmsfumf" path="res://assets/ui/visual_novel/computer.png" id="6_uyhtg"]
+[ext_resource type="Script" path="res://ui/clickable.gd" id="7_rfvm4"]
 [ext_resource type="Script" path="res://ui/intro/badgame.gd" id="8_2qdnu"]
 [ext_resource type="Texture2D" uid="uid://dbp3rcrt6ajfc" path="res://assets/ui/visual_novel/badgame/badgame_bg.png" id="8_kkttt"]
+[ext_resource type="Script" path="res://ui/outline.gd" id="8_wowup"]
 [ext_resource type="PackedScene" uid="uid://dlvbu647qggor" path="res://ui/intro/platformer_character.tscn" id="9_pjxf0"]
 [ext_resource type="Texture2D" uid="uid://b2x8bdjxoa08w" path="res://assets/ui/visual_novel/badgame/badgame_flag.png" id="11_aaei8"]
 [ext_resource type="Texture2D" uid="uid://3n6cnkt8rrqp" path="res://assets/ui/visual_novel/badgame/badgame_platform1.png" id="12_2atus"]
@@ -79,23 +80,50 @@ centered = false
 
 [node name="Computer" type="Area2D" parent="Subscenes/Room/Clickables"]
 position = Vector2(-4, 30)
-script = ExtResource("4_iovda")
+script = ExtResource("7_rfvm4")
 examine_dialogue = "examine_computer"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Subscenes/Room/Clickables/Computer"]
 position = Vector2(-14, -15)
 polygon = PackedVector2Array(134, 49, 183, 51, 185, 82, 136, 82)
 
+[node name="Outline" type="Polygon2D" parent="Subscenes/Room/Clickables/Computer"]
+position = Vector2(64, 16)
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(55, 18, 104, 20, 108, 50, 57, 51)
+script = ExtResource("8_wowup")
+outline_color = Color(1, 1, 1, 1)
+width = 0.5
+
+[node name="Fade" parent="Subscenes/Room/Clickables/Computer/Outline" instance=ExtResource("5_g2i7w")]
+active = false
+fade_type = 2
+fade_speed = 2.0
+
 [node name="Bed" type="Area2D" parent="Subscenes/Room/Clickables"]
 position = Vector2(-4, 30)
-script = ExtResource("4_iovda")
+script = ExtResource("7_rfvm4")
 examine_dialogue = "examine_bed"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Subscenes/Room/Clickables/Bed"]
 position = Vector2(84, 47)
 polygon = PackedVector2Array(134, 49, 178, -37, 214, 49, 136, 82)
 
+[node name="Outline" type="Polygon2D" parent="Subscenes/Room/Clickables/Bed"]
+position = Vector2(172, 84)
+color = Color(1, 1, 1, 0)
+polygon = PackedVector2Array(55, 18, 70, 18, 77, -13, 76, -31, 103, -31, 96, 26, 56, 25)
+script = ExtResource("8_wowup")
+outline_color = Color(1, 1, 1, 1)
+width = 0.5
+
+[node name="Fade" parent="Subscenes/Room/Clickables/Bed/Outline" instance=ExtResource("5_g2i7w")]
+active = false
+fade_type = 2
+fade_speed = 2.0
+
 [node name="BadGame" type="Node2D" parent="Subscenes"]
+visible = false
 script = ExtResource("8_2qdnu")
 
 [node name="Background" type="Sprite2D" parent="Subscenes/BadGame"]
@@ -306,5 +334,7 @@ fade_type = 1
 fade_speed = 5.0
 fade_out_hangtime = 0.5
 
+[connection signal="fade_in_done" from="Subscenes/Room/Clickables/Computer/Outline/Fade" to="Subscenes/Room/Clickables/Computer/Outline" method="_on_fade_fade_in_done"]
+[connection signal="fade_in_done" from="Subscenes/Room/Clickables/Bed/Outline/Fade" to="Subscenes/Room/Clickables/Bed/Outline" method="_on_fade_fade_in_done"]
 [connection signal="body_entered" from="Subscenes/BadGame/FallenArea" to="Subscenes/BadGame" method="_on_fallen_area_body_entered"]
 [connection signal="text_submitted" from="NameInput" to="." method="_on_name_input_text_submitted"]

@@ -32,6 +32,19 @@ func after_all():
 		DirAccess.remove_absolute(TEST_DIR + "/" + file)
 	DirAccess.remove_absolute(TEST_DIR)
 
+func test_adjust_towards():
+	assert_eq(Global.adjust_towards(10, 5, 3), 7)
+	assert_eq(Global.adjust_towards(10, 5, 1), 9)
+	assert_eq(Global.adjust_towards(10, 5, 5), 5)
+	assert_eq(Global.adjust_towards(10, 5, 6), 5)
+	assert_eq(Global.adjust_towards(10, 5, 31312), 5)
+	
+	assert_eq(Global.adjust_towards(10, 15, 3), 13)
+	assert_eq(Global.adjust_towards(10, 15, 1), 11)
+	assert_eq(Global.adjust_towards(10, 15, 5), 15)
+	assert_eq(Global.adjust_towards(10, 15, 6), 15)
+	assert_eq(Global.adjust_towards(10, 15, 313432), 15)
+
 func test_choose_one():
 	# with one element, always return that element
 	for i in range(0, 10):

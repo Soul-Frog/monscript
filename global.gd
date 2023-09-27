@@ -31,6 +31,14 @@ enum BattleEndCondition {
 	NONE # default/error condition; should be set before battle ends
 }
 
+func adjust_towards(current, goal, delta):
+	assert(delta > 0, "Delta should be provided as a nonzero positive value")
+	if current < goal:
+		current = min(goal, current + delta)
+	elif current > goal:
+		current = max(goal, current - delta)
+	return current
+
 func choose_char(options: String):
 	assert(options.length() != 0, "No options in string!")
 	return options[RNG.randi_range(0, options.length()-1)]
