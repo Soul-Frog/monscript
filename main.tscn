@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bjs0uf6g07yax"]
+[gd_scene load_steps=11 format=3 uid="uid://bjs0uf6g07yax"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_sv5wa"]
 [ext_resource type="PackedScene" uid="uid://ca2l5wqdhsgdf" path="res://overworld/overworld.tscn" id="2_kjijl"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://wvcujwhuslip" path="res://ui/pause/pause_menu.tscn" id="4_wdx4t"]
 [ext_resource type="PackedScene" uid="uid://bm5tklk7abl5" path="res://ui/database/database_menu.tscn" id="6_yfjpu"]
 [ext_resource type="PackedScene" uid="uid://d00rb06jyy6qd" path="res://ui/intro/visual_novel.tscn" id="7_s1av8"]
+[ext_resource type="PackedScene" uid="uid://bqh1k7h8c6yi2" path="res://ui/main/main_menu.tscn" id="8_02s72"]
 [ext_resource type="PackedScene" uid="uid://ct27r3y3ao3um" path="res://decorators/fade_decorator.tscn" id="8_h4geq"]
 [ext_resource type="PackedScene" uid="uid://cwa8fi3cy5vut" path="res://debug/debug_console.tscn" id="9_4qxol"]
 
@@ -29,11 +30,18 @@ script = ExtResource("1_sv5wa")
 
 [node name="VisualNovel" parent="Scene/Scenes" instance=ExtResource("7_s1av8")]
 
-[node name="FadeDecorator" parent="Scene" instance=ExtResource("8_h4geq")]
+[node name="MainMenu" parent="Scene/Scenes" instance=ExtResource("8_02s72")]
+
+[node name="StandardFade" parent="Scene" instance=ExtResource("8_h4geq")]
 active = false
 fade_type = 1
-fade_speed = 10.0
-fade_out_hangtime = 0.1
+fade_speed = 11.0
+
+[node name="MainMenuFade" parent="Scene" instance=ExtResource("8_h4geq")]
+active = false
+fade_type = 1
+fade_speed = 1.5
+fade_out_hangtime = 2.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -44,5 +52,8 @@ fade_out_hangtime = 0.1
 [connection signal="database_menu_opened" from="Scene/Scenes/PauseMenu" to="." method="_on_database_menu_opened"]
 [connection signal="script_menu_opened" from="Scene/Scenes/PauseMenu" to="." method="_on_script_menu_opened"]
 [connection signal="completed" from="Scene/Scenes/VisualNovel" to="." method="_on_visual_novel_completed"]
+[connection signal="clicked_continue" from="Scene/Scenes/MainMenu" to="." method="_on_main_menu_clicked_continue"]
+[connection signal="clicked_new_game" from="Scene/Scenes/MainMenu" to="." method="_on_main_menu_clicked_new_game"]
+[connection signal="clicked_settings" from="Scene/Scenes/MainMenu" to="." method="_on_main_menu_clicked_settings"]
 [connection signal="debug_console_closed" from="CanvasLayer/DebugConsole" to="." method="_on_debug_console_debug_console_closed"]
 [connection signal="debug_console_opened" from="CanvasLayer/DebugConsole" to="." method="_on_debug_console_debug_console_opened"]

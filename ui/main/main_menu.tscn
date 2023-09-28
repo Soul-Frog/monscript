@@ -1,9 +1,105 @@
-[gd_scene load_steps=2 format=3 uid="uid://bqh1k7h8c6yi2"]
+[gd_scene load_steps=5 format=3 uid="uid://bqh1k7h8c6yi2"]
 
+[ext_resource type="Script" path="res://ui/main/main_menu.gd" id="1_ehsb3"]
 [ext_resource type="Texture2D" uid="uid://daec1lljd8gfy" path="res://assets/ui/main_menu/main_menu.png" id="1_ox4se"]
+[ext_resource type="PackedScene" uid="uid://ct27r3y3ao3um" path="res://decorators/fade_decorator.tscn" id="2_6xhxi"]
+[ext_resource type="Script" path="res://ui/main/menu_text_option.gd" id="2_fe8mi"]
 
 [node name="MainMenu" type="Node2D"]
+script = ExtResource("1_ehsb3")
 
 [node name="Background" type="Sprite2D" parent="."]
 texture = ExtResource("1_ox4se")
 centered = false
+
+[node name="Title" type="Label" parent="."]
+offset_top = 9.0
+offset_right = 320.0
+offset_bottom = 37.0
+theme_override_colors/font_shadow_color = Color(0, 1, 0, 0.298039)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 32
+text = "Monscript"
+horizontal_alignment = 1
+
+[node name="Episode" type="Label" parent="."]
+offset_top = 37.0
+offset_right = 320.0
+offset_bottom = 65.0
+theme_override_font_sizes/font_size = 16
+text = "episode 1: sleep"
+horizontal_alignment = 1
+
+[node name="Options" type="VBoxContainer" parent="."]
+offset_top = 89.0
+offset_right = 320.0
+offset_bottom = 179.0
+size_flags_vertical = 6
+theme_override_constants/separation = 2
+
+[node name="Continue" type="MarginContainer" parent="Options"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_right = 6
+script = ExtResource("2_fe8mi")
+
+[node name="Label" type="Label" parent="Options/Continue"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Continue"
+horizontal_alignment = 1
+
+[node name="NewGame" type="MarginContainer" parent="Options"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_right = 6
+script = ExtResource("2_fe8mi")
+
+[node name="Label" type="Label" parent="Options/NewGame"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "New Game"
+horizontal_alignment = 1
+
+[node name="Settings" type="MarginContainer" parent="Options"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_right = 6
+script = ExtResource("2_fe8mi")
+
+[node name="Label" type="Label" parent="Options/Settings"]
+layout_mode = 2
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="Quit" type="MarginContainer" parent="Options"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_right = 6
+script = ExtResource("2_fe8mi")
+
+[node name="Label" type="Label" parent="Options/Quit"]
+layout_mode = 2
+text = "Quit"
+horizontal_alignment = 1
+
+[node name="Version" type="Label" parent="."]
+offset_top = 165.0
+offset_right = 316.0
+offset_bottom = 181.0
+text = "v0.0.0"
+horizontal_alignment = 2
+
+[node name="Fade" parent="." instance=ExtResource("2_6xhxi")]
+fade_type = 2
+fade_speed = 1.6
+
+[connection signal="clicked" from="Options/Continue" to="." method="_on_continue_clicked"]
+[connection signal="clicked" from="Options/NewGame" to="." method="_on_new_game_clicked"]
+[connection signal="clicked" from="Options/Settings" to="." method="_on_settings_clicked"]
+[connection signal="clicked" from="Options/Quit" to="." method="_on_quit_clicked"]

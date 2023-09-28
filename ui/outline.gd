@@ -29,4 +29,4 @@ func deactivate():
 
 func _on_fade_fade_in_done():
 	_FADE.oscillate()
-	_FADE.min_alpha = 0.3
+	_FADE.min_alpha = 0.5

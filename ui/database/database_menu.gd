@@ -65,6 +65,7 @@ func _on_entry_clicked(entry: DatabaseEntry) -> void:
 	$MonInfo/AttackBar.value = active_entry.get_attack_bar_value() + BAR_BUFFER
 	$MonInfo/DefenseBar.value = active_entry.get_defense_bar_value() + BAR_BUFFER
 	$MonInfo/SpeedBar.value = active_entry.get_speed_bar_value() + BAR_BUFFER
+	$DatabaseMonFileDefault.visible = false
 	for child in $MonInfo.get_children():
 		child.visible = true
 

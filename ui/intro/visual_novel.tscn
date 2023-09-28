@@ -5,9 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://c7dg504mvepmr" path="res://assets/ui/visual_novel/bus.jpg" id="3_bqlat"]
 [ext_resource type="Texture2D" uid="uid://ct640uueqq1pl" path="res://assets/ui/visual_novel/bus_stop.jpg" id="3_v4ulx"]
 [ext_resource type="Texture2D" uid="uid://bmxmomtvqv2uf" path="res://assets/ui/visual_novel/placeholderroom.jpg" id="4_24uig"]
+[ext_resource type="Script" path="res://ui/intro/clickable.gd" id="4_iovda"]
 [ext_resource type="PackedScene" uid="uid://ct27r3y3ao3um" path="res://decorators/fade_decorator.tscn" id="5_g2i7w"]
 [ext_resource type="Texture2D" uid="uid://c4li05lmsfumf" path="res://assets/ui/visual_novel/computer.png" id="6_uyhtg"]
-[ext_resource type="Script" path="res://ui/clickable.gd" id="7_rfvm4"]
 [ext_resource type="Script" path="res://ui/intro/badgame.gd" id="8_2qdnu"]
 [ext_resource type="Texture2D" uid="uid://dbp3rcrt6ajfc" path="res://assets/ui/visual_novel/badgame/badgame_bg.png" id="8_kkttt"]
 [ext_resource type="Script" path="res://ui/outline.gd" id="8_wowup"]
@@ -80,7 +80,7 @@ centered = false
 
 [node name="Computer" type="Area2D" parent="Subscenes/Room/Clickables"]
 position = Vector2(-4, 30)
-script = ExtResource("7_rfvm4")
+script = ExtResource("4_iovda")
 examine_dialogue = "examine_computer"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Subscenes/Room/Clickables/Computer"]
@@ -93,7 +93,7 @@ color = Color(1, 1, 1, 0)
 polygon = PackedVector2Array(55, 18, 104, 20, 108, 50, 57, 51)
 script = ExtResource("8_wowup")
 outline_color = Color(1, 1, 1, 1)
-width = 0.5
+width = 0.75
 
 [node name="Fade" parent="Subscenes/Room/Clickables/Computer/Outline" instance=ExtResource("5_g2i7w")]
 active = false
@@ -102,7 +102,7 @@ fade_speed = 2.0
 
 [node name="Bed" type="Area2D" parent="Subscenes/Room/Clickables"]
 position = Vector2(-4, 30)
-script = ExtResource("7_rfvm4")
+script = ExtResource("4_iovda")
 examine_dialogue = "examine_bed"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Subscenes/Room/Clickables/Bed"]
@@ -115,7 +115,7 @@ color = Color(1, 1, 1, 0)
 polygon = PackedVector2Array(55, 18, 70, 18, 77, -13, 76, -31, 103, -31, 96, 26, 56, 25)
 script = ExtResource("8_wowup")
 outline_color = Color(1, 1, 1, 1)
-width = 0.5
+width = 0.75
 
 [node name="Fade" parent="Subscenes/Room/Clickables/Bed/Outline" instance=ExtResource("5_g2i7w")]
 active = false

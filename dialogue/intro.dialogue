@@ -32,15 +32,15 @@ Professor: Class dismissed.
 {{GameData.PLAYER_NAME}}: (And yet... I'm on the verge of graduation. Not the best time to get cold feet.)
 {{GameData.PLAYER_NAME}}: ...
 {{GameData.PLAYER_NAME}}: ...
-{{GameData.PLAYER_NAME}}: (Ah. Here's the bus. Better get going.)
+{{GameData.PLAYER_NAME}}: (There's the bus. Better get going.)
 => END
 
 ~ bus
 {{GameData.PLAYER_NAME}}: (It's already getting dark out. I need to get home to work on my project.)
 {{GameData.PLAYER_NAME}}: (When we were told that we could choose anything to do for our senior project, my first thought was to make a game. What a great idea, right?)
 {{GameData.PLAYER_NAME}}: (After all, that's why I decided to study computer science in the first place.)
-{{GameData.PLAYER_NAME}}: (I've liked games ever since I was a kid. Playing them, talking about them, writing about them, making my own out of pen and paper...)
-{{GameData.PLAYER_NAME}}: (So, I figured, why not try to make a career out of designing them?)
+{{GameData.PLAYER_NAME}}: (I've liked games ever since I was a kid. Playing them, talking about them, writing about them, trying to make my own out of pen and paper...)
+{{GameData.PLAYER_NAME}}: (So, I figured, why not try to make a career out that?)
 {{GameData.PLAYER_NAME}}: (How hard could it be?)
 {{GameData.PLAYER_NAME}}: (...turns out it's way harder than I thought.)
 {{GameData.PLAYER_NAME}}: (At this point, I'm just trying to get through the rest of my degree.)

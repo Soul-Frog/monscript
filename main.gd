@@ -7,9 +7,15 @@ extends Node2D
 @onready var SCRIPT_MENU := $Scene/Scenes/ScriptMenu
 @onready var DATABASE_MENU := $Scene/Scenes/DatabaseMenu
 @onready var VISUAL_NOVEL: VisualNovel = $Scene/Scenes/VisualNovel
-@onready var active_scene: Node = VISUAL_NOVEL
+@onready var MAIN_MENU := $Scene/Scenes/MainMenu
 
-@onready var FADE: FadeDecorator = $Scene/FadeDecorator
+@onready var active_scene: Node = MAIN_MENU
+
+# the normal fade used to transition between scenes in the game
+@onready var FADE: FadeDecorator = $Scene/StandardFade
+
+# a slower, longer fade used to transition to the game from the main menu
+@onready var MAIN_MENU_FADE: FadeDecorator = $Scene/MainMenuFade
 
 func _ready() -> void:
 	assert(OVERWORLD != null)
@@ -18,7 +24,9 @@ func _ready() -> void:
 	assert(SCRIPT_MENU != null)
 	assert(DATABASE_MENU != null)
 	assert(VISUAL_NOVEL != null)
+	assert(MAIN_MENU != null)	
 	assert(FADE != null)
+	assert(MAIN_MENU_FADE != null)
 	
 	# remove all but Overworld scene
 	for scene in $Scene/Scenes.get_children():
@@ -28,22 +36,17 @@ func _ready() -> void:
 	# hook up some signals
 	Events.battle_started.connect(_on_battle_started)
 	Events.battle_ended.connect(_on_battle_ended)
-	
-	# give all nodes a frame to get set up
-	call_deferred("start_game")
-
-func start_game():
-	VISUAL_NOVEL.play_intro_cutscene()
 
 func _input(_event) -> void:
 	if Input.is_action_just_released("open_pause_menu") and not FADE.active:
 		if active_scene == OVERWORLD:
 			PAUSE_MENU.setup()
-			await _switch_to_scene(PAUSE_MENU)
+			await _switch_to_scene(PAUSE_MENU, FADE)
 		elif active_scene == PAUSE_MENU:
-			await _switch_to_scene(OVERWORLD)
+			await _switch_to_scene(OVERWORLD, FADE)
 
-func _switch_to_scene(new_scene: Node) -> void:
+# Switch to a new scene with a fade effect.
+func _switch_to_scene(new_scene: Node, fade_effect: FadeDecorator) -> void:
 	assert(active_scene != new_scene)
 	var old_scene = active_scene
 	
@@ -51,8 +54,8 @@ func _switch_to_scene(new_scene: Node) -> void:
 	Global.recursive_set_processes(old_scene, false)
 	
 	# fade out and wait for that to complete
-	FADE.fade_out()
-	await FADE.fade_out_done
+	fade_effect.fade_out()
+	await fade_effect.fade_out_done
 	
 	$Scene/Scenes.call_deferred("remove_child", active_scene)
 	$Scene/Scenes.call_deferred("add_child", new_scene)
@@ -62,7 +65,7 @@ func _switch_to_scene(new_scene: Node) -> void:
 	Global.recursive_set_processes(old_scene, true)
 	
 	# fade back in
-	FADE.fade_in()
+	fade_effect.fade_in()
 
 func _on_debug_console_debug_console_opened() -> void:
 	assert(get_tree().paused == false)
@@ -77,7 +80,7 @@ func _on_battle_started(computer_encounter_team: Array) -> void:
 	# multiple battle start on the same frame (stacked enemies)
 	if active_scene != BATTLE: 
 		BATTLE.setup_battle(PlayerData.team, computer_encounter_team);
-		await _switch_to_scene(BATTLE)
+		await _switch_to_scene(BATTLE, FADE)
 
 func _on_battle_ended(battle_result: Battle.BattleResult) -> void:
 	assert(battle_result.end_condition != Global.BattleEndCondition.NONE, "End condition was not set before battle ended.")
@@ -91,21 +94,31 @@ func _on_battle_ended(battle_result: Battle.BattleResult) -> void:
 		if mon != null:
 			mon.gain_XP(battle_result.xp_earned)
 	
-	await _switch_to_scene(OVERWORLD)
+	await _switch_to_scene(OVERWORLD, FADE)
 	
 	# clean up the battle scene
 	BATTLE.clear_battle();
 
 func _on_script_menu_opened(mon: MonData.Mon) -> void:
-	await _switch_to_scene(SCRIPT_MENU)
+	await _switch_to_scene(SCRIPT_MENU, FADE)
 	SCRIPT_MENU.setup(mon)
 
 func _on_database_menu_opened() -> void:
 	DATABASE_MENU.setup()
-	await _switch_to_scene(DATABASE_MENU)
+	await _switch_to_scene(DATABASE_MENU, FADE)
 
 func _on_submenu_closed() -> void:
-	await _switch_to_scene(PAUSE_MENU)
+	await _switch_to_scene(PAUSE_MENU, FADE)
 
 func _on_visual_novel_completed() -> void:
-	await _switch_to_scene(OVERWORLD)
+	await _switch_to_scene(OVERWORLD, FADE)
+
+func _on_main_menu_clicked_new_game():
+	await _switch_to_scene(VISUAL_NOVEL, MAIN_MENU_FADE)
+	VISUAL_NOVEL.play_intro_cutscene()
+
+func _on_main_menu_clicked_continue():
+	await _switch_to_scene(OVERWORLD, MAIN_MENU_FADE) #for now
+
+func _on_main_menu_clicked_settings():
+	print("TODO - Settings")
