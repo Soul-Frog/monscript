@@ -147,6 +147,9 @@ class Mon:
 	func get_speed() -> int:
 		return _base.speed_for_level(_level)
 	
+	func get_current_XP() -> int:
+		return _xp
+	
 	# adds XP and potentially applies level up
 	func gain_XP(xp_gained: int) -> void:
 		if _level == MonData.MAX_LEVEL: # don't try to level past MAX

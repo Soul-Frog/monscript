@@ -14,30 +14,17 @@ signal settings_menu_opened
 var MON_POSITIONS: Array[Vector2] = []
 var MON_EDIT_BUTTON_POSITIONS: Array[Vector2] = []
 
+@onready var ACTIVE_MONS = $ActiveMons
+
 func _ready() -> void:
-	assert($Mons.get_children().size() == Global.MONS_PER_TEAM, "Wrong number of placeholder positions!")
-	for placeholder in $Mons.get_children():
-		MON_POSITIONS.append(placeholder.position)
+	assert(ACTIVE_MONS.get_children().size() == Global.MONS_PER_TEAM, "Wrong number of placeholder positions!")
+	
+	setup()
 
 func setup() -> void:
-	# remove the existing mons
-	for mon in $Mons.get_children():
-		mon.queue_free()
-	# hide all the edit buttons
-	for button in $MonEditButtons.get_children():
-		button.visible = false
-	
-	# create instances of the mons in the player's party and position them
-	assert(PlayerData.team.size() <= Global.MONS_PER_TEAM, "Too many mons in player team?")
+	# put the player's mons into the active slots
 	for i in Global.MONS_PER_TEAM:
-		var mon = PlayerData.team[i]
-		if mon != null:
-			# create the mon and place it
-			var m = load(mon.get_scene_path()).instantiate()
-			m.position = MON_POSITIONS[i]
-			$Mons.add_child(m)
-			# make the edit button for this position visible
-			$MonEditButtons.get_child(i).visible = true
+		ACTIVE_MONS.get_child(i).set_mon(PlayerData.team[i])
 
 func _on_database_button_pressed() -> void:
 	emit_signal("database_menu_opened")

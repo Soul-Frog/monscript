@@ -1,0 +1,120 @@
+[gd_scene load_steps=5 format=3 uid="uid://cj636lm4kwto2"]
+
+[ext_resource type="Script" path="res://ui/pause/active_mon.gd" id="1_7rwn5"]
+[ext_resource type="PackedScene" uid="uid://embxye03wh4t" path="res://ui/pause/mon_slot.tscn" id="1_mfrbm"]
+[ext_resource type="Texture2D" uid="uid://daocqjrihblev" path="res://assets/ui/pause_menu/xp_bar_under.png" id="3_ybxu8"]
+[ext_resource type="Texture2D" uid="uid://clwqj7m0fc021" path="res://assets/ui/pause_menu/xp_bar_progress.png" id="4_2uepe"]
+
+[node name="ActiveMon" type="Node2D"]
+script = ExtResource("1_7rwn5")
+
+[node name="Name" type="Label" parent="."]
+offset_left = 2.0
+offset_right = 74.0
+offset_bottom = 15.0
+text = "MON1NAME"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Slot" parent="." instance=ExtResource("1_mfrbm")]
+position = Vector2(1, 16)
+
+[node name="EditScriptButton" type="Button" parent="."]
+offset_left = 9.0
+offset_top = 66.0
+offset_right = 69.0
+offset_bottom = 79.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="EditScriptButton"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = -1.0
+offset_right = 58.0
+offset_bottom = 14.0
+text = "Edit Script"
+metadata/_edit_use_anchors_ = true
+
+[node name="Level" type="Label" parent="."]
+offset_left = 26.0
+offset_top = 50.0
+offset_right = 39.0
+offset_bottom = 65.0
+text = "00"
+horizontal_alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="HP" type="Label" parent="."]
+offset_left = 57.0
+offset_top = 12.0
+offset_right = 77.0
+offset_bottom = 27.0
+text = "000"
+metadata/_edit_use_anchors_ = true
+
+[node name="ATK" type="Label" parent="."]
+offset_left = 57.0
+offset_top = 21.0
+offset_right = 77.0
+offset_bottom = 36.0
+text = "000"
+metadata/_edit_use_anchors_ = true
+
+[node name="DEF" type="Label" parent="."]
+offset_left = 57.0
+offset_top = 30.0
+offset_right = 77.0
+offset_bottom = 45.0
+text = "000"
+metadata/_edit_use_anchors_ = true
+
+[node name="SPD" type="Label" parent="."]
+offset_left = 57.0
+offset_top = 39.0
+offset_right = 77.0
+offset_bottom = 54.0
+text = "000"
+metadata/_edit_use_anchors_ = true
+
+[node name="HPLabel" type="Label" parent="."]
+offset_left = 37.0
+offset_top = 12.0
+offset_right = 77.0
+offset_bottom = 27.0
+text = "HP"
+
+[node name="ATKLabel" type="Label" parent="."]
+offset_left = 37.0
+offset_top = 21.0
+offset_right = 77.0
+offset_bottom = 36.0
+text = "ATK"
+
+[node name="DEFLabel" type="Label" parent="."]
+offset_left = 37.0
+offset_top = 30.0
+offset_right = 77.0
+offset_bottom = 45.0
+text = "DEF"
+
+[node name="SPDLabel" type="Label" parent="."]
+offset_left = 37.0
+offset_top = 39.0
+offset_right = 77.0
+offset_bottom = 54.0
+text = "SPD"
+
+[node name="LvLabel" type="Label" parent="."]
+offset_left = 13.0
+offset_top = 50.0
+offset_right = 25.0
+offset_bottom = 65.0
+text = "LV"
+
+[node name="XPBar" type="TextureProgressBar" parent="."]
+offset_left = 42.0
+offset_top = 54.0
+offset_right = 66.0
+offset_bottom = 61.0
+texture_under = ExtResource("3_ybxu8")
+texture_progress = ExtResource("4_2uepe")
