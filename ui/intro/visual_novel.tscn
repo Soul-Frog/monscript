@@ -184,12 +184,10 @@ polygon = PackedVector2Array(283, 139, 277.486, 77.3437, 272, 16, 264, 16, 267, 
 
 [node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="Subscenes/BadGame/Collision"]
 position = Vector2(5, -8)
-scale = Vector2(1, 1)
 polygon = PackedVector2Array(200, 123, 201, 132, 212, 126, 211, 112)
 
 [node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="Subscenes/BadGame/Collision"]
 position = Vector2(-6, -97)
-scale = Vector2(1, 1)
 polygon = PackedVector2Array(200, 104, 205, 107, 213, 126, 240, 104)
 
 [node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="Subscenes/BadGame/Collision"]
@@ -198,12 +196,10 @@ polygon = PackedVector2Array(112, 72, 112, 80, 260, 76, 368, 89, 358, 74)
 
 [node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="Subscenes/BadGame/Collision"]
 position = Vector2(34, -35)
-scale = Vector2(1, 1)
 polygon = PackedVector2Array(200, 123, 201, 132, 212, 129, 212, 122)
 
 [node name="CollisionPolygon2D10" type="CollisionPolygon2D" parent="Subscenes/BadGame/Collision"]
 position = Vector2(-136, 19)
-scale = Vector2(1, 1)
 polygon = PackedVector2Array(204, 114, 209, 124, 220, 134, 218, 117)
 
 [node name="CollisionPolygon2D11" type="CollisionPolygon2D" parent="Subscenes/BadGame/Collision"]

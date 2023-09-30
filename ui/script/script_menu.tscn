@@ -27,11 +27,11 @@
 [ext_resource type="Texture2D" uid="uid://dcx2ma73ec0if" path="res://assets/ui/script_menu/to_tab_inactive.png" id="30_0v3aq"]
 [ext_resource type="Texture2D" uid="uid://duxhdhv0bp2j5" path="res://assets/ui/script_menu/to_tab_inactive_hover.png" id="31_j0bmb"]
 [ext_resource type="Texture2D" uid="uid://bbex8j0wbo0lb" path="res://assets/ui/script_menu/clear.png" id="32_bfb30"]
-[ext_resource type="Texture2D" uid="uid://cf5jkrufx2hjv" path="res://assets/ui/grey9patch.png" id="33_4cfcy"]
 [ext_resource type="Texture2D" uid="uid://hll5u1aj8n0e" path="res://assets/ui/script_menu/clear_clicked.png" id="33_ibe8g"]
 [ext_resource type="Script" path="res://ui/script/popup.gd" id="33_uuib8"]
 [ext_resource type="Texture2D" uid="uid://5pbgn7fbq0vg" path="res://assets/ui/script_menu/clear_hover.png" id="34_0512m"]
 [ext_resource type="PackedScene" uid="uid://byonngrgtbxr7" path="res://ui/x_button.tscn" id="35_jfbm6"]
+[ext_resource type="Texture2D" uid="uid://bga5fi1nfoafk" path="res://assets/ui/popup9patch.png" id="35_tgtow"]
 [ext_resource type="Script" path="res://ui/script/fade_text.gd" id="39_5ys6j"]
 [ext_resource type="PackedScene" uid="uid://ct27r3y3ao3um" path="res://decorators/fade_decorator.tscn" id="39_7hj41"]
 
@@ -377,7 +377,7 @@ offset_left = 89.0
 offset_top = 28.0
 offset_right = 224.0
 offset_bottom = 97.0
-texture = ExtResource("33_4cfcy")
+texture = ExtResource("35_tgtow")
 patch_margin_left = 3
 patch_margin_top = 3
 patch_margin_right = 3
@@ -422,7 +422,6 @@ text = "No"
 horizontal_alignment = 1
 
 [node name="ClearPopup" type="Control" parent="."]
-visible = false
 z_index = 400
 custom_minimum_size = Vector2(320, 180)
 layout_mode = 3
@@ -444,7 +443,7 @@ offset_left = 88.0
 offset_top = 28.0
 offset_right = 224.0
 offset_bottom = 81.0
-texture = ExtResource("33_4cfcy")
+texture = ExtResource("35_tgtow")
 patch_margin_left = 3
 patch_margin_top = 3
 patch_margin_right = 3
@@ -462,28 +461,30 @@ autowrap_mode = 2
 [node name="YesButton" type="Button" parent="ClearPopup"]
 layout_mode = 0
 offset_left = 104.0
-offset_top = 62.0
+offset_top = 63.0
 offset_right = 144.0
-offset_bottom = 77.0
+offset_bottom = 76.0
 
 [node name="YesLabel" type="Label" parent="ClearPopup/YesButton"]
 layout_mode = 0
+offset_top = -1.0
 offset_right = 40.0
-offset_bottom = 11.0
+offset_bottom = 14.0
 text = "Yes"
 horizontal_alignment = 1
 
 [node name="NoButton" type="Button" parent="ClearPopup"]
 layout_mode = 0
 offset_left = 168.0
-offset_top = 62.0
-offset_right = 208.0
-offset_bottom = 77.0
+offset_top = 63.0
+offset_right = 207.0
+offset_bottom = 76.0
 
 [node name="NoLabel" type="Label" parent="ClearPopup/NoButton"]
 layout_mode = 0
+offset_top = -1.0
 offset_right = 40.0
-offset_bottom = 15.0
+offset_bottom = 14.0
 text = "No"
 horizontal_alignment = 1
 
