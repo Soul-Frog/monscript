@@ -19,4 +19,5 @@ texture_hover = ExtResource("2_7lgrx")
 position = Vector2(17, 17)
 script = null
 
+[connection signal="mouse_entered" from="FrameButton" to="." method="_on_frame_button_mouse_entered"]
 [connection signal="pressed" from="FrameButton" to="." method="_on_clicked"]

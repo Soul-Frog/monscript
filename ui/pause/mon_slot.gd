@@ -9,9 +9,12 @@ signal mon_changed
 
 @onready var _MON = $Mon
 @onready var _MON_POSITION = _MON.position
+@onready var _FRAME_BUTTON = $FrameButton
 
 var _current_mon_scene: MonScene = null
 var _current_mon: MonData.Mon = null
+
+var _TOOLTIP_FORMAT = "%s Lv%d\nHP %d  ATK %d\nDEF %d  SPD %d"
 
 func _ready() -> void:
 	_MON.queue_free() # delete the placeholder
@@ -50,3 +53,10 @@ func has_mon() -> bool:
 
 func _on_clicked():
 	emit_signal("clicked", self)
+
+# create tooltip when moused over
+func _on_frame_button_mouse_entered():
+	if _current_mon != null:
+		var tooltip = _TOOLTIP_FORMAT % [_current_mon.get_name(), _current_mon.get_level(), _current_mon.get_max_health(),
+			_current_mon.get_attack(), _current_mon.get_defense(), _current_mon.get_speed()]
+		UITooltip.create(_FRAME_BUTTON, tooltip, get_global_mouse_position(), get_tree().root)

@@ -6,7 +6,7 @@ signal settings_menu_opened
 signal save
 signal closed
 
-@onready var ACTIVE_MONS = $ActiveMons
+@onready var TEAM_MONS = $TeamMons
 @onready var STORAGE_PAGE_LABEL = $Storage/StoragePage
 @onready var STORAGE_PAGE_SLOTS = $Storage/Slots
 @onready var DATABASE_BUTTON = $Buttons/DatabaseButton
@@ -22,7 +22,7 @@ var _storage_page = 0
 var _STORAGE_PAGE_LABEL_FORMAT = "%d/%d"
 
 func _ready() -> void:
-	assert(ACTIVE_MONS)
+	assert(TEAM_MONS)
 	assert(STORAGE_PAGE_LABEL)
 	assert(STORAGE_PAGE_SLOTS)
 	assert(DATABASE_BUTTON)
@@ -32,15 +32,15 @@ func _ready() -> void:
 	assert(HELD)
 	assert(STORAGE_PAGE_SLOTS.get_child_count() == PlayerData.MONS_PER_STORAGE_PAGE, "Not enough slots per page.")
 	
-	assert(ACTIVE_MONS.get_children().size() == Global.MONS_PER_TEAM, "Wrong number of placeholder positions!")
+	assert(TEAM_MONS.get_children().size() == Global.MONS_PER_TEAM, "Wrong number of team slots!")
 	_change_storage_page(0) # set the initial storage page
 	
 	setup() #todo - remove this
 
 func setup() -> void:
-	# put the player's mons into the active slots
+	# put the player's mons into the team slots
 	for i in Global.MONS_PER_TEAM:
-		ACTIVE_MONS.get_child(i).set_mon(PlayerData.team[i])
+		TEAM_MONS.get_child(i).set_mon(PlayerData.team[i])
 	
 	# update the storage page
 	_change_storage_page(_storage_page)
@@ -122,7 +122,7 @@ func _on_slot_clicked(slot: MonSlot):
 			
 	# if we changed an active mon, update the info
 	if slot.is_active_mon:
-		ACTIVE_MONS.get_children()[slot.index].notify_update()
+		TEAM_MONS.get_children()[slot.index].notify_update()
 	
 	# update the global storage with the result of this click
 	if slot.is_active_mon: # in team
@@ -135,5 +135,8 @@ func _on_slot_clicked(slot: MonSlot):
 	SAVE_BUTTON.disabled = _held_mon != null
 	SETTINGS_BUTTON.disabled = _held_mon != null
 	X_BUTTON.disabled = _held_mon != null
-	for active_slot in ACTIVE_MONS.get_children():
-		active_slot.set_edit_script_disabled(_held_mon != null)
+	for team_mon in TEAM_MONS.get_children():
+		team_mon.set_edit_script_disabled(_held_mon != null)
+	
+	# while held, disable tooltips; if not held, re-enable tooltips
+	UITooltip.disable_tooltips() if _held_mon else UITooltip.enable_tooltips()

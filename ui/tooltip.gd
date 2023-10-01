@@ -45,18 +45,29 @@ static func create_manual(source: Control, text: String, global_mouse_position: 
 	
 	var label: RichTextLabel = tooltip.find_child("TextMargin").find_child("TooltipText")
 	
-	# calculate a reasonable tooltip size
-	# basically, add words one at a time until we exceed the threshold. that's the length we want.
-	# this fanciness guarantees that the first line in the tooltip is the longest, which looks nice
-	var words = text.split(" ", false)
-	var first_line = ""
-	for word in words:
-		var text_length := tooltip.get_theme().get_default_font().get_string_size(first_line).x
-		if text_length > _MAX_WIDTH_THRESHOLD:
-			break
-		first_line += word + " "
-	
-	label.custom_minimum_size.x = tooltip.get_theme().get_default_font().get_string_size(first_line).x
+	# the text does not contain \n, automatically break the text and format a nice tooltip.
+	if not text.contains("\n"):
+		# calculate a reasonable tooltip size
+		# basically, add words one at a time until we exceed the threshold. that's the length we want.
+		# this fanciness guarantees that the first line in the tooltip is the longest, which looks nice
+		var words = text.split(" ", false)
+		var first_line = ""
+		for word in words:
+			var text_length := tooltip.get_theme().get_default_font().get_string_size(first_line).x
+			if text_length > _MAX_WIDTH_THRESHOLD:
+				break
+			first_line += word + " "
+		
+		label.custom_minimum_size.x = tooltip.get_theme().get_default_font().get_string_size(first_line).x
+	# otherwise set the tooltip size based on the longest line
+	else:
+		var longest_line_size = -1
+		for line in text.split("\n"):
+			var line_size = tooltip.get_theme().get_default_font().get_string_size(line).x
+			if line_size > longest_line_size:
+				longest_line_size = line_size
+		label.custom_minimum_size.x = longest_line_size
+		
 	label.text = _FORMAT % text
 	
 	tooltip.position = global_mouse_position + _TOOLTIP_OFFSET
@@ -64,6 +75,9 @@ static func create_manual(source: Control, text: String, global_mouse_position: 
 	_ALL_TOOLTIPS.append(tooltip)
 	
 	tooltip._force_position_onto_screen()
+	
+	# set initial visibility based on if tooltips are enabled
+	tooltip.visible = _ENABLED
 	
 	return tooltip
 

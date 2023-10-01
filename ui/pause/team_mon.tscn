@@ -1,12 +1,12 @@
 [gd_scene load_steps=5 format=3 uid="uid://cj636lm4kwto2"]
 
-[ext_resource type="Script" path="res://ui/pause/active_mon.gd" id="1_7rwn5"]
-[ext_resource type="PackedScene" uid="uid://embxye03wh4t" path="res://ui/pause/mon_slot.tscn" id="1_mfrbm"]
-[ext_resource type="Texture2D" uid="uid://daocqjrihblev" path="res://assets/ui/pause_menu/xp_bar_under.png" id="3_ybxu8"]
-[ext_resource type="Texture2D" uid="uid://clwqj7m0fc021" path="res://assets/ui/pause_menu/xp_bar_progress.png" id="4_2uepe"]
+[ext_resource type="Script" path="res://ui/pause/team_mon.gd" id="1_u3udn"]
+[ext_resource type="PackedScene" uid="uid://embxye03wh4t" path="res://ui/pause/mon_slot.tscn" id="2_842f4"]
+[ext_resource type="Texture2D" uid="uid://daocqjrihblev" path="res://assets/ui/pause_menu/xp_bar_under.png" id="3_3akm2"]
+[ext_resource type="Texture2D" uid="uid://clwqj7m0fc021" path="res://assets/ui/pause_menu/xp_bar_progress.png" id="4_fhq70"]
 
 [node name="ActiveMon" type="Node2D"]
-script = ExtResource("1_7rwn5")
+script = ExtResource("1_u3udn")
 
 [node name="Name" type="Label" parent="."]
 offset_left = 2.0
@@ -16,7 +16,7 @@ text = "MON1NAME"
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Slot" parent="." instance=ExtResource("1_mfrbm")]
+[node name="Slot" parent="." instance=ExtResource("2_842f4")]
 position = Vector2(1, 16)
 is_active_mon = true
 
@@ -117,8 +117,8 @@ offset_left = 42.0
 offset_top = 54.0
 offset_right = 66.0
 offset_bottom = 61.0
-texture_under = ExtResource("3_ybxu8")
-texture_progress = ExtResource("4_2uepe")
+texture_under = ExtResource("3_3akm2")
+texture_progress = ExtResource("4_fhq70")
 
 [connection signal="clicked" from="Slot" to="." method="_on_slot_clicked"]
 [connection signal="mon_changed" from="Slot" to="." method="_on_slot_mon_changed"]

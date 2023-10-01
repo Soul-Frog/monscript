@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://ui/pause/pause_menu.gd" id="1_2voed"]
 [ext_resource type="Texture2D" uid="uid://dnu8i8xfacd0m" path="res://assets/ui/pause_menu/pause_base.png" id="2_6t5wk"]
-[ext_resource type="PackedScene" uid="uid://cj636lm4kwto2" path="res://ui/pause/active_mon.tscn" id="3_efgjc"]
+[ext_resource type="PackedScene" uid="uid://cj636lm4kwto2" path="res://ui/pause/team_mon.tscn" id="3_efgjc"]
 [ext_resource type="PackedScene" uid="uid://embxye03wh4t" path="res://ui/pause/mon_slot.tscn" id="3_kshv5"]
 [ext_resource type="Texture2D" uid="uid://cr8ps4hg8di0r" path="res://assets/ui/pause_menu/left_arrow.png" id="9_yybf0"]
 [ext_resource type="Texture2D" uid="uid://bno0ms2rh0xpm" path="res://assets/ui/pause_menu/left_arrow_pressed.png" id="10_vsw02"]
@@ -34,20 +34,20 @@ offset_right = 46.0
 offset_bottom = 112.0
 text = "Storage"
 
-[node name="ActiveMons" type="Node2D" parent="."]
+[node name="TeamMons" type="Node2D" parent="."]
 
-[node name="Mon1" parent="ActiveMons" instance=ExtResource("3_efgjc")]
+[node name="Mon1" parent="TeamMons" instance=ExtResource("3_efgjc")]
 position = Vector2(5, 15)
 
-[node name="Mon2" parent="ActiveMons" instance=ExtResource("3_efgjc")]
+[node name="Mon2" parent="TeamMons" instance=ExtResource("3_efgjc")]
 position = Vector2(82, 15)
 index = 1
 
-[node name="Mon3" parent="ActiveMons" instance=ExtResource("3_efgjc")]
+[node name="Mon3" parent="TeamMons" instance=ExtResource("3_efgjc")]
 position = Vector2(160, 15)
 index = 2
 
-[node name="Mon4" parent="ActiveMons" instance=ExtResource("3_efgjc")]
+[node name="Mon4" parent="TeamMons" instance=ExtResource("3_efgjc")]
 position = Vector2(238, 14)
 index = 3
 
@@ -165,14 +165,14 @@ vertical_alignment = 1
 
 [node name="Held" type="Node2D" parent="."]
 
-[connection signal="edit_script" from="ActiveMons/Mon1" to="." method="_on_edit_script_button_pressed"]
-[connection signal="slot_clicked" from="ActiveMons/Mon1" to="." method="_on_slot_clicked"]
-[connection signal="edit_script" from="ActiveMons/Mon2" to="." method="_on_edit_script_button_pressed"]
-[connection signal="slot_clicked" from="ActiveMons/Mon2" to="." method="_on_slot_clicked"]
-[connection signal="edit_script" from="ActiveMons/Mon3" to="." method="_on_edit_script_button_pressed"]
-[connection signal="slot_clicked" from="ActiveMons/Mon3" to="." method="_on_slot_clicked"]
-[connection signal="edit_script" from="ActiveMons/Mon4" to="." method="_on_edit_script_button_pressed"]
-[connection signal="slot_clicked" from="ActiveMons/Mon4" to="." method="_on_slot_clicked"]
+[connection signal="edit_script" from="TeamMons/Mon1" to="." method="_on_edit_script_button_pressed"]
+[connection signal="slot_clicked" from="TeamMons/Mon1" to="." method="_on_slot_clicked"]
+[connection signal="edit_script" from="TeamMons/Mon2" to="." method="_on_edit_script_button_pressed"]
+[connection signal="slot_clicked" from="TeamMons/Mon2" to="." method="_on_slot_clicked"]
+[connection signal="edit_script" from="TeamMons/Mon3" to="." method="_on_edit_script_button_pressed"]
+[connection signal="slot_clicked" from="TeamMons/Mon3" to="." method="_on_slot_clicked"]
+[connection signal="edit_script" from="TeamMons/Mon4" to="." method="_on_edit_script_button_pressed"]
+[connection signal="slot_clicked" from="TeamMons/Mon4" to="." method="_on_slot_clicked"]
 [connection signal="pressed" from="Storage/LeftStorageArrow" to="." method="_on_left_storage_arrow_pressed"]
 [connection signal="pressed" from="Storage/RightStorageArrow" to="." method="_on_right_storage_arrow_pressed"]
 [connection signal="clicked" from="Storage/Slots/MonSlot1" to="." method="_on_slot_clicked"]
