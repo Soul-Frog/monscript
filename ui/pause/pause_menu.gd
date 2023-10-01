@@ -13,6 +13,7 @@ signal closed
 @onready var SAVE_BUTTON = $Buttons/SaveButton
 @onready var SETTINGS_BUTTON = $Buttons/SettingsButton
 @onready var X_BUTTON = $XButton
+@onready var NO_MON_POPUP = $NoMonPopup
 
 @onready var HELD = $Held
 const _HELD_OFFSET = Vector2(16, 16)
@@ -29,6 +30,8 @@ func _ready() -> void:
 	assert(SAVE_BUTTON)
 	assert(SETTINGS_BUTTON)
 	assert(X_BUTTON)
+	assert(NO_MON_POPUP)
+	assert(not NO_MON_POPUP.visible)
 	assert(HELD)
 	assert(STORAGE_PAGE_SLOTS.get_child_count() == PlayerData.MONS_PER_STORAGE_PAGE, "Not enough slots per page.")
 	
@@ -64,13 +67,17 @@ func _change_storage_page(new_page: int):
 func _input(event) -> void:
 	if event is InputEventMouseMotion:
 		HELD.position = get_viewport().get_mouse_position() - _HELD_OFFSET
+	if Input.is_action_just_released("tab"):
+		_on_right_storage_arrow_pressed()
 
 func _on_database_button_pressed() -> void:
 	emit_signal("database_menu_opened")
 
 func _on_save_button_pressed():
-	print("Save!") 	#TODO save
-	emit_signal("save")
+	if not _is_team_valid():
+		NO_MON_POPUP.show()
+	else:
+		emit_signal("save")
 
 func _on_settings_button_pressed() -> void:
 	print("Settings!")	#TODO settings
@@ -81,7 +88,10 @@ func _on_edit_script_button_pressed(mon: MonData.Mon) -> void:
 	emit_signal("script_menu_opened", mon)
 
 func _on_x_button_pressed():
-	emit_signal("closed")
+	if not _is_team_valid():
+		NO_MON_POPUP.show()
+	else:
+		emit_signal("closed")
 
 func _on_left_storage_arrow_pressed():
 	# switch to the next page down, but roll around to max if needed
@@ -119,7 +129,10 @@ func _on_slot_clicked(slot: MonSlot):
 			Global.free_children(HELD)
 			_held_mon = popped[0]
 			HELD.add_child(popped[1])
-			
+	
+	# remind this slot that the mouse is hovering; to display the tooltip
+	slot._on_frame_button_mouse_entered()
+	
 	# if we changed an active mon, update the info
 	if slot.is_active_mon:
 		TEAM_MONS.get_children()[slot.index].notify_update()
@@ -140,3 +153,9 @@ func _on_slot_clicked(slot: MonSlot):
 	
 	# while held, disable tooltips; if not held, re-enable tooltips
 	UITooltip.disable_tooltips() if _held_mon else UITooltip.enable_tooltips()
+
+func _is_team_valid():
+	for team_mon in TEAM_MONS.get_children():
+		if team_mon.has_mon():
+			return true
+	return false

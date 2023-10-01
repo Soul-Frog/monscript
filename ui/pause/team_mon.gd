@@ -1,9 +1,10 @@
+class_name TeamMon
 extends Node2D
 
 @export var index: int
 
 @onready var NAME = $Name
-@onready var SLOT = $Slot
+@onready var SLOT := $Slot
 @onready var LEVEL = $Level
 @onready var HP = $HP
 @onready var ATK = $ATK
@@ -60,6 +61,9 @@ func set_mon(mon: MonData.Mon) -> void:
 	
 	# update visiblity of edit script button
 	EDIT_SCRIPT_BUTTON.visible = mon != null
+
+func has_mon() -> bool:
+	return SLOT.has_mon()
 
 func _on_edit_script_button_pressed() -> void:
 	assert(_mon)

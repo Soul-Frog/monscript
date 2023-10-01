@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://wvcujwhuslip"]
+[gd_scene load_steps=15 format=3 uid="uid://wvcujwhuslip"]
 
 [ext_resource type="Script" path="res://ui/pause/pause_menu.gd" id="1_2voed"]
 [ext_resource type="Texture2D" uid="uid://dnu8i8xfacd0m" path="res://assets/ui/pause_menu/pause_base.png" id="2_6t5wk"]
@@ -10,7 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://cunwhbwcsa6gr" path="res://assets/ui/pause_menu/right_arrow.png" id="12_lage2"]
 [ext_resource type="Script" path="res://ui/pause/priority_button.gd" id="12_ya3ju"]
 [ext_resource type="Texture2D" uid="uid://bqbhro25bvmyn" path="res://assets/ui/pause_menu/right_arrow_pressed.png" id="13_cl076"]
+[ext_resource type="Script" path="res://ui/script/popup.gd" id="13_iq3fg"]
 [ext_resource type="Texture2D" uid="uid://bbvvcauplh0nx" path="res://assets/ui/pause_menu/right_arrow_hover.png" id="14_nfk3y"]
+[ext_resource type="Texture2D" uid="uid://bga5fi1nfoafk" path="res://assets/ui/popup9patch.png" id="14_q80o4"]
 [ext_resource type="PackedScene" uid="uid://byonngrgtbxr7" path="res://ui/x_button.tscn" id="15_vbad3"]
 
 [node name="PauseMenu" type="Node2D"]
@@ -165,6 +167,60 @@ vertical_alignment = 1
 
 [node name="Held" type="Node2D" parent="."]
 
+[node name="NoMonPopup" type="Control" parent="."]
+visible = false
+z_index = 400
+custom_minimum_size = Vector2(320, 180)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 320.0
+offset_bottom = 180.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("13_iq3fg")
+
+[node name="MouseBlocker" type="ColorRect" parent="NoMonPopup"]
+modulate = Color(0, 0, 0, 0.764706)
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 179.0
+
+[node name="Popup" type="Node2D" parent="NoMonPopup"]
+
+[node name="NinePatchRect" type="NinePatchRect" parent="NoMonPopup/Popup"]
+offset_left = 89.0
+offset_top = 20.0
+offset_right = 224.0
+offset_bottom = 90.0
+texture = ExtResource("14_q80o4")
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+
+[node name="Label" type="Label" parent="NoMonPopup/Popup"]
+offset_left = 94.0
+offset_top = 22.0
+offset_right = 218.0
+offset_bottom = 67.0
+text = "You cannot save or exit with no Mons on your team!"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="WhoopsButton" type="Button" parent="NoMonPopup"]
+layout_mode = 0
+offset_left = 131.0
+offset_top = 71.0
+offset_right = 182.0
+offset_bottom = 86.0
+
+[node name="WhoopsLabel" type="Label" parent="NoMonPopup/WhoopsButton"]
+layout_mode = 0
+offset_right = 51.0
+offset_bottom = 15.0
+text = "Whoops!"
+horizontal_alignment = 1
+
 [connection signal="edit_script" from="TeamMons/Mon1" to="." method="_on_edit_script_button_pressed"]
 [connection signal="slot_clicked" from="TeamMons/Mon1" to="." method="_on_slot_clicked"]
 [connection signal="edit_script" from="TeamMons/Mon2" to="." method="_on_edit_script_button_pressed"]
@@ -189,3 +245,4 @@ vertical_alignment = 1
 [connection signal="pressed" from="Buttons/DatabaseButton" to="." method="_on_database_button_pressed"]
 [connection signal="pressed" from="Buttons/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="Buttons/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="NoMonPopup/WhoopsButton" to="NoMonPopup" method="_on_yes_button_pressed"]
