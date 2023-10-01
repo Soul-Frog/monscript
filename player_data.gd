@@ -3,18 +3,25 @@
 
 extends Node
 
-const MON_STORAGE_PAGES = 3
+const STORAGE_PAGES = 3
 const MONS_PER_STORAGE_PAGE = 8
 
 var team = []
-var mon_storage = []
+var storage = []
 
 func _init():
 	team = [MonData.create_mon(MonData.MonType.MAGNETFROG, 5), null, null, MonData.create_mon(MonData.MonType.MAGNETFROGBLUE, 5)]
 	
-	for i in MON_STORAGE_PAGES:
+	for i in STORAGE_PAGES:
 		for j in MONS_PER_STORAGE_PAGE:
-			mon_storage.append(null)
+			storage.append(null)
 		
 	assert(team.size() == Global.MONS_PER_TEAM)
-	assert(mon_storage.size() == MON_STORAGE_PAGES * MONS_PER_STORAGE_PAGE)
+	assert(storage.size() == STORAGE_PAGES * MONS_PER_STORAGE_PAGE)
+	
+	storage[0] = MonData.create_mon(MonData.MonType.MAGNETFROG, 10)
+	storage[5] = MonData.create_mon(MonData.MonType.MAGNETFROG, 11)
+	storage[4] = MonData.create_mon(MonData.MonType.MAGNETFROG, 12)
+	storage[9] = MonData.create_mon(MonData.MonType.MAGNETFROG, 13)
+	storage[13] = MonData.create_mon(MonData.MonType.MAGNETFROG, 14)
+	storage[18] = MonData.create_mon(MonData.MonType.MAGNETFROG, 64)
