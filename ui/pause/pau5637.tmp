@@ -1,0 +1,185 @@
+[gd_scene load_steps=12 format=3 uid="uid://wvcujwhuslip"]
+
+[ext_resource type="Script" path="res://ui/pause/pause_menu.gd" id="1_2voed"]
+[ext_resource type="Texture2D" uid="uid://dnu8i8xfacd0m" path="res://assets/ui/pause_menu/pause_base.png" id="2_6t5wk"]
+[ext_resource type="PackedScene" uid="uid://cj636lm4kwto2" path="res://ui/pause/active_mon.tscn" id="3_efgjc"]
+[ext_resource type="PackedScene" uid="uid://embxye03wh4t" path="res://ui/pause/mon_slot.tscn" id="3_kshv5"]
+[ext_resource type="Texture2D" uid="uid://cr8ps4hg8di0r" path="res://assets/ui/pause_menu/left_arrow.png" id="9_yybf0"]
+[ext_resource type="Texture2D" uid="uid://bno0ms2rh0xpm" path="res://assets/ui/pause_menu/left_arrow_pressed.png" id="10_vsw02"]
+[ext_resource type="Texture2D" uid="uid://e68t3b8x6bme" path="res://assets/ui/pause_menu/left_arrow_hover.png" id="11_wlcmt"]
+[ext_resource type="Texture2D" uid="uid://cunwhbwcsa6gr" path="res://assets/ui/pause_menu/right_arrow.png" id="12_lage2"]
+[ext_resource type="Texture2D" uid="uid://bqbhro25bvmyn" path="res://assets/ui/pause_menu/right_arrow_pressed.png" id="13_cl076"]
+[ext_resource type="Texture2D" uid="uid://bbvvcauplh0nx" path="res://assets/ui/pause_menu/right_arrow_hover.png" id="14_nfk3y"]
+[ext_resource type="PackedScene" uid="uid://byonngrgtbxr7" path="res://ui/x_button.tscn" id="15_vbad3"]
+
+[node name="PauseMenu" type="Node2D"]
+script = ExtResource("1_2voed")
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("2_6t5wk")
+centered = false
+
+[node name="Team" type="Label" parent="Background"]
+offset_left = 6.0
+offset_top = -1.0
+offset_right = 46.0
+offset_bottom = 14.0
+text = "Team"
+
+[node name="Storage" type="Label" parent="Background"]
+offset_left = 6.0
+offset_top = 97.0
+offset_right = 46.0
+offset_bottom = 112.0
+text = "Storage"
+
+[node name="ActiveMons" type="Node2D" parent="."]
+
+[node name="Mon1" parent="ActiveMons" instance=ExtResource("3_efgjc")]
+position = Vector2(5, 15)
+
+[node name="Mon2" parent="ActiveMons" instance=ExtResource("3_efgjc")]
+position = Vector2(82, 15)
+index = 1
+
+[node name="Mon3" parent="ActiveMons" instance=ExtResource("3_efgjc")]
+position = Vector2(160, 15)
+index = 2
+
+[node name="Mon4" parent="ActiveMons" instance=ExtResource("3_efgjc")]
+position = Vector2(238, 14)
+index = 3
+
+[node name="Storage" type="Node2D" parent="."]
+position = Vector2(49, 97)
+
+[node name="StoragePage" type="Label" parent="Storage"]
+offset_right = 30.0
+offset_bottom = 15.0
+text = " 1/10"
+
+[node name="LeftStorageArrow" type="TextureButton" parent="Storage"]
+offset_left = -45.0
+offset_top = 14.0
+offset_right = -33.0
+offset_bottom = 55.0
+texture_normal = ExtResource("9_yybf0")
+texture_pressed = ExtResource("10_vsw02")
+texture_hover = ExtResource("11_wlcmt")
+
+[node name="RightStorageArrow" type="TextureButton" parent="Storage"]
+offset_left = 255.0
+offset_top = 14.0
+offset_right = 267.0
+offset_bottom = 55.0
+texture_normal = ExtResource("12_lage2")
+texture_pressed = ExtResource("13_cl076")
+texture_hover = ExtResource("14_nfk3y")
+
+[node name="Slots" type="Node2D" parent="Storage"]
+
+[node name="MonSlot1" parent="Storage/Slots" instance=ExtResource("3_kshv5")]
+position = Vector2(-32, 17)
+
+[node name="MonSlot2" parent="Storage/Slots" instance=ExtResource("3_kshv5")]
+position = Vector2(4, 17)
+index = 1
+
+[node name="MonSlot3" parent="Storage/Slots" instance=ExtResource("3_kshv5")]
+position = Vector2(40, 17)
+index = 2
+
+[node name="MonSlot4" parent="Storage/Slots" instance=ExtResource("3_kshv5")]
+position = Vector2(76, 17)
+index = 3
+
+[node name="MonSlot5" parent="Storage/Slots" instance=ExtResource("3_kshv5")]
+position = Vector2(112, 17)
+index = 4
+
+[node name="MonSlot6" parent="Storage/Slots" instance=ExtResource("3_kshv5")]
+position = Vector2(148, 17)
+index = 5
+
+[node name="MonSlot7" parent="Storage/Slots" instance=ExtResource("3_kshv5")]
+position = Vector2(184, 17)
+index = 6
+
+[node name="MonSlot8" parent="Storage/Slots" instance=ExtResource("3_kshv5")]
+position = Vector2(220, 17)
+index = 7
+
+[node name="XButton" parent="." instance=ExtResource("15_vbad3")]
+
+[node name="Buttons" type="HBoxContainer" parent="."]
+offset_left = 5.0
+offset_top = 151.0
+offset_right = 315.0
+offset_bottom = 175.0
+theme_override_constants/separation = 0
+
+[node name="DatabaseButton" type="Button" parent="Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Buttons/DatabaseButton"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 102.0
+offset_bottom = 23.0
+text = "Database"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SaveButton" type="Button" parent="Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Buttons/SaveButton"]
+layout_mode = 0
+offset_top = 1.0
+offset_right = 102.0
+offset_bottom = 23.0
+text = "Save"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SettingsButton" type="Button" parent="Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Buttons/SettingsButton"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 103.0
+offset_bottom = 23.0
+text = "Settings"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Held" type="Node2D" parent="."]
+
+[connection signal="edit_script" from="ActiveMons/Mon1" to="." method="_on_edit_script_button_pressed"]
+[connection signal="slot_clicked" from="ActiveMons/Mon1" to="." method="_on_slot_clicked"]
+[connection signal="edit_script" from="ActiveMons/Mon2" to="." method="_on_edit_script_button_pressed"]
+[connection signal="slot_clicked" from="ActiveMons/Mon2" to="." method="_on_slot_clicked"]
+[connection signal="edit_script" from="ActiveMons/Mon3" to="." method="_on_edit_script_button_pressed"]
+[connection signal="slot_clicked" from="ActiveMons/Mon3" to="." method="_on_slot_clicked"]
+[connection signal="edit_script" from="ActiveMons/Mon4" to="." method="_on_edit_script_button_pressed"]
+[connection signal="slot_clicked" from="ActiveMons/Mon4" to="." method="_on_slot_clicked"]
+[connection signal="pressed" from="Storage/LeftStorageArrow" to="." method="_on_left_storage_arrow_pressed"]
+[connection signal="pressed" from="Storage/RightStorageArrow" to="." method="_on_right_storage_arrow_pressed"]
+[connection signal="clicked" from="Storage/Slots/MonSlot1" to="." method="_on_slot_clicked"]
+[connection signal="clicked" from="Storage/Slots/MonSlot2" to="." method="_on_slot_clicked"]
+[connection signal="clicked" from="Storage/Slots/MonSlot3" to="." method="_on_slot_clicked"]
+[connection signal="clicked" from="Storage/Slots/MonSlot4" to="." method="_on_slot_clicked"]
+[connection signal="clicked" from="Storage/Slots/MonSlot5" to="." method="_on_slot_clicked"]
+[connection signal="clicked" from="Storage/Slots/MonSlot6" to="." method="_on_slot_clicked"]
+[connection signal="clicked" from="Storage/Slots/MonSlot7" to="." method="_on_slot_clicked"]
+[connection signal="clicked" from="Storage/Slots/MonSlot8" to="." method="_on_slot_clicked"]
+[connection signal="pressed" from="XButton" to="." method="_on_x_button_pressed"]
+[connection signal="pressed" from="Buttons/DatabaseButton" to="." method="_on_database_button_pressed"]
+[connection signal="pressed" from="Buttons/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="Buttons/SettingsButton" to="." method="_on_settings_button_pressed"]

@@ -30,7 +30,7 @@ func _ready() -> void:
 	SLOT.is_active_mon = true
 	SLOT.index = index
 
-func set_mon(mon: MonData.Mon):
+func set_mon(mon: MonData.Mon) -> void:
 	_mon = mon
 	
 	# update name
@@ -61,9 +61,16 @@ func set_mon(mon: MonData.Mon):
 	# update visiblity of edit script button
 	EDIT_SCRIPT_BUTTON.visible = mon != null
 
-func _on_edit_script_button_pressed():
+func _on_edit_script_button_pressed() -> void:
 	assert(_mon)
 	emit_signal("edit_script", _mon)
 
-func _on_slot_clicked(slot: MonSlot):
+func _on_slot_clicked(slot: MonSlot) -> void:
+	assert(slot)
 	emit_signal("slot_clicked", slot)
+
+func set_edit_script_disabled(disabled: bool) -> void:
+	EDIT_SCRIPT_BUTTON.disabled = disabled
+
+func notify_update() -> void:
+	set_mon(SLOT.get_mon())

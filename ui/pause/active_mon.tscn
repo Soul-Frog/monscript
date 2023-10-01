@@ -121,4 +121,5 @@ texture_under = ExtResource("3_ybxu8")
 texture_progress = ExtResource("4_2uepe")
 
 [connection signal="clicked" from="Slot" to="." method="_on_slot_clicked"]
+[connection signal="mon_changed" from="Slot" to="." method="_on_slot_mon_changed"]
 [connection signal="pressed" from="EditScriptButton" to="." method="_on_edit_script_button_pressed"]

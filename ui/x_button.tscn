@@ -12,3 +12,4 @@ focus_mode = 0
 texture_normal = ExtResource("1_04pbb")
 texture_pressed = ExtResource("2_njh86")
 texture_hover = ExtResource("3_ne27g")
+texture_disabled = ExtResource("1_04pbb")

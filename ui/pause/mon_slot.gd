@@ -2,6 +2,7 @@ class_name MonSlot
 extends Node2D
 
 signal clicked
+signal mon_changed
 
 @export var is_active_mon: bool
 @export var index: int

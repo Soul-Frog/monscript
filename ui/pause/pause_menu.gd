@@ -9,6 +9,10 @@ signal closed
 @onready var ACTIVE_MONS = $ActiveMons
 @onready var STORAGE_PAGE_LABEL = $Storage/StoragePage
 @onready var STORAGE_PAGE_SLOTS = $Storage/Slots
+@onready var DATABASE_BUTTON = $Buttons/DatabaseButton
+@onready var SAVE_BUTTON = $Buttons/SaveButton
+@onready var SETTINGS_BUTTON = $Buttons/SettingsButton
+@onready var X_BUTTON = $XButton
 
 @onready var HELD = $Held
 const _HELD_OFFSET = Vector2(16, 16)
@@ -21,6 +25,10 @@ func _ready() -> void:
 	assert(ACTIVE_MONS)
 	assert(STORAGE_PAGE_LABEL)
 	assert(STORAGE_PAGE_SLOTS)
+	assert(DATABASE_BUTTON)
+	assert(SAVE_BUTTON)
+	assert(SETTINGS_BUTTON)
+	assert(X_BUTTON)
 	assert(HELD)
 	assert(STORAGE_PAGE_SLOTS.get_child_count() == PlayerData.MONS_PER_STORAGE_PAGE, "Not enough slots per page.")
 	
@@ -111,9 +119,21 @@ func _on_slot_clicked(slot: MonSlot):
 			Global.free_children(HELD)
 			_held_mon = popped[0]
 			HELD.add_child(popped[1])
+			
+	# if we changed an active mon, update the info
+	if slot.is_active_mon:
+		ACTIVE_MONS.get_children()[slot.index].notify_update()
 	
 	# update the global storage with the result of this click
 	if slot.is_active_mon: # in team
 		PlayerData.team[slot.index] = slot.get_mon()
 	else: # in storage
 		PlayerData.storage[(_storage_page * PlayerData.MONS_PER_STORAGE_PAGE) + slot.index] = slot.get_mon()
+	
+	# update button state based on if we're holding a mon or not
+	DATABASE_BUTTON.disabled = _held_mon != null
+	SAVE_BUTTON.disabled = _held_mon != null
+	SETTINGS_BUTTON.disabled = _held_mon != null
+	X_BUTTON.disabled = _held_mon != null
+	for active_slot in ACTIVE_MONS.get_children():
+		active_slot.set_edit_script_disabled(_held_mon != null)
