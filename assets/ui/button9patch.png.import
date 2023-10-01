@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cf5jkrufx2hjv"
-path="res://.godot/imported/grey9patch.png-99c037a2d92cb0c0e996ed0e616fb899.ctex"
+path="res://.godot/imported/button9patch.png-96754bca85dfada4e2ccd90d2cba4f0b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/grey9patch.png"
-dest_files=["res://.godot/imported/grey9patch.png-99c037a2d92cb0c0e996ed0e616fb899.ctex"]
+source_file="res://assets/ui/button9patch.png"
+dest_files=["res://.godot/imported/button9patch.png-96754bca85dfada4e2ccd90d2cba4f0b.ctex"]
 
 [params]
 

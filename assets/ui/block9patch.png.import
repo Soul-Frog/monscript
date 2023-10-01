@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b5fhhyi4te8hq"
-path="res://.godot/imported/darkgrey9patch.png-486d0e746fb7439370a2698fcfb520d2.ctex"
+uid="uid://jtkdgxn1ucf5"
+path="res://.godot/imported/block9patch.png-dac7095d94be0079090cb2b887349086.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/darkgrey9patch.png"
-dest_files=["res://.godot/imported/darkgrey9patch.png-486d0e746fb7439370a2698fcfb520d2.ctex"]
+source_file="res://assets/ui/block9patch.png"
+dest_files=["res://.godot/imported/block9patch.png-dac7095d94be0079090cb2b887349086.ctex"]
 
 [params]
 

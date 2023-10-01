@@ -22,6 +22,7 @@ const COLOR_DARK_RED = Color.DARK_RED
 var DEBUG_DRAW = true
 var DEBUG_NO_INVINCIBLE = true
 var DEBUG_CONSOLE = true
+var DEBUG_FAST_START = true
 
 # represents the result of a battle
 enum BattleEndCondition {

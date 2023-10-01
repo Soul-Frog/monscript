@@ -1,10 +1,10 @@
 extends Node2D
 
-# emitted when the script menu should be opened, sends a Mon
-signal script_menu_opened
+signal script_menu_opened # emitted when the script menu should be opened, sends a Mon
 signal database_menu_opened
 signal settings_menu_opened
 signal save
+signal closed
 
 @onready var ACTIVE_MONS = $ActiveMons
 @onready var STORAGE_PAGE_LABEL = $Storage/StoragePage
@@ -60,26 +60,12 @@ func _on_settings_button_pressed() -> void:
 	print("Settings!")
 	emit_signal("settings_menu_opened")
 
-func _on_mon_edit_button_1_pressed() -> void:
-	assert(PlayerData.team[0] != null, "Shouldn't be possible to click this...")
-	emit_signal("script_menu_opened", PlayerData.team[0])
-
-func _on_mon_edit_button_2_pressed():
-	assert(PlayerData.team[1] != null, "Shouldn't be possible to click this...")
-	emit_signal("script_menu_opened", PlayerData.team[1])
-
-func _on_mon_edit_button_3_pressed():
-	assert(PlayerData.team[2] != null, "Shouldn't be possible to click this...")
-	emit_signal("script_menu_opened", PlayerData.team[2])
-
-func _on_mon_edit_button_4_pressed():
-	assert(PlayerData.team[3] != null, "Shouldn't be possible to click this...")
-	emit_signal("script_menu_opened",  PlayerData.team[3])
-
+func _on_edit_script_button_pressed(mon: MonData.Mon) -> void:
+	assert(mon != null)
+	emit_signal("script_menu_opened", mon)
 
 func _on_x_button_pressed():
-	#TODO
-	pass
+	emit_signal("closed")
 
 func _on_left_storage_arrow_pressed():
 	var new_page = PlayerData.STORAGE_PAGES - 1 if _storage_page == 0 else _storage_page - 1

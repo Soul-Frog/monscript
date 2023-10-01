@@ -1,8 +1,8 @@
 [gd_resource type="Theme" load_steps=13 format=3 uid="uid://612i0h3ltb6t"]
 
-[ext_resource type="Texture2D" uid="uid://cf5jkrufx2hjv" path="res://assets/ui/grey9patch.png" id="1_5hqfd"]
+[ext_resource type="Texture2D" uid="uid://cf5jkrufx2hjv" path="res://assets/ui/button9patch.png" id="1_5hqfd"]
 [ext_resource type="FontFile" uid="uid://bv5q1sxhpuca3" path="res://assets/fonts/m5x7.ttf" id="1_o4iu0"]
-[ext_resource type="Texture2D" uid="uid://b5fhhyi4te8hq" path="res://assets/ui/darkgrey9patch.png" id="2_snpje"]
+[ext_resource type="Texture2D" uid="uid://b5fhhyi4te8hq" path="res://assets/ui/buttonpressed9patch.png" id="2_snpje"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_knmr4"]
 

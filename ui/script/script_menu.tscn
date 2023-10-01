@@ -422,6 +422,7 @@ text = "No"
 horizontal_alignment = 1
 
 [node name="ClearPopup" type="Control" parent="."]
+visible = false
 z_index = 400
 custom_minimum_size = Vector2(320, 180)
 layout_mode = 3

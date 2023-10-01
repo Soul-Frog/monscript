@@ -149,6 +149,10 @@ text = "Settings"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[connection signal="edit_script" from="ActiveMons/Mon1" to="." method="_on_edit_script_button_pressed"]
+[connection signal="edit_script" from="ActiveMons/Mon2" to="." method="_on_edit_script_button_pressed"]
+[connection signal="edit_script" from="ActiveMons/Mon3" to="." method="_on_edit_script_button_pressed"]
+[connection signal="edit_script" from="ActiveMons/Mon4" to="." method="_on_edit_script_button_pressed"]
 [connection signal="pressed" from="Storage/LeftStorageArrow" to="." method="_on_left_storage_arrow_pressed"]
 [connection signal="pressed" from="Storage/RightStorageArrow" to="." method="_on_right_storage_arrow_pressed"]
 [connection signal="pressed" from="XButton" to="." method="_on_x_button_pressed"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://esji7qvwtt2w"]
 
 [ext_resource type="Script" path="res://ui/script/script_block.gd" id="1_5w5ou"]
-[ext_resource type="Texture2D" uid="uid://cf5jkrufx2hjv" path="res://assets/ui/grey9patch.png" id="2_lshjy"]
+[ext_resource type="Texture2D" uid="uid://jtkdgxn1ucf5" path="res://assets/ui/block9patch.png" id="2_nx7xk"]
 [ext_resource type="Texture2D" uid="uid://dw4ksdpcf0pf2" path="res://assets/ui/script_menu/do.png" id="3_044cn"]
 [ext_resource type="PackedScene" uid="uid://djhn0flf60xvu" path="res://decorators/mouseover_watcher.tscn" id="4_84670"]
 
@@ -22,7 +22,7 @@ mouse_filter = 2
 layout_mode = 2
 offset_right = 48.0
 offset_bottom = 13.0
-texture = ExtResource("2_lshjy")
+texture = ExtResource("2_nx7xk")
 patch_margin_left = 5
 patch_margin_top = 5
 patch_margin_right = 5

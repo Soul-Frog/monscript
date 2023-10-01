@@ -10,6 +10,10 @@ extends Node2D
 @onready var XP_BAR = $XPBar
 @onready var EDIT_SCRIPT_BUTTON = $EditScriptButton
 
+signal edit_script
+
+var _mon: MonData.Mon = null
+
 func _ready() -> void:
 	# make sure required elements exist
 	assert(SLOT)
@@ -21,6 +25,8 @@ func _ready() -> void:
 	assert(XP_BAR)
 
 func set_mon(mon: MonData.Mon):
+	_mon = mon
+	
 	# update name
 	NAME.text = mon.get_name() if mon else ""
 	
@@ -48,3 +54,7 @@ func set_mon(mon: MonData.Mon):
 	
 	# update visiblity of edit script button
 	EDIT_SCRIPT_BUTTON.visible = mon != null
+
+func _on_edit_script_button_pressed():
+	assert(_mon)
+	emit_signal("edit_script", _mon)

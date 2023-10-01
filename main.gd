@@ -43,7 +43,7 @@ func _input(_event) -> void:
 			PAUSE_MENU.setup()
 			await _switch_to_scene(PAUSE_MENU, FADE)
 		elif active_scene == PAUSE_MENU:
-			await _switch_to_scene(OVERWORLD, FADE)
+			await _on_pause_menu_closed()
 
 # Switch to a new scene with a fade effect.
 func _switch_to_scene(new_scene: Node, fade_effect: FadeDecorator) -> void:
@@ -113,12 +113,15 @@ func _on_submenu_closed() -> void:
 func _on_visual_novel_completed() -> void:
 	await _switch_to_scene(OVERWORLD, FADE)
 
+func _on_pause_menu_closed():
+	await _switch_to_scene(OVERWORLD, FADE)
+
 func _on_main_menu_clicked_new_game():
 	await _switch_to_scene(VISUAL_NOVEL, MAIN_MENU_FADE)
 	VISUAL_NOVEL.play_intro_cutscene()
 
 func _on_main_menu_clicked_continue():
-	await _switch_to_scene(OVERWORLD, MAIN_MENU_FADE) #for now
+	await _switch_to_scene(OVERWORLD, MAIN_MENU_FADE if not Global.DEBUG_FAST_START else FADE) #for now
 
 func _on_main_menu_clicked_settings():
 	print("TODO - Settings")

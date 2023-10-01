@@ -54,6 +54,10 @@ func _ready() -> void:
 	assert(NEWLINE_BUTTON != null)
 	assert(HELD != null)
 	assert(CLEAR_POPUP != null)
+	assert(EXIT_POPUP != null)
+	assert(not CLEAR_POPUP.visible)
+	assert(not EXIT_POPUP.visible)
+	assert(not DISCARD_ZONE.visible)
 	
 	# when the scrollbar size changes, move the scrollbar down
 	SCRIPT_SCROLL.get_v_scroll_bar().changed.connect(_move_scroll_to_bottom)

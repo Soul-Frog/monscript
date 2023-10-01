@@ -49,6 +49,7 @@ fade_out_hangtime = 2.0
 
 [connection signal="closed" from="Scene/Scenes/ScriptMenu" to="." method="_on_submenu_closed"]
 [connection signal="closed" from="Scene/Scenes/DatabaseMenu" to="." method="_on_submenu_closed"]
+[connection signal="closed" from="Scene/Scenes/PauseMenu" to="." method="_on_pause_menu_closed"]
 [connection signal="database_menu_opened" from="Scene/Scenes/PauseMenu" to="." method="_on_database_menu_opened"]
 [connection signal="script_menu_opened" from="Scene/Scenes/PauseMenu" to="." method="_on_script_menu_opened"]
 [connection signal="completed" from="Scene/Scenes/VisualNovel" to="." method="_on_visual_novel_completed"]
