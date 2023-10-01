@@ -18,6 +18,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Slot" parent="." instance=ExtResource("1_mfrbm")]
 position = Vector2(1, 16)
+is_active_mon = true
 
 [node name="EditScriptButton" type="Button" parent="."]
 offset_left = 9.0
@@ -119,4 +120,5 @@ offset_bottom = 61.0
 texture_under = ExtResource("3_ybxu8")
 texture_progress = ExtResource("4_2uepe")
 
+[connection signal="clicked" from="Slot" to="." method="_on_slot_clicked"]
 [connection signal="pressed" from="EditScriptButton" to="." method="_on_edit_script_button_pressed"]

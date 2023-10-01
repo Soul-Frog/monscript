@@ -40,15 +40,12 @@ position = Vector2(5, 15)
 
 [node name="Mon2" parent="ActiveMons" instance=ExtResource("3_efgjc")]
 position = Vector2(82, 15)
-index = 1
 
 [node name="Mon3" parent="ActiveMons" instance=ExtResource("3_efgjc")]
 position = Vector2(160, 15)
-index = 2
 
 [node name="Mon4" parent="ActiveMons" instance=ExtResource("3_efgjc")]
 position = Vector2(238, 14)
-index = 3
 
 [node name="Storage" type="Node2D" parent="."]
 position = Vector2(49, 97)
@@ -83,31 +80,24 @@ position = Vector2(-32, 17)
 
 [node name="MonSlot2" parent="Storage/Slots" instance=ExtResource("3_kshv5")]
 position = Vector2(4, 17)
-index = 1
 
 [node name="MonSlot3" parent="Storage/Slots" instance=ExtResource("3_kshv5")]
 position = Vector2(40, 17)
-index = 2
 
 [node name="MonSlot4" parent="Storage/Slots" instance=ExtResource("3_kshv5")]
 position = Vector2(76, 17)
-index = 3
 
 [node name="MonSlot5" parent="Storage/Slots" instance=ExtResource("3_kshv5")]
 position = Vector2(112, 17)
-index = 4
 
 [node name="MonSlot6" parent="Storage/Slots" instance=ExtResource("3_kshv5")]
 position = Vector2(148, 17)
-index = 5
 
 [node name="MonSlot7" parent="Storage/Slots" instance=ExtResource("3_kshv5")]
 position = Vector2(184, 17)
-index = 6
 
 [node name="MonSlot8" parent="Storage/Slots" instance=ExtResource("3_kshv5")]
 position = Vector2(220, 17)
-index = 7
 
 [node name="XButton" parent="." instance=ExtResource("15_vbad3")]
 

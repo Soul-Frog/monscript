@@ -1,5 +1,7 @@
 extends Node2D
 
+@export var index: int
+
 @onready var NAME = $Name
 @onready var SLOT = $Slot
 @onready var LEVEL = $Level
@@ -11,6 +13,7 @@ extends Node2D
 @onready var EDIT_SCRIPT_BUTTON = $EditScriptButton
 
 signal edit_script
+signal slot_clicked
 
 var _mon: MonData.Mon = null
 
@@ -23,6 +26,9 @@ func _ready() -> void:
 	assert(DEF)
 	assert(SPD)
 	assert(XP_BAR)
+	
+	SLOT.is_active_mon = true
+	SLOT.index = index
 
 func set_mon(mon: MonData.Mon):
 	_mon = mon
@@ -58,3 +64,6 @@ func set_mon(mon: MonData.Mon):
 func _on_edit_script_button_pressed():
 	assert(_mon)
 	emit_signal("edit_script", _mon)
+
+func _on_slot_clicked(slot: MonSlot):
+	emit_signal("slot_clicked", slot)

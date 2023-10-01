@@ -10,6 +10,10 @@ signal closed
 @onready var STORAGE_PAGE_LABEL = $Storage/StoragePage
 @onready var STORAGE_PAGE_SLOTS = $Storage/Slots
 
+@onready var HELD = $Held
+const _HELD_OFFSET = Vector2(16, 16)
+var _held_mon = null
+
 var _storage_page = 0
 var _STORAGE_PAGE_LABEL_FORMAT = "%d/%d"
 
@@ -17,10 +21,12 @@ func _ready() -> void:
 	assert(ACTIVE_MONS)
 	assert(STORAGE_PAGE_LABEL)
 	assert(STORAGE_PAGE_SLOTS)
+	assert(HELD)
 	assert(STORAGE_PAGE_SLOTS.get_child_count() == PlayerData.MONS_PER_STORAGE_PAGE, "Not enough slots per page.")
 	
 	assert(ACTIVE_MONS.get_children().size() == Global.MONS_PER_TEAM, "Wrong number of placeholder positions!")
 	_change_storage_page(0) # set the initial storage page
+	
 	setup() #todo - remove this
 
 func setup() -> void:
@@ -47,17 +53,19 @@ func _change_storage_page(new_page: int):
 		var storage_index = (_storage_page * PlayerData.MONS_PER_STORAGE_PAGE) + i
 		STORAGE_PAGE_SLOTS.get_children()[i].set_mon(PlayerData.storage[storage_index])
 
+func _input(event) -> void:
+	if event is InputEventMouseMotion:
+		HELD.position = get_viewport().get_mouse_position() - _HELD_OFFSET
+
 func _on_database_button_pressed() -> void:
 	emit_signal("database_menu_opened")
 
 func _on_save_button_pressed():
-	#TODO save
-	print("Save!")
+	print("Save!") 	#TODO save
 	emit_signal("save")
 
 func _on_settings_button_pressed() -> void:
-	#TODO settings
-	print("Settings!")
+	print("Settings!")	#TODO settings
 	emit_signal("settings_menu_opened")
 
 func _on_edit_script_button_pressed(mon: MonData.Mon) -> void:
@@ -68,9 +76,44 @@ func _on_x_button_pressed():
 	emit_signal("closed")
 
 func _on_left_storage_arrow_pressed():
-	var new_page = PlayerData.STORAGE_PAGES - 1 if _storage_page == 0 else _storage_page - 1
-	_change_storage_page(new_page)
+	# switch to the next page down, but roll around to max if needed
+	_change_storage_page(PlayerData.STORAGE_PAGES - 1 if _storage_page == 0 else _storage_page - 1)
 
 func _on_right_storage_arrow_pressed():
-	var new_page = 0 if _storage_page == PlayerData.STORAGE_PAGES - 1 else _storage_page + 1
-	_change_storage_page(new_page)
+	# switch to the next page up, but roll around to 0 if needed
+	_change_storage_page(0 if _storage_page == PlayerData.STORAGE_PAGES - 1 else _storage_page + 1)
+
+func _on_slot_clicked(slot: MonSlot):
+	assert(slot)
+	assert((_held_mon == null and HELD.get_child_count() == 0) or (_held_mon != null and HELD.get_child_count() == 1))
+	
+	# if we are holding nothing...
+	if _held_mon == null:
+		#...and the slot is empty, do nothing
+		if not slot.has_mon():
+			return
+		#...and the slot is not empty, pick up that mon
+		else:
+			var popped = slot.pop_mon()
+			_held_mon = popped[0]
+			HELD.add_child(popped[1])
+	# if we are holding a mon...
+	else:
+		#...and the slot is empty, place mon in slot
+		if not slot.has_mon():
+			slot.set_mon(_held_mon)
+			Global.free_children(HELD)
+			_held_mon = null
+		#...and the slot is not empty, swap the held mon with the mon in the slot
+		else:
+			var popped = slot.pop_mon()
+			slot.set_mon(_held_mon)
+			Global.free_children(HELD)
+			_held_mon = popped[0]
+			HELD.add_child(popped[1])
+	
+	# update the global storage with the result of this click
+	if slot.is_active_mon: # in team
+		PlayerData.team[slot.index] = slot.get_mon()
+	else: # in storage
+		PlayerData.storage[(_storage_page * PlayerData.MONS_PER_STORAGE_PAGE) + slot.index] = slot.get_mon()

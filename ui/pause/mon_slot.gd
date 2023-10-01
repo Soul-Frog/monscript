@@ -1,4 +1,10 @@
+class_name MonSlot
 extends Node2D
+
+signal clicked
+
+@export var is_active_mon: bool
+@export var index: int
 
 @onready var _MON = $Mon
 @onready var _MON_POSITION = _MON.position
@@ -24,14 +30,22 @@ func set_mon(mon: MonData.Mon):
 		_current_mon = mon
 		add_child(_current_mon_scene)
 
-func pop_mon() -> MonData.Mon:
+func get_mon():
+	return _current_mon
+
+# clears this slot and returns an array containing the removed [MonData.mon, MonScene]
+func pop_mon():
 	assert((_current_mon != null) == (_current_mon_scene != null), "Mon and MonScene are not synced - one is null; other is not.")
 	var mon = _current_mon
-	_current_mon_scene.queue_free()
+	var scene = _current_mon_scene
+	remove_child(_current_mon_scene)
 	_current_mon_scene = null
 	_current_mon = null
-	return mon
+	return [mon, scene]
 
 func has_mon() -> bool:
 	assert((_current_mon != null) == (_current_mon_scene != null), "Mon and MonScene are not synced - one is null; other is not.")
 	return _current_mon != null
+
+func _on_clicked():
+	emit_signal("clicked", self)
