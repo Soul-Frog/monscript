@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://wvcujwhuslip"]
+[gd_scene load_steps=13 format=3 uid="uid://wvcujwhuslip"]
 
 [ext_resource type="Script" path="res://ui/pause/pause_menu.gd" id="1_2voed"]
 [ext_resource type="Texture2D" uid="uid://dnu8i8xfacd0m" path="res://assets/ui/pause_menu/pause_base.png" id="2_6t5wk"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bno0ms2rh0xpm" path="res://assets/ui/pause_menu/left_arrow_pressed.png" id="10_vsw02"]
 [ext_resource type="Texture2D" uid="uid://e68t3b8x6bme" path="res://assets/ui/pause_menu/left_arrow_hover.png" id="11_wlcmt"]
 [ext_resource type="Texture2D" uid="uid://cunwhbwcsa6gr" path="res://assets/ui/pause_menu/right_arrow.png" id="12_lage2"]
+[ext_resource type="Script" path="res://ui/pause/priority_button.gd" id="12_ya3ju"]
 [ext_resource type="Texture2D" uid="uid://bqbhro25bvmyn" path="res://assets/ui/pause_menu/right_arrow_pressed.png" id="13_cl076"]
 [ext_resource type="Texture2D" uid="uid://bbvvcauplh0nx" path="res://assets/ui/pause_menu/right_arrow_hover.png" id="14_nfk3y"]
 [ext_resource type="PackedScene" uid="uid://byonngrgtbxr7" path="res://ui/x_button.tscn" id="15_vbad3"]
@@ -121,6 +122,7 @@ theme_override_constants/separation = 0
 [node name="DatabaseButton" type="Button" parent="Buttons"]
 layout_mode = 2
 size_flags_horizontal = 3
+script = ExtResource("12_ya3ju")
 
 [node name="Label" type="Label" parent="Buttons/DatabaseButton"]
 layout_mode = 0
@@ -135,6 +137,7 @@ vertical_alignment = 1
 [node name="SaveButton" type="Button" parent="Buttons"]
 layout_mode = 2
 size_flags_horizontal = 3
+script = ExtResource("12_ya3ju")
 
 [node name="Label" type="Label" parent="Buttons/SaveButton"]
 layout_mode = 0
@@ -148,6 +151,7 @@ vertical_alignment = 1
 [node name="SettingsButton" type="Button" parent="Buttons"]
 layout_mode = 2
 size_flags_horizontal = 3
+script = ExtResource("12_ya3ju")
 
 [node name="Label" type="Label" parent="Buttons/SettingsButton"]
 layout_mode = 0
@@ -180,6 +184,8 @@ vertical_alignment = 1
 [connection signal="clicked" from="Storage/Slots/MonSlot7" to="." method="_on_slot_clicked"]
 [connection signal="clicked" from="Storage/Slots/MonSlot8" to="." method="_on_slot_clicked"]
 [connection signal="pressed" from="XButton" to="." method="_on_x_button_pressed"]
+[connection signal="mouse_entered" from="Buttons/DatabaseButton" to="Buttons/DatabaseButton" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Buttons/DatabaseButton" to="Buttons/DatabaseButton" method="_on_mouse_exited"]
 [connection signal="pressed" from="Buttons/DatabaseButton" to="." method="_on_database_button_pressed"]
 [connection signal="pressed" from="Buttons/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="Buttons/SettingsButton" to="." method="_on_settings_button_pressed"]
