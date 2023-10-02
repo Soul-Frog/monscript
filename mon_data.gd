@@ -82,7 +82,21 @@ class Mon:
 		self._xp = 0
 		self._nickname = mon_nickname
 		self._monscripts = [get_default_monscript(), get_default_monscript(), get_default_monscript()]
+		assert(_monscripts.size() == 3) # would need to change a ton of stuff to change this...
 		self._active_monscript_index = 0
+	
+	func to_json() -> String:
+		var save = {
+			"species" : _base._species_name,
+			"nickname" : _nickname,
+			"level" : _level,
+			"xp" : _xp,
+			"monscript1" : _monscripts[0].as_string(),
+			"monscript2" : _monscripts[1].as_string(),
+			"monscript3" : _monscripts[2].as_string(),
+			"active_monscript" : _active_monscript_index
+		}
+		return JSON.stringify(save)
 	
 	# if this mon can use this block
 	# right now, it just checks if the mon's base uses this block
@@ -265,7 +279,43 @@ func get_speed_percentile_for(montype: MonType) -> int:
 	
 	return float(_MON_MAP[montype].speed_for_level(MAX_LEVEL) - lowest_speed) / (highest_speed- lowest_speed) * 100
 
+# used in mon_from_json - convert the name of a species into the monbase
+func _species_str_to_montype(species_str: String) -> MonType:
+	for montype in _MON_MAP.keys():
+		if _MON_MAP[montype]._species_name == species_str:
+			return montype
+	assert(false, "No base found for %s." % species_str)
+	return MonType.MAGNETFROG #error case
+
 func create_mon(montype: MonType, level: int) -> Mon:
 	assert(montype != MonType.NONE)
 	return Mon.new(_MON_MAP[montype], level)
 
+func mon_from_json(json_string: String) -> Mon:
+	# read in the string as json
+	var json = JSON.new()
+	var result = json.parse(json_string)
+	if result != OK:
+		assert(false, "Mon corruption!")
+		return create_mon(MonType.MAGNETFROG, 0) #error case - just return a magnetfrog
+	
+	var save = json.data
+	
+	# recreate the mon
+	var type: MonType = _species_str_to_montype(save["species"])
+	var level: int = save["level"]
+	var mon: Mon = create_mon(type, level)
+	
+	# set some fields on this mon
+	mon._nickname = save["nickname"]
+	mon._xp = save["xp"]
+	
+	# remake the scripts for this mon
+	mon.set_monscript(0, ScriptData.MonScript.new(save["monscript1"]))
+	mon.set_monscript(1, ScriptData.MonScript.new(save["monscript2"]))
+	mon.set_monscript(2, ScriptData.MonScript.new(save["monscript3"]))
+	
+	mon.set_active_monscript_index(save["active_monscript"])
+	
+	return mon
+	

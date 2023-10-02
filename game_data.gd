@@ -52,9 +52,12 @@ var team = []
 var storage = []
 
 # the maximum number of lines the player can use to build scripts
-var line_limit = 3
+const DEFAULT_LINE_LIMIT = 3 # number of line available for a new game
+var line_limit = DEFAULT_LINE_LIMIT
+
 # the number of available storage pages 
-var storage_pages = 3
+const DEFAULT_STORAGE_PAGES = 3 # number of storage pages for a new game
+var storage_pages = DEFAULT_STORAGE_PAGES
 
 # MonType -> int; maps MonType to unlock progress
 var compilation_progress_per_mon := {}
@@ -98,15 +101,10 @@ func _ready():
 	
 	# create the default team
 	team = [MonData.create_mon(MonData.MonType.MAGNETFROG, 1), null, null, null]
-	
-	# create the mon storage, empty by default
-	for i in storage_pages:
-		for j in MONS_PER_STORAGE_PAGE:
-			storage.append(null)
-		
 	assert(team.size() == Global.MONS_PER_TEAM)
-	assert(storage.size() == storage_pages * MONS_PER_STORAGE_PAGE)
 	
+	# create the mon storage
+	increase_storage_size(DEFAULT_STORAGE_PAGES)
 	# TODO - remove this debug code
 	storage[0] = MonData.create_mon(MonData.MonType.MAGNETFROG, 10)
 	storage[5] = MonData.create_mon(MonData.MonType.MAGNETFROG, 11)
@@ -114,7 +112,6 @@ func _ready():
 	storage[9] = MonData.create_mon(MonData.MonType.MAGNETFROG, 13)
 	storage[13] = MonData.create_mon(MonData.MonType.MAGNETFROG, 14)
 	storage[18] = MonData.create_mon(MonData.MonType.MAGNETFROG, 64)
-	
 
 # saves the game state to file
 func save_game():
@@ -124,16 +121,24 @@ func save_game():
 	# save player's name
 	save_dict["player_name"] = PLAYER_NAME
 	
+	# save line limit and storage slots
+	save_dict["line_limit"] = line_limit
+	save_dict["storage_pages"] = storage_pages
+	
 	# save each flag as str->bool
 	for flag in _flags.keys():
 		save_dict[_flag_to_str[flag]] = _flags[flag]
 	
+	# save each mon in the team
+	for i in team.size():
+		save_dict["team_mon_%d" % i] = team[i].to_json() if team[i] != null else "[TEAMNULL]"
+	
+	# save each mon in storage
+	for i in storage.size():
+		save_dict["storage_mon_%d" % i] = storage[i].to_json() if storage[i] != null else "[STORAGENULL]"
 	
 	# convert to json
 	var json = JSON.stringify(save_dict)
-	
-	print(save_dict) #todo remove debug print
-	print(json) 
 	
 	# write it all to a special file
 	Global.string_to_file(SAVE_FILE_NAME, json)
@@ -154,14 +159,30 @@ func load_game():
 	# read back the player's name
 	PLAYER_NAME = save_dict["player_name"]
 	
+	# read back the line limit and storage size
+	line_limit = save_dict["line_limit"]
+	increase_storage_size(save_dict["storage_pages"]) # adjust size of storage to match loaded value
+	
 	# read back each flag
 	for flag_enum in _flag_to_str.keys():
 		_flags[flag_enum] = save_dict[_flag_to_str[flag_enum]]
 	
 	# read back each mon in team
+	for i in team.size():
+		var mon_str = save_dict["team_mon_%d" % i]
+		team[i] = MonData.mon_from_json(mon_str) if mon_str != "[TEAMNULL]" else null
 	
 	# read back each mon in storage
-	
+	for i in storage.size():
+		var mon_str = save_dict["storage_mon_%d" % i]
+		storage[i] = MonData.mon_from_json(mon_str) if mon_str != "[STORAGENULL]" else null
+
+func increase_storage_size(new_size: int):
+	assert(storage_pages <= new_size, "Can't decrease storage size!")
+	storage_pages = new_size
+	while storage.size() < storage_pages * MONS_PER_STORAGE_PAGE:
+		storage.append(null)
+	assert(storage.size() == storage_pages * MONS_PER_STORAGE_PAGE)
 
 
 func is_block_unlocked(block: ScriptData.Block) -> bool:
