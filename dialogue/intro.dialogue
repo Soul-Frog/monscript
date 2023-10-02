@@ -67,12 +67,12 @@ Professor: Class dismissed.
 
 ~ examine_computer
 # first time examining computer
-if not GameData.FLAG_INTRO_EXAMINED_COMPUTER_ONCE
+if not GameData.check_flag(GameData.Flag.INTRO_EXAMINED_COMPUTER_ONCE)
 	{{GameData.PLAYER_NAME}}: My computer. Well, this game isn't going to finish itself, as much as I wish it would.
 	: If you're done examining the room, select the computer again to proceed.
-	set GameData.FLAG_INTRO_EXAMINED_COMPUTER_ONCE = true
+	do GameData.set_flag(GameData.Flag.INTRO_EXAMINED_COMPUTER_ONCE, true)
 # second time
-elif not GameData.FLAG_INTRO_READY_TO_SLEEP
+elif not GameData.check_flag(GameData.Flag.INTRO_READY_TO_SLEEP)
 	{{GameData.PLAYER_NAME}}: Enough procrastinating. I've got to do this thing.
 	do Dialogue.emit("examined computer twice")
 # after playing the game demo
@@ -155,11 +155,11 @@ do Dialogue.emit("reset")
 {{GameData.PLAYER_NAME}}: I've reached my limit. I can't deal with this anymore.
 {{GameData.PLAYER_NAME}}: There's no reason for me to to struggle. I'm giving up.
 {{GameData.PLAYER_NAME}}: ...I just want to go to bed. 
-set GameData.FLAG_INTRO_READY_TO_SLEEP = true
+do GameData.set_flag(GameData.Flag.INTRO_READY_TO_SLEEP, true)
 => END
 
 ~ examine_bed
-if not GameData.FLAG_INTRO_READY_TO_SLEEP: 
+if not GameData.check_flag(GameData.Flag.INTRO_READY_TO_SLEEP)
 	{{GameData.PLAYER_NAME}}: My bed. It looks really cozy.\nI'd like to just go to sleep now, but I've got a lot I need to get done tonight.
 else
 	{{GameData.PLAYER_NAME}}: I don't even know why I bother.

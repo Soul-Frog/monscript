@@ -3,7 +3,7 @@ extends Node
 
 # Constants
 const MONS_PER_STORAGE_PAGE = 8
-const SAVE_FILE_NAME = "save.monsave"
+const SAVE_FILE_NAME = "user://save.monsave"
 
 # Area stuff
 enum Area
@@ -22,10 +22,30 @@ func path_for_area(area_enum: GameData.Area) -> String:
 	return _area_enum_to_path[area_enum]
 
 # Gamestate Flags
-# During the intro, the computer needs to be examined twice to progress. This tracks if the first examine has occured.
-var FLAG_INTRO_EXAMINED_COMPUTER_ONCE = false
-# During the intro, after examining the computer twice and playing the game, this is enabled so we can sleep at the bed.
-var FLAG_INTRO_READY_TO_SLEEP = false
+enum Flag {
+	# During the intro, the computer needs to be examined twice to progress. This tracks if the first examine has occured.
+	INTRO_EXAMINED_COMPUTER_ONCE, 
+	# During the intro, after examining the computer twice and playing the game, this is enabled so we can sleep at the bed.
+	INTRO_READY_TO_SLEEP
+}
+
+# map of flag enums to strings, used when saving so we can save actual names and not small integers which would get
+# messed up easily by new flags being added or flags being shifted.
+# unfortunately this must be updated manually whenever a new flag is added as GDScript does not support string based enums.
+var _flag_to_str := {
+	Flag.INTRO_EXAMINED_COMPUTER_ONCE : "INTRO_EXAMINED_COMPUTER_ONCE",
+	Flag.INTRO_READY_TO_SLEEP : "INTRO_READY_TO_SLEEP"
+}
+
+var _flags : Dictionary = {}
+
+func check_flag(flag: Flag) -> bool:
+	assert(_flags.has(flag))
+	return _flags[flag]
+
+func set_flag(flag: Flag, value: bool) -> void:
+	assert(_flags.has(flag))
+	_flags[flag] = value
 
 var PLAYER_NAME = "???"
 var team = []
@@ -40,9 +60,16 @@ var storage_pages = 3
 var compilation_progress_per_mon := {}
 
 # tracks which blocks have been unlocked for use in the script editor
-var _block_unlock_map = {}
+var _block_unlock_map := {}
 
 func _ready():
+	# populate the list of flags, set to their default value of false
+	for flag in Flag.values():
+		_flags[flag] = false
+	assert(_flag_to_str.size() == _flags.size(), "Either missing or too many string conversions for a flag! (update _flag_to_str)")
+	for flag in _flags.keys():
+		assert(_flag_to_str.has(flag), "Missing string conversion for a flag! (update _flag_to_str)")
+	
 	# populate the compilation progress map
 	for montype in MonData.MonType.values():
 		if montype == MonData.MonType.NONE:
@@ -92,12 +119,21 @@ func _ready():
 # saves the game state to file
 func save_game():
 	# store everything we care about in a big dictionary
-	var save_dict := {
-		"player_name" : PLAYER_NAME
-	}
+	var save_dict := {}
+	
+	# save player's name
+	save_dict["player_name"] = PLAYER_NAME
+	
+	# save each flag as str->bool
+	for flag in _flags.keys():
+		save_dict[_flag_to_str[flag]] = _flags[flag]
+	
 	
 	# convert to json
 	var json = JSON.stringify(save_dict)
+	
+	print(save_dict) #todo remove debug print
+	print(json) 
 	
 	# write it all to a special file
 	Global.string_to_file(SAVE_FILE_NAME, json)
@@ -113,12 +149,19 @@ func load_game():
 	if not result == OK:
 		assert(false, "Save corruption!")
 		return
-	var save_dict = json.data()
+	var save_dict = json.data
 	
-	print(save_dict)
-	print(save_dict["player_name"])
-	
+	# read back the player's name
 	PLAYER_NAME = save_dict["player_name"]
+	
+	# read back each flag
+	for flag_enum in _flag_to_str.keys():
+		_flags[flag_enum] = save_dict[_flag_to_str[flag_enum]]
+	
+	# read back each mon in team
+	
+	# read back each mon in storage
+	
 
 
 func is_block_unlocked(block: ScriptData.Block) -> bool:
