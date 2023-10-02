@@ -139,3 +139,6 @@ func recursive_set_processes(node: Node, enable: bool) -> void:
 	node.set_process_input(enable)
 	for child in node.get_children():
 		recursive_set_processes(child, enable)
+
+func value_or_default(dict: Dictionary, key, default):
+	return dict[key] if dict.has(key) else default

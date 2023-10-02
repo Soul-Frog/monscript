@@ -157,15 +157,15 @@ func load_game():
 	var save_dict = json.data
 	
 	# read back the player's name
-	PLAYER_NAME = save_dict["player_name"]
+	PLAYER_NAME = Global.value_or_default(save_dict, "player_name", PLAYER_NAME)
 	
 	# read back the line limit and storage size
-	line_limit = save_dict["line_limit"]
-	increase_storage_size(save_dict["storage_pages"]) # adjust size of storage to match loaded value
+	line_limit = Global.value_or_default(save_dict, "line_limit", DEFAULT_LINE_LIMIT)
+	increase_storage_size(Global.value_or_default(save_dict, "storage_pages", DEFAULT_STORAGE_PAGES)) # adjust size of storage to match loaded value
 	
 	# read back each flag
 	for flag_enum in _flag_to_str.keys():
-		_flags[flag_enum] = save_dict[_flag_to_str[flag_enum]]
+		_flags[flag_enum] = Global.value_or_default(save_dict, _flag_to_str[flag_enum], false)
 	
 	# read back each mon in team
 	for i in team.size():
