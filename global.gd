@@ -19,10 +19,10 @@ const COLOR_RED = Color.RED
 const COLOR_DARK_RED = Color.DARK_RED
 
 # turns various debug functionality on and off
-var DEBUG_DRAW = true
-var DEBUG_NO_INVINCIBLE = true
-var DEBUG_CONSOLE = true
-var DEBUG_FAST_START = true
+var DEBUG_DRAW = true # Draw additional debug shapes through DebugTool
+var DEBUG_NO_INVINCIBLE = true # Turn off invincibility after ending a battle
+var DEBUG_CONSOLE = true # Enables the debug console when typing `
+var DEBUG_FAST_START = true # Continue is available even with no save file; speeds up main menu->overworld transition
 
 # represents the result of a battle
 enum BattleEndCondition {
@@ -117,21 +117,23 @@ func int_to_str_zero_padded(num: int, length: int):
 	return ret
 
 # returns the position of this node if centered on a given point
-func centered_position(node: Node, point: Vector2):
+func centered_position(node: Node, point: Vector2) -> Vector2:
 	return point - Vector2(node.size.x/2, node.size.y/2)
 
-func free_children(node: Node):
+# removes each child of a node and frees them
+func free_children(node: Node) -> void:
 	for child in node.get_children():
 		node.remove_child(child)
 		child.queue_free()
 
-func remove_children(node: Node):
+# removes each child of a node but does NOT free them
+func remove_children(node: Node) -> void:
 	for child in node.get_children():
 		node.remove_child(child)
 
 # used to disable a node
 # recursively sets the enable status of process and physics processes and input on node and all children
-func recursive_set_processes(node: Node, enable: bool):
+func recursive_set_processes(node: Node, enable: bool) -> void:
 	node.set_process(enable)
 	node.set_physics_process(enable)
 	node.set_process_input(enable)

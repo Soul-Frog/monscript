@@ -1,8 +1,11 @@
 # Stores information about the game world, such as areas, story flags, and other flags. 
 extends Node
 
+# Constants
 const MONS_PER_STORAGE_PAGE = 8
+const SAVE_FILE_NAME = "save.monsave"
 
+# Area stuff
 enum Area
 {
 	DEBUG1, DEBUG2, NONE
@@ -12,6 +15,11 @@ var _area_enum_to_path: Dictionary = {
 	Area.DEBUG1 : "res://overworld/areas/debug_area.tscn",
 	Area.DEBUG2 : "res://overworld/areas/debug_area2.tscn"
 }
+
+# function to get script for enum
+func path_for_area(area_enum: GameData.Area) -> String:
+	assert(area_enum != Area.NONE, "Area enum is none!")
+	return _area_enum_to_path[area_enum]
 
 # Gamestate Flags
 # During the intro, the computer needs to be examined twice to progress. This tracks if the first examine has occured.
@@ -83,16 +91,35 @@ func _ready():
 
 # saves the game state to file
 func save_game():
-	pass
+	# store everything we care about in a big dictionary
+	var save_dict := {
+		"player_name" : PLAYER_NAME
+	}
+	
+	# convert to json
+	var json = JSON.stringify(save_dict)
+	
+	# write it all to a special file
+	Global.string_to_file(SAVE_FILE_NAME, json)
+
+# returns whether a saved game exists
+func does_save_exist() -> bool:
+	return Global.does_file_exist(SAVE_FILE_NAME)
 
 # loads the stored save file
 func load_game():
-	pass
+	var json = JSON.new()
+	var result = json.parse(Global.file_to_string(SAVE_FILE_NAME))
+	if not result == OK:
+		assert(false, "Save corruption!")
+		return
+	var save_dict = json.data()
+	
+	print(save_dict)
+	print(save_dict["player_name"])
+	
+	PLAYER_NAME = save_dict["player_name"]
 
-# function to get script for enum
-func path_for_area(area_enum: GameData.Area) -> String:
-	assert(area_enum != Area.NONE, "Area enum is none!")
-	return _area_enum_to_path[area_enum]
 
 func is_block_unlocked(block: ScriptData.Block) -> bool:
 	if not _block_unlock_map.has(block):

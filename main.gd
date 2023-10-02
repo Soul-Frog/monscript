@@ -121,6 +121,9 @@ func _on_main_menu_clicked_new_game():
 	VISUAL_NOVEL.play_intro_cutscene()
 
 func _on_main_menu_clicked_continue():
+	if not Global.DEBUG_FAST_START:
+		assert(GameData.has_saved_game())
+		GameData.load_game()
 	await _switch_to_scene(OVERWORLD, MAIN_MENU_FADE if not Global.DEBUG_FAST_START else FADE) #for now
 
 func _on_main_menu_clicked_settings():

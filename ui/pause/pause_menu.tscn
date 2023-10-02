@@ -167,6 +167,75 @@ vertical_alignment = 1
 
 [node name="Held" type="Node2D" parent="."]
 
+[node name="SavePopup" type="Control" parent="."]
+visible = false
+z_index = 400
+custom_minimum_size = Vector2(320, 180)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 320.0
+offset_bottom = 180.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("13_iq3fg")
+
+[node name="MouseBlocker" type="ColorRect" parent="SavePopup"]
+modulate = Color(0, 0, 0, 0.764706)
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 179.0
+
+[node name="Popup" type="Node2D" parent="SavePopup"]
+
+[node name="NinePatchRect" type="NinePatchRect" parent="SavePopup/Popup"]
+offset_left = 89.0
+offset_top = 20.0
+offset_right = 224.0
+offset_bottom = 78.0
+texture = ExtResource("14_q80o4")
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+
+[node name="Label" type="Label" parent="SavePopup/Popup"]
+offset_left = 94.0
+offset_top = 22.0
+offset_right = 218.0
+offset_bottom = 67.0
+text = "Save successful.
+Continue playing?"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="ContinueButton" type="Button" parent="SavePopup"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 58.0
+offset_right = 151.0
+offset_bottom = 73.0
+
+[node name="Continue" type="Label" parent="SavePopup/ContinueButton"]
+layout_mode = 0
+offset_right = 51.0
+offset_bottom = 15.0
+text = "Continue"
+horizontal_alignment = 1
+
+[node name="QuitButton" type="Button" parent="SavePopup"]
+layout_mode = 0
+offset_left = 161.0
+offset_top = 58.0
+offset_right = 212.0
+offset_bottom = 73.0
+
+[node name="Quit" type="Label" parent="SavePopup/QuitButton"]
+layout_mode = 0
+offset_right = 51.0
+offset_bottom = 15.0
+text = "Quit"
+horizontal_alignment = 1
+
 [node name="NoMonPopup" type="Control" parent="."]
 visible = false
 z_index = 400
@@ -245,4 +314,7 @@ horizontal_alignment = 1
 [connection signal="pressed" from="Buttons/DatabaseButton" to="." method="_on_database_button_pressed"]
 [connection signal="pressed" from="Buttons/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="Buttons/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="SavePopup/ContinueButton" to="SavePopup" method="_on_yes_button_pressed"]
+[connection signal="pressed" from="SavePopup/QuitButton" to="SavePopup" method="_on_no_button_pressed"]
+[connection signal="pressed" from="SavePopup/QuitButton" to="SavePopup" method="_on_yes_button_pressed"]
 [connection signal="pressed" from="NoMonPopup/WhoopsButton" to="NoMonPopup" method="_on_yes_button_pressed"]

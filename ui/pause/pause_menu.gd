@@ -14,6 +14,7 @@ signal closed
 @onready var SETTINGS_BUTTON = $Buttons/SettingsButton
 @onready var X_BUTTON = $XButton
 @onready var NO_MON_POPUP = $NoMonPopup
+@onready var SAVE_POPUP = $SavePopup
 
 @onready var HELD = $Held
 const _HELD_OFFSET = Vector2(16, 16)
@@ -32,6 +33,8 @@ func _ready() -> void:
 	assert(X_BUTTON)
 	assert(NO_MON_POPUP)
 	assert(not NO_MON_POPUP.visible)
+	assert(SAVE_POPUP)
+	assert(not SAVE_POPUP.visible)
 	assert(HELD)
 	assert(STORAGE_PAGE_SLOTS.get_child_count() == GameData.MONS_PER_STORAGE_PAGE, "Not enough slots per page.")
 	
@@ -77,7 +80,11 @@ func _on_save_button_pressed():
 	if not _is_team_valid():
 		NO_MON_POPUP.show()
 	else:
-		emit_signal("save")
+		await GameData.save_game()
+		SAVE_POPUP.show()
+		var continueGame = await SAVE_POPUP.selection_made
+		if not continueGame:
+			get_tree().quit()
 
 func _on_settings_button_pressed() -> void:
 	print("Settings!")	#TODO settings
