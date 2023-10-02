@@ -1,45 +1,38 @@
 # Stores information about the game world, such as areas, story flags, and other flags. 
 extends Node
 
-# Gamestate Flags
-# During the intro, the computer needs to be examined twice to progress. This tracks if the first examine has occured.
-var FLAG_INTRO_EXAMINED_COMPUTER_ONCE = false
-# During the intro, after examining the computer twice and playing the game, this is enabled so we can sleep at the bed.
-var FLAG_INTRO_READY_TO_SLEEP = false
-
-
-var PLAYER_NAME = "???"
+const MONS_PER_STORAGE_PAGE = 8
 
 enum Area
 {
 	DEBUG1, DEBUG2, NONE
 }
 
-# MonType -> int; maps MonType to unlock progress
-var compilation_progress_per_mon := {}
-
-# the maximum number of lines the player can use to build scripts
-var line_limit = 3
-
 var _area_enum_to_path: Dictionary = {
 	Area.DEBUG1 : "res://overworld/areas/debug_area.tscn",
 	Area.DEBUG2 : "res://overworld/areas/debug_area2.tscn"
 }
 
-var _unlocked_blocks = [
-	ScriptData.get_block_by_name("Always"),
-	#ScriptData.get_block_by_name("FoeHasLowHP"),
-	#ScriptData.get_block_by_name("PalDamaged"),
-	#ScriptData.get_block_by_name("PalHasLowHP"),
-	#ScriptData.get_block_by_name("Pass"),
-	ScriptData.get_block_by_name("Attack"),
-	#ScriptData.get_block_by_name("Defend"),
-	ScriptData.get_block_by_name("Escape"),
-	#ScriptData.get_block_by_name("Shellbash"),
-	ScriptData.get_block_by_name("RandomFoe"),
-	#ScriptData.get_block_by_name("LowestHPFoe"),
-	#ScriptData.get_block_by_name("LowestHPPal")
-]
+# Gamestate Flags
+# During the intro, the computer needs to be examined twice to progress. This tracks if the first examine has occured.
+var FLAG_INTRO_EXAMINED_COMPUTER_ONCE = false
+# During the intro, after examining the computer twice and playing the game, this is enabled so we can sleep at the bed.
+var FLAG_INTRO_READY_TO_SLEEP = false
+
+var PLAYER_NAME = "???"
+var team = []
+var storage = []
+
+# the maximum number of lines the player can use to build scripts
+var line_limit = 3
+# the number of available storage pages 
+var storage_pages = 3
+
+# MonType -> int; maps MonType to unlock progress
+var compilation_progress_per_mon := {}
+
+# tracks which blocks have been unlocked for use in the script editor
+var _block_unlock_map = {}
 
 func _ready():
 	# populate the compilation progress map
@@ -50,6 +43,51 @@ func _ready():
 			compilation_progress_per_mon[montype] = 100
 		else:
 			compilation_progress_per_mon[montype] = 0
+	# mark the initial mon as compiled
+	# TODO - Bitleon starts as compiled
+	
+	# populate the block unlock map
+	for block in ScriptData.IF_BLOCK_LIST:
+		_block_unlock_map[block] = false
+	for block in ScriptData.DO_BLOCK_LIST:
+		_block_unlock_map[block] = false
+	for block in ScriptData.TO_BLOCK_LIST:
+		_block_unlock_map[block] = false
+	# mark the initial blocks as unlocked
+	assert(ScriptData.get_block_by_name("Always"))
+	assert(ScriptData.get_block_by_name("Attack"))
+	assert(ScriptData.get_block_by_name("RandomFoe"))
+	_block_unlock_map[ScriptData.get_block_by_name("Always")] = true
+	_block_unlock_map[ScriptData.get_block_by_name("Attack")] = true
+	_block_unlock_map[ScriptData.get_block_by_name("RandomFoe")] = true
+	
+	# create the default team
+	team = [MonData.create_mon(MonData.MonType.MAGNETFROG, 1), null, null, null]
+	
+	# create the mon storage, empty by default
+	for i in storage_pages:
+		for j in MONS_PER_STORAGE_PAGE:
+			storage.append(null)
+		
+	assert(team.size() == Global.MONS_PER_TEAM)
+	assert(storage.size() == storage_pages * MONS_PER_STORAGE_PAGE)
+	
+	# TODO - remove this debug code
+	storage[0] = MonData.create_mon(MonData.MonType.MAGNETFROG, 10)
+	storage[5] = MonData.create_mon(MonData.MonType.MAGNETFROG, 11)
+	storage[4] = MonData.create_mon(MonData.MonType.MAGNETFROG, 12)
+	storage[9] = MonData.create_mon(MonData.MonType.MAGNETFROG, 13)
+	storage[13] = MonData.create_mon(MonData.MonType.MAGNETFROG, 14)
+	storage[18] = MonData.create_mon(MonData.MonType.MAGNETFROG, 64)
+	
+
+# saves the game state to file
+func save_game():
+	pass
+
+# loads the stored save file
+func load_game():
+	pass
 
 # function to get script for enum
 func path_for_area(area_enum: GameData.Area) -> String:
@@ -57,4 +95,6 @@ func path_for_area(area_enum: GameData.Area) -> String:
 	return _area_enum_to_path[area_enum]
 
 func is_block_unlocked(block: ScriptData.Block) -> bool:
-	return _unlocked_blocks.has(block)
+	if not _block_unlock_map.has(block):
+		return false
+	return _block_unlock_map[block]

@@ -79,7 +79,7 @@ func _on_battle_started(computer_encounter_team: Array) -> void:
 	# this check is necessary to prevent bugs when
 	# multiple battle start on the same frame (stacked enemies)
 	if active_scene != BATTLE: 
-		BATTLE.setup_battle(PlayerData.team, computer_encounter_team);
+		BATTLE.setup_battle(GameData.team, computer_encounter_team);
 		await _switch_to_scene(BATTLE, FADE)
 
 func _on_battle_ended(battle_result: Battle.BattleResult) -> void:
@@ -90,7 +90,7 @@ func _on_battle_ended(battle_result: Battle.BattleResult) -> void:
 	OVERWORLD.handle_battle_results(battle_result.end_condition)
 	
 	# give experience to player's mons who participated in battle
-	for mon in PlayerData.team: 
+	for mon in GameData.team: 
 		if mon != null:
 			mon.gain_XP(battle_result.xp_earned)
 	

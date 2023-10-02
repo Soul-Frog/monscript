@@ -279,5 +279,6 @@ var TO_BLOCK_LIST := [
 @warning_ignore("unused_private_class_variable")
 var _ERROR_DO := Block.new(Block.Type.DO, "ERROR", Block.Type.NONE, "ERROR - do nothing.",
 	func (mon: BattleMon, friends:Array, foes: Array, target: BattleMon, animator: BattleAnimator):
+		# TODO - something better here
 		print("ERROR")
 )
