@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://clrokgdo0bo4a"]
+[gd_scene load_steps=13 format=3 uid="uid://clrokgdo0bo4a"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_pir84"]
-[ext_resource type="Texture2D" uid="uid://f2ej122kalmi" path="res://assets/maps/cave1/cave.png" id="2_8pdrq"]
+[ext_resource type="Texture2D" uid="uid://cknrucl6hnncy" path="res://assets/maps/coolant_cave/beach/fence.png" id="2_mkan5"]
+[ext_resource type="Texture2D" uid="uid://f2ej122kalmi" path="res://assets/maps/coolant_cave/beach/beach.png" id="3_2gr0a"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player.tscn" id="3_nbwo1"]
-[ext_resource type="Texture2D" uid="uid://b6va77lju8lb7" path="res://assets/maps/cave1/waves.png" id="3_ywp38"]
+[ext_resource type="Texture2D" uid="uid://b6va77lju8lb7" path="res://assets/maps/coolant_cave/beach/waves.png" id="4_kiejw"]
 [ext_resource type="PackedScene" uid="uid://dfrab43qku35w" path="res://decorators/move_decorator.tscn" id="4_v7epi"]
 [ext_resource type="PackedScene" uid="uid://dmhm3mwxxspu" path="res://overworld/npcs/blue_hat.tscn" id="5_gw1pb"]
 [ext_resource type="PackedScene" uid="uid://cyr7fpimubkpa" path="res://mons/magnetfrogblue.tscn" id="6_d6yho"]
@@ -17,14 +18,20 @@ size = Vector2(27, 28)
 [node name="Area" type="Node2D"]
 script = ExtResource("1_pir84")
 
+[node name="Fence" type="Sprite2D" parent="."]
+z_index = 100
+position = Vector2(-40, 36)
+texture = ExtResource("2_mkan5")
+centered = false
+
 [node name="Map" type="Sprite2D" parent="."]
-position = Vector2(-54, 0)
-texture = ExtResource("2_8pdrq")
+position = Vector2(-55, 0)
+texture = ExtResource("3_2gr0a")
 centered = false
 
 [node name="Waves" type="Sprite2D" parent="."]
 position = Vector2(-54, 0)
-texture = ExtResource("3_ywp38")
+texture = ExtResource("4_kiejw")
 centered = false
 
 [node name="MoveDecorator" parent="Waves" instance=ExtResource("4_v7epi")]
@@ -33,7 +40,7 @@ up = 2
 down = 1
 
 [node name="Player" parent="." instance=ExtResource("3_nbwo1")]
-position = Vector2(37, 84)
+position = Vector2(8, 87)
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
 
@@ -57,13 +64,8 @@ max_time_between_movement = 3.0
 
 [node name="Points" type="Node2D" parent="."]
 
-[node name="Spawnpoint" type="Node2D" parent="Points"]
-visible = false
-position = Vector2(-104, 69)
-
-[node name="Spawnpoint2" type="Node2D" parent="Points"]
-visible = false
-position = Vector2(-104, 64)
+[node name="CaveEntrance" type="Node2D" parent="Points"]
+position = Vector2(72, 58)
 
 [node name="Warps" type="Node2D" parent="."]
 
@@ -72,7 +74,7 @@ position = Vector2(72, 49)
 collision_layer = 0
 script = ExtResource("7_ip4bp")
 area = 1
-spawn_point = "bottom"
+spawn_point = "Bottom"
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/Warp"]
@@ -103,15 +105,3 @@ polygon = PackedVector2Array(152, -27, 153, -27, 153, -26, 156, -26, 157, -26, 1
 
 [node name="Tape" type="CollisionPolygon2D" parent="World"]
 polygon = PackedVector2Array(168, -30, 168, -23, 172, -20, 180, -20, 182, -22, 185, -22, 187, -18, 189, -22, 190, -19, 192, -23, 187, -28, 184, -28, 184, -30, 180, -33, 171, -33)
-
-[node name="Floor Bump West" type="CollisionPolygon2D" parent="World"]
-polygon = PackedVector2Array(-43, -3, -43, -1, -41, -1, -41, 0, -38, 0, -38, 1, -35, 1, -35, 0, -33, 0, -33, -1, -32, -1, -32, -2, -33, -2, -33, -3, -34, -3, -34, -4, -35, -4, -35, -5, -36, -5, -36, -4, -37, -4, -37, -5, -38, -5, -38, -6, -39, -6, -39, -5, -40, -5, -40, -4, -42, -4, -42, -3)
-
-[node name="Floor Bump South" type="CollisionPolygon2D" parent="World"]
-polygon = PackedVector2Array(133, 18, 135, 18, 135, 17, 137, 17, 137, 18, 138, 18, 138, 17, 139, 17, 139, 19, 140, 19, 140, 20, 140, 21, 139, 21, 139, 22, 136, 22, 136, 21, 134, 21, 134, 20, 133, 20)
-
-[node name="Floor Bump North" type="CollisionPolygon2D" parent="World"]
-polygon = PackedVector2Array(123, -43, 123, -42, 122, -42, 122, -41, 121, -41, 121, -40, 120, -40, 120, -39, 121, -39, 121, -39, 121, -38, 124, -38, 124, -37, 127, -37, 127, -38, 128, -38, 128, -41, 127, -41, 127, -42, 126, -42, 126, -41, 125, -41, 125, -42, 124, -42, 124, -43)
-
-[node name="Floor Bump East" type="CollisionPolygon2D" parent="World"]
-polygon = PackedVector2Array(252, -38, 252, -36, 254, -36, 254, -35, 257, -35, 257, -34, 260, -34, 260, -35, 262, -35, 262, -36, 263, -36, 263, -37, 262, -37, 262, -38, 261, -38, 261, -39, 260, -39, 260, -40, 259, -40, 259, -39, 258, -39, 258, -40, 257, -40, 257, -41, 256, -41, 256, -40, 255, -40, 255, -39, 253, -39, 253, -38, 252, -38)

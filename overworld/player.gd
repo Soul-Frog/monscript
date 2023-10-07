@@ -52,13 +52,11 @@ func activate_invincibility(battle_end_condition):
 	is_invincible = false
 
 func enable_movement():
-	print("enabled")
 	can_move = true
 	$Area2D.monitoring = true
 	$Area2D.monitorable = true
 	
 func disable_movement():
-	print("disabled")
 	can_move = false
 	$Area2D.monitoring = false
 	$Area2D.monitorable = false

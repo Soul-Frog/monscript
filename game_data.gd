@@ -8,12 +8,12 @@ const SAVE_FILE_NAME = "user://save.monsave"
 # Area stuff
 enum Area
 {
-	DEBUG1, DEBUG2, NONE
+	COOLANT_CAVE_BEACH, COOLANT_CAVE_CAVE1, NONE
 }
 
 var _area_enum_to_path: Dictionary = {
-	Area.DEBUG1 : "res://overworld/areas/debug_area.tscn",
-	Area.DEBUG2 : "res://overworld/areas/debug_area2.tscn"
+	Area.COOLANT_CAVE_BEACH : "res://overworld/areas/coolant_cave/beach.tscn",
+	Area.COOLANT_CAVE_CAVE1 : "res://overworld/areas/coolant_cave/cave1.tscn"
 }
 
 # function to get script for enum

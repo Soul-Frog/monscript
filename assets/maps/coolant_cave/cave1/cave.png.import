@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6va77lju8lb7"
-path="res://.godot/imported/waves.png-f1bca2f7391b62533a1d6be82877af8f.ctex"
+uid="uid://cb5b1cs4m7bop"
+path="res://.godot/imported/cave.png-d64e019cdc8661a312fc6908b1bce026.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/maps/cave1/waves.png"
-dest_files=["res://.godot/imported/waves.png-f1bca2f7391b62533a1d6be82877af8f.ctex"]
+source_file="res://assets/maps/coolant_cave/cave1/cave.png"
+dest_files=["res://.godot/imported/cave.png-d64e019cdc8661a312fc6908b1bce026.ctex"]
 
 [params]
 

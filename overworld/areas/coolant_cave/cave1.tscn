@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://conqj70b6ouir"]
+
+[ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_56icl"]
+[ext_resource type="Texture2D" uid="uid://cb5b1cs4m7bop" path="res://assets/maps/coolant_cave/cave1/cave.png" id="2_f7adj"]
+[ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player.tscn" id="6_lqjak"]
+[ext_resource type="Script" path="res://overworld/warp.gd" id="9_tst20"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_80ub1"]
+size = Vector2(54, 16)
+
+[node name="Area" type="Node2D"]
+script = ExtResource("1_56icl")
+
+[node name="Map" type="Sprite2D" parent="."]
+texture = ExtResource("2_f7adj")
+centered = false
+
+[node name="Player" parent="." instance=ExtResource("6_lqjak")]
+position = Vector2(170, 413)
+
+[node name="OverworldEncounters" type="Node2D" parent="."]
+
+[node name="Points" type="Node2D" parent="."]
+
+[node name="Bottom" type="Node2D" parent="Points"]
+position = Vector2(170, 414)
+
+[node name="Warps" type="Node2D" parent="."]
+
+[node name="Warp" type="Area2D" parent="Warps"]
+position = Vector2(149, 440)
+collision_layer = 0
+script = ExtResource("9_tst20")
+area = 0
+spawn_point = "CaveEntrance"
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/Warp"]
+position = Vector2(20, -3)
+shape = SubResource("RectangleShape2D_80ub1")
+
+[node name="World" type="StaticBody2D" parent="."]
+position = Vector2(-96, 150)
+collision_layer = 4
+collision_mask = 0
+
+[node name="OuterWall" type="CollisionPolygon2D" parent="World"]
+position = Vector2(252, 217)
+polygon = PackedVector2Array(-79, -84, -92, -97, -92, -169, -105, -181, -105, -257, -91, -257, -91, -276, -68, -276, -68, -257, -48, -257, -23, -283, 298, -283, 298, -83, 72, -84, 72, -78, 153, -78, 298, -78, 312, -78, 312, -83, 312, -283, 312, -332, 298, -332, -24, -332, -48, -307, -104, -310, -112, -310, -112, -166, -104, -111, -104, -78, -79, -78, -40, -78, -40, 66, -40, 82, -30, 82, 57, 82, 72, 82, 72, -84, 57, -84, 57, 67, -29, 67, -29, -84)

@@ -8,3 +8,8 @@ func set_limits(map: Sprite2D):
 	self.limit_right = int(map.position.x) + map.texture.get_width()
 	self.limit_top = int(map.position.y)
 	self.limit_bottom = int(map.position.y) + map.texture.get_height()
+	
+	print(limit_left)
+	print(limit_right)
+	print(limit_top)
+	print(limit_bottom)
