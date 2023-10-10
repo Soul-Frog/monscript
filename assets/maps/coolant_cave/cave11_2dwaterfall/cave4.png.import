@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://f2ej122kalmi"
-path="res://.godot/imported/beach.png-7ce044f034cc48e8976948156a6808b3.ctex"
+uid="uid://dovicv5nojqhs"
+path="res://.godot/imported/cave4.png-8c301f5f811bc1866d5e05f8d14d60d9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/maps/coolant_cave/beach/beach.png"
-dest_files=["res://.godot/imported/beach.png-7ce044f034cc48e8976948156a6808b3.ctex"]
+source_file="res://assets/maps/coolant_cave/cave11_2dwaterfall/cave4.png"
+dest_files=["res://.godot/imported/cave4.png-8c301f5f811bc1866d5e05f8d14d60d9.ctex"]
 
 [params]
 

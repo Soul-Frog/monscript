@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://qd3qjfmb8432"
-path="res://.godot/imported/chest.png-1efc92d834cc50422fcd14154360c56d.ctex"
+uid="uid://dovicv5nojqhs"
+path="res://.godot/imported/cave5.png-6832535b7b252b9c8a19b7926b4ce065.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/maps/coolant_cave/cave1/chest.png"
-dest_files=["res://.godot/imported/chest.png-1efc92d834cc50422fcd14154360c56d.ctex"]
+source_file="res://assets/maps/coolant_cave/cave5_2druins/cave5.png"
+dest_files=["res://.godot/imported/cave5.png-6832535b7b252b9c8a19b7926b4ce065.ctex"]
 
 [params]
 

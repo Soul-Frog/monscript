@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cb5b1cs4m7bop"
-path="res://.godot/imported/cave.png-d64e019cdc8661a312fc6908b1bce026.ctex"
+uid="uid://dovicv5nojqhs"
+path="res://.godot/imported/cave4.png-3158b88f40af25c2db9ab756dadece4c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/maps/coolant_cave/cave1/cave.png"
-dest_files=["res://.godot/imported/cave.png-d64e019cdc8661a312fc6908b1bce026.ctex"]
+source_file="res://assets/maps/coolant_cave/cave7_whirldown/cave4.png"
+dest_files=["res://.godot/imported/cave4.png-3158b88f40af25c2db9ab756dadece4c.ctex"]
 
 [params]
 

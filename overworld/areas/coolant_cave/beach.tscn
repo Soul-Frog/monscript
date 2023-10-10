@@ -1,10 +1,10 @@
 [gd_scene load_steps=13 format=3 uid="uid://clrokgdo0bo4a"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_pir84"]
-[ext_resource type="Texture2D" uid="uid://cknrucl6hnncy" path="res://assets/maps/coolant_cave/beach/fence.png" id="2_mkan5"]
-[ext_resource type="Texture2D" uid="uid://f2ej122kalmi" path="res://assets/maps/coolant_cave/beach/beach.png" id="3_2gr0a"]
+[ext_resource type="Texture2D" uid="uid://cknrucl6hnncy" path="res://assets/maps/coolant_cave/cave1_beach/fence.png" id="2_dadcw"]
+[ext_resource type="Texture2D" uid="uid://f2ej122kalmi" path="res://assets/maps/coolant_cave/cave1_beach/beach.png" id="3_k3t8h"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player.tscn" id="3_nbwo1"]
-[ext_resource type="Texture2D" uid="uid://b6va77lju8lb7" path="res://assets/maps/coolant_cave/beach/waves.png" id="4_kiejw"]
+[ext_resource type="Texture2D" uid="uid://b6va77lju8lb7" path="res://assets/maps/coolant_cave/cave1_beach/waves.png" id="4_ktkkn"]
 [ext_resource type="PackedScene" uid="uid://dfrab43qku35w" path="res://decorators/move_decorator.tscn" id="4_v7epi"]
 [ext_resource type="PackedScene" uid="uid://dmhm3mwxxspu" path="res://overworld/npcs/blue_hat.tscn" id="5_gw1pb"]
 [ext_resource type="PackedScene" uid="uid://cyr7fpimubkpa" path="res://mons/magnetfrogblue.tscn" id="6_d6yho"]
@@ -21,17 +21,17 @@ script = ExtResource("1_pir84")
 [node name="Fence" type="Sprite2D" parent="."]
 z_index = 100
 position = Vector2(-40, 36)
-texture = ExtResource("2_mkan5")
+texture = ExtResource("2_dadcw")
 centered = false
 
 [node name="Map" type="Sprite2D" parent="."]
 position = Vector2(-55, 0)
-texture = ExtResource("3_2gr0a")
+texture = ExtResource("3_k3t8h")
 centered = false
 
 [node name="Waves" type="Sprite2D" parent="."]
 position = Vector2(-54, 0)
-texture = ExtResource("4_kiejw")
+texture = ExtResource("4_ktkkn")
 centered = false
 
 [node name="MoveDecorator" parent="Waves" instance=ExtResource("4_v7epi")]

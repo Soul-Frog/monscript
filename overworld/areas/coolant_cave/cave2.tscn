@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://conqj70b6ouir"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_56icl"]
-[ext_resource type="Texture2D" uid="uid://drfvc5n36jass" path="res://assets/maps/coolant_cave/cave1/cave1.png" id="2_3nug4"]
+[ext_resource type="Texture2D" uid="uid://drfvc5n36jass" path="res://assets/maps/coolant_cave/cave2/cave2.png" id="2_eocs2"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player.tscn" id="6_lqjak"]
 [ext_resource type="Script" path="res://overworld/warp.gd" id="9_tst20"]
 
@@ -12,7 +12,7 @@ size = Vector2(54, 16)
 script = ExtResource("1_56icl")
 
 [node name="Map" type="Sprite2D" parent="."]
-texture = ExtResource("2_3nug4")
+texture = ExtResource("2_eocs2")
 centered = false
 
 [node name="Player" parent="." instance=ExtResource("6_lqjak")]
