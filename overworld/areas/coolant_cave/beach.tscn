@@ -45,7 +45,7 @@ position = Vector2(8, 87)
 [node name="OverworldEncounters" type="Node2D" parent="."]
 
 [node name="Mon2" parent="OverworldEncounters" instance=ExtResource("6_d6yho")]
-position = Vector2(149, 93)
+position = Vector2(305, 45)
 safe_margin = 0.08
 script = ExtResource("7_j4ll8")
 mon1Type = 2
