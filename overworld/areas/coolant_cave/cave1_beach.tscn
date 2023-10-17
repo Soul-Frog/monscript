@@ -64,7 +64,7 @@ max_time_between_movement = 3.0
 
 [node name="Points" type="Node2D" parent="."]
 
-[node name="CaveEntrance" type="Node2D" parent="Points"]
+[node name="Cave1Entrance" type="Node2D" parent="Points"]
 position = Vector2(72, 58)
 
 [node name="Warps" type="Node2D" parent="."]
@@ -74,7 +74,7 @@ position = Vector2(72, 49)
 collision_layer = 0
 script = ExtResource("9_a8npn")
 area = 1
-spawn_point = "Bottom"
+spawn_point = "Cave2Bottom"
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/Warp"]

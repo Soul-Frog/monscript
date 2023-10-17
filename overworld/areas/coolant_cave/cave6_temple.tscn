@@ -1,43 +1,79 @@
-[gd_scene load_steps=6 format=3 uid="uid://wn6keuc21ls8"]
+[gd_scene load_steps=8 format=3 uid="uid://wn6keuc21ls8"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_jvkfo"]
-[ext_resource type="Texture2D" uid="uid://drfvc5n36jass" path="res://assets/maps/coolant_cave/cave2_entrance/cave2.png" id="2_48rpr"]
+[ext_resource type="Texture2D" uid="uid://be4c4syodtuwg" path="res://assets/maps/coolant_cave/cave6_temple/cave6.png" id="2_v2f4j"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player.tscn" id="3_u0psi"]
 [ext_resource type="Script" path="res://overworld/warp.gd" id="4_n8bn1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_80ub1"]
-size = Vector2(54, 16)
+size = Vector2(70, 44)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_waod4"]
+size = Vector2(7, 78)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5a52f"]
+size = Vector2(79, 8)
 
 [node name="Area" type="Node2D"]
 script = ExtResource("1_jvkfo")
 
 [node name="Map" type="Sprite2D" parent="."]
-texture = ExtResource("2_48rpr")
+texture = ExtResource("2_v2f4j")
 centered = false
 
 [node name="Player" parent="." instance=ExtResource("3_u0psi")]
-position = Vector2(291, 744)
+position = Vector2(1373, 95)
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
 
 [node name="Points" type="Node2D" parent="."]
 
-[node name="Bottom" type="Node2D" parent="Points"]
-position = Vector2(291, 744)
+[node name="Cave6Top" type="Node2D" parent="Points"]
+position = Vector2(1368, 16)
+
+[node name="Cave6Ladder" type="Node2D" parent="Points"]
+position = Vector2(379, 320)
+
+[node name="Cave6Right" type="Node2D" parent="Points"]
+position = Vector2(1536, 832)
 
 [node name="Warps" type="Node2D" parent="."]
 
-[node name="Warp" type="Area2D" parent="Warps"]
-position = Vector2(271, 776)
+[node name="WarpToWhirlcavern" type="Area2D" parent="Warps"]
+position = Vector2(372, 625)
 collision_layer = 0
 script = ExtResource("4_n8bn1")
-area = 0
-spawn_point = "CaveEntrance"
+area = 6
+spawn_point = "Cave7Top"
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/Warp"]
-position = Vector2(20, -3)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/WarpToWhirlcavern"]
+position = Vector2(12, -17)
 shape = SubResource("RectangleShape2D_80ub1")
+
+[node name="WarpToRuins2D" type="Area2D" parent="Warps"]
+position = Vector2(1547, 813)
+collision_layer = 0
+script = ExtResource("4_n8bn1")
+area = 4
+spawn_point = "Cave5Left"
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/WarpToRuins2D"]
+position = Vector2(10.5, 21)
+shape = SubResource("RectangleShape2D_waod4")
+
+[node name="WarpToTidal" type="Area2D" parent="Warps"]
+position = Vector2(1336, -5)
+collision_layer = 0
+script = ExtResource("4_n8bn1")
+area = 8
+spawn_point = "Cave9Bottom"
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/WarpToTidal"]
+position = Vector2(32.5, 1)
+shape = SubResource("RectangleShape2D_5a52f")
 
 [node name="World" type="StaticBody2D" parent="."]
 position = Vector2(-96, 150)

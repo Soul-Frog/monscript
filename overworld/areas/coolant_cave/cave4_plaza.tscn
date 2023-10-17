@@ -1,45 +1,42 @@
 [gd_scene load_steps=6 format=3 uid="uid://c8sccmm8akfmv"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_leamx"]
-[ext_resource type="Texture2D" uid="uid://dovicv5nojqhs" path="res://assets/maps/coolant_cave/cave5_2druins/cave5.png" id="2_bedkn"]
+[ext_resource type="Texture2D" uid="uid://tjinhumapyr" path="res://assets/maps/coolant_cave/cave4_plaza/cave4.png" id="2_a7nkp"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player.tscn" id="3_bhctv"]
 [ext_resource type="Script" path="res://overworld/warp.gd" id="4_7evqn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_80ub1"]
-size = Vector2(54, 16)
+size = Vector2(51, 7)
 
 [node name="Area" type="Node2D"]
 script = ExtResource("1_leamx")
 
 [node name="Map" type="Sprite2D" parent="."]
-texture = ExtResource("2_bedkn")
+texture = ExtResource("2_a7nkp")
 centered = false
 
 [node name="Player" parent="." instance=ExtResource("3_bhctv")]
-position = Vector2(573, 177)
+position = Vector2(608, 443)
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
 
 [node name="Points" type="Node2D" parent="."]
 
-[node name="Left" type="Node2D" parent="Points"]
-position = Vector2(41, 104)
-
-[node name="Right" type="Node2D" parent="Points"]
-position = Vector2(574, 177)
+[node name="Cave4Bottom" type="Node2D" parent="Points"]
+position = Vector2(608, 443)
 
 [node name="Warps" type="Node2D" parent="."]
 
-[node name="Warp" type="Area2D" parent="Warps"]
-position = Vector2(626, 200)
+[node name="WarpToLake" type="Area2D" parent="Warps"]
+position = Vector2(587, 465)
 collision_layer = 0
 script = ExtResource("4_7evqn")
-area = 0
-spawn_point = "CaveEntrance"
+area = 2
+spawn_point = "Cave3Top"
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/Warp"]
-position = Vector2(20, -3)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/WarpToLake"]
+position = Vector2(19.5, -0.5)
 shape = SubResource("RectangleShape2D_80ub1")
 
 [node name="World" type="StaticBody2D" parent="."]

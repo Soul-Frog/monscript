@@ -1,18 +1,30 @@
-[gd_scene load_steps=6 format=3 uid="uid://h1rp512m0kw3"]
+[gd_scene load_steps=10 format=3 uid="uid://h1rp512m0kw3"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_c2hk5"]
-[ext_resource type="Texture2D" uid="uid://drfvc5n36jass" path="res://assets/maps/coolant_cave/cave2_entrance/cave2.png" id="2_6ay0h"]
+[ext_resource type="Texture2D" uid="uid://b0e6tgnkw52yd" path="res://assets/maps/coolant_cave/cave10_river/cave10.png" id="2_dl0pi"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player.tscn" id="3_jyrdr"]
 [ext_resource type="Script" path="res://overworld/warp.gd" id="4_o02w7"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_80ub1"]
-size = Vector2(54, 16)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ipd0d"]
+size = Vector2(11, 97)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kv1gw"]
+size = Vector2(44, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6gihg"]
+size = Vector2(77, 1532)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ompsi"]
+size = Vector2(77, 1586)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2wrru"]
+size = Vector2(44, 16)
 
 [node name="Area" type="Node2D"]
 script = ExtResource("1_c2hk5")
 
 [node name="Map" type="Sprite2D" parent="."]
-texture = ExtResource("2_6ay0h")
+texture = ExtResource("2_dl0pi")
 centered = false
 
 [node name="Player" parent="." instance=ExtResource("3_jyrdr")]
@@ -22,22 +34,67 @@ position = Vector2(291, 744)
 
 [node name="Points" type="Node2D" parent="."]
 
-[node name="Bottom" type="Node2D" parent="Points"]
-position = Vector2(291, 744)
+[node name="Cave10Right" type="Node2D" parent="Points"]
+position = Vector2(517, 1963)
+
+[node name="Cave10Ladder" type="Node2D" parent="Points"]
+position = Vector2(180, 1957)
+
+[node name="Cave10Top" type="Node2D" parent="Points"]
+position = Vector2(264, 128)
 
 [node name="Warps" type="Node2D" parent="."]
 
-[node name="Warp" type="Area2D" parent="Warps"]
-position = Vector2(271, 776)
+[node name="WarpToTidal" type="Area2D" parent="Warps"]
+position = Vector2(535, 2012)
 collision_layer = 0
 script = ExtResource("4_o02w7")
-area = 0
-spawn_point = "CaveEntrance"
+area = 8
+spawn_point = "Cave9Left"
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/Warp"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/WarpToTidal"]
+position = Vector2(-1.5, -43.5)
+shape = SubResource("RectangleShape2D_ipd0d")
+
+[node name="WarpToBoss" type="Area2D" parent="Warps"]
+position = Vector2(241, 41)
+collision_layer = 0
+script = ExtResource("4_o02w7")
+area = 11
+spawn_point = "Cave12Bottom"
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/WarpToBoss"]
+position = Vector2(21, -3)
+shape = SubResource("RectangleShape2D_kv1gw")
+
+[node name="WarpsTo2DWaterfallRight" type="Area2D" parent="Warps"]
+position = Vector2(429, 1839)
+collision_layer = 0
+script = ExtResource("4_o02w7")
+area = 10
+spawn_point = "Cave11Right"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/WarpsTo2DWaterfallRight"]
+position = Vector2(83, -771)
+shape = SubResource("RectangleShape2D_6gihg")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Warps/WarpsTo2DWaterfallRight"]
+position = Vector2(-421, -728)
+shape = SubResource("RectangleShape2D_ompsi")
+
+[node name="WarpTo2DWaterfallLeft" type="Area2D" parent="Warps"]
+position = Vector2(95, 1366)
+collision_layer = 0
+script = ExtResource("4_o02w7")
+area = 10
+spawn_point = "Cave11Left"
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/WarpTo2DWaterfallLeft"]
 position = Vector2(20, -3)
-shape = SubResource("RectangleShape2D_80ub1")
+shape = SubResource("RectangleShape2D_2wrru")
 
 [node name="World" type="StaticBody2D" parent="."]
 position = Vector2(-96, 150)
