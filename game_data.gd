@@ -8,12 +8,25 @@ const SAVE_FILE_NAME = "user://save.monsave"
 # Area stuff
 enum Area
 {
-	COOLANT_CAVE_BEACH, COOLANT_CAVE_CAVE1, NONE
+	COOLANT_CAVE1_BEACH, COOLANT_CAVE2_ENTRANCE, COOLANT_CAVE3_LAKE, COOLANT_CAVE4_PLAZA, COOLANT_CAVE5_2DRUINS,
+	COOLANT_CAVE6_TEMPLE, COOLANT_CAVE7_WHIRLCAVERN, COOLANT_CAVE8_SEAFLOOR, COOLANT_CAVE9_TIDALCHAMBER, COOLANT_CAVE10_RIVER,
+	COOLANT_CAVE11_2DWATERFALL, COOLANT_CAVE12_BOSSROOM,
+	NONE
 }
 
 var _area_enum_to_path: Dictionary = {
-	Area.COOLANT_CAVE_BEACH : "res://overworld/areas/coolant_cave/beach.tscn",
-	Area.COOLANT_CAVE_CAVE1 : "res://overworld/areas/coolant_cave/cave1.tscn"
+	Area.COOLANT_CAVE1_BEACH : "res://overworld/areas/coolant_cave/cave1_beach.tscn",
+	Area.COOLANT_CAVE2_ENTRANCE : "res://overworld/areas/coolant_cave/cave2_entrance.tscn",
+	Area.COOLANT_CAVE3_LAKE : "res://overworld/areas/coolant_cave/cave3_lake.tscn",
+	Area.COOLANT_CAVE4_PLAZA : "res://overworld/areas/coolant_cave/cave4_plaza.tscn",
+	Area.COOLANT_CAVE5_2DRUINS : "res://overworld/areas/coolant_cave/cave5_2druins.tscn",
+	Area.COOLANT_CAVE6_TEMPLE : "res://overworld/areas/coolant_cave/cave6_temple.tscn",
+	Area.COOLANT_CAVE7_WHIRLCAVERN : "res://overworld/areas/coolant_cave/cave7_whirlcavern.tscn",
+	Area.COOLANT_CAVE8_SEAFLOOR : "res://overworld/areas/coolant_cave/cave8_seafloor.tscn",
+	Area.COOLANT_CAVE9_TIDALCHAMBER : "res://overworld/areas/coolant_cave/cave9_tidalchamber.tscn",
+	Area.COOLANT_CAVE10_RIVER : "res://overworld/areas/coolant_cave/cave10_river.tscn",
+	Area.COOLANT_CAVE11_2DWATERFALL : "res://overworld/areas/coolant_cave/cave11_2dwaterfall.tscn",
+	Area.COOLANT_CAVE12_BOSSROOM : "res://overworld/areas/coolant_cave/cave12_bossroom.tscn",
 }
 
 # function to get script for enum
@@ -66,6 +79,14 @@ var compilation_progress_per_mon := {}
 var _block_unlock_map := {}
 
 func _ready():
+	# make sure all the paths to areas go to files that exist
+	for path in _area_enum_to_path.values():
+		assert(Global.does_file_exist(path), "%s is not a file!" % path)
+	for areaenum in Area.values():
+		if areaenum == Area.NONE:
+			continue
+		assert(_area_enum_to_path.has(areaenum), "No area for enum in dictionary!")
+	
 	# populate the list of flags, set to their default value of false
 	for flag in Flag.values():
 		_flags[flag] = false

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://f2ej122kalmi"
-path="res://.godot/imported/beach.png-43fc30b0df922938d45d17bb45383855.ctex"
+path="res://.godot/imported/cave1.png-f1726bed0cb23e55718046969e3cda78.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/maps/coolant_cave/cave1_beach/beach.png"
-dest_files=["res://.godot/imported/beach.png-43fc30b0df922938d45d17bb45383855.ctex"]
+source_file="res://assets/maps/coolant_cave/cave1_beach/cave1.png"
+dest_files=["res://.godot/imported/cave1.png-f1726bed0cb23e55718046969e3cda78.ctex"]
 
 [params]
 

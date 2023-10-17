@@ -1,53 +1,53 @@
 [gd_scene load_steps=13 format=3 uid="uid://clrokgdo0bo4a"]
 
-[ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_pir84"]
-[ext_resource type="Texture2D" uid="uid://cknrucl6hnncy" path="res://assets/maps/coolant_cave/cave1_beach/fence.png" id="2_dadcw"]
-[ext_resource type="Texture2D" uid="uid://f2ej122kalmi" path="res://assets/maps/coolant_cave/cave1_beach/beach.png" id="3_k3t8h"]
-[ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player.tscn" id="3_nbwo1"]
-[ext_resource type="Texture2D" uid="uid://b6va77lju8lb7" path="res://assets/maps/coolant_cave/cave1_beach/waves.png" id="4_ktkkn"]
-[ext_resource type="PackedScene" uid="uid://dfrab43qku35w" path="res://decorators/move_decorator.tscn" id="4_v7epi"]
-[ext_resource type="PackedScene" uid="uid://dmhm3mwxxspu" path="res://overworld/npcs/blue_hat.tscn" id="5_gw1pb"]
-[ext_resource type="PackedScene" uid="uid://cyr7fpimubkpa" path="res://mons/magnetfrogblue.tscn" id="6_d6yho"]
-[ext_resource type="Resource" uid="uid://defy52ihj1vmu" path="res://dialogue/test.dialogue" id="6_g60m2"]
-[ext_resource type="Script" path="res://overworld/warp.gd" id="7_ip4bp"]
-[ext_resource type="Script" path="res://overworld/overworld_encounter.gd" id="7_j4ll8"]
+[ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_4sj54"]
+[ext_resource type="Texture2D" uid="uid://cknrucl6hnncy" path="res://assets/maps/coolant_cave/cave1_beach/fence.png" id="2_r844y"]
+[ext_resource type="Texture2D" uid="uid://f2ej122kalmi" path="res://assets/maps/coolant_cave/cave1_beach/cave1.png" id="3_u6wrc"]
+[ext_resource type="Texture2D" uid="uid://b6va77lju8lb7" path="res://assets/maps/coolant_cave/cave1_beach/waves.png" id="4_hsrq7"]
+[ext_resource type="PackedScene" uid="uid://dfrab43qku35w" path="res://decorators/move_decorator.tscn" id="5_46txx"]
+[ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player.tscn" id="6_nx2l3"]
+[ext_resource type="PackedScene" uid="uid://cyr7fpimubkpa" path="res://mons/magnetfrogblue.tscn" id="7_sdnxq"]
+[ext_resource type="Script" path="res://overworld/overworld_encounter.gd" id="8_48q7f"]
+[ext_resource type="Script" path="res://overworld/warp.gd" id="9_a8npn"]
+[ext_resource type="PackedScene" uid="uid://dmhm3mwxxspu" path="res://overworld/npcs/blue_hat.tscn" id="10_fkyo0"]
+[ext_resource type="Resource" uid="uid://defy52ihj1vmu" path="res://dialogue/test.dialogue" id="11_7lkry"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_80ub1"]
 size = Vector2(27, 28)
 
 [node name="Area" type="Node2D"]
-script = ExtResource("1_pir84")
+script = ExtResource("1_4sj54")
 
 [node name="Fence" type="Sprite2D" parent="."]
 z_index = 100
 position = Vector2(-40, 36)
-texture = ExtResource("2_dadcw")
+texture = ExtResource("2_r844y")
 centered = false
 
 [node name="Map" type="Sprite2D" parent="."]
 position = Vector2(-55, 0)
-texture = ExtResource("3_k3t8h")
+texture = ExtResource("3_u6wrc")
 centered = false
 
 [node name="Waves" type="Sprite2D" parent="."]
 position = Vector2(-54, 0)
-texture = ExtResource("4_ktkkn")
+texture = ExtResource("4_hsrq7")
 centered = false
 
-[node name="MoveDecorator" parent="Waves" instance=ExtResource("4_v7epi")]
+[node name="MoveDecorator" parent="Waves" instance=ExtResource("5_46txx")]
 timeout = 0.3
 up = 2
 down = 1
 
-[node name="Player" parent="." instance=ExtResource("3_nbwo1")]
+[node name="Player" parent="." instance=ExtResource("6_nx2l3")]
 position = Vector2(8, 87)
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
 
-[node name="Mon2" parent="OverworldEncounters" instance=ExtResource("6_d6yho")]
+[node name="Mon2" parent="OverworldEncounters" instance=ExtResource("7_sdnxq")]
 position = Vector2(305, 45)
 safe_margin = 0.08
-script = ExtResource("7_j4ll8")
+script = ExtResource("8_48q7f")
 mon1Type = 2
 mon1Level = 2
 mon2Type = 2
@@ -72,7 +72,7 @@ position = Vector2(72, 58)
 [node name="Warp" type="Area2D" parent="Warps"]
 position = Vector2(72, 49)
 collision_layer = 0
-script = ExtResource("7_ip4bp")
+script = ExtResource("9_a8npn")
 area = 1
 spawn_point = "Bottom"
 metadata/_edit_group_ = true
@@ -81,9 +81,9 @@ metadata/_edit_group_ = true
 position = Vector2(0.5, -3)
 shape = SubResource("RectangleShape2D_80ub1")
 
-[node name="BlueHat" parent="." instance=ExtResource("5_gw1pb")]
+[node name="BlueHat" parent="." instance=ExtResource("10_fkyo0")]
 position = Vector2(286, 33)
-dialogue_resource = ExtResource("6_g60m2")
+dialogue_resource = ExtResource("11_7lkry")
 
 [node name="World" type="StaticBody2D" parent="."]
 position = Vector2(55, 83)

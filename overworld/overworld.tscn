@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ca2l5wqdhsgdf"]
 
-[ext_resource type="PackedScene" uid="uid://clrokgdo0bo4a" path="res://overworld/areas/coolant_cave/beach.tscn" id="1_wwtbh"]
+[ext_resource type="PackedScene" uid="uid://clrokgdo0bo4a" path="res://overworld/areas/coolant_cave/cave1_beach.tscn" id="1_wwtbh"]
 [ext_resource type="Script" path="res://overworld/overworld.gd" id="1_xol28"]
 [ext_resource type="PackedScene" uid="uid://diodlu0baosyk" path="res://debug/debug_tool.tscn" id="3_4wxtj"]
 
