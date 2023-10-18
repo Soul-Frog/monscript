@@ -1,11 +1,15 @@
 extends Node2D
 
+@export var camera_zoom := 1.0
+
 signal change_area
 
 var overworld_encounter_battling_with = null
 
 func _ready():
 	$Player/Camera2D.set_limits($Map)
+	$Player/Camera2D.zoom.x = camera_zoom
+	$Player/Camera2D.zoom.y = camera_zoom
 	Events.collided_with_overworld_encounter.connect(_on_overworld_encounter_collided_with_player)
 
 func _on_overworld_encounter_collided_with_player(overworld_encounter_collided_with):

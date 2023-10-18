@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://cepi8saddwmb6"]
+
+[ext_resource type="Texture2D" uid="uid://rnh5madliw2g" path="res://assets/maps/coolant_cave/cave2_entrance/cave2_fg.png" id="1_cfiou"]
+[ext_resource type="Script" path="res://overworld/foreground_element.gd" id="2_714x5"]
+[ext_resource type="Script" path="res://decorators/fade_decorator.gd" id="3_xy6t3"]
+
+[node name="ForegroundElement" type="Sprite2D"]
+z_index = 10
+position = Vector2(340, 249)
+texture = ExtResource("1_cfiou")
+centered = false
+script = ExtResource("2_714x5")
+
+[node name="FadeZone" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="FadeZone"]
+polygon = PackedVector2Array(0, 0, 163, 0, 163, 62, 0, 63)
+
+[node name="FadeDecorator" type="Node" parent="."]
+script = ExtResource("3_xy6t3")
+active = false
+fade_type = 1
+min_alpha = 0.5
+fade_speed = 1.0
+
+[connection signal="body_entered" from="FadeZone" to="." method="_on_fade_zone_body_entered"]
+[connection signal="body_exited" from="FadeZone" to="." method="_on_fade_zone_body_exited"]
