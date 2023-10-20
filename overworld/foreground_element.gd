@@ -1,3 +1,4 @@
+class_name ForegroundElement
 extends Sprite2D
 
 @onready var _FADE = $FadeDecorator

@@ -1,9 +1,21 @@
-[gd_scene load_steps=8 format=3 uid="uid://bgy6hy7u3yt0r"]
+[gd_scene load_steps=20 format=3 uid="uid://bgy6hy7u3yt0r"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_yla7b"]
 [ext_resource type="Texture2D" uid="uid://yf35enbnapma" path="res://assets/maps/coolant_cave/cave3_lake/cave3.png" id="2_bhnda"]
+[ext_resource type="Texture2D" uid="uid://dh72nupx5gwj5" path="res://assets/maps/coolant_cave/cave3_lake/cave3_water.png" id="3_h2cok"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player.tscn" id="3_tgpbx"]
 [ext_resource type="Script" path="res://overworld/warp.gd" id="4_2xcn4"]
+[ext_resource type="PackedScene" uid="uid://cepi8saddwmb6" path="res://overworld/foreground_element.tscn" id="5_wieau"]
+[ext_resource type="Texture2D" uid="uid://ba6kh8lccf56c" path="res://assets/maps/coolant_cave/cave3_lake/cave3_fg1.png" id="6_6r4ub"]
+[ext_resource type="Texture2D" uid="uid://fixed1mdbb0f" path="res://assets/maps/coolant_cave/cave3_lake/cave3_fg2.png" id="7_6vmoe"]
+[ext_resource type="Texture2D" uid="uid://crvf4bcccoiv1" path="res://assets/maps/coolant_cave/cave3_lake/cave3_fg3.png" id="8_5btrp"]
+[ext_resource type="Texture2D" uid="uid://yy36cx5qyjr5" path="res://assets/maps/coolant_cave/cave3_lake/cave3_fg4.png" id="9_2wk5e"]
+[ext_resource type="Texture2D" uid="uid://d16ouoadupgj2" path="res://assets/maps/coolant_cave/cave3_lake/cave3_fg5.png" id="10_r020h"]
+[ext_resource type="Texture2D" uid="uid://donmyycucn3c5" path="res://assets/maps/coolant_cave/cave3_lake/cave3_fg6.png" id="11_uwv6a"]
+[ext_resource type="Texture2D" uid="uid://vkxfhts3fcdv" path="res://assets/maps/coolant_cave/cave3_lake/cave3_fg7.png" id="12_o5kxj"]
+[ext_resource type="Texture2D" uid="uid://cusd2icx8s3h5" path="res://assets/maps/coolant_cave/cave3_lake/cave3_fg8.png" id="13_cbewm"]
+[ext_resource type="Texture2D" uid="uid://htmvey6m0px1" path="res://assets/maps/coolant_cave/cave3_lake/cave3_fg9.png" id="14_obyah"]
+[ext_resource type="Texture2D" uid="uid://cvgham20c83iq" path="res://assets/maps/coolant_cave/cave3_lake/cave3_fg10.png" id="15_50mtl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_45bbg"]
 size = Vector2(55, 6)
@@ -22,8 +34,141 @@ camera_zoom = 0.5
 texture = ExtResource("2_bhnda")
 centered = false
 
+[node name="Water" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.74902)
+texture = ExtResource("3_h2cok")
+centered = false
+
 [node name="Player" parent="." instance=ExtResource("3_tgpbx")]
 position = Vector2(984, 916)
+
+[node name="ForegroundElements" type="Node2D" parent="."]
+
+[node name="ForegroundElement" parent="ForegroundElements" instance=ExtResource("5_wieau")]
+position = Vector2(1407, 181)
+texture = ExtResource("6_6r4ub")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElement/FadeZone" index="0"]
+position = Vector2(-1, 95)
+polygon = PackedVector2Array(1, 21, 74, -15, 73, -46, 88, -76, 108, -95, 108, -57, 136, -3, 136, 26, 153, 59, 153, 121, 136, 88, 136, 67, 121, 75, 118, 75, 89, 60, 49, 60, 1, 84)
+
+[node name="ForegroundElement2" parent="ForegroundElements" instance=ExtResource("5_wieau")]
+position = Vector2(1057, 668)
+texture = ExtResource("7_6vmoe")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElement2/FadeZone" index="0"]
+polygon = PackedVector2Array(0, 53, 55, 0, 85, 15, 118, 15, 140, 26, 140, 90, 117, 78, 39, 78, 0, 116)
+
+[node name="ForegroundElement3" parent="ForegroundElements" instance=ExtResource("5_wieau")]
+position = Vector2(1334, 713)
+texture = ExtResource("8_5btrp")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElement3/FadeZone" index="0"]
+polygon = PackedVector2Array(0, 31, 62, 0, 65, 0, 90, 25, 90, 88, 65, 63, 63, 63, 0, 94)
+
+[node name="ForegroundElement4" parent="ForegroundElements" instance=ExtResource("5_wieau")]
+position = Vector2(1724, 447)
+texture = ExtResource("9_2wk5e")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElement4/FadeZone" index="0"]
+position = Vector2(13, 50)
+polygon = PackedVector2Array(58, 12, 58, -7, 80, -50, 82, -50, 113, 11, 160, -12, 169, 5, 169, 68, 159, 51, 113, 74, 101, 50, 58, 71, 58, 75, 40, 111, 4, 129, -13, 161, -13, 99, 3, 66, 40, 48)
+
+[node name="ForegroundElement5" parent="ForegroundElements" instance=ExtResource("5_wieau")]
+position = Vector2(1707, 139)
+texture = ExtResource("10_r020h")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElement5/FadeZone" index="0"]
+polygon = PackedVector2Array(0, 0, 17, 33, 132, 33, 180, 57, 180, 120, 131, 96, 17, 96, 0, 63)
+
+[node name="ForegroundElement6" parent="ForegroundElements" instance=ExtResource("5_wieau")]
+position = Vector2(905, 230)
+texture = ExtResource("11_uwv6a")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElement6/FadeZone" index="0"]
+polygon = PackedVector2Array(28, 1, 58, 1, 108, 26, 108, 55, 108, 88, 58, 63, 27.7402, 63, 0, 115, 1, 54)
+
+[node name="ForegroundElement7" parent="ForegroundElements" instance=ExtResource("5_wieau")]
+position = Vector2(595, 378)
+texture = ExtResource("12_o5kxj")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElement7/FadeZone" index="0"]
+polygon = PackedVector2Array(15, 0, 45, 0, 85, 20, 84, 83, 45, 63, 16, 63, 0, 70, 0, 8)
+
+[node name="ForegroundElement8" parent="ForegroundElements" instance=ExtResource("5_wieau")]
+position = Vector2(397, 268)
+texture = ExtResource("13_cbewm")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElement8/FadeZone" index="0"]
+polygon = PackedVector2Array(38, 0, 76, 0, 113, 72, 113, 135, 76.6709, 62.6906, 38, 63, 0, 82, 0, 19)
+
+[node name="ForegroundElement9" parent="ForegroundElements" instance=ExtResource("5_wieau")]
+position = Vector2(356, 153)
+texture = ExtResource("14_obyah")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElement9/FadeZone" index="0"]
+position = Vector2(27, -23)
+polygon = PackedVector2Array(-18, 23, -14, 29, -14, 92, -27, 68, -27, 40)
+
+[node name="ForegroundElementPillar1" parent="ForegroundElements" instance=ExtResource("5_wieau")]
+position = Vector2(184, 382)
+texture = ExtResource("15_50mtl")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElementPillar1/FadeZone" index="0"]
+polygon = PackedVector2Array(0, 0, 16, 0, 16, 45, 0, 45)
+
+[node name="FadeDecorator" parent="ForegroundElements/ForegroundElementPillar1" index="1"]
+fade_speed = 2.0
+
+[node name="ForegroundElementPillar2" parent="ForegroundElements" instance=ExtResource("5_wieau")]
+position = Vector2(227, 382)
+texture = ExtResource("15_50mtl")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElementPillar2/FadeZone" index="0"]
+polygon = PackedVector2Array(0, 0, 16, 0, 16, 45, 0, 45)
+
+[node name="FadeDecorator" parent="ForegroundElements/ForegroundElementPillar2" index="1"]
+fade_speed = 2.0
+
+[node name="ForegroundElementPillar3" parent="ForegroundElements" instance=ExtResource("5_wieau")]
+position = Vector2(269, 382)
+texture = ExtResource("15_50mtl")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElementPillar3/FadeZone" index="0"]
+polygon = PackedVector2Array(0, 0, 16, 0, 16, 45, 0, 45)
+
+[node name="FadeDecorator" parent="ForegroundElements/ForegroundElementPillar3" index="1"]
+fade_speed = 2.0
+
+[node name="ForegroundElementPillar4" parent="ForegroundElements" instance=ExtResource("5_wieau")]
+position = Vector2(184, 482)
+texture = ExtResource("15_50mtl")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElementPillar4/FadeZone" index="0"]
+polygon = PackedVector2Array(0, 0, 16, 0, 16, 45, 0, 45)
+
+[node name="FadeDecorator" parent="ForegroundElements/ForegroundElementPillar4" index="1"]
+fade_speed = 2.0
+
+[node name="ForegroundElementPillar5" parent="ForegroundElements" instance=ExtResource("5_wieau")]
+position = Vector2(227, 482)
+texture = ExtResource("15_50mtl")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElementPillar5/FadeZone" index="0"]
+polygon = PackedVector2Array(0, 0, 16, 0, 16, 45, 0, 45)
+
+[node name="FadeDecorator" parent="ForegroundElements/ForegroundElementPillar5" index="1"]
+fade_speed = 2.0
+
+[node name="ForegroundElementPillar6" parent="ForegroundElements" instance=ExtResource("5_wieau")]
+position = Vector2(269, 482)
+texture = ExtResource("15_50mtl")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElementPillar6/FadeZone" index="0"]
+polygon = PackedVector2Array(0, 0, 16, 0, 16, 45, 0, 45)
+
+[node name="FadeDecorator" parent="ForegroundElements/ForegroundElementPillar6" index="1"]
+fade_speed = 2.0
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
 
@@ -80,3 +225,19 @@ shape = SubResource("RectangleShape2D_vv7td")
 position = Vector2(-96, 150)
 collision_layer = 4
 collision_mask = 0
+
+[editable path="ForegroundElements/ForegroundElement"]
+[editable path="ForegroundElements/ForegroundElement2"]
+[editable path="ForegroundElements/ForegroundElement3"]
+[editable path="ForegroundElements/ForegroundElement4"]
+[editable path="ForegroundElements/ForegroundElement5"]
+[editable path="ForegroundElements/ForegroundElement6"]
+[editable path="ForegroundElements/ForegroundElement7"]
+[editable path="ForegroundElements/ForegroundElement8"]
+[editable path="ForegroundElements/ForegroundElement9"]
+[editable path="ForegroundElements/ForegroundElementPillar1"]
+[editable path="ForegroundElements/ForegroundElementPillar2"]
+[editable path="ForegroundElements/ForegroundElementPillar3"]
+[editable path="ForegroundElements/ForegroundElementPillar4"]
+[editable path="ForegroundElements/ForegroundElementPillar5"]
+[editable path="ForegroundElements/ForegroundElementPillar6"]
