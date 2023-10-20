@@ -16,26 +16,41 @@ texture = ExtResource("2_a7nkp")
 centered = false
 
 [node name="Player" parent="." instance=ExtResource("3_bhctv")]
-position = Vector2(608, 443)
+position = Vector2(344, 443)
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
 
 [node name="Points" type="Node2D" parent="."]
 
-[node name="Cave4Bottom" type="Node2D" parent="Points"]
+[node name="Cave4BottomRight" type="Node2D" parent="Points"]
 position = Vector2(608, 443)
+
+[node name="Cave4BottomLeft" type="Node2D" parent="Points"]
+position = Vector2(344, 443)
 
 [node name="Warps" type="Node2D" parent="."]
 
-[node name="WarpToLake" type="Area2D" parent="Warps"]
+[node name="WarpToLakeRight" type="Area2D" parent="Warps"]
 position = Vector2(587, 465)
 collision_layer = 0
 script = ExtResource("4_7evqn")
 area = 2
-spawn_point = "Cave3Top"
+spawn_point = "Cave3TopRight"
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/WarpToLake"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/WarpToLakeRight"]
+position = Vector2(19.5, -0.5)
+shape = SubResource("RectangleShape2D_80ub1")
+
+[node name="WarpToLakeLeft" type="Area2D" parent="Warps"]
+position = Vector2(325, 465)
+collision_layer = 0
+script = ExtResource("4_7evqn")
+area = 2
+spawn_point = "Cave3TopLeft"
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/WarpToLakeLeft"]
 position = Vector2(19.5, -0.5)
 shape = SubResource("RectangleShape2D_80ub1")
 

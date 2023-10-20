@@ -40,7 +40,7 @@ texture = ExtResource("3_h2cok")
 centered = false
 
 [node name="Player" parent="." instance=ExtResource("3_tgpbx")]
-position = Vector2(984, 916)
+position = Vector2(1010, 162)
 
 [node name="ForegroundElements" type="Node2D" parent="."]
 
@@ -177,8 +177,12 @@ fade_speed = 2.0
 [node name="Cave3Bottom" type="Node2D" parent="Points"]
 position = Vector2(984, 916)
 
-[node name="Cave3Top" type="Node2D" parent="Points"]
-position = Vector2(1006, 150)
+[node name="Cave3TopRight" type="Node2D" parent="Points"]
+position = Vector2(1066, 139)
+
+[node name="Cave3TopLeft" type="Node2D" parent="Points"]
+position = Vector2(671, 140)
+scale = Vector2(1.00241, 1)
 
 [node name="Cave3Left" type="Node2D" parent="Points"]
 position = Vector2(15, 517)
@@ -209,15 +213,27 @@ metadata/_edit_group_ = true
 position = Vector2(36.5, -32.5)
 shape = SubResource("RectangleShape2D_wc5tq")
 
-[node name="WarpToPlaza" type="Area2D" parent="Warps"]
-position = Vector2(982, 140)
+[node name="WarpToPlazaRight" type="Area2D" parent="Warps"]
+position = Vector2(1043, 141)
 collision_layer = 0
 script = ExtResource("4_2xcn4")
 area = 3
-spawn_point = "Cave4Bottom"
+spawn_point = "Cave4BottomRight"
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/WarpToPlaza"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/WarpToPlazaRight"]
+position = Vector2(23.5, -3)
+shape = SubResource("RectangleShape2D_vv7td")
+
+[node name="WarpToPlazaLeft" type="Area2D" parent="Warps"]
+position = Vector2(647, 141)
+collision_layer = 0
+script = ExtResource("4_2xcn4")
+area = 3
+spawn_point = "Cave4BottomLeft"
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/WarpToPlazaLeft"]
 position = Vector2(23.5, -3)
 shape = SubResource("RectangleShape2D_vv7td")
 
