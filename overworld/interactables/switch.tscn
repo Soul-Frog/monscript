@@ -1,0 +1,87 @@
+[gd_scene load_steps=12 format=3 uid="uid://5lhr4mbe0psu"]
+
+[ext_resource type="PackedScene" uid="uid://cd6pj5homenki" path="res://overworld/interactables/interactable_base.tscn" id="1_x44rn"]
+[ext_resource type="Script" path="res://overworld/interactables/switch_interactable.gd" id="2_f3nno"]
+[ext_resource type="Texture2D" uid="uid://b7rysph8rb228" path="res://assets/objects/switch.png" id="3_ojhhi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_88oha"]
+atlas = ExtResource("3_ojhhi")
+region = Rect2(0, 0, 19, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8s50b"]
+atlas = ExtResource("3_ojhhi")
+region = Rect2(19, 0, 19, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kdt7s"]
+atlas = ExtResource("3_ojhhi")
+region = Rect2(38, 0, 19, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a5k35"]
+atlas = ExtResource("3_ojhhi")
+region = Rect2(38, 0, 19, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xg2hl"]
+atlas = ExtResource("3_ojhhi")
+region = Rect2(19, 0, 19, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_inqm2"]
+atlas = ExtResource("3_ojhhi")
+region = Rect2(0, 0, 19, 15)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l1js8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_88oha")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8s50b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kdt7s")
+}],
+"loop": false,
+"name": &"lower_water",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a5k35")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xg2hl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_inqm2")
+}],
+"loop": false,
+"name": &"raise_water",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_80gjf"]
+radius = 20.0
+
+[node name="Interactable" instance=ExtResource("1_x44rn")]
+script = ExtResource("2_f3nno")
+
+[node name="Sprite" parent="." index="0"]
+position = Vector2(-8, -8)
+sprite_frames = SubResource("SpriteFrames_l1js8")
+animation = &"lower_water"
+frame = 2
+frame_progress = 1.0
+centered = false
+
+[node name="CollisionPolygon2D" parent="Collision" index="0"]
+polygon = PackedVector2Array(-57.6001, 21.1227, 18.356, 21.1227, 18.356, -11.1462, -57.6001, -11.1462)
+
+[node name="CollisionShape2D" parent="InteractionArea" index="0"]
+shape = SubResource("CircleShape2D_80gjf")
+
+[node name="Label" parent="." index="3"]
+offset_left = -61.0
+offset_top = -24.0
+offset_right = 62.0
+offset_bottom = -1.0
+text = "[center][E] Flip[/center]"

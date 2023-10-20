@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bgy6hy7u3yt0r"]
+[gd_scene load_steps=21 format=3 uid="uid://bgy6hy7u3yt0r"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_yla7b"]
 [ext_resource type="Texture2D" uid="uid://yf35enbnapma" path="res://assets/maps/coolant_cave/cave3_lake/cave3.png" id="2_bhnda"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://cusd2icx8s3h5" path="res://assets/maps/coolant_cave/cave3_lake/cave3_fg8.png" id="13_cbewm"]
 [ext_resource type="Texture2D" uid="uid://htmvey6m0px1" path="res://assets/maps/coolant_cave/cave3_lake/cave3_fg9.png" id="14_obyah"]
 [ext_resource type="Texture2D" uid="uid://cvgham20c83iq" path="res://assets/maps/coolant_cave/cave3_lake/cave3_fg10.png" id="15_50mtl"]
+[ext_resource type="PackedScene" uid="uid://5lhr4mbe0psu" path="res://overworld/interactables/switch.tscn" id="17_f7r4y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_45bbg"]
 size = Vector2(55, 6)
@@ -41,6 +42,9 @@ centered = false
 
 [node name="Player" parent="." instance=ExtResource("3_tgpbx")]
 position = Vector2(1010, 162)
+
+[node name="Interactable" parent="." instance=ExtResource("17_f7r4y")]
+position = Vector2(717, 156)
 
 [node name="ForegroundElements" type="Node2D" parent="."]
 
@@ -241,6 +245,9 @@ shape = SubResource("RectangleShape2D_vv7td")
 position = Vector2(-96, 150)
 collision_layer = 4
 collision_mask = 0
+
+[node name="Interactable2" parent="." instance=ExtResource("17_f7r4y")]
+position = Vector2(720, 185)
 
 [editable path="ForegroundElements/ForegroundElement"]
 [editable path="ForegroundElements/ForegroundElement2"]
