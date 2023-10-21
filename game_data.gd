@@ -1,11 +1,11 @@
-# Stores information about the game world, such as areas, story flags, and other flags. 
+# Stores information about the game world, such as areas and persistant variables.
 extends Node
 
 # Constants
 const MONS_PER_STORAGE_PAGE = 8
 const SAVE_FILE_NAME = "user://save.monsave"
 
-# Area stuff
+# Areas
 enum Area
 {
 	COOLANT_CAVE1_BEACH, COOLANT_CAVE2_ENTRANCE, COOLANT_CAVE3_LAKE, COOLANT_CAVE4_PLAZA, COOLANT_CAVE5_2DRUINS,
@@ -14,6 +14,7 @@ enum Area
 	NONE
 }
 
+# Map of areas to their scenes
 var _area_enum_to_path: Dictionary = {
 	Area.COOLANT_CAVE1_BEACH : "res://overworld/areas/coolant_cave/cave1_beach.tscn",
 	Area.COOLANT_CAVE2_ENTRANCE : "res://overworld/areas/coolant_cave/cave2_entrance.tscn",
@@ -34,33 +35,32 @@ func path_for_area(area_enum: GameData.Area) -> String:
 	assert(area_enum != Area.NONE, "Area enum is none!")
 	return _area_enum_to_path[area_enum]
 
-# Gamestate Flags
-enum Flag {
-	# During the intro, the computer needs to be examined twice to progress. This tracks if the first examine has occured.
-	INTRO_EXAMINED_COMPUTER_ONCE, 
-	# During the intro, after examining the computer twice and playing the game, this is enabled so we can sleep at the bed.
-	INTRO_READY_TO_SLEEP
+# The player's name.
+const PLAYER_NAME = "PlAYER_NAME"
+# During the intro, the computer needs to be examined twice to progress. This tracks if the first examine has occurred.
+const INTRO_EXAMINED_COMPUTER_ONCE = "INTRO_EXAMINED_COMPUTER_ONCE"
+# During the intro, after examining the computer twice and playing the game, this is enabled so we can sleep at the bed.
+const INTRO_READY_TO_SLEEP = "INTRO_READY_TO_SLEEP"
+
+# Variables which are persisted.
+# Anything in this dictionary will automatically be saved/loaded when the game is saved/loaded.
+# Do not access this directly, use get_var(String) and set_var(String, Variant) instead.
+# Variables can be bools, floats, Strings, or ints. Anything else will trigger an assertion for now.
+var _variables : Dictionary = {
+	PLAYER_NAME : "???",
+	INTRO_EXAMINED_COMPUTER_ONCE : false,
+	INTRO_READY_TO_SLEEP : false
 }
 
-# map of flag enums to strings, used when saving so we can save actual names and not small integers which would get
-# messed up easily by new flags being added or flags being shifted.
-# unfortunately this must be updated manually whenever a new flag is added as GDScript does not support string based enums.
-var _flag_to_str := {
-	Flag.INTRO_EXAMINED_COMPUTER_ONCE : "INTRO_EXAMINED_COMPUTER_ONCE",
-	Flag.INTRO_READY_TO_SLEEP : "INTRO_READY_TO_SLEEP"
-}
+func get_var(variable_name: String):
+	assert(_variables.has(variable_name))
+	return _variables[variable_name]
 
-var _flags : Dictionary = {}
+func set_var(variable_name: String, value) -> void:
+	assert(_variables.has(variable_name))
+	assert(value is bool or value is String or value is int or value is float, "Can't store values besides bools, Strings, ints, floats.")
+	_variables[variable_name] = value
 
-func check_flag(flag: Flag) -> bool:
-	assert(_flags.has(flag))
-	return _flags[flag]
-
-func set_flag(flag: Flag, value: bool) -> void:
-	assert(_flags.has(flag))
-	_flags[flag] = value
-
-var PLAYER_NAME = "???"
 var team = []
 var storage = []
 
@@ -87,13 +87,6 @@ func _ready():
 			continue
 		assert(_area_enum_to_path.has(areaenum), "No area for enum in dictionary!")
 	
-	# populate the list of flags, set to their default value of false
-	for flag in Flag.values():
-		_flags[flag] = false
-	assert(_flag_to_str.size() == _flags.size(), "Either missing or too many string conversions for a flag! (update _flag_to_str)")
-	for flag in _flags.keys():
-		assert(_flag_to_str.has(flag), "Missing string conversion for a flag! (update _flag_to_str)")
-	
 	# populate the compilation progress map
 	for montype in MonData.MonType.values():
 		if montype == MonData.MonType.NONE:
@@ -102,6 +95,7 @@ func _ready():
 			compilation_progress_per_mon[montype] = 100
 		else:
 			compilation_progress_per_mon[montype] = 0
+	
 	# mark the initial mon as compiled
 	# TODO - Bitleon starts as compiled
 	
@@ -139,16 +133,13 @@ func save_game():
 	# store everything we care about in a big dictionary
 	var save_dict := {}
 	
-	# save player's name
-	save_dict["player_name"] = PLAYER_NAME
-	
 	# save line limit and storage slots
 	save_dict["line_limit"] = line_limit
 	save_dict["storage_pages"] = storage_pages
 	
-	# save each flag as str->bool
-	for flag in _flags.keys():
-		save_dict[_flag_to_str[flag]] = _flags[flag]
+	# save each variable as str->Variant
+	for var_key in _variables.keys():
+		save_dict[var_key] = _variables[var_key]
 	
 	# save each mon in the team
 	for i in team.size():
@@ -177,16 +168,14 @@ func load_game():
 		return
 	var save_dict = json.data
 	
-	# read back the player's name
-	PLAYER_NAME = Global.value_or_default(save_dict, "player_name", PLAYER_NAME)
-	
 	# read back the line limit and storage size
 	line_limit = Global.value_or_default(save_dict, "line_limit", DEFAULT_LINE_LIMIT)
 	increase_storage_size(Global.value_or_default(save_dict, "storage_pages", DEFAULT_STORAGE_PAGES)) # adjust size of storage to match loaded value
 	
 	# read back each flag
-	for flag_enum in _flag_to_str.keys():
-		_flags[flag_enum] = Global.value_or_default(save_dict, _flag_to_str[flag_enum], false)
+	for var_key in _variables.keys():
+		if save_dict.has(var_key):
+			_variables[var_key] = save_dict[var_key]
 	
 	# read back each mon in team
 	for i in team.size():

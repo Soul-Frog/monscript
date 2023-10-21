@@ -12,3 +12,6 @@ signal area_changed
 
 # called by player when colliding with overworld encounter
 signal collided_with_overworld_encounter
+
+# called when the water level changes in coolant cave
+signal coolant_cave_water_level_changed

@@ -20,20 +20,20 @@ func play_cutscene(id: CutsceneID, node: Node):
 func _CUTSCENE_INTRODUCTION(vn: Node):
 	assert(vn is VisualNovel)
 
-	# open the initial dialogue in classroom
-	vn.switch_subscene(vn.CLASSROOM_SCENE, false)
-	vn.open_dialogue("classroom")
-	await vn.dialogue_completed
-
-	# switch the scene to the bus stop
-	await vn.switch_subscene(vn.BUS_STOP_SCENE)
-	vn.open_dialogue("bus_stop")
-	await vn.dialogue_completed
-
-	# switch the scene to the bus
-	await vn.switch_subscene(vn.BUS_SCENE)
-	vn.open_dialogue("bus")
-	await vn.dialogue_completed
+#	# open the initial dialogue in classroom
+#	vn.switch_subscene(vn.CLASSROOM_SCENE, false)
+#	vn.open_dialogue("classroom")
+#	await vn.dialogue_completed
+#
+#	# switch the scene to the bus stop
+#	await vn.switch_subscene(vn.BUS_STOP_SCENE)
+#	vn.open_dialogue("bus_stop")
+#	await vn.dialogue_completed
+#
+#	# switch the scene to the bus
+#	await vn.switch_subscene(vn.BUS_SCENE)
+#	vn.open_dialogue("bus")
+#	await vn.dialogue_completed
 
 	# switch the scene to the room
 	await vn.switch_subscene(vn.ROOM_SCENE)
@@ -49,7 +49,7 @@ func _CUTSCENE_INTRODUCTION(vn: Node):
 	vn.open_dialogue("login1")
 	await vn.dialogue_completed
 	vn.display_name_input()
-	GameData.PLAYER_NAME = await vn.name_inputted
+	GameData.set_var(GameData.PLAYER_NAME, await vn.name_inputted)
 	vn.hide_name_input()
 	vn.open_dialogue("login2")
 	await vn.dialogue_completed
