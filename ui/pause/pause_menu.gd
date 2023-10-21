@@ -53,13 +53,13 @@ func setup() -> void:
 
 # changes to a new storage page, updates mons, updates label
 func _change_storage_page(new_page: int):
-	assert(new_page < GameData.storage_pages)
+	assert(new_page < GameData.get_var(GameData.STORAGE_PAGES))
 	assert(new_page >= 0)
 	
 	_storage_page = new_page
 	
 	# update the label
-	STORAGE_PAGE_LABEL.text = _STORAGE_PAGE_LABEL_FORMAT % [new_page + 1, GameData.storage_pages]
+	STORAGE_PAGE_LABEL.text = _STORAGE_PAGE_LABEL_FORMAT % [new_page + 1, GameData.get_var(GameData.STORAGE_PAGES)]
 	
 	# update the slots
 	for i in STORAGE_PAGE_SLOTS.get_child_count():
@@ -102,11 +102,11 @@ func _on_x_button_pressed():
 
 func _on_left_storage_arrow_pressed():
 	# switch to the next page down, but roll around to max if needed
-	_change_storage_page(GameData.storage_pages - 1 if _storage_page == 0 else _storage_page - 1)
+	_change_storage_page(GameData.get_var(GameData.STORAGE_PAGES) - 1 if _storage_page == 0 else _storage_page - 1)
 
 func _on_right_storage_arrow_pressed():
 	# switch to the next page up, but roll around to 0 if needed
-	_change_storage_page(0 if _storage_page == GameData.storage_pages - 1 else _storage_page + 1)
+	_change_storage_page(0 if _storage_page == GameData.get_var(GameData.STORAGE_PAGES) - 1 else _storage_page + 1)
 
 func _on_slot_clicked(slot: MonSlot):
 	assert(slot)

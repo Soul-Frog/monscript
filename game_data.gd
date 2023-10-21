@@ -4,8 +4,6 @@ extends Node
 ## Constants ##
 const MONS_PER_STORAGE_PAGE = 8 # how many mons are on a single page of pause menu storage
 const SAVE_FILE_NAME = "user://save.monsave" # path to the save file
-const DEFAULT_LINE_LIMIT = 3 # number of line available for a new game
-const DEFAULT_STORAGE_PAGES = 3 # number of storage pages for a new game
 
 ## Areas ##
 enum Area
@@ -40,6 +38,10 @@ func path_for_area(area_enum: GameData.Area) -> String: # function to get script
 ## Persistent Variables. ##
 # Key for the player's name.
 const PLAYER_NAME = "PlAYER_NAME"
+# Maximum number of lines in a script
+const LINE_LIMIT = "LINE_LIMIT"
+# Number of pages of mon storage in pause menu
+const STORAGE_PAGES = "STORAGE_PAGES"
 # During the intro, the computer needs to be examined twice to progress. This tracks if the first examine has occurred.
 const INTRO_EXAMINED_COMPUTER_ONCE = "INTRO_EXAMINED_COMPUTER_ONCE"
 # During the intro, after examining the computer twice and playing the game, this is enabled so we can sleep at the bed.
@@ -53,6 +55,8 @@ const COOLANT_CAVE_WATER_RAISED = "COOLANT_CAVE_WATER_RAISED"
 # Variables can be bools, floats, Strings, or ints. Anything else will trigger an assertion for now.
 var _variables : Dictionary = {
 	PLAYER_NAME : "???", #default name is displayed in intro dialogue before the player enters the real name
+	LINE_LIMIT : 3, #default number of lines in a script is 3
+	STORAGE_PAGES : 2, #default number of storage pages is 2 (16 mons storage)
 	
 	INTRO_EXAMINED_COMPUTER_ONCE : false,
 	INTRO_READY_TO_SLEEP : false,
@@ -62,8 +66,6 @@ var _variables : Dictionary = {
 
 var team = [] # player's active team
 var storage = []  # player's mon storage
-var line_limit = DEFAULT_LINE_LIMIT # the maximum number of lines the player can use to build scripts
-var storage_pages = DEFAULT_STORAGE_PAGES # the number of available storage pages 
 var compilation_progress_per_mon := {} # MonType -> int; maps MonType to unlock progress
 var _block_unlock_map := {} # tracks which blocks have been unlocked for use in the script editor
 
@@ -118,23 +120,20 @@ func _ready():
 	assert(team.size() == Global.MONS_PER_TEAM)
 	
 	# create the mon storage
-	increase_storage_size(DEFAULT_STORAGE_PAGES)
+	increase_storage_size(_variables[STORAGE_PAGES])
+	
 	# TODO - remove this debug code
 	storage[0] = MonData.create_mon(MonData.MonType.MAGNETFROG, 10)
 	storage[5] = MonData.create_mon(MonData.MonType.MAGNETFROG, 11)
 	storage[4] = MonData.create_mon(MonData.MonType.MAGNETFROG, 12)
 	storage[9] = MonData.create_mon(MonData.MonType.MAGNETFROG, 13)
 	storage[13] = MonData.create_mon(MonData.MonType.MAGNETFROG, 14)
-	storage[18] = MonData.create_mon(MonData.MonType.MAGNETFROG, 64)
+	storage[15] = MonData.create_mon(MonData.MonType.MAGNETFROG, 64)
 
 # saves the game state to file
 func save_game():
 	# store everything we care about in a big dictionary
 	var save_dict := {}
-	
-	# save line limit and storage slots
-	save_dict["line_limit"] = line_limit
-	save_dict["storage_pages"] = storage_pages
 	
 	# save each variable as str->Variant
 	for var_key in _variables.keys():
@@ -167,14 +166,13 @@ func load_game():
 		return
 	var save_dict = json.data
 	
-	# read back the line limit and storage size
-	line_limit = Global.value_or_default(save_dict, "line_limit", DEFAULT_LINE_LIMIT)
-	increase_storage_size(Global.value_or_default(save_dict, "storage_pages", DEFAULT_STORAGE_PAGES)) # adjust size of storage to match loaded value
-	
 	# read back each flag
 	for var_key in _variables.keys():
 		if save_dict.has(var_key):
 			_variables[var_key] = save_dict[var_key]
+	
+	# increase the storage size based on the number of pages
+	increase_storage_size(_variables[STORAGE_PAGES])
 	
 	# read back each mon in team
 	for i in team.size():
@@ -187,11 +185,11 @@ func load_game():
 		storage[i] = MonData.mon_from_json(mon_str) if mon_str != "[STORAGENULL]" else null
 
 func increase_storage_size(new_size: int):
-	assert(storage_pages <= new_size, "Can't decrease storage size!")
-	storage_pages = new_size
-	while storage.size() < storage_pages * MONS_PER_STORAGE_PAGE:
+	assert(_variables[STORAGE_PAGES] <= new_size, "Can't decrease storage size!")
+	_variables[STORAGE_PAGES] = new_size
+	while storage.size() < _variables[STORAGE_PAGES] * MONS_PER_STORAGE_PAGE:
 		storage.append(null)
-	assert(storage.size() == storage_pages * MONS_PER_STORAGE_PAGE)
+	assert(storage.size() == _variables[STORAGE_PAGES] * MONS_PER_STORAGE_PAGE)
 
 func is_block_unlocked(block: ScriptData.Block) -> bool:
 	if not _block_unlock_map.has(block):

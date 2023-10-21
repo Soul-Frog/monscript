@@ -2,7 +2,7 @@
 # 1) make an inherited scene based off of this interactable_base.tscn
 # Then, to give it custom behavior on interaction, 
 # 2) create a new script (.gd file) which extends Interctable
-# 3) override the _onInteract function.
+# 3) override the _on_interact function.
 
 class_name Interactable
 extends Node2D
@@ -18,9 +18,9 @@ func _ready():
 
 func _input(event):
 	if event.is_action_released("interact") and _INTERACTION_AREA.get_overlapping_bodies().size() != 0:
-		_onInteract()
+		_on_interact()
 
-func _onInteract():
+func _on_interact():
 	pass #no-op
 
 func _on_body_entered(body):

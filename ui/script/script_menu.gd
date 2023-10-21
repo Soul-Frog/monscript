@@ -369,10 +369,10 @@ func _update_line_numbers() -> void:
 	
 	# update the line limit text and flash it if it changed
 	var prev_text = LINE_LIMIT.text
-	LINE_LIMIT.text = LINE_LIMIT_FORMAT % [n, GameData.line_limit]
+	LINE_LIMIT.text = LINE_LIMIT_FORMAT % [n, GameData.get_var(GameData.LINE_LIMIT)]
 	if LINE_LIMIT.text != prev_text:
 		LINE_LIMIT.flash()
-	NEWLINE_BUTTON.visible = n != GameData.line_limit
+	NEWLINE_BUTTON.visible = n != GameData.get_var(GameData.LINE_LIMIT)
 
 func _put_held_blocks_in_line(line: UIScriptLine):
 	for block in HELD.get_children():

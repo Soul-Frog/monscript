@@ -56,6 +56,12 @@ func oscillate():
 	fade_type = FadeType.OSCILLATE
 	active = true
 
+# immediately finish an active fade in/out
+func immediately_finish():
+	assert(active)
+	assert(fade_type == FadeType.FADE_IN or fade_type == FadeType.FADE_OUT)
+	get_parent().modulate.a = (min_alpha if fade_type == FadeType.FADE_OUT else max_alpha)
+
 func _process(delta):
 	if active:
 		var fade_delta = fade_speed * delta * (-1 if _fade_direction == _Direction.OUT else 1)

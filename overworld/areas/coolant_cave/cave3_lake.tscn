@@ -1,10 +1,12 @@
-[gd_scene load_steps=21 format=3 uid="uid://bgy6hy7u3yt0r"]
+[gd_scene load_steps=23 format=3 uid="uid://bgy6hy7u3yt0r"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_yla7b"]
 [ext_resource type="Texture2D" uid="uid://yf35enbnapma" path="res://assets/maps/coolant_cave/cave3_lake/cave3.png" id="2_bhnda"]
 [ext_resource type="Texture2D" uid="uid://dh72nupx5gwj5" path="res://assets/maps/coolant_cave/cave3_lake/cave3_water.png" id="3_h2cok"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player.tscn" id="3_tgpbx"]
 [ext_resource type="Script" path="res://overworld/warp.gd" id="4_2xcn4"]
+[ext_resource type="Script" path="res://overworld/areas/coolant_cave/water.gd" id="4_f0j4f"]
+[ext_resource type="PackedScene" uid="uid://ct27r3y3ao3um" path="res://decorators/fade_decorator.tscn" id="5_npjti"]
 [ext_resource type="PackedScene" uid="uid://cepi8saddwmb6" path="res://overworld/foreground_element.tscn" id="5_wieau"]
 [ext_resource type="Texture2D" uid="uid://ba6kh8lccf56c" path="res://assets/maps/coolant_cave/cave3_lake/cave3_fg1.png" id="6_6r4ub"]
 [ext_resource type="Texture2D" uid="uid://fixed1mdbb0f" path="res://assets/maps/coolant_cave/cave3_lake/cave3_fg2.png" id="7_6vmoe"]
@@ -39,12 +41,76 @@ centered = false
 modulate = Color(1, 1, 1, 0.74902)
 texture = ExtResource("3_h2cok")
 centered = false
+script = ExtResource("4_f0j4f")
+
+[node name="WaterCollision" type="StaticBody2D" parent="Water"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Water/WaterCollision"]
+polygon = PackedVector2Array(696, 208, 696, 216, 648, 216, 648, 208)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Water/WaterCollision"]
+position = Vector2(2, 0)
+polygon = PackedVector2Array(392, 221, 435, 221, 435, 216, 392, 216)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Water/WaterCollision"]
+polygon = PackedVector2Array(368, 604, 368, 610, 324, 610, 324, 604)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Water/WaterCollision"]
+polygon = PackedVector2Array(1887, 677, 1880, 677, 1880, 628, 1887, 628)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="Water/WaterCollision"]
+polygon = PackedVector2Array(1845, 160, 1840, 160, 1840, 207, 1845, 207)
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="Water/WaterCollision"]
+polygon = PackedVector2Array(1653, 512, 1648, 512, 1648, 468, 1653, 468)
+
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="Water/WaterCollision"]
+polygon = PackedVector2Array(1522, 828, 1522, 822, 1469, 822, 1469, 828)
+
+[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="Water/WaterCollision"]
+polygon = PackedVector2Array(1143, 489, 1143, 537, 1136, 537, 1136, 489)
+
+[node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="Water/WaterCollision"]
+polygon = PackedVector2Array(545, 687, 585, 687, 585, 693, 545, 693)
+
+[node name="CollisionPolygon2D10" type="CollisionPolygon2D" parent="Water/WaterCollision"]
+polygon = PackedVector2Array(1332, 188, 1376, 188, 1376, 195, 1332, 195)
+
+[node name="CollisionPolygon2D11" type="CollisionPolygon2D" parent="Water/WaterCollision"]
+polygon = PackedVector2Array(866, 230, 860, 230, 860, 184, 866, 184)
+
+[node name="CollisionPolygon2D12" type="CollisionPolygon2D" parent="Water/WaterCollision"]
+polygon = PackedVector2Array(142, 443, 150, 443, 150, 540, 142, 540)
+
+[node name="FadeDecorator" parent="Water" instance=ExtResource("5_npjti")]
+active = false
+fade_speed = 2.0
 
 [node name="Player" parent="." instance=ExtResource("3_tgpbx")]
+y_sort_enabled = true
 position = Vector2(1010, 162)
 
 [node name="Switch" parent="." instance=ExtResource("17_f7r4y")]
+y_sort_enabled = true
 position = Vector2(717, 156)
+
+[node name="Switch2" parent="." instance=ExtResource("17_f7r4y")]
+y_sort_enabled = true
+position = Vector2(324, 275)
+
+[node name="Switch3" parent="." instance=ExtResource("17_f7r4y")]
+y_sort_enabled = true
+position = Vector2(549, 414)
+
+[node name="Switch4" parent="." instance=ExtResource("17_f7r4y")]
+y_sort_enabled = true
+position = Vector2(1503, 685)
+
+[node name="Switch5" parent="." instance=ExtResource("17_f7r4y")]
+y_sort_enabled = true
+position = Vector2(1759, 343)
 
 [node name="ForegroundElements" type="Node2D" parent="."]
 
