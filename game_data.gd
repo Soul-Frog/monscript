@@ -1,11 +1,13 @@
 # Stores information about the game world, such as areas and persistant variables.
 extends Node
 
-# Constants
-const MONS_PER_STORAGE_PAGE = 8
-const SAVE_FILE_NAME = "user://save.monsave"
+## Constants ##
+const MONS_PER_STORAGE_PAGE = 8 # how many mons are on a single page of pause menu storage
+const SAVE_FILE_NAME = "user://save.monsave" # path to the save file
+const DEFAULT_LINE_LIMIT = 3 # number of line available for a new game
+const DEFAULT_STORAGE_PAGES = 3 # number of storage pages for a new game
 
-# Areas
+## Areas ##
 enum Area
 {
 	COOLANT_CAVE1_BEACH, COOLANT_CAVE2_ENTRANCE, COOLANT_CAVE3_LAKE, COOLANT_CAVE4_PLAZA, COOLANT_CAVE5_2DRUINS,
@@ -30,27 +32,40 @@ var _area_enum_to_path: Dictionary = {
 	Area.COOLANT_CAVE12_BOSSROOM : "res://overworld/areas/coolant_cave/cave12_bossroom.tscn",
 }
 
-# function to get script for enum
-func path_for_area(area_enum: GameData.Area) -> String:
+func path_for_area(area_enum: GameData.Area) -> String: # function to get script for enum
 	assert(area_enum != Area.NONE, "Area enum is none!")
 	return _area_enum_to_path[area_enum]
 
-# The player's name.
+
+## Persistent Variables. ##
+# Key for the player's name.
 const PLAYER_NAME = "PlAYER_NAME"
 # During the intro, the computer needs to be examined twice to progress. This tracks if the first examine has occurred.
 const INTRO_EXAMINED_COMPUTER_ONCE = "INTRO_EXAMINED_COMPUTER_ONCE"
 # During the intro, after examining the computer twice and playing the game, this is enabled so we can sleep at the bed.
 const INTRO_READY_TO_SLEEP = "INTRO_READY_TO_SLEEP"
+# Whether the water in coolant cave is up or down. This persists across saves (since player may save in an area with lowered water)
+const COOLANT_CAVE_WATER_RAISED = "COOLANT_CAVE_WATER_RAISED"
 
 # Variables which are persisted.
 # Anything in this dictionary will automatically be saved/loaded when the game is saved/loaded.
 # Do not access this directly, use get_var(String) and set_var(String, Variant) instead.
 # Variables can be bools, floats, Strings, or ints. Anything else will trigger an assertion for now.
 var _variables : Dictionary = {
-	PLAYER_NAME : "???",
+	PLAYER_NAME : "???", #default name is displayed in intro dialogue before the player enters the real name
+	
 	INTRO_EXAMINED_COMPUTER_ONCE : false,
-	INTRO_READY_TO_SLEEP : false
+	INTRO_READY_TO_SLEEP : false,
+	
+	COOLANT_CAVE_WATER_RAISED : true #default: water is up
 }
+
+var team = [] # player's active team
+var storage = []  # player's mon storage
+var line_limit = DEFAULT_LINE_LIMIT # the maximum number of lines the player can use to build scripts
+var storage_pages = DEFAULT_STORAGE_PAGES # the number of available storage pages 
+var compilation_progress_per_mon := {} # MonType -> int; maps MonType to unlock progress
+var _block_unlock_map := {} # tracks which blocks have been unlocked for use in the script editor
 
 func get_var(variable_name: String):
 	assert(_variables.has(variable_name))
@@ -61,23 +76,7 @@ func set_var(variable_name: String, value) -> void:
 	assert(value is bool or value is String or value is int or value is float, "Can't store values besides bools, Strings, ints, floats.")
 	_variables[variable_name] = value
 
-var team = []
-var storage = []
-
-# the maximum number of lines the player can use to build scripts
-const DEFAULT_LINE_LIMIT = 3 # number of line available for a new game
-var line_limit = DEFAULT_LINE_LIMIT
-
-# the number of available storage pages 
-const DEFAULT_STORAGE_PAGES = 3 # number of storage pages for a new game
-var storage_pages = DEFAULT_STORAGE_PAGES
-
-# MonType -> int; maps MonType to unlock progress
-var compilation_progress_per_mon := {}
-
-# tracks which blocks have been unlocked for use in the script editor
-var _block_unlock_map := {}
-
+# Set up the initial gamestate (for a new game)
 func _ready():
 	# make sure all the paths to areas go to files that exist
 	for path in _area_enum_to_path.values():
@@ -193,7 +192,6 @@ func increase_storage_size(new_size: int):
 	while storage.size() < storage_pages * MONS_PER_STORAGE_PAGE:
 		storage.append(null)
 	assert(storage.size() == storage_pages * MONS_PER_STORAGE_PAGE)
-
 
 func is_block_unlocked(block: ScriptData.Block) -> bool:
 	if not _block_unlock_map.has(block):
