@@ -34,7 +34,7 @@ collision_layer = 4
 collision_mask = 0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Water/WaterCollision"]
-polygon = PackedVector2Array(48, 476, 48, 480, 84, 480, 84, 476)
+polygon = PackedVector2Array(33, 464, 33, 496, 99, 496, 97, 464)
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Water/WaterCollision"]
 polygon = PackedVector2Array(544, 474, 544, 469, 534, 469, 535, 517, 544, 517, 544, 511, 540, 511, 540, 476, 542, 476, 542, 474)
@@ -94,6 +94,7 @@ position = Vector2(19, -3)
 shape = SubResource("RectangleShape2D_80ub1")
 
 [node name="Collision" type="StaticBody2D" parent="."]
+visible = false
 modulate = Color(0, 1, 0, 1)
 position = Vector2(-96, 150)
 collision_layer = 4
@@ -162,6 +163,7 @@ polygon = PackedVector2Array(596, 358, 638, 325, 595, 325)
 polygon = PackedVector2Array(598, 161, 600, 160, 638, 122, 638, -42, 592, -42, 592, 161)
 
 [node name="CollisionWhileLower" type="StaticBody2D" parent="."]
+visible = false
 modulate = Color(1, 0, 0, 1)
 position = Vector2(-90, 229)
 collision_layer = 32
@@ -190,14 +192,13 @@ script = ExtResource("7_kowvn")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TransitionToLower"]
 position = Vector2(-3.8147e-06, -525.858)
 scale = Vector2(1, 2.02285)
-polygon = PackedVector2Array(50, 511, 82, 511, 82, 514, 50, 514)
+polygon = PackedVector2Array(33, 505.158, 99, 505.158, 99, 518.011, 33, 518.505)
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="TransitionToLower"]
 position = Vector2(5, -3)
-polygon = PackedVector2Array(502, 507, 505, 505, 505, 537, 502, 539)
+polygon = PackedVector2Array(482, 489, 512, 488, 510, 552, 476, 553)
 
 [node name="TransitionToUpper" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_kowvn")
@@ -209,7 +210,7 @@ scale = Vector2(1, 2.15768)
 polygon = PackedVector2Array(50, 471, 82, 471, 82, 474, 50, 474)
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="TransitionToUpper"]
-polygon = PackedVector2Array(535, 482, 537, 481, 537, 512, 535, 513)
+polygon = PackedVector2Array(530, 467, 558, 468, 557, 537, 528, 539)
 
 [connection signal="body_entered" from="TransitionToLower" to="TransitionToLower" method="_on_body_entered"]
 [connection signal="body_entered" from="TransitionToUpper" to="TransitionToUpper" method="_on_body_entered"]
