@@ -41,7 +41,6 @@ centered = false
 metadata/_edit_group_ = true
 
 [node name="Water" type="Sprite2D" parent="."]
-visible = false
 modulate = Color(1, 1, 1, 0.74902)
 texture = ExtResource("3_h2cok")
 centered = false
@@ -128,7 +127,6 @@ y_sort_enabled = true
 position = Vector2(1759, 343)
 
 [node name="ForegroundElements" type="Node2D" parent="."]
-visible = false
 
 [node name="ForegroundElement" parent="ForegroundElements" instance=ExtResource("5_wieau")]
 position = Vector2(1407, 181)
@@ -329,6 +327,7 @@ collision_layer = 4
 collision_mask = 0
 
 [node name="Collision" type="StaticBody2D" parent="."]
+visible = false
 modulate = Color(0, 1, 0, 1)
 position = Vector2(-96, 150)
 collision_layer = 4
@@ -472,6 +471,7 @@ polygon = PackedVector2Array(1604, 683, 1605, 683, 1605, 640, 1604, 640)
 polygon = PackedVector2Array(1711, 353, 1711, 351, 1753, 319, 1753, 322)
 
 [node name="CollisionWhileUpper" type="StaticBody2D" parent="."]
+visible = false
 modulate = Color(0, 0, 1, 1)
 position = Vector2(-96, 150)
 collision_layer = 16
@@ -575,6 +575,105 @@ modulate = Color(1, 0, 0, 1)
 position = Vector2(-90, 229)
 collision_layer = 32
 collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(500, 212, 491, 212, 490, 359, 500, 354)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(580, 186, 587, 186, 590, 259, 580, 241)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(595, 424, 595, 439, 602, 439, 602, 268, 595, 268)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(248, 101, 311, 101, 353, 122, 418, 187, 487, 187, 487, 193, 248, 194)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(388, 45, 388, 42, 395, 36, 395, 59)
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(589, 115, 589, 25, 534, -3, 521, -3, 521, 4, 579, 115)
+
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(489, -3, 489, 4, 451, 4, 451, -3)
+
+[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(583, 142, 628, 142, 664, 160, 695, 191, 705, 211, 705, 212, 696, 214, 646, 162, 590, 154)
+
+[node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(748, 286, 748, 404, 740, 404, 739, 286)
+
+[node name="CollisionPolygon2D10" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(832, 583, 896, 551, 1014, 551, 1031, 542, 1110, 542, 1128, 552, 1150, 552, 1150, 563, 839, 587)
+
+[node name="CollisionPolygon2D11" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(1424, 591, 1350, 591, 1286, 559, 1280, 562, 1348, 600, 1429, 600)
+
+[node name="CollisionPolygon2D12" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(1507, 599, 1515, 604, 1566, 604, 1566, 608, 1506, 608)
+
+[node name="CollisionPolygon2D13" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(1598, 604, 1598, 610, 1653, 610, 1757, 661, 1765, 661, 1653, 604)
+
+[node name="CollisionPolygon2D14" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(901, 387, 901, 329, 911, 324, 954, 324, 966, 330, 966, 423, 919, 423)
+
+[node name="CollisionPolygon2D15" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(1036, 412, 1036, 348, 1045, 339, 1154, 339, 1162, 347, 1162, 412, 1151, 434, 1047, 434)
+
+[node name="CollisionPolygon2D16" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(1362, 533, 1394, 533, 1425, 508, 1442, 474, 1467, 462, 1467, 436, 1483, 406, 1483, 345, 1382, 345, 1367, 377, 1367, 412, 1346, 453, 1346, 484, 1355, 501, 1362, 501)
+
+[node name="CollisionPolygon2D17" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(439, 147, 471, 147, 471, 115, 439, 115)
+
+[node name="CollisionPolygon2D18" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(917, 242, 949, 242, 949, 210, 917, 210)
+
+[node name="CollisionPolygon2D19" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(938, 55, 880, 113, 880, 172, 880, 186, 890, 187, 956, 110, 959, 12)
+
+[node name="CollisionPolygon2D20" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(1235, 262, 1237, 262, 1268, 230, 1302, 230, 1333, 261, 1333, 295, 1302, 326, 1268, 326, 1237, 294, 1235, 294)
+
+[node name="CollisionPolygon2D21" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(1420, 285, 1452, 285, 1452, 317, 1420, 317)
+
+[node name="CollisionPolygon2D22" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(1199, 89, 1186, 89, 1186, 203, 1199, 197)
+
+[node name="CollisionPolygon2D23" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(1329, 188, 1329, 84, 1337, 68, 1346, 59, 1352, 56, 1360, 56, 1442, 56, 1478, 74, 1501, 97, 1513, 122, 1513, 123, 1515, 207, 1507, 221, 1361, 204)
+
+[node name="CollisionPolygon2D24" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(1360, -2, 1392, -2, 1392, -34, 1360, -34)
+
+[node name="CollisionPolygon2D25" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(1558, 476, 1558, 465, 1577, 428, 1700, 428, 1735, 446, 1768, 446, 1814, 446, 1833, 450, 1851, 459, 1870, 478, 1870, 550, 1862, 558, 1860, 558, 1820, 511)
+
+[node name="CollisionPolygon2D26" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(1985, 601, 2005, 561, 2005, 493, 2026, 493, 2026, 586, 1985, 608)
+
+[node name="CollisionPolygon2D27" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(1973, 380, 1977, 387, 1978, 356, 1973, 359)
+
+[node name="CollisionPolygon2D28" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(1973, 325, 1973, 267, 1979, 267, 1979, 323)
+
+[node name="CollisionPolygon2D29" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(1939, 201, 1944, 211, 1944, 47, 1939, 49)
+
+[node name="CollisionPolygon2D30" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(1939, 11, 1939, -39, 1945, -39, 1945, 15)
+
+[node name="CollisionPolygon2D31" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(1802, 43, 1782, 53, 1765, 86, 1765, 198, 1747, 232, 1747, 243, 1821, 296, 1821, 252, 1804, 220, 1804, 150)
+
+[node name="CollisionPolygon2D32" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(1889, 113, 1885, 117, 1885, 102, 1889, 102)
+
+[node name="CollisionPolygon2D33" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(1889, 72, 1939, 72, 1939, 86, 1889, 86)
 
 [node name="TransitionToLower" type="Area2D" parent="."]
 visible = false

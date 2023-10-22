@@ -162,7 +162,6 @@ polygon = PackedVector2Array(596, 358, 638, 325, 595, 325)
 polygon = PackedVector2Array(598, 161, 600, 160, 638, 122, 638, -42, 592, -42, 592, 161)
 
 [node name="CollisionWhileLower" type="StaticBody2D" parent="."]
-visible = false
 modulate = Color(1, 0, 0, 1)
 position = Vector2(-90, 229)
 collision_layer = 32
@@ -179,6 +178,9 @@ polygon = PackedVector2Array(632, 43, 632, -121, 642, -121, 642, 43, 593, 98, 59
 
 [node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="CollisionWhileLower"]
 polygon = PackedVector2Array(634, 332, 634, 277, 634, 277, 642, 277, 642, 332)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="CollisionWhileLower"]
+polygon = PackedVector2Array(365, 292, 397, 292, 397, 260, 365, 260)
 
 [node name="TransitionToLower" type="Area2D" parent="."]
 collision_layer = 0
