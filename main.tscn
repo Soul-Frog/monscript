@@ -33,13 +33,9 @@ script = ExtResource("1_sv5wa")
 [node name="MainMenu" parent="Scene/Scenes" instance=ExtResource("8_02s72")]
 
 [node name="StandardFade" parent="Scene" instance=ExtResource("8_h4geq")]
-active = false
-fade_type = 1
 fade_speed = 20.0
 
 [node name="MainMenuFade" parent="Scene" instance=ExtResource("8_h4geq")]
-active = false
-fade_type = 1
 fade_speed = 1.5
 fade_out_hangtime = 2.0
 

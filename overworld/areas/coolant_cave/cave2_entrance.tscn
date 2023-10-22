@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://conqj70b6ouir"]
+[gd_scene load_steps=12 format=3 uid="uid://conqj70b6ouir"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_1crr8"]
 [ext_resource type="Texture2D" uid="uid://drfvc5n36jass" path="res://assets/maps/coolant_cave/cave2_entrance/cave2.png" id="2_l834j"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://overworld/warp.gd" id="4_7d5uj"]
 [ext_resource type="PackedScene" uid="uid://cepi8saddwmb6" path="res://overworld/foreground_element.tscn" id="4_i74oh"]
 [ext_resource type="Script" path="res://overworld/areas/coolant_cave/water.gd" id="4_x74uy"]
+[ext_resource type="PackedScene" uid="uid://0kv02scwi7py" path="res://decorators/color_decorator.tscn" id="5_rxbvk"]
 [ext_resource type="Script" path="res://overworld/elevation_transition_zone.gd" id="7_kowvn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mkqcf"]
@@ -37,6 +38,15 @@ polygon = PackedVector2Array(48, 476, 48, 480, 84, 480, 84, 476)
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Water/WaterCollision"]
 polygon = PackedVector2Array(544, 474, 544, 469, 534, 469, 535, 517, 544, 517, 544, 511, 540, 511, 540, 476, 542, 476, 542, 474)
+
+[node name="ColorDecorator" parent="Water" instance=ExtResource("5_rxbvk")]
+autostart = true
+min_red = 215.0
+red_speed = 300
+min_green = 195.0
+green_speed = 65
+min_blue = 175.0
+blue_speed = 25
 
 [node name="Player" parent="." instance=ExtResource("3_3xe7d")]
 position = Vector2(292, 748)
@@ -84,14 +94,13 @@ position = Vector2(19, -3)
 shape = SubResource("RectangleShape2D_80ub1")
 
 [node name="Collision" type="StaticBody2D" parent="."]
-visible = false
 modulate = Color(0, 1, 0, 1)
 position = Vector2(-96, 150)
 collision_layer = 4
 collision_mask = 0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collision"]
-polygon = PackedVector2Array(150, -21, 150, -56, 178, -56, 178, -21, 199, -21, 199, -16, 225, -42, 662, -42, 740, 36, 740, 411, 430, 411, 430, 422, 747, 422, 746, 10, 662, -63, 178, -62, 120, -62, 120, -54, 120, -22, 121, 398, 121, 416, 142, 416, 336.115, 415.039, 336, 620, 336, 626, 344, 626, 431, 626, 438, 626, 439, 422, 430, 422, 430, 620, 344, 620, 344, 415, 344, 411, 142, 411, 129, 398, 129, -21)
+polygon = PackedVector2Array(150, -21, 150, -56, 178, -56, 178, -21, 199, -21, 199, -16, 225, -42, 662, -42, 740, 36, 740, 411, 430, 411, 430, 422, 747, 422, 746, 10, 662, -63, 178, -62, 120, -62, 120, -54, 120, -22, 121, 398, 121, 416, 142, 416, 336.115, 415.039, 336, 620, 336, 626, 343, 633, 431, 633, 438, 626, 439, 422, 430, 422, 431, 626, 343, 626, 344, 415, 344, 411, 142, 411, 129, 398, 129, -21)
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Collision"]
 polygon = PackedVector2Array(146, 321, 146, 353, 129, 353, 129, 321)

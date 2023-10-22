@@ -16,7 +16,7 @@ func _on_fade_decorator_in_fade_done():
 	_time_before_fadeout = FULL_VISIBILITY_TIME
 
 func _process(delta):
-	if FADE.fade_type == FadeDecorator.FadeType.FADE_IN and not FADE.active:
+	if modulate.a >= 1:
 		_time_before_fadeout = max(0, _time_before_fadeout - delta)
 		if _time_before_fadeout == 0:
 			FADE.fade_out()

@@ -96,7 +96,8 @@ text = "v0.0.0"
 horizontal_alignment = 2
 
 [node name="Fade" parent="." instance=ExtResource("2_6xhxi")]
-fade_type = 2
+autostart = true
+autostart_effect_type = 2
 fade_speed = 1.6
 
 [connection signal="clicked" from="Options/Continue" to="." method="_on_continue_clicked"]

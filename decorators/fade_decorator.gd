@@ -9,11 +9,10 @@ enum FadeType {
 	OSCILLATE, FADE_OUT, FADE_IN
 }
 
-# whether this effect is currently changing alpha; set to false after completing a fade
-@export var active := true 
-
-# behavior of the fade
-@export var fade_type := FadeType.OSCILLATE
+# should the effect automatically play when the parent node enters the scene?
+@export var autostart := false
+# what effect should play if autostarting
+@export var autostart_effect_type := FadeType.OSCILLATE
 
 # minimum transparency
 @export var min_alpha := 0.0
@@ -21,7 +20,7 @@ enum FadeType {
 # maximum opacity
 @export var max_alpha := 1.0
 
-# how fast the fade effect is
+# how fast the fade effect isq
 @export var fade_speed := 0.5
 
 # how long (if any) a fade out waits before signaling, or, if oscillating, fading in again
@@ -34,43 +33,47 @@ enum _Direction {
 	IN, OUT
 }
 
+# if the fade is active
+var _active := false 
+# the type of fade being performed
+var _fade_type := FadeType.OSCILLATE
+# the current fade direction
 var _fade_direction := _Direction.OUT
 
 func _ready():
-	if fade_type == FadeType.FADE_IN:
-		get_parent().modulate.a = min_alpha
-		_fade_direction = _Direction.IN
-	elif fade_type == FadeType.FADE_OUT:
-		get_parent().modulate.a = max_alpha
-		_fade_direction = _Direction.OUT
+	if autostart:
+		_fade_type = autostart_effect_type
+		_active = true
+
+func is_active():
+	return _active
 
 func fade_out():
-	fade_type = FadeType.FADE_OUT
-	active = true
+	_fade_type = FadeType.FADE_OUT
+	_fade_direction = _Direction.OUT
+	_active = true
 
 func fade_in():
-	fade_type = FadeType.FADE_IN
-	active = true
+	_fade_type = FadeType.FADE_IN
+	_fade_direction = _Direction.IN
+	_active = true
 
 func oscillate():
-	fade_type = FadeType.OSCILLATE
-	active = true
+	_fade_type = FadeType.OSCILLATE
+	_active = true
 
-# immediately finish an active fade in/out
-func immediately_finish():
-	assert(active)
-	assert(fade_type == FadeType.FADE_IN or fade_type == FadeType.FADE_OUT)
-	get_parent().modulate.a = (min_alpha if fade_type == FadeType.FADE_OUT else max_alpha)
+func stop():
+	_active = false
 
 func _process(delta):
-	if active:
+	if _active:
 		var fade_delta = fade_speed * delta * (-1 if _fade_direction == _Direction.OUT else 1)
 		get_parent().modulate.a += fade_delta
 		
 		if _fade_direction == _Direction.OUT and get_parent().modulate.a <= min_alpha:
 			get_parent().modulate.a = min_alpha
-			if fade_type == FadeType.FADE_OUT:
-				active = false
+			if _fade_type == FadeType.FADE_OUT:
+				_active = false
 				await Global.delay(fade_out_hangtime)
 				emit_signal("fade_out_done")
 				emit_signal("fade_done")
@@ -78,8 +81,8 @@ func _process(delta):
 				_fade_direction = _Direction.IN
 		elif _fade_direction == _Direction.IN and get_parent().modulate.a >= max_alpha:
 			get_parent().modulate.a = max_alpha
-			if fade_type == FadeType.FADE_IN:
-				active = false
+			if _fade_type == FadeType.FADE_IN:
+				_active = false
 				await Global.delay(fade_in_hangtime)
 				emit_signal("fade_in_done")
 				emit_signal("fade_done")
