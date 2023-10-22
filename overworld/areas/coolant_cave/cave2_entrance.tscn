@@ -181,7 +181,6 @@ polygon = PackedVector2Array(632, 43, 632, -121, 642, -121, 642, 43, 593, 98, 59
 polygon = PackedVector2Array(634, 332, 634, 277, 634, 277, 642, 277, 642, 332)
 
 [node name="TransitionToLower" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_kowvn")

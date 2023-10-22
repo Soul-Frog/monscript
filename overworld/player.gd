@@ -1,7 +1,7 @@
 class_name Player
 extends CharacterBody2D
 
-const SPEED = 100
+const SPEED = 150
 const INVINCIBILITY_AFTER_ESCAPE_SECS = 2
 const INVINCIBILITY_AFTER_WIN_SECS = 1
 const DASH_DURATION = 0.05

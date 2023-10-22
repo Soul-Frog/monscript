@@ -1,6 +1,8 @@
 extends Interactable
 
 func _ready():
+	super()
+	
 	# connect ourself to the signal so we can update when water changes
 	Events.coolant_cave_water_level_changed.connect(_on_water_level_changed)
 	
