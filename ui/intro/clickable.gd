@@ -1,4 +1,3 @@
-class_name VNClickable
 extends Area2D
 
 signal clicked

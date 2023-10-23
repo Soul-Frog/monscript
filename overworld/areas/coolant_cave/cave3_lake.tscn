@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bgy6hy7u3yt0r"]
+[gd_scene load_steps=28 format=3 uid="uid://bgy6hy7u3yt0r"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_yla7b"]
 [ext_resource type="Texture2D" uid="uid://yf35enbnapma" path="res://assets/maps/coolant_cave/cave3_lake/cave3.png" id="2_bhnda"]
@@ -11,7 +11,10 @@
 [ext_resource type="Texture2D" uid="uid://ba6kh8lccf56c" path="res://assets/maps/coolant_cave/cave3_lake/cave3_fg1.png" id="6_6r4ub"]
 [ext_resource type="PackedScene" uid="uid://0kv02scwi7py" path="res://decorators/color_decorator.tscn" id="6_tmfd1"]
 [ext_resource type="Texture2D" uid="uid://fixed1mdbb0f" path="res://assets/maps/coolant_cave/cave3_lake/cave3_fg2.png" id="7_6vmoe"]
+[ext_resource type="Texture2D" uid="uid://b0tso04honi8p" path="res://assets/maps/coolant_cave/cave3_lake/cave3_bridgesup.png" id="7_s336r"]
+[ext_resource type="Script" path="res://overworld/areas/coolant_cave/bridges.gd" id="7_xka0u"]
 [ext_resource type="Texture2D" uid="uid://crvf4bcccoiv1" path="res://assets/maps/coolant_cave/cave3_lake/cave3_fg3.png" id="8_5btrp"]
+[ext_resource type="Texture2D" uid="uid://bpmm5qmhkep7s" path="res://assets/maps/coolant_cave/cave3_lake/cave3_bridgesdown.png" id="8_uoy5x"]
 [ext_resource type="Texture2D" uid="uid://yy36cx5qyjr5" path="res://assets/maps/coolant_cave/cave3_lake/cave3_fg4.png" id="9_2wk5e"]
 [ext_resource type="Texture2D" uid="uid://d16ouoadupgj2" path="res://assets/maps/coolant_cave/cave3_lake/cave3_fg5.png" id="10_r020h"]
 [ext_resource type="Texture2D" uid="uid://donmyycucn3c5" path="res://assets/maps/coolant_cave/cave3_lake/cave3_fg6.png" id="11_uwv6a"]
@@ -103,9 +106,113 @@ green_speed = 65
 min_blue = 175.0
 blue_speed = 25
 
+[node name="Bridges" type="Node2D" parent="."]
+script = ExtResource("7_xka0u")
+
+[node name="DownSprite" type="Sprite2D" parent="Bridges"]
+modulate = Color(1, 1, 1, 0)
+texture = ExtResource("8_uoy5x")
+centered = false
+
+[node name="FadeDecorator" parent="Bridges/DownSprite" instance=ExtResource("5_npjti")]
+fade_speed = 5.0
+
+[node name="UpSprite" type="Sprite2D" parent="Bridges"]
+texture = ExtResource("7_s336r")
+centered = false
+
+[node name="FadeDecorator" parent="Bridges/UpSprite" instance=ExtResource("5_npjti")]
+fade_speed = 5.0
+
+[node name="CollisionWhileBridgesDown" type="StaticBody2D" parent="Bridges"]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+polygon = PackedVector2Array(349, 416, 349, 410, 381, 410, 381, 416)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+polygon = PackedVector2Array(349, 344, 349, 349, 381, 349, 381, 344)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+polygon = PackedVector2Array(410, 525, 415, 525, 415, 557, 410, 557)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+polygon = PackedVector2Array(505, 525, 500, 525, 500, 557, 505, 557)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+polygon = PackedVector2Array(827, 439, 827, 446, 859, 446, 859, 439)
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+polygon = PackedVector2Array(827, 553, 859, 553, 859, 547, 827, 547)
+
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+polygon = PackedVector2Array(876, 606, 882, 606, 882, 638, 876, 638)
+
+[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+polygon = PackedVector2Array(946, 606, 941, 606, 941, 638, 946, 638)
+
+[node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+polygon = PackedVector2Array(966, 663, 966, 669, 998, 669, 998, 663)
+
+[node name="CollisionPolygon2D10" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+polygon = PackedVector2Array(966, 765, 998, 765, 998, 771, 966, 771)
+
+[node name="CollisionPolygon2D11" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+polygon = PackedVector2Array(1272, 814, 1304, 814, 1304, 820, 1272, 820)
+
+[node name="CollisionPolygon2D12" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+polygon = PackedVector2Array(1272, 730, 1304, 730, 1304, 736, 1272, 736)
+
+[node name="CollisionPolygon2D13" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+polygon = PackedVector2Array(1277, 606, 1272, 606, 1272, 638, 1277, 638)
+
+[node name="CollisionPolygon2D14" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+polygon = PackedVector2Array(1072, 606, 1077, 606, 1077, 638, 1072, 638)
+
+[node name="CollisionPolygon2D15" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+polygon = PackedVector2Array(1109, 370, 1115, 370, 1115, 402, 1109, 402)
+
+[node name="CollisionPolygon2D16" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+polygon = PackedVector2Array(1239, 370, 1234, 370, 1234, 402, 1239, 402)
+
+[node name="CollisionPolygon2D17" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+polygon = PackedVector2Array(1330, 574, 1362, 574, 1362, 568, 1330, 568)
+
+[node name="CollisionPolygon2D18" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+polygon = PackedVector2Array(1330, 514, 1362, 514, 1362, 520, 1330, 520)
+
+[node name="CollisionPolygon2D19" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+polygon = PackedVector2Array(1270, 195, 1302, 195, 1302, 201, 1270, 201)
+
+[node name="CollisionPolygon2D20" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+polygon = PackedVector2Array(1270, 285, 1270, 279, 1302, 279, 1302, 285)
+
+[node name="CollisionPolygon2D21" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+polygon = PackedVector2Array(1799, 301, 1804, 301, 1805, 333, 1799, 333)
+
+[node name="CollisionPolygon2D22" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+polygon = PackedVector2Array(1849, 301, 1844, 301, 1844, 333, 1849, 333)
+
+[node name="CollisionPolygon2D23" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+polygon = PackedVector2Array(1678, 537, 1678, 543, 1710, 543, 1710, 537)
+
+[node name="CollisionPolygon2D24" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+polygon = PackedVector2Array(1678, 675, 1678, 669, 1710, 669, 1710, 675)
+
+[node name="CollisionPolygon2D25" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+polygon = PackedVector2Array(1780, 737, 1785, 737, 1785, 769, 1780, 769)
+
+[node name="CollisionPolygon2D26" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+polygon = PackedVector2Array(1910, 737, 1915, 737, 1915, 769, 1910, 769)
+
 [node name="Player" parent="." instance=ExtResource("3_tgpbx")]
 y_sort_enabled = true
 position = Vector2(1010, 162)
+
+[node name="Switch6" parent="." instance=ExtResource("17_f7r4y")]
+y_sort_enabled = true
+position = Vector2(968, 211)
 
 [node name="Switch" parent="." instance=ExtResource("17_f7r4y")]
 y_sort_enabled = true
@@ -128,7 +235,6 @@ y_sort_enabled = true
 position = Vector2(1759, 343)
 
 [node name="ForegroundElements" type="Node2D" parent="."]
-visible = false
 
 [node name="ForegroundElement" parent="ForegroundElements" instance=ExtResource("5_wieau")]
 position = Vector2(1407, 181)
@@ -329,6 +435,7 @@ collision_layer = 4
 collision_mask = 0
 
 [node name="Collision" type="StaticBody2D" parent="."]
+visible = false
 modulate = Color(0, 1, 0, 1)
 position = Vector2(-96, 150)
 collision_layer = 4
@@ -677,6 +784,7 @@ polygon = PackedVector2Array(1889, 113, 1885, 117, 1885, 102, 1889, 102)
 polygon = PackedVector2Array(1889, 72, 1939, 72, 1939, 86, 1889, 86)
 
 [node name="TransitionToLower" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("21_e6l8w")
@@ -721,6 +829,7 @@ position = Vector2(1, 0)
 polygon = PackedVector2Array(1796, 173, 1812, 186, 1816, 217, 1798, 229)
 
 [node name="TransitionToUpper" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("21_e6l8w")

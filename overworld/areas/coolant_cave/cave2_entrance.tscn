@@ -30,6 +30,7 @@ centered = false
 script = ExtResource("4_x74uy")
 
 [node name="WaterCollision" type="StaticBody2D" parent="Water"]
+visible = false
 collision_layer = 4
 collision_mask = 0
 
@@ -185,6 +186,7 @@ polygon = PackedVector2Array(634, 332, 634, 277, 634, 277, 642, 277, 642, 332)
 polygon = PackedVector2Array(365, 292, 397, 292, 397, 260, 365, 260)
 
 [node name="TransitionToLower" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_kowvn")
@@ -199,6 +201,7 @@ position = Vector2(5, -3)
 polygon = PackedVector2Array(482, 489, 512, 488, 510, 552, 476, 553)
 
 [node name="TransitionToUpper" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_kowvn")
