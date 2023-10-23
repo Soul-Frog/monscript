@@ -214,6 +214,10 @@ func _switch_active_monscript(new_index: int) -> void:
 	_import(mon.get_active_monscript())
 
 func _on_clear_button_pressed() -> void:
+	# ignore this click if we're holding a block
+	if HELD.get_child_count() != 0:
+		return
+	
 	if SCRIPT_LINES.get_child_count() != 0:
 		assert(not CLEAR_POPUP.visible)
 		CLEAR_POPUP.show()
@@ -227,6 +231,10 @@ func _on_clear() -> void:
 	_update_file_tabs()
 
 func _on_x_button_pressed() -> void:
+	# ignore this click if we're holding a block
+	if HELD.get_child_count() != 0:
+		return
+	
 	# if script is invalid, ask before exiting
 	if not _generate_script().is_valid():
 		EXIT_POPUP.show()
