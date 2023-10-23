@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cd6pj5homenki"]
+[gd_scene load_steps=3 format=3 uid="uid://cd6pj5homenki"]
 
 [ext_resource type="Script" path="res://overworld/interactables/interactable.gd" id="1_uakwy"]
+[ext_resource type="PackedScene" uid="uid://ct27r3y3ao3um" path="res://decorators/fade_decorator.tscn" id="2_0rgp8"]
 
 [node name="Interactable" type="Node2D"]
 position = Vector2(8, 8)
@@ -29,6 +30,9 @@ offset_right = 61.0
 offset_bottom = -12.0
 bbcode_enabled = true
 text = "[center]Label[/center]"
+
+[node name="FadeDecorator" parent="Label" instance=ExtResource("2_0rgp8")]
+fade_speed = 5.0
 
 [connection signal="body_entered" from="InteractionArea" to="." method="_on_body_entered"]
 [connection signal="body_exited" from="InteractionArea" to="." method="_on_body_exit"]

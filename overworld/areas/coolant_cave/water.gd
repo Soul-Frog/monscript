@@ -14,11 +14,6 @@ func _ready():
 	if not GameData.get_var(GameData.COOLANT_CAVE_WATER_RAISED):
 		modulate.a = 0
 
-func _process(delta):
-	
-	# update color a bit
-	pass
-
 # update water collision (enable if up, disable if down)
 func _update_collisions():
 	if find_child("WaterCollision"):

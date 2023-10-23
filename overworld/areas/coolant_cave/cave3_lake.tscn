@@ -125,6 +125,7 @@ centered = false
 fade_speed = 5.0
 
 [node name="CollisionWhileBridgesDown" type="StaticBody2D" parent="Bridges"]
+visible = false
 collision_layer = 16
 collision_mask = 0
 
@@ -208,11 +209,7 @@ polygon = PackedVector2Array(1910, 737, 1915, 737, 1915, 769, 1910, 769)
 
 [node name="Player" parent="." instance=ExtResource("3_tgpbx")]
 y_sort_enabled = true
-position = Vector2(1010, 162)
-
-[node name="Switch6" parent="." instance=ExtResource("17_f7r4y")]
-y_sort_enabled = true
-position = Vector2(968, 211)
+position = Vector2(667, 174)
 
 [node name="Switch" parent="." instance=ExtResource("17_f7r4y")]
 y_sort_enabled = true

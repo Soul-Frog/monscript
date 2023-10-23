@@ -12,9 +12,10 @@ extends Node2D
 @onready var _SPRITE = $Sprite
 @onready var _INTERACTION_AREA = $InteractionArea
 @onready var _LABEL = $Label
+@onready var _LABEL_FADE = $Label/FadeDecorator
 
 func _ready():
-	_LABEL.visible = false
+	_LABEL.modulate.a = 0
 
 func _input(event):
 	if event.is_action_released("interact") and _INTERACTION_AREA.get_overlapping_bodies().size() != 0:
@@ -24,7 +25,7 @@ func _on_interact():
 	pass #no-op
 
 func _on_body_entered(body):
-	_LABEL.visible = true
+	_LABEL_FADE.fade_in()
 
 func _on_body_exit(body):
-	_LABEL.visible = false
+	_LABEL_FADE.fade_out()

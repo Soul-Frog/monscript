@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://conqj70b6ouir"]
+[gd_scene load_steps=16 format=3 uid="uid://conqj70b6ouir"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_1crr8"]
 [ext_resource type="Texture2D" uid="uid://drfvc5n36jass" path="res://assets/maps/coolant_cave/cave2_entrance/cave2.png" id="2_l834j"]
@@ -8,7 +8,11 @@
 [ext_resource type="PackedScene" uid="uid://cepi8saddwmb6" path="res://overworld/foreground_element.tscn" id="4_i74oh"]
 [ext_resource type="Script" path="res://overworld/areas/coolant_cave/water.gd" id="4_x74uy"]
 [ext_resource type="PackedScene" uid="uid://0kv02scwi7py" path="res://decorators/color_decorator.tscn" id="5_rxbvk"]
+[ext_resource type="Script" path="res://overworld/areas/coolant_cave/bridges.gd" id="6_kqlxl"]
+[ext_resource type="Texture2D" uid="uid://bawltqc7xfvx2" path="res://assets/maps/coolant_cave/cave2_entrance/cave2_bridgesdown.png" id="7_fbe6u"]
 [ext_resource type="Script" path="res://overworld/elevation_transition_zone.gd" id="7_kowvn"]
+[ext_resource type="PackedScene" uid="uid://ct27r3y3ao3um" path="res://decorators/fade_decorator.tscn" id="8_ka6sp"]
+[ext_resource type="Texture2D" uid="uid://da4yqugocjbs4" path="res://assets/maps/coolant_cave/cave2_entrance/cave2_bridgesup.png" id="9_7t2wm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mkqcf"]
 size = Vector2(88, 11)
@@ -35,10 +39,11 @@ collision_layer = 4
 collision_mask = 0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Water/WaterCollision"]
-polygon = PackedVector2Array(33, 464, 33, 496, 99, 496, 97, 464)
+position = Vector2(15, 12)
+polygon = PackedVector2Array(31, 464, 31, 469, 75, 469, 75, 464)
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Water/WaterCollision"]
-polygon = PackedVector2Array(544, 474, 544, 469, 534, 469, 535, 517, 544, 517, 544, 511, 540, 511, 540, 476, 542, 476, 542, 474)
+polygon = PackedVector2Array(534, 470, 535, 517, 540, 517, 540, 470)
 
 [node name="ColorDecorator" parent="Water" instance=ExtResource("5_rxbvk")]
 autostart = true
@@ -49,8 +54,40 @@ green_speed = 65
 min_blue = 175.0
 blue_speed = 25
 
+[node name="FadeDecorator" parent="Water" instance=ExtResource("8_ka6sp")]
+fade_speed = 2.0
+
+[node name="Bridges" type="Node2D" parent="."]
+script = ExtResource("6_kqlxl")
+
+[node name="DownSprite" type="Sprite2D" parent="Bridges"]
+modulate = Color(1, 1, 1, 0)
+texture = ExtResource("7_fbe6u")
+centered = false
+
+[node name="FadeDecorator" parent="Bridges/DownSprite" instance=ExtResource("8_ka6sp")]
+fade_speed = 5.0
+
+[node name="UpSprite" type="Sprite2D" parent="Bridges"]
+texture = ExtResource("9_7t2wm")
+centered = false
+
+[node name="FadeDecorator" parent="Bridges/UpSprite" instance=ExtResource("8_ka6sp")]
+fade_speed = 5.0
+
+[node name="CollisionWhileBridgesDown" type="StaticBody2D" parent="Bridges"]
+visible = false
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+polygon = PackedVector2Array(133, 347, 138, 347, 138, 385, 133, 385)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+polygon = PackedVector2Array(248, 383, 243, 383, 243, 348, 248, 348)
+
 [node name="Player" parent="." instance=ExtResource("3_3xe7d")]
-position = Vector2(292, 748)
+position = Vector2(48, 429)
 
 [node name="ForegroundElem" parent="." instance=ExtResource("4_i74oh")]
 z_index = 0
@@ -143,7 +180,7 @@ collision_layer = 16
 collision_mask = 0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CollisionWhileUpper"]
-polygon = PackedVector2Array(230, 230, 345, 230, 345, 233, 344, 233, 328, 249, 328, 333, 230, 333)
+polygon = PackedVector2Array(229, 230, 345, 230, 345, 233, 344, 233, 328, 249, 328, 333, 229, 333)
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="CollisionWhileUpper"]
 polygon = PackedVector2Array(371, 371, 371, 411, 336, 411, 336, 370)
@@ -152,6 +189,7 @@ polygon = PackedVector2Array(371, 371, 371, 411, 336, 411, 336, 370)
 polygon = PackedVector2Array(403, 371, 403, 411, 448, 411, 448, 371)
 
 [node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="CollisionWhileUpper"]
+position = Vector2(-1, 0)
 polygon = PackedVector2Array(230, 200, 345, 200, 345, 177, 360, 162, 436, 162, 436, 122, 232, 122, 232, 2, 199, 2, 199, 124, 230, 155)
 
 [node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="CollisionWhileUpper"]
@@ -210,7 +248,7 @@ transition_type = 1
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TransitionToUpper"]
 position = Vector2(-3.8147e-06, -544.681)
 scale = Vector2(1, 2.15768)
-polygon = PackedVector2Array(50, 471, 82, 471, 82, 474, 50, 474)
+polygon = PackedVector2Array(39, 466.094, 89, 465.63, 81, 474.899, 49, 474.899)
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="TransitionToUpper"]
 polygon = PackedVector2Array(530, 467, 558, 468, 557, 537, 528, 539)
