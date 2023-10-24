@@ -1,9 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://b7tq8iefta43j"]
+[gd_scene load_steps=13 format=3 uid="uid://b7tq8iefta43j"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_6nc0c"]
 [ext_resource type="Texture2D" uid="uid://cds4e7g3n1rdo" path="res://assets/maps/coolant_cave/cave7_whirlcavern/cave7.png" id="2_jra30"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player.tscn" id="3_24mgp"]
 [ext_resource type="Script" path="res://overworld/warp.gd" id="4_ckphf"]
+[ext_resource type="Texture2D" uid="uid://b7kocjfpipg8q" path="res://assets/maps/coolant_cave/cave7_whirlcavern/cave7_water.png" id="4_kx0l5"]
+[ext_resource type="PackedScene" uid="uid://cepi8saddwmb6" path="res://overworld/foreground_element.tscn" id="4_no6le"]
+[ext_resource type="Texture2D" uid="uid://cyrll8kcgrydi" path="res://assets/maps/coolant_cave/cave7_whirlcavern/cave7_fg1.png" id="5_b1lb7"]
+[ext_resource type="Texture2D" uid="uid://lwyfhyhqcocq" path="res://assets/maps/coolant_cave/cave7_whirlcavern/cave7_fg2.png" id="6_bpich"]
+[ext_resource type="Texture2D" uid="uid://vrs2yt3mmjiv" path="res://assets/maps/coolant_cave/cave7_whirlcavern/cave7_fg3.png" id="7_gpok0"]
+[ext_resource type="Texture2D" uid="uid://du4shfa6x16iq" path="res://assets/maps/coolant_cave/cave7_whirlcavern/cave7_fg4.png" id="8_spo1b"]
+[ext_resource type="Texture2D" uid="uid://c2b0hj2h2p83" path="res://assets/maps/coolant_cave/cave7_whirlcavern/cave7_fg5.png" id="9_sxt7u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_80ub1"]
 size = Vector2(35, 16)
@@ -16,16 +23,65 @@ texture = ExtResource("2_jra30")
 centered = false
 
 [node name="Player" parent="." instance=ExtResource("3_24mgp")]
-position = Vector2(291, 744)
+position = Vector2(461, 105)
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
 
+[node name="ForegroundElements" type="Node2D" parent="."]
+
+[node name="ForegroundElem" parent="ForegroundElements" instance=ExtResource("4_no6le")]
+z_index = 0
+position = Vector2(446, 174)
+texture = ExtResource("5_b1lb7")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem/FadeZone" index="0"]
+polygon = PackedVector2Array(17, 0, 25, 0, 38, 17, 46, 39, 46, 94, 30, 79, 14, 79, 0, 110, 0, 55, 4, 35)
+
+[node name="ForegroundElem2" parent="ForegroundElements" instance=ExtResource("4_no6le")]
+z_index = 0
+position = Vector2(387, 300)
+texture = ExtResource("6_bpich")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem2/FadeZone" index="0"]
+polygon = PackedVector2Array(8, 0, 17, 0, 20, 5, 24, 7, 37, 36, 46, 64, 47, 140, 37, 96, 20, 60, 5, 58, 0, 69, 0, 55, 0, 13, 2, 5)
+
+[node name="ForegroundElem3" parent="ForegroundElements" instance=ExtResource("4_no6le")]
+z_index = 0
+position = Vector2(496, 295)
+texture = ExtResource("7_gpok0")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem3/FadeZone" index="0"]
+polygon = PackedVector2Array(28, 14, 35, 9, 50, 2, 59, 0, 66, 0, 81, 6, 94, 21, 94, 76, 66, 56, 59, 55, 58, 57, 50, 58, 32, 67, 20, 80, 14, 90, 0, 128, 0, 73, 5, 51, 14, 32)
+
+[node name="ForegroundElem4" parent="ForegroundElements" instance=ExtResource("4_no6le")]
+z_index = 0
+position = Vector2(514, 419)
+texture = ExtResource("8_spo1b")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem4/FadeZone" index="0"]
+polygon = PackedVector2Array(50, 2, 59, 0, 67, 2, 68, 60, 61, 58, 42, 61, 15, 61, 2, 53, -1, 10, 7, -1, 21, 5, 39, 5)
+
+[node name="ForegroundElem5" parent="ForegroundElements" instance=ExtResource("4_no6le")]
+z_index = 0
+position = Vector2(447, 531)
+texture = ExtResource("9_sxt7u")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem5/FadeZone" index="0"]
+polygon = PackedVector2Array(43, 11, 52, 21, 56, 31, 56, 86, 31, 55, 20, 57, 0, 97, 0, 54, -1, 40, 14, 9, 18, 5, 23, 0, 31, 0)
+
+[node name="Water" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.282353)
+texture = ExtResource("4_kx0l5")
+centered = false
+
 [node name="Points" type="Node2D" parent="."]
+visible = false
 
 [node name="Cave7Top" type="Node2D" parent="Points"]
 position = Vector2(461, 84)
 
 [node name="Warps" type="Node2D" parent="."]
+visible = false
 
 [node name="WarpToSeafloor" type="Area2D" parent="Warps"]
 position = Vector2(485, 787)
@@ -39,7 +95,30 @@ metadata/_edit_group_ = true
 position = Vector2(10.5, -3)
 shape = SubResource("RectangleShape2D_80ub1")
 
-[node name="World" type="StaticBody2D" parent="."]
+[node name="Collision" type="StaticBody2D" parent="."]
+visible = false
+modulate = Color(0, 1, 0, 1)
 position = Vector2(-96, 150)
 collision_layer = 4
 collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collision"]
+polygon = PackedVector2Array(562, 79, 558, 82, 549, 105, 542, 134, 542, 143, 551, 162, 555, 163, 565, 163, 578, 159, 582, 154, 587, 140, 588, 128, 586.753, 120.204, 584, 103, 580, 95, 566, 79)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Collision"]
+polygon = PackedVector2Array(491, 205, 500, 205, 503, 209, 507, 212, 511, 220, 514, 227, 517, 234, 520, 241, 521, 246, 529, 269, 530, 290, 530, 312, 524, 336, 518, 348, 505, 361, 499, 361, 495, 353, 489, 325, 488, 294, 484, 251, 483, 238, 483, 218, 486, 209)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Collision"]
+polygon = PackedVector2Array(666, 266, 674, 266, 680, 263, 684, 254, 686, 244, 686, 221, 677, 210, 669, 204, 658, 200, 651, 200, 650, 202, 642, 202, 633, 207, 623, 211, 612, 223, 601, 242, 592, 273, 592, 311, 600, 335, 607, 349, 614, 357, 627, 362, 632, 363, 647, 363, 658, 360, 668, 353, 674, 344, 678, 333, 677, 326, 672, 325, 652, 329, 629, 329, 612, 315, 610, 312, 611, 282, 614, 272, 622, 268, 647, 266, 658, 264)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Collision"]
+polygon = PackedVector2Array(567, 436, 574, 436, 585, 446, 595, 457, 597, 461, 599, 467, 599, 478, 595, 489, 590, 494, 586, 495, 580, 496, 558, 496, 547, 491, 543, 484, 543, 477, 549, 461, 553, 453, 555, 449, 557, 445, 561, 440)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="Collision"]
+polygon = PackedVector2Array(501, 544, 509, 555, 520, 589, 527, 610, 535, 624, 542, 644, 551, 659, 554, 663, 558, 668, 563, 670, 580, 674, 609, 674, 627, 670, 632, 665, 637, 657, 642, 646, 645, 633, 649, 589, 651, 571, 652, 551, 660, 540, 672, 532, 687, 523, 703, 508, 716.804, 473.275, 720, 413, 724, 353, 725, 323, 725, 234, 724, 221, 717, 190, 710, 172, 698, 151, 690, 141, 687, 139, 687, 136, 682, 131, 682, 127, 681, 127, 681, 125, 679, 124, 679, 119, 677, 118, 677, 115, 676, 115, 676, 112, 675, 112, 675, 109, 673, 109, 673, 105, 672, 103, 671, 103, 671, 101, 670, 101, 670, 97, 661, 78, 652, 58, 638, 41, 637, 39, 633, 36, 633, 34, 631, 34, 631, 31, 628, 30, 626, 25, 623, 22, 622, 18, 620, 16, 619, 13, 617, 12, 617, 6, 614, -11, 613, -30, 611, -40, 608, -44, 608, -47, 605, -51, 598, -63, 589, -73, 579, -78, 567, -83, 545, -83, 536, -80, 530, -75, 527, -70, 521, -65, 517, -59, 514, -55, 512, -49, 508, -38, 506, -26, 505, 21, 499, 25, 497, 29, 491, 32, 488, 38, 480, 50, 476, 55, 470, 67, 467, 79, 464, 88, 460, 97, 458, 104, 192, -187, 853, -200, 824, 714, 225, 725, 192, -186, 458, 104, 455, 108, 449, 125, 446, 138, 444, 143, 443, 149, 438, 163, 436, 174, 434, 182, 432, 196, 428, 206, 425, 221, 425, 233, 424, 233, 424, 277, 422, 279, 414, 278, 407, 276, 391, 276, 391, 277, 385, 277, 359, 291, 353, 298, 349, 307, 346, 311, 343, 318, 338, 331, 338, 341, 340, 354, 342, 358, 344, 365, 349, 375, 355, 381, 358, 385, 363, 390, 373, 392, 393, 392, 410, 393, 421, 394, 425, 397, 425, 413, 427, 425, 427, 444, 429, 461, 431, 478, 436, 495, 438, 502, 443, 511, 448, 515, 451, 520, 454, 523, 463, 532, 471, 534, 489, 540)
+
+[editable path="ForegroundElements/ForegroundElem"]
+[editable path="ForegroundElements/ForegroundElem2"]
+[editable path="ForegroundElements/ForegroundElem3"]
+[editable path="ForegroundElements/ForegroundElem4"]
+[editable path="ForegroundElements/ForegroundElem5"]

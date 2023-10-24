@@ -17,8 +17,8 @@ polygon = PackedVector2Array(0, 0, 163, 0, 163, 62, 0, 63)
 
 [node name="FadeDecorator" type="Node" parent="."]
 script = ExtResource("3_xy6t3")
-min_alpha = 0.5
-fade_speed = 1.0
+min_alpha = 0.4
+fade_speed = 2.5
 
 [connection signal="body_entered" from="FadeZone" to="." method="_on_fade_zone_body_entered"]
 [connection signal="body_exited" from="FadeZone" to="." method="_on_fade_zone_body_exited"]

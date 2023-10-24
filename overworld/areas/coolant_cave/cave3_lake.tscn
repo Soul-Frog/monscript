@@ -426,11 +426,6 @@ metadata/_edit_group_ = true
 position = Vector2(23.5, -3)
 shape = SubResource("RectangleShape2D_vv7td")
 
-[node name="World" type="StaticBody2D" parent="."]
-position = Vector2(-96, 150)
-collision_layer = 4
-collision_mask = 0
-
 [node name="Collision" type="StaticBody2D" parent="."]
 visible = false
 modulate = Color(0, 1, 0, 1)
