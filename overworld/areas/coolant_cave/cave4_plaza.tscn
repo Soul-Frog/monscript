@@ -31,6 +31,7 @@ position = Vector2(344, 443)
 [node name="Warps" type="Node2D" parent="."]
 
 [node name="WarpToLakeRight" type="Area2D" parent="Warps"]
+visible = false
 position = Vector2(587, 465)
 collision_layer = 0
 script = ExtResource("4_7evqn")
@@ -43,6 +44,7 @@ position = Vector2(19.5, -0.5)
 shape = SubResource("RectangleShape2D_80ub1")
 
 [node name="WarpToLakeLeft" type="Area2D" parent="Warps"]
+visible = false
 position = Vector2(325, 465)
 collision_layer = 0
 script = ExtResource("4_7evqn")
@@ -58,3 +60,12 @@ shape = SubResource("RectangleShape2D_80ub1")
 position = Vector2(-96, 150)
 collision_layer = 4
 collision_mask = 0
+
+[node name="Collision" type="StaticBody2D" parent="."]
+modulate = Color(0, 1, 0, 1)
+position = Vector2(-96, 150)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collision"]
+polygon = PackedVector2Array(416, 269, 396, 269, 367, 254, 367, 175, 390, 152, 390, 92, 417, 78, 221, -34, 226, 375, 756, 372, 1152, 358, 1145, -33, 221, -34, 417, 78, 462, 78, 489, 92, 489, 151, 512, 175, 727, 175, 771, 153, 885, 153, 923, 172, 950, 172, 950, 70, 1014, 70, 1014, 172, 1044, 172, 1084, 192, 1084, 251, 1049, 269, 1047, 269, 1047, 268, 878, 268, 849, 253, 727, 253, 728, 323, 678, 323, 678, 253, 504, 253, 474, 269, 465, 269, 465, 319, 416, 319)
