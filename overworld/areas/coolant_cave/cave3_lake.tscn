@@ -231,6 +231,8 @@ position = Vector2(1503, 685)
 y_sort_enabled = true
 position = Vector2(1759, 343)
 
+[node name="OverworldEncounters" type="Node2D" parent="."]
+
 [node name="ForegroundElements" type="Node2D" parent="."]
 
 [node name="ForegroundElement" parent="ForegroundElements" instance=ExtResource("5_wieau")]
@@ -358,8 +360,6 @@ polygon = PackedVector2Array(0, 0, 16, 0, 16, 45, 0, 45)
 
 [node name="FadeDecorator" parent="ForegroundElements/ForegroundElementPillar6" index="1"]
 fade_speed = 2.0
-
-[node name="OverworldEncounters" type="Node2D" parent="."]
 
 [node name="Points" type="Node2D" parent="."]
 

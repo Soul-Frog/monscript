@@ -89,13 +89,15 @@ polygon = PackedVector2Array(248, 383, 243, 383, 243, 348, 248, 348)
 [node name="Player" parent="." instance=ExtResource("3_3xe7d")]
 position = Vector2(48, 429)
 
-[node name="ForegroundElem" parent="." instance=ExtResource("4_i74oh")]
+[node name="OverworldEncounters" type="Node2D" parent="."]
+
+[node name="ForegroundElements" type="Node2D" parent="."]
+
+[node name="ForegroundElem" parent="ForegroundElements" instance=ExtResource("4_i74oh")]
 z_index = 0
 
-[node name="CollisionPolygon2D" parent="ForegroundElem/FadeZone" index="0"]
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem/FadeZone" index="0"]
 visible = false
-
-[node name="OverworldEncounters" type="Node2D" parent="."]
 
 [node name="Points" type="Node2D" parent="."]
 
@@ -256,4 +258,4 @@ polygon = PackedVector2Array(530, 467, 558, 468, 557, 537, 528, 539)
 [connection signal="body_entered" from="TransitionToLower" to="TransitionToLower" method="_on_body_entered"]
 [connection signal="body_entered" from="TransitionToUpper" to="TransitionToUpper" method="_on_body_entered"]
 
-[editable path="ForegroundElem"]
+[editable path="ForegroundElements/ForegroundElem"]
