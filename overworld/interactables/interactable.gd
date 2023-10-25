@@ -7,6 +7,8 @@
 class_name Interactable
 extends Node2D
 
+@export var LABEL_TEXT = "Interact"
+
 #godot thinks _SPRITE is unused, but it can be used by subclasses, so suppress the warning...
 @warning_ignore("unused_private_class_variable") 
 @onready var _SPRITE = $Sprite
@@ -14,8 +16,12 @@ extends Node2D
 @onready var _LABEL = $Label
 @onready var _LABEL_FADE = $Label/FadeDecorator
 
+const _LABEL_FORMAT = "[center]%s %s[/center]"
+
 func _ready():
 	_LABEL.modulate.a = 0
+	InputMap.get_actions()
+	_LABEL.text = _LABEL_FORMAT % ["[%s]" % [Global.key_for_action("interact")], LABEL_TEXT]
 
 func _input(event):
 	if event.is_action_released("interact") and _INTERACTION_AREA.get_overlapping_bodies().size() != 0:

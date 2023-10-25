@@ -23,6 +23,7 @@ radius = 24.0
 script = ExtResource("2_7r8lo")
 dialogue_resource = ExtResource("3_1orfb")
 dialogue_start = "test"
+LABEL_TEXT = "Talk"
 
 [node name="Sprite" parent="." index="0"]
 position = Vector2(-8, -8)
@@ -42,4 +43,3 @@ shape = SubResource("CircleShape2D_qry7x")
 [node name="Label" parent="." index="3"]
 offset_top = -33.0
 offset_bottom = -10.0
-text = "[center][E] Talk[/center]"

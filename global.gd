@@ -142,3 +142,10 @@ func recursive_set_processes(node: Node, enable: bool) -> void:
 
 func value_or_default(dict: Dictionary, key, default):
 	return dict[key] if dict.has(key) else default
+
+# Returns a string representation of the hotkey for a given action (for example, "E" or "A")
+func key_for_action(action: String) -> String:
+	assert(InputMap.has_action(action))
+	# get the first key mapped to this action; split to remove anything but the key itself
+	# for example the E key as_text is "E (Physical)"; split to remove the (Physical)
+	return InputMap.action_get_events(action)[0].as_text().split(" ")[0]
