@@ -57,6 +57,12 @@ func _on_text_submitted(txt):
 	var BATTLE = main_scene.BATTLE
 	var animator = BATTLE.get_node("Animator")
 	
+	assert(_player)
+	assert(OVERWORLD)
+	assert(BATTLE)
+	assert(animator)
+	assert(current_area)
+	
 	txt = txt.to_lower().replace(" ", "").replace("_", "")
 	print("Debug Command: " + txt)
 	

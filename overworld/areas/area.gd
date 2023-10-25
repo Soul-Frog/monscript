@@ -6,10 +6,20 @@ signal change_area
 
 var overworld_encounter_battling_with = null
 
+@onready var _PLAYER = $Player
+@onready var _CAMERA = $Player/Camera2D
+@onready var _MAP = $Map
+@onready var _OVERWORLD_ENCOUNTERS = $OverworldEncounters
+
 func _ready():
-	$Player/Camera2D.set_limits($Map)
-	$Player/Camera2D.zoom.x = camera_zoom
-	$Player/Camera2D.zoom.y = camera_zoom
+	assert(_PLAYER)
+	assert(_CAMERA)
+	assert(_MAP)
+	assert(_OVERWORLD_ENCOUNTERS)
+	
+	_CAMERA.set_limits(_MAP)
+	_CAMERA.zoom.x = camera_zoom
+	_CAMERA.zoom.y = camera_zoom
 	Events.collided_with_overworld_encounter.connect(_on_overworld_encounter_collided_with_player)
 
 func _on_overworld_encounter_collided_with_player(overworld_encounter_collided_with):
@@ -19,11 +29,11 @@ func handle_battle_results(battle_end_condition):
 	assert(overworld_encounter_battling_with != null, "Must be battling against an overworld mon!")
 	assert(battle_end_condition != Global.BattleEndCondition.NONE, "Battle end condition was not set.")
 	if battle_end_condition == Global.BattleEndCondition.WIN:
-		$OverworldEncounters.remove_child(overworld_encounter_battling_with)
+		_OVERWORLD_ENCOUNTERS.remove_child(overworld_encounter_battling_with)
 		overworld_encounter_battling_with.queue_free()
 	
 	if battle_end_condition == Global.BattleEndCondition.ESCAPE or battle_end_condition == Global.BattleEndCondition.WIN:
-		$Player.activate_invincibility(battle_end_condition)
+		_PLAYER.activate_invincibility(battle_end_condition)
 
 func move_player_to(destination_point):
 	var found_destination_point = false

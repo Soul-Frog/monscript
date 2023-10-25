@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_c2hk5"]
 [ext_resource type="Texture2D" uid="uid://b0e6tgnkw52yd" path="res://assets/maps/coolant_cave/cave10_river/cave10.png" id="2_dl0pi"]
-[ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player.tscn" id="3_jyrdr"]
+[ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player_overhead.tscn" id="3_jyrdr"]
 [ext_resource type="Script" path="res://overworld/warp.gd" id="4_o02w7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ipd0d"]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dovicv5nojqhs"
-path="res://.godot/imported/cave5.png-6832535b7b252b9c8a19b7926b4ce065.ctex"
+uid="uid://bsbqw2a0ycaaa"
+path="res://.godot/imported/cave11.png-d16d3d1f40b4e7ad65fe36ca877b3abb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/maps/coolant_cave/cave5_2druins/cave5.png"
-dest_files=["res://.godot/imported/cave5.png-6832535b7b252b9c8a19b7926b4ce065.ctex"]
+source_file="res://assets/maps/coolant_cave/cave11_platformerwaterfall/cave11.png"
+dest_files=["res://.godot/imported/cave11.png-d16d3d1f40b4e7ad65fe36ca877b3abb.ctex"]
 
 [params]
 

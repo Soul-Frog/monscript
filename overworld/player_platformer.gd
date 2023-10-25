@@ -1,40 +1,38 @@
-class_name Player
+class_name PlayerPlatformer
 extends CharacterBody2D
 
-const SPEED = 150
+# Movement speed
+const SPEED = 120
+var GRAVITY = ProjectSettings.get_setting("physics/2d/default_gravity")
+const JUMP_VELOCITY = -220.0
+
 const INVINCIBILITY_AFTER_ESCAPE_SECS = 2
 const INVINCIBILITY_AFTER_WIN_SECS = 1
-const DASH_DURATION = 0.05
-const DASH_SPEED = SPEED * 4
 
 var is_invincible = false
-var escaped_recently = false
 
-var orientation = Vector2.ZERO
-var dashing = false
-
-var can_move = true
-
-func _input(event):
-	if event.is_action_released("dash"):
-		dashing = true
-		await Global.delay(DASH_DURATION)
-		dashing = false
+var can_move = true # if the player can move
 
 func _ready():
 	assert(SPEED > 0)
 
-func update_velocity(_delta):
-	var input_direction = Input.get_vector("left", "right", "up", "down")
-	velocity = SPEED * input_direction
-	if dashing:
-		velocity = DASH_SPEED * orientation
-	if input_direction != Vector2.ZERO and not dashing:
-		orientation = input_direction
-
 func _physics_process(delta):
 	if can_move:
-		update_velocity(delta)
+		# Add the gravity.
+		if not is_on_floor():
+			velocity.y += GRAVITY * delta
+
+		# Handle Jump.
+		if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+			velocity.y = JUMP_VELOCITY
+
+		# Get the input direction and handle the movement/deceleration.
+		# As good practice, you should replace UI actions with custom gameplay actions.
+		var direction = Input.get_axis("left", "right")
+		if direction:
+			velocity.x = direction * SPEED
+		else:
+			velocity.x = move_toward(velocity.x, 0, SPEED)
 		move_and_slide()
 
 func _on_area_2d_body_entered(overworld_encounter_collided_with):

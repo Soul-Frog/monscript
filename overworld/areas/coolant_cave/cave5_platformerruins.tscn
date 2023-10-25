@@ -1,0 +1,85 @@
+[gd_scene load_steps=7 format=3 uid="uid://bocqniv5n4bn6"]
+
+[ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_cah05"]
+[ext_resource type="Texture2D" uid="uid://dovicv5nojqhs" path="res://assets/maps/coolant_cave/cave5_platformerruins/cave5.png" id="2_l3y27"]
+[ext_resource type="PackedScene" uid="uid://cpro10oe50dhk" path="res://overworld/player_platformer.tscn" id="3_8ihar"]
+[ext_resource type="Script" path="res://overworld/warp.gd" id="4_oxmf0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4wb6b"]
+size = Vector2(4, 63)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4sjyf"]
+size = Vector2(4, 63)
+
+[node name="Area" type="Node2D"]
+script = ExtResource("1_cah05")
+
+[node name="Map" type="Sprite2D" parent="."]
+texture = ExtResource("2_l3y27")
+centered = false
+
+[node name="Player" parent="." instance=ExtResource("3_8ihar")]
+position = Vector2(128, 61)
+
+[node name="OverworldEncounters" type="Node2D" parent="."]
+
+[node name="Points" type="Node2D" parent="."]
+
+[node name="Cave5Right" type="Node2D" parent="Points"]
+position = Vector2(586, 176)
+
+[node name="Cave5Left" type="Node2D" parent="Points"]
+position = Vector2(16, 104)
+
+[node name="Warps" type="Node2D" parent="."]
+
+[node name="WarpToLake" type="Area2D" parent="Warps"]
+position = Vector2(585, 161)
+collision_layer = 0
+script = ExtResource("4_oxmf0")
+area = 2
+spawn_point = "Cave3Left"
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/WarpToLake"]
+position = Vector2(20, -3.5)
+shape = SubResource("RectangleShape2D_4wb6b")
+
+[node name="WarpToTemple" type="Area2D" parent="Warps"]
+position = Vector2(3, 65)
+collision_layer = 0
+script = ExtResource("4_oxmf0")
+area = 5
+spawn_point = "Cave6Right"
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/WarpToTemple"]
+position = Vector2(-5, 20.5)
+shape = SubResource("RectangleShape2D_4sjyf")
+
+[node name="Collision" type="StaticBody2D" parent="."]
+modulate = Color(0, 1, 0, 1)
+position = Vector2(-96, 150)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collision"]
+polygon = PackedVector2Array(92, -33, 96, -33, 168, -33, 168, -15, 186, -15, 186, 3, 204, 3, 204, 21, 222, 21, 222, 39, 249, 39, 249, 75, 537, 75, 572, 69, 553, 106, 221, 106, 56, 106, 53, -33, 54, -150, 168, -150, 719, -150, 720, -24, 723, 71, 537, 75, 537, 39, 703, 39, 703, -24, 600, -24, 537, -24, 537, -33, 600, -32.9167, 600, -141, 168, -141, 168, -96, 96, -96, 92, -96)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Collision"]
+polygon = PackedVector2Array(211, -55, 211, -46, 238, -46, 238, -55)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Collision"]
+polygon = PackedVector2Array(281, 10, 281, 19, 434, 19, 434, 10)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Collision"]
+polygon = PackedVector2Array(463, 39, 463, 48, 508, 48, 508, 39)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="Collision"]
+polygon = PackedVector2Array(463, -51, 463, -42, 508, -42, 508, -51)
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="Collision"]
+polygon = PackedVector2Array(380, -68, 380, -59, 425, -59, 425, -68)
+
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="Collision"]
+polygon = PackedVector2Array(290, -68, 290, -59, 335, -59, 335, -68)

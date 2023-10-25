@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://f2ej122kalmi" path="res://assets/maps/coolant_cave/cave1_beach/cave1.png" id="3_u6wrc"]
 [ext_resource type="Texture2D" uid="uid://b6va77lju8lb7" path="res://assets/maps/coolant_cave/cave1_beach/waves.png" id="4_hsrq7"]
 [ext_resource type="PackedScene" uid="uid://dfrab43qku35w" path="res://decorators/move_decorator.tscn" id="5_46txx"]
-[ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player.tscn" id="6_nx2l3"]
+[ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player_overhead.tscn" id="6_nx2l3"]
 [ext_resource type="PackedScene" uid="uid://cyr7fpimubkpa" path="res://mons/magnetfrogblue.tscn" id="7_sdnxq"]
 [ext_resource type="Script" path="res://overworld/overworld_encounter.gd" id="8_48q7f"]
 [ext_resource type="Script" path="res://overworld/warp.gd" id="9_a8npn"]

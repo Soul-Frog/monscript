@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://bimj6b5rlyog4"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_k8mby"]
-[ext_resource type="Texture2D" uid="uid://bsbqw2a0ycaaa" path="res://assets/maps/coolant_cave/cave11_2dwaterfall/cave11.png" id="2_ghj08"]
-[ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player.tscn" id="3_6oeoq"]
+[ext_resource type="Texture2D" uid="uid://bsbqw2a0ycaaa" path="res://assets/maps/coolant_cave/cave11_platformerwaterfall/cave11.png" id="2_ghj08"]
+[ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player_overhead.tscn" id="3_6oeoq"]
 [ext_resource type="Script" path="res://overworld/warp.gd" id="4_851ib"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_80ub1"]
