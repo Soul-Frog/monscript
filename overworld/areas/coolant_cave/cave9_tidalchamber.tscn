@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://bfry8d2ofnfac"]
+[gd_scene load_steps=9 format=3 uid="uid://bfry8d2ofnfac"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_kc7wb"]
 [ext_resource type="Texture2D" uid="uid://lqwkx40f2lfp" path="res://assets/maps/coolant_cave/cave9_tidalchamber/cave9.png" id="2_ufui5"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player_overhead.tscn" id="3_3s5my"]
 [ext_resource type="Script" path="res://overworld/warp.gd" id="4_0016s"]
+[ext_resource type="PackedScene" uid="uid://cepi8saddwmb6" path="res://overworld/foreground_element.tscn" id="4_w7l34"]
+[ext_resource type="Texture2D" uid="uid://cjxeq5hxni7nw" path="res://assets/maps/coolant_cave/cave9_tidalchamber/cave9_fg1.png" id="5_pyofp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0yocw"]
 size = Vector2(77, 16)
@@ -20,9 +22,19 @@ texture = ExtResource("2_ufui5")
 centered = false
 
 [node name="Player" parent="." instance=ExtResource("3_3s5my")]
-position = Vector2(318, 1172)
+position = Vector2(315, 1086)
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
+
+[node name="ForegroundElements" type="Node2D" parent="."]
+
+[node name="ForegroundElem" parent="ForegroundElements" instance=ExtResource("4_w7l34")]
+z_index = 0
+position = Vector2(279, 841)
+texture = ExtResource("5_pyofp")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem/FadeZone" index="0"]
+polygon = PackedVector2Array(172, -94, 212, -4, 209, 144, 160, 149, 160, 74, 1, 70, -94, 69, -95, -95)
 
 [node name="Points" type="Node2D" parent="."]
 
@@ -58,7 +70,10 @@ metadata/_edit_group_ = true
 position = Vector2(43, -43)
 shape = SubResource("RectangleShape2D_80ub1")
 
-[node name="World" type="StaticBody2D" parent="."]
+[node name="Collision" type="StaticBody2D" parent="."]
+modulate = Color(0, 1, 0, 1)
 position = Vector2(-96, 150)
 collision_layer = 4
 collision_mask = 0
+
+[editable path="ForegroundElements/ForegroundElem"]
