@@ -79,6 +79,9 @@ func play(res: DialogueResource, tag: String, p0 = null, p1 = null, p2 = null, p
 	assert(not _in_dialogue, "Can't start a new dialogue with one already open!")
 	assert(res != null and tag != null)
 	
+	# disable player movement while dialogue is active
+	get_tree().get_first_node_in_group("main").get_player().disable_movement()
+	
 	# set in-params
 	_in(p0, p1, p2, p3, p4, p5)
 	
@@ -93,6 +96,9 @@ func play(res: DialogueResource, tag: String, p0 = null, p1 = null, p2 = null, p
 	# signal that the dialogue is over
 	_in_dialogue = false
 	emit_signal("dialogue_ended")
+	
+	# reenable movement now that dialogue is done
+	get_tree().get_first_node_in_group("main").get_player().enable_movement()
 	
 	# return out-params
 	return outs

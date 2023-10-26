@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://i0tisfi5mas0"]
+[gd_scene load_steps=7 format=3 uid="uid://i0tisfi5mas0"]
 
 [ext_resource type="Script" path="res://overworld/player_overhead.gd" id="1_kvdei"]
 [ext_resource type="Script" path="res://overworld/camera.gd" id="2_djux3"]
@@ -9,8 +9,11 @@ radius = 1.5
 height = 12.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6eq6j"]
-radius = 16.0
-height = 32.0
+radius = 8.0
+height = 26.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5uo5j"]
+radius = 18.8679
 
 [node name="PlayerOverhead" type="CharacterBody2D"]
 collision_mask = 20
@@ -29,11 +32,17 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_0gcyb")
 
 [node name="Area2D" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CapsuleShape2D_6eq6j")
+
+[node name="InteractableCollision" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableCollision"]
+shape = SubResource("CircleShape2D_5uo5j")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

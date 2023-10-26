@@ -12,11 +12,14 @@ extends Node2D
 #godot thinks _SPRITE is unused, but it can be used by subclasses, so suppress the warning...
 @warning_ignore("unused_private_class_variable") 
 @onready var _SPRITE = $Sprite
+@warning_ignore("unused_private_class_variable")  #ditto
 @onready var _INTERACTION_AREA = $InteractionArea
 @onready var _LABEL = $Label
 @onready var _LABEL_FADE = $Label/FadeDecorator
 
 const _LABEL_FORMAT = "[center]%s %s[/center]"
+
+var _player_in_range = false
 
 func _ready():
 	_LABEL.modulate.a = 0
@@ -24,14 +27,16 @@ func _ready():
 	_LABEL.text = _LABEL_FORMAT % ["[%s]" % [Global.key_for_action("interact")], LABEL_TEXT]
 
 func _input(event):
-	if event.is_action_released("interact") and _INTERACTION_AREA.get_overlapping_bodies().size() != 0:
+	if event.is_action_released("interact") and _player_in_range:
 		_on_interact()
 
 func _on_interact():
 	pass #no-op
 
-func _on_body_entered(body):
+func _on_player_interaction_area_entered(area):
 	_LABEL_FADE.fade_in()
+	_player_in_range = true
 
-func _on_body_exit(body):
+func _on_player_interaction_area_exited(area):
 	_LABEL_FADE.fade_out()
+	_player_in_range = false

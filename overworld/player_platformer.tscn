@@ -8,11 +8,11 @@
 size = Vector2(14.0059, 25.0165)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6eq6j"]
-radius = 16.0
-height = 32.0
+radius = 7.52869
+height = 26.2016
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_33s4x"]
-radius = 16.0018
+radius = 18.8679
 
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 20
@@ -35,7 +35,9 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BattleCollision"]
 shape = SubResource("CapsuleShape2D_6eq6j")
 
-[node name="InteractableCollision" type="StaticBody2D" parent="."]
+[node name="InteractableCollision" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableCollision"]
 shape = SubResource("CircleShape2D_33s4x")
