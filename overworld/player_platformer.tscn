@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cpro10oe50dhk"]
+[gd_scene load_steps=7 format=3 uid="uid://cpro10oe50dhk"]
 
 [ext_resource type="Script" path="res://overworld/player_platformer.gd" id="1_wbnhs"]
 [ext_resource type="Script" path="res://overworld/camera.gd" id="2_68i22"]
@@ -10,6 +10,9 @@ size = Vector2(14.0059, 25.0165)
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6eq6j"]
 radius = 16.0
 height = 32.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_33s4x"]
+radius = 16.0018
 
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 20
@@ -25,12 +28,16 @@ texture = ExtResource("3_s3gtb")
 [node name="Collider" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_w5nlt")
 
-[node name="Area2D" type="Area2D" parent="."]
-visible = false
+[node name="BattleCollision" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BattleCollision"]
 shape = SubResource("CapsuleShape2D_6eq6j")
 
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[node name="InteractableCollision" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableCollision"]
+shape = SubResource("CircleShape2D_33s4x")
+
+[connection signal="body_entered" from="BattleCollision" to="." method="_on_area_2d_body_entered"]

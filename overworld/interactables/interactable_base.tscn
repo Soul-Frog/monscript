@@ -19,7 +19,8 @@ position = Vector2(5.65001, -2.81875)
 scale = Vector2(0.236979, 0.464844)
 
 [node name="InteractionArea" type="Area2D" parent="."]
-collision_layer = 8
+collision_layer = 0
+collision_mask = 65
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
 

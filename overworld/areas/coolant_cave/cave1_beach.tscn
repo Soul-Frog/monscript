@@ -16,6 +16,7 @@ size = Vector2(27, 28)
 
 [node name="Area" type="Node2D"]
 script = ExtResource("1_4sj54")
+area_enum = 0
 
 [node name="Fence" type="Sprite2D" parent="."]
 z_index = 100

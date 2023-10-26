@@ -138,6 +138,13 @@ func save_game():
 	# save each variable as str->Variant
 	for var_key in _variables.keys():
 		save_dict[var_key] = _variables[var_key]
+		
+	# save the player's current position, area, mask, and layer
+	save_dict["current_area"] = get_tree().get_first_node_in_group("main").get_current_area()
+	save_dict["player_x"] = get_tree().get_first_node_in_group("main").get_player().position.x
+	save_dict["player_y"] = get_tree().get_first_node_in_group("main").get_player().position.y
+	save_dict["player_collision_mask"] = get_tree().get_first_node_in_group("main").get_player().collision_mask
+	save_dict["player_collision_layer"] = get_tree().get_first_node_in_group("main").get_player().collision_layer
 	
 	# save each mon in the team
 	for i in team.size():
@@ -168,7 +175,7 @@ func load_game():
 	
 	# read back each flag
 	for var_key in _variables.keys():
-		if save_dict.has(var_key):
+		if save_dict.has(var_key) and _variables.has(var_key):
 			_variables[var_key] = save_dict[var_key]
 	
 	# increase the storage size based on the number of pages
@@ -183,6 +190,13 @@ func load_game():
 	for i in storage.size():
 		var mon_str = save_dict["storage_mon_%d" % i]
 		storage[i] = MonData.mon_from_json(mon_str) if mon_str != "[STORAGENULL]" else null
+	
+	# set the player's position and area
+	Events.area_changed.emit( save_dict["current_area"], Vector2(save_dict["player_x"], save_dict["player_y"]))
+	
+	# set the player's mask
+	get_tree().get_first_node_in_group("main").get_player().collision_mask = save_dict["player_collision_mask"]
+	get_tree().get_first_node_in_group("main").get_player().collision_layer = save_dict["player_collision_layer"]
 
 func increase_storage_size(new_size: int):
 	assert(_variables[STORAGE_PAGES] <= new_size, "Can't decrease storage size!")

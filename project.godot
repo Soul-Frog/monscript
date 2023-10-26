@@ -110,7 +110,7 @@ locale/translations_pot_files=PackedStringArray("res://test.dialogue", "res://di
 2d_physics/layer_1="Player"
 2d_physics/layer_2="OverworldEncounter"
 2d_physics/layer_3="World"
-2d_physics/layer_4="Interactable"
+2d_physics/layer_4="InteractableDetectionBox"
 2d_physics/layer_5="WorldUpper"
 2d_physics/layer_6="WorldLower"
 

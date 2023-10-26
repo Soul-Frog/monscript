@@ -131,3 +131,14 @@ func _on_main_menu_clicked_continue():
 
 func _on_main_menu_clicked_settings():
 	print("TODO - Settings")
+
+# Fetch the player; used when saving/loading
+func get_player():
+	assert(OVERWORLD.current_area)
+	assert(OVERWORLD.current_area.get_player())
+	return OVERWORLD.current_area.get_player()
+
+# Fetch the current area; used when saving
+func get_current_area() -> GameData.Area:
+	assert(OVERWORLD.current_area)
+	return OVERWORLD.current_area.area_enum
