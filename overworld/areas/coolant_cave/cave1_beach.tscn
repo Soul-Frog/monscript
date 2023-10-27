@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://clrokgdo0bo4a"]
+[gd_scene load_steps=9 format=3 uid="uid://clrokgdo0bo4a"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_4sj54"]
 [ext_resource type="Texture2D" uid="uid://cknrucl6hnncy" path="res://assets/maps/coolant_cave/cave1_beach/fence.png" id="2_r844y"]
@@ -6,10 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b6va77lju8lb7" path="res://assets/maps/coolant_cave/cave1_beach/waves.png" id="4_hsrq7"]
 [ext_resource type="PackedScene" uid="uid://dfrab43qku35w" path="res://decorators/move_decorator.tscn" id="5_46txx"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player_overhead.tscn" id="6_nx2l3"]
-[ext_resource type="PackedScene" uid="uid://cyr7fpimubkpa" path="res://mons/magnetfrogblue.tscn" id="7_sdnxq"]
-[ext_resource type="Script" path="res://overworld/overworld_encounter.gd" id="8_48q7f"]
 [ext_resource type="Script" path="res://overworld/warp.gd" id="9_a8npn"]
-[ext_resource type="PackedScene" uid="uid://dmhm3mwxxspu" path="res://overworld/interactables/blue_hat.tscn" id="10_fkyo0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_80ub1"]
 size = Vector2(27, 28)
@@ -44,24 +41,6 @@ position = Vector2(8, 87)
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
 
-[node name="Mon2" parent="OverworldEncounters" instance=ExtResource("7_sdnxq")]
-position = Vector2(305, 45)
-safe_margin = 0.08
-script = ExtResource("8_48q7f")
-mon1Type = 2
-mon1Level = 2
-mon2Type = 2
-mon2Level = 2
-mon3Type = 0
-mon3Level = 0
-mon4Type = 0
-mon4Level = 0
-speed = 45
-min_wander_range = 10
-max_wander_range = 30
-min_time_between_movement = 2
-max_time_between_movement = 3.0
-
 [node name="Points" type="Node2D" parent="."]
 
 [node name="Cave1Entrance" type="Node2D" parent="Points"]
@@ -80,9 +59,6 @@ metadata/_edit_group_ = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/Warp"]
 position = Vector2(0.5, -3)
 shape = SubResource("RectangleShape2D_80ub1")
-
-[node name="BlueHat" parent="." instance=ExtResource("10_fkyo0")]
-position = Vector2(116, 73)
 
 [node name="World" type="StaticBody2D" parent="."]
 position = Vector2(55, 83)

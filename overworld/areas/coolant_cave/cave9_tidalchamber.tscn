@@ -1,11 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://bfry8d2ofnfac"]
+[gd_scene load_steps=11 format=3 uid="uid://bfry8d2ofnfac"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_kc7wb"]
 [ext_resource type="Texture2D" uid="uid://lqwkx40f2lfp" path="res://assets/maps/coolant_cave/cave9_tidalchamber/cave9.png" id="2_ufui5"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player_overhead.tscn" id="3_3s5my"]
 [ext_resource type="Script" path="res://overworld/warp.gd" id="4_0016s"]
 [ext_resource type="PackedScene" uid="uid://cepi8saddwmb6" path="res://overworld/foreground_element.tscn" id="4_w7l34"]
-[ext_resource type="Texture2D" uid="uid://cjxeq5hxni7nw" path="res://assets/maps/coolant_cave/cave9_tidalchamber/cave9_fg1.png" id="5_pyofp"]
+[ext_resource type="Texture2D" path="res://assets/maps/coolant_cave/cave9_tidalchamber/cave9_fg1.png" id="5_pyofp"]
+[ext_resource type="Texture2D" path="res://assets/maps/coolant_cave/cave9_tidalchamber/cave9_fg2.png" id="6_060lv"]
+[ext_resource type="Texture2D" path="res://assets/maps/coolant_cave/cave9_tidalchamber/cave9_fg3.png" id="7_a7lob"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0yocw"]
 size = Vector2(77, 16)
@@ -30,11 +32,99 @@ position = Vector2(315, 1086)
 
 [node name="ForegroundElem" parent="ForegroundElements" instance=ExtResource("4_w7l34")]
 z_index = 0
-position = Vector2(279, 841)
+position = Vector2(279, 847)
 texture = ExtResource("5_pyofp")
 
 [node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem/FadeZone" index="0"]
-polygon = PackedVector2Array(172, -94, 212, -4, 209, 144, 160, 149, 160, 74, 1, 70, -94, 69, -95, -95)
+position = Vector2(1, 13)
+polygon = PackedVector2Array(159, -22, 201, -9, 195, 79, 160, 74, 77, 38, -1, 38, -82, 40, -97, 36, -98, -91, 84, -75)
+
+[node name="FadeDecorator" parent="ForegroundElements/ForegroundElem" index="1"]
+min_alpha = 0.25
+
+[node name="ForegroundElem2" parent="ForegroundElements" instance=ExtResource("4_w7l34")]
+z_index = 0
+position = Vector2(279, 619)
+texture = ExtResource("5_pyofp")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem2/FadeZone" index="0"]
+position = Vector2(1, 13)
+polygon = PackedVector2Array(232, -113, 229, -25, 202, 0, 77, 38, -1, 38, -97, 41, -99, -67, 98, -67, 180, -106)
+
+[node name="FadeDecorator" parent="ForegroundElements/ForegroundElem2" index="1"]
+min_alpha = 0.25
+
+[node name="ForegroundElem3" parent="ForegroundElements" instance=ExtResource("4_w7l34")]
+z_index = 0
+position = Vector2(279, 423)
+texture = ExtResource("5_pyofp")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem3/FadeZone" index="0"]
+position = Vector2(1, 13)
+polygon = PackedVector2Array(203, -43, 229, -5, 231, 83, 160, 87, 157, 64, 77, 38, -1, 38, -97, 48, -97, -102, 7, -52, 160, -56)
+
+[node name="FadeDecorator" parent="ForegroundElements/ForegroundElem3" index="1"]
+min_alpha = 0.25
+
+[node name="ForegroundElem4" parent="ForegroundElements" instance=ExtResource("4_w7l34")]
+z_index = 0
+position = Vector2(279, 246)
+texture = ExtResource("5_pyofp")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem4/FadeZone" index="0"]
+position = Vector2(1, 13)
+polygon = PackedVector2Array(77, 38, -1, 38, -1, -13, 77, -13)
+
+[node name="FadeDecorator" parent="ForegroundElements/ForegroundElem4" index="1"]
+min_alpha = 0.25
+
+[node name="ForegroundElem5" parent="ForegroundElements" instance=ExtResource("4_w7l34")]
+z_index = 0
+position = Vector2(181, 832)
+texture = ExtResource("6_060lv")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem5/FadeZone" index="0"]
+position = Vector2(1, 13)
+polygon = PackedVector2Array(137, 52, 98, 52, -15, 36, -16, -63, 16, -59, 138, -13)
+
+[node name="FadeDecorator" parent="ForegroundElements/ForegroundElem5" index="1"]
+min_alpha = 0.25
+
+[node name="ForegroundElem6" parent="ForegroundElements" instance=ExtResource("4_w7l34")]
+z_index = 0
+position = Vector2(181, 624)
+texture = ExtResource("6_060lv")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem6/FadeZone" index="0"]
+position = Vector2(1, 13)
+polygon = PackedVector2Array(137, 28, 97, 28, -21, 35, -17, -65, 15, -58, 138, -13)
+
+[node name="FadeDecorator" parent="ForegroundElements/ForegroundElem6" index="1"]
+min_alpha = 0.25
+
+[node name="ForegroundElem7" parent="ForegroundElements" instance=ExtResource("4_w7l34")]
+z_index = 0
+position = Vector2(181, 433)
+texture = ExtResource("6_060lv")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem7/FadeZone" index="0"]
+position = Vector2(1, 13)
+polygon = PackedVector2Array(137, 28, 97, 28, -15, 34, -12, -115, 16, -111, 51, -66, 138, -13)
+
+[node name="FadeDecorator" parent="ForegroundElements/ForegroundElem7" index="1"]
+min_alpha = 0.25
+
+[node name="ForegroundElem8" parent="ForegroundElements" instance=ExtResource("4_w7l34")]
+z_index = 0
+position = Vector2(438, 448)
+texture = ExtResource("7_a7lob")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem8/FadeZone" index="0"]
+position = Vector2(48, 11)
+polygon = PackedVector2Array(25, -2, 25, 69, -48, 42, -166, 8, -123, -48, -47, -77, 5, -56)
+
+[node name="FadeDecorator" parent="ForegroundElements/ForegroundElem8" index="1"]
+min_alpha = 0.25
 
 [node name="Points" type="Node2D" parent="."]
 
@@ -77,3 +167,10 @@ collision_layer = 4
 collision_mask = 0
 
 [editable path="ForegroundElements/ForegroundElem"]
+[editable path="ForegroundElements/ForegroundElem2"]
+[editable path="ForegroundElements/ForegroundElem3"]
+[editable path="ForegroundElements/ForegroundElem4"]
+[editable path="ForegroundElements/ForegroundElem5"]
+[editable path="ForegroundElements/ForegroundElem6"]
+[editable path="ForegroundElements/ForegroundElem7"]
+[editable path="ForegroundElements/ForegroundElem8"]
