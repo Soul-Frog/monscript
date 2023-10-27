@@ -166,6 +166,36 @@ position = Vector2(-96, 150)
 collision_layer = 4
 collision_mask = 0
 
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collision"]
+polygon = PackedVector2Array(376, 958, 294, 958, 294, 953, 278, 949, 235, 949, 235, 282, 219, 278, 186, 278, 170, 273, 137, 273, 97, 265, 88, 265, 88, 169, 102, 169, 137, 177, 170, 177, 186, 182, 219, 182, 235, 187, 282, 187, 294, 190, 294, -35, 535, -35, 534, 41, 542, 39, 553, 39, 561, 36, 572, 36, 581, 34, 581, -10, 705, -11, 705, 121, 581, 121, 581, 77, 572, 79, 562, 79, 553, 82, 543, 82, 534, 84, 534, 275, 540, 275, 554, 277, 570, 284, 580, 291, 587, 300, 591, 305, 596, 312, 602, 324, 605, 352, 606, 365, 606, 389, 603, 413, 600, 435, 593, 455, 582, 468, 574, 474, 565, 479, 555, 483, 545, 488, 534, 491, 808, 893, 904, -136, -26, -136, -53, 1077, 802, 1102, 609, 707, 579, 556, 534, 491, 534, 688, 534, 732, 537, 732, 543, 735, 547, 738, 552, 743, 555, 747, 558, 752, 562, 758, 568, 768, 571, 781, 571, 799, 569, 808, 565, 820, 558, 826, 549, 833, 534, 839, 534, 958, 451, 958, 451, 1056, 376, 1056)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Collision"]
+polygon = PackedVector2Array(375, 742, 453, 742, 453, 793, 375, 793)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Collision"]
+polygon = PackedVector2Array(375, 514, 453, 514, 453, 565, 375, 565)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Collision"]
+polygon = PackedVector2Array(277, 726, 294, 729, 294, 918, 277, 915)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="Collision"]
+polygon = PackedVector2Array(277, 634, 294, 637, 294, 521, 277, 518)
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="Collision"]
+polygon = PackedVector2Array(277, 426, 294, 429, 294, 330, 277, 327)
+
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="Collision"]
+polygon = PackedVector2Array(375, 318, 375, 369, 453, 369, 453, 318)
+
+[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="Collision"]
+polygon = PackedVector2Array(375, 141, 375, 192, 453, 192, 453, 141)
+
+[node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="Collision"]
+polygon = PackedVector2Array(534, 341, 537, 341, 545, 347, 549, 354, 552, 360, 554, 365, 557, 379, 557, 389, 556, 402, 554, 411, 549, 421, 544, 426, 540, 430, 534, 431)
+
+[node name="CollisionPolygon2D10" type="CollisionPolygon2D" parent="Collision"]
+polygon = PackedVector2Array(618, 34, 618, 84, 668, 84, 668, 34)
+
 [editable path="ForegroundElements/ForegroundElem"]
 [editable path="ForegroundElements/ForegroundElem2"]
 [editable path="ForegroundElements/ForegroundElem3"]
