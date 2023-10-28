@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bimj6b5rlyog4"]
+[gd_scene load_steps=8 format=3 uid="uid://bimj6b5rlyog4"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_k8mby"]
 [ext_resource type="Texture2D" uid="uid://bsbqw2a0ycaaa" path="res://assets/maps/coolant_cave/cave11_platformerwaterfall/cave11.png" id="2_ghj08"]
 [ext_resource type="PackedScene" uid="uid://cpro10oe50dhk" path="res://overworld/player_platformer.tscn" id="3_i2mfo"]
 [ext_resource type="Script" path="res://overworld/warp.gd" id="4_851ib"]
+[ext_resource type="PackedScene" uid="uid://cepi8saddwmb6" path="res://overworld/foreground_element.tscn" id="4_bg1m2"]
+[ext_resource type="Texture2D" uid="uid://cshh1a3j2a1jp" path="res://assets/maps/coolant_cave/cave11_platformerwaterfall/cave11_fg1.png" id="5_gaf47"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_80ub1"]
 size = Vector2(54, 16)
@@ -21,6 +23,20 @@ centered = false
 position = Vector2(844, 19)
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
+
+[node name="ForegroundElements" type="Node2D" parent="."]
+
+[node name="ForegroundElement" parent="ForegroundElements" instance=ExtResource("4_bg1m2")]
+position = Vector2(68, 723)
+texture = ExtResource("5_gaf47")
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElement/FadeZone" index="0"]
+position = Vector2(-1, 95)
+polygon = PackedVector2Array(0, -22, 0, -95, 64, -95, 64, -22)
+
+[node name="FadeDecorator" parent="ForegroundElements/ForegroundElement" index="1"]
+min_alpha = 0.0
+fade_speed = 4.0
 
 [node name="Points" type="Node2D" parent="."]
 
@@ -58,3 +74,5 @@ polygon = PackedVector2Array(633, 317, 775, 317, 775, 320, 760, 350, 648, 350, 6
 
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Collision"]
 polygon = PackedVector2Array(898, 416, 1040, 416, 1040, 419, 1025, 449, 913, 449, 898, 419)
+
+[editable path="ForegroundElements/ForegroundElement"]
