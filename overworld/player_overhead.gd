@@ -1,8 +1,7 @@
 class_name PlayerOverhead
 extends CharacterBody2D
 
-# Movement speed
-const SPEED = 150
+const SPEED = 125 # Movement speed
 
 const INVINCIBILITY_AFTER_ESCAPE_SECS = 2
 const INVINCIBILITY_AFTER_WIN_SECS = 1

@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cjypeabhp8v4y" path="res://assets/characters/mc.png" id="3_s3gtb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w5nlt"]
-size = Vector2(14.0059, 25.0165)
+size = Vector2(14.0059, 23.5812)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6eq6j"]
 radius = 7.52869
@@ -26,6 +26,7 @@ script = ExtResource("2_68i22")
 texture = ExtResource("3_s3gtb")
 
 [node name="Collider" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.717667)
 shape = SubResource("RectangleShape2D_w5nlt")
 
 [node name="BattleCollision" type="Area2D" parent="."]
