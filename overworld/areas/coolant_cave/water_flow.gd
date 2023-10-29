@@ -58,17 +58,17 @@ func _on_particle_fade_out_done(particle):
 	
 	# move until we're back in the water flow zone
 	while not Geometry2D.is_point_in_polygon(particle.position, $ParticleZone.polygon) and stuck_ctr < STUCK_MAX:
-		particle.translate(Vector2(1, 0))
+		particle.translate(Vector2(-1, -1) * _direction_vector())
 		stuck_ctr += 1
 	
 	if stuck_ctr != STUCK_MAX:
 		stuck_ctr = 0
 		# move until we're at the edge of the zone
 		while Geometry2D.is_point_in_polygon(particle.position, $ParticleZone.polygon) and stuck_ctr < STUCK_MAX:
-			particle.translate(Vector2(1, 0))
+			particle.translate(Vector2(-1, -1) * _direction_vector())
 			stuck_ctr += 1
 		# move it 1 particle back into the szone
-		particle.translate(Vector2(-1, 0))
+		particle.translate(Vector2(1, 1) * _direction_vector())
 		particle.fade_in()
 	
 	#this should never happen, but if we can't reposition a particle, just delete it
