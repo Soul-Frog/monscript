@@ -1,8 +1,8 @@
 extends PushZone
 
-@export var MIN_PARTICLE_SPEED = 30
-@export var MAX_PARTICLE_SPEED = 60
-@export var PARTICLE_COUNT = 100
+@export var MIN_PARTICLE_SPEED = 60
+@export var MAX_PARTICLE_SPEED = 90
+@export var PARTICLE_COUNT = 30
 
 const _PARTICLE = preload("res://particle.tscn")
 
@@ -36,10 +36,8 @@ func _ready():
 				var particle = _PARTICLE.instantiate()
 				particle.init(placement, velocity)
 				match Global.RNG.randi_range(0, 2):
-					0:
+					0, 1:
 						particle.color = Color.WHITE
-					1:
-						particle.color = Color.GRAY
 					2:
 						particle.color = Color.SKY_BLUE
 				particle.fade_out_done.connect(_on_particle_fade_out_done)
