@@ -10,5 +10,8 @@ script = ExtResource("1_f68h3")
 [node name="Collision" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(0, 0, 32, 0, 32, 32, 0, 32)
 
+[node name="ParticleZone" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-2, 0, 34, 0, 34, 32, -2, 32)
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

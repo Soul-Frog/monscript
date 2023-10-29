@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://k2v76upmygmb"]
+
+[ext_resource type="Script" path="res://overworld/areas/coolant_cave/particle.gd" id="1_cxmr5"]
+[ext_resource type="Script" path="res://decorators/fade_decorator.gd" id="2_p18vy"]
+
+[node name="Particle" type="Polygon2D"]
+polygon = PackedVector2Array(0, 0, 1, 0, 1, 1, 0, 1)
+script = ExtResource("1_cxmr5")
+
+[node name="Fade" type="Node" parent="."]
+script = ExtResource("2_p18vy")
+fade_speed = 15.0
+
+[connection signal="fade_out_done" from="Fade" to="." method="_on_fade_fade_out_done"]

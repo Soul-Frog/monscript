@@ -248,10 +248,15 @@ polygon = PackedVector2Array(199, 371, 377, 282, 574, 282, 753, 372, 753, 316, 5
 
 [node name="WaterFlow" parent="." instance=ExtResource("10_j85m8")]
 position = Vector2(1257, 795)
-PARTICLE_COUNT = 500
+MIN_PARTICLE_SPEED = 60
+MAX_PARTICLE_SPEED = 90
+PARTICLE_COUNT = 350
 
 [node name="Collision" parent="WaterFlow" index="0"]
-polygon = PackedVector2Array(0, -37, 8, -34, 19, -32, 30, -34, 37, -37, 45, -33, 56, -31, 66, -33, 73, -35, 73, 77, 49, 74, 33, 76, 13, 74, 0, 77)
+polygon = PackedVector2Array(0, -27, 73, -27, 73, 77, 0, 77)
+
+[node name="ParticleZone" parent="WaterFlow" index="1"]
+polygon = PackedVector2Array(-2, -27, 76, -27, 76, 76, -2, 76)
 
 [editable path="ForegroundElements/ForegroundElem"]
 [editable path="ForegroundElements/ForegroundElem12"]

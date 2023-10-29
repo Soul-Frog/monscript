@@ -1,26 +1,12 @@
 extends PushZone
 
-@export var MIN_PARTICLE_SPEED = 6
-@export var MAX_PARTICLE_SPEED = 20
+@export var MIN_PARTICLE_SPEED = 30
+@export var MAX_PARTICLE_SPEED = 60
 @export var PARTICLE_COUNT = 100
 
-class Particle:
-	var rect: Rect2
-	var color: Color
-	var velocity: Vector2
-	
-	func _init(particle_rect = Rect2(0, 0, 1, 1), particle_color = Color.WHITE, particle_velocity = Vector2(0, 0)) -> void:
-		rect = particle_rect
-		color = particle_color
-		velocity = particle_velocity
-	
-	func update(delta: float) -> void:
-		rect.position += velocity * delta
-	
-	func translate(movement: Vector2) -> void:
-		rect.position += movement
+const _PARTICLE = preload("res://particle.tscn")
 
-var _particles = []
+var _water_particles = []
 
 func _ready():
 	assert(MIN_PARTICLE_SPEED <= MAX_PARTICLE_SPEED)
@@ -29,8 +15,8 @@ func _ready():
 	var max_x = Global.INT_MIN
 	var min_y = Global.INT_MAX
 	var max_y = Global.INT_MIN
-	for i in $Collision.polygon.size():
-		var point = $Collision.polygon[i]
+	for i in $ParticleZone.polygon.size():
+		var point = $ParticleZone.polygon[i]
 		min_x = min(point.x, min_x)
 		min_y = min(point.y, min_y)
 		max_x = max(point.x, max_x)
@@ -44,36 +30,49 @@ func _ready():
 			var placement = Vector2(Global.RNG.randi_range(min_x, max_x), Global.RNG.randi_range(min_y, max_y))
 			
 			# make sure it actually falls within the polygon
-			if Geometry2D.is_point_in_polygon(placement, $Collision.polygon):
-				var random_speed = Global.RNG.randi_range(MIN_PARTICLE_SPEED, MAX_PARTICLE_SPEED)
-				var velocity = Vector2(random_speed, random_speed) * _direction_vector()
-				_particles.append(Particle.new(Rect2(placement, Vector2(1, 1)), Color.WHITE, velocity))
+			if Geometry2D.is_point_in_polygon(placement, $ParticleZone.polygon):
+				var rand_speed = Global.RNG.randi_range(MIN_PARTICLE_SPEED, MAX_PARTICLE_SPEED)
+				var velocity = Vector2(rand_speed, rand_speed) * _direction_vector()
+				var particle = _PARTICLE.instantiate()
+				particle.init(placement, velocity)
+				match Global.RNG.randi_range(0, 2):
+					0:
+						particle.color = Color.WHITE
+					1:
+						particle.color = Color.GRAY
+					2:
+						particle.color = Color.SKY_BLUE
+				particle.fade_out_done.connect(_on_particle_fade_out_done)
+				add_child(particle)
+				_water_particles.append(particle)
 				placed = true
 
 func _process(delta):
-	for particle in _particles:
-		particle.update(delta)
-	queue_redraw()
+	for particle in _water_particles:
+		if not Geometry2D.is_point_in_polygon(particle.position + Vector2(5, 5) * _direction_vector(), $ParticleZone.polygon):
+			particle.fade_out()
 
-func _draw():
+func _on_particle_fade_out_done(particle):
 	const STUCK_MAX = 1000
+	var stuck_ctr = 0 
 	
-	for particle in _particles:
-		var stuck_ctr = 0 
-		if not Geometry2D.is_point_in_polygon(particle.rect.position, $Collision.polygon):
-			while not Geometry2D.is_point_in_polygon(particle.rect.position, $Collision.polygon) and stuck_ctr < 1000:
-				particle.translate(Vector2(1, 0))
-				stuck_ctr += 1
-			stuck_ctr = 0
-			while Geometry2D.is_point_in_polygon(particle.rect.position, $Collision.polygon) and stuck_ctr < 1000:
-				particle.translate(Vector2(1, 0))
-				stuck_ctr += 1
-			particle.translate(Vector2(-1, 0))
-			
-			#this should never happen, but if we can't reposition a particle, just delete it
-			if stuck_ctr == STUCK_MAX:
-				print("warning - particle was stuck")
-				_particles.erase(particle)
-				continue
-		
-		draw_rect(particle.rect, particle.color)
+	# move until we're back in the water flow zone
+	while not Geometry2D.is_point_in_polygon(particle.position, $ParticleZone.polygon) and stuck_ctr < STUCK_MAX:
+		particle.translate(Vector2(1, 0))
+		stuck_ctr += 1
+	
+	if stuck_ctr != STUCK_MAX:
+		stuck_ctr = 0
+		# move until we're at the edge of the zone
+		while Geometry2D.is_point_in_polygon(particle.position, $ParticleZone.polygon) and stuck_ctr < STUCK_MAX:
+			particle.translate(Vector2(1, 0))
+			stuck_ctr += 1
+		# move it 1 particle back into the szone
+		particle.translate(Vector2(-1, 0))
+		particle.fade_in()
+	
+	#this should never happen, but if we can't reposition a particle, just delete it
+	if stuck_ctr == STUCK_MAX:
+		print("warning - particle was stuck")
+		_water_particles.erase(particle)
+		particle.queue_free()
