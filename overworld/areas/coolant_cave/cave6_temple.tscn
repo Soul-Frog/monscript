@@ -1,14 +1,15 @@
-[gd_scene load_steps=13 format=3 uid="uid://wn6keuc21ls8"]
+[gd_scene load_steps=14 format=3 uid="uid://wn6keuc21ls8"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_jvkfo"]
 [ext_resource type="Texture2D" uid="uid://be4c4syodtuwg" path="res://assets/maps/coolant_cave/cave6_temple/cave6.png" id="2_v2f4j"]
-[ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player_overhead.tscn" id="3_u0psi"]
-[ext_resource type="PackedScene" uid="uid://cepi8saddwmb6" path="res://overworld/foreground_element.tscn" id="4_0sjwi"]
-[ext_resource type="Script" path="res://overworld/warp.gd" id="4_n8bn1"]
+[ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/components/player_overhead.tscn" id="3_u0psi"]
+[ext_resource type="PackedScene" uid="uid://cepi8saddwmb6" path="res://overworld/components/foreground_element.tscn" id="4_0sjwi"]
+[ext_resource type="Script" path="res://overworld/components/warp.gd" id="4_n8bn1"]
 [ext_resource type="Texture2D" uid="uid://6838wwuqkn7g" path="res://assets/maps/coolant_cave/cave6_temple/cave6_fg1.png" id="5_c0klj"]
 [ext_resource type="Texture2D" uid="uid://bib236o4h2gj" path="res://assets/maps/coolant_cave/cave6_temple/cave6_fg4.png" id="6_lw8og"]
 [ext_resource type="Texture2D" uid="uid://da2b1r3cba4" path="res://assets/maps/coolant_cave/cave6_temple/cave6_fg2.png" id="6_x6q01"]
 [ext_resource type="Texture2D" uid="uid://dglru7qddmd6g" path="res://assets/maps/coolant_cave/cave6_temple/cave6_fg3.png" id="7_y32nk"]
+[ext_resource type="PackedScene" uid="uid://5vxxc0i44umo" path="res://overworld/areas/coolant_cave/water_flow.tscn" id="10_j85m8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_80ub1"]
 size = Vector2(70, 44)
@@ -29,11 +30,12 @@ texture = ExtResource("2_v2f4j")
 centered = false
 
 [node name="Player" parent="." instance=ExtResource("3_u0psi")]
-position = Vector2(1373, 95)
+position = Vector2(1374, 830)
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
 
 [node name="ForegroundElements" type="Node2D" parent="."]
+visible = false
 
 [node name="ForegroundElem" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
 z_index = 0
@@ -244,6 +246,13 @@ polygon = PackedVector2Array(1203, -28, 1276, -28, 1276, 45, 1203, 45)
 [node name="CollisionPolygon2D14" type="CollisionPolygon2D" parent="Collision"]
 polygon = PackedVector2Array(199, 371, 377, 282, 574, 282, 753, 372, 753, 316, 574, 227, 377, 227, 199, 316)
 
+[node name="WaterFlow" parent="." instance=ExtResource("10_j85m8")]
+position = Vector2(1257, 795)
+PARTICLE_COUNT = 500
+
+[node name="Collision" parent="WaterFlow" index="0"]
+polygon = PackedVector2Array(0, -37, 8, -34, 19, -32, 30, -34, 37, -37, 45, -33, 56, -31, 66, -33, 73, -35, 73, 77, 49, 74, 33, 76, 13, 74, 0, 77)
+
 [editable path="ForegroundElements/ForegroundElem"]
 [editable path="ForegroundElements/ForegroundElem12"]
 [editable path="ForegroundElements/ForegroundElem11"]
@@ -256,3 +265,4 @@ polygon = PackedVector2Array(199, 371, 377, 282, 574, 282, 753, 372, 753, 316, 5
 [editable path="ForegroundElements/ForegroundElem8"]
 [editable path="ForegroundElements/ForegroundElem9"]
 [editable path="ForegroundElements/ForegroundElem10"]
+[editable path="WaterFlow"]

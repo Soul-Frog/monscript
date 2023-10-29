@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_kc7wb"]
 [ext_resource type="Texture2D" uid="uid://lqwkx40f2lfp" path="res://assets/maps/coolant_cave/cave9_tidalchamber/cave9.png" id="2_ufui5"]
-[ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player_overhead.tscn" id="3_3s5my"]
-[ext_resource type="Script" path="res://overworld/warp.gd" id="4_0016s"]
-[ext_resource type="PackedScene" uid="uid://cepi8saddwmb6" path="res://overworld/foreground_element.tscn" id="4_w7l34"]
+[ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/components/player_overhead.tscn" id="3_3s5my"]
+[ext_resource type="Script" path="res://overworld/components/warp.gd" id="4_0016s"]
+[ext_resource type="PackedScene" uid="uid://cepi8saddwmb6" path="res://overworld/components/foreground_element.tscn" id="4_w7l34"]
 [ext_resource type="Texture2D" uid="uid://cjxeq5hxni7nw" path="res://assets/maps/coolant_cave/cave9_tidalchamber/cave9_fg1.png" id="5_pyofp"]
 [ext_resource type="Texture2D" uid="uid://dgrg2ivn326v8" path="res://assets/maps/coolant_cave/cave9_tidalchamber/cave9_fg2.png" id="6_060lv"]
 [ext_resource type="Texture2D" uid="uid://c8tw7e7kjqgwl" path="res://assets/maps/coolant_cave/cave9_tidalchamber/cave9_fg3.png" id="7_a7lob"]

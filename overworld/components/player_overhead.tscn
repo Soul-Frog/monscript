@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://i0tisfi5mas0"]
 
-[ext_resource type="Script" path="res://overworld/player_overhead.gd" id="1_kvdei"]
+[ext_resource type="Script" path="res://overworld/components/player_overhead.gd" id="1_kvdei"]
 [ext_resource type="Script" path="res://overworld/camera.gd" id="2_djux3"]
 [ext_resource type="Texture2D" uid="uid://cjypeabhp8v4y" path="res://assets/characters/mc.png" id="3_wuw0g"]
 

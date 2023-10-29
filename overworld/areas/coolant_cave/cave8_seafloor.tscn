@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_c21qo"]
 [ext_resource type="Texture2D" uid="uid://3nwfn8vi6s2" path="res://assets/maps/coolant_cave/cave8_seafloor/cave8.png" id="2_eo2i5"]
-[ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player_overhead.tscn" id="3_x756a"]
-[ext_resource type="Script" path="res://overworld/warp.gd" id="4_ux8ka"]
+[ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/components/player_overhead.tscn" id="3_x756a"]
+[ext_resource type="Script" path="res://overworld/components/warp.gd" id="4_ux8ka"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_80ub1"]
 size = Vector2(54, 16)

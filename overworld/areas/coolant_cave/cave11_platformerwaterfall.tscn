@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_k8mby"]
 [ext_resource type="Texture2D" uid="uid://bsbqw2a0ycaaa" path="res://assets/maps/coolant_cave/cave11_platformerwaterfall/cave11.png" id="2_ghj08"]
-[ext_resource type="PackedScene" uid="uid://cpro10oe50dhk" path="res://overworld/player_platformer.tscn" id="3_i2mfo"]
-[ext_resource type="Script" path="res://overworld/warp.gd" id="4_851ib"]
-[ext_resource type="PackedScene" uid="uid://cepi8saddwmb6" path="res://overworld/foreground_element.tscn" id="4_bg1m2"]
+[ext_resource type="PackedScene" uid="uid://cpro10oe50dhk" path="res://overworld/components/player_platformer.tscn" id="3_i2mfo"]
+[ext_resource type="Script" path="res://overworld/components/warp.gd" id="4_851ib"]
+[ext_resource type="PackedScene" uid="uid://cepi8saddwmb6" path="res://overworld/components/foreground_element.tscn" id="4_bg1m2"]
 [ext_resource type="Texture2D" uid="uid://cshh1a3j2a1jp" path="res://assets/maps/coolant_cave/cave11_platformerwaterfall/cave11_fg1.png" id="5_gaf47"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_80ub1"]

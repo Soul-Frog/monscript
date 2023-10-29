@@ -1,7 +1,9 @@
 class_name PlayerOverhead
 extends CharacterBody2D
 
-const SPEED = 125 # Movement speed
+const SPEED = 150 # Movement speed
+const FRICTION = 0.4
+const ACCELERATION = 0.4
 
 const INVINCIBILITY_AFTER_ESCAPE_SECS = 2
 const INVINCIBILITY_AFTER_WIN_SECS = 1
@@ -10,6 +12,7 @@ const DASH_SPEED = SPEED * 4
 
 var is_invincible = false
 
+var external_velocity = Vector2.ZERO
 
 var orientation = Vector2.ZERO # direction the player last moved; used for dash direction
 var dashing = false # if the player is currently dashing
@@ -25,9 +28,22 @@ func _input(event):
 func _ready():
 	assert(SPEED > 0)
 
-func update_velocity(_delta):
+func apply_velocity(velo):
+	external_velocity += velo
+
+func update_velocity():
 	var input_direction = Input.get_vector("left", "right", "up", "down")
-	velocity = SPEED * input_direction
+	
+	if input_direction != Vector2.ZERO:
+		velocity = lerp(velocity, SPEED * input_direction, ACCELERATION)
+	else:
+		velocity = lerp(velocity, Vector2.ZERO, FRICTION)
+	
+	# apply external velocity
+	velocity.x += external_velocity.x
+	velocity.y += external_velocity.y
+	external_velocity = Vector2.ZERO
+	
 	if dashing:
 		velocity = DASH_SPEED * orientation
 	if input_direction != Vector2.ZERO and not dashing:
@@ -35,7 +51,7 @@ func update_velocity(_delta):
 
 func _physics_process(delta):
 	if can_move:
-		update_velocity(delta)
+		update_velocity()
 		move_and_slide()
 
 func _on_area_2d_body_entered(overworld_encounter_collided_with):

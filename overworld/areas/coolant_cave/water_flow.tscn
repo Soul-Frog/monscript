@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://5vxxc0i44umo"]
+
+[ext_resource type="Script" path="res://overworld/areas/coolant_cave/water_flow.gd" id="1_f68h3"]
+
+[node name="WaterFlow" type="Area2D"]
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("1_f68h3")
+
+[node name="Collision" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, 0, 32, 0, 32, 32, 0, 32)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

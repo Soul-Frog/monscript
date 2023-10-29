@@ -1,7 +1,7 @@
 class_name PlayerPlatformer
 extends CharacterBody2D
 
-const SPEED = 100 # Movement speed
+const SPEED = 110 # Movement speed
 var GRAVITY = ProjectSettings.get_setting("physics/2d/default_gravity")
 var MAX_FALL_SPEED = GRAVITY/2 #maximum speed the player can be falling
 const JUMP_VELOCITY = -271.0 #this is ~56 pixels high with current gravity
