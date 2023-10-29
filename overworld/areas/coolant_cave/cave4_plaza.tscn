@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_leamx"]
 [ext_resource type="Texture2D" uid="uid://tjinhumapyr" path="res://assets/maps/coolant_cave/cave4_plaza/cave4.png" id="2_a7nkp"]
-[ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/player_overhead.tscn" id="3_bhctv"]
-[ext_resource type="Script" path="res://overworld/warp.gd" id="4_7evqn"]
+[ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/components/player_overhead.tscn" id="3_bhctv"]
+[ext_resource type="Script" path="res://overworld/components/warp.gd" id="4_7evqn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_80ub1"]
 size = Vector2(51, 7)
@@ -32,7 +32,6 @@ position = Vector2(344, 443)
 [node name="Warps" type="Node2D" parent="."]
 
 [node name="WarpToLakeRight" type="Area2D" parent="Warps"]
-visible = false
 position = Vector2(587, 465)
 collision_layer = 0
 script = ExtResource("4_7evqn")
@@ -45,7 +44,6 @@ position = Vector2(19.5, -0.5)
 shape = SubResource("RectangleShape2D_80ub1")
 
 [node name="WarpToLakeLeft" type="Area2D" parent="Warps"]
-visible = false
 position = Vector2(325, 465)
 collision_layer = 0
 script = ExtResource("4_7evqn")
