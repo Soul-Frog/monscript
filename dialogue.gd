@@ -80,7 +80,9 @@ func play(res: DialogueResource, tag: String, p0 = null, p1 = null, p2 = null, p
 	assert(res != null and tag != null)
 	
 	# disable player movement while dialogue is active
-	get_tree().get_first_node_in_group("main").get_player().disable_movement()
+	var player = get_tree().get_first_node_in_group("main").get_player()
+	player.disable_movement()
+	player.disable_battle_collision()
 	
 	# set in-params
 	_in(p0, p1, p2, p3, p4, p5)
@@ -98,7 +100,8 @@ func play(res: DialogueResource, tag: String, p0 = null, p1 = null, p2 = null, p
 	emit_signal("dialogue_ended")
 	
 	# reenable movement now that dialogue is done
-	get_tree().get_first_node_in_group("main").get_player().enable_movement()
+	player.enable_movement()
+	player.enable_battle_collision()
 	
 	# return out-params
 	return outs

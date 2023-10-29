@@ -22,7 +22,7 @@ texture = ExtResource("2_l3y27")
 centered = false
 
 [node name="Player" parent="." instance=ExtResource("3_8ihar")]
-position = Vector2(16, 196)
+position = Vector2(15.8915, 195.472)
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
 
@@ -46,7 +46,7 @@ fade_speed = 4.0
 position = Vector2(1280, 276)
 
 [node name="Cave5Left" type="Node2D" parent="Points"]
-position = Vector2(16, 196)
+position = Vector2(15.8772, 195.479)
 
 [node name="Warps" type="Node2D" parent="."]
 
@@ -63,7 +63,7 @@ position = Vector2(29, -19.5)
 shape = SubResource("RectangleShape2D_4wb6b")
 
 [node name="WarpToTemple" type="Area2D" parent="Warps"]
-position = Vector2(-2, 110)
+position = Vector2(-1.40069, 109.737)
 collision_layer = 0
 script = ExtResource("4_oxmf0")
 area = 5

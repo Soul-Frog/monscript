@@ -13,9 +13,6 @@ var is_invincible = false
 
 var can_move = true # if the player can move
 
-func _ready():
-	assert(SPEED > 0)
-
 func _physics_process(delta):
 	if can_move:
 		# Add the gravity.
@@ -60,10 +57,14 @@ func activate_invincibility(battle_end_condition):
 
 func enable_movement():
 	can_move = true
-	$Area2D.monitoring = true
-	$Area2D.monitorable = true
 	
 func disable_movement():
 	can_move = false
-	$Area2D.monitoring = false
-	$Area2D.monitorable = false
+
+func enable_battle_collision():
+	$BattleCollision.monitoring = true
+	$BattleCollision.monitorable = true
+
+func disable_battle_collsiion():
+	$BattleCollision.monitoring = false
+	$BattleCollision.monitorable = false

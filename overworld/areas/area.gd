@@ -1,3 +1,4 @@
+class_name Area
 extends Node2D
 
 @export var area_enum := GameData.Area.NONE
