@@ -4,7 +4,6 @@
 
 [node name="WaterFlow" type="Area2D"]
 collision_layer = 0
-collision_mask = 3
 script = ExtResource("1_f68h3")
 direction = 3
 
