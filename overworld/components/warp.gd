@@ -13,4 +13,4 @@ func _ready():
 	self.body_entered.connect(_on_body_entered)
 
 func _on_body_entered(body):
-	Events.emit_signal("area_changed", area, spawn_point)
+	Events.emit_signal("area_changed", area, spawn_point, false)

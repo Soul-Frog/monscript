@@ -14,9 +14,10 @@ func handle_battle_results(battle_end_condition) -> void:
 
 # Loads a new area and move the player to their spawn point.
 # new_spawn_point may be a String (a point in the new area) or a Vector2 (a position)
-func _on_area_changed(new_area: GameData.Area, new_spawn_point: Variant) -> void:
-	$FadeDecorator.fade_out()
-	await $FadeDecorator.fade_out_done
+func _on_area_changed(new_area: GameData.Area, new_spawn_point: Variant, skip_fade: bool) -> void:
+	if not skip_fade:
+		$FadeDecorator.fade_out()
+		await $FadeDecorator.fade_out_done
 	
 	# if new area is the different from current area...
 	if current_area.scene_file_path != GameData.path_for_area(new_area):

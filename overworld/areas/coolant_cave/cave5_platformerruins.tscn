@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://bocqniv5n4bn6"]
+[gd_scene load_steps=10 format=3 uid="uid://bocqniv5n4bn6"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_cah05"]
 [ext_resource type="Texture2D" uid="uid://dovicv5nojqhs" path="res://assets/maps/coolant_cave/cave5_platformerruins/cave5.png" id="2_l3y27"]
 [ext_resource type="PackedScene" uid="uid://cpro10oe50dhk" path="res://overworld/components/player_platformer.tscn" id="3_8ihar"]
+[ext_resource type="Texture2D" uid="uid://b8i48bctelxjw" path="res://assets/maps/coolant_cave/cave5_platformerruins/cave5_water.png" id="4_g2yta"]
 [ext_resource type="Script" path="res://overworld/components/warp.gd" id="4_oxmf0"]
 [ext_resource type="PackedScene" uid="uid://cepi8saddwmb6" path="res://overworld/components/foreground_element.tscn" id="4_rw0m6"]
 [ext_resource type="Texture2D" uid="uid://cojsfqslplo7l" path="res://assets/maps/coolant_cave/cave5_platformerruins/cave5_fg1.png" id="5_7sbg0"]
@@ -23,6 +24,12 @@ centered = false
 
 [node name="Player" parent="." instance=ExtResource("3_8ihar")]
 position = Vector2(15.8915, 195.472)
+
+[node name="Water" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.74902)
+position = Vector2(192, 279)
+texture = ExtResource("4_g2yta")
+centered = false
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
 

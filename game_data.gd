@@ -192,7 +192,7 @@ func load_game():
 		storage[i] = MonData.mon_from_json(mon_str) if mon_str != "[STORAGENULL]" else null
 	
 	# set the player's position and area
-	Events.area_changed.emit( save_dict["current_area"], Vector2(save_dict["player_x"], save_dict["player_y"]))
+	Events.area_changed.emit(save_dict["current_area"], Vector2(save_dict["player_x"], save_dict["player_y"]), true)
 	
 	# set the player's mask
 	get_tree().get_first_node_in_group("main").get_player().collision_mask = save_dict["player_collision_mask"]
