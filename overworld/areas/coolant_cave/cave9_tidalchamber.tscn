@@ -1,12 +1,15 @@
-[gd_scene load_steps=13 format=3 uid="uid://bfry8d2ofnfac"]
+[gd_scene load_steps=16 format=3 uid="uid://bfry8d2ofnfac"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_kc7wb"]
 [ext_resource type="Texture2D" uid="uid://lqwkx40f2lfp" path="res://assets/maps/coolant_cave/cave9_tidalchamber/cave9.png" id="2_ufui5"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/components/player_overhead.tscn" id="3_3s5my"]
 [ext_resource type="Script" path="res://overworld/areas/coolant_cave/wavepool.gd" id="3_h13ki"]
+[ext_resource type="Texture2D" uid="uid://cvpijgunhsm8k" path="res://assets/maps/coolant_cave/cave9_tidalchamber/cave9_water.png" id="3_vcl0r"]
 [ext_resource type="Script" path="res://overworld/components/warp.gd" id="4_0016s"]
+[ext_resource type="PackedScene" uid="uid://0kv02scwi7py" path="res://decorators/color_decorator.tscn" id="4_ghfd4"]
 [ext_resource type="PackedScene" uid="uid://cepi8saddwmb6" path="res://overworld/components/foreground_element.tscn" id="4_w7l34"]
 [ext_resource type="Script" path="res://overworld/areas/coolant_cave/wave.gd" id="4_w8nsl"]
+[ext_resource type="Texture2D" uid="uid://bta8ruo3cdy2e" path="res://assets/maps/coolant_cave/cave9_tidalchamber/cave9_abovewaves.png" id="5_isefo"]
 [ext_resource type="Texture2D" uid="uid://cjxeq5hxni7nw" path="res://assets/maps/coolant_cave/cave9_tidalchamber/cave9_fg1.png" id="5_pyofp"]
 [ext_resource type="Texture2D" uid="uid://dgrg2ivn326v8" path="res://assets/maps/coolant_cave/cave9_tidalchamber/cave9_fg2.png" id="6_060lv"]
 [ext_resource type="Texture2D" uid="uid://c8tw7e7kjqgwl" path="res://assets/maps/coolant_cave/cave9_tidalchamber/cave9_fg3.png" id="7_a7lob"]
@@ -24,6 +27,20 @@ area_enum = 8
 [node name="Map" type="Sprite2D" parent="."]
 texture = ExtResource("2_ufui5")
 centered = false
+
+[node name="Water" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.2)
+texture = ExtResource("3_vcl0r")
+centered = false
+
+[node name="ColorDecorator" parent="Water" instance=ExtResource("4_ghfd4")]
+autostart = true
+min_red = 215.0
+red_speed = 300
+min_green = 195.0
+green_speed = 65
+min_blue = 175.0
+blue_speed = 25
 
 [node name="Wavepool" type="Node2D" parent="."]
 script = ExtResource("3_h13ki")
@@ -95,6 +112,10 @@ polygon = PackedVector2Array(198, 115, 198, 118, 438, 118, 438, 115)
 [node name="WaveSprite" type="Polygon2D" parent="Wavepool/Waves/Wave4"]
 position = Vector2(-1, 0)
 polygon = PackedVector2Array(1, 0, 241, 0, 241, 3, 1, 3)
+
+[node name="MapAboveWaves" type="Sprite2D" parent="."]
+texture = ExtResource("5_isefo")
+centered = false
 
 [node name="Player" parent="." instance=ExtResource("3_3s5my")]
 position = Vector2(315, 1086)
