@@ -1,10 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://bfry8d2ofnfac"]
+[gd_scene load_steps=13 format=3 uid="uid://bfry8d2ofnfac"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_kc7wb"]
 [ext_resource type="Texture2D" uid="uid://lqwkx40f2lfp" path="res://assets/maps/coolant_cave/cave9_tidalchamber/cave9.png" id="2_ufui5"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/components/player_overhead.tscn" id="3_3s5my"]
+[ext_resource type="Script" path="res://overworld/areas/coolant_cave/wavepool.gd" id="3_h13ki"]
 [ext_resource type="Script" path="res://overworld/components/warp.gd" id="4_0016s"]
 [ext_resource type="PackedScene" uid="uid://cepi8saddwmb6" path="res://overworld/components/foreground_element.tscn" id="4_w7l34"]
+[ext_resource type="Script" path="res://overworld/areas/coolant_cave/wave.gd" id="4_w8nsl"]
 [ext_resource type="Texture2D" uid="uid://cjxeq5hxni7nw" path="res://assets/maps/coolant_cave/cave9_tidalchamber/cave9_fg1.png" id="5_pyofp"]
 [ext_resource type="Texture2D" uid="uid://dgrg2ivn326v8" path="res://assets/maps/coolant_cave/cave9_tidalchamber/cave9_fg2.png" id="6_060lv"]
 [ext_resource type="Texture2D" uid="uid://c8tw7e7kjqgwl" path="res://assets/maps/coolant_cave/cave9_tidalchamber/cave9_fg3.png" id="7_a7lob"]
@@ -23,6 +25,77 @@ area_enum = 8
 texture = ExtResource("2_ufui5")
 centered = false
 
+[node name="Wavepool" type="Node2D" parent="."]
+script = ExtResource("3_h13ki")
+
+[node name="Top" type="Node2D" parent="Wavepool"]
+position = Vector2(198, 115)
+
+[node name="Bottom" type="Node2D" parent="Wavepool"]
+position = Vector2(198, 1019)
+
+[node name="Waves" type="Node2D" parent="Wavepool"]
+
+[node name="Wave" type="StaticBody2D" parent="Wavepool/Waves"]
+position = Vector2(198, 115)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("4_w8nsl")
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wavepool/Waves/Wave"]
+position = Vector2(-198, -115)
+polygon = PackedVector2Array(198, 115, 198, 118, 438, 118, 438, 115)
+
+[node name="WaveSprite" type="Polygon2D" parent="Wavepool/Waves/Wave"]
+position = Vector2(-1, 0)
+polygon = PackedVector2Array(1, 0, 241, 0, 241, 3, 1, 3)
+
+[node name="Wave2" type="StaticBody2D" parent="Wavepool/Waves"]
+position = Vector2(198, 341)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("4_w8nsl")
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wavepool/Waves/Wave2"]
+position = Vector2(-198, -115)
+polygon = PackedVector2Array(198, 115, 198, 118, 438, 118, 438, 115)
+
+[node name="WaveSprite" type="Polygon2D" parent="Wavepool/Waves/Wave2"]
+position = Vector2(-1, 0)
+polygon = PackedVector2Array(1, 0, 241, 0, 241, 3, 1, 3)
+
+[node name="Wave3" type="StaticBody2D" parent="Wavepool/Waves"]
+position = Vector2(198, 567)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("4_w8nsl")
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wavepool/Waves/Wave3"]
+position = Vector2(-198, -115)
+polygon = PackedVector2Array(198, 115, 198, 118, 438, 118, 438, 115)
+
+[node name="WaveSprite" type="Polygon2D" parent="Wavepool/Waves/Wave3"]
+position = Vector2(-1, 0)
+polygon = PackedVector2Array(1, 0, 241, 0, 241, 3, 1, 3)
+
+[node name="Wave4" type="StaticBody2D" parent="Wavepool/Waves"]
+position = Vector2(198, 793)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("4_w8nsl")
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wavepool/Waves/Wave4"]
+position = Vector2(-198, -115)
+polygon = PackedVector2Array(198, 115, 198, 118, 438, 118, 438, 115)
+
+[node name="WaveSprite" type="Polygon2D" parent="Wavepool/Waves/Wave4"]
+position = Vector2(-1, 0)
+polygon = PackedVector2Array(1, 0, 241, 0, 241, 3, 1, 3)
+
 [node name="Player" parent="." instance=ExtResource("3_3s5my")]
 position = Vector2(315, 1086)
 
@@ -34,6 +107,9 @@ position = Vector2(315, 1086)
 z_index = 0
 position = Vector2(279, 847)
 texture = ExtResource("5_pyofp")
+
+[node name="FadeZone" parent="ForegroundElements/ForegroundElem" index="0"]
+visible = false
 
 [node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem/FadeZone" index="0"]
 position = Vector2(1, 13)
@@ -47,6 +123,9 @@ z_index = 0
 position = Vector2(279, 619)
 texture = ExtResource("5_pyofp")
 
+[node name="FadeZone" parent="ForegroundElements/ForegroundElem2" index="0"]
+visible = false
+
 [node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem2/FadeZone" index="0"]
 position = Vector2(1, 13)
 polygon = PackedVector2Array(232, -113, 229, -25, 202, 0, 77, 38, -1, 38, -97, 41, -99, -67, 98, -67, 180, -106)
@@ -58,6 +137,9 @@ min_alpha = 0.25
 z_index = 0
 position = Vector2(279, 423)
 texture = ExtResource("5_pyofp")
+
+[node name="FadeZone" parent="ForegroundElements/ForegroundElem3" index="0"]
+visible = false
 
 [node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem3/FadeZone" index="0"]
 position = Vector2(1, 13)
@@ -71,6 +153,9 @@ z_index = 0
 position = Vector2(279, 246)
 texture = ExtResource("5_pyofp")
 
+[node name="FadeZone" parent="ForegroundElements/ForegroundElem4" index="0"]
+visible = false
+
 [node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem4/FadeZone" index="0"]
 position = Vector2(1, 13)
 polygon = PackedVector2Array(77, 38, -1, 38, -1, -13, 77, -13)
@@ -82,6 +167,9 @@ min_alpha = 0.25
 z_index = 0
 position = Vector2(181, 832)
 texture = ExtResource("6_060lv")
+
+[node name="FadeZone" parent="ForegroundElements/ForegroundElem5" index="0"]
+visible = false
 
 [node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem5/FadeZone" index="0"]
 position = Vector2(1, 13)
@@ -95,6 +183,9 @@ z_index = 0
 position = Vector2(181, 624)
 texture = ExtResource("6_060lv")
 
+[node name="FadeZone" parent="ForegroundElements/ForegroundElem6" index="0"]
+visible = false
+
 [node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem6/FadeZone" index="0"]
 position = Vector2(1, 13)
 polygon = PackedVector2Array(137, 28, 97, 28, -21, 35, -17, -65, 15, -58, 138, -13)
@@ -107,6 +198,9 @@ z_index = 0
 position = Vector2(181, 433)
 texture = ExtResource("6_060lv")
 
+[node name="FadeZone" parent="ForegroundElements/ForegroundElem7" index="0"]
+visible = false
+
 [node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem7/FadeZone" index="0"]
 position = Vector2(1, 13)
 polygon = PackedVector2Array(137, 28, 97, 28, -15, 34, -12, -115, 16, -111, 51, -66, 138, -13)
@@ -118,6 +212,9 @@ min_alpha = 0.25
 z_index = 0
 position = Vector2(438, 448)
 texture = ExtResource("7_a7lob")
+
+[node name="FadeZone" parent="ForegroundElements/ForegroundElem8" index="0"]
+visible = false
 
 [node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem8/FadeZone" index="0"]
 position = Vector2(48, 11)
@@ -161,6 +258,7 @@ position = Vector2(43, -43)
 shape = SubResource("RectangleShape2D_80ub1")
 
 [node name="Collision" type="StaticBody2D" parent="."]
+visible = false
 modulate = Color(0, 1, 0, 1)
 position = Vector2(-96, 150)
 collision_layer = 4
