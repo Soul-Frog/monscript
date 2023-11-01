@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b7tq8iefta43j"]
+[gd_scene load_steps=14 format=3 uid="uid://b7tq8iefta43j"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_6nc0c"]
 [ext_resource type="Texture2D" uid="uid://cds4e7g3n1rdo" path="res://assets/maps/coolant_cave/cave7_whirlcavern/cave7.png" id="2_jra30"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://vrs2yt3mmjiv" path="res://assets/maps/coolant_cave/cave7_whirlcavern/cave7_fg3.png" id="7_gpok0"]
 [ext_resource type="Texture2D" uid="uid://du4shfa6x16iq" path="res://assets/maps/coolant_cave/cave7_whirlcavern/cave7_fg4.png" id="8_spo1b"]
 [ext_resource type="Texture2D" uid="uid://c2b0hj2h2p83" path="res://assets/maps/coolant_cave/cave7_whirlcavern/cave7_fg5.png" id="9_sxt7u"]
+[ext_resource type="PackedScene" uid="uid://cafxffxq81di" path="res://overworld/components/push_zone.tscn" id="12_dtqlw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_80ub1"]
 size = Vector2(35, 16)
@@ -29,6 +30,7 @@ position = Vector2(461, 105)
 [node name="OverworldEncounters" type="Node2D" parent="."]
 
 [node name="ForegroundElements" type="Node2D" parent="."]
+visible = false
 
 [node name="ForegroundElem" parent="ForegroundElements" instance=ExtResource("4_no6le")]
 z_index = 0
@@ -72,6 +74,7 @@ polygon = PackedVector2Array(43, 11, 52, 21, 56, 31, 56, 86, 31, 55, 20, 57, 0, 
 
 [node name="Water" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.282353)
+position = Vector2(-29, 42)
 texture = ExtResource("4_kx0l5")
 centered = false
 
@@ -118,8 +121,197 @@ polygon = PackedVector2Array(567, 436, 574, 436, 585, 446, 595, 457, 597, 461, 5
 [node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="Collision"]
 polygon = PackedVector2Array(501, 544, 509, 555, 520, 589, 527, 610, 535, 624, 542, 644, 551, 659, 554, 663, 558, 668, 563, 670, 580, 674, 609, 674, 627, 670, 632, 665, 637, 657, 642, 646, 645, 633, 649, 589, 651, 571, 652, 551, 660, 540, 672, 532, 687, 523, 703, 508, 716.804, 473.275, 720, 413, 724, 353, 725, 323, 725, 234, 724, 221, 717, 190, 710, 172, 698, 151, 690, 141, 687, 139, 687, 136, 682, 131, 682, 127, 681, 127, 681, 125, 679, 124, 679, 119, 677, 118, 677, 115, 676, 115, 676, 112, 675, 112, 675, 109, 673, 109, 673, 105, 672, 103, 671, 103, 671, 101, 670, 101, 670, 97, 661, 78, 652, 58, 638, 41, 637, 39, 633, 36, 633, 34, 631, 34, 631, 31, 628, 30, 626, 25, 623, 22, 622, 18, 620, 16, 619, 13, 617, 12, 617, 6, 614, -11, 613, -30, 611, -40, 608, -44, 608, -47, 605, -51, 598, -63, 589, -73, 579, -78, 567, -83, 545, -83, 536, -80, 530, -75, 527, -70, 521, -65, 517, -59, 514, -55, 512, -49, 508, -38, 506, -26, 505, 21, 499, 25, 497, 29, 491, 32, 488, 38, 480, 50, 476, 55, 470, 67, 467, 79, 464, 88, 460, 97, 458, 104, 192, -187, 853, -200, 824, 714, 225, 725, 192, -186, 458, 104, 455, 108, 449, 125, 446, 138, 444, 143, 443, 149, 438, 163, 436, 174, 434, 182, 432, 196, 428, 206, 425, 221, 425, 233, 424, 233, 424, 277, 422, 279, 414, 278, 407, 276, 391, 276, 391, 277, 385, 277, 359, 291, 353, 298, 349, 307, 346, 311, 343, 318, 338, 331, 338, 341, 340, 354, 342, 358, 344, 365, 349, 375, 355, 381, 358, 385, 363, 390, 373, 392, 393, 392, 410, 393, 421, 394, 425, 397, 425, 413, 427, 425, 427, 444, 429, 461, 431, 478, 436, 495, 438, 502, 443, 511, 448, 515, 451, 520, 454, 523, 463, 532, 471, 534, 489, 540)
 
+[node name="Node" type="Node2D" parent="."]
+
+[node name="PushDown" parent="Node" instance=ExtResource("12_dtqlw")]
+visible = false
+direction = 1
+force = 85
+
+[node name="CollisionPolygon2D" parent="Node/PushDown" index="0"]
+polygon = PackedVector2Array(192, 0, 1192, 0, 1192, 1000, 192, 1000)
+
+[node name="Upper" type="Node2D" parent="Node"]
+
+[node name="Right" parent="Node/Upper" instance=ExtResource("12_dtqlw")]
+direction = 3
+force = 60
+
+[node name="CollisionPolygon2D" parent="Node/Upper/Right" index="0"]
+position = Vector2(-166, -21)
+polygon = PackedVector2Array(636, 245, 641, 250, 651, 259, 656, 272, 658, 289, 646, 261, 635, 250)
+
+[node name="Left" parent="Node/Upper" instance=ExtResource("12_dtqlw")]
+force = 60
+
+[node name="CollisionPolygon2D" parent="Node/Upper/Left" index="0"]
+position = Vector2(-194, -25)
+polygon = PackedVector2Array(653, 257, 658, 250, 664, 249, 663, 254, 640, 309, 641, 288, 648, 267)
+
+[node name="Tiebreaker" parent="Node/Upper" instance=ExtResource("12_dtqlw")]
+force = 60
+
+[node name="CollisionPolygon2D" parent="Node/Upper/Tiebreaker" index="0"]
+position = Vector2(-186, -25)
+polygon = PackedVector2Array(649, 249, 656, 249, 655, 254, 649, 257)
+
+[node name="Right" type="Node2D" parent="Node"]
+
+[node name="Right" parent="Node/Right" instance=ExtResource("12_dtqlw")]
+direction = 3
+force = 60
+
+[node name="CollisionPolygon2D" parent="Node/Right/Right" index="0"]
+position = Vector2(-64, 100)
+polygon = PackedVector2Array(623, 247, 639, 250, 649, 259, 654, 272, 646, 261, 623, 250)
+
+[node name="Left" parent="Node/Right" instance=ExtResource("12_dtqlw")]
+force = 60
+
+[node name="CollisionPolygon2D" parent="Node/Right/Left" index="0"]
+position = Vector2(-144, 107)
+polygon = PackedVector2Array(672, 248, 688, 242, 703, 240, 703, 243, 681, 250, 673, 253, 640, 309, 649, 275)
+
+[node name="Tiebreaker" parent="Node/Right" instance=ExtResource("12_dtqlw")]
+force = 60
+
+[node name="CollisionPolygon2D" parent="Node/Right/Tiebreaker" index="0"]
+position = Vector2(-104, 100)
+polygon = PackedVector2Array(648, 249, 663, 247, 663, 250, 655, 252, 649, 253)
+
+[node name="Left" type="Node2D" parent="Node"]
+
+[node name="Right" parent="Node/Left" instance=ExtResource("12_dtqlw")]
+direction = 3
+force = 60
+
+[node name="CollisionPolygon2D" parent="Node/Left/Right" index="0"]
+position = Vector2(-223, 104)
+polygon = PackedVector2Array(623, 248, 629, 250, 635, 255, 641, 269, 645, 278, 647, 286, 647, 288, 641, 277, 632, 256, 623, 251)
+
+[node name="Left" parent="Node/Left" instance=ExtResource("12_dtqlw")]
+force = 60
+
+[node name="CollisionPolygon2D" parent="Node/Left/Left" index="0"]
+position = Vector2(-300, 111)
+polygon = PackedVector2Array(688, 247, 692, 243, 699, 241, 699, 244, 688, 254, 687, 258, 685, 253)
+
+[node name="Tiebreaker" parent="Node/Left" instance=ExtResource("12_dtqlw")]
+direction = 3
+force = 60
+
+[node name="CollisionPolygon2D" parent="Node/Left/Tiebreaker" index="0"]
+position = Vector2(-250, 103)
+polygon = PackedVector2Array(650, 249, 656, 250, 659, 257, 656, 256, 655, 252, 650, 252)
+
+[node name="Down" type="Node2D" parent="Node"]
+
+[node name="Right" parent="Node/Down" instance=ExtResource("12_dtqlw")]
+direction = 3
+force = 60
+
+[node name="CollisionPolygon2D" parent="Node/Down/Right" index="0"]
+position = Vector2(-146, 337)
+polygon = PackedVector2Array(620, 246, 629, 251, 649, 275, 649, 280, 648, 280, 647, 275, 632, 256, 620, 249)
+
+[node name="Left" parent="Node/Down" instance=ExtResource("12_dtqlw")]
+force = 60
+
+[node name="CollisionPolygon2D" parent="Node/Down/Left" index="0"]
+position = Vector2(-240, 371)
+polygon = PackedVector2Array(706, 216, 714, 212, 714, 215, 707, 219, 699, 229, 695, 238, 688, 254, 687, 258, 686, 252, 697, 229)
+
+[node name="Tiebreaker" parent="Node/Down" instance=ExtResource("12_dtqlw")]
+force = 60
+
+[node name="CollisionPolygon2D" parent="Node/Down/Tiebreaker" index="0"]
+position = Vector2(-179, 334)
+polygon = PackedVector2Array(650, 250, 653, 249, 654, 252, 650, 253)
+
+[node name="LeftWall" parent="Node" instance=ExtResource("12_dtqlw")]
+direction = 3
+force = 70
+
+[node name="CollisionPolygon2D" parent="Node/LeftWall" index="0"]
+position = Vector2(-283, 389)
+polygon = PackedVector2Array(620, 246, 624, 256, 631, 269, 651, 290, 664, 295, 685, 301, 694, 309, 707, 344, 713, 365, 732, 409, 736, 418, 731, 411, 727, 401, 718, 381, 711, 365, 706, 349, 704, 343, 695, 315, 683, 303, 672, 300, 648, 292, 640, 282, 630, 270, 622, 256, 620, 249)
+
+[node name="LeftHelper" parent="Node" instance=ExtResource("12_dtqlw")]
+direction = 3
+force = 35
+
+[node name="CollisionPolygon2D" parent="Node/LeftHelper" index="0"]
+position = Vector2(250, 709)
+polygon = PackedVector2Array(166, -16, 203, 3, 246, 115, 235, 114, 208, 94, 193, 63)
+
+[node name="RightWall" parent="Node" instance=ExtResource("12_dtqlw")]
+force = 70
+
+[node name="CollisionPolygon2D" parent="Node/RightWall" index="0"]
+position = Vector2(-83, 405)
+polygon = PackedVector2Array(698, 232, 702, 221, 705, 196, 706, 199, 703, 222, 699, 232, 695, 242, 692, 250, 687, 258, 682, 263, 671, 270, 651, 282, 627, 398, 626, 397, 631, 367, 632, 355, 633, 340, 639, 293, 643, 287, 650, 281, 670, 269, 681, 262, 685, 259, 690, 251)
+
+[node name="RightHelper" parent="Node" instance=ExtResource("12_dtqlw")]
+force = 35
+
+[node name="CollisionPolygon2D" parent="Node/RightHelper" index="0"]
+position = Vector2(305, 688)
+polygon = PackedVector2Array(245, 6, 222, 25, 203, 135, 215, 133, 229, 120, 236, 102)
+
+[connection signal="body_entered" from="Node/PushDown" to="Node/PushDown" method="_on_body_entered"]
+[connection signal="body_exited" from="Node/PushDown" to="Node/PushDown" method="_on_body_exited"]
+[connection signal="body_entered" from="Node/Upper/Right" to="Node/Upper/Right" method="_on_body_entered"]
+[connection signal="body_exited" from="Node/Upper/Right" to="Node/Upper/Right" method="_on_body_exited"]
+[connection signal="body_entered" from="Node/Upper/Left" to="Node/Upper/Left" method="_on_body_entered"]
+[connection signal="body_exited" from="Node/Upper/Left" to="Node/Upper/Left" method="_on_body_exited"]
+[connection signal="body_entered" from="Node/Upper/Tiebreaker" to="Node/Upper/Tiebreaker" method="_on_body_entered"]
+[connection signal="body_exited" from="Node/Upper/Tiebreaker" to="Node/Upper/Tiebreaker" method="_on_body_exited"]
+[connection signal="body_entered" from="Node/Right/Right" to="Node/Right/Right" method="_on_body_entered"]
+[connection signal="body_exited" from="Node/Right/Right" to="Node/Right/Right" method="_on_body_exited"]
+[connection signal="body_entered" from="Node/Right/Left" to="Node/Right/Left" method="_on_body_entered"]
+[connection signal="body_exited" from="Node/Right/Left" to="Node/Right/Left" method="_on_body_exited"]
+[connection signal="body_entered" from="Node/Right/Tiebreaker" to="Node/Right/Tiebreaker" method="_on_body_entered"]
+[connection signal="body_exited" from="Node/Right/Tiebreaker" to="Node/Right/Tiebreaker" method="_on_body_exited"]
+[connection signal="body_entered" from="Node/Left/Right" to="Node/Left/Right" method="_on_body_entered"]
+[connection signal="body_exited" from="Node/Left/Right" to="Node/Left/Right" method="_on_body_exited"]
+[connection signal="body_entered" from="Node/Left/Left" to="Node/Left/Left" method="_on_body_entered"]
+[connection signal="body_exited" from="Node/Left/Left" to="Node/Left/Left" method="_on_body_exited"]
+[connection signal="body_entered" from="Node/Left/Tiebreaker" to="Node/Left/Tiebreaker" method="_on_body_entered"]
+[connection signal="body_exited" from="Node/Left/Tiebreaker" to="Node/Left/Tiebreaker" method="_on_body_exited"]
+[connection signal="body_entered" from="Node/Down/Right" to="Node/Down/Right" method="_on_body_entered"]
+[connection signal="body_exited" from="Node/Down/Right" to="Node/Down/Right" method="_on_body_exited"]
+[connection signal="body_entered" from="Node/Down/Left" to="Node/Down/Left" method="_on_body_entered"]
+[connection signal="body_exited" from="Node/Down/Left" to="Node/Down/Left" method="_on_body_exited"]
+[connection signal="body_entered" from="Node/Down/Tiebreaker" to="Node/Down/Tiebreaker" method="_on_body_entered"]
+[connection signal="body_exited" from="Node/Down/Tiebreaker" to="Node/Down/Tiebreaker" method="_on_body_exited"]
+[connection signal="body_entered" from="Node/LeftWall" to="Node/LeftWall" method="_on_body_entered"]
+[connection signal="body_exited" from="Node/LeftWall" to="Node/LeftWall" method="_on_body_exited"]
+[connection signal="body_entered" from="Node/LeftHelper" to="Node/LeftHelper" method="_on_body_entered"]
+[connection signal="body_exited" from="Node/LeftHelper" to="Node/LeftHelper" method="_on_body_exited"]
+[connection signal="body_entered" from="Node/RightWall" to="Node/RightWall" method="_on_body_entered"]
+[connection signal="body_exited" from="Node/RightWall" to="Node/RightWall" method="_on_body_exited"]
+[connection signal="body_entered" from="Node/RightHelper" to="Node/RightHelper" method="_on_body_entered"]
+[connection signal="body_exited" from="Node/RightHelper" to="Node/RightHelper" method="_on_body_exited"]
+
 [editable path="ForegroundElements/ForegroundElem"]
 [editable path="ForegroundElements/ForegroundElem2"]
 [editable path="ForegroundElements/ForegroundElem3"]
 [editable path="ForegroundElements/ForegroundElem4"]
 [editable path="ForegroundElements/ForegroundElem5"]
+[editable path="Node/PushDown"]
+[editable path="Node/Upper/Right"]
+[editable path="Node/Upper/Left"]
+[editable path="Node/Upper/Tiebreaker"]
+[editable path="Node/Right/Right"]
+[editable path="Node/Right/Left"]
+[editable path="Node/Right/Tiebreaker"]
+[editable path="Node/Left/Right"]
+[editable path="Node/Left/Left"]
+[editable path="Node/Left/Tiebreaker"]
+[editable path="Node/Down/Right"]
+[editable path="Node/Down/Left"]
+[editable path="Node/Down/Tiebreaker"]
+[editable path="Node/LeftWall"]
+[editable path="Node/LeftHelper"]
+[editable path="Node/RightWall"]
+[editable path="Node/RightHelper"]

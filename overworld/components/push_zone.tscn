@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cafxffxq81di"]
+
+[ext_resource type="Script" path="res://overworld/components/push_zone.gd" id="1_rl3rx"]
+
+[node name="PushDown" type="Area2D"]
+collision_layer = 0
+script = ExtResource("1_rl3rx")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(-192, 0)
+polygon = PackedVector2Array(192, 0, 256, 0, 256, 64, 192, 64)

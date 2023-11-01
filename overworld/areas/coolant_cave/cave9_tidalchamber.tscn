@@ -29,7 +29,7 @@ texture = ExtResource("2_ufui5")
 centered = false
 
 [node name="Water" type="Sprite2D" parent="."]
-modulate = Color(1, 1, 1, 0.2)
+modulate = Color(1, 1, 1, 0.341176)
 texture = ExtResource("3_vcl0r")
 centered = false
 
