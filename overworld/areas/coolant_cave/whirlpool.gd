@@ -1,5 +1,5 @@
 class_name Whirlpool
-extends Area2D
+extends SuckZone
 
 class Circle:
 	var radius: float
@@ -9,38 +9,33 @@ class Circle:
 		radius = rad
 		alpha = trans
 
-@export var NUM_CIRCLES = 10
-@export var SUCTION_SPEED = 50
+@export var CIRCLE_COLOR: Color = Color.WHITE #circle color
+@export var NUM_CIRCLES: int = 10 #number of circles used when rendering the whirlpool
+@export var CIRCLE_SPEED: float = 50 #speed of the graphical circles
 
-@onready var _COLLISION = $CollisionShape2D
-@onready var CENTER: Vector2 = _COLLISION.position
-@onready var MAX_RADIUS: float = _COLLISION.shape.radius
-const FADE_IN_SPEED = 2
-const MAX_CIRCLE_ALPHA = 1
-const MIN_CIRCLE_ALPHA = 0.7
+const _FADE_IN_SPEED = 2 #how quickly a new outer circle fades in
+const _MAX_CIRCLE_ALPHA = 1 #maximum alpha of a circle
+const _MIN_CIRCLE_ALPHA = 0.7 #starting alpha of an outer circle - looks less like it 'pops' in if we start partially transparent
 
-var circles = []
+var _circles = []
 
 func _ready():
-	assert(_COLLISION)
-	assert(MAX_RADIUS >= 0)
-	
-	var radius_per_circle = MAX_RADIUS / NUM_CIRCLES
+	super()
+	var radius_per_circle = _MAX_RADIUS / NUM_CIRCLES
 	for i in NUM_CIRCLES:
-		circles.append(Circle.new((i+1) * radius_per_circle, MAX_CIRCLE_ALPHA))
-		
+		_circles.append(Circle.new((i+1) * radius_per_circle, _MAX_CIRCLE_ALPHA))
 
 func _draw():
-	for circle in circles:
-		draw_arc(CENTER, circle.radius, 0, deg_to_rad(360), 100, Color.WHITE * circle.alpha, 1, false)
+	for circle in _circles:
+		draw_arc(_CENTER, circle.radius, 0, deg_to_rad(360), 100, CIRCLE_COLOR * circle.alpha, 1, false)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	for i in circles.size():
-		var circle = circles[i]
-		circle.radius -= SUCTION_SPEED * delta
-		circle.alpha = min(circle.alpha + delta * FADE_IN_SPEED, MAX_CIRCLE_ALPHA)
+	super(delta)
+	for i in _circles.size():
+		var circle = _circles[i]
+		circle.radius -= CIRCLE_SPEED * delta
+		circle.alpha = min(circle.alpha + delta * _FADE_IN_SPEED, _MAX_CIRCLE_ALPHA)
 		if circle.radius < 0:
-			circle.radius = MAX_RADIUS
-			circle.alpha = MIN_CIRCLE_ALPHA
+			circle.radius = _MAX_RADIUS
+			circle.alpha = _MIN_CIRCLE_ALPHA
 	queue_redraw()

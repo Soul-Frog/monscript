@@ -1,3 +1,4 @@
+# A wave which just moves down; reset by wavepool.gd
 class_name Wave
 extends StaticBody2D
 
@@ -11,7 +12,6 @@ func set_top(top: float) -> void:
 func set_bottom(bottom: float) -> void:
 	_bottom = bottom
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	position.y += _SPEED * delta
 	

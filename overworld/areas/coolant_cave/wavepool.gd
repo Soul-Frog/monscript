@@ -1,3 +1,4 @@
+# Used in cave9-tidal chamber to control the waves that move down the central corridor
 extends Node2D
 
 @onready var TOP = $Top
