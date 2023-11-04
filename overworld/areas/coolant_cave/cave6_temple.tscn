@@ -37,6 +37,9 @@ texture = ExtResource("3_873o4")
 centered = false
 
 [node name="Whirlpool" parent="." instance=ExtResource("4_uqqbu")]
+CIRCLE_COLOR = null
+NUM_CIRCLES = null
+CIRCLE_SPEED = null
 
 [node name="Player" parent="." instance=ExtResource("3_u0psi")]
 position = Vector2(610, 685)
