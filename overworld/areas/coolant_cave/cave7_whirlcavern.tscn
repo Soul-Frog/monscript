@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b7tq8iefta43j"]
+[gd_scene load_steps=16 format=3 uid="uid://b7tq8iefta43j"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_6nc0c"]
 [ext_resource type="Texture2D" uid="uid://cds4e7g3n1rdo" path="res://assets/maps/coolant_cave/cave7_whirlcavern/cave7.png" id="2_jra30"]
@@ -12,9 +12,12 @@
 [ext_resource type="Texture2D" uid="uid://du4shfa6x16iq" path="res://assets/maps/coolant_cave/cave7_whirlcavern/cave7_fg4.png" id="8_spo1b"]
 [ext_resource type="Texture2D" uid="uid://c2b0hj2h2p83" path="res://assets/maps/coolant_cave/cave7_whirlcavern/cave7_fg5.png" id="9_sxt7u"]
 [ext_resource type="PackedScene" uid="uid://cafxffxq81di" path="res://overworld/components/push_zone.tscn" id="12_dtqlw"]
+[ext_resource type="PackedScene" uid="uid://dyhdug5srtv2g" path="res://overworld/areas/coolant_cave/whirlpool.tscn" id="13_i1p7n"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_80ub1"]
-size = Vector2(35, 16)
+[sub_resource type="CircleShape2D" id="CircleShape2D_41i08"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f3604"]
+radius = 45.0111
 
 [node name="Area" type="Node2D"]
 script = ExtResource("1_6nc0c")
@@ -30,7 +33,6 @@ position = Vector2(461, 105)
 [node name="OverworldEncounters" type="Node2D" parent="."]
 
 [node name="ForegroundElements" type="Node2D" parent="."]
-visible = false
 
 [node name="ForegroundElem" parent="ForegroundElements" instance=ExtResource("4_no6le")]
 z_index = 0
@@ -74,7 +76,7 @@ polygon = PackedVector2Array(43, 11, 52, 21, 56, 31, 56, 86, 31, 55, 20, 57, 0, 
 
 [node name="Water" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.282353)
-position = Vector2(-29, 42)
+position = Vector2(-2, 3)
 texture = ExtResource("4_kx0l5")
 centered = false
 
@@ -85,19 +87,17 @@ visible = false
 position = Vector2(461, 84)
 
 [node name="Warps" type="Node2D" parent="."]
-visible = false
 
 [node name="WarpToSeafloor" type="Area2D" parent="Warps"]
-position = Vector2(485, 787)
+position = Vector2(496, 781)
 collision_layer = 0
 script = ExtResource("4_ckphf")
 area = 7
 spawn_point = "Cave8Entrance"
-metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/WarpToSeafloor"]
-position = Vector2(10.5, -3)
-shape = SubResource("RectangleShape2D_80ub1")
+position = Vector2(2, -3)
+shape = SubResource("CircleShape2D_41i08")
 
 [node name="Collision" type="StaticBody2D" parent="."]
 visible = false
@@ -129,7 +129,7 @@ direction = 1
 force = 85
 
 [node name="CollisionPolygon2D" parent="Node/PushDown" index="0"]
-polygon = PackedVector2Array(192, 0, 1192, 0, 1192, 1000, 192, 1000)
+polygon = PackedVector2Array(192, 0, 1192, 0, 1157, 959, 638, 940, 646, 772, 646, 788, 657, 809, 668, 817, 687, 823, 701, 822, 721, 812, 733, 792, 733, 761, 714, 739, 703, 733, 679, 733, 655, 750, 645, 771, 636, 941, 192, 974)
 
 [node name="Upper" type="Node2D" parent="Node"]
 
@@ -230,33 +230,43 @@ polygon = PackedVector2Array(650, 250, 653, 249, 654, 252, 650, 253)
 
 [node name="LeftWall" parent="Node" instance=ExtResource("12_dtqlw")]
 direction = 3
-force = 70
+force = 90
 
 [node name="CollisionPolygon2D" parent="Node/LeftWall" index="0"]
 position = Vector2(-283, 389)
-polygon = PackedVector2Array(620, 246, 624, 256, 631, 269, 651, 290, 664, 295, 685, 301, 694, 309, 707, 344, 713, 365, 732, 409, 736, 418, 731, 411, 727, 401, 718, 381, 711, 365, 706, 349, 704, 343, 695, 315, 683, 303, 672, 300, 648, 292, 640, 282, 630, 270, 622, 256, 620, 249)
+polygon = PackedVector2Array(620, 246, 624, 256, 631, 269, 640, 278, 651, 289, 665, 294, 685, 301, 694, 309, 707, 344, 713, 365, 732, 409, 736, 418, 731, 411, 727, 401, 718, 381, 711, 365, 706, 349, 704, 343, 695, 315, 683, 303, 672, 300, 648, 292, 640, 282, 630, 270, 622, 256, 620, 249)
 
 [node name="LeftHelper" parent="Node" instance=ExtResource("12_dtqlw")]
 direction = 3
-force = 35
+force = 150
 
 [node name="CollisionPolygon2D" parent="Node/LeftHelper" index="0"]
 position = Vector2(250, 709)
-polygon = PackedVector2Array(166, -16, 203, 3, 246, 115, 235, 114, 208, 94, 193, 63)
+polygon = PackedVector2Array(181, 45, 194, 51, 197, 64, 201, 79, 213, 110, 199, 90, 190, 68)
 
 [node name="RightWall" parent="Node" instance=ExtResource("12_dtqlw")]
-force = 70
+force = 90
 
 [node name="CollisionPolygon2D" parent="Node/RightWall" index="0"]
 position = Vector2(-83, 405)
-polygon = PackedVector2Array(698, 232, 702, 221, 705, 196, 706, 199, 703, 222, 699, 232, 695, 242, 692, 250, 687, 258, 682, 263, 671, 270, 651, 282, 627, 398, 626, 397, 631, 367, 632, 355, 633, 340, 639, 293, 643, 287, 650, 281, 670, 269, 681, 262, 685, 259, 690, 251)
+polygon = PackedVector2Array(698, 232, 702, 221, 705, 196, 706, 199, 703, 222, 699, 232, 695, 242, 692, 250, 687, 258, 685.607, 259.393, 682, 263, 671, 270, 651, 282, 627, 398, 626, 397, 631, 367, 632, 355, 633, 340, 639, 293, 643, 287, 650, 281, 670, 269, 680, 261, 683, 257, 689, 250)
 
 [node name="RightHelper" parent="Node" instance=ExtResource("12_dtqlw")]
-force = 35
+force = 150
 
 [node name="CollisionPolygon2D" parent="Node/RightHelper" index="0"]
 position = Vector2(305, 688)
-polygon = PackedVector2Array(245, 6, 222, 25, 203, 135, 215, 133, 229, 120, 236, 102)
+polygon = PackedVector2Array(244, 64, 241, 70, 240, 94, 239, 102, 235, 118, 241, 104)
+
+[node name="Whirlpool" parent="." instance=ExtResource("13_i1p7n")]
+position = Vector2(830, 387)
+NUM_CIRCLES = 4
+CIRCLE_SPEED = 15.0
+SUCTION_STRENGTH = 220.0
+
+[node name="SuckCircle" parent="Whirlpool" index="0"]
+position = Vector2(-332, 391)
+shape = SubResource("CircleShape2D_f3604")
 
 [connection signal="body_entered" from="Node/PushDown" to="Node/PushDown" method="_on_body_entered"]
 [connection signal="body_exited" from="Node/PushDown" to="Node/PushDown" method="_on_body_exited"]
@@ -315,3 +325,4 @@ polygon = PackedVector2Array(245, 6, 222, 25, 203, 135, 215, 133, 229, 120, 236,
 [editable path="Node/LeftHelper"]
 [editable path="Node/RightWall"]
 [editable path="Node/RightHelper"]
+[editable path="Whirlpool"]

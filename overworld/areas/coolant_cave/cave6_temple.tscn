@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://wn6keuc21ls8"]
+[gd_scene load_steps=17 format=3 uid="uid://wn6keuc21ls8"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_jvkfo"]
 [ext_resource type="Texture2D" uid="uid://be4c4syodtuwg" path="res://assets/maps/coolant_cave/cave6_temple/cave6.png" id="2_v2f4j"]
@@ -13,8 +13,11 @@
 [ext_resource type="Texture2D" uid="uid://dglru7qddmd6g" path="res://assets/maps/coolant_cave/cave6_temple/cave6_fg3.png" id="7_y32nk"]
 [ext_resource type="PackedScene" uid="uid://5vxxc0i44umo" path="res://overworld/areas/coolant_cave/water_flow.tscn" id="10_j85m8"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_pim6k"]
+radius = 188.003
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_a4hac"]
-radius = 7.0
+radius = 17.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_waod4"]
 size = Vector2(7, 78)
@@ -37,9 +40,14 @@ texture = ExtResource("3_873o4")
 centered = false
 
 [node name="Whirlpool" parent="." instance=ExtResource("4_uqqbu")]
+position = Vector2(384, 620)
 CIRCLE_COLOR = null
 NUM_CIRCLES = null
 CIRCLE_SPEED = null
+SUCTION_STRENGTH = 90.0
+
+[node name="SuckCircle" parent="Whirlpool" index="0"]
+shape = SubResource("CircleShape2D_pim6k")
 
 [node name="Player" parent="." instance=ExtResource("3_u0psi")]
 position = Vector2(610, 685)
@@ -430,7 +438,7 @@ position = Vector2(1536, 832)
 [node name="Warps" type="Node2D" parent="."]
 
 [node name="WarpToWhirlcavern" type="Area2D" parent="Warps"]
-position = Vector2(372, 637)
+position = Vector2(372, 641)
 collision_layer = 0
 script = ExtResource("4_n8bn1")
 area = 6
@@ -514,6 +522,7 @@ polygon = PackedVector2Array(1203, -28, 1276, -28, 1276, 45, 1203, 45)
 [node name="CollisionPolygon2D14" type="CollisionPolygon2D" parent="Collision"]
 polygon = PackedVector2Array(199, 371, 377, 282, 574, 282, 753, 372, 753, 316, 574, 227, 377, 227, 199, 316)
 
+[editable path="Whirlpool"]
 [editable path="WaterFlows/WaterFlow1"]
 [editable path="WaterFlows/WaterFlow14"]
 [editable path="WaterFlows/WaterFlow15"]

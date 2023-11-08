@@ -1,4 +1,5 @@
-extends Area2D
+# An interactable which triggers an area transition when interacted with
+extends Interactable
 
 # the area that should be loaded when hitting this warp
 @export var area = GameData.Area.NONE
@@ -6,9 +7,11 @@ extends Area2D
 @export var spawn_point = ""
 
 func _ready():
+	super()
 	assert(area != GameData.Area.NONE, "Did not set destination for transition!")
 	assert(spawn_point.length() != 0, "Did not set spawn point for transition!")
-	self.body_entered.connect(_on_body_entered)
+	if $Sprite.sprite_frames == null:
+		$Sprite.queue_free()
 
-func _on_body_entered(body):
+func _on_interact():
 	Events.emit_signal("area_changed", area, spawn_point, false)

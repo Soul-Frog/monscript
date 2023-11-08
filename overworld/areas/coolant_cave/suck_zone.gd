@@ -5,8 +5,12 @@ extends Area2D
 @export var SUCTION_STRENGTH: float = 100 #how quickly the whirlpool pulls player to center at maximum
 
 @onready var _CIRCLE = $SuckCircle
-@onready var _CENTER: Vector2 = _CIRCLE.position
 @onready var _MAX_RADIUS: float = _CIRCLE.shape.radius
+
+#godot thinks _CENTER is unused, but it can be used by subclasses, so suppress the warning...
+@warning_ignore("unused_private_class_variable") 
+@onready var _CENTER: Vector2 = _CIRCLE.position #use for drawing circles
+@onready var _GLOBAL_CENTER: Vector2 = _CIRCLE.global_position #use for calculating suck
 
 var _bodies = []
 
@@ -16,16 +20,13 @@ func _ready():
 
 func _process(delta):
 	for body in _bodies:
-		# I'm not really sure why we're doing -7 and -21, but it doesn't line up right if we don't
-		var magic_position = body.position + Vector2(-7, -21)
-		
 		# measure distance to center of whirlpool
-		var dist = magic_position.distance_to(_CENTER) #how far are we from the center?
-		var x_dist = abs(magic_position.x - _CENTER.x) #how far are we from the center in x?
-		var y_dist = abs(magic_position.y - _CENTER.y) #how far are we from the center in y?
+		var dist = body.position.distance_to(_GLOBAL_CENTER) #how far are we from the center?
+		var x_dist = abs(body.position.x - _GLOBAL_CENTER.x) #how far are we from the center in x?
+		var y_dist = abs(body.position.y - _GLOBAL_CENTER.y) #how far are we from the center in y?
 		
-		var x_direction = -1 if magic_position.x > _CENTER.x else 1 #pull left or right?
-		var y_direction = -1 if magic_position.y > _CENTER.y else 1 #pull up or down?
+		var x_direction = -1 if body.position.x > _GLOBAL_CENTER.x else 1 #pull left or right?
+		var y_direction = -1 if body.position.y > _GLOBAL_CENTER.y else 1 #pull up or down?
 		var total_force = (1-(dist/_MAX_RADIUS)) * SUCTION_STRENGTH #calculate force based on distance to center
 		
 		# we want to look like we're smoothly sliding to the center, so if we are closer in one dimension, 
