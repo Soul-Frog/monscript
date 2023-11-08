@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://wn6keuc21ls8"]
+[gd_scene load_steps=19 format=3 uid="uid://wn6keuc21ls8"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_jvkfo"]
 [ext_resource type="Texture2D" uid="uid://be4c4syodtuwg" path="res://assets/maps/coolant_cave/cave6_temple/cave6.png" id="2_v2f4j"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://da2b1r3cba4" path="res://assets/maps/coolant_cave/cave6_temple/cave6_fg2.png" id="6_x6q01"]
 [ext_resource type="Texture2D" uid="uid://dglru7qddmd6g" path="res://assets/maps/coolant_cave/cave6_temple/cave6_fg3.png" id="7_y32nk"]
 [ext_resource type="PackedScene" uid="uid://5vxxc0i44umo" path="res://overworld/areas/coolant_cave/water_flow.tscn" id="10_j85m8"]
+[ext_resource type="PackedScene" uid="uid://ce42geant7kmk" path="res://overworld/interactables/warp_interactable.tscn" id="13_612sg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pim6k"]
 radius = 188.003
@@ -24,6 +25,9 @@ size = Vector2(7, 78)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5a52f"]
 size = Vector2(79, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gpmta"]
+size = Vector2(32, 16)
 
 [node name="Area" type="Node2D"]
 script = ExtResource("1_jvkfo")
@@ -50,7 +54,7 @@ SUCTION_STRENGTH = 90.0
 shape = SubResource("CircleShape2D_pim6k")
 
 [node name="Player" parent="." instance=ExtResource("3_u0psi")]
-position = Vector2(610, 685)
+position = Vector2(463, 280)
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
 
@@ -430,7 +434,7 @@ polygon = PackedVector2Array(-77, -32, 299, -32, 300, 45, -77, 45)
 position = Vector2(1368, 16)
 
 [node name="Cave6Ladder" type="Node2D" parent="Points"]
-position = Vector2(379, 320)
+position = Vector2(379, 272)
 
 [node name="Cave6Right" type="Node2D" parent="Points"]
 position = Vector2(1536, 832)
@@ -522,6 +526,26 @@ polygon = PackedVector2Array(1203, -28, 1276, -28, 1276, 45, 1203, 45)
 [node name="CollisionPolygon2D14" type="CollisionPolygon2D" parent="Collision"]
 polygon = PackedVector2Array(199, 371, 377, 282, 574, 282, 753, 372, 753, 316, 574, 227, 377, 227, 199, 316)
 
+[node name="WarpInteractable" parent="." instance=ExtResource("13_612sg")]
+position = Vector2(378, 300)
+area = 7
+spawn_point = "Cave8Ladder"
+LABEL_TEXT = "Climb"
+
+[node name="CollisionPolygon2D" parent="WarpInteractable/Collision" index="0"]
+polygon = PackedVector2Array(-70.2594, 18.9714, 31.0154, 18.9714, 47.8945, 12.5176, 47.8945, -0.389893, 31.0154, -6.84369, -70.2594, -6.84369, -87.1385, -0.389893, -87.1385, 12.5176)
+
+[node name="CollisionShape2D" parent="WarpInteractable/InteractionArea" index="0"]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_gpmta")
+
+[node name="Label" parent="WarpInteractable" index="3"]
+offset_left = -59.0
+offset_top = -27.0
+offset_right = 64.0
+offset_bottom = -4.0
+text = "[center][E] Climb[/center]"
+
 [editable path="Whirlpool"]
 [editable path="WaterFlows/WaterFlow1"]
 [editable path="WaterFlows/WaterFlow14"]
@@ -559,3 +583,4 @@ polygon = PackedVector2Array(199, 371, 377, 282, 574, 282, 753, 372, 753, 316, 5
 [editable path="ForegroundElements/ForegroundElem8"]
 [editable path="ForegroundElements/ForegroundElem9"]
 [editable path="ForegroundElements/ForegroundElem10"]
+[editable path="WarpInteractable"]

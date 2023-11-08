@@ -5,8 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/components/player_overhead.tscn" id="3_x756a"]
 [ext_resource type="PackedScene" uid="uid://ce42geant7kmk" path="res://overworld/interactables/warp_interactable.tscn" id="4_dowlu"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tuxsk"]
-size = Vector2(20, 12)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_87r1p"]
+size = Vector2(14, 14)
 
 [node name="Area" type="Node2D"]
 script = ExtResource("1_c21qo")
@@ -26,9 +26,13 @@ position = Vector2(575, 263)
 [node name="Cave8Entrance" type="Node2D" parent="Points"]
 position = Vector2(660, 314)
 
+[node name="Cave8Ladder" type="Node2D" parent="Points"]
+position = Vector2(269, 107)
+
 [node name="Warps" type="Node2D" parent="."]
 
 [node name="Collision" type="StaticBody2D" parent="."]
+visible = false
 modulate = Color(0, 1, 0, 1)
 position = Vector2(-96, 150)
 collision_layer = 4
@@ -46,11 +50,21 @@ LABEL_TEXT = "Climb"
 [node name="Sprite" parent="WarpInteractable" index="0"]
 visible = false
 
+[node name="Collision" parent="WarpInteractable" index="1"]
+position = Vector2(-3, -18)
+
 [node name="CollisionPolygon2D" parent="WarpInteractable/Collision" index="0"]
-polygon = PackedVector2Array(-57.6001, 21.1227, 1.47681, 21.1227, 1.47681, 8.21512, -57.6002, 8.21512)
+polygon = PackedVector2Array(-57.6001, 21.1227, 1.47681, 21.1227, 1.47681, 6.06386, -57.6001, 6.06386)
 
 [node name="CollisionShape2D" parent="WarpInteractable/InteractionArea" index="0"]
-position = Vector2(-1, 9)
-shape = SubResource("RectangleShape2D_tuxsk")
+position = Vector2(-4, -18)
+shape = SubResource("RectangleShape2D_87r1p")
+
+[node name="Label" parent="WarpInteractable" index="3"]
+offset_left = -64.0
+offset_top = 6.0
+offset_right = 59.0
+offset_bottom = 29.0
+text = "[center][E] Climb[/center]"
 
 [editable path="WarpInteractable"]
