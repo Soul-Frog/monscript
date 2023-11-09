@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://wn6keuc21ls8"]
+[gd_scene load_steps=21 format=3 uid="uid://wn6keuc21ls8"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_jvkfo"]
 [ext_resource type="Texture2D" uid="uid://be4c4syodtuwg" path="res://assets/maps/coolant_cave/cave6_temple/cave6.png" id="2_v2f4j"]
@@ -13,6 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://dglru7qddmd6g" path="res://assets/maps/coolant_cave/cave6_temple/cave6_fg3.png" id="7_y32nk"]
 [ext_resource type="PackedScene" uid="uid://5vxxc0i44umo" path="res://overworld/areas/coolant_cave/water_flow.tscn" id="10_j85m8"]
 [ext_resource type="PackedScene" uid="uid://ce42geant7kmk" path="res://overworld/interactables/warp_interactable.tscn" id="13_612sg"]
+[ext_resource type="PackedScene" uid="uid://cty2bys7mmd6k" path="res://overworld/interactables/chest.tscn" id="14_h5edw"]
+[ext_resource type="Resource" uid="uid://defy52ihj1vmu" path="res://dialogue/test.dialogue" id="15_vrvhg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pim6k"]
 radius = 188.003
@@ -545,6 +547,12 @@ offset_top = -27.0
 offset_right = 64.0
 offset_bottom = -4.0
 text = "[center][E] Climb[/center]"
+
+[node name="Chest" parent="." instance=ExtResource("14_h5edw")]
+position = Vector2(282, 275)
+chest_id = "temple6testchest"
+dialogue_resource = ExtResource("15_vrvhg")
+dialogue_start = "test_chest"
 
 [editable path="Whirlpool"]
 [editable path="WaterFlows/WaterFlow1"]

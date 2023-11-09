@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=3 uid="uid://cty2bys7mmd6k"]
+
+[ext_resource type="PackedScene" uid="uid://cd6pj5homenki" path="res://overworld/interactables/interactable_base.tscn" id="1_8j4l1"]
+[ext_resource type="Script" path="res://overworld/interactables/chest.gd" id="2_anro5"]
+[ext_resource type="Texture2D" uid="uid://cxg76f1ffb4ri" path="res://assets/objects/chest.png" id="4_vw2bn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ncslg"]
+atlas = ExtResource("4_vw2bn")
+region = Rect2(0, 0, 20, 19)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mogvw"]
+atlas = ExtResource("4_vw2bn")
+region = Rect2(20, 0, 20, 19)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uf0hs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ncslg")
+}],
+"loop": true,
+"name": &"closed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mogvw")
+}],
+"loop": true,
+"name": &"opened",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2xfpe"]
+radius = 12.0
+
+[node name="Chest" instance=ExtResource("1_8j4l1")]
+script = ExtResource("2_anro5")
+chest_id = "NULL"
+dialogue_resource = null
+dialogue_start = "NULL"
+LABEL_TEXT = "Open"
+
+[node name="Sprite" parent="." index="0"]
+position = Vector2(-8, -8)
+sprite_frames = SubResource("SpriteFrames_uf0hs")
+animation = &"closed"
+centered = false
+
+[node name="Collision" parent="." index="1"]
+position = Vector2(0, 4)
+
+[node name="CollisionPolygon2D" parent="Collision" index="0"]
+polygon = PackedVector2Array(-57.6001, -19.7512, 9.91645, -19.7512, 9.91645, 12.5176, -57.6001, 12.5176)
+
+[node name="CollisionShape2D" parent="InteractionArea" index="0"]
+shape = SubResource("CircleShape2D_2xfpe")
+
+[node name="Label" parent="." index="3"]
+offset_top = -27.0
+offset_bottom = -4.0

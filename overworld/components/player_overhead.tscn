@@ -31,11 +31,11 @@ position = Vector2(0, 11.5)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_0gcyb")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="BattleCollision" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BattleCollision"]
 shape = SubResource("CapsuleShape2D_6eq6j")
 
 [node name="InteractableCollision" type="Area2D" parent="."]
@@ -45,4 +45,4 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractableCollision"]
 shape = SubResource("CircleShape2D_5uo5j")
 
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="BattleCollision" to="." method="_on_area_2d_body_entered"]

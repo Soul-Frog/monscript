@@ -69,14 +69,19 @@ var storage = []  # player's mon storage
 var compilation_progress_per_mon := {} # MonType -> int; maps MonType to unlock progress
 var _block_unlock_map := {} # tracks which blocks have been unlocked for use in the script editor
 
+# returns a variable, or null if that variable is not set
 func get_var(variable_name: String):
-	assert(_variables.has(variable_name))
+	if not _variables.has(variable_name):
+		return null
 	return _variables[variable_name]
 
+# sets the value of or adds a new variable to the game data map
 func set_var(variable_name: String, value) -> void:
-	assert(_variables.has(variable_name))
 	assert(value is bool or value is String or value is int or value is float, "Can't store values besides bools, Strings, ints, floats.")
 	_variables[variable_name] = value
+
+func has_var(variable_name: String) -> void:
+	return _variables.has(variable_name)
 
 # Set up the initial gamestate (for a new game)
 func _ready():
@@ -174,9 +179,8 @@ func load_game():
 	var save_dict = json.data
 	
 	# read back each flag
-	for var_key in _variables.keys():
-		if save_dict.has(var_key) and _variables.has(var_key):
-			_variables[var_key] = save_dict[var_key]
+	for var_key in save_dict.keys():
+		_variables[var_key] = save_dict[var_key]
 	
 	# increase the storage size based on the number of pages
 	increase_storage_size(_variables[STORAGE_PAGES])
