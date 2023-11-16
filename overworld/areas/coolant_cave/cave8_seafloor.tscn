@@ -1,9 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://cxcuo37uxvkig"]
+[gd_scene load_steps=8 format=3 uid="uid://cxcuo37uxvkig"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_c21qo"]
 [ext_resource type="Texture2D" uid="uid://3nwfn8vi6s2" path="res://assets/maps/coolant_cave/cave8_seafloor/cave8.png" id="2_eo2i5"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/components/player_overhead.tscn" id="3_x756a"]
 [ext_resource type="PackedScene" uid="uid://ce42geant7kmk" path="res://overworld/interactables/warp_interactable.tscn" id="4_dowlu"]
+
+[sub_resource type="Gradient" id="Gradient_ocroy"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sn4if"]
+gradient = SubResource("Gradient_ocroy")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.675214, 0.253561)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_87r1p"]
 size = Vector2(14, 14)
@@ -16,8 +25,16 @@ area_enum = 7
 texture = ExtResource("2_eo2i5")
 centered = false
 
+[node name="CanvasModulate" type="CanvasModulate" parent="Map"]
+color = Color(0, 0, 0, 1)
+
 [node name="Player" parent="." instance=ExtResource("3_x756a")]
-position = Vector2(575, 263)
+position = Vector2(661, 314)
+
+[node name="Light" type="PointLight2D" parent="Player"]
+scale = Vector2(4, 4)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_sn4if")
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
 
