@@ -6,7 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://ce42geant7kmk" path="res://overworld/interactables/warp_interactable.tscn" id="4_dowlu"]
 
 [sub_resource type="Gradient" id="Gradient_ocroy"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+offsets = PackedFloat32Array(0, 0.6, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.698039, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_sn4if"]
 gradient = SubResource("Gradient_ocroy")
