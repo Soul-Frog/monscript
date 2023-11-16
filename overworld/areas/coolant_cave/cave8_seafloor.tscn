@@ -13,7 +13,7 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.698039, 1, 1, 1, 0)
 gradient = SubResource("Gradient_ocroy")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(0.675214, 0.253561)
+fill_to = Vector2(0.928775, 0.225071)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_87r1p"]
 size = Vector2(14, 14)
@@ -33,7 +33,7 @@ color = Color(0, 0, 0, 1)
 position = Vector2(661, 314)
 
 [node name="Light" type="PointLight2D" parent="Player"]
-scale = Vector2(4, 4)
+scale = Vector2(3, 3)
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_sn4if")
 

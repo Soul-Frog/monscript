@@ -9,6 +9,13 @@ var bodies = []
 @export var direction = Direction.PUSH_LEFT
 @export var force = 100
 
+func _ready():
+	# if not connected through editor, do it automatically here
+	if body_entered.get_connections().size() == 0:
+		body_entered.connect(_on_body_entered)
+	if body_exited.get_connections().size() == 0:
+		body_exited.connect(_on_body_exited)
+
 func _direction_vector():
 	match direction:
 		Direction.PUSH_LEFT:
@@ -26,7 +33,6 @@ func _physics_process(delta):
 	for body in bodies:
 		body.apply_velocity(force * _direction_vector())
 
-# don't forget to connect the signal to yourself for this
 func _on_body_entered(body):
 	assert(not bodies.has(body))
 	bodies.append(body)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bimj6b5rlyog4"]
+[gd_scene load_steps=9 format=3 uid="uid://bimj6b5rlyog4"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_k8mby"]
 [ext_resource type="Texture2D" uid="uid://bsbqw2a0ycaaa" path="res://assets/maps/coolant_cave/cave11_platformerwaterfall/cave11.png" id="2_ghj08"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://overworld/components/warp.gd" id="4_851ib"]
 [ext_resource type="PackedScene" uid="uid://cepi8saddwmb6" path="res://overworld/components/foreground_element.tscn" id="4_bg1m2"]
 [ext_resource type="Texture2D" uid="uid://cshh1a3j2a1jp" path="res://assets/maps/coolant_cave/cave11_platformerwaterfall/cave11_fg1.png" id="5_gaf47"]
+[ext_resource type="Script" path="res://overworld/areas/coolant_cave/platformer_water.gd" id="7_0ue4f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_80ub1"]
 size = Vector2(54, 16)
@@ -74,5 +75,26 @@ polygon = PackedVector2Array(633, 317, 775, 317, 775, 320, 760, 350, 648, 350, 6
 
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Collision"]
 polygon = PackedVector2Array(898, 416, 1040, 416, 1040, 419, 1025, 449, 913, 449, 898, 419)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Collision"]
+polygon = PackedVector2Array(385, 794, 597, 794, 576, 838, 406, 838)
+
+[node name="PlatformerWater" type="Node2D" parent="."]
+script = ExtResource("7_0ue4f")
+
+[node name="Water" type="Area2D" parent="PlatformerWater"]
+collision_layer = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PlatformerWater/Water"]
+polygon = PackedVector2Array(128, 795, 385, 795, 406, 839, 576, 839, 597, 795, 1067, 795, 1067, 908, 1067, 1008, 128, 1008)
+
+[node name="Topwater" type="Area2D" parent="PlatformerWater"]
+collision_layer = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PlatformerWater/Topwater"]
+polygon = PackedVector2Array(183, 795, 183, 797, 385, 797, 385, 795)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="PlatformerWater/Topwater"]
+polygon = PackedVector2Array(597, 795, 597, 797, 1067, 796, 1067, 795)
 
 [editable path="ForegroundElements/ForegroundElement"]

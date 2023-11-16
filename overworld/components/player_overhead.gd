@@ -1,3 +1,4 @@
+class_name PlayerOverhead
 extends Player
 
 const SPEED = 150 # Movement speed

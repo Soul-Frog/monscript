@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://overworld/components/push_zone.gd" id="1_rl3rx"]
 
-[node name="PushDown" type="Area2D"]
+[node name="PushZone" type="Area2D"]
 collision_layer = 0
 script = ExtResource("1_rl3rx")
 
