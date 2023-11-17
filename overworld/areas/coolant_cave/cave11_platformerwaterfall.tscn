@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://bimj6b5rlyog4"]
+[gd_scene load_steps=10 format=3 uid="uid://bimj6b5rlyog4"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_k8mby"]
 [ext_resource type="Texture2D" uid="uid://bsbqw2a0ycaaa" path="res://assets/maps/coolant_cave/cave11_platformerwaterfall/cave11.png" id="2_ghj08"]
+[ext_resource type="Texture2D" uid="uid://dgtlavegs5o7l" path="res://assets/maps/coolant_cave/cave11_platformerwaterfall/cave11_water.png" id="3_8sj1p"]
 [ext_resource type="PackedScene" uid="uid://cpro10oe50dhk" path="res://overworld/components/player_platformer.tscn" id="3_i2mfo"]
 [ext_resource type="Script" path="res://overworld/components/warp.gd" id="4_851ib"]
 [ext_resource type="PackedScene" uid="uid://cepi8saddwmb6" path="res://overworld/components/foreground_element.tscn" id="4_bg1m2"]
@@ -22,6 +23,11 @@ centered = false
 
 [node name="Player" parent="." instance=ExtResource("3_i2mfo")]
 position = Vector2(844, 19)
+
+[node name="Water" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.670588)
+texture = ExtResource("3_8sj1p")
+centered = false
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
 
@@ -88,6 +94,9 @@ collision_layer = 0
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PlatformerWater/Water"]
 polygon = PackedVector2Array(128, 795, 385, 795, 406, 839, 576, 839, 597, 795, 1067, 795, 1067, 908, 1067, 1008, 128, 1008)
 
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="PlatformerWater/Water"]
+polygon = PackedVector2Array(131, 259, 131, 232, 258, 232, 247, 254, 247, 259)
+
 [node name="Topwater" type="Area2D" parent="PlatformerWater"]
 collision_layer = 0
 
@@ -96,5 +105,8 @@ polygon = PackedVector2Array(183, 795, 183, 797, 385, 797, 385, 795)
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="PlatformerWater/Topwater"]
 polygon = PackedVector2Array(597, 795, 597, 797, 1067, 796, 1067, 795)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="PlatformerWater/Topwater"]
+polygon = PackedVector2Array(131, 232, 131, 234, 257, 234, 258, 232)
 
 [editable path="ForegroundElements/ForegroundElement"]

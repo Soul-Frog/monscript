@@ -1,13 +1,14 @@
 class_name PlayerPlatformer
 extends Player
 
-const SPEED = 110 # Movement speed
-const FRICTION = 20 # How quickly the player stops moving when direction is released
+const SPEED = 110.0 # Movement speed
+const FRICTION = 20.0 # How quickly the player stops moving when direction is released
 var GRAVITY = ProjectSettings.get_setting("physics/2d/default_gravity")
 var MAX_FALL_SPEED = GRAVITY/2.0 #maximum speed the player can be falling
 const JUMP_VELOCITY = -271.0 #this is ~56 pixels high with default gravity
 
 var SWIM_SPEED = SPEED/1.5
+var SWIM_FRICTION = FRICTION/15.0
 var SWIM_GROUNDED_SPEED = SPEED/3.0
 var SWIM_GRAVITY = GRAVITY/4.0
 var MAX_SWIM_FALL_SPEED = SWIM_GRAVITY/2.0
@@ -29,8 +30,7 @@ func _physics_process(delta):
 		var gravity = (SWIM_GRAVITY if is_swimming else GRAVITY)
 		var max_fall_speed = (MAX_SWIM_FALL_SPEED if is_swimming else MAX_FALL_SPEED)
 		var jump_velocity = (SWIM_TOPWATER_JUMP_VELOCITY if is_topwater else SWIM_JUMP_VELOCITY) if is_swimming or is_topwater else JUMP_VELOCITY
-		
-		#TODO - walk really slow if grounded
+		var friction = (SWIM_FRICTION if is_swimming else FRICTION)
 		
 		# Add the gravity.
 		if not is_on_floor():
@@ -53,7 +53,7 @@ func _physics_process(delta):
 		if direction:
 			velocity.x = direction * speed
 		else:
-			velocity.x = move_toward(velocity.x, 0, FRICTION)
+			velocity.x = move_toward(velocity.x, 0, friction)
 			
 		# TODO - apply external velocity (ex pushzones)
 		# doesn't work correctly (adds too much since it adds it every frame we're being pushed, can't do it the same way as overhead)
