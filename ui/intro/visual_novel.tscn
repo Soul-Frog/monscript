@@ -69,6 +69,7 @@ centered = false
 [node name="Clickables" type="Node2D" parent="Subscenes/Computer"]
 
 [node name="Room" type="Node2D" parent="Subscenes"]
+visible = false
 
 [node name="Background" type="Sprite2D" parent="Subscenes/Room"]
 scale = Vector2(0.432432, 0.540541)
