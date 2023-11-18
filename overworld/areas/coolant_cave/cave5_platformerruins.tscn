@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b8i48bctelxjw" path="res://assets/maps/coolant_cave/cave5_platformerruins/cave5_water.png" id="4_g2yta"]
 [ext_resource type="Script" path="res://overworld/components/warp.gd" id="4_oxmf0"]
 [ext_resource type="PackedScene" uid="uid://cepi8saddwmb6" path="res://overworld/components/foreground_element.tscn" id="4_rw0m6"]
-[ext_resource type="Texture2D" uid="uid://cojsfqslplo7l" path="res://assets/maps/coolant_cave/cave5_platformerruins/cave5_fg1.png" id="5_7sbg0"]
+[ext_resource type="Texture2D" uid="uid://cojsfqslplo7l" path="res://assets/maps/coolant_cave/cave5_platformerruins/cave5_fg.png" id="5_7sbg0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4wb6b"]
 size = Vector2(12, 125)
@@ -19,6 +19,7 @@ script = ExtResource("1_cah05")
 area_enum = 4
 
 [node name="Map" type="Sprite2D" parent="."]
+position = Vector2(0, -80)
 texture = ExtResource("2_l3y27")
 centered = false
 
