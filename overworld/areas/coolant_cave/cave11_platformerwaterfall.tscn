@@ -56,7 +56,7 @@ position = Vector2(832, 1)
 [node name="Warps" type="Node2D" parent="."]
 
 [node name="Warp" type="Area2D" parent="Warps"]
-position = Vector2(471, 665)
+position = Vector2(471, 789)
 collision_layer = 0
 script = ExtResource("4_851ib")
 area = 9
@@ -68,6 +68,7 @@ position = Vector2(20, -3)
 shape = SubResource("RectangleShape2D_80ub1")
 
 [node name="Collision" type="StaticBody2D" parent="."]
+visible = false
 modulate = Color(0, 1, 0, 1)
 position = Vector2(0, 1)
 collision_layer = 4
@@ -86,6 +87,7 @@ polygon = PackedVector2Array(898, 416, 1040, 416, 1040, 419, 1025, 449, 913, 449
 polygon = PackedVector2Array(385, 794, 597, 794, 576, 838, 406, 838)
 
 [node name="PlatformerWater" type="Node2D" parent="."]
+visible = false
 script = ExtResource("7_0ue4f")
 
 [node name="Water" type="Area2D" parent="PlatformerWater"]

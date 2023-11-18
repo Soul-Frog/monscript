@@ -11,6 +11,9 @@ var mouse_hovered = false
 func _ready() -> void:
 	assert(examine_dialogue != "", "Forgot to assign dialogue to this clickable.")
 	assert(_OUTLINE, "Didn't add outline child node to clickable!")
+	
+	_OUTLINE.deactivate()
+	
 	# track when the mouse enters or exits this clickable
 	mouse_entered.connect(func(): 
 		mouse_hovered = true

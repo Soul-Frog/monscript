@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://5lhr4mbe0psu"]
 
 [ext_resource type="PackedScene" uid="uid://cd6pj5homenki" path="res://overworld/interactables/interactable_base.tscn" id="1_fh0cw"]
-[ext_resource type="Script" path="res://overworld/interactables/water_switch_interactable.gd" id="2_5rely"]
+[ext_resource type="Script" path="res://overworld/interactables/water_switch.gd" id="2_5rely"]
 [ext_resource type="Texture2D" uid="uid://b7rysph8rb228" path="res://assets/objects/water_switch.png" id="3_a2h4i"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_88oha"]

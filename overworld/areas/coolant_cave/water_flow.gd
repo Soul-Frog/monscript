@@ -2,7 +2,7 @@ extends PushZone
 
 @export var MIN_PARTICLE_SPEED = 60
 @export var MAX_PARTICLE_SPEED = 90
-@export var PARTICLE_COUNT = 30
+@export var PARTICLE_COUNT = 45
 
 const _PARTICLE = preload("res://particle.tscn")
 

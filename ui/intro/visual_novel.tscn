@@ -69,7 +69,6 @@ centered = false
 [node name="Clickables" type="Node2D" parent="Subscenes/Computer"]
 
 [node name="Room" type="Node2D" parent="Subscenes"]
-visible = false
 
 [node name="Background" type="Sprite2D" parent="Subscenes/Room"]
 scale = Vector2(0.432432, 0.540541)
@@ -96,8 +95,6 @@ outline_color = Color(1, 1, 1, 1)
 width = 0.75
 
 [node name="Fade" parent="Subscenes/Room/Clickables/Computer/Outline" instance=ExtResource("5_g2i7w")]
-active = false
-fade_type = 2
 fade_speed = 2.0
 
 [node name="Bed" type="Area2D" parent="Subscenes/Room/Clickables"]
@@ -118,8 +115,6 @@ outline_color = Color(1, 1, 1, 1)
 width = 0.75
 
 [node name="Fade" parent="Subscenes/Room/Clickables/Bed/Outline" instance=ExtResource("5_g2i7w")]
-active = false
-fade_type = 2
 fade_speed = 2.0
 
 [node name="BadGame" type="Node2D" parent="Subscenes"]
@@ -309,8 +304,6 @@ offset_bottom = 198.0
 
 [node name="FadeDecorator" type="Node" parent="NameInputBlackout"]
 script = ExtResource("16_scigv")
-active = false
-fade_type = 2
 max_alpha = 0.8
 fade_speed = 2.0
 
@@ -325,8 +318,6 @@ alignment = 1
 max_length = 15
 
 [node name="FadeDecorator" parent="." instance=ExtResource("5_g2i7w")]
-active = false
-fade_type = 1
 fade_speed = 5.0
 fade_out_hangtime = 0.5
 

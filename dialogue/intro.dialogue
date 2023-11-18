@@ -11,7 +11,7 @@ Professor: ...and by performing a simple traversal of this graph, it should be e
 Professor: ...and so we'll leave it there for today. You'll have the chance to implement some of these algorithms yourself in this week's problem set.
 Professor: And before you all leave, don't forget that you should have made some good progress on your senior project by this point...
 {{GameData.get_var(GameData.PLAYER_NAME)}}: (Ah... right. My senior project. I've still got a lot of work to do on that.)
-{{GameData.get_var(GameData.PLAYER_NAME)}}: (I'd always wanted to program a gBame, but making that my senior project might have been a mistake.)
+{{GameData.get_var(GameData.PLAYER_NAME)}}: (I'd always wanted to program a game, but making that my senior project might have been a mistake.)
 Professor: ...so don't leave it to the last minute! I look forward to seeing your progress during our individual meetings next week.
 {{GameData.get_var(GameData.PLAYER_NAME)}}: ("Progress"... yeah, right.)
 Professor: Have a good evening everyone! If you have any questions about today's lecture material, the TAs will be holding extra office hours in the CS lounge next Monday and Wednesday.

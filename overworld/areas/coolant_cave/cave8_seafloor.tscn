@@ -27,6 +27,7 @@ texture = ExtResource("2_eo2i5")
 centered = false
 
 [node name="CanvasModulate" type="CanvasModulate" parent="Map"]
+visible = false
 color = Color(0, 0, 0, 1)
 
 [node name="Player" parent="." instance=ExtResource("3_x756a")]
