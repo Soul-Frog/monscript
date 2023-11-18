@@ -20,8 +20,10 @@ signal closed
 const _HELD_OFFSET = Vector2(16, 16)
 var _held_mon = null
 
-var _storage_page = 0
+var _storage_page = 0 #the current page of storage open
 var _STORAGE_PAGE_LABEL_FORMAT = "%d/%d"
+
+var _is_closable = false #if the pause menu can be safely closed (ie the game is not saving)
 
 func _ready() -> void:
 	assert(TEAM_MONS)
@@ -77,6 +79,7 @@ func _on_database_button_pressed() -> void:
 	emit_signal("database_menu_opened")
 
 func _on_save_button_pressed():
+	_is_closable = false # prevent the menu from being closed while saving
 	if not _is_team_valid():
 		NO_MON_POPUP.show()
 	else:
@@ -85,6 +88,7 @@ func _on_save_button_pressed():
 		var continueGame = await SAVE_POPUP.selection_made
 		if not continueGame:
 			get_tree().quit()
+	_is_closable = true # done saving; menu can be closed now if needed
 
 func _on_settings_button_pressed() -> void:
 	print("Settings!")	#TODO settings
@@ -166,3 +170,7 @@ func _is_team_valid():
 		if team_mon.has_mon():
 			return true
 	return false
+
+# if the pause menu can currently be closed (false if the save popup is active)
+func is_closable():
+	return _is_closable

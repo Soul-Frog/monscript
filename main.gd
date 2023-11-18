@@ -42,7 +42,7 @@ func _input(_event) -> void:
 		if active_scene == OVERWORLD:
 			PAUSE_MENU.setup()
 			await _switch_to_scene(PAUSE_MENU, FADE)
-		elif active_scene == PAUSE_MENU:
+		elif active_scene == PAUSE_MENU and PAUSE_MENU.is_closable():
 			await _on_pause_menu_closed()
 
 # Switch to a new scene with a fade effect.
