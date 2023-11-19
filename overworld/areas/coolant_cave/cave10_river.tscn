@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://h1rp512m0kw3"]
+[gd_scene load_steps=7 format=3 uid="uid://h1rp512m0kw3"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_c2hk5"]
 [ext_resource type="Texture2D" uid="uid://b0e6tgnkw52yd" path="res://assets/maps/coolant_cave/cave10_river/cave10.png" id="2_dl0pi"]
@@ -11,15 +11,6 @@ size = Vector2(11, 97)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kv1gw"]
 size = Vector2(44, 16)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_6gihg"]
-size = Vector2(77, 1532)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ompsi"]
-size = Vector2(77, 1586)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2wrru"]
-size = Vector2(44, 16)
-
 [node name="Area" type="Node2D"]
 script = ExtResource("1_c2hk5")
 area_enum = 9
@@ -30,7 +21,7 @@ texture = ExtResource("2_dl0pi")
 centered = false
 
 [node name="Player" parent="." instance=ExtResource("3_jyrdr")]
-position = Vector2(291, 744)
+position = Vector2(405, 1952)
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
 
@@ -78,13 +69,50 @@ script = ExtResource("4_o02w7")
 area = 10
 spawn_point = "Cave11Right"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/WarpsTo2DWaterfallRight"]
-position = Vector2(83, -771)
-shape = SubResource("RectangleShape2D_6gihg")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Warps/WarpsTo2DWaterfallRight"]
+polygon = PackedVector2Array(113, -1568, -64, -1559, -64, -1556, -91, -1504, -149, -1504, -149, -1475, -145, -1472, -145, -1443, -138, -1429, -138, -1398, -123, -1383, -123, -1352, -30, -1260, -27, -1256, 36, -1128, 36, -933, -21, -904, -20, -727, -78, -699, -78, -577, -20, -547, -20, -341, -34, -312, -97, -249, -97, -219, -66, -188, -66, -92, -130, -29, -130, 65, 38, 65, 38, 19, 99, 7)
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Warps/WarpsTo2DWaterfallRight"]
-position = Vector2(-421, -728)
-shape = SubResource("RectangleShape2D_ompsi")
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Warps/WarpsTo2DWaterfallRight"]
+position = Vector2(-187, -121)
+polygon = PackedVector2Array(-7, -3, 5, 10, 39, 10, 51, -3, 51, -34, 38, -48, 6, -48, -7, -35)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Warps/WarpsTo2DWaterfallRight"]
+position = Vector2(-236, -331)
+polygon = PackedVector2Array(-7, -3, 5, 10, 39, 10, 51, -3, 51, -34, 38, -48, 6, -48, -7, -35)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Warps/WarpsTo2DWaterfallRight"]
+position = Vector2(-117, -375)
+polygon = PackedVector2Array(-7, -3, 5, 10, 39, 10, 51, -3, 51, -34, 38, -48, 6, -48, -7, -35)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="Warps/WarpsTo2DWaterfallRight"]
+position = Vector2(-207, -457)
+polygon = PackedVector2Array(-7, -3, 5, 10, 39, 10, 51, -3, 51, -34, 38, -48, 6, -48, -7, -35)
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="Warps/WarpsTo2DWaterfallRight"]
+polygon = PackedVector2Array(-200, 65, -285, 65, -297, 77, -297, 159, -285, 168, 38, 169, 39, 224, -409, 224, -431, -1562, -265, -1559, -265, -1556, -238, -1504, -180, -1504, -180, -1475, -184, -1472, -184, -1444, -191, -1430, -191, -1398, -206, -1383, -206, -1352, -301, -1256, -366, -1128, -366, -934, -309, -905, -309, -729, -252, -700, -252, -576, -356, -524, -356, -459, -310, -436, -309, -342, -294, -311, -231, -248, -231, -219, -262, -188, -262, -92, -200, -29)
+
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="Warps/WarpsTo2DWaterfallRight"]
+polygon = PackedVector2Array(-167, -563, -163, -563, -136, -578, -136, -699, -163, -713, -167, -713, -194, -699, -194, -578)
+
+[node name="CollisionPolygon2D13" type="CollisionPolygon2D" parent="Warps/WarpsTo2DWaterfallRight"]
+position = Vector2(0, -410)
+polygon = PackedVector2Array(-167, -563, -162, -563, -135, -578, -135, -699, -162, -713, -167, -713, -194, -699, -194, -578)
+
+[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="Warps/WarpsTo2DWaterfallRight"]
+position = Vector2(-58, -205)
+polygon = PackedVector2Array(-166, -563, -163, -563, -136, -578, -136, -699, -163, -713, -166, -713, -193, -699, -193, -577)
+
+[node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="Warps/WarpsTo2DWaterfallRight"]
+position = Vector2(57, -205)
+polygon = PackedVector2Array(-166, -563, -163, -563, -136, -578, -136, -699, -163, -713, -166, -713, -193, -699, -193, -577)
+
+[node name="CollisionPolygon2D10" type="CollisionPolygon2D" parent="Warps/WarpsTo2DWaterfallRight"]
+position = Vector2(115, -410)
+polygon = PackedVector2Array(-166, -563, -163, -563, -136, -578, -136, -699, -163, -713, -166, -713, -193, -699, -193, -577)
+
+[node name="CollisionPolygon2D11" type="CollisionPolygon2D" parent="Warps/WarpsTo2DWaterfallRight"]
+position = Vector2(-115, -411)
+polygon = PackedVector2Array(-166, -563, -163, -563, -136, -578, -136, -699, -163, -713, -166, -713, -193, -699, -193, -577)
 
 [node name="WarpTo2DWaterfallLeft" type="Area2D" parent="Warps"]
 position = Vector2(95, 1366)
@@ -94,11 +122,17 @@ area = 10
 spawn_point = "Cave11Left"
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/WarpTo2DWaterfallLeft"]
-position = Vector2(20, -3)
-shape = SubResource("RectangleShape2D_2wrru")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Warps/WarpTo2DWaterfallLeft"]
+polygon = PackedVector2Array(-7, -3, 5, 10, 39, 10, 51, -3, 51, -34, 38, -48, 6, -48, -7, -35)
 
-[node name="World" type="StaticBody2D" parent="."]
+[node name="Collision" type="StaticBody2D" parent="."]
+modulate = Color(0, 1, 0, 1)
 position = Vector2(-96, 150)
 collision_layer = 4
 collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collision"]
+polygon = PackedVector2Array(563, 1757, 624, 1770, 635, 1770, 635, 1867, 624, 1867, 563, 1855, 563.162, 1864.57, 564, 1914, 689, 1912, 701, 1683, 563, 1708)
+
+[node name="Polygon2D" type="CollisionPolygon2D" parent="Collision"]
+polygon = PackedVector2Array(405, 130, 405, -10, 382, -22, 382, -38, 338, -38, 338, -22, 316, -11, 316, 130, 221, 130, 221, -80, 492, -79, 487, 130)
