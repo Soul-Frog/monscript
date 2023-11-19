@@ -9,7 +9,7 @@
 [ext_resource type="Script" path="res://overworld/components/warp.gd" id="9_a8npn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_80ub1"]
-size = Vector2(27, 28)
+size = Vector2(27, 32)
 
 [node name="Area2" type="Node2D"]
 script = ExtResource("1_4sj54")
@@ -57,7 +57,7 @@ spawn_point = "Cave2Bottom"
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/Warp"]
-position = Vector2(0.5, -3)
+position = Vector2(0.5, -1)
 shape = SubResource("RectangleShape2D_80ub1")
 
 [node name="World" type="StaticBody2D" parent="."]
