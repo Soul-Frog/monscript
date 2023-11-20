@@ -4,13 +4,13 @@
 [ext_resource type="Texture2D" uid="uid://bsbqw2a0ycaaa" path="res://assets/maps/coolant_cave/cave11_platformerwaterfall/cave11.png" id="2_ghj08"]
 [ext_resource type="Texture2D" uid="uid://dgtlavegs5o7l" path="res://assets/maps/coolant_cave/cave11_platformerwaterfall/cave11_water.png" id="3_8sj1p"]
 [ext_resource type="PackedScene" uid="uid://cpro10oe50dhk" path="res://overworld/components/player_platformer.tscn" id="3_i2mfo"]
-[ext_resource type="Script" path="res://overworld/components/warp.gd" id="4_851ib"]
 [ext_resource type="PackedScene" uid="uid://cepi8saddwmb6" path="res://overworld/components/foreground_element.tscn" id="4_bg1m2"]
 [ext_resource type="Texture2D" uid="uid://cshh1a3j2a1jp" path="res://assets/maps/coolant_cave/cave11_platformerwaterfall/cave11_fg1.png" id="5_gaf47"]
 [ext_resource type="Script" path="res://overworld/areas/coolant_cave/platformer_water.gd" id="7_0ue4f"]
+[ext_resource type="PackedScene" uid="uid://ce42geant7kmk" path="res://overworld/interactables/warp_interactable.tscn" id="8_30lcs"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_80ub1"]
-size = Vector2(54, 16)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tqmcg"]
+size = Vector2(14, 14)
 
 [node name="Area" type="Node2D"]
 script = ExtResource("1_k8mby")
@@ -22,7 +22,7 @@ texture = ExtResource("2_ghj08")
 centered = false
 
 [node name="Player" parent="." instance=ExtResource("3_i2mfo")]
-position = Vector2(844, 19)
+position = Vector2(491, 782)
 
 [node name="Water" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.670588)
@@ -48,34 +48,24 @@ fade_speed = 4.0
 [node name="Points" type="Node2D" parent="."]
 
 [node name="Cave11Left" type="Node2D" parent="Points"]
-position = Vector2(192, 1)
+position = Vector2(197, -89)
 
 [node name="Cave11Right" type="Node2D" parent="Points"]
-position = Vector2(832, 1)
+position = Vector2(832, -84)
+
+[node name="Cave11Ladder" type="Node2D" parent="Points"]
+position = Vector2(491, 782)
 
 [node name="Warps" type="Node2D" parent="."]
 
-[node name="Warp" type="Area2D" parent="Warps"]
-position = Vector2(471, 789)
-collision_layer = 0
-script = ExtResource("4_851ib")
-area = 9
-spawn_point = "Cave10Ladder"
-metadata/_edit_group_ = true
-
-[node name="TEMP" type="CollisionShape2D" parent="Warps/Warp"]
-position = Vector2(20, -3)
-shape = SubResource("RectangleShape2D_80ub1")
-
 [node name="Collision" type="StaticBody2D" parent="."]
-visible = false
 modulate = Color(0, 1, 0, 1)
 position = Vector2(0, 1)
 collision_layer = 4
 collision_mask = 0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collision"]
-polygon = PackedVector2Array(0, -129, 130, -129, 131, 253, 247, 253, 260, 225, 275, 225, 275, 246, 260, 276, 131, 276, 131, 723, 104, 725, 90, 729, 80, 734, 72, 744, 69, 752, 69, 794, 183, 794, 161, 838, 131, 838, 131, 908, 141, 924, 146, 930, 153, 934, 157, 939, 165, 945, 175, 950, 183, 955, 188, 958, 199, 962, 207, 967, 218, 970, 230, 973, 236, 975, 246, 976, 258, 979, 272, 981, 349, 985, 820, 985, 888, 982, 934, 979, 966, 974, 990, 967, 1003, 960, 1015, 954, 1027, 948, 1033, 944, 1039, 940, 1045, 934, 1052, 929, 1058, 923, 1062, 916, 1067, 907, 1067, 687, 1067, -64.8333, 597, -66, 597, 687, 552, 687, 519, 652, 463, 652, 430, 686, 385, 687, 385, -1, 384, -65, 130, -65, 130, -129, 1067, -129, 1152, -129, 1152, 1023, 0, 1023, 0, 288)
+polygon = PackedVector2Array(0, -193, 131, -193, 131, 253, 247, 253, 260, 225, 275, 225, 275, 246, 260, 276, 131, 276, 131, 723, 104, 725, 90, 729, 80, 734, 72, 744, 69, 752, 69, 794, 183, 794, 161, 838, 131, 838, 131, 908, 141, 924, 146, 930, 153, 934, 157, 939, 165, 945, 175, 950, 183, 955, 188, 958, 199, 962, 207, 967, 218, 970, 230, 973, 236, 975, 246, 976, 258, 979, 272, 981, 349, 985, 820, 985, 888, 982, 934, 979, 966, 974, 990, 967, 1003, 960, 1015, 954, 1027, 948, 1033, 944, 1039, 940, 1045, 934, 1052, 929, 1058, 923, 1062, 916, 1067, 907, 1067, 687, 1067, -177, 597, -174, 597, 687, 552, 687, 519, 652, 463, 652, 430, 686, 385, 687, 385, -165, 132, -164, 132, -193, 1144, -198, 1152, 1023, 0, 1023, 0, 288)
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Collision"]
 polygon = PackedVector2Array(633, 317, 775, 317, 775, 320, 760, 350, 648, 350, 633, 320)
@@ -111,4 +101,25 @@ polygon = PackedVector2Array(597, 795, 597, 797, 1067, 796, 1067, 795)
 [node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="PlatformerWater/Topwater"]
 polygon = PackedVector2Array(131, 232, 131, 234, 257, 234, 258, 232)
 
+[node name="WarpInteractable" parent="." instance=ExtResource("8_30lcs")]
+position = Vector2(490, 788)
+area = 9
+spawn_point = "Cave10Ladder"
+LABEL_TEXT = "Climb"
+
+[node name="CollisionPolygon2D" parent="WarpInteractable/Collision" index="0"]
+polygon = PackedVector2Array()
+
+[node name="CollisionShape2D" parent="WarpInteractable/InteractionArea" index="0"]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_tqmcg")
+
+[node name="Label" parent="WarpInteractable" index="3"]
+offset_left = -59.0
+offset_top = -53.0
+offset_right = 64.0
+offset_bottom = -30.0
+text = "[center][E] Climb[/center]"
+
 [editable path="ForegroundElements/ForegroundElement"]
+[editable path="WarpInteractable"]

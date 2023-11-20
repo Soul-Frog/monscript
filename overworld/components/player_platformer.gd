@@ -19,7 +19,7 @@ var is_swimming = false # if the player is in water
 var is_topwater = false # if the player is swimming but near the top of the water
 
 func _physics_process(delta): 
-	if can_move:
+	if _can_move:
 		# set the values to use depending on our current state
 		var speed = SPEED
 		if is_swimming:
@@ -41,15 +41,24 @@ func _physics_process(delta):
 			velocity.y = max_fall_speed
 
 		# Handle Jump on space or up.
-		if (Input.is_action_just_pressed("ui_accept") or Input.is_action_just_pressed("up")) and (is_on_floor() or is_swimming):
+		var up_input = Input.is_action_just_pressed("ui_accept") or Input.is_action_just_pressed("up")
+		if _forced_movement and _forced_direction_vector.y != 0: # if a control is forced, overwrite the input with up/down depending on the force
+			up_input = _forced_direction_vector.y > 0
+		if (up_input and (is_on_floor() or is_swimming)): #attempt to jump
 			velocity.y = jump_velocity
 		
 		# pass through 1 ways by pressing down
-		if is_on_floor() and Input.is_action_just_pressed("down"):
+		var down_input = Input.is_action_just_pressed("down")
+		if _forced_movement and _forced_direction_vector.y != 0:
+			down_input = _forced_direction_vector.y < 0
+		if down_input and is_on_floor():
 			position.y += 1
 
 		# Get the input direction and handle the movement/deceleration.
 		var direction = Input.get_axis("left", "right")
+		if _forced_movement and _forced_direction_vector.x != 0:
+			direction.x = _forced_direction_vector.x
+		
 		if direction:
 			velocity.x = direction * speed
 		else:

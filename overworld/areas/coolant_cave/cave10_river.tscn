@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://h1rp512m0kw3"]
+[gd_scene load_steps=9 format=3 uid="uid://h1rp512m0kw3"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_c2hk5"]
 [ext_resource type="Texture2D" uid="uid://b0e6tgnkw52yd" path="res://assets/maps/coolant_cave/cave10_river/cave10.png" id="2_dl0pi"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/components/player_overhead.tscn" id="3_jyrdr"]
 [ext_resource type="Script" path="res://overworld/components/warp.gd" id="4_o02w7"]
+[ext_resource type="Script" path="res://overworld/areas/coolant_cave/ice.gd" id="5_t63x7"]
+[ext_resource type="PackedScene" uid="uid://ce42geant7kmk" path="res://overworld/interactables/warp_interactable.tscn" id="6_ucxxx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ipd0d"]
 size = Vector2(11, 97)
@@ -63,6 +65,7 @@ position = Vector2(21, -3)
 shape = SubResource("RectangleShape2D_kv1gw")
 
 [node name="WarpsTo2DWaterfallRight" type="Area2D" parent="Warps"]
+visible = false
 position = Vector2(429, 1839)
 collision_layer = 0
 script = ExtResource("4_o02w7")
@@ -136,3 +139,35 @@ polygon = PackedVector2Array(563, 1757, 624, 1770, 635, 1770, 635, 1867, 624, 18
 
 [node name="Polygon2D" type="CollisionPolygon2D" parent="Collision"]
 polygon = PackedVector2Array(405, 130, 405, -10, 382, -22, 382, -38, 338, -38, 338, -22, 316, -11, 316, 130, 221, 130, 221, -80, 492, -79, 487, 130)
+
+[node name="Ice" type="Node2D" parent="."]
+script = ExtResource("5_t63x7")
+
+[node name="IceArea" type="Area2D" parent="Ice"]
+collision_layer = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Ice/IceArea"]
+polygon = PackedVector2Array(232, 1907, 232, 1835, 11, 1831, -2, 740, 18, 369, 251, 364, 251, 333, 278, 333, 278, 364, 533, 387, 527, 1842, 296, 1835, 296, 1907)
+
+[node name="Bottom" type="Area2D" parent="Ice"]
+collision_layer = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Ice/Bottom"]
+polygon = PackedVector2Array(232, 1907, 296, 1907, 296, 1883, 232, 1883)
+
+[node name="Top" type="Area2D" parent="Ice"]
+collision_layer = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Ice/Top"]
+polygon = PackedVector2Array(251, 333, 251, 351, 278, 351, 278, 333)
+
+[node name="Ladder" parent="." instance=ExtResource("6_ucxxx")]
+position = Vector2(181, 1940)
+area = 10
+spawn_point = "Cave11Ladder"
+LABEL_TEXT = "Climb"
+
+[node name="CollisionPolygon2D" parent="Ladder/Collision" index="0"]
+polygon = PackedVector2Array(-74.4792, 23.2739, 26.7955, 23.2739, 43.6747, 16.8203, 43.6747, 3.9126, 26.7955, -2.54102, -74.4792, -2.54102, -91.3584, 3.9126, -91.3584, 16.8203)
+
+[editable path="Ladder"]

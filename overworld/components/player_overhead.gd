@@ -23,15 +23,21 @@ func _ready():
 func update_velocity():
 	var input_direction = Input.get_vector("left", "right", "up", "down")
 	
+	if _forced_movement:
+		if _forced_direction_vector.x != 0:
+			input_direction.x = _forced_direction_vector.x
+		if _forced_direction_vector.y != 0:
+			input_direction.y = _forced_direction_vector.y
+	
 	if input_direction != Vector2.ZERO:
 		velocity = lerp(velocity, SPEED * input_direction, ACCELERATION)
 	else:
 		velocity = lerp(velocity, Vector2.ZERO, FRICTION)
 	
 	# apply external velocity
-	velocity.x += external_velocity.x
-	velocity.y += external_velocity.y
-	external_velocity = Vector2.ZERO
+	velocity.x += _external_velocity.x
+	velocity.y += _external_velocity.y
+	_external_velocity = Vector2.ZERO
 	
 	if dashing:
 		velocity = DASH_SPEED * orientation
@@ -39,6 +45,6 @@ func update_velocity():
 		orientation = input_direction
 
 func _physics_process(delta):
-	if can_move:
+	if _can_move:
 		update_velocity()
 		move_and_slide()

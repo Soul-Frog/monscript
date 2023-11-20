@@ -3,41 +3,38 @@ extends CharacterBody2D
 
 @onready var _BATTLE_COLLISION = $BattleCollision
 
-const INVINCIBILITY_AFTER_ESCAPE_SECS = 2
-const INVINCIBILITY_AFTER_WIN_SECS = 1
+const _INVINCIBILITY_AFTER_ESCAPE_SECS := 2
+const _INVINCIBILITY_AFTER_WIN_SECS := 1
+var _is_invincible := false
+var _can_move := true # if the player can move
 
-var is_invincible = false
-
-var external_velocity = Vector2.ZERO
-
-var can_move = true # if the player can move
+var _external_velocity := Vector2.ZERO # external forces acting upon the player (ie water currents/whirlpool)
+var _forced_movement := false # if a certain direction should be forced (ie, while sliding on ice, you can't stop holding a direction)
+var _forced_direction_vector := Vector2(0, 0) # the direction that is forced if _forced_movement is true
 
 func _ready():
 	assert(_BATTLE_COLLISION)
 
-func apply_velocity(velo):
-	external_velocity += velo
-
 func _on_area_2d_body_entered(overworld_encounter_collided_with):
-	if not is_invincible: 
+	if not _is_invincible: 
 		Events.emit_signal("collided_with_overworld_encounter", overworld_encounter_collided_with)
 		Events.emit_signal("battle_started", overworld_encounter_collided_with.mons)
 
 func activate_invincibility(battle_end_condition) -> void:
-	is_invincible = true
+	_is_invincible = true
 	
-	var length = INVINCIBILITY_AFTER_ESCAPE_SECS if battle_end_condition == Global.BattleEndCondition.ESCAPE else INVINCIBILITY_AFTER_WIN_SECS
+	var length = _INVINCIBILITY_AFTER_ESCAPE_SECS if battle_end_condition == Global.BattleEndCondition.ESCAPE else _INVINCIBILITY_AFTER_WIN_SECS
 	if Global.DEBUG_NO_INVINCIBLE:
 		length = 0
 	
 	await Global.delay(length)
-	is_invincible = false
+	_is_invincible = false
 
 func enable_movement() -> void:
-	can_move = true
+	_can_move = true
 	
 func disable_movement() -> void:
-	can_move = false
+	_can_move = false
 
 func enable_battle_collision() -> void:
 	_BATTLE_COLLISION.monitoring = true
@@ -46,3 +43,14 @@ func enable_battle_collision() -> void:
 func disable_battle_collision() -> void:
 	_BATTLE_COLLISION.monitoring = false
 	_BATTLE_COLLISION.monitorable = false
+
+func apply_velocity(velo):
+	_external_velocity += velo
+
+func apply_forced_movement(forced_direction: Vector2):
+	_forced_movement = true
+	_forced_direction_vector = forced_direction
+
+func disable_forced_movement():
+	_forced_movement = false
+	_forced_direction_vector = Vector2(0, 0)
