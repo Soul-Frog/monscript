@@ -23,7 +23,7 @@ var _held_mon = null
 var _storage_page = 0 #the current page of storage open
 var _STORAGE_PAGE_LABEL_FORMAT = "%d/%d"
 
-var _is_closable = false #if the pause menu can be safely closed (ie the game is not saving)
+var _is_closable = true #if the pause menu can be safely closed (ie the game is not saving)
 
 func _ready() -> void:
 	assert(TEAM_MONS)
