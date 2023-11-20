@@ -4,8 +4,6 @@ extends Node2D
 @export var area_enum := GameData.Area.NONE
 @export var camera_zoom := 1.0
 
-signal change_area
-
 var _overworld_encounter_battling_with = null
 
 @onready var _PLAYER = $Player
