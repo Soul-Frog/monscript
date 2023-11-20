@@ -53,7 +53,7 @@ collision_mask = 0
 
 [node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Collision"]
 position = Vector2(-45, -185)
-polygon = PackedVector2Array(507, 794, 507, 609, 548, 609, 613, 544, 613, 416, 548, 351, 420, 351, 355, 416, 355, 544, 420, 609, 461, 609, 461, 794, 213, 794, 213, 288, 518, 286, 701, 280, 701, 848, 213, 848, 213, 794)
+polygon = PackedVector2Array(507, 794, 507, 609, 548, 609, 613, 544, 613, 416, 548, 351, 420, 351, 355, 416, 355, 544, 420, 609, 461, 609, 461, 794, 213, 794, 213, 288, 749, 288, 749, 848, 213, 848, 213, 794)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collision"]
 polygon = PackedVector2Array(407, 231, 471, 231, 503, 263, 503, 327, 471, 359, 407, 359, 375, 327, 375, 263)
