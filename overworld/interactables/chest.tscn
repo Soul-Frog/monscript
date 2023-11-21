@@ -32,7 +32,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2xfpe"]
-radius = 12.0
+radius = 14.0
 
 [node name="Chest" instance=ExtResource("1_8j4l1")]
 script = ExtResource("2_anro5")
@@ -51,11 +51,15 @@ centered = false
 position = Vector2(0, 4)
 
 [node name="CollisionPolygon2D" parent="Collision" index="0"]
-polygon = PackedVector2Array(-57.6001, -19.7512, 9.91645, -19.7512, 9.91645, 12.5176, -57.6001, 12.5176)
+polygon = PackedVector2Array(-53.3803, -13.2975, 22.5758, -13.2975, 22.5758, 18.9714, -53.3803, 18.9714)
 
 [node name="CollisionShape2D" parent="InteractionArea" index="0"]
+position = Vector2(2, 2)
 shape = SubResource("CircleShape2D_2xfpe")
 
 [node name="Label" parent="." index="3"]
+offset_left = -58.0
 offset_top = -27.0
+offset_right = 65.0
 offset_bottom = -4.0
+text = "[center][E] Open[/center]"

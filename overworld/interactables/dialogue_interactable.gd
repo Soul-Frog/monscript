@@ -7,6 +7,7 @@ extends Interactable
 func _ready():
 	assert(dialogue_resource, "No dialogue assigned!")
 	assert(dialogue_start != "NULL", "No dialogue assigned!")
+	super()
 
 func _on_interact():
 	# don't open a new dialogue if we're already talking
