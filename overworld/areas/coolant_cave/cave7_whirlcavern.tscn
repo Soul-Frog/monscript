@@ -34,44 +34,48 @@ position = Vector2(461, 105)
 
 [node name="ForegroundElements" type="Node2D" parent="."]
 
-[node name="ForegroundElem" parent="ForegroundElements" instance=ExtResource("4_no6le")]
+[node name="Wall" parent="ForegroundElements" instance=ExtResource("4_no6le")]
 z_index = 0
 position = Vector2(446, 174)
 texture = ExtResource("5_b1lb7")
+active = false
 
-[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem/FadeZone" index="0"]
+[node name="CollisionPolygon2D" parent="ForegroundElements/Wall/FadeZone" index="0"]
 polygon = PackedVector2Array(17, 0, 25, 0, 38, 17, 46, 39, 46, 94, 30, 79, 14, 79, 0, 110, 0, 55, 4, 35)
 
-[node name="ForegroundElem2" parent="ForegroundElements" instance=ExtResource("4_no6le")]
+[node name="Wall2" parent="ForegroundElements" instance=ExtResource("4_no6le")]
 z_index = 0
 position = Vector2(387, 300)
 texture = ExtResource("6_bpich")
+active = false
 
-[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem2/FadeZone" index="0"]
+[node name="CollisionPolygon2D" parent="ForegroundElements/Wall2/FadeZone" index="0"]
 polygon = PackedVector2Array(8, 0, 17, 0, 20, 5, 24, 7, 37, 36, 46, 64, 47, 140, 37, 96, 20, 60, 5, 58, 0, 69, 0, 55, 0, 13, 2, 5)
 
-[node name="ForegroundElem3" parent="ForegroundElements" instance=ExtResource("4_no6le")]
+[node name="Wall3" parent="ForegroundElements" instance=ExtResource("4_no6le")]
 z_index = 0
 position = Vector2(496, 295)
 texture = ExtResource("7_gpok0")
+active = false
 
-[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem3/FadeZone" index="0"]
+[node name="CollisionPolygon2D" parent="ForegroundElements/Wall3/FadeZone" index="0"]
 polygon = PackedVector2Array(28, 14, 35, 9, 50, 2, 59, 0, 66, 0, 81, 6, 94, 21, 94, 76, 66, 56, 59, 55, 58, 57, 50, 58, 32, 67, 20, 80, 14, 90, 0, 128, 0, 73, 5, 51, 14, 32)
 
-[node name="ForegroundElem4" parent="ForegroundElements" instance=ExtResource("4_no6le")]
+[node name="Cove" parent="ForegroundElements" instance=ExtResource("4_no6le")]
 z_index = 0
 position = Vector2(514, 419)
 texture = ExtResource("8_spo1b")
 
-[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem4/FadeZone" index="0"]
+[node name="CollisionPolygon2D" parent="ForegroundElements/Cove/FadeZone" index="0"]
 polygon = PackedVector2Array(50, 2, 59, 0, 67, 2, 68, 60, 61, 58, 42, 61, 15, 61, 2, 53, -1, 10, 7, -1, 21, 5, 39, 5)
 
-[node name="ForegroundElem5" parent="ForegroundElements" instance=ExtResource("4_no6le")]
+[node name="Wall4" parent="ForegroundElements" instance=ExtResource("4_no6le")]
 z_index = 0
 position = Vector2(447, 531)
 texture = ExtResource("9_sxt7u")
+active = false
 
-[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem5/FadeZone" index="0"]
+[node name="CollisionPolygon2D" parent="ForegroundElements/Wall4/FadeZone" index="0"]
 polygon = PackedVector2Array(43, 11, 52, 21, 56, 31, 56, 86, 31, 55, 20, 57, 0, 97, 0, 54, -1, 40, 14, 9, 18, 5, 23, 0, 31, 0)
 
 [node name="Water" type="Sprite2D" parent="."]
@@ -122,6 +126,7 @@ polygon = PackedVector2Array(567, 436, 574, 436, 585, 446, 595, 457, 597, 461, 5
 polygon = PackedVector2Array(501, 544, 509, 555, 520, 589, 527, 610, 535, 624, 542, 644, 551, 659, 554, 663, 558, 668, 563, 670, 580, 674, 609, 674, 627, 670, 632, 665, 637, 657, 642, 646, 645, 633, 649, 589, 651, 571, 652, 551, 660, 540, 672, 532, 687, 523, 703, 508, 716.804, 473.275, 720, 413, 724, 353, 725, 323, 725, 234, 724, 221, 717, 190, 710, 172, 698, 151, 690, 141, 687, 139, 687, 136, 682, 131, 682, 127, 681, 127, 681, 125, 679, 124, 679, 119, 677, 118, 677, 115, 676, 115, 676, 112, 675, 112, 675, 109, 673, 109, 673, 105, 672, 103, 671, 103, 671, 101, 670, 101, 670, 97, 661, 78, 652, 58, 638, 41, 637, 39, 633, 36, 633, 34, 631, 34, 631, 31, 628, 30, 626, 25, 623, 22, 622, 18, 620, 16, 619, 13, 617, 12, 617, 6, 614, -11, 613, -30, 611, -40, 608, -44, 608, -47, 605, -51, 598, -63, 589, -73, 579, -78, 567, -83, 545, -83, 536, -80, 530, -75, 527, -70, 521, -65, 517, -59, 514, -55, 512, -49, 508, -38, 506, -26, 505, 21, 499, 25, 497, 29, 491, 32, 488, 38, 480, 50, 476, 55, 470, 67, 467, 79, 464, 88, 460, 97, 458, 104, 192, -187, 853, -200, 824, 714, 225, 725, 192, -186, 458, 104, 455, 108, 449, 125, 446, 138, 444, 143, 443, 149, 438, 163, 436, 174, 434, 182, 432, 196, 428, 206, 425, 221, 425, 233, 424, 233, 424, 277, 422, 279, 414, 278, 407, 276, 391, 276, 391, 277, 385, 277, 359, 291, 353, 298, 349, 307, 346, 311, 343, 318, 338, 331, 338, 341, 340, 354, 342, 358, 344, 365, 349, 375, 355, 381, 358, 385, 363, 390, 373, 392, 393, 392, 410, 393, 421, 394, 425, 397, 425, 413, 427, 425, 427, 444, 429, 461, 431, 478, 436, 495, 438, 502, 443, 511, 448, 515, 451, 520, 454, 523, 463, 532, 471, 534, 489, 540)
 
 [node name="PushingZones" type="Node2D" parent="."]
+visible = false
 
 [node name="PushDown" parent="PushingZones" instance=ExtResource("12_dtqlw")]
 direction = 1
@@ -310,11 +315,11 @@ shape = SubResource("CircleShape2D_f3604")
 [connection signal="body_entered" from="PushingZones/RightHelper" to="PushingZones/RightHelper" method="_on_body_entered"]
 [connection signal="body_exited" from="PushingZones/RightHelper" to="PushingZones/RightHelper" method="_on_body_exited"]
 
-[editable path="ForegroundElements/ForegroundElem"]
-[editable path="ForegroundElements/ForegroundElem2"]
-[editable path="ForegroundElements/ForegroundElem3"]
-[editable path="ForegroundElements/ForegroundElem4"]
-[editable path="ForegroundElements/ForegroundElem5"]
+[editable path="ForegroundElements/Wall"]
+[editable path="ForegroundElements/Wall2"]
+[editable path="ForegroundElements/Wall3"]
+[editable path="ForegroundElements/Cove"]
+[editable path="ForegroundElements/Wall4"]
 [editable path="PushingZones/PushDown"]
 [editable path="PushingZones/Upper/Right"]
 [editable path="PushingZones/Upper/Left"]

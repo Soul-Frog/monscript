@@ -322,111 +322,123 @@ polygon = PackedVector2Array(-2, -27, 226, -27, 226, 76, -2, 76)
 
 [node name="ForegroundElements" type="Node2D" parent="."]
 
-[node name="ForegroundElem" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
-z_index = 0
-position = Vector2(957, 527)
-texture = ExtResource("5_c0klj")
-
-[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem/FadeZone" index="0"]
-visible = false
-polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
-
-[node name="ForegroundElem12" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
+[node name="Wall" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
 z_index = 0
 position = Vector2(657, 227)
 texture = ExtResource("6_lw8og")
+active = false
 
-[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem12/FadeZone" index="0"]
+[node name="CollisionPolygon2D" parent="ForegroundElements/Wall/FadeZone" index="0"]
 visible = false
 polygon = PackedVector2Array(-25, -32, 300, -32, 300, 45, 0, 45, 0, 61, -25, 61)
 
-[node name="ForegroundElem11" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
+[node name="Pillar1" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
 z_index = 0
 position = Vector2(1257, 677)
 texture = ExtResource("5_c0klj")
+active = false
 
-[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem11/FadeZone" index="0"]
+[node name="CollisionPolygon2D" parent="ForegroundElements/Pillar1/FadeZone" index="0"]
 visible = false
 polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
 
-[node name="ForegroundElem2" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
+[node name="Pillar2" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
+z_index = 0
+position = Vector2(957, 527)
+texture = ExtResource("5_c0klj")
+active = false
+
+[node name="CollisionPolygon2D" parent="ForegroundElements/Pillar2/FadeZone" index="0"]
+visible = false
+polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
+
+[node name="Pillar3" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
 z_index = 0
 position = Vector2(957, 377)
 texture = ExtResource("5_c0klj")
+active = false
 
-[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem2/FadeZone" index="0"]
+[node name="CollisionPolygon2D" parent="ForegroundElements/Pillar3/FadeZone" index="0"]
 visible = false
 polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
 
-[node name="ForegroundElem3" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
+[node name="Pillar4" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
 z_index = 0
 position = Vector2(1107, 378)
 texture = ExtResource("5_c0klj")
+active = false
 
-[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem3/FadeZone" index="0"]
+[node name="CollisionPolygon2D" parent="ForegroundElements/Pillar4/FadeZone" index="0"]
 visible = false
 polygon = PackedVector2Array(-77, -33, 150, -33, 150, 44, -77, 44)
 
-[node name="ForegroundElem4" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
+[node name="Pillar5" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
 z_index = 0
 position = Vector2(1257, 377)
 texture = ExtResource("5_c0klj")
+active = false
 
-[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem4/FadeZone" index="0"]
+[node name="CollisionPolygon2D" parent="ForegroundElements/Pillar5/FadeZone" index="0"]
 visible = false
 polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
 
-[node name="ForegroundElem5" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
+[node name="Pillar6" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
 z_index = 0
 position = Vector2(1107, 227)
 texture = ExtResource("5_c0klj")
+active = false
 
-[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem5/FadeZone" index="0"]
+[node name="CollisionPolygon2D" parent="ForegroundElements/Pillar6/FadeZone" index="0"]
 visible = false
 polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
 
-[node name="ForegroundElem6" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
+[node name="Pillar7" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
 z_index = 0
 position = Vector2(957, 227)
 texture = ExtResource("5_c0klj")
+active = false
 
-[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem6/FadeZone" index="0"]
+[node name="CollisionPolygon2D" parent="ForegroundElements/Pillar7/FadeZone" index="0"]
 visible = false
 polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
 
-[node name="ForegroundElem7" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
+[node name="Pillar8" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
 z_index = 0
 position = Vector2(957, 77)
 texture = ExtResource("5_c0klj")
+active = false
 
-[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem7/FadeZone" index="0"]
+[node name="CollisionPolygon2D" parent="ForegroundElements/Pillar8/FadeZone" index="0"]
 visible = false
 polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
 
-[node name="ForegroundElem8" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
+[node name="Pillar9" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
 z_index = 0
 position = Vector2(1107, 77)
 texture = ExtResource("5_c0klj")
+active = false
 
-[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem8/FadeZone" index="0"]
+[node name="CollisionPolygon2D" parent="ForegroundElements/Pillar9/FadeZone" index="0"]
 visible = false
 polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
 
-[node name="ForegroundElem9" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
+[node name="LongPillar" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
 z_index = 0
 position = Vector2(1107, 527)
 texture = ExtResource("6_x6q01")
+active = false
 
-[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem9/FadeZone" index="0"]
+[node name="CollisionPolygon2D" parent="ForegroundElements/LongPillar/FadeZone" index="0"]
 visible = false
 polygon = PackedVector2Array(-77, -32, 300, -32, 300, 45, -77, 45)
 
-[node name="ForegroundElem10" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
+[node name="LongPillar2" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
 z_index = 0
 position = Vector2(957, 677)
 texture = ExtResource("7_y32nk")
+active = false
 
-[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem10/FadeZone" index="0"]
+[node name="CollisionPolygon2D" parent="ForegroundElements/LongPillar2/FadeZone" index="0"]
 visible = false
 polygon = PackedVector2Array(-77, -32, 299, -32, 300, 45, -77, 45)
 
@@ -549,7 +561,7 @@ offset_bottom = -4.0
 text = "[center][E] Climb[/center]"
 
 [node name="Chest" parent="." instance=ExtResource("14_h5edw")]
-position = Vector2(282, 275)
+position = Vector2(283, 276)
 chest_id = "temple6testchest"
 dialogue_resource = ExtResource("15_vrvhg")
 dialogue_start = "test_chest"
@@ -579,16 +591,17 @@ dialogue_start = "test_chest"
 [editable path="WaterFlows/WaterFlow7"]
 [editable path="WaterFlows/WaterFlow8"]
 [editable path="WaterFlows/LongBottomFlow"]
-[editable path="ForegroundElements/ForegroundElem"]
-[editable path="ForegroundElements/ForegroundElem12"]
-[editable path="ForegroundElements/ForegroundElem11"]
-[editable path="ForegroundElements/ForegroundElem2"]
-[editable path="ForegroundElements/ForegroundElem3"]
-[editable path="ForegroundElements/ForegroundElem4"]
-[editable path="ForegroundElements/ForegroundElem5"]
-[editable path="ForegroundElements/ForegroundElem6"]
-[editable path="ForegroundElements/ForegroundElem7"]
-[editable path="ForegroundElements/ForegroundElem8"]
-[editable path="ForegroundElements/ForegroundElem9"]
-[editable path="ForegroundElements/ForegroundElem10"]
+[editable path="ForegroundElements/Wall"]
+[editable path="ForegroundElements/Pillar1"]
+[editable path="ForegroundElements/Pillar2"]
+[editable path="ForegroundElements/Pillar3"]
+[editable path="ForegroundElements/Pillar4"]
+[editable path="ForegroundElements/Pillar5"]
+[editable path="ForegroundElements/Pillar6"]
+[editable path="ForegroundElements/Pillar7"]
+[editable path="ForegroundElements/Pillar8"]
+[editable path="ForegroundElements/Pillar9"]
+[editable path="ForegroundElements/LongPillar"]
+[editable path="ForegroundElements/LongPillar2"]
 [editable path="WarpInteractable"]
+[editable path="Chest"]

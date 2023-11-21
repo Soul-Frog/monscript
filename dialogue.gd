@@ -80,6 +80,8 @@ func play(res: DialogueResource, tag: String, p0 = null, p1 = null, p2 = null, p
 	assert(res != null and tag != null)
 	
 	# disable player movement while dialogue is active
+	# DEV NOTE - if you are encountering this while running via f6 (running 1 scene), this is not a bug. 
+	# Dialogue will only work when running the game through f5 (running the whole game).
 	var player = get_tree().get_first_node_in_group("main").get_player()
 	player.disable_movement()
 	player.disable_battle_collision()
