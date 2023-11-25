@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c1oqv8kfcmwgc"
-path="res://.godot/imported/cave6_fg3.png-eb4978e9dc32aae41a149222dcb4a35e.ctex"
+uid="uid://b4f0df3adk8ty"
+path="res://.godot/imported/turtminal.png-1e30705bc655d70d5c55e2194c31fcf8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/maps/coolant_cave/cave4_plaza/cave6_fg3.png"
-dest_files=["res://.godot/imported/cave6_fg3.png-eb4978e9dc32aae41a149222dcb4a35e.ctex"]
+source_file="res://assets/mons/turtminal.png"
+dest_files=["res://.godot/imported/turtminal.png-1e30705bc655d70d5c55e2194c31fcf8.ctex"]
 
 [params]
 
