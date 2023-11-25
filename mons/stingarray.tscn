@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://b1udhcbvv01om"]
+
+[ext_resource type="PackedScene" uid="uid://qd8gobfrvv8u" path="res://mons/mon.tscn" id="1_jy5re"]
+[ext_resource type="Texture2D" uid="uid://cuhtrqefjsuhu" path="res://assets/mons/stingarray.png" id="2_6ilkj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_urbit"]
+atlas = ExtResource("2_6ilkj")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vx6k8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_urbit")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8f2y5"]
+size = Vector2(18, 11)
+
+[node name="Mon" instance=ExtResource("1_jy5re")]
+
+[node name="Sprite" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_vx6k8")
+
+[node name="CollisionHitbox" parent="." index="1"]
+position = Vector2(1, -0.5)
+shape = SubResource("RectangleShape2D_8f2y5")
+
+[node name="BattleComponents" parent="." index="2"]
+visible = false
+
+[node name="ActionPointsBar" parent="BattleComponents" index="0"]
+visible = true
+
+[node name="HealthBar" parent="BattleComponents" index="1"]
+visible = true

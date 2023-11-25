@@ -1,0 +1,53 @@
+[gd_scene load_steps=7 format=3 uid="uid://wu6230b30hb2"]
+
+[ext_resource type="PackedScene" uid="uid://qd8gobfrvv8u" path="res://mons/mon.tscn" id="1_p3nuy"]
+[ext_resource type="Texture2D" uid="uid://4joln8glrm8s" path="res://assets/mons/anglerphish.png" id="2_ow0vo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_63vg2"]
+atlas = ExtResource("2_ow0vo")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0he3d"]
+atlas = ExtResource("2_ow0vo")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q0uix"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_63vg2")
+}],
+"loop": true,
+"name": &"angry",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0he3d")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3cnyc"]
+size = Vector2(14, 9)
+
+[node name="Mon" instance=ExtResource("1_p3nuy")]
+
+[node name="Sprite" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_q0uix")
+animation = &"angry"
+
+[node name="CollisionHitbox" parent="." index="1"]
+position = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_3cnyc")
+
+[node name="BattleComponents" parent="." index="2"]
+visible = false
+
+[node name="ActionPointsBar" parent="BattleComponents" index="0"]
+visible = true
+
+[node name="HealthBar" parent="BattleComponents" index="1"]
+visible = true

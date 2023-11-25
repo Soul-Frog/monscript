@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://b5sx3ehv6u6ks"]
+
+[ext_resource type="PackedScene" uid="uid://qd8gobfrvv8u" path="res://mons/mon.tscn" id="1_3r1rt"]
+[ext_resource type="Texture2D" uid="uid://crvccvbiw0w6i" path="res://assets/mons/pascalican.png" id="2_khsus"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_widuq"]
+atlas = ExtResource("2_khsus")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pbs50"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_widuq")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5qijh"]
+size = Vector2(11, 19)
+
+[node name="Mon" instance=ExtResource("1_3r1rt")]
+
+[node name="Sprite" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_pbs50")
+
+[node name="CollisionHitbox" parent="." index="1"]
+position = Vector2(0.5, -1.5)
+shape = SubResource("RectangleShape2D_5qijh")
+
+[node name="BattleComponents" parent="." index="2"]
+visible = false
+
+[node name="ActionPointsBar" parent="BattleComponents" index="0"]
+visible = true
+
+[node name="HealthBar" parent="BattleComponents" index="1"]
+visible = true

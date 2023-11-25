@@ -1,0 +1,87 @@
+[gd_scene load_steps=12 format=3 uid="uid://dm1epg70fkia2"]
+
+[ext_resource type="PackedScene" uid="uid://qd8gobfrvv8u" path="res://mons/mon.tscn" id="1_vg63d"]
+[ext_resource type="Texture2D" uid="uid://ca5ih1flogtvs" path="res://assets/mons/orchin.png" id="2_sbhac"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_15tp5"]
+atlas = ExtResource("2_sbhac")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s8aq8"]
+atlas = ExtResource("2_sbhac")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w5t7s"]
+atlas = ExtResource("2_sbhac")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v7tpp"]
+atlas = ExtResource("2_sbhac")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q7d3w"]
+atlas = ExtResource("2_sbhac")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_682mr"]
+atlas = ExtResource("2_sbhac")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gn4hh"]
+atlas = ExtResource("2_sbhac")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vn03o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_15tp5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s8aq8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w5t7s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v7tpp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q7d3w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_682mr")
+}],
+"loop": true,
+"name": &"burst",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gn4hh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4mwr4"]
+size = Vector2(10, 10)
+
+[node name="Mon" instance=ExtResource("1_vg63d")]
+
+[node name="Sprite" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_vn03o")
+
+[node name="CollisionHitbox" parent="." index="1"]
+position = Vector2(0, 0)
+shape = SubResource("RectangleShape2D_4mwr4")
+
+[node name="BattleComponents" parent="." index="2"]
+visible = false
+
+[node name="ActionPointsBar" parent="BattleComponents" index="0"]
+visible = true
+
+[node name="HealthBar" parent="BattleComponents" index="1"]
+visible = true

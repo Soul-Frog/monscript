@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://bo77v3uohwvy1"]
+
+[ext_resource type="PackedScene" uid="uid://qd8gobfrvv8u" path="res://mons/mon.tscn" id="1_kkw55"]
+[ext_resource type="Texture2D" uid="uid://7f1xs6lh2wuf" path="res://assets/mons/bitleon.png" id="2_kygqj"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4uhoi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_kygqj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wsujs"]
+size = Vector2(32, 32)
+
+[node name="Mon" instance=ExtResource("1_kkw55")]
+
+[node name="Sprite" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_4uhoi")
+
+[node name="CollisionHitbox" parent="." index="1"]
+position = Vector2(0, 0)
+shape = SubResource("RectangleShape2D_wsujs")
+
+[node name="BattleComponents" parent="." index="2"]
+visible = false
+
+[node name="ActionPointsBar" parent="BattleComponents" index="0"]
+visible = true
+
+[node name="HealthBar" parent="BattleComponents" index="1"]
+visible = true

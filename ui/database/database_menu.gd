@@ -22,7 +22,6 @@ const BAR_BUFFER = 10
 func _ready() -> void:
 	# create the database entries, one for each mon type
 	for montype in MonData.MonType.values():
-		for i in range(0, 10):
 			if montype == MonData.MonType.NONE:
 				continue
 			var entry: DatabaseEntry = DATABASE_ENTRY_SCENE.instantiate()

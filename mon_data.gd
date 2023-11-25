@@ -178,6 +178,44 @@ class Mon:
 				return
 
 # List of MonBases, each is a static and constant representation of a Mon's essential characteristics
+
+# Bitleons
+var _BITLEON_BASE = MonBase.new("Bitleon", "res://mons/bitleon.tscn", "res://monscripts/attack.txt",
+	40, 200, 10, 100, 5, 50, 6, 40,
+	ScriptData.get_block_by_name("Shellbash"),
+	"Passive", "Bitleon passive")
+
+# Coolant Cave
+var _GELIF_BASE = MonBase.new("Gelif", "res://mons/gelif.tscn", "res://monscripts/attack.txt",
+	70, 380, 6, 60, 4, 45, 3, 35,
+	ScriptData.get_block_by_name("Shellbash"),
+	"Passive", "Gelif passive")
+var _CHORSE_BASE = MonBase.new("C-horse", "res://mons/chorse.tscn", "res://monscripts/attack.txt",
+	70, 380, 6, 60, 4, 45, 3, 35,
+	ScriptData.get_block_by_name("Shellbash"),
+	"Passive", "C-horse passive")
+var _PASCALICAN_BASE = MonBase.new("Pascalican", "res://mons/pascalican.tscn", "res://monscripts/attack.txt",
+	70, 380, 6, 60, 4, 45, 3, 35,
+	ScriptData.get_block_by_name("Shellbash"),
+	"Passive", "Pascalican passive")
+var _ORCHIN_BASE = MonBase.new("Orchin", "res://mons/orchin.tscn", "res://monscripts/attack.txt",
+	70, 380, 6, 60, 4, 45, 3, 35,
+	ScriptData.get_block_by_name("Shellbash"),
+	"Passive", "Orchin passive")
+var _TURTMINAL_BASE = MonBase.new("Turtminal", "res://mons/turtminal.tscn", "res://monscripts/attack.txt",
+	70, 380, 6, 60, 4, 45, 3, 35,
+	ScriptData.get_block_by_name("Shellbash"),
+	"Passive", "Turtminal passive")
+var _STINGARRAY_BASE = MonBase.new("Stringarray", "res://mons/stingarray.tscn", "res://monscripts/attack.txt",
+	70, 380, 6, 60, 4, 45, 3, 35,
+	ScriptData.get_block_by_name("Shellbash"),
+	"Passive", "Stingarray passive")
+var _ANGLERPHISH_BASE = MonBase.new("Anglerphish", "res://mons/anglerphish.tscn", "res://monscripts/attack.txt",
+	70, 380, 6, 60, 4, 45, 3, 35,
+	ScriptData.get_block_by_name("Shellbash"),
+	"Passive", "Anglerphish passive")
+
+# Extras
 var _MAGNETFROG_BASE = MonBase.new("magnetFrog", "res://mons/magnetfrog.tscn", "res://monscripts/attack.txt", 
 	40, 200, 10, 110, 5, 100, 6, 40,
 	ScriptData.get_block_by_name("Shellbash"), 
@@ -189,14 +227,24 @@ var _MAGNETFROGBLUE_BASE = MonBase.new("magnetFrogBLUE", "res://mons/magnetfrogb
 
 # dictionary mapping MonTypes -> MonBases
 var _MON_MAP := {
+	MonType.BITLEON : _BITLEON_BASE,
+	
+	MonType.GELIF : _GELIF_BASE,
+	MonType.CHORSE : _CHORSE_BASE,
+	MonType.PASCALICAN : _PASCALICAN_BASE,
+	MonType.ORCHIN : _ORCHIN_BASE,
+	MonType.TURTMINAL : _TURTMINAL_BASE,
+	MonType.STINGARRAY : _STINGARRAY_BASE,
+	MonType.ANGLERPHISH : _ANGLERPHISH_BASE,
+	
 	MonType.MAGNETFROG : _MAGNETFROG_BASE,
-	MonType.MAGNETFROGBLUE : _MAGNETFROGBLUE_BASE
+	MonType.MAGNETFROGBLUE : _MAGNETFROGBLUE_BASE,
 }
 
 # This enum is used by the overworld_encounter.tscn, so don't delete it
 enum MonType
 {
-	NONE, MAGNETFROG, MAGNETFROGBLUE
+	NONE, BITLEON, GELIF, CHORSE, PASCALICAN, ORCHIN, TURTMINAL, STINGARRAY, ANGLERPHISH, MAGNETFROG, MAGNETFROGBLUE
 }
 
 
