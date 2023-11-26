@@ -110,20 +110,19 @@ func is_defeated() -> bool:
 # Called when this mon is attacked
 # Damage taken is reduced by defense, then further divided by 2 if defending
 func take_damage(raw_damage: int) -> void:
-	var damage_taken = max(raw_damage - defense, 0)
+	var damage_taken = raw_damage - defense
 	if is_defending:
 		damage_taken /= 2
-	current_health -= damage_taken
+	current_health -= int(max(damage_taken, 1)) # deal a minimum of 1 damage
 	current_health = max(current_health, 0);
 	
 	# make text effect
 	self.add_child(
 		MOVING_TEXT_SCENE.instantiate()
 		.tx(damage_taken).direction_up().speed(40).time(0.2).color(Global.COLOR_RED))
-	
-	if damage_taken != 0:
-		is_shaking = true
-		shake_timer.start()
+	# make the damaged mon shake
+	is_shaking = true
+	shake_timer.start()
 	
 	if current_health == 0:
 		action_points = 0

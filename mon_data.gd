@@ -181,17 +181,17 @@ class Mon:
 
 # Bitleons
 var _BITLEON_BASE = MonBase.new("Bitleon", "res://mons/bitleon.tscn", "res://monscripts/attack.txt",
-	40, 200, 10, 100, 5, 50, 6, 40,
+	16, 256, 8, 128, 4, 64, 4, 64,
 	ScriptData.get_block_by_name("Shellbash"),
 	"Passive", "Bitleon passive")
 
 # Coolant Cave
 var _GELIF_BASE = MonBase.new("Gelif", "res://mons/gelif.tscn", "res://monscripts/attack.txt",
-	70, 380, 6, 60, 4, 45, 3, 35,
+	30, 600, 2, 25, 2, 15, 3, 45,
 	ScriptData.get_block_by_name("Shellbash"),
 	"Passive", "Gelif passive")
 var _CHORSE_BASE = MonBase.new("C-horse", "res://mons/chorse.tscn", "res://monscripts/attack.txt",
-	70, 380, 6, 60, 4, 45, 3, 35,
+	15, 220, 5, 108, 3, 58, 5, 80,
 	ScriptData.get_block_by_name("Shellbash"),
 	"Passive", "C-horse passive")
 var _PASCALICAN_BASE = MonBase.new("Pascalican", "res://mons/pascalican.tscn", "res://monscripts/attack.txt",

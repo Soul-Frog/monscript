@@ -26,12 +26,3 @@ sprite_frames = SubResource("SpriteFrames_4vobj")
 position = Vector2(-0.5, 0)
 scale = Vector2(1.00494, 1.04114)
 shape = SubResource("RectangleShape2D_fwhip")
-
-[node name="BattleComponents" parent="." index="2"]
-visible = false
-
-[node name="ActionPointsBar" parent="BattleComponents" index="0"]
-visible = true
-
-[node name="HealthBar" parent="BattleComponents" index="1"]
-visible = true

@@ -29,12 +29,3 @@ sprite_frames = SubResource("SpriteFrames_pbs50")
 [node name="CollisionHitbox" parent="." index="1"]
 position = Vector2(0.5, -1.5)
 shape = SubResource("RectangleShape2D_5qijh")
-
-[node name="BattleComponents" parent="." index="2"]
-visible = false
-
-[node name="ActionPointsBar" parent="BattleComponents" index="0"]
-visible = true
-
-[node name="HealthBar" parent="BattleComponents" index="1"]
-visible = true
