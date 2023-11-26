@@ -1,20 +1,9 @@
-extends CharacterBody2D
-class_name OverworldMon
+#an overworld mon which wanders around randomly
+extends OverworldMon
 
 enum {
 	MOVING_SOON, MOVING, IDLE
 }
-
-# the mons in this battle composition
-@export_group("Mons")
-@export var mon1Type = MonData.MonType.NONE
-@export var mon1Level = 0
-@export var mon2Type = MonData.MonType.NONE
-@export var mon2Level = 0
-@export var mon3Type = MonData.MonType.NONE
-@export var mon3Level = 0
-@export var mon4Type = MonData.MonType.NONE
-@export var mon4Level = 0
 
 @export_group("Overworld Movement")
 # mon's speed while moving
@@ -28,30 +17,10 @@ enum {
 
 var state = IDLE
 var target = Vector2.ZERO
-var mons = []
 
 func _ready():
-	assert(mon1Level >= 0 and mon1Level <= 64, "Illegal level for mon1!")
-	assert(mon2Level >= 0 and mon2Level <= 64, "Illegal level for mon2!")
-	assert(mon3Level >= 0 and mon3Level <= 64, "Illegal level for mon3!")
-	assert(mon4Level >= 0 and mon4Level <= 64, "Illegal level for mon4!")	
-	assert(min_time_between_movement >= 0 && max_time_between_movement >= 0, "Don't use negative values for time.")
-	assert(min_time_between_movement <= max_time_between_movement, "Min time is larger than max time, flip that.")
-	assert(min_wander_range >= 0 && max_wander_range >= 0, "Don't use negative values for movement range.")
-	assert(min_wander_range <= max_wander_range, "Min wander range is larger than max wander range, flip that.")
+	super()
 	_start_idling()
-	
-	# create mons for battle formation
-	assert(not(mon1Type == MonData.MonType.NONE 
-	and mon2Type != MonData.MonType.NONE 
-	and mon3Type != MonData.MonType.NONE 
-	and mon4Type != MonData.MonType.NONE), 
-	"Must have at least one non-NONE mon!")
-	
-	mons.append(MonData.create_mon(mon1Type, mon1Level) if mon1Type != MonData.MonType.NONE else null)
-	mons.append(MonData.create_mon(mon2Type, mon2Level) if mon2Type != MonData.MonType.NONE else null)
-	mons.append(MonData.create_mon(mon3Type, mon3Level) if mon3Type != MonData.MonType.NONE else null)
-	mons.append(MonData.create_mon(mon4Type, mon4Level) if mon4Type != MonData.MonType.NONE else null)
 
 func _randomize_wander_target():
 	var success = false
@@ -118,8 +87,11 @@ func _randomize_wander_target():
 		$DebugTool.add_line(line_start3, line_end3, Color.MAGENTA)
 		$DebugTool.add_line(line_start4, line_end4, Color.GREEN)
 		$DebugTool.add_point(target, Color.BLUE)
-
-	assert(success, "Couldn't find a valid path - check your maximum and minimum wander range")
+	
+	if not success:
+		print("couldn't find a valid path")
+		if Global.DEBUG_CONSOLE:
+			assert(success, "Couldn't find a valid path - check your maximum and minimum wander range")
 
 
 func _start_idling():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://conqj70b6ouir"]
+[gd_scene load_steps=20 format=3 uid="uid://conqj70b6ouir"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_1crr8"]
 [ext_resource type="Texture2D" uid="uid://drfvc5n36jass" path="res://assets/maps/coolant_cave/cave2_entrance/cave2.png" id="2_l834j"]
@@ -13,7 +13,10 @@
 [ext_resource type="Script" path="res://overworld/components/elevation_transition_zone.gd" id="7_kowvn"]
 [ext_resource type="PackedScene" uid="uid://ct27r3y3ao3um" path="res://decorators/fade_decorator.tscn" id="8_ka6sp"]
 [ext_resource type="Texture2D" uid="uid://da4yqugocjbs4" path="res://assets/maps/coolant_cave/cave2_entrance/cave2_bridgesup.png" id="9_7t2wm"]
+[ext_resource type="PackedScene" uid="uid://0pfd6i8pcnc1" path="res://mons/gelif.tscn" id="11_qslf1"]
+[ext_resource type="Script" path="res://overworld/components/overworld_mons/overworld_mon.gd" id="12_2ykkf"]
 [ext_resource type="Texture2D" uid="uid://rnh5madliw2g" path="res://assets/maps/coolant_cave/cave2_entrance/cave2_fg.png" id="12_wmi3w"]
+[ext_resource type="Script" path="res://overworld/components/overworld_mons/wanderer.gd" id="13_5rf1m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mkqcf"]
 size = Vector2(88, 11)
@@ -97,6 +100,35 @@ polygon = PackedVector2Array(275, 555, 275, 561, 307, 561, 307, 555)
 position = Vector2(48, 429)
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
+
+[node name="Mon" parent="OverworldEncounters" instance=ExtResource("11_qslf1")]
+position = Vector2(287, 395)
+script = ExtResource("12_2ykkf")
+mon1Type = 2
+mon1Level = 0
+mon2Type = 0
+mon2Level = 0
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+
+[node name="Mon2" parent="OverworldEncounters" instance=ExtResource("11_qslf1")]
+position = Vector2(287, 395)
+script = ExtResource("13_5rf1m")
+speed = 100
+min_wander_range = 50
+max_wander_range = 150
+min_time_between_movement = 0
+max_time_between_movement = 0.2
+mon1Type = 5
+mon1Level = 0
+mon2Type = 0
+mon2Level = 0
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
 
 [node name="ForegroundElements" type="Node2D" parent="."]
 
