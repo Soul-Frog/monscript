@@ -6,7 +6,7 @@ signal debug_console_closed
 var active
 const SUCCESS_COLOR = Color.GREEN
 const FAIL_COLOR = Color.RED
-const DEFAULT_COLOR = Color.BLACK
+const DEFAULT_COLOR = Color.WHITE
 
 var main_scene: Main = null
 var last_command = null

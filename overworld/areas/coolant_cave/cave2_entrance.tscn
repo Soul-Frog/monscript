@@ -102,7 +102,7 @@ position = Vector2(48, 429)
 [node name="OverworldEncounters" type="Node2D" parent="."]
 
 [node name="Mon" parent="OverworldEncounters" instance=ExtResource("11_qslf1")]
-position = Vector2(287, 395)
+position = Vector2(574, 347)
 script = ExtResource("12_2ykkf")
 mon1Type = 2
 mon1Level = 0
@@ -114,7 +114,7 @@ mon4Type = 0
 mon4Level = 0
 
 [node name="Mon2" parent="OverworldEncounters" instance=ExtResource("11_qslf1")]
-position = Vector2(287, 395)
+position = Vector2(268, 401)
 script = ExtResource("13_5rf1m")
 speed = 100
 min_wander_range = 50

@@ -1,4 +1,5 @@
 #an overworld mon which wanders around randomly
+class_name Wanderer
 extends OverworldMon
 
 enum {
