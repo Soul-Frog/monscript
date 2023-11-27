@@ -228,13 +228,107 @@ var DO_BLOCK_LIST := [
 		mon.emit_signal("try_to_escape", mon)
 		),
 		
-	Block.new(Block.Type.DO, "Shellbash", Block.Type.TO, "Attack an enemy for 70% damage, and defend until your next turn.",
+	Block.new(Block.Type.DO, "ShellBash", Block.Type.TO, "Attack an enemy for 70% damage, and defend until your next turn.",
 	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, animator: BattleAnimator) -> void:
 		animator.slash(target)
 		await animator.animation_finished
 		
 		target.take_damage(int(mon.attack * 0.7))
 		mon.is_defending = true
+		),
+		
+	Block.new(Block.Type.DO, "Repair", Block.Type.NONE, "Heal 40% of your HP and clear status conditions.",
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, animator: BattleAnimator) -> void:
+		mon.heal_damage(int(mon.max_health * 0.4))
+		mon.heal_all_statuses()
+		),
+		
+	Block.new(Block.Type.DO, "C-gun", Block.Type.TO, "Deals 80% Chill damage to a single target (140% Chill damage instead if this is your 5th turn or later).",
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, animator: BattleAnimator) -> void:
+		#todo - animation
+		animator.slash(target)
+		await animator.animation_finished
+		
+		var dmg_mult = 0.8
+		if mon.turn_count >= 5:
+			dmg_mult = 1.4
+		
+		target.take_damage(int(mon.attack * dmg_mult)) #todo - chill damage
+		),
+	
+	Block.new(Block.Type.DO, "Triangulate", Block.Type.TO, "Deals 50% damage to a single target. Increases by +10%/20%/30%/60%/100% each use in the same battle.",
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, animator: BattleAnimator) -> void:
+		#todo - animation
+		animator.slash(target)
+		await animator.animation_finished
+		
+		const metadata_key = "TRIANGULATE_USES"
+		
+		var dmg_mult = 0.5
+		if mon.metadata.has(metadata_key):
+			var previous_uses = mon.metadata[metadata_key]
+			assert(previous_uses > 0)
+			if previous_uses == 1:
+				dmg_mult += 0.1
+			elif previous_uses == 2:
+				dmg_mult += 0.2
+			elif previous_uses == 3:
+				dmg_mult += 0.3
+			elif previous_uses == 4:
+				dmg_mult += 0.6
+			else:
+				dmg_mult += 1
+			mon.metadata[metadata_key] += 1
+		else:
+			mon.metadata[metadata_key] = 1
+		
+		target.take_damage(int(mon.attack * dmg_mult))
+		),
+	
+	Block.new(Block.Type.DO, "SpikOR", Block.Type.TO, "Deals 60% damage to a single target (125% damage instead if target is leaky or above 80% HP.)",
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, animator: BattleAnimator) -> void:
+		#todo - animation
+		animator.slash(target)
+		await animator.animation_finished
+		
+		var dmg_mult = 0.6
+		if mon.statuses[BattleMon.Status.LEAK] or float(mon.current_health) / mon.max_health >= 0.8:
+			dmg_mult = 1.25
+		
+		target.take_damage(int(mon.attack * dmg_mult)) #todo - volt damage
+		),
+	
+	Block.new(Block.Type.DO, "Multitack", Block.Type.NONE, "Four times, deal 25% damage to a random target.",
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, animator: BattleAnimator) -> void:
+		for i in range(0, 4):
+			var rand_target = Global.choose_one(foes)
+			animator.slash(rand_target) #todo - animation
+			await animator.animation_finished
+			target.take_damage(int(mon.attack * 0.25))
+		),
+		
+	Block.new(Block.Type.DO, "Spearphish", Block.Type.TO, "Inflict leak on a single target.",
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, animator: BattleAnimator) -> void:
+		for i in range(0, 4):
+			animator.slash(target) #todo - animation
+			await animator.animation_finished
+			target.inflict_status(BattleMon.Status.LEAK)
+		),
+		
+	Block.new(Block.Type.DO, "Transfer", Block.Type.TO, "Heal a mon by transfering up to 50% of the user's HP to a single target.",
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, animator: BattleAnimator) -> void:
+		# heal amount is up to 50% of user's health; if not enough health, use all but 1
+		var heal_possible = min(mon.max_health * 0.5, mon.current_health - 1)
+		# heal amount is ideally the previous value, but if we don't need to heal that much, use the diff between target's
+		# current and max health instead (basically, don't overheal)
+		var heal_used = min(heal_possible, target.max_health - target.current_health)
+		
+		#todo animation
+		
+		# apply the heal
+		target.heal_damage(heal_used)
+		# and damage ourself
+		mon.take_damage(heal_possible, true)
 		),
 ]
 

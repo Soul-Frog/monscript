@@ -28,6 +28,9 @@ var base_mon: MonData.Mon = null
 # when this reaches 100, signals to take a turn
 var action_points := 0
 
+# how many turns this mon has taken this battle
+var turn_count := 0
+
 var is_defending := false
 var escaped_from_battle := false
 
@@ -48,6 +51,18 @@ const SHAKE_TIME := 0.10
 const shake_amount := 3
 const shake_speed := 0.8
 var shake_direction := 1
+
+# a dictionary that anything can be stored in that needs to be tracked
+# for example, some moves will store information in here to use later
+var metadata = {}
+
+enum Status {
+	LEAK
+}
+
+var statuses = {
+	Status.LEAK : false
+}
 
 func _ready() -> void:
 	original_position = position
@@ -83,6 +98,7 @@ func battle_tick() -> void:
 		_update_labels();
 		if action_points >= ACTION_POINTS_PER_TURN:
 			$BattleComponents/ActionPointsBar.modulate = Global.COLOR_RED
+			turn_count += 1
 			emit_signal("ready_to_take_action", self) # signal that it's time for this mon to act
 
 # Take a single turn in battle
@@ -93,13 +109,22 @@ func take_action(friends: Array, foes: Array, animator: BattleAnimator) -> void:
 	
 	# tell our script to go ahead and execute an action
 	base_mon.get_active_monscript().execute(self, friends, foes, animator)
+	# don't do anything after here, the turn is over when we hit alert_turn_over
+	# todo - maybe alert_turn_over is useless and we can just cram more info here...?
 
+# called after a mon takes its turn
 func alert_turn_over() -> void:
 	assert(action_points == 100 or not reset_AP_after_action)
 	if reset_AP_after_action:
 		action_points = 0
 	reset_AP_after_action = true
 	$BattleComponents/ActionPointsBar.modulate = Global.COLOR_YELLOW
+	
+	# after taking an action, if inflicted with leak, take 5% health as damage
+	if statuses[Status.LEAK]:
+		take_damage(int(max_health * 0.05), true)
+		#todo - animate this better
+	
 	_update_labels();
 	emit_signal("action_completed")
 
@@ -109,10 +134,14 @@ func is_defeated() -> bool:
 
 # Called when this mon is attacked
 # Damage taken is reduced by defense, then further divided by 2 if defending
-func take_damage(raw_damage: int) -> void:
-	var damage_taken = raw_damage - defense
-	if is_defending:
-		damage_taken /= 2
+func take_damage(raw_damage: int, ignore_defense: bool = false) -> void:
+	var damage_taken = raw_damage
+	
+	if not ignore_defense: # if we aren't ignoring defense (ie, leak status ignores defense), apply it
+		damage_taken = raw_damage - defense
+		if is_defending: # defending reduces damage by half
+			damage_taken /= 2
+	
 	current_health -= int(max(damage_taken, 1)) # deal a minimum of 1 damage
 	current_health = max(current_health, 0);
 	
@@ -124,11 +153,46 @@ func take_damage(raw_damage: int) -> void:
 	is_shaking = true
 	shake_timer.start()
 	
+	# TODO - make mon glow red or something for a sec
+	# when taking fire damage, glow redder; chill glow blue, volt glow yellow; white on normal damage?
+	
 	if current_health == 0:
 		action_points = 0
 		emit_signal("zero_health", self)
 	
 	_update_labels();
+
+func heal_damage(heal: int) -> void:
+	var heal_amt = heal
+	if current_health + heal >= max_health:
+		heal_amt = max_health - current_health
+	
+	current_health += heal_amt
+	
+	# make text effect
+	self.add_child(
+		MOVING_TEXT_SCENE.instantiate()
+		.tx(heal_amt).direction_up().speed(40).time(0.2).color(Global.COLOR_GREEN))
+	
+	# TODO - make self glow green or something for a sec
+	
+	_update_labels()
+
+func inflict_status(status: Status) -> void:
+	statuses[status] = true
+	
+	# todo - play some effect here, add some icons, idk
+
+func heal_status(status: Status) -> void:
+	statuses[status] = false
+	
+	# todo - play some effect here
+
+func heal_all_statuses() -> void:
+	for status in statuses.keys():
+		statuses[status] = false
+	
+	#todo - play some effect here
 
 func _update_labels() -> void:
 	$BattleComponents/ActionPointsBar.value = action_points

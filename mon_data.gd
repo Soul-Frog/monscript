@@ -185,48 +185,48 @@ class Mon:
 # Bitleons
 var _BITLEON_BASE = MonBase.new("Bitleon", "res://mons/bitleon.tscn", "res://monscripts/attack.txt",
 	256, 128, 64, 96,
-	ScriptData.get_block_by_name("Shellbash"),
+	ScriptData.get_block_by_name("Repair"),
 	"Passive", "Bitleon passive")
 
 # Coolant Cave
 var _GELIF_BASE = MonBase.new("Gelif", "res://mons/gelif.tscn", "res://monscripts/attack.txt",
 	540, 98, 14, 74,
-	ScriptData.get_block_by_name("Shellbash"),
+	ScriptData.get_block_by_name("Transfer"),
 	"Passive", "Gelif passive")
 var _CHORSE_BASE = MonBase.new("C-horse", "res://mons/chorse.tscn", "res://monscripts/attack.txt",
 	220, 100, 42, 95,
-	ScriptData.get_block_by_name("Shellbash"),
+	ScriptData.get_block_by_name("C-gun"),
 	"Passive", "C-horse passive")
 var _PASCALICAN_BASE = MonBase.new("Pascalican", "res://mons/pascalican.tscn", "res://monscripts/attack.txt",
 	210, 84, 56, 126,
-	ScriptData.get_block_by_name("Shellbash"),
+	ScriptData.get_block_by_name("Triangulate"),
 	"Passive", "Pascalican passive")
 var _ORCHIN_BASE = MonBase.new("Orchin", "res://mons/orchin.tscn", "res://monscripts/attack.txt",
 	198, 115, 86, 65,
-	ScriptData.get_block_by_name("Shellbash"),
+	ScriptData.get_block_by_name("SpikOR"),
 	"Passive", "Orchin passive")
 var _TURTMINAL_BASE = MonBase.new("Turtminal", "res://mons/turtminal.tscn", "res://monscripts/attack.txt",
 	328, 98, 88, 28,
-	ScriptData.get_block_by_name("Shellbash"),
+	ScriptData.get_block_by_name("ShellBash"),
 	"Passive", "Turtminal passive")
 var _STINGARRAY_BASE = MonBase.new("Stringarray", "res://mons/stingarray.tscn", "res://monscripts/attack.txt",
 	212, 144, 58, 89,
-	ScriptData.get_block_by_name("Shellbash"),
+	ScriptData.get_block_by_name("Multitack"),
 	"Passive", "Stingarray passive")
 var _ANGLERPHISH_BASE = MonBase.new("Anglerphish", "res://mons/anglerphish.tscn", "res://monscripts/attack.txt",
 	328, 170, 44, 59,
-	ScriptData.get_block_by_name("Shellbash"),
+	ScriptData.get_block_by_name("Spearphish"),
 	"Passive", "Anglerphish passive")
 
 # Extras
-var _MAGNETFROG_BASE = MonBase.new("magnetFrog", "res://mons/magnetfrog.tscn", "res://monscripts/attack.txt", 
-	500, 500, 500, 500,
-	ScriptData.get_block_by_name("Shellbash"), 
-	"Passive", "Passive desc")
-var _MAGNETFROGBLUE_BASE = MonBase.new("magnetFrogBLUE", "res://mons/magnetfrogblue.tscn", "res://monscripts/attack.txt", 
-	500, 500, 500, 500,
-	ScriptData.get_block_by_name("Shellbash"), 
-	"Bluenatism", "MagnetFrog Blue's passive ability information!")
+#var _MAGNETFROG_BASE = MonBase.new("magnetFrog", "res://mons/magnetfrog.tscn", "res://monscripts/attack.txt", 
+#	500, 500, 500, 500,
+#	ScriptData.get_block_by_name("Shellbash"), 
+#	"Passive", "Passive desc")
+#var _MAGNETFROGBLUE_BASE = MonBase.new("magnetFrogBLUE", "res://mons/magnetfrogblue.tscn", "res://monscripts/attack.txt", 
+#	500, 500, 500, 500,
+#	ScriptData.get_block_by_name("Shellbash"), 
+#	"Bluenatism", "MagnetFrog Blue's passive ability information!")
 
 # dictionary mapping MonTypes -> MonBases
 var _MON_MAP := {
@@ -240,14 +240,15 @@ var _MON_MAP := {
 	MonType.STINGARRAY : _STINGARRAY_BASE,
 	MonType.ANGLERPHISH : _ANGLERPHISH_BASE,
 	
-	MonType.MAGNETFROG : _MAGNETFROG_BASE,
-	MonType.MAGNETFROGBLUE : _MAGNETFROGBLUE_BASE,
+	#MonType.MAGNETFROG : _MAGNETFROG_BASE,
+	#MonType.MAGNETFROGBLUE : _MAGNETFROGBLUE_BASE,
 }
 
 # This enum is used by the overworld_encounter.tscn, so don't delete it
 enum MonType
 {
-	NONE, BITLEON, GELIF, CHORSE, PASCALICAN, ORCHIN, TURTMINAL, STINGARRAY, ANGLERPHISH, MAGNETFROG, MAGNETFROGBLUE
+	NONE, BITLEON, GELIF, CHORSE, PASCALICAN, ORCHIN, TURTMINAL, STINGARRAY, ANGLERPHISH,
+	#MagnetFrog, MagnetFrogBlue
 }
 
 
@@ -336,7 +337,7 @@ func _species_str_to_montype(species_str: String) -> MonType:
 		if _MON_MAP[montype]._species_name == species_str:
 			return montype
 	assert(false, "No base found for %s." % species_str)
-	return MonType.MAGNETFROG #error case
+	return MonType.BITLEON #error case
 
 func create_mon(montype: MonType, level: int) -> Mon:
 	assert(montype != MonType.NONE)
@@ -348,7 +349,7 @@ func mon_from_json(json_string: String) -> Mon:
 	var result = json.parse(json_string)
 	if result != OK:
 		assert(false, "Mon corruption!")
-		return create_mon(MonType.MAGNETFROG, 0) #error case - just return a magnetfrog
+		return create_mon(MonType.BITLEON, 0) #error case - just return a bitleon
 	
 	var save = json.data
 	

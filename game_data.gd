@@ -97,7 +97,7 @@ func _ready():
 	for montype in MonData.MonType.values():
 		if montype == MonData.MonType.NONE:
 			continue
-		if montype == MonData.MonType.MAGNETFROG:
+		if montype == MonData.MonType.BITLEON:
 			compilation_progress_per_mon[montype] = 100
 		else:
 			compilation_progress_per_mon[montype] = 0
@@ -128,12 +128,14 @@ func _ready():
 	increase_storage_size(_variables[STORAGE_PAGES])
 	
 	# TODO - remove this debug code
-	storage[0] = MonData.create_mon(MonData.MonType.BITLEON, 1)
-	storage[1] = MonData.create_mon(MonData.MonType.BITLEON, 2)
-	storage[2] = MonData.create_mon(MonData.MonType.BITLEON, 3)
-	storage[3] = MonData.create_mon(MonData.MonType.BITLEON, 4)
-	storage[4] = MonData.create_mon(MonData.MonType.BITLEON, 32)
-	storage[5] = MonData.create_mon(MonData.MonType.BITLEON, 64)
+	storage[0] = MonData.create_mon(MonData.MonType.GELIF, 0)
+	storage[1] = MonData.create_mon(MonData.MonType.CHORSE, 0)
+	storage[2] = MonData.create_mon(MonData.MonType.PASCALICAN, 0)
+	storage[3] = MonData.create_mon(MonData.MonType.ORCHIN, 0)
+	storage[4] = MonData.create_mon(MonData.MonType.TURTMINAL, 0)
+	storage[5] = MonData.create_mon(MonData.MonType.STINGARRAY, 0)
+	storage[6] = MonData.create_mon(MonData.MonType.ANGLERPHISH, 0)
+	
 
 # saves the game state to file
 func save_game():
