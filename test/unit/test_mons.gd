@@ -28,4 +28,4 @@ func test_has_hitbox():
 # make sure each mon has a sprite
 func test_has_sprite():
 	for mon in mons:
-		assert_true(mon.find_child("Sprite").texture != null)
+		assert_true(mon.get_texture() != null)

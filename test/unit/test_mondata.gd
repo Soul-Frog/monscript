@@ -3,7 +3,7 @@ extends GutTest
 var mons := []
 var fakemon: MonData.Mon
 var FAKE_BASE = MonData.MonBase.new("FAKEMON", "res://mons/magnetfrog.tscn", "res://monscripts/attack.txt", 
-	0, 64, 0, 128, 0, 256, 0, 512, ScriptData.get_block_by_name("Attack"), "passive", "passivedesc")
+	256, 128, 64, 96, ScriptData.get_block_by_name("Attack"), "passive", "passivedesc")
 
 func before_each():
 	mons.clear()
@@ -21,13 +21,48 @@ func test_create_mon():
 		assert_not_null(mon)
 
 func test_stats_for_level():
-	for lvl in range(MonData.MIN_LEVEL, MonData.MAX_LEVEL):
-		fakemon._level = lvl
-		assert_eq(lvl, fakemon.get_level())
-		assert_eq(lvl * 1, fakemon.get_max_health())
-		assert_eq(lvl * 2, fakemon.get_attack())
-		assert_eq(lvl * 4, fakemon.get_defense())
-		assert_eq(lvl * 8, fakemon.get_speed())
+	fakemon._level = 0
+	assert_eq(0, fakemon.get_level())
+	assert_eq(34, fakemon.get_max_health())
+	assert_eq(17, fakemon.get_attack())
+	assert_eq(8, fakemon.get_defense())
+	assert_eq(12, fakemon.get_speed())
+	
+	fakemon._level = 1
+	assert_eq(1, fakemon.get_level())
+	assert_eq(38, fakemon.get_max_health())
+	assert_eq(19, fakemon.get_attack())
+	assert_eq(9, fakemon.get_defense())
+	assert_eq(14, fakemon.get_speed())
+	
+	fakemon._level = 2
+	assert_eq(2, fakemon.get_level())
+	assert_eq(41, fakemon.get_max_health())
+	assert_eq(20, fakemon.get_attack())
+	assert_eq(10, fakemon.get_defense())
+	assert_eq(15, fakemon.get_speed())
+	
+	fakemon._level = 16
+	assert_eq(16, fakemon.get_level())
+	assert_eq(89, fakemon.get_max_health())
+	assert_eq(44, fakemon.get_attack())
+	assert_eq(22, fakemon.get_defense())
+	assert_eq(33, fakemon.get_speed())
+	
+	fakemon._level = 32
+	assert_eq(32, fakemon.get_level())
+	assert_eq(145, fakemon.get_max_health())
+	assert_eq(72, fakemon.get_attack())
+	assert_eq(36, fakemon.get_defense())
+	assert_eq(54, fakemon.get_speed())
+	
+	fakemon._level = 64
+	assert_eq(64, fakemon.get_level())
+	assert_eq(256, fakemon.get_max_health())
+	assert_eq(128, fakemon.get_attack())
+	assert_eq(64, fakemon.get_defense())
+	assert_eq(96, fakemon.get_speed())
+
 
 # check if nicknames work
 func test_get_name():
@@ -51,7 +86,7 @@ func test_get_script():
 		mon.set_active_monscript_index(2)
 		assert_eq(mon.get_active_monscript(), script3)
 
-# make sure that all mons have a script that exists# make sure that all mons have a scene that exists
+# make sure that all mons have a script that exists
 func test_get_scene():
 	for mon in mons:
 		assert_true(FileAccess.file_exists(mon._base._scene_path))

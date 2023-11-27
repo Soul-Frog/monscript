@@ -121,19 +121,19 @@ func _ready():
 	_block_unlock_map[ScriptData.get_block_by_name("RandomFoe")] = true
 	
 	# create the default team
-	team = [MonData.create_mon(MonData.MonType.MAGNETFROG, 1), null, null, null]
+	team = [MonData.create_mon(MonData.MonType.BITLEON, 0), null, null, null]
 	assert(team.size() == Global.MONS_PER_TEAM)
 	
 	# create the mon storage
 	increase_storage_size(_variables[STORAGE_PAGES])
 	
 	# TODO - remove this debug code
-	storage[0] = MonData.create_mon(MonData.MonType.MAGNETFROG, 10)
-	storage[5] = MonData.create_mon(MonData.MonType.MAGNETFROG, 11)
-	storage[4] = MonData.create_mon(MonData.MonType.MAGNETFROG, 12)
-	storage[9] = MonData.create_mon(MonData.MonType.MAGNETFROG, 13)
-	storage[13] = MonData.create_mon(MonData.MonType.MAGNETFROG, 14)
-	storage[15] = MonData.create_mon(MonData.MonType.MAGNETFROG, 64)
+	storage[0] = MonData.create_mon(MonData.MonType.BITLEON, 1)
+	storage[1] = MonData.create_mon(MonData.MonType.BITLEON, 2)
+	storage[2] = MonData.create_mon(MonData.MonType.BITLEON, 3)
+	storage[3] = MonData.create_mon(MonData.MonType.BITLEON, 4)
+	storage[4] = MonData.create_mon(MonData.MonType.BITLEON, 32)
+	storage[5] = MonData.create_mon(MonData.MonType.BITLEON, 64)
 
 # saves the game state to file
 func save_game():

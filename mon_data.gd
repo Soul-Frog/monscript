@@ -6,6 +6,14 @@ extends Node
 const MIN_LEVEL: int = 0
 const MAX_LEVEL: int = 64
 
+# A mon's stats scale linearly as it levels.
+# Instead of starting at level 0 and scaling to 64, 
+# we start at level 10 and scale to level 74. (we still show the level to the player in a 0-64 range though)
+# This means mons haev slightly higher stats at the start of the game.
+# It smooths out the math a bit.
+# This constant is used for that.
+const PHANTOM_STARTING_LEVEL: int = 10
+
 # Calculates the amount of experience needed to gain a level
 func XP_for_level(level: int) -> int:
 	return level * level
@@ -20,34 +28,25 @@ class MonBase:
 	var _species_name: String
 	var _scene_path: String # the scene that represents this mon
 	var _default_script_path: String
-	var _attack0: int
-	var _attack64: int
-	var _defense0: int
-	var _defense64: int
-	var _health0: int
 	var _health64: int
-	var _speed0: int
+	var _attack64: int
+	var _defense64: int
 	var _speed64: int
 	var _special_block: ScriptData.Block
 	var _passive_name: String
 	var _passive_description: String
 	
 	func _init(monSpecies: String, mon_scene: String, default_script_file_path: String,
-		healthAt0: int, healthAt64: int, attackAt0: int, attackAt64: int, 
-		defenseAt0: int, defenseAt64: int, speedAt0: int, speedAt64: int,
+		healthAt64: int, attackAt64: int, defenseAt64: int, speedAt64: int,
 		specialBlock: ScriptData.Block, passiveName: String, passiveDesc: String) -> void:
 		self._species_name = monSpecies
 		self._scene_path = mon_scene
 		assert(Global.does_file_exist(_scene_path))
 		self._default_script_path = default_script_file_path
 		assert(Global.does_file_exist(_default_script_path))
-		self._health0 = healthAt0
 		self._health64 = healthAt64
-		self._attack0 = attackAt0
 		self._attack64 = attackAt64
-		self._defense0 = defenseAt0
 		self._defense64 = defenseAt64
-		self._speed0 = speedAt0
 		self._speed64 = speedAt64
 		self._special_block = specialBlock
 		self._passive_name = passiveName
@@ -55,16 +54,20 @@ class MonBase:
 	
 	# functions to determine a mon's stat value for a given level
 	func health_for_level(level: int) -> int:
-		return int((float(level) / MAX_LEVEL * (_health64 - _health0)) + _health0)
+		var hp_per_level = float(_health64) / (MAX_LEVEL + PHANTOM_STARTING_LEVEL)
+		return hp_per_level * (level + PHANTOM_STARTING_LEVEL)
 	
 	func attack_for_level(level: int) -> int:
-		return int((float(level) / MAX_LEVEL * (_attack64 - _attack0)) + _attack0)
+		var atk_per_level = float(_attack64) / (MAX_LEVEL + PHANTOM_STARTING_LEVEL)
+		return atk_per_level * (level + PHANTOM_STARTING_LEVEL)
 		
 	func defense_for_level(level: int) -> int:
-		return int((float(level) / MAX_LEVEL * (_defense64 - _defense0)) + _defense0)
+		var def_per_level = float(_defense64) / (MAX_LEVEL + PHANTOM_STARTING_LEVEL)
+		return def_per_level * (level + PHANTOM_STARTING_LEVEL)
 		
 	func speed_for_level(level: int) -> int:
-		return int((float(level) / MAX_LEVEL * (_speed64 - _speed0)) + _speed0)
+		var spd_per_level = float(_speed64) / (MAX_LEVEL + PHANTOM_STARTING_LEVEL)
+		return spd_per_level * (level + PHANTOM_STARTING_LEVEL)
 	
 
 # Represents an actual Mon in the game, in the player's party or in an overworld formation
@@ -181,47 +184,47 @@ class Mon:
 
 # Bitleons
 var _BITLEON_BASE = MonBase.new("Bitleon", "res://mons/bitleon.tscn", "res://monscripts/attack.txt",
-	16, 256, 8, 128, 4, 64, 4, 64,
+	256, 128, 64, 96,
 	ScriptData.get_block_by_name("Shellbash"),
 	"Passive", "Bitleon passive")
 
 # Coolant Cave
 var _GELIF_BASE = MonBase.new("Gelif", "res://mons/gelif.tscn", "res://monscripts/attack.txt",
-	30, 600, 2, 25, 2, 15, 3, 45,
+	540, 98, 14, 74,
 	ScriptData.get_block_by_name("Shellbash"),
 	"Passive", "Gelif passive")
 var _CHORSE_BASE = MonBase.new("C-horse", "res://mons/chorse.tscn", "res://monscripts/attack.txt",
-	15, 220, 5, 108, 3, 58, 5, 80,
+	220, 100, 42, 95,
 	ScriptData.get_block_by_name("Shellbash"),
 	"Passive", "C-horse passive")
 var _PASCALICAN_BASE = MonBase.new("Pascalican", "res://mons/pascalican.tscn", "res://monscripts/attack.txt",
-	70, 380, 6, 60, 4, 45, 3, 35,
+	210, 84, 56, 126,
 	ScriptData.get_block_by_name("Shellbash"),
 	"Passive", "Pascalican passive")
 var _ORCHIN_BASE = MonBase.new("Orchin", "res://mons/orchin.tscn", "res://monscripts/attack.txt",
-	70, 380, 6, 60, 4, 45, 3, 35,
+	198, 115, 86, 65,
 	ScriptData.get_block_by_name("Shellbash"),
 	"Passive", "Orchin passive")
 var _TURTMINAL_BASE = MonBase.new("Turtminal", "res://mons/turtminal.tscn", "res://monscripts/attack.txt",
-	70, 380, 6, 60, 4, 45, 3, 35,
+	328, 98, 88, 28,
 	ScriptData.get_block_by_name("Shellbash"),
 	"Passive", "Turtminal passive")
 var _STINGARRAY_BASE = MonBase.new("Stringarray", "res://mons/stingarray.tscn", "res://monscripts/attack.txt",
-	70, 380, 6, 60, 4, 45, 3, 35,
+	212, 144, 58, 89,
 	ScriptData.get_block_by_name("Shellbash"),
 	"Passive", "Stingarray passive")
 var _ANGLERPHISH_BASE = MonBase.new("Anglerphish", "res://mons/anglerphish.tscn", "res://monscripts/attack.txt",
-	70, 380, 6, 60, 4, 45, 3, 35,
+	328, 170, 44, 59,
 	ScriptData.get_block_by_name("Shellbash"),
 	"Passive", "Anglerphish passive")
 
 # Extras
 var _MAGNETFROG_BASE = MonBase.new("magnetFrog", "res://mons/magnetfrog.tscn", "res://monscripts/attack.txt", 
-	40, 200, 10, 110, 5, 100, 6, 40,
+	500, 500, 500, 500,
 	ScriptData.get_block_by_name("Shellbash"), 
 	"Passive", "Passive desc")
 var _MAGNETFROGBLUE_BASE = MonBase.new("magnetFrogBLUE", "res://mons/magnetfrogblue.tscn", "res://monscripts/attack.txt", 
-	40, 250, 10, 100, 5, 50, 6, 20,
+	500, 500, 500, 500,
 	ScriptData.get_block_by_name("Shellbash"), 
 	"Bluenatism", "MagnetFrog Blue's passive ability information!")
 
