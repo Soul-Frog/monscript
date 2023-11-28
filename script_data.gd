@@ -215,7 +215,7 @@ var DO_BLOCK_LIST := [
 		await animator.animation_finished
 		
 		# then apply the actual damage from this attack
-		target.take_damage(mon.attack)
+		target.apply_attack(mon.attack, 1)
 		),
 	
 	Block.new(Block.Type.DO, "Defend", Block.Type.NONE, "Do nothing, but reduce damage taken by 50% until your next turn.",
@@ -233,7 +233,7 @@ var DO_BLOCK_LIST := [
 		animator.slash(target)
 		await animator.animation_finished
 		
-		target.take_damage(int(mon.attack * 0.7))
+		target.apply_attack(mon.attack, 0.7)
 		mon.is_defending = true
 		),
 		
@@ -253,7 +253,7 @@ var DO_BLOCK_LIST := [
 		if mon.turn_count >= 5:
 			dmg_mult = 1.4
 		
-		target.take_damage(int(mon.attack * dmg_mult)) #todo - chill damage
+		target.apply_attack(mon.attack, dmg_mult) #todo - chill damage
 		),
 	
 	Block.new(Block.Type.DO, "Triangulate", Block.Type.TO, "Deals 50% damage to a single target. Increases by +10%/20%/30%/60%/100% each use in the same battle.",
@@ -282,7 +282,7 @@ var DO_BLOCK_LIST := [
 		else:
 			mon.metadata[metadata_key] = 1
 		
-		target.take_damage(int(mon.attack * dmg_mult))
+		target.apply_attack(mon.attack, dmg_mult)
 		),
 	
 	Block.new(Block.Type.DO, "SpikOR", Block.Type.TO, "Deals 60% damage to a single target (125% damage instead if target is leaky or above 80% HP.)",
@@ -295,7 +295,7 @@ var DO_BLOCK_LIST := [
 		if mon.statuses[BattleMon.Status.LEAK] or float(mon.current_health) / mon.max_health >= 0.8:
 			dmg_mult = 1.25
 		
-		target.take_damage(int(mon.attack * dmg_mult)) #todo - volt damage
+		target.apply_attack(mon.attack, dmg_mult) #todo - volt damage
 		),
 	
 	Block.new(Block.Type.DO, "Multitack", Block.Type.NONE, "Four times, deal 25% damage to a random target.",
@@ -304,15 +304,14 @@ var DO_BLOCK_LIST := [
 			var rand_target = Global.choose_one(foes)
 			animator.slash(rand_target) #todo - animation
 			await animator.animation_finished
-			target.take_damage(int(mon.attack * 0.25))
+			rand_target.apply_attack(mon.attack, 0.25)
 		),
 		
 	Block.new(Block.Type.DO, "Spearphish", Block.Type.TO, "Inflict leak on a single target.",
 	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, animator: BattleAnimator) -> void:
-		for i in range(0, 4):
-			animator.slash(target) #todo - animation
-			await animator.animation_finished
-			target.inflict_status(BattleMon.Status.LEAK)
+		animator.slash(target) #todo - animation
+		await animator.animation_finished
+		target.inflict_status(BattleMon.Status.LEAK)
 		),
 		
 	Block.new(Block.Type.DO, "Transfer", Block.Type.TO, "Heal a mon by transfering up to 50% of the user's HP to a single target.",
@@ -328,7 +327,7 @@ var DO_BLOCK_LIST := [
 		# apply the heal
 		target.heal_damage(heal_used)
 		# and damage ourself
-		mon.take_damage(heal_possible, true)
+		mon.take_damage(heal_used)
 		),
 ]
 

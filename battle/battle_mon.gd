@@ -122,7 +122,7 @@ func alert_turn_over() -> void:
 	
 	# after taking an action, if inflicted with leak, take 5% health as damage
 	if statuses[Status.LEAK]:
-		take_damage(int(max_health * 0.05), true)
+		take_damage(max(int(max_health * 0.05), 1))
 		#todo - animate this better
 	
 	_update_labels();
@@ -132,17 +132,26 @@ func is_defeated() -> bool:
 	assert(current_health >= 0, "Mon's health is somehow negative.")
 	return current_health == 0
 
-# Called when this mon is attacked
-# Damage taken is reduced by defense, then further divided by 2 if defending
-func take_damage(raw_damage: int, ignore_defense: bool = false) -> void:
-	var damage_taken = raw_damage
+# apply an attack against this mon with a given attack value and damage multiplier
+# this function factors in defense and defending
+func apply_attack(attacker_atk: int, multiplier: float) -> void:
+	# damage taken is ATK-DEF, to a minimum of 1
+	var damage_taken = max(attacker_atk - defense, 1) 
 	
-	if not ignore_defense: # if we aren't ignoring defense (ie, leak status ignores defense), apply it
-		damage_taken = raw_damage - defense
-		if is_defending: # defending reduces damage by half
-			damage_taken /= 2
+	# increase damage taken by attack multiplier
+	damage_taken *= multiplier
 	
-	current_health -= int(max(damage_taken, 1)) # deal a minimum of 1 damage
+	# if defending, reduce the damage taken by half
+	if is_defending:
+		damage_taken /= 2
+	
+	take_damage(damage_taken)
+
+# deal an absolute amount of damage to a mon
+# ignores defense and defending
+# generally, don't call this directly in attack blocks, call apply_attack instead
+func take_damage(damage_taken: int) -> void:
+	current_health -= damage_taken # deal a minimum of 1 damage
 	current_health = max(current_health, 0);
 	
 	# make text effect

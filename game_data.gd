@@ -97,13 +97,11 @@ func _ready():
 	for montype in MonData.MonType.values():
 		if montype == MonData.MonType.NONE:
 			continue
-		if montype == MonData.MonType.BITLEON:
-			compilation_progress_per_mon[montype] = 100
 		else:
 			compilation_progress_per_mon[montype] = 0
 	
 	# mark the initial mon as compiled
-	# TODO - Bitleon starts as compiled
+	compilation_progress_per_mon[MonData.MonType.BITLEON] = 100
 	
 	# populate the block unlock map
 	for block in ScriptData.IF_BLOCK_LIST:

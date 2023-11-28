@@ -23,7 +23,7 @@ var _held_mon = null
 var _storage_page = 0 #the current page of storage open
 var _STORAGE_PAGE_LABEL_FORMAT = "%d/%d"
 
-var _is_closable = true #if the pause menu can be safely closed (ie the game is not saving)
+var _is_saving = false # if the game is currently saving (used to prevent the menu from closing while save is in progress)
 
 func _ready() -> void:
 	assert(TEAM_MONS)
@@ -79,7 +79,7 @@ func _on_database_button_pressed() -> void:
 	emit_signal("database_menu_opened")
 
 func _on_save_button_pressed():
-	_is_closable = false # prevent the menu from being closed while saving
+	_is_saving = true # prevent the menu from being closed while saving
 	if not _is_team_valid():
 		NO_MON_POPUP.show()
 	else:
@@ -88,7 +88,7 @@ func _on_save_button_pressed():
 		var continueGame = await SAVE_POPUP.selection_made
 		if not continueGame:
 			get_tree().quit()
-	_is_closable = true # done saving; menu can be closed now if needed
+	_is_saving = false # done saving; menu can be closed now if needed
 
 func _on_settings_button_pressed() -> void:
 	print("Settings!")	#TODO settings
@@ -171,6 +171,9 @@ func _is_team_valid():
 			return true
 	return false
 
-# if the pause menu can currently be closed (false if the save popup is active)
+# if the pause menu can currently be closed
+# (false if save popup is open)
+# (false if we're holding a mon)
+# (false if the team is invalid [empty])
 func is_closable():
-	return _is_closable
+	return (not _is_saving) and HELD.get_child_count() == 0 and _is_team_valid()

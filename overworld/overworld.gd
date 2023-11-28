@@ -8,6 +8,9 @@ func _ready():
 func handle_battle_results(battle_end_condition) -> void:
 	assert(battle_end_condition != Global.BattleEndCondition.NONE, "Battle end condition was not set.")
 	
+	if battle_end_condition == Global.BattleEndCondition.LOSE:
+		print("We lost the battle btw")
+	
 	current_area.handle_battle_results(battle_end_condition)
 	
 	print("TODO - HANDLE BATTLE LOSS")
