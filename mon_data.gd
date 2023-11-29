@@ -215,7 +215,7 @@ var _STINGARRAY_BASE = MonBase.new("Stringarray", "res://mons/stingarray.tscn", 
 	"Passive", "Stingarray passive")
 var _ANGLERPHISH_BASE = MonBase.new("Anglerphish", "res://mons/anglerphish.tscn", "res://monscripts/attack.txt",
 	328, 170, 44, 59,
-	ScriptData.get_block_by_name("Spearphish"),
+	ScriptData.get_block_by_name("Spearphishing"),
 	"Passive", "Anglerphish passive")
 
 # Extras

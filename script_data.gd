@@ -307,7 +307,7 @@ var DO_BLOCK_LIST := [
 			rand_target.apply_attack(mon.attack, 0.25)
 		),
 		
-	Block.new(Block.Type.DO, "Spearphish", Block.Type.TO, "Inflict leak on a single target.",
+	Block.new(Block.Type.DO, "Spearphishing", Block.Type.TO, "Inflict leak on a single target.",
 	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, animator: BattleAnimator) -> void:
 		animator.slash(target) #todo - animation
 		await animator.animation_finished
