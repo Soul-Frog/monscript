@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://conqj70b6ouir"]
+[gd_scene load_steps=22 format=3 uid="uid://conqj70b6ouir"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_1crr8"]
 [ext_resource type="Texture2D" uid="uid://drfvc5n36jass" path="res://assets/maps/coolant_cave/cave2_entrance/cave2.png" id="2_l834j"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" path="res://overworld/components/overworld_mons/overworld_mon.gd" id="12_2ykkf"]
 [ext_resource type="Texture2D" uid="uid://rnh5madliw2g" path="res://assets/maps/coolant_cave/cave2_entrance/cave2_fg.png" id="12_wmi3w"]
 [ext_resource type="Script" path="res://overworld/components/overworld_mons/wanderer.gd" id="13_5rf1m"]
+[ext_resource type="PackedScene" uid="uid://dm1epg70fkia2" path="res://mons/orchin.tscn" id="15_c7tfi"]
 [ext_resource type="Texture2D" uid="uid://bb7yokb2yw0dv" path="res://assets/objects/gateway.png" id="18_b6w6p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mkqcf"]
@@ -30,11 +31,13 @@ script = ExtResource("1_1crr8")
 area_enum = 1
 
 [node name="Map" type="Sprite2D" parent="."]
+z_index = 100
 texture = ExtResource("2_l834j")
 centered = false
 
 [node name="Water" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.74902)
+z_index = 150
 texture = ExtResource("3_mpdax")
 centered = false
 script = ExtResource("4_x74uy")
@@ -64,6 +67,7 @@ blue_speed = 25
 fade_speed = 2.0
 
 [node name="Bridges" type="Node2D" parent="."]
+z_index = 160
 script = ExtResource("6_kqlxl")
 
 [node name="DownSprite" type="Sprite2D" parent="Bridges"]
@@ -98,17 +102,21 @@ polygon = PackedVector2Array(275, 489, 275, 494, 307, 494, 307, 489)
 polygon = PackedVector2Array(275, 555, 275, 561, 307, 561, 307, 555)
 
 [node name="Gateway" type="Sprite2D" parent="."]
+z_index = 200
 position = Vector2(584, 179)
 texture = ExtResource("18_b6w6p")
 centered = false
 
 [node name="Player" parent="." instance=ExtResource("3_3xe7d")]
-position = Vector2(48, 429)
+z_index = 200
+position = Vector2(61, 426)
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
 
-[node name="StillMon" parent="OverworldEncounters" instance=ExtResource("11_qslf1")]
-position = Vector2(278, 373)
+[node name="TEMPSTILLMON" parent="OverworldEncounters" instance=ExtResource("11_qslf1")]
+z_index = 200
+position = Vector2(297, 357)
+collision_mask = 532
 script = ExtResource("12_2ykkf")
 mon1Type = 2
 mon1Level = 0
@@ -119,20 +127,97 @@ mon3Level = 0
 mon4Type = 0
 mon4Level = 0
 
-[node name="WanderMon" parent="OverworldEncounters" instance=ExtResource("11_qslf1")]
-position = Vector2(556, 372)
+[node name="GelifLeft" parent="OverworldEncounters" instance=ExtResource("11_qslf1")]
+z_index = 200
+position = Vector2(67, 354)
+collision_mask = 532
 script = ExtResource("13_5rf1m")
-speed = 100
-min_wander_range = 50
-max_wander_range = 150
-min_time_between_movement = 0
-max_time_between_movement = 0.2
-mon1Type = 5
+speed = 30
+min_wander_range = 30
+max_wander_range = 80
+min_time_between_movement = 3
+max_time_between_movement = 5.0
+mon1Type = 2
 mon1Level = 0
 mon2Type = 0
 mon2Level = 0
 mon3Type = 0
 mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+
+[node name="GelifRight" parent="OverworldEncounters" instance=ExtResource("11_qslf1")]
+z_index = 200
+position = Vector2(597, 460)
+collision_mask = 532
+script = ExtResource("13_5rf1m")
+speed = 30
+min_wander_range = 30
+max_wander_range = 80
+min_time_between_movement = 3
+max_time_between_movement = 5.0
+mon1Type = 2
+mon1Level = 4
+mon2Type = 2
+mon2Level = 4
+mon3Type = 2
+mon3Level = 4
+mon4Type = 0
+mon4Level = 0
+
+[node name="Orchin1TODO" parent="OverworldEncounters" instance=ExtResource("15_c7tfi")]
+z_index = 125
+position = Vector2(183, 503)
+collision_mask = 548
+script = ExtResource("12_2ykkf")
+mon1Type = 5
+mon1Level = 3
+mon2Type = 0
+mon2Level = 0
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+
+[node name="Orchin2TODO" parent="OverworldEncounters" instance=ExtResource("15_c7tfi")]
+z_index = 125
+position = Vector2(192, 282)
+collision_mask = 548
+script = ExtResource("12_2ykkf")
+mon1Type = 2
+mon1Level = 3
+mon2Type = 5
+mon2Level = 5
+mon3Type = 2
+mon3Level = 3
+mon4Type = 0
+mon4Level = 0
+
+[node name="Orchin3TODO" parent="OverworldEncounters" instance=ExtResource("15_c7tfi")]
+z_index = 125
+position = Vector2(445, 519)
+collision_mask = 548
+script = ExtResource("12_2ykkf")
+mon1Type = 5
+mon1Level = 2
+mon2Type = 5
+mon2Level = 2
+mon3Type = 5
+mon3Level = 2
+mon4Type = 5
+mon4Level = 2
+
+[node name="Orchin4TODO" parent="OverworldEncounters" instance=ExtResource("15_c7tfi")]
+z_index = 125
+position = Vector2(439, 217)
+collision_mask = 548
+script = ExtResource("12_2ykkf")
+mon1Type = 5
+mon1Level = 6
+mon2Type = 2
+mon2Level = 4
+mon3Type = 6
+mon3Level = 4
 mon4Type = 0
 mon4Level = 0
 
@@ -272,41 +357,40 @@ polygon = PackedVector2Array(634, 332, 634, 277, 634, 277, 642, 277, 642, 332)
 [node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="CollisionWhileLower"]
 polygon = PackedVector2Array(365, 292, 397, 292, 397, 260, 365, 260)
 
-[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="CollisionWhileLower/CollisionPolygon2D5"]
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="CollisionWhileLower"]
 position = Vector2(-27, 72)
 polygon = PackedVector2Array(365, 271, 451, 271, 451, 260, 365, 260)
 
-[node name="TransitionToLower" type="Area2D" parent="."]
-visible = false
-collision_layer = 0
-collision_mask = 3
-script = ExtResource("7_kowvn")
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TransitionToLower"]
-position = Vector2(-3.8147e-06, -525.858)
-scale = Vector2(1, 2.02285)
-polygon = PackedVector2Array(33, 505.158, 99, 505.158, 99, 518.011, 33, 518.505)
-
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="TransitionToLower"]
-position = Vector2(5, -3)
-polygon = PackedVector2Array(482, 489, 512, 488, 510, 552, 476, 553)
-
-[node name="TransitionToUpper" type="Area2D" parent="."]
-visible = false
+[node name="TransitionDown" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_kowvn")
 transition_type = 1
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TransitionToUpper"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TransitionDown"]
+position = Vector2(-3.8147e-06, -525.858)
+scale = Vector2(1, 2.02285)
+polygon = PackedVector2Array(33, 505.158, 99, 505.158, 99, 518.011, 33, 518.505)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="TransitionDown"]
+position = Vector2(5, -3)
+polygon = PackedVector2Array(482, 489, 512, 488, 510, 552, 476, 553)
+
+[node name="TransitionUp" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("7_kowvn")
+transition_type = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TransitionUp"]
 position = Vector2(-3.8147e-06, -544.681)
 scale = Vector2(1, 2.15768)
 polygon = PackedVector2Array(39, 466.094, 89, 465.63, 81, 474.899, 49, 474.899)
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="TransitionToUpper"]
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="TransitionUp"]
 polygon = PackedVector2Array(530, 467, 558, 468, 557, 537, 528, 539)
 
-[connection signal="body_entered" from="TransitionToLower" to="TransitionToLower" method="_on_body_entered"]
-[connection signal="body_entered" from="TransitionToUpper" to="TransitionToUpper" method="_on_body_entered"]
+[connection signal="body_entered" from="TransitionDown" to="TransitionDown" method="_on_body_entered"]
+[connection signal="body_entered" from="TransitionUp" to="TransitionUp" method="_on_body_entered"]
 
 [editable path="ForegroundElements/ForegroundElem"]
