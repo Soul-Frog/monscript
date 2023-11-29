@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://conqj70b6ouir"]
+[gd_scene load_steps=21 format=3 uid="uid://conqj70b6ouir"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_1crr8"]
 [ext_resource type="Texture2D" uid="uid://drfvc5n36jass" path="res://assets/maps/coolant_cave/cave2_entrance/cave2.png" id="2_l834j"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" path="res://overworld/components/overworld_mons/overworld_mon.gd" id="12_2ykkf"]
 [ext_resource type="Texture2D" uid="uid://rnh5madliw2g" path="res://assets/maps/coolant_cave/cave2_entrance/cave2_fg.png" id="12_wmi3w"]
 [ext_resource type="Script" path="res://overworld/components/overworld_mons/wanderer.gd" id="13_5rf1m"]
+[ext_resource type="Texture2D" uid="uid://bb7yokb2yw0dv" path="res://assets/objects/gateway.png" id="18_b6w6p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mkqcf"]
 size = Vector2(88, 11)
@@ -96,6 +97,11 @@ polygon = PackedVector2Array(275, 489, 275, 494, 307, 494, 307, 489)
 [node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
 polygon = PackedVector2Array(275, 555, 275, 561, 307, 561, 307, 555)
 
+[node name="Gateway" type="Sprite2D" parent="."]
+position = Vector2(584, 179)
+texture = ExtResource("18_b6w6p")
+centered = false
+
 [node name="Player" parent="." instance=ExtResource("3_3xe7d")]
 position = Vector2(48, 429)
 
@@ -174,7 +180,6 @@ position = Vector2(19, -3)
 shape = SubResource("RectangleShape2D_80ub1")
 
 [node name="Collision" type="StaticBody2D" parent="."]
-visible = false
 modulate = Color(0, 1, 0, 1)
 position = Vector2(-96, 150)
 collision_layer = 4
@@ -214,6 +219,9 @@ polygon = PackedVector2Array(140, 285, 139, 285, 139, 242, 140, 242)
 position = Vector2(6, 79)
 polygon = PackedVector2Array(172, 242, 173, 242, 173, 285, 172, 285)
 
+[node name="CollisionPolygon2D11" type="CollisionPolygon2D" parent="Collision"]
+polygon = PackedVector2Array(680, 69, 705, 69, 705, 34, 700, 29, 685, 29, 680, 34)
+
 [node name="CollisionWhileUpper" type="StaticBody2D" parent="."]
 visible = false
 modulate = Color(0, 0, 1, 1)
@@ -244,7 +252,6 @@ polygon = PackedVector2Array(596, 358, 638, 325, 595, 325)
 polygon = PackedVector2Array(598, 161, 600, 160, 638, 122, 638, -42, 592, -42, 592, 161)
 
 [node name="CollisionWhileLower" type="StaticBody2D" parent="."]
-visible = false
 modulate = Color(1, 0, 0, 1)
 position = Vector2(-90, 229)
 collision_layer = 32
@@ -264,6 +271,10 @@ polygon = PackedVector2Array(634, 332, 634, 277, 634, 277, 642, 277, 642, 332)
 
 [node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="CollisionWhileLower"]
 polygon = PackedVector2Array(365, 292, 397, 292, 397, 260, 365, 260)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="CollisionWhileLower/CollisionPolygon2D5"]
+position = Vector2(-27, 72)
+polygon = PackedVector2Array(365, 271, 451, 271, 451, 260, 365, 260)
 
 [node name="TransitionToLower" type="Area2D" parent="."]
 visible = false
