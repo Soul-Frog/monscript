@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://h1rp512m0kw3"]
+[gd_scene load_steps=11 format=3 uid="uid://h1rp512m0kw3"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_c2hk5"]
 [ext_resource type="Texture2D" uid="uid://b0e6tgnkw52yd" path="res://assets/maps/coolant_cave/cave10_river/cave10.png" id="2_dl0pi"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/components/player_overhead.tscn" id="3_jyrdr"]
 [ext_resource type="Script" path="res://overworld/components/warp.gd" id="4_o02w7"]
+[ext_resource type="PackedScene" uid="uid://b5sx3ehv6u6ks" path="res://mons/pascalican.tscn" id="4_xct11"]
+[ext_resource type="Script" path="res://overworld/components/overworld_mons/overworld_mon.gd" id="5_67v3a"]
 [ext_resource type="Script" path="res://overworld/areas/coolant_cave/ice.gd" id="5_t63x7"]
 [ext_resource type="PackedScene" uid="uid://ce42geant7kmk" path="res://overworld/interactables/warp_interactable.tscn" id="6_ucxxx"]
 
@@ -26,6 +28,30 @@ centered = false
 position = Vector2(405, 1952)
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
+
+[node name="Pascalican2" parent="OverworldEncounters" instance=ExtResource("4_xct11")]
+position = Vector2(317, 309)
+script = ExtResource("5_67v3a")
+mon1Type = 4
+mon1Level = 3
+mon2Type = 7
+mon2Level = 3
+mon3Type = 2
+mon3Level = 3
+mon4Type = 6
+mon4Level = 3
+
+[node name="Pascalican3" parent="OverworldEncounters" instance=ExtResource("4_xct11")]
+position = Vector2(315, 1924)
+script = ExtResource("5_67v3a")
+mon1Type = 4
+mon1Level = 5
+mon2Type = 6
+mon2Level = 3
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
 
 [node name="Points" type="Node2D" parent="."]
 
