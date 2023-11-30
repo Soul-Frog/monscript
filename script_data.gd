@@ -305,6 +305,12 @@ var DO_BLOCK_LIST := [
 			animator.slash(rand_target) #todo - animation
 			await animator.animation_finished
 			rand_target.apply_attack(mon.attack, 0.25)
+			
+			# if we killed the target, don't let it be a target for future attacks
+			if rand_target.current_health == 0:
+				foes.erase(rand_target)
+				if foes.size() == 0: # if everyone is dead, don't keep attacking
+					break
 		),
 		
 	Block.new(Block.Type.DO, "Spearphishing", Block.Type.TO, "Inflict leak on a single target.",
