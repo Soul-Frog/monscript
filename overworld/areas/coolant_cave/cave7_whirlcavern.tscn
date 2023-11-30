@@ -1,12 +1,14 @@
-[gd_scene load_steps=16 format=3 uid="uid://b7tq8iefta43j"]
+[gd_scene load_steps=18 format=3 uid="uid://b7tq8iefta43j"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_6nc0c"]
 [ext_resource type="Texture2D" uid="uid://cds4e7g3n1rdo" path="res://assets/maps/coolant_cave/cave7_whirlcavern/cave7.png" id="2_jra30"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/components/player_overhead.tscn" id="3_24mgp"]
+[ext_resource type="PackedScene" uid="uid://dm1epg70fkia2" path="res://mons/orchin.tscn" id="4_aue2l"]
 [ext_resource type="Script" path="res://overworld/components/warp.gd" id="4_ckphf"]
 [ext_resource type="Texture2D" uid="uid://b7kocjfpipg8q" path="res://assets/maps/coolant_cave/cave7_whirlcavern/cave7_water.png" id="4_kx0l5"]
 [ext_resource type="PackedScene" uid="uid://cepi8saddwmb6" path="res://overworld/components/foreground_element.tscn" id="4_no6le"]
 [ext_resource type="Texture2D" uid="uid://cyrll8kcgrydi" path="res://assets/maps/coolant_cave/cave7_whirlcavern/cave7_fg1.png" id="5_b1lb7"]
+[ext_resource type="Script" path="res://overworld/components/overworld_mons/overworld_mon.gd" id="5_py7nl"]
 [ext_resource type="Texture2D" uid="uid://lwyfhyhqcocq" path="res://assets/maps/coolant_cave/cave7_whirlcavern/cave7_fg2.png" id="6_bpich"]
 [ext_resource type="Texture2D" uid="uid://vrs2yt3mmjiv" path="res://assets/maps/coolant_cave/cave7_whirlcavern/cave7_fg3.png" id="7_gpok0"]
 [ext_resource type="Texture2D" uid="uid://du4shfa6x16iq" path="res://assets/maps/coolant_cave/cave7_whirlcavern/cave7_fg4.png" id="8_spo1b"]
@@ -24,18 +26,46 @@ script = ExtResource("1_6nc0c")
 area_enum = 6
 
 [node name="Map" type="Sprite2D" parent="."]
+z_index = 100
 texture = ExtResource("2_jra30")
 centered = false
 
 [node name="Player" parent="." instance=ExtResource("3_24mgp")]
+z_index = 200
 position = Vector2(461, 105)
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
 
+[node name="Orchin1TODO" parent="OverworldEncounters" instance=ExtResource("4_aue2l")]
+position = Vector2(291, 492)
+collision_mask = 548
+script = ExtResource("5_py7nl")
+mon1Type = 5
+mon1Level = 3
+mon2Type = 0
+mon2Level = 0
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+
+[node name="Orchin1TODO2" parent="OverworldEncounters" instance=ExtResource("4_aue2l")]
+position = Vector2(546, 433)
+collision_mask = 548
+script = ExtResource("5_py7nl")
+mon1Type = 5
+mon1Level = 3
+mon2Type = 0
+mon2Level = 0
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+
 [node name="ForegroundElements" type="Node2D" parent="."]
+z_index = 210
 
 [node name="Wall" parent="ForegroundElements" instance=ExtResource("4_no6le")]
-z_index = 0
 position = Vector2(446, 174)
 texture = ExtResource("5_b1lb7")
 active = false
@@ -44,7 +74,6 @@ active = false
 polygon = PackedVector2Array(17, 0, 25, 0, 38, 17, 46, 39, 46, 94, 30, 79, 14, 79, 0, 110, 0, 55, 4, 35)
 
 [node name="Wall2" parent="ForegroundElements" instance=ExtResource("4_no6le")]
-z_index = 0
 position = Vector2(387, 300)
 texture = ExtResource("6_bpich")
 active = false
@@ -53,7 +82,6 @@ active = false
 polygon = PackedVector2Array(8, 0, 17, 0, 20, 5, 24, 7, 37, 36, 46, 64, 47, 140, 37, 96, 20, 60, 5, 58, 0, 69, 0, 55, 0, 13, 2, 5)
 
 [node name="Wall3" parent="ForegroundElements" instance=ExtResource("4_no6le")]
-z_index = 0
 position = Vector2(496, 295)
 texture = ExtResource("7_gpok0")
 active = false
@@ -62,7 +90,6 @@ active = false
 polygon = PackedVector2Array(28, 14, 35, 9, 50, 2, 59, 0, 66, 0, 81, 6, 94, 21, 94, 76, 66, 56, 59, 55, 58, 57, 50, 58, 32, 67, 20, 80, 14, 90, 0, 128, 0, 73, 5, 51, 14, 32)
 
 [node name="Cove" parent="ForegroundElements" instance=ExtResource("4_no6le")]
-z_index = 0
 position = Vector2(514, 419)
 texture = ExtResource("8_spo1b")
 
@@ -70,7 +97,6 @@ texture = ExtResource("8_spo1b")
 polygon = PackedVector2Array(50, 2, 59, 0, 67, 2, 68, 60, 61, 58, 42, 61, 15, 61, 2, 53, -1, 10, 7, -1, 21, 5, 39, 5)
 
 [node name="Wall4" parent="ForegroundElements" instance=ExtResource("4_no6le")]
-z_index = 0
 position = Vector2(447, 531)
 texture = ExtResource("9_sxt7u")
 active = false
@@ -80,6 +106,7 @@ polygon = PackedVector2Array(43, 11, 52, 21, 56, 31, 56, 86, 31, 55, 20, 57, 0, 
 
 [node name="Water" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.282353)
+z_index = 1000
 position = Vector2(3, -12)
 texture = ExtResource("4_kx0l5")
 centered = false
@@ -271,6 +298,7 @@ position = Vector2(305, 688)
 polygon = PackedVector2Array(244, 64, 241, 70, 240, 94, 239, 102, 235, 118, 241, 104)
 
 [node name="Whirlpool" parent="." instance=ExtResource("13_i1p7n")]
+visible = false
 position = Vector2(830, 387)
 NUM_CIRCLES = 4
 CIRCLE_SPEED = 15.0

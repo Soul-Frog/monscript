@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://wn6keuc21ls8"]
+[gd_scene load_steps=26 format=3 uid="uid://wn6keuc21ls8"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_jvkfo"]
 [ext_resource type="Texture2D" uid="uid://be4c4syodtuwg" path="res://assets/maps/coolant_cave/cave6_temple/cave6.png" id="2_v2f4j"]
@@ -8,9 +8,14 @@
 [ext_resource type="Script" path="res://overworld/components/warp.gd" id="4_n8bn1"]
 [ext_resource type="PackedScene" uid="uid://dyhdug5srtv2g" path="res://overworld/areas/coolant_cave/whirlpool.tscn" id="4_uqqbu"]
 [ext_resource type="Texture2D" uid="uid://6838wwuqkn7g" path="res://assets/maps/coolant_cave/cave6_temple/cave6_fg1.png" id="5_c0klj"]
+[ext_resource type="PackedScene" uid="uid://0pfd6i8pcnc1" path="res://mons/gelif.tscn" id="6_eu742"]
 [ext_resource type="Texture2D" uid="uid://bib236o4h2gj" path="res://assets/maps/coolant_cave/cave6_temple/cave6_fg4.png" id="6_lw8og"]
 [ext_resource type="Texture2D" uid="uid://da2b1r3cba4" path="res://assets/maps/coolant_cave/cave6_temple/cave6_fg2.png" id="6_x6q01"]
+[ext_resource type="Script" path="res://overworld/components/overworld_mons/wanderer.gd" id="7_um4l4"]
 [ext_resource type="Texture2D" uid="uid://dglru7qddmd6g" path="res://assets/maps/coolant_cave/cave6_temple/cave6_fg3.png" id="7_y32nk"]
+[ext_resource type="PackedScene" uid="uid://du83qsxxw4lqn" path="res://mons/chorse.tscn" id="8_trmej"]
+[ext_resource type="PackedScene" uid="uid://b5sx3ehv6u6ks" path="res://mons/pascalican.tscn" id="9_jnuf3"]
+[ext_resource type="Script" path="res://overworld/components/overworld_mons/overworld_mon.gd" id="10_i4e28"]
 [ext_resource type="PackedScene" uid="uid://5vxxc0i44umo" path="res://overworld/areas/coolant_cave/water_flow.tscn" id="10_j85m8"]
 [ext_resource type="PackedScene" uid="uid://ce42geant7kmk" path="res://overworld/interactables/warp_interactable.tscn" id="13_612sg"]
 [ext_resource type="PackedScene" uid="uid://cty2bys7mmd6k" path="res://overworld/interactables/chest.tscn" id="14_h5edw"]
@@ -37,15 +42,18 @@ area_enum = 5
 camera_zoom = 0.5
 
 [node name="Map" type="Sprite2D" parent="."]
+z_index = 100
 texture = ExtResource("2_v2f4j")
 centered = false
 
 [node name="Water" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.74902)
+z_index = 150
 texture = ExtResource("3_873o4")
 centered = false
 
 [node name="Whirlpool" parent="." instance=ExtResource("4_uqqbu")]
+z_index = 160
 position = Vector2(384, 620)
 CIRCLE_COLOR = null
 NUM_CIRCLES = null
@@ -56,11 +64,186 @@ SUCTION_STRENGTH = 90.0
 shape = SubResource("CircleShape2D_pim6k")
 
 [node name="Player" parent="." instance=ExtResource("3_u0psi")]
+z_index = 200
 position = Vector2(463, 280)
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
 
+[node name="Gelif" parent="OverworldEncounters" instance=ExtResource("6_eu742")]
+position = Vector2(471, 714)
+collision_mask = 532
+script = ExtResource("7_um4l4")
+speed = 30
+min_wander_range = 10
+max_wander_range = 40
+min_time_between_movement = 3
+max_time_between_movement = 5.0
+mon1Type = 2
+mon1Level = 2
+mon2Type = 2
+mon2Level = 2
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+
+[node name="Gelif2" parent="OverworldEncounters" instance=ExtResource("6_eu742")]
+position = Vector2(405, 510)
+collision_mask = 532
+script = ExtResource("7_um4l4")
+speed = 30
+min_wander_range = 10
+max_wander_range = 40
+min_time_between_movement = 3
+max_time_between_movement = 5.0
+mon1Type = 2
+mon1Level = 3
+mon2Type = 0
+mon2Level = 2
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+
+[node name="Gelif3" parent="OverworldEncounters" instance=ExtResource("6_eu742")]
+position = Vector2(260, 677)
+collision_mask = 532
+script = ExtResource("7_um4l4")
+speed = 30
+min_wander_range = 10
+max_wander_range = 40
+min_time_between_movement = 3
+max_time_between_movement = 5.0
+mon1Type = 2
+mon1Level = 3
+mon2Type = 3
+mon2Level = 1
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+
+[node name="Chorse6" parent="OverworldEncounters" instance=ExtResource("8_trmej")]
+position = Vector2(1370, 229)
+collision_layer = 34
+collision_mask = 532
+script = ExtResource("7_um4l4")
+speed = 100
+min_wander_range = 30
+max_wander_range = 100
+min_time_between_movement = 2
+max_time_between_movement = 3.0
+mon1Type = 3
+mon1Level = 5
+mon2Type = 0
+mon2Level = 0
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+
+[node name="Chorse5" parent="OverworldEncounters" instance=ExtResource("8_trmej")]
+position = Vector2(1213, 745)
+collision_layer = 34
+collision_mask = 532
+script = ExtResource("7_um4l4")
+speed = 100
+min_wander_range = 30
+max_wander_range = 100
+min_time_between_movement = 2
+max_time_between_movement = 3.0
+mon1Type = 3
+mon1Level = 0
+mon2Type = 0
+mon2Level = 0
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+
+[node name="Chorse7" parent="OverworldEncounters" instance=ExtResource("8_trmej")]
+position = Vector2(1058, 384)
+collision_layer = 34
+collision_mask = 532
+script = ExtResource("7_um4l4")
+speed = 100
+min_wander_range = 30
+max_wander_range = 100
+min_time_between_movement = 2
+max_time_between_movement = 3.0
+mon1Type = 3
+mon1Level = 3
+mon2Type = 4
+mon2Level = 2
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+
+[node name="Chorse8" parent="OverworldEncounters" instance=ExtResource("8_trmej")]
+position = Vector2(918, 85)
+collision_layer = 34
+collision_mask = 532
+script = ExtResource("7_um4l4")
+speed = 100
+min_wander_range = 30
+max_wander_range = 100
+min_time_between_movement = 2
+max_time_between_movement = 3.0
+mon1Type = 3
+mon1Level = 3
+mon2Type = 6
+mon2Level = 1
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+
+[node name="Chorse9" parent="OverworldEncounters" instance=ExtResource("8_trmej")]
+position = Vector2(1220, 526)
+collision_layer = 34
+collision_mask = 532
+script = ExtResource("7_um4l4")
+speed = 100
+min_wander_range = 30
+max_wander_range = 100
+min_time_between_movement = 2
+max_time_between_movement = 3.0
+mon1Type = 3
+mon1Level = 3
+mon2Type = 0
+mon2Level = 0
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+
+[node name="Pascalican" parent="OverworldEncounters" instance=ExtResource("9_jnuf3")]
+position = Vector2(163, 384)
+script = ExtResource("10_i4e28")
+mon1Type = 4
+mon1Level = 2
+mon2Type = 3
+mon2Level = 1
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+
+[node name="Pascalican2" parent="OverworldEncounters" instance=ExtResource("9_jnuf3")]
+position = Vector2(590, 345)
+script = ExtResource("10_i4e28")
+mon1Type = 4
+mon1Level = 3
+mon2Type = 0
+mon2Level = 0
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+
 [node name="WaterFlows" type="Node2D" parent="."]
+z_index = 205
 
 [node name="WaterFlow1" parent="WaterFlows" instance=ExtResource("10_j85m8")]
 position = Vector2(1257, 795)
@@ -321,9 +504,9 @@ polygon = PackedVector2Array(0, -1, 223, 0, 223, 77, 0, 77)
 polygon = PackedVector2Array(-2, -27, 226, -27, 226, 76, -2, 76)
 
 [node name="ForegroundElements" type="Node2D" parent="."]
+z_index = 210
 
 [node name="Wall" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
-z_index = 0
 position = Vector2(657, 227)
 texture = ExtResource("6_lw8og")
 active = false
@@ -333,7 +516,6 @@ visible = false
 polygon = PackedVector2Array(-25, -32, 300, -32, 300, 45, 0, 45, 0, 61, -25, 61)
 
 [node name="Pillar1" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
-z_index = 0
 position = Vector2(1257, 677)
 texture = ExtResource("5_c0klj")
 active = false
@@ -343,7 +525,6 @@ visible = false
 polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
 
 [node name="Pillar2" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
-z_index = 0
 position = Vector2(957, 527)
 texture = ExtResource("5_c0klj")
 active = false
@@ -353,7 +534,6 @@ visible = false
 polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
 
 [node name="Pillar3" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
-z_index = 0
 position = Vector2(957, 377)
 texture = ExtResource("5_c0klj")
 active = false
@@ -363,7 +543,6 @@ visible = false
 polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
 
 [node name="Pillar4" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
-z_index = 0
 position = Vector2(1107, 378)
 texture = ExtResource("5_c0klj")
 active = false
@@ -373,7 +552,6 @@ visible = false
 polygon = PackedVector2Array(-77, -33, 150, -33, 150, 44, -77, 44)
 
 [node name="Pillar5" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
-z_index = 0
 position = Vector2(1257, 377)
 texture = ExtResource("5_c0klj")
 active = false
@@ -383,7 +561,6 @@ visible = false
 polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
 
 [node name="Pillar6" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
-z_index = 0
 position = Vector2(1107, 227)
 texture = ExtResource("5_c0klj")
 active = false
@@ -393,7 +570,6 @@ visible = false
 polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
 
 [node name="Pillar7" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
-z_index = 0
 position = Vector2(957, 227)
 texture = ExtResource("5_c0klj")
 active = false
@@ -403,7 +579,6 @@ visible = false
 polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
 
 [node name="Pillar8" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
-z_index = 0
 position = Vector2(957, 77)
 texture = ExtResource("5_c0klj")
 active = false
@@ -413,7 +588,6 @@ visible = false
 polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
 
 [node name="Pillar9" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
-z_index = 0
 position = Vector2(1107, 77)
 texture = ExtResource("5_c0klj")
 active = false
@@ -423,7 +597,6 @@ visible = false
 polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
 
 [node name="LongPillar" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
-z_index = 0
 position = Vector2(1107, 527)
 texture = ExtResource("6_x6q01")
 active = false
@@ -433,7 +606,6 @@ visible = false
 polygon = PackedVector2Array(-77, -32, 300, -32, 300, 45, -77, 45)
 
 [node name="LongPillar2" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
-z_index = 0
 position = Vector2(957, 677)
 texture = ExtResource("7_y32nk")
 active = false
@@ -541,6 +713,7 @@ polygon = PackedVector2Array(1203, -28, 1276, -28, 1276, 45, 1203, 45)
 polygon = PackedVector2Array(199, 371, 377, 282, 574, 282, 753, 372, 753, 316, 574, 227, 377, 227, 199, 316)
 
 [node name="WarpInteractable" parent="." instance=ExtResource("13_612sg")]
+z_index = 200
 position = Vector2(378, 300)
 area = 7
 spawn_point = "Cave8Ladder"
@@ -561,6 +734,7 @@ offset_bottom = -4.0
 text = "[center][E] Climb[/center]"
 
 [node name="Chest" parent="." instance=ExtResource("14_h5edw")]
+z_index = 200
 position = Vector2(283, 276)
 chest_id = "temple6testchest"
 dialogue_resource = ExtResource("15_vrvhg")

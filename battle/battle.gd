@@ -61,7 +61,7 @@ func _create_and_setup_mon(base_mon, teamNode, pos):
 
 # Sets up a new battle scene
 func setup_battle(player_team, computer_team):
-	assert(state == BattleState.EMPTY) # Make sure previous battle was cleaned up
+	assert(state == BattleState.EMPTY) # Make sure previous battle was cleaned up; this can also happen if 2 battle start at once (accidentally layered overworld mons)
 	assert($PlayerMons.get_child_count() == 0, "Shouldn't have any mons at start of setup! (forgot to clear_battle()?)")
 	assert($ComputerMons.get_child_count() == 0, "Shouldn't have any mons at start of setup! (forgot to clear_battle()?)")
 	assert(player_team.size() == Global.MONS_PER_TEAM, "Wrong num of mons in player team!")

@@ -1,9 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://cxcuo37uxvkig"]
+[gd_scene load_steps=12 format=3 uid="uid://cxcuo37uxvkig"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_c21qo"]
 [ext_resource type="Texture2D" uid="uid://3nwfn8vi6s2" path="res://assets/maps/coolant_cave/cave8_seafloor/cave8.png" id="2_eo2i5"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/components/player_overhead.tscn" id="3_x756a"]
+[ext_resource type="PackedScene" uid="uid://wu6230b30hb2" path="res://mons/anglerphish.tscn" id="4_cloe7"]
 [ext_resource type="PackedScene" uid="uid://ce42geant7kmk" path="res://overworld/interactables/warp_interactable.tscn" id="4_dowlu"]
+[ext_resource type="Script" path="res://overworld/components/overworld_mons/wanderer.gd" id="5_pcifn"]
+[ext_resource type="PackedScene" uid="uid://b1udhcbvv01om" path="res://mons/stingarray.tscn" id="6_pq7c8"]
+[ext_resource type="Script" path="res://overworld/components/overworld_mons/overworld_mon.gd" id="7_nhyxu"]
 
 [sub_resource type="Gradient" id="Gradient_ocroy"]
 offsets = PackedFloat32Array(0, 0.6, 1)
@@ -23,6 +27,7 @@ script = ExtResource("1_c21qo")
 area_enum = 7
 
 [node name="Map" type="Sprite2D" parent="."]
+z_index = 100
 texture = ExtResource("2_eo2i5")
 centered = false
 
@@ -30,6 +35,7 @@ centered = false
 color = Color(0, 0, 0, 1)
 
 [node name="Player" parent="." instance=ExtResource("3_x756a")]
+z_index = 200
 position = Vector2(661, 314)
 
 [node name="Light" type="PointLight2D" parent="Player"]
@@ -39,27 +45,125 @@ texture = SubResource("GradientTexture2D_sn4if")
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
 
-[node name="Points" type="Node2D" parent="."]
+[node name="Anglerphish" parent="OverworldEncounters" instance=ExtResource("4_cloe7")]
+position = Vector2(642, 177)
+script = ExtResource("5_pcifn")
+speed = 25
+min_wander_range = 20
+max_wander_range = 60
+min_time_between_movement = 4
+max_time_between_movement = 6.0
+mon1Type = 8
+mon1Level = 5
+mon2Type = 0
+mon2Level = 0
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
 
-[node name="Cave8Entrance" type="Node2D" parent="Points"]
-position = Vector2(660, 314)
+[node name="Light" type="PointLight2D" parent="OverworldEncounters/Anglerphish"]
+position = Vector2(-11, -3)
+scale = Vector2(0.5, 0.5)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_sn4if")
 
-[node name="Cave8Ladder" type="Node2D" parent="Points"]
-position = Vector2(269, 107)
+[node name="Anglerphish2" parent="OverworldEncounters" instance=ExtResource("4_cloe7")]
+position = Vector2(440, 303)
+script = ExtResource("5_pcifn")
+speed = 25
+min_wander_range = 20
+max_wander_range = 60
+min_time_between_movement = 4
+max_time_between_movement = 6.0
+mon1Type = 8
+mon1Level = 3
+mon2Type = 7
+mon2Level = 2
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
 
-[node name="Warps" type="Node2D" parent="."]
+[node name="Light" type="PointLight2D" parent="OverworldEncounters/Anglerphish2"]
+position = Vector2(-11, -3)
+scale = Vector2(0.5, 0.5)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_sn4if")
 
-[node name="Collision" type="StaticBody2D" parent="."]
-visible = false
-modulate = Color(0, 1, 0, 1)
-position = Vector2(-96, 150)
-collision_layer = 4
-collision_mask = 0
+[node name="Mon3" parent="OverworldEncounters" instance=ExtResource("4_cloe7")]
+position = Vector2(250, 225)
+script = ExtResource("5_pcifn")
+speed = 25
+min_wander_range = 20
+max_wander_range = 60
+min_time_between_movement = 4
+max_time_between_movement = 6.0
+mon1Type = 8
+mon1Level = 3
+mon2Type = 5
+mon2Level = 2
+mon3Type = 5
+mon3Level = 2
+mon4Type = 0
+mon4Level = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collision"]
-polygon = PackedVector2Array(254, 219, 266, 309, 250, 313, 235, 328, 228, 345, 228, 361, 230, 374, 235, 392, 241, 404, 249, 412, 260, 418, 270, 421, 280, 423, 292, 424, 291, 489, 160, 490, 54, 277, 52, 82, 150, -156, 1006, -151, 1017, 484, 292, 489, 292, 424, 314, 424, 328, 419, 334, 416, 341, 410, 350, 399, 354, 390, 356, 378, 356, 350, 346, 326, 334, 311, 318, 309, 326, 219, 333, 219, 356, 217, 365, 214, 393, 207, 422, 200, 449, 197, 474, 194, 535, 194, 566, 198, 592, 202, 616, 203, 636, 207, 657, 211, 675, 215, 713, 215, 735, 212, 763, 207, 791, 199, 813, 186, 833, 165, 838, 148, 837, 98, 835, 84, 818, 27, 798, -3, 774, -24, 737, -42, 708, -50, 673, -55, 648, -55, 633, -52, 591, -43, 552, -36, 505, -36, 494, -38, 466, -40, 435, -48, 389, -56, 336, -56, 287, -49, 239, -37, 216, -27, 202, -13, 178, 33, 168, 59, 164, 85, 165, 124, 177, 151, 187, 171, 205, 192, 219, 204, 230, 211, 242, 216)
+[node name="Light" type="PointLight2D" parent="OverworldEncounters/Mon3"]
+position = Vector2(-11, -3)
+scale = Vector2(0.5, 0.5)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_sn4if")
+
+[node name="Stingarray" parent="OverworldEncounters" instance=ExtResource("6_pq7c8")]
+position = Vector2(530, 243)
+script = ExtResource("7_nhyxu")
+mon1Type = 7
+mon1Level = 4
+mon2Type = 0
+mon2Level = 0
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+
+[node name="Stingarray3" parent="OverworldEncounters" instance=ExtResource("6_pq7c8")]
+position = Vector2(275, 326)
+script = ExtResource("7_nhyxu")
+mon1Type = 7
+mon1Level = 3
+mon2Type = 2
+mon2Level = 3
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+
+[node name="Stingarray4" parent="OverworldEncounters" instance=ExtResource("6_pq7c8")]
+position = Vector2(194, 502)
+script = ExtResource("7_nhyxu")
+mon1Type = 7
+mon1Level = 4
+mon2Type = 2
+mon2Level = 2
+mon3Type = 3
+mon3Level = 2
+mon4Type = 0
+mon4Level = 0
+
+[node name="Stingarray5" parent="OverworldEncounters" instance=ExtResource("6_pq7c8")]
+position = Vector2(332, 135)
+script = ExtResource("7_nhyxu")
+mon1Type = 7
+mon1Level = 5
+mon2Type = 0
+mon2Level = 0
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
 
 [node name="WarpInteractable" parent="." instance=ExtResource("4_dowlu")]
+z_index = 200
 position = Vector2(273, 112)
 area = 5
 spawn_point = "Cave6Ladder"
@@ -84,5 +188,25 @@ offset_top = 6.0
 offset_right = 59.0
 offset_bottom = 29.0
 text = "[center][E] Climb[/center]"
+
+[node name="Points" type="Node2D" parent="."]
+
+[node name="Cave8Entrance" type="Node2D" parent="Points"]
+position = Vector2(660, 314)
+
+[node name="Cave8Ladder" type="Node2D" parent="Points"]
+position = Vector2(269, 107)
+
+[node name="Warps" type="Node2D" parent="."]
+
+[node name="Collision" type="StaticBody2D" parent="."]
+modulate = Color(0, 1, 0, 1)
+z_index = 3000
+position = Vector2(-96, 150)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collision"]
+polygon = PackedVector2Array(258, 219, 258, 310, 250, 313, 235, 328, 228, 345, 228, 361, 230, 374, 235, 392, 241, 404, 249, 412, 260, 418, 270, 421, 280, 423, 292, 424, 291, 489, 160, 490, 54, 277, 52, 82, 150, -156, 1006, -151, 1017, 484, 292, 489, 292, 424, 314, 424, 328, 419, 334, 416, 341, 410, 350, 399, 354, 390, 356, 378, 356, 350, 346, 326, 334, 311, 320, 310, 320, 219, 333, 219, 356, 217, 365, 214, 393, 207, 422, 200, 449, 197, 474, 194, 535, 194, 566, 198, 592, 202, 616, 203, 636, 207, 657, 211, 675, 215, 713, 215, 735, 212, 763, 207, 791, 199, 813, 186, 833, 165, 838, 148, 837, 98, 835, 84, 818, 27, 798, -3, 774, -24, 737, -42, 708, -50, 673, -55, 648, -55, 633, -52, 591, -43, 552, -36, 505, -36, 494, -38, 466, -40, 435, -48, 389, -56, 336, -56, 287, -49, 239, -37, 216, -27, 202, -13, 178, 33, 168, 59, 164, 85, 165, 124, 177, 151, 187, 171, 205, 192, 219, 204, 230, 211, 242, 216)
 
 [editable path="WarpInteractable"]

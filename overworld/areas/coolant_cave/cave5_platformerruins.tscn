@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bocqniv5n4bn6"]
+[gd_scene load_steps=12 format=3 uid="uid://bocqniv5n4bn6"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_cah05"]
 [ext_resource type="Texture2D" uid="uid://dovicv5nojqhs" path="res://assets/maps/coolant_cave/cave5_platformerruins/cave5.png" id="2_l3y27"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" path="res://overworld/components/warp.gd" id="4_oxmf0"]
 [ext_resource type="PackedScene" uid="uid://cepi8saddwmb6" path="res://overworld/components/foreground_element.tscn" id="4_rw0m6"]
 [ext_resource type="Texture2D" uid="uid://cojsfqslplo7l" path="res://assets/maps/coolant_cave/cave5_platformerruins/cave5_fg.png" id="5_7sbg0"]
+[ext_resource type="PackedScene" uid="uid://dn47fjifusgh1" path="res://mons/turtminal.tscn" id="5_m7ob8"]
+[ext_resource type="Script" path="res://overworld/components/overworld_mons/overworld_mon.gd" id="6_6vtvi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4wb6b"]
 size = Vector2(12, 125)
@@ -19,22 +21,62 @@ script = ExtResource("1_cah05")
 area_enum = 4
 
 [node name="Map" type="Sprite2D" parent="."]
+z_index = 100
 position = Vector2(0, -80)
 texture = ExtResource("2_l3y27")
 centered = false
 
 [node name="Player" parent="." instance=ExtResource("3_8ihar")]
+z_index = 200
 position = Vector2(15.8915, 195.472)
 
 [node name="Water" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.74902)
+z_index = 210
 position = Vector2(192, 279)
 texture = ExtResource("4_g2yta")
 centered = false
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
 
+[node name="Mon" parent="OverworldEncounters" instance=ExtResource("5_m7ob8")]
+position = Vector2(639, 104)
+script = ExtResource("6_6vtvi")
+mon1Type = 6
+mon1Level = 2
+mon2Type = 4
+mon2Level = 0
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+
+[node name="Mon2" parent="OverworldEncounters" instance=ExtResource("5_m7ob8")]
+position = Vector2(640, 199)
+script = ExtResource("6_6vtvi")
+mon1Type = 6
+mon1Level = 1
+mon2Type = 0
+mon2Level = 0
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+
+[node name="Mon3" parent="OverworldEncounters" instance=ExtResource("5_m7ob8")]
+position = Vector2(378, 120)
+script = ExtResource("6_6vtvi")
+mon1Type = 6
+mon1Level = 1
+mon2Type = 0
+mon2Level = 0
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+
 [node name="ForegroundElements" type="Node2D" parent="."]
+z_index = 210
 
 [node name="ForegroundElement" parent="ForegroundElements" instance=ExtResource("4_rw0m6")]
 position = Vector2(576, 212)

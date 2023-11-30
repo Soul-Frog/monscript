@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://c8sccmm8akfmv"]
+[gd_scene load_steps=8 format=3 uid="uid://c8sccmm8akfmv"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_leamx"]
 [ext_resource type="Texture2D" uid="uid://tjinhumapyr" path="res://assets/maps/coolant_cave/cave4_plaza/cave4.png" id="2_a7nkp"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/components/player_overhead.tscn" id="3_bhctv"]
 [ext_resource type="Script" path="res://overworld/components/warp.gd" id="4_7evqn"]
+[ext_resource type="PackedScene" uid="uid://b5sx3ehv6u6ks" path="res://mons/pascalican.tscn" id="4_vbraw"]
+[ext_resource type="Script" path="res://overworld/components/overworld_mons/overworld_mon.gd" id="5_xlunq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_80ub1"]
 size = Vector2(51, 7)
@@ -20,6 +22,32 @@ centered = false
 position = Vector2(344, 443)
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
+
+[node name="Pascalican" parent="OverworldEncounters" instance=ExtResource("4_vbraw")]
+z_index = 0
+position = Vector2(739, 330)
+script = ExtResource("5_xlunq")
+mon1Type = 4
+mon1Level = 1
+mon2Type = 0
+mon2Level = 0
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+
+[node name="Pascalican2" parent="OverworldEncounters" instance=ExtResource("4_vbraw")]
+z_index = 0
+position = Vector2(951, 363)
+script = ExtResource("5_xlunq")
+mon1Type = 4
+mon1Level = 0
+mon2Type = 3
+mon2Level = 0
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
 
 [node name="Points" type="Node2D" parent="."]
 

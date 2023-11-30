@@ -26,7 +26,7 @@ func _ready():
 func _randomize_wander_target():
 	var success = false
 	var attempts = 0
-	while not success and attempts <= 1000: # try 1000 times to find a valid movement
+	while not success and attempts <= 100: # try 100 times to find a valid movement
 		attempts += 1
 		
 		# choose a random nearby point
@@ -90,9 +90,9 @@ func _randomize_wander_target():
 		$DebugTool.add_point(target, Color.BLUE)
 	
 	if not success:
-		print("couldn't find a valid path")
-		if Global.DEBUG_CONSOLE:
-			assert(success, "Couldn't find a valid path - check your maximum and minimum wander range")
+		print("couldn't find a valid path for %s" % name)
+		#if Global.DEBUG_CONSOLE:
+		#	assert(success, "Couldn't find a valid path - check your maximum and minimum wander range")
 
 
 func _start_idling():

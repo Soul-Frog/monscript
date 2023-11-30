@@ -249,7 +249,6 @@ position = Vector2(1759, 343)
 [node name="OverworldEncounters" type="Node2D" parent="."]
 
 [node name="Gelif" parent="OverworldEncounters" instance=ExtResource("12_t33ou")]
-z_index = 200
 position = Vector2(843, 579)
 collision_mask = 532
 script = ExtResource("13_sr6q3")
@@ -268,7 +267,6 @@ mon4Type = 0
 mon4Level = 0
 
 [node name="Gelif6" parent="OverworldEncounters" instance=ExtResource("12_t33ou")]
-z_index = 200
 position = Vector2(573, 570)
 collision_mask = 532
 script = ExtResource("13_sr6q3")
@@ -287,7 +285,6 @@ mon4Type = 0
 mon4Level = 0
 
 [node name="Gelif2" parent="OverworldEncounters" instance=ExtResource("12_t33ou")]
-z_index = 200
 position = Vector2(1192, 844)
 collision_mask = 532
 script = ExtResource("13_sr6q3")
@@ -306,7 +303,6 @@ mon4Type = 0
 mon4Level = 0
 
 [node name="Gelif3" parent="OverworldEncounters" instance=ExtResource("12_t33ou")]
-z_index = 200
 position = Vector2(1892, 199)
 collision_mask = 532
 script = ExtResource("13_sr6q3")
@@ -325,7 +321,6 @@ mon4Type = 0
 mon4Level = 0
 
 [node name="Gelif4" parent="OverworldEncounters" instance=ExtResource("12_t33ou")]
-z_index = 200
 position = Vector2(1053, 387)
 collision_mask = 532
 script = ExtResource("13_sr6q3")
@@ -344,7 +339,6 @@ mon4Type = 0
 mon4Level = 0
 
 [node name="Gelif5" parent="OverworldEncounters" instance=ExtResource("12_t33ou")]
-z_index = 200
 position = Vector2(1292, 332)
 collision_mask = 532
 script = ExtResource("13_sr6q3")
@@ -363,7 +357,6 @@ mon4Type = 0
 mon4Level = 0
 
 [node name="Chorse" parent="OverworldEncounters" instance=ExtResource("14_vrcxb")]
-z_index = 200
 position = Vector2(231, 481)
 collision_mask = 532
 script = ExtResource("13_sr6q3")
@@ -382,7 +375,6 @@ mon4Type = 0
 mon4Level = 0
 
 [node name="Chorse5" parent="OverworldEncounters" instance=ExtResource("14_vrcxb")]
-z_index = 200
 position = Vector2(1006, 592)
 collision_layer = 34
 collision_mask = 532
@@ -402,7 +394,6 @@ mon4Type = 0
 mon4Level = 0
 
 [node name="Chorse6" parent="OverworldEncounters" instance=ExtResource("14_vrcxb")]
-z_index = 200
 position = Vector2(1352, 622)
 collision_layer = 34
 collision_mask = 532
@@ -422,7 +413,6 @@ mon4Type = 0
 mon4Level = 0
 
 [node name="Chorse7" parent="OverworldEncounters" instance=ExtResource("14_vrcxb")]
-z_index = 200
 position = Vector2(1360, 417)
 collision_layer = 34
 collision_mask = 532
@@ -442,7 +432,6 @@ mon4Type = 0
 mon4Level = 0
 
 [node name="Chorse8" parent="OverworldEncounters" instance=ExtResource("14_vrcxb")]
-z_index = 200
 position = Vector2(1122, 201)
 collision_layer = 34
 collision_mask = 532
@@ -462,7 +451,6 @@ mon4Type = 0
 mon4Level = 0
 
 [node name="Chorse9" parent="OverworldEncounters" instance=ExtResource("14_vrcxb")]
-z_index = 200
 position = Vector2(855, 334)
 collision_layer = 34
 collision_mask = 532
@@ -482,7 +470,6 @@ mon4Type = 0
 mon4Level = 0
 
 [node name="Chorse10" parent="OverworldEncounters" instance=ExtResource("14_vrcxb")]
-z_index = 200
 position = Vector2(1587, 704)
 collision_layer = 34
 collision_mask = 532
@@ -502,7 +489,6 @@ mon4Type = 0
 mon4Level = 0
 
 [node name="Chorse11" parent="OverworldEncounters" instance=ExtResource("14_vrcxb")]
-z_index = 200
 position = Vector2(1696, 448)
 collision_layer = 18
 collision_mask = 532
@@ -522,7 +508,6 @@ mon4Type = 0
 mon4Level = 0
 
 [node name="Chorse12" parent="OverworldEncounters" instance=ExtResource("14_vrcxb")]
-z_index = 200
 position = Vector2(1938, 632)
 collision_mask = 532
 script = ExtResource("13_sr6q3")
@@ -541,13 +526,12 @@ mon4Type = 0
 mon4Level = 0
 
 [node name="Chorse4" parent="OverworldEncounters" instance=ExtResource("14_vrcxb")]
-z_index = 200
-position = Vector2(437, 312)
+position = Vector2(426, 291)
 collision_mask = 532
 script = ExtResource("13_sr6q3")
 speed = 100
-min_wander_range = 30
-max_wander_range = 100
+min_wander_range = 20
+max_wander_range = 50
 min_time_between_movement = 2
 max_time_between_movement = 3.0
 mon1Type = 3

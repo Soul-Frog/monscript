@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://diodlu0baosyk" path="res://debug/debug_tool.tscn" id="2_cagr3"]
 
 [node name="Mon" type="CharacterBody2D"]
+z_index = 200
 collision_layer = 2
 collision_mask = 516
 safe_margin = 0.001

@@ -4,7 +4,6 @@
 [ext_resource type="Script" path="res://decorators/fade_decorator.gd" id="3_xy6t3"]
 
 [node name="ForegroundElement" type="Sprite2D"]
-z_index = 10
 position = Vector2(340, 249)
 centered = false
 script = ExtResource("2_714x5")
