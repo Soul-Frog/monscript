@@ -15,6 +15,7 @@ height = 26.2016
 radius = 18.8679
 
 [node name="Player" type="CharacterBody2D"]
+z_index = 200
 collision_mask = 20
 script = ExtResource("1_wbnhs")
 

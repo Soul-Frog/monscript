@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://ct27r3y3ao3um" path="res://decorators/fade_decorator.tscn" id="2_0rgp8"]
 
 [node name="Interactable" type="Node2D"]
+z_index = 200
 position = Vector2(8, 8)
 script = ExtResource("1_uakwy")
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bimj6b5rlyog4"]
+[gd_scene load_steps=16 format=3 uid="uid://bimj6b5rlyog4"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_k8mby"]
 [ext_resource type="Texture2D" uid="uid://bsbqw2a0ycaaa" path="res://assets/maps/coolant_cave/cave11_platformerwaterfall/cave11.png" id="2_ghj08"]
@@ -7,7 +7,13 @@
 [ext_resource type="PackedScene" uid="uid://cepi8saddwmb6" path="res://overworld/components/foreground_element.tscn" id="4_bg1m2"]
 [ext_resource type="Texture2D" uid="uid://cshh1a3j2a1jp" path="res://assets/maps/coolant_cave/cave11_platformerwaterfall/cave11_fg1.png" id="5_gaf47"]
 [ext_resource type="Script" path="res://overworld/areas/coolant_cave/platformer_water.gd" id="7_0ue4f"]
+[ext_resource type="PackedScene" uid="uid://dn47fjifusgh1" path="res://mons/turtminal.tscn" id="7_c76l7"]
 [ext_resource type="PackedScene" uid="uid://ce42geant7kmk" path="res://overworld/interactables/warp_interactable.tscn" id="8_30lcs"]
+[ext_resource type="PackedScene" uid="uid://dm1epg70fkia2" path="res://mons/orchin.tscn" id="8_hk1nc"]
+[ext_resource type="PackedScene" uid="uid://du83qsxxw4lqn" path="res://mons/chorse.tscn" id="9_1a8f2"]
+[ext_resource type="PackedScene" uid="uid://b5sx3ehv6u6ks" path="res://mons/pascalican.tscn" id="9_500nt"]
+[ext_resource type="Script" path="res://overworld/components/overworld_mons/overworld_mon.gd" id="10_2dvum"]
+[ext_resource type="Script" path="res://overworld/components/overworld_mons/wanderer.gd" id="10_6drvj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tqmcg"]
 size = Vector2(14, 14)
@@ -18,6 +24,7 @@ area_enum = 10
 camera_zoom = 0.5
 
 [node name="Map" type="Sprite2D" parent="."]
+z_index = 100
 texture = ExtResource("2_ghj08")
 centered = false
 
@@ -26,10 +33,127 @@ position = Vector2(491, 782)
 
 [node name="Water" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.670588)
+z_index = 210
 texture = ExtResource("3_8sj1p")
 centered = false
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
+
+[node name="Pascalican" parent="OverworldEncounters" instance=ExtResource("9_500nt")]
+position = Vector2(170, 785)
+script = ExtResource("10_2dvum")
+mon1Type = 4
+mon1Level = 6
+mon2Type = 0
+mon2Level = 0
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+
+[node name="Turtminal" parent="OverworldEncounters" instance=ExtResource("7_c76l7")]
+position = Vector2(746, 310)
+script = ExtResource("10_2dvum")
+mon1Type = 6
+mon1Level = 6
+mon2Type = 4
+mon2Level = 4
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+
+[node name="Turtminal2" parent="OverworldEncounters" instance=ExtResource("7_c76l7")]
+position = Vector2(924, 409)
+script = ExtResource("10_2dvum")
+mon1Type = 6
+mon1Level = 6
+mon2Type = 2
+mon2Level = 4
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+
+[node name="Orchin1TODO" parent="OverworldEncounters" instance=ExtResource("8_hk1nc")]
+z_index = 125
+position = Vector2(330, 975)
+collision_mask = 548
+script = ExtResource("10_2dvum")
+mon1Type = 5
+mon1Level = 5
+mon2Type = 5
+mon2Level = 5
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+
+[node name="Orchin1TODO2" parent="OverworldEncounters" instance=ExtResource("8_hk1nc")]
+z_index = 125
+position = Vector2(901, 972)
+collision_mask = 548
+script = ExtResource("10_2dvum")
+mon1Type = 5
+mon1Level = 5
+mon2Type = 3
+mon2Level = 4
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+
+[node name="Orchin1TODO3" parent="OverworldEncounters" instance=ExtResource("8_hk1nc")]
+z_index = 125
+position = Vector2(537, 976)
+collision_mask = 548
+script = ExtResource("10_2dvum")
+mon1Type = 5
+mon1Level = 4
+mon2Type = 5
+mon2Level = 4
+mon3Type = 5
+mon3Level = 4
+mon4Type = 0
+mon4Level = 0
+
+[node name="Chorse9" parent="OverworldEncounters" instance=ExtResource("9_1a8f2")]
+position = Vector2(694, 909)
+collision_layer = 34
+collision_mask = 532
+script = ExtResource("10_6drvj")
+speed = 100
+min_wander_range = 30
+max_wander_range = 100
+min_time_between_movement = 2
+max_time_between_movement = 3.0
+mon1Type = 3
+mon1Level = 6
+mon2Type = 3
+mon2Level = 6
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+
+[node name="Chorse10" parent="OverworldEncounters" instance=ExtResource("9_1a8f2")]
+position = Vector2(269, 891)
+collision_layer = 34
+collision_mask = 532
+script = ExtResource("10_6drvj")
+speed = 100
+min_wander_range = 30
+max_wander_range = 100
+min_time_between_movement = 2
+max_time_between_movement = 3.0
+mon1Type = 3
+mon1Level = 4
+mon2Type = 5
+mon2Level = 4
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
 
 [node name="ForegroundElements" type="Node2D" parent="."]
 
@@ -46,6 +170,7 @@ min_alpha = 0.0
 fade_speed = 4.0
 
 [node name="Points" type="Node2D" parent="."]
+visible = false
 
 [node name="Cave11Left" type="Node2D" parent="Points"]
 position = Vector2(197, -89)
@@ -57,8 +182,10 @@ position = Vector2(832, -84)
 position = Vector2(491, 782)
 
 [node name="Warps" type="Node2D" parent="."]
+visible = false
 
 [node name="Collision" type="StaticBody2D" parent="."]
+visible = false
 modulate = Color(0, 1, 0, 1)
 position = Vector2(0, 1)
 collision_layer = 4

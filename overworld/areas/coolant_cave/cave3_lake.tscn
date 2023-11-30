@@ -217,32 +217,26 @@ polygon = PackedVector2Array(1780, 737, 1785, 737, 1785, 769, 1780, 769)
 polygon = PackedVector2Array(1910, 737, 1915, 737, 1915, 769, 1910, 769)
 
 [node name="Player" parent="." instance=ExtResource("3_tgpbx")]
-z_index = 200
 y_sort_enabled = true
 position = Vector2(667, 174)
 
 [node name="Switch" parent="." instance=ExtResource("17_f7r4y")]
-z_index = 200
 y_sort_enabled = true
 position = Vector2(717, 156)
 
 [node name="Switch2" parent="." instance=ExtResource("17_f7r4y")]
-z_index = 200
 y_sort_enabled = true
 position = Vector2(324, 275)
 
 [node name="Switch3" parent="." instance=ExtResource("17_f7r4y")]
-z_index = 200
 y_sort_enabled = true
 position = Vector2(549, 414)
 
 [node name="Switch4" parent="." instance=ExtResource("17_f7r4y")]
-z_index = 200
 y_sort_enabled = true
 position = Vector2(1503, 685)
 
 [node name="Switch5" parent="." instance=ExtResource("17_f7r4y")]
-z_index = 200
 y_sort_enabled = true
 position = Vector2(1759, 343)
 

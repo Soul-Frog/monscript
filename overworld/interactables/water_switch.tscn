@@ -63,6 +63,7 @@ animations = [{
 radius = 20.0
 
 [node name="Switch" instance=ExtResource("1_fh0cw")]
+z_index = 200
 script = ExtResource("2_5rely")
 LABEL_TEXT = "Flip"
 

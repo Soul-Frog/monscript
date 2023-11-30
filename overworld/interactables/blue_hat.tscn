@@ -20,6 +20,7 @@ animations = [{
 radius = 24.0
 
 [node name="BlueHat" instance=ExtResource("1_c66em")]
+z_index = 200
 script = ExtResource("2_7r8lo")
 dialogue_resource = ExtResource("3_1orfb")
 dialogue_start = "test"

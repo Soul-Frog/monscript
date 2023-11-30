@@ -16,6 +16,7 @@ height = 26.0
 radius = 18.8679
 
 [node name="PlayerOverhead" type="CharacterBody2D"]
+z_index = 200
 collision_mask = 20
 script = ExtResource("1_kvdei")
 

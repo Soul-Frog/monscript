@@ -27,7 +27,6 @@ texture = ExtResource("2_l3y27")
 centered = false
 
 [node name="Player" parent="." instance=ExtResource("3_8ihar")]
-z_index = 200
 position = Vector2(15.8915, 195.472)
 
 [node name="Water" type="Sprite2D" parent="."]
@@ -39,7 +38,7 @@ centered = false
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
 
-[node name="Mon" parent="OverworldEncounters" instance=ExtResource("5_m7ob8")]
+[node name="Turtminal" parent="OverworldEncounters" instance=ExtResource("5_m7ob8")]
 position = Vector2(639, 104)
 script = ExtResource("6_6vtvi")
 mon1Type = 6
@@ -51,7 +50,7 @@ mon3Level = 0
 mon4Type = 0
 mon4Level = 0
 
-[node name="Mon2" parent="OverworldEncounters" instance=ExtResource("5_m7ob8")]
+[node name="Turtminal2" parent="OverworldEncounters" instance=ExtResource("5_m7ob8")]
 position = Vector2(640, 199)
 script = ExtResource("6_6vtvi")
 mon1Type = 6
@@ -63,7 +62,7 @@ mon3Level = 0
 mon4Type = 0
 mon4Level = 0
 
-[node name="Mon3" parent="OverworldEncounters" instance=ExtResource("5_m7ob8")]
+[node name="Turtminal3" parent="OverworldEncounters" instance=ExtResource("5_m7ob8")]
 position = Vector2(378, 120)
 script = ExtResource("6_6vtvi")
 mon1Type = 6

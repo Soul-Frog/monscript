@@ -18,9 +18,9 @@ size = Vector2(44, 16)
 [node name="Area" type="Node2D"]
 script = ExtResource("1_c2hk5")
 area_enum = 9
-camera_zoom = 0.5
 
 [node name="Map" type="Sprite2D" parent="."]
+z_index = 100
 texture = ExtResource("2_dl0pi")
 centered = false
 
@@ -54,6 +54,7 @@ mon4Type = 0
 mon4Level = 0
 
 [node name="Points" type="Node2D" parent="."]
+visible = false
 
 [node name="Cave10Right" type="Node2D" parent="Points"]
 position = Vector2(517, 1963)
@@ -65,6 +66,7 @@ position = Vector2(180, 1957)
 position = Vector2(264, 128)
 
 [node name="Warps" type="Node2D" parent="."]
+visible = false
 
 [node name="WarpToTidal" type="Area2D" parent="Warps"]
 position = Vector2(535, 2012)
@@ -155,6 +157,7 @@ metadata/_edit_group_ = true
 polygon = PackedVector2Array(-7, -3, 5, 10, 39, 10, 51, -3, 51, -34, 38, -48, 6, -48, -7, -35)
 
 [node name="Collision" type="StaticBody2D" parent="."]
+visible = false
 modulate = Color(0, 1, 0, 1)
 position = Vector2(-96, 150)
 collision_layer = 4
@@ -167,6 +170,7 @@ polygon = PackedVector2Array(563, 1757, 624, 1770, 635, 1770, 635, 1867, 624, 18
 polygon = PackedVector2Array(405, 130, 405, -10, 382, -22, 382, -38, 338, -38, 338, -22, 316, -11, 316, 130, 221, 130, 221, -80, 492, -79, 487, 130)
 
 [node name="Ice" type="Node2D" parent="."]
+visible = false
 script = ExtResource("5_t63x7")
 
 [node name="IceArea" type="Area2D" parent="Ice"]

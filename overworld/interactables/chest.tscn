@@ -35,6 +35,7 @@ animations = [{
 radius = 14.0
 
 [node name="Chest" instance=ExtResource("1_8j4l1")]
+z_index = 200
 script = ExtResource("2_anro5")
 chest_id = "NULL"
 dialogue_resource = null
