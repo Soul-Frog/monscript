@@ -112,26 +112,13 @@ position = Vector2(61, 426)
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
 
-[node name="TEMPSTILLMON" parent="OverworldEncounters" instance=ExtResource("11_qslf1")]
-position = Vector2(297, 357)
-collision_mask = 532
-script = ExtResource("12_2ykkf")
-mon1Type = 2
-mon1Level = 0
-mon2Type = 0
-mon2Level = 0
-mon3Type = 0
-mon3Level = 0
-mon4Type = 0
-mon4Level = 0
-
 [node name="GelifLeft" parent="OverworldEncounters" instance=ExtResource("11_qslf1")]
-position = Vector2(67, 354)
+position = Vector2(65, 238)
 collision_mask = 532
 script = ExtResource("13_5rf1m")
 speed = 30
 min_wander_range = 30
-max_wander_range = 80
+max_wander_range = 60
 min_time_between_movement = 3
 max_time_between_movement = 5.0
 mon1Type = 2
@@ -144,7 +131,7 @@ mon4Type = 0
 mon4Level = 0
 
 [node name="GelifRight" parent="OverworldEncounters" instance=ExtResource("11_qslf1")]
-position = Vector2(597, 460)
+position = Vector2(600, 490)
 collision_mask = 532
 script = ExtResource("13_5rf1m")
 speed = 30
@@ -261,6 +248,7 @@ position = Vector2(19, -3)
 shape = SubResource("RectangleShape2D_80ub1")
 
 [node name="Collision" type="StaticBody2D" parent="."]
+visible = false
 modulate = Color(0, 1, 0, 1)
 position = Vector2(-96, 150)
 collision_layer = 4
@@ -333,6 +321,7 @@ polygon = PackedVector2Array(596, 358, 638, 325, 595, 325)
 polygon = PackedVector2Array(598, 161, 600, 160, 638, 122, 638, -42, 592, -42, 592, 161)
 
 [node name="CollisionWhileLower" type="StaticBody2D" parent="."]
+visible = false
 modulate = Color(1, 0, 0, 1)
 position = Vector2(-90, 229)
 collision_layer = 32
@@ -357,7 +346,42 @@ polygon = PackedVector2Array(365, 292, 397, 292, 397, 260, 365, 260)
 position = Vector2(-27, 72)
 polygon = PackedVector2Array(365, 271, 451, 271, 451, 260, 365, 260)
 
+[node name="MonCollision" type="StaticBody2D" parent="."]
+modulate = Color(0.278431, 1, 1, 1)
+z_index = 2000
+position = Vector2(-96, 150)
+collision_layer = 512
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(345, 200, 341, 199, 341, 232, 345, 232)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(230, 200, 232, 200, 232, 232, 230, 232)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(146, 321, 146, 366, 178, 366, 178, 321)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(640, 324, 596, 358, 596, 389, 640, 389)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="MonCollision"]
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="MonCollision"]
+position = Vector2(3, 121)
+polygon = PackedVector2Array(596, 162, 738, 162, 738, 172, 596, 172)
+
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(371, 339, 371, 341, 403, 341, 403, 339)
+
+[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(371, 411, 371, 410, 403, 410, 403, 411)
+
+[node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(199, 125, 128, 125, 129, 134, 205, 132)
+
 [node name="TransitionDown" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_kowvn")
@@ -373,6 +397,7 @@ position = Vector2(5, -3)
 polygon = PackedVector2Array(482, 489, 512, 488, 510, 552, 476, 553)
 
 [node name="TransitionUp" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_kowvn")

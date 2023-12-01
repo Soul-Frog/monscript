@@ -469,8 +469,8 @@ collision_layer = 34
 collision_mask = 532
 script = ExtResource("13_sr6q3")
 speed = 100
-min_wander_range = 30
-max_wander_range = 100
+min_wander_range = 20
+max_wander_range = 60
 min_time_between_movement = 2
 max_time_between_movement = 3.0
 mon1Type = 3
@@ -483,13 +483,13 @@ mon4Type = 0
 mon4Level = 0
 
 [node name="Chorse11" parent="OverworldEncounters" instance=ExtResource("14_vrcxb")]
-position = Vector2(1696, 448)
+position = Vector2(1697, 478)
 collision_layer = 18
 collision_mask = 532
 script = ExtResource("13_sr6q3")
 speed = 100
-min_wander_range = 30
-max_wander_range = 100
+min_wander_range = 20
+max_wander_range = 50
 min_time_between_movement = 2
 max_time_between_movement = 3.0
 mon1Type = 3

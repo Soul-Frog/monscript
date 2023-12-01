@@ -67,6 +67,7 @@ position = Vector2(264, 128)
 
 [node name="Warps" type="Node2D" parent="."]
 visible = false
+z_index = 2000
 
 [node name="WarpToTidal" type="Area2D" parent="Warps"]
 position = Vector2(535, 2012)
@@ -93,7 +94,6 @@ position = Vector2(21, -3)
 shape = SubResource("RectangleShape2D_kv1gw")
 
 [node name="WarpsTo2DWaterfallRight" type="Area2D" parent="Warps"]
-visible = false
 position = Vector2(429, 1839)
 collision_layer = 0
 script = ExtResource("4_o02w7")
@@ -157,7 +157,6 @@ metadata/_edit_group_ = true
 polygon = PackedVector2Array(-7, -3, 5, 10, 39, 10, 51, -3, 51, -34, 38, -48, 6, -48, -7, -35)
 
 [node name="Collision" type="StaticBody2D" parent="."]
-visible = false
 modulate = Color(0, 1, 0, 1)
 position = Vector2(-96, 150)
 collision_layer = 4
@@ -166,8 +165,21 @@ collision_mask = 0
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collision"]
 polygon = PackedVector2Array(563, 1757, 624, 1770, 635, 1770, 635, 1867, 624, 1867, 563, 1855, 563.162, 1864.57, 564, 1914, 689, 1912, 701, 1683, 563, 1708)
 
-[node name="Polygon2D" type="CollisionPolygon2D" parent="Collision"]
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Collision"]
 polygon = PackedVector2Array(405, 130, 405, -10, 382, -22, 382, -38, 338, -38, 338, -22, 316, -11, 316, 130, 221, 130, 221, -80, 492, -79, 487, 130)
+
+[node name="MonCollision" type="StaticBody2D" parent="."]
+modulate = Color(0.278431, 1, 1, 1)
+z_index = 2000
+position = Vector2(-96, 150)
+collision_layer = 512
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(232, 1727, 194, 1755, 209, 1883, 563, 1887, 563, 1855, 240, 1855, 231, 1846, 231, 1766, 240, 1757, 563, 1757, 563, 1855, 563, 1887, 576, 1888, 581, 1753, 563, 1732)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(434, 183, 459, 130, 491, 114, 451, 207, 266, 205, 246, 111, 491, 114, 459, 130, 262, 130, 287, 183)
 
 [node name="Ice" type="Node2D" parent="."]
 visible = false
