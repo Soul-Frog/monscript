@@ -30,7 +30,7 @@ func _physics_process(delta):
 		var gravity = (SWIM_GRAVITY if is_swimming else GRAVITY)
 		var max_fall_speed = (MAX_SWIM_FALL_SPEED if is_swimming else MAX_FALL_SPEED)
 		var jump_velocity = (SWIM_TOPWATER_JUMP_VELOCITY if is_topwater else SWIM_JUMP_VELOCITY) if is_swimming or is_topwater else JUMP_VELOCITY
-		var friction = (SWIM_FRICTION if is_swimming else FRICTION)
+		var friction = (SWIM_FRICTION if (is_swimming and not is_on_floor()) else FRICTION)
 		
 		# Add the gravity.
 		if not is_on_floor():
