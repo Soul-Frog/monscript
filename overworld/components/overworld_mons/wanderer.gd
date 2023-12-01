@@ -37,7 +37,8 @@ func _randomize_wander_target():
 		var trial_target = position + movement
 		
 		# create a raycast from each corner of the rectangle; if none collide, movement is safe
-		var col_mask = 0b100 # 0b100 is a collision mask representing only the world collisions
+		var col_mask = collision_mask
+		
 		var x_offset = $CollisionHitbox.shape.size.x / 2.0
 		var y_offset = $CollisionHitbox.shape.size.y / 2.0
 		var top_left_offset = Vector2(-x_offset, -y_offset)
