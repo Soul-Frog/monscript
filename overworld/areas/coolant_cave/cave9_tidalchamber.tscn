@@ -127,7 +127,6 @@ texture = ExtResource("5_isefo")
 centered = false
 
 [node name="Player" parent="." instance=ExtResource("3_3s5my")]
-z_index = 200
 position = Vector2(315, 1086)
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
@@ -157,13 +156,13 @@ mon4Type = 0
 mon4Level = 0
 
 [node name="Chorse" parent="OverworldEncounters" instance=ExtResource("11_q65fi")]
-position = Vector2(469, 207)
+position = Vector2(501, 207)
 collision_layer = 34
 collision_mask = 532
 script = ExtResource("12_745ro")
 speed = 100
-min_wander_range = 30
-max_wander_range = 100
+min_wander_range = 10
+max_wander_range = 40
 min_time_between_movement = 2
 max_time_between_movement = 3.0
 mon1Type = 3
@@ -420,6 +419,49 @@ polygon = PackedVector2Array(534, 341, 537, 341, 545, 347, 549, 354, 552, 360, 5
 
 [node name="CollisionPolygon2D10" type="CollisionPolygon2D" parent="Collision"]
 polygon = PackedVector2Array(618, 34, 618, 84, 668, 84, 668, 34)
+
+[node name="MonCollision" type="StaticBody2D" parent="."]
+modulate = Color(0.278431, 1, 1, 1)
+z_index = 2000
+position = Vector2(-96, 150)
+collision_layer = 512
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(278, 284, 279, 187, 294, 190, 294, 288)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(234, 283, 278, 284, 278, 293, 233, 293)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(112, 128, 112, 269, 96, 266, 96, 125)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(562, 36, 562, 80, 564, 80, 565, 35)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(232, 426, 277, 426, 278, 481, 294, 484, 293, 412, 226, 404)
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(277, 633, 277, 688, 234, 688, 233, 700, 294, 700, 294, 636)
+
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(294, 868, 294, 876, 534, 876, 534, 869)
+
+[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(375, 959, 452, 959, 452, 1042, 375, 1043)
+
+[node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(293, 916, 293, 954, 290, 955, 290, 916)
+
+[node name="CollisionPolygon2D10" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(535, 275, 538, 275, 539, 312, 534, 312)
+
+[node name="CollisionPolygon2D11" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(534, 431, 536, 431, 536, 495, 534, 494)
+
+[node name="CollisionPolygon2D12" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(534, 732, 536, 732, 536, 840, 534, 840)
 
 [editable path="ForegroundElements/Pillar1"]
 [editable path="ForegroundElements/Pillar2"]

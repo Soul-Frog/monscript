@@ -242,4 +242,38 @@ position = Vector2(240, 195)
 polygon = PackedVector2Array(-48, 12, -48, 18, 48, 18, 48, 12)
 one_way_collision = true
 
+[node name="MonCollision" type="StaticBody2D" parent="."]
+modulate = Color(0.278431, 1, 1, 1)
+z_index = 2000
+position = Vector2(-96, 150)
+collision_layer = 512
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(832, 58, 832, 26, 840, 26, 840, 58)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="MonCollision"]
+position = Vector2(-232, 0)
+polygon = PackedVector2Array(832, 58, 832, 26, 840, 26, 840, 58)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="MonCollision"]
+position = Vector2(-200, -96)
+polygon = PackedVector2Array(832, 58, 832, 26, 840, 26, 840, 58)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="MonCollision"]
+position = Vector2(0, -96)
+polygon = PackedVector2Array(832, 58, 832, 26, 840, 26, 840, 58)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="MonCollision"]
+position = Vector2(-224, -80)
+polygon = PackedVector2Array(832, 58, 832, 26, 840, 26, 840, 58)
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="MonCollision"]
+position = Vector2(-714, -1)
+polygon = PackedVector2Array(794, 75, 794, -53, 842, -53, 842, 75)
+
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="MonCollision"]
+position = Vector2(566, 79)
+polygon = PackedVector2Array(794, 75, 794, -53, 842, -53, 842, 75)
+
 [editable path="ForegroundElements/ForegroundElement"]

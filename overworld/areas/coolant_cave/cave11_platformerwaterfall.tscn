@@ -248,5 +248,36 @@ offset_right = 64.0
 offset_bottom = -30.0
 text = "[center][E] Climb[/center]"
 
+[node name="MonCollision" type="StaticBody2D" parent="."]
+modulate = Color(0.278431, 1, 1, 1)
+z_index = 2000
+position = Vector2(-96, 150)
+collision_layer = 512
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(227, 645, 227, 573, 225, 573, 224, 645)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(279, 649, 279, 616, 481, 614, 481, 648)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(729, 168, 729, 145, 723, 145, 723, 168)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="MonCollision"]
+position = Vector2(148, 0)
+polygon = PackedVector2Array(729, 168, 729, 145, 723, 145, 723, 168)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="MonCollision"]
+position = Vector2(265, 99)
+polygon = PackedVector2Array(729, 168, 729, 145, 723, 145, 723, 168)
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="MonCollision"]
+position = Vector2(413, 99)
+polygon = PackedVector2Array(729, 168, 729, 145, 723, 145, 723, 168)
+
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(692, 648, 693, 643, 700, 641, 1163, 639, 1163, 648)
+
 [editable path="ForegroundElements/ForegroundElement"]
 [editable path="WarpInteractable"]

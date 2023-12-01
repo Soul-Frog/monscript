@@ -35,7 +35,6 @@ centered = false
 color = Color(0, 0, 0, 1)
 
 [node name="Player" parent="." instance=ExtResource("3_x756a")]
-z_index = 200
 position = Vector2(661, 314)
 
 [node name="Light" type="PointLight2D" parent="Player"]
@@ -163,7 +162,6 @@ mon4Type = 0
 mon4Level = 0
 
 [node name="WarpInteractable" parent="." instance=ExtResource("4_dowlu")]
-z_index = 200
 position = Vector2(273, 112)
 area = 5
 spawn_point = "Cave6Ladder"
@@ -208,5 +206,15 @@ collision_mask = 0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collision"]
 polygon = PackedVector2Array(258, 219, 258, 310, 250, 313, 235, 328, 228, 345, 228, 361, 230, 374, 235, 392, 241, 404, 249, 412, 260, 418, 270, 421, 280, 423, 292, 424, 291, 489, 160, 490, 54, 277, 52, 82, 150, -156, 1006, -151, 1017, 484, 292, 489, 292, 424, 314, 424, 328, 419, 334, 416, 341, 410, 350, 399, 354, 390, 356, 378, 356, 350, 346, 326, 334, 311, 320, 310, 320, 219, 333, 219, 356, 217, 365, 214, 393, 207, 422, 200, 449, 197, 474, 194, 535, 194, 566, 198, 592, 202, 616, 203, 636, 207, 657, 211, 675, 215, 713, 215, 735, 212, 763, 207, 791, 199, 813, 186, 833, 165, 838, 148, 837, 98, 835, 84, 818, 27, 798, -3, 774, -24, 737, -42, 708, -50, 673, -55, 648, -55, 633, -52, 591, -43, 552, -36, 505, -36, 494, -38, 466, -40, 435, -48, 389, -56, 336, -56, 287, -49, 239, -37, 216, -27, 202, -13, 178, 33, 168, 59, 164, 85, 165, 124, 177, 151, 187, 171, 205, 192, 219, 204, 230, 211, 242, 216)
+
+[node name="MonCollision" type="StaticBody2D" parent="."]
+modulate = Color(0.278431, 1, 1, 1)
+z_index = 2000
+position = Vector2(-96, 150)
+collision_layer = 512
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(258, 219, 320, 219, 320, 311, 258, 311)
 
 [editable path="WarpInteractable"]

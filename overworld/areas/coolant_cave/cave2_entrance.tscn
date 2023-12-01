@@ -365,8 +365,6 @@ polygon = PackedVector2Array(146, 321, 146, 366, 178, 366, 178, 321)
 [node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="MonCollision"]
 polygon = PackedVector2Array(640, 324, 596, 358, 596, 389, 640, 389)
 
-[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="MonCollision"]
-
 [node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="MonCollision"]
 position = Vector2(3, 121)
 polygon = PackedVector2Array(596, 162, 738, 162, 738, 172, 596, 172)

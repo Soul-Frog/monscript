@@ -31,7 +31,6 @@ texture = ExtResource("2_jra30")
 centered = false
 
 [node name="Player" parent="." instance=ExtResource("3_24mgp")]
-z_index = 200
 position = Vector2(461, 105)
 
 [node name="OverworldEncounters" type="Node2D" parent="."]

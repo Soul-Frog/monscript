@@ -64,7 +64,6 @@ SUCTION_STRENGTH = 90.0
 shape = SubResource("CircleShape2D_pim6k")
 
 [node name="Player" parent="." instance=ExtResource("3_u0psi")]
-z_index = 200
 position = Vector2(463, 280)
 
 [node name="OverworldEncounters" type="Node2D" parent="."]
@@ -186,8 +185,8 @@ collision_layer = 34
 collision_mask = 532
 script = ExtResource("7_um4l4")
 speed = 100
-min_wander_range = 30
-max_wander_range = 100
+min_wander_range = 10
+max_wander_range = 30
 min_time_between_movement = 2
 max_time_between_movement = 3.0
 mon1Type = 3
@@ -219,7 +218,7 @@ mon4Type = 0
 mon4Level = 0
 
 [node name="Pascalican" parent="OverworldEncounters" instance=ExtResource("9_jnuf3")]
-position = Vector2(163, 384)
+position = Vector2(156, 408)
 script = ExtResource("10_i4e28")
 mon1Type = 4
 mon1Level = 2
@@ -231,7 +230,7 @@ mon4Type = 0
 mon4Level = 0
 
 [node name="Pascalican2" parent="OverworldEncounters" instance=ExtResource("9_jnuf3")]
-position = Vector2(590, 345)
+position = Vector2(495, 353)
 script = ExtResource("10_i4e28")
 mon1Type = 4
 mon1Level = 3
@@ -713,7 +712,6 @@ polygon = PackedVector2Array(1203, -28, 1276, -28, 1276, 45, 1203, 45)
 polygon = PackedVector2Array(199, 371, 377, 282, 574, 282, 753, 372, 753, 316, 574, 227, 377, 227, 199, 316)
 
 [node name="WarpInteractable" parent="." instance=ExtResource("13_612sg")]
-z_index = 200
 position = Vector2(378, 300)
 area = 7
 spawn_point = "Cave8Ladder"
@@ -734,11 +732,47 @@ offset_bottom = -4.0
 text = "[center][E] Climb[/center]"
 
 [node name="Chest" parent="." instance=ExtResource("14_h5edw")]
-z_index = 200
 position = Vector2(283, 276)
 chest_id = "temple6testchest"
 dialogue_resource = ExtResource("15_vrvhg")
 dialogue_start = "test_chest"
+
+[node name="MonCollision" type="StaticBody2D" parent="."]
+modulate = Color(0.278431, 1, 1, 1)
+z_index = 2000
+position = Vector2(-96, 150)
+collision_layer = 512
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(1353, 722, 1353, 495, 1276, 495, 1276, 722, 1261, 722, 1264, 480, 1377, 480, 1375, 737, 1261, 737, 1261, 722)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(975, -29, 1054, -29, 1054, -149, 1354, -150, 1354, 45, 1053, 45, 976, 45)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(976, 20, 976, 161, 951, 158, 946, 40)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(1353, 167, 1426, 168, 1426, 449, 1353, 450)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(975, 422, 1204, 423, 1205, 495, 975, 495)
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(1426, 194, 1503, 195, 1504, 143, 1425, 147)
+
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(1425, -150, 1426, -37, 1505, -37, 1505, -150)
+
+[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(652, 647, 721, 482, 673, 321, 823, 340, 812, 669)
+
+[node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(265, 330, 235, 493, 300, 655, 182, 618, 191, 364)
+
+[node name="CollisionPolygon2D10" type="CollisionPolygon2D" parent="MonCollision"]
+polygon = PackedVector2Array(1568, 644, 1651, 644, 1662, 744, 1570, 736)
 
 [editable path="Whirlpool"]
 [editable path="WaterFlows/WaterFlow1"]
