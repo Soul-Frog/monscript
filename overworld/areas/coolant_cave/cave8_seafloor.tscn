@@ -30,6 +30,7 @@ area_enum = 7
 
 [node name="Map" type="Sprite2D" parent="Base"]
 z_index = 100
+position = Vector2(0, -1)
 texture = ExtResource("2_eo2i5")
 centered = false
 
@@ -67,7 +68,7 @@ mon4Level = 0
 
 [node name="Light" type="PointLight2D" parent="Entities/OverworldEncounters/Anglerphish"]
 position = Vector2(-11, -3)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.1, 0.1)
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_sn4if")
 
@@ -90,7 +91,7 @@ mon4Level = 0
 
 [node name="Light" type="PointLight2D" parent="Entities/OverworldEncounters/Anglerphish2"]
 position = Vector2(-11, -3)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.1, 0.1)
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_sn4if")
 
@@ -113,7 +114,7 @@ mon4Level = 0
 
 [node name="Light" type="PointLight2D" parent="Entities/OverworldEncounters/Mon3"]
 position = Vector2(-11, -3)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.1, 0.1)
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_sn4if")
 
