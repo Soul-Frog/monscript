@@ -204,7 +204,7 @@ polygon = PackedVector2Array(898, 416, 1040, 416, 1040, 419, 1025, 449, 913, 449
 polygon = PackedVector2Array(385, 794, 597, 794, 576, 838, 406, 838)
 
 [node name="PlatformerWater" type="Node2D" parent="."]
-visible = false
+z_index = 2000
 script = ExtResource("7_0ue4f")
 
 [node name="Water" type="Area2D" parent="PlatformerWater"]

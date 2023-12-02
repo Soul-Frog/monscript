@@ -50,6 +50,18 @@ mon3Level = 0
 mon4Type = 0
 mon4Level = 0
 
+[node name="Turtminal4" parent="OverworldEncounters" instance=ExtResource("5_m7ob8")]
+position = Vector2(462, 280)
+script = ExtResource("6_6vtvi")
+mon1Type = 6
+mon1Level = 3
+mon2Type = 0
+mon2Level = 0
+mon3Type = 0
+mon3Level = 0
+mon4Type = 0
+mon4Level = 0
+
 [node name="Turtminal2" parent="OverworldEncounters" instance=ExtResource("5_m7ob8")]
 position = Vector2(640, 199)
 script = ExtResource("6_6vtvi")

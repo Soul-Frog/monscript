@@ -15,43 +15,69 @@ size = Vector2(27, 32)
 script = ExtResource("1_4sj54")
 area_enum = 0
 
-[node name="Fence" type="Sprite2D" parent="."]
+[node name="Base" type="Node2D" parent="."]
+
+[node name="Fence" type="Sprite2D" parent="Base"]
 z_index = 210
 position = Vector2(-40, 36)
 texture = ExtResource("2_r844y")
 centered = false
 
-[node name="Map" type="Sprite2D" parent="."]
+[node name="Map" type="Sprite2D" parent="Base"]
 z_index = 100
 position = Vector2(-55, 0)
 texture = ExtResource("3_u6wrc")
 centered = false
 
-[node name="Waves" type="Sprite2D" parent="."]
+[node name="Waves" type="Sprite2D" parent="Base"]
 z_index = 210
 position = Vector2(-54, 0)
 texture = ExtResource("4_hsrq7")
 centered = false
 
-[node name="MoveDecorator" parent="Waves" instance=ExtResource("5_46txx")]
+[node name="MoveDecorator" parent="Base/Waves" instance=ExtResource("5_46txx")]
 timeout = 0.3
 up = 2
 down = 1
 
-[node name="Player" parent="." instance=ExtResource("6_nx2l3")]
-z_index = 200
+[node name="Entities" type="Node2D" parent="."]
+
+[node name="Player" parent="Entities" instance=ExtResource("6_nx2l3")]
 position = Vector2(8, 87)
 
-[node name="OverworldEncounters" type="Node2D" parent="."]
+[node name="OverworldEncounters" type="Node2D" parent="Entities"]
 
-[node name="Points" type="Node2D" parent="."]
+[node name="Data" type="Node2D" parent="."]
 
-[node name="Cave1Entrance" type="Node2D" parent="Points"]
+[node name="Points" type="Node2D" parent="Data"]
+
+[node name="Cave1Entrance" type="Node2D" parent="Data/Points"]
 position = Vector2(72, 58)
 
-[node name="Warps" type="Node2D" parent="."]
+[node name="Collisions" type="StaticBody2D" parent="Data"]
+position = Vector2(55, 83)
+collision_layer = 4
+collision_mask = 0
+metadata/_edit_group_ = true
 
-[node name="Warp" type="Area2D" parent="Warps"]
+[node name="Wall" type="CollisionPolygon2D" parent="Data/Collisions"]
+polygon = PackedVector2Array(-93, -83, -93, -18, 4, -18, 4, -51, 31, -51, 31, -18, 92, -18, 118, -44, 268, -44, 268, -83)
+
+[node name="Water" type="CollisionPolygon2D" parent="Data/Collisions"]
+polygon = PackedVector2Array(-109, -51, -93, -51, -93, -18, -95, -18, -95, -3, -55, 37, 151, 37, 189, -2, 198, -2, 206, -10, 262, -10, 268, -16, 268, -51, 291, -51, 291, 117, -109, 117)
+
+[node name="Crack Bottom Half" type="CollisionPolygon2D" parent="Data/Collisions"]
+polygon = PackedVector2Array(122, -5, 122, -6, 144, -20, 146, -20, 146, -19, 148, -19, 148, -16, 146, -16, 146, -15, 144, -15, 144, -14, 141, -14, 141, -13, 140, -13, 140, -12, 138, -12, 138, -11, 135, -11, 135, -10, 133, -10, 133, -9, 131, -9, 131, -9, 131, -8, 128, -8, 128, -7, 126, -7, 126, -6, 123, -6)
+
+[node name="Crack Top Half" type="CollisionPolygon2D" parent="Data/Collisions"]
+polygon = PackedVector2Array(152, -27, 153, -27, 153, -26, 156, -26, 157, -26, 157, -28, 159, -28, 159, -29, 160, -29, 160, -30, 162, -30, 162, -31, 163, -31, 163, -32, 165, -32, 165, -33, 168, -33, 168, -34, 171, -34, 171, -35, 174, -35, 174, -36, 176, -36, 176, -37, 179, -38, 175, -38, 175, -37, 160, -34)
+
+[node name="Tape" type="CollisionPolygon2D" parent="Data/Collisions"]
+polygon = PackedVector2Array(168, -30, 168, -23, 172, -20, 180, -20, 182, -22, 185, -22, 187, -18, 189, -22, 190, -19, 192, -23, 187, -28, 184, -28, 184, -30, 180, -33, 171, -33)
+
+[node name="Warps" type="Node2D" parent="Data"]
+
+[node name="Warp" type="Area2D" parent="Data/Warps"]
 position = Vector2(72, 49)
 collision_layer = 0
 script = ExtResource("9_a8npn")
@@ -59,27 +85,6 @@ area = 1
 spawn_point = "Cave2Bottom"
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/Warp"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Data/Warps/Warp"]
 position = Vector2(0.5, -1)
 shape = SubResource("RectangleShape2D_80ub1")
-
-[node name="World" type="StaticBody2D" parent="."]
-position = Vector2(55, 83)
-collision_layer = 4
-collision_mask = 0
-metadata/_edit_group_ = true
-
-[node name="Wall" type="CollisionPolygon2D" parent="World"]
-polygon = PackedVector2Array(-93, -83, -93, -18, 4, -18, 4, -51, 31, -51, 31, -18, 92, -18, 118, -44, 268, -44, 268, -83)
-
-[node name="Water" type="CollisionPolygon2D" parent="World"]
-polygon = PackedVector2Array(-109, -51, -93, -51, -93, -18, -95, -18, -95, -3, -55, 37, 151, 37, 189, -2, 198, -2, 206, -10, 262, -10, 268, -16, 268, -51, 291, -51, 291, 117, -109, 117)
-
-[node name="Crack Bottom Half" type="CollisionPolygon2D" parent="World"]
-polygon = PackedVector2Array(122, -5, 122, -6, 144, -20, 146, -20, 146, -19, 148, -19, 148, -16, 146, -16, 146, -15, 144, -15, 144, -14, 141, -14, 141, -13, 140, -13, 140, -12, 138, -12, 138, -11, 135, -11, 135, -10, 133, -10, 133, -9, 131, -9, 131, -9, 131, -8, 128, -8, 128, -7, 126, -7, 126, -6, 123, -6)
-
-[node name="Crack Top Half" type="CollisionPolygon2D" parent="World"]
-polygon = PackedVector2Array(152, -27, 153, -27, 153, -26, 156, -26, 157, -26, 157, -28, 159, -28, 159, -29, 160, -29, 160, -30, 162, -30, 162, -31, 163, -31, 163, -32, 165, -32, 165, -33, 168, -33, 168, -34, 171, -34, 171, -35, 174, -35, 174, -36, 176, -36, 176, -37, 179, -38, 175, -38, 175, -37, 160, -34)
-
-[node name="Tape" type="CollisionPolygon2D" parent="World"]
-polygon = PackedVector2Array(168, -30, 168, -23, 172, -20, 180, -20, 182, -22, 185, -22, 187, -18, 189, -22, 190, -19, 192, -23, 187, -28, 184, -28, 184, -30, 180, -33, 171, -33)

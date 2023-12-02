@@ -30,31 +30,33 @@ size = Vector2(28, 16)
 script = ExtResource("1_1crr8")
 area_enum = 1
 
-[node name="Map" type="Sprite2D" parent="."]
+[node name="Base" type="Node2D" parent="."]
+
+[node name="Map" type="Sprite2D" parent="Base"]
 z_index = 100
 texture = ExtResource("2_l834j")
 centered = false
 
-[node name="Water" type="Sprite2D" parent="."]
+[node name="Water" type="Sprite2D" parent="Base"]
 modulate = Color(1, 1, 1, 0.74902)
 z_index = 150
 texture = ExtResource("3_mpdax")
 centered = false
 script = ExtResource("4_x74uy")
 
-[node name="WaterCollision" type="StaticBody2D" parent="Water"]
+[node name="WaterCollision" type="StaticBody2D" parent="Base/Water"]
 visible = false
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Water/WaterCollision"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Base/Water/WaterCollision"]
 position = Vector2(15, 12)
 polygon = PackedVector2Array(31, 464, 31, 469, 75, 469, 75, 464)
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Water/WaterCollision"]
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Base/Water/WaterCollision"]
 polygon = PackedVector2Array(534, 470, 535, 517, 540, 517, 540, 470)
 
-[node name="ColorDecorator" parent="Water" instance=ExtResource("5_rxbvk")]
+[node name="ColorDecorator" parent="Base/Water" instance=ExtResource("5_rxbvk")]
 autostart = true
 min_red = 215.0
 red_speed = 300
@@ -63,56 +65,67 @@ green_speed = 65
 min_blue = 175.0
 blue_speed = 25
 
-[node name="FadeDecorator" parent="Water" instance=ExtResource("8_ka6sp")]
+[node name="FadeDecorator" parent="Base/Water" instance=ExtResource("8_ka6sp")]
 fade_speed = 2.0
 
-[node name="Bridges" type="Node2D" parent="."]
+[node name="Bridges" type="Node2D" parent="Base"]
 z_index = 160
 script = ExtResource("6_kqlxl")
 
-[node name="DownSprite" type="Sprite2D" parent="Bridges"]
+[node name="DownSprite" type="Sprite2D" parent="Base/Bridges"]
 modulate = Color(1, 1, 1, 0)
 texture = ExtResource("7_fbe6u")
 centered = false
 
-[node name="FadeDecorator" parent="Bridges/DownSprite" instance=ExtResource("8_ka6sp")]
+[node name="FadeDecorator" parent="Base/Bridges/DownSprite" instance=ExtResource("8_ka6sp")]
 fade_speed = 5.0
 
-[node name="UpSprite" type="Sprite2D" parent="Bridges"]
+[node name="UpSprite" type="Sprite2D" parent="Base/Bridges"]
 texture = ExtResource("9_7t2wm")
 centered = false
 
-[node name="FadeDecorator" parent="Bridges/UpSprite" instance=ExtResource("8_ka6sp")]
+[node name="FadeDecorator" parent="Base/Bridges/UpSprite" instance=ExtResource("8_ka6sp")]
 fade_speed = 5.0
 
-[node name="CollisionWhileBridgesDown" type="StaticBody2D" parent="Bridges"]
+[node name="CollisionWhileBridgesDown" type="StaticBody2D" parent="Base/Bridges"]
 collision_layer = 16
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Base/Bridges/CollisionWhileBridgesDown"]
 polygon = PackedVector2Array(133, 347, 138, 347, 138, 385, 133, 385)
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Base/Bridges/CollisionWhileBridgesDown"]
 polygon = PackedVector2Array(248, 383, 243, 383, 243, 348, 248, 348)
 
-[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Base/Bridges/CollisionWhileBridgesDown"]
 polygon = PackedVector2Array(275, 489, 275, 494, 307, 494, 307, 489)
 
-[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Bridges/CollisionWhileBridgesDown"]
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Base/Bridges/CollisionWhileBridgesDown"]
 polygon = PackedVector2Array(275, 555, 275, 561, 307, 561, 307, 555)
 
-[node name="Gateway" type="Sprite2D" parent="."]
+[node name="ForegroundElements" type="Node2D" parent="Base"]
+z_index = 210
+
+[node name="ForegroundElem" parent="Base/ForegroundElements" instance=ExtResource("4_i74oh")]
+texture = ExtResource("12_wmi3w")
+
+[node name="CollisionPolygon2D" parent="Base/ForegroundElements/ForegroundElem/FadeZone" index="0"]
+visible = false
+
+[node name="Entities" type="Node2D" parent="."]
+
+[node name="Player" parent="Entities" instance=ExtResource("3_3xe7d")]
+position = Vector2(61, 426)
+
+[node name="Gateway" type="Sprite2D" parent="Entities"]
 z_index = 200
 position = Vector2(584, 179)
 texture = ExtResource("18_b6w6p")
 centered = false
 
-[node name="Player" parent="." instance=ExtResource("3_3xe7d")]
-position = Vector2(61, 426)
+[node name="OverworldEncounters" type="Node2D" parent="Entities"]
 
-[node name="OverworldEncounters" type="Node2D" parent="."]
-
-[node name="GelifLeft" parent="OverworldEncounters" instance=ExtResource("11_qslf1")]
+[node name="GelifLeft" parent="Entities/OverworldEncounters" instance=ExtResource("11_qslf1")]
 position = Vector2(65, 238)
 collision_mask = 532
 script = ExtResource("13_5rf1m")
@@ -130,7 +143,7 @@ mon3Level = 0
 mon4Type = 0
 mon4Level = 0
 
-[node name="GelifRight" parent="OverworldEncounters" instance=ExtResource("11_qslf1")]
+[node name="GelifRight" parent="Entities/OverworldEncounters" instance=ExtResource("11_qslf1")]
 position = Vector2(600, 490)
 collision_mask = 532
 script = ExtResource("13_5rf1m")
@@ -148,7 +161,7 @@ mon3Level = 4
 mon4Type = 0
 mon4Level = 0
 
-[node name="Orchin1TODO" parent="OverworldEncounters" instance=ExtResource("15_c7tfi")]
+[node name="Orchin1TODO" parent="Entities/OverworldEncounters" instance=ExtResource("15_c7tfi")]
 z_index = 125
 position = Vector2(183, 503)
 collision_mask = 548
@@ -162,7 +175,7 @@ mon3Level = 0
 mon4Type = 0
 mon4Level = 0
 
-[node name="Orchin2TODO" parent="OverworldEncounters" instance=ExtResource("15_c7tfi")]
+[node name="Orchin2TODO" parent="Entities/OverworldEncounters" instance=ExtResource("15_c7tfi")]
 z_index = 125
 position = Vector2(192, 282)
 collision_mask = 548
@@ -176,7 +189,7 @@ mon3Level = 3
 mon4Type = 0
 mon4Level = 0
 
-[node name="Orchin3TODO" parent="OverworldEncounters" instance=ExtResource("15_c7tfi")]
+[node name="Orchin3TODO" parent="Entities/OverworldEncounters" instance=ExtResource("15_c7tfi")]
 z_index = 125
 position = Vector2(445, 519)
 collision_mask = 548
@@ -190,7 +203,7 @@ mon3Level = 2
 mon4Type = 5
 mon4Level = 2
 
-[node name="Orchin4TODO" parent="OverworldEncounters" instance=ExtResource("15_c7tfi")]
+[node name="Orchin4TODO" parent="Entities/OverworldEncounters" instance=ExtResource("15_c7tfi")]
 z_index = 125
 position = Vector2(439, 217)
 collision_mask = 548
@@ -204,26 +217,142 @@ mon3Level = 4
 mon4Type = 0
 mon4Level = 0
 
-[node name="ForegroundElements" type="Node2D" parent="."]
-z_index = 210
+[node name="Data" type="Node2D" parent="."]
 
-[node name="ForegroundElem" parent="ForegroundElements" instance=ExtResource("4_i74oh")]
-texture = ExtResource("12_wmi3w")
-
-[node name="CollisionPolygon2D" parent="ForegroundElements/ForegroundElem/FadeZone" index="0"]
+[node name="Collision" type="StaticBody2D" parent="Data"]
 visible = false
+modulate = Color(0, 1, 0, 1)
+position = Vector2(-96, 150)
+collision_layer = 4
+collision_mask = 0
 
-[node name="Points" type="Node2D" parent="."]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Data/Collision"]
+polygon = PackedVector2Array(150, -21, 150, -56, 178, -56, 178, -21, 199, -21, 199, -16, 225, -42, 662, -42, 740, 36, 740, 411, 430, 411, 430, 422, 747, 422, 746, 10, 662, -63, 178, -62, 120, -62, 120, -54, 120, -22, 121, 398, 121, 416, 142, 416, 336.115, 415.039, 336, 620, 336, 626, 343, 633, 431, 633, 438, 626, 439, 422, 430, 422, 431, 626, 343, 626, 344, 415, 344, 411, 142, 411, 129, 398, 129, -21)
 
-[node name="Cave2Top" type="Node2D" parent="Points"]
-position = Vector2(68, 127)
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Data/Collision"]
+polygon = PackedVector2Array(146, 321, 146, 353, 129, 353, 129, 321)
 
-[node name="Cave2Bottom" type="Node2D" parent="Points"]
-position = Vector2(292, 748)
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Data/Collision"]
+polygon = PackedVector2Array(230, 301, 210, 321, 178, 321, 178, 353, 210, 353, 230, 333)
 
-[node name="Warps" type="Node2D" parent="."]
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Data/Collision"]
+polygon = PackedVector2Array(328, 323, 328, 355, 344, 371, 371, 371, 371, 339, 344, 339)
 
-[node name="WarpToBeach" type="Area2D" parent="Warps"]
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="Data/Collision"]
+polygon = PackedVector2Array(403, 339, 403, 371, 471, 371, 517, 325, 638, 325, 638, 324, 640, 324, 640, 293, 599, 293, 599, 161, 597.955, 162, 436, 162, 436, 339)
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="Data/Collision"]
+polygon = PackedVector2Array(199, 11, 201, 11, 226, -14, 638, -14, 638, -42, 225, -42, 199, -16)
+
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="Data/Collision"]
+position = Vector2(7, 80)
+polygon = PackedVector2Array(632, 246, 632, 244, 590, 276, 590, 278)
+
+[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="Data/Collision"]
+position = Vector2(8, 113)
+polygon = PackedVector2Array(632, 246, 632, 244, 590, 276, 632, 276)
+
+[node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="Data/Collision"]
+position = Vector2(6, 79)
+polygon = PackedVector2Array(140, 285, 139, 285, 139, 242, 140, 242)
+
+[node name="CollisionPolygon2D10" type="CollisionPolygon2D" parent="Data/Collision"]
+position = Vector2(6, 79)
+polygon = PackedVector2Array(172, 242, 173, 242, 173, 285, 172, 285)
+
+[node name="CollisionPolygon2D11" type="CollisionPolygon2D" parent="Data/Collision"]
+polygon = PackedVector2Array(680, 69, 705, 69, 705, 34, 700, 29, 685, 29, 680, 34)
+
+[node name="CollisionWhileLower" type="StaticBody2D" parent="Data"]
+visible = false
+modulate = Color(1, 0, 0, 1)
+position = Vector2(-90, 229)
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Data/CollisionWhileLower"]
+polygon = PackedVector2Array(193, -77, 186, -77, 186, 46, 217, 82, 219, 227, 224, 222, 224, 76, 193, 45)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Data/CollisionWhileLower"]
+polygon = PackedVector2Array(322, 244, 322, 170, 339, 153, 339, 98, 354, 83, 430, 83, 430, 91, 354, 91, 346, 99, 346, 153, 330, 171, 325, 247)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Data/CollisionWhileLower"]
+polygon = PackedVector2Array(632, 43, 632, -121, 642, -121, 642, 43, 593, 98, 593, 82)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Data/CollisionWhileLower"]
+polygon = PackedVector2Array(634, 332, 634, 277, 634, 277, 642, 277, 642, 332)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="Data/CollisionWhileLower"]
+polygon = PackedVector2Array(365, 292, 397, 292, 397, 260, 365, 260)
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="Data/CollisionWhileLower"]
+position = Vector2(-27, 72)
+polygon = PackedVector2Array(365, 271, 451, 271, 451, 260, 365, 260)
+
+[node name="CollisionWhileUpper" type="StaticBody2D" parent="Data"]
+visible = false
+modulate = Color(0, 0, 1, 1)
+position = Vector2(-96, 150)
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Data/CollisionWhileUpper"]
+polygon = PackedVector2Array(229, 230, 345, 230, 345, 233, 344, 233, 328, 249, 328, 333, 229, 333)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Data/CollisionWhileUpper"]
+polygon = PackedVector2Array(371, 371, 371, 411, 336, 411, 336, 370)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Data/CollisionWhileUpper"]
+polygon = PackedVector2Array(403, 371, 403, 411, 448, 411, 448, 371)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Data/CollisionWhileUpper"]
+position = Vector2(-1, 0)
+polygon = PackedVector2Array(230, 200, 345, 200, 345, 177, 360, 162, 436, 162, 436, 122, 232, 122, 232, 2, 199, 2, 199, 124, 230, 155)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="Data/CollisionWhileUpper"]
+polygon = PackedVector2Array(640, 356, 597, 390, 597, 411, 640, 412)
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="Data/CollisionWhileUpper"]
+polygon = PackedVector2Array(596, 358, 638, 325, 595, 325)
+
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="Data/CollisionWhileUpper"]
+polygon = PackedVector2Array(598, 161, 600, 160, 638, 122, 638, -42, 592, -42, 592, 161)
+
+[node name="MonCollision" type="StaticBody2D" parent="Data"]
+modulate = Color(0.278431, 1, 1, 1)
+z_index = 2000
+position = Vector2(-96, 150)
+collision_layer = 512
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Data/MonCollision"]
+polygon = PackedVector2Array(345, 200, 341, 199, 341, 232, 345, 232)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Data/MonCollision"]
+polygon = PackedVector2Array(230, 200, 232, 200, 232, 232, 230, 232)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Data/MonCollision"]
+polygon = PackedVector2Array(146, 321, 146, 366, 178, 366, 178, 321)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Data/MonCollision"]
+polygon = PackedVector2Array(640, 324, 596, 358, 596, 389, 640, 389)
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="Data/MonCollision"]
+position = Vector2(3, 121)
+polygon = PackedVector2Array(596, 162, 738, 162, 738, 172, 596, 172)
+
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="Data/MonCollision"]
+polygon = PackedVector2Array(371, 339, 371, 341, 403, 341, 403, 339)
+
+[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="Data/MonCollision"]
+polygon = PackedVector2Array(371, 411, 371, 410, 403, 410, 403, 411)
+
+[node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="Data/MonCollision"]
+polygon = PackedVector2Array(199, 125, 128, 125, 129, 134, 205, 132)
+
+[node name="Warps" type="Node2D" parent="Data"]
+
+[node name="WarpToBeach" type="Area2D" parent="Data/Warps"]
 position = Vector2(271, 776)
 collision_layer = 0
 script = ExtResource("4_7d5uj")
@@ -231,11 +360,11 @@ area = 0
 spawn_point = "Cave1Entrance"
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/WarpToBeach"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Data/Warps/WarpToBeach"]
 position = Vector2(20, -0.5)
 shape = SubResource("RectangleShape2D_mkqcf")
 
-[node name="WarpToLake" type="Area2D" parent="Warps"]
+[node name="WarpToLake" type="Area2D" parent="Data/Warps"]
 position = Vector2(49, 123)
 collision_layer = 0
 script = ExtResource("4_7d5uj")
@@ -243,173 +372,50 @@ area = 2
 spawn_point = "Cave3Bottom"
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/WarpToLake"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Data/Warps/WarpToLake"]
 position = Vector2(19, -3)
 shape = SubResource("RectangleShape2D_80ub1")
 
-[node name="Collision" type="StaticBody2D" parent="."]
-visible = false
-modulate = Color(0, 1, 0, 1)
-position = Vector2(-96, 150)
-collision_layer = 4
-collision_mask = 0
+[node name="Points" type="Node2D" parent="Data"]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collision"]
-polygon = PackedVector2Array(150, -21, 150, -56, 178, -56, 178, -21, 199, -21, 199, -16, 225, -42, 662, -42, 740, 36, 740, 411, 430, 411, 430, 422, 747, 422, 746, 10, 662, -63, 178, -62, 120, -62, 120, -54, 120, -22, 121, 398, 121, 416, 142, 416, 336.115, 415.039, 336, 620, 336, 626, 343, 633, 431, 633, 438, 626, 439, 422, 430, 422, 431, 626, 343, 626, 344, 415, 344, 411, 142, 411, 129, 398, 129, -21)
+[node name="Cave2Top" type="Node2D" parent="Data/Points"]
+position = Vector2(68, 127)
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Collision"]
-polygon = PackedVector2Array(146, 321, 146, 353, 129, 353, 129, 321)
+[node name="Cave2Bottom" type="Node2D" parent="Data/Points"]
+position = Vector2(292, 748)
 
-[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Collision"]
-polygon = PackedVector2Array(230, 301, 210, 321, 178, 321, 178, 353, 210, 353, 230, 333)
-
-[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Collision"]
-polygon = PackedVector2Array(328, 323, 328, 355, 344, 371, 371, 371, 371, 339, 344, 339)
-
-[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="Collision"]
-polygon = PackedVector2Array(403, 339, 403, 371, 471, 371, 517, 325, 638, 325, 638, 324, 640, 324, 640, 293, 599, 293, 599, 161, 597.955, 162, 436, 162, 436, 339)
-
-[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="Collision"]
-polygon = PackedVector2Array(199, 11, 201, 11, 226, -14, 638, -14, 638, -42, 225, -42, 199, -16)
-
-[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="Collision"]
-position = Vector2(7, 80)
-polygon = PackedVector2Array(632, 246, 632, 244, 590, 276, 590, 278)
-
-[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="Collision"]
-position = Vector2(8, 113)
-polygon = PackedVector2Array(632, 246, 632, 244, 590, 276, 632, 276)
-
-[node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="Collision"]
-position = Vector2(6, 79)
-polygon = PackedVector2Array(140, 285, 139, 285, 139, 242, 140, 242)
-
-[node name="CollisionPolygon2D10" type="CollisionPolygon2D" parent="Collision"]
-position = Vector2(6, 79)
-polygon = PackedVector2Array(172, 242, 173, 242, 173, 285, 172, 285)
-
-[node name="CollisionPolygon2D11" type="CollisionPolygon2D" parent="Collision"]
-polygon = PackedVector2Array(680, 69, 705, 69, 705, 34, 700, 29, 685, 29, 680, 34)
-
-[node name="CollisionWhileUpper" type="StaticBody2D" parent="."]
-visible = false
-modulate = Color(0, 0, 1, 1)
-position = Vector2(-96, 150)
-collision_layer = 16
-collision_mask = 0
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CollisionWhileUpper"]
-polygon = PackedVector2Array(229, 230, 345, 230, 345, 233, 344, 233, 328, 249, 328, 333, 229, 333)
-
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="CollisionWhileUpper"]
-polygon = PackedVector2Array(371, 371, 371, 411, 336, 411, 336, 370)
-
-[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="CollisionWhileUpper"]
-polygon = PackedVector2Array(403, 371, 403, 411, 448, 411, 448, 371)
-
-[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="CollisionWhileUpper"]
-position = Vector2(-1, 0)
-polygon = PackedVector2Array(230, 200, 345, 200, 345, 177, 360, 162, 436, 162, 436, 122, 232, 122, 232, 2, 199, 2, 199, 124, 230, 155)
-
-[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="CollisionWhileUpper"]
-polygon = PackedVector2Array(640, 356, 597, 390, 597, 411, 640, 412)
-
-[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="CollisionWhileUpper"]
-polygon = PackedVector2Array(596, 358, 638, 325, 595, 325)
-
-[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="CollisionWhileUpper"]
-polygon = PackedVector2Array(598, 161, 600, 160, 638, 122, 638, -42, 592, -42, 592, 161)
-
-[node name="CollisionWhileLower" type="StaticBody2D" parent="."]
-visible = false
-modulate = Color(1, 0, 0, 1)
-position = Vector2(-90, 229)
-collision_layer = 32
-collision_mask = 0
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CollisionWhileLower"]
-polygon = PackedVector2Array(193, -77, 186, -77, 186, 46, 217, 82, 219, 227, 224, 222, 224, 76, 193, 45)
-
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="CollisionWhileLower"]
-polygon = PackedVector2Array(322, 244, 322, 170, 339, 153, 339, 98, 354, 83, 430, 83, 430, 91, 354, 91, 346, 99, 346, 153, 330, 171, 325, 247)
-
-[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="CollisionWhileLower"]
-polygon = PackedVector2Array(632, 43, 632, -121, 642, -121, 642, 43, 593, 98, 593, 82)
-
-[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="CollisionWhileLower"]
-polygon = PackedVector2Array(634, 332, 634, 277, 634, 277, 642, 277, 642, 332)
-
-[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="CollisionWhileLower"]
-polygon = PackedVector2Array(365, 292, 397, 292, 397, 260, 365, 260)
-
-[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="CollisionWhileLower"]
-position = Vector2(-27, 72)
-polygon = PackedVector2Array(365, 271, 451, 271, 451, 260, 365, 260)
-
-[node name="MonCollision" type="StaticBody2D" parent="."]
-modulate = Color(0.278431, 1, 1, 1)
-z_index = 2000
-position = Vector2(-96, 150)
-collision_layer = 512
-collision_mask = 0
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MonCollision"]
-polygon = PackedVector2Array(345, 200, 341, 199, 341, 232, 345, 232)
-
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="MonCollision"]
-polygon = PackedVector2Array(230, 200, 232, 200, 232, 232, 230, 232)
-
-[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="MonCollision"]
-polygon = PackedVector2Array(146, 321, 146, 366, 178, 366, 178, 321)
-
-[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="MonCollision"]
-polygon = PackedVector2Array(640, 324, 596, 358, 596, 389, 640, 389)
-
-[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="MonCollision"]
-position = Vector2(3, 121)
-polygon = PackedVector2Array(596, 162, 738, 162, 738, 172, 596, 172)
-
-[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="MonCollision"]
-polygon = PackedVector2Array(371, 339, 371, 341, 403, 341, 403, 339)
-
-[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="MonCollision"]
-polygon = PackedVector2Array(371, 411, 371, 410, 403, 410, 403, 411)
-
-[node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="MonCollision"]
-polygon = PackedVector2Array(199, 125, 128, 125, 129, 134, 205, 132)
-
-[node name="TransitionDown" type="Area2D" parent="."]
-visible = false
-collision_layer = 0
-collision_mask = 3
-script = ExtResource("7_kowvn")
-transition_type = 1
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TransitionDown"]
-position = Vector2(-3.8147e-06, -525.858)
-scale = Vector2(1, 2.02285)
-polygon = PackedVector2Array(33, 505.158, 99, 505.158, 99, 518.011, 33, 518.505)
-
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="TransitionDown"]
-position = Vector2(5, -3)
-polygon = PackedVector2Array(482, 489, 512, 488, 510, 552, 476, 553)
-
-[node name="TransitionUp" type="Area2D" parent="."]
+[node name="TransitionUp" type="Area2D" parent="Data"]
 visible = false
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("7_kowvn")
 transition_type = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="TransitionUp"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Data/TransitionUp"]
 position = Vector2(-3.8147e-06, -544.681)
 scale = Vector2(1, 2.15768)
 polygon = PackedVector2Array(39, 466.094, 89, 465.63, 81, 474.899, 49, 474.899)
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="TransitionUp"]
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Data/TransitionUp"]
 polygon = PackedVector2Array(530, 467, 558, 468, 557, 537, 528, 539)
 
-[connection signal="body_entered" from="TransitionDown" to="TransitionDown" method="_on_body_entered"]
-[connection signal="body_entered" from="TransitionUp" to="TransitionUp" method="_on_body_entered"]
+[node name="TransitionDown" type="Area2D" parent="Data"]
+visible = false
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("7_kowvn")
+transition_type = 1
 
-[editable path="ForegroundElements/ForegroundElem"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Data/TransitionDown"]
+position = Vector2(-3.8147e-06, -525.858)
+scale = Vector2(1, 2.02285)
+polygon = PackedVector2Array(33, 505.158, 99, 505.158, 99, 518.011, 33, 518.505)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Data/TransitionDown"]
+position = Vector2(5, -3)
+polygon = PackedVector2Array(482, 489, 512, 488, 510, 552, 476, 553)
+
+[connection signal="body_entered" from="Data/TransitionUp" to="Data/TransitionUp" method="_on_body_entered"]
+[connection signal="body_entered" from="Data/TransitionDown" to="Data/TransitionDown" method="_on_body_entered"]
+
+[editable path="Base/ForegroundElements/ForegroundElem"]

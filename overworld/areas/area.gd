@@ -6,10 +6,11 @@ extends Node2D
 
 var _overworld_encounter_battling_with = null
 
-@onready var _PLAYER = $Player
-@onready var _CAMERA = $Player/Camera2D
-@onready var _MAP = $Map
-@onready var _OVERWORLD_ENCOUNTERS = $OverworldEncounters
+@onready var _PLAYER = $Entities/Player
+@onready var _CAMERA = $Entities/Player/Camera2D
+@onready var _MAP = $Base/Map
+@onready var _OVERWORLD_ENCOUNTERS = $Entities/OverworldEncounters
+@onready var _POINTS = $Data/Points
 
 func _ready():
 	assert(not area_enum == GameData.Area.NONE, "Did not assign area_enum in editor.")
@@ -18,6 +19,7 @@ func _ready():
 	assert(_CAMERA)
 	assert(_MAP)
 	assert(_OVERWORLD_ENCOUNTERS)
+	assert(_POINTS)
 	
 	_CAMERA.set_limits(_MAP)
 	_CAMERA.zoom.x = camera_zoom
@@ -43,13 +45,15 @@ func move_player_to(destination_point: Variant) -> void:
 	
 	if destination_point is String:
 		var found_destination_point = false
-		for point in $Points.get_children():
+		# These $ paths need to be hardcoded to work during area transitions for some reason
+		for point in $Data/Points.get_children():
 			if point.name.to_lower().strip_edges() == destination_point.to_lower().strip_edges():
-				$Player.position = point.position
+				$Entities/Player.position = point.position
 				found_destination_point = true
 		assert(found_destination_point, "Could not find point %s!" % [destination_point])
 	else:
-		$Player.position = destination_point
+		$Entities/Player.position = destination_point
 
 func get_player():
-	return $Player
+	# needs to be hardcoded to work during area transitions
+	return $Entities/Player
