@@ -12,23 +12,37 @@ size = Vector2(46, 5)
 script = ExtResource("1_lonuy")
 area_enum = 11
 
-[node name="Map" type="Sprite2D" parent="."]
+[node name="Base" type="Node2D" parent="."]
+
+[node name="Map" type="Sprite2D" parent="Base"]
 texture = ExtResource("2_wxx4f")
 centered = false
 
-[node name="Player" parent="." instance=ExtResource("3_4vle2")]
+[node name="Entities" type="Node2D" parent="."]
+
+[node name="Player" parent="Entities" instance=ExtResource("3_4vle2")]
 position = Vector2(439, 589)
 
-[node name="OverworldEncounters" type="Node2D" parent="."]
+[node name="OverworldEncounters" type="Node2D" parent="Entities"]
 
-[node name="Points" type="Node2D" parent="."]
+[node name="Data" type="Node2D" parent="."]
 
-[node name="Cave12Bottom" type="Node2D" parent="Points"]
-position = Vector2(439, 589)
+[node name="Collision" type="StaticBody2D" parent="Data"]
+modulate = Color(0, 1, 0, 1)
+position = Vector2(0, 1)
+collision_layer = 4
+collision_mask = 0
 
-[node name="Warps" type="Node2D" parent="."]
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Data/Collision"]
+position = Vector2(-45, -185)
+polygon = PackedVector2Array(507, 794, 507, 609, 548, 609, 613, 544, 613, 416, 548, 351, 420, 351, 355, 416, 355, 544, 420, 609, 461, 609, 461, 794, 213, 794, 213, 288, 749, 288, 749, 848, 213, 848, 213, 794)
 
-[node name="WarpToRiver" type="Area2D" parent="Warps"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Data/Collision"]
+polygon = PackedVector2Array(407, 231, 471, 231, 503, 263, 503, 327, 471, 359, 407, 359, 375, 327, 375, 263)
+
+[node name="Warps" type="Node2D" parent="Data"]
+
+[node name="WarpToRiver" type="Area2D" parent="Data/Warps"]
 position = Vector2(423, 616)
 collision_layer = 0
 script = ExtResource("4_wixns")
@@ -36,24 +50,11 @@ area = 9
 spawn_point = "Cave10Top"
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/WarpToRiver"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Data/Warps/WarpToRiver"]
 position = Vector2(16, -8.5)
 shape = SubResource("RectangleShape2D_80ub1")
 
-[node name="World" type="StaticBody2D" parent="."]
-position = Vector2(-96, 150)
-collision_layer = 4
-collision_mask = 0
+[node name="Points" type="Node2D" parent="Data"]
 
-[node name="Collision" type="StaticBody2D" parent="."]
-modulate = Color(0, 1, 0, 1)
-position = Vector2(0, 1)
-collision_layer = 4
-collision_mask = 0
-
-[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Collision"]
-position = Vector2(-45, -185)
-polygon = PackedVector2Array(507, 794, 507, 609, 548, 609, 613, 544, 613, 416, 548, 351, 420, 351, 355, 416, 355, 544, 420, 609, 461, 609, 461, 794, 213, 794, 213, 288, 749, 288, 749, 848, 213, 848, 213, 794)
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collision"]
-polygon = PackedVector2Array(407, 231, 471, 231, 503, 263, 503, 327, 471, 359, 407, 359, 375, 327, 375, 263)
+[node name="Cave12Bottom" type="Node2D" parent="Data/Points"]
+position = Vector2(439, 589)

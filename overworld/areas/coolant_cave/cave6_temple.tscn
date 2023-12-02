@@ -21,8 +21,8 @@
 [ext_resource type="PackedScene" uid="uid://cty2bys7mmd6k" path="res://overworld/interactables/chest.tscn" id="14_h5edw"]
 [ext_resource type="Resource" uid="uid://defy52ihj1vmu" path="res://dialogue/test.dialogue" id="15_vrvhg"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_pim6k"]
-radius = 188.003
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gpmta"]
+size = Vector2(32, 16)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a4hac"]
 radius = 17.0
@@ -33,42 +33,146 @@ size = Vector2(7, 78)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5a52f"]
 size = Vector2(79, 8)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gpmta"]
-size = Vector2(32, 16)
+[sub_resource type="CircleShape2D" id="CircleShape2D_pim6k"]
+radius = 188.003
 
 [node name="Area" type="Node2D"]
 script = ExtResource("1_jvkfo")
 area_enum = 5
 camera_zoom = 0.5
 
-[node name="Map" type="Sprite2D" parent="."]
+[node name="Base" type="Node2D" parent="."]
+
+[node name="Map" type="Sprite2D" parent="Base"]
 z_index = 100
 texture = ExtResource("2_v2f4j")
 centered = false
 
-[node name="Water" type="Sprite2D" parent="."]
+[node name="Water" type="Sprite2D" parent="Base"]
 modulate = Color(1, 1, 1, 0.74902)
 z_index = 150
 texture = ExtResource("3_873o4")
 centered = false
 
-[node name="Whirlpool" parent="." instance=ExtResource("4_uqqbu")]
-z_index = 160
-position = Vector2(384, 620)
-CIRCLE_COLOR = null
-NUM_CIRCLES = null
-CIRCLE_SPEED = null
-SUCTION_STRENGTH = 90.0
+[node name="ForegroundElements" type="Node2D" parent="Base"]
+z_index = 210
 
-[node name="SuckCircle" parent="Whirlpool" index="0"]
-shape = SubResource("CircleShape2D_pim6k")
+[node name="Wall" parent="Base/ForegroundElements" instance=ExtResource("4_0sjwi")]
+position = Vector2(657, 227)
+texture = ExtResource("6_lw8og")
+active = false
 
-[node name="Player" parent="." instance=ExtResource("3_u0psi")]
+[node name="CollisionPolygon2D" parent="Base/ForegroundElements/Wall/FadeZone" index="0"]
+visible = false
+polygon = PackedVector2Array(-25, -32, 300, -32, 300, 45, 0, 45, 0, 61, -25, 61)
+
+[node name="Pillar1" parent="Base/ForegroundElements" instance=ExtResource("4_0sjwi")]
+position = Vector2(1257, 677)
+texture = ExtResource("5_c0klj")
+active = false
+
+[node name="CollisionPolygon2D" parent="Base/ForegroundElements/Pillar1/FadeZone" index="0"]
+visible = false
+polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
+
+[node name="Pillar2" parent="Base/ForegroundElements" instance=ExtResource("4_0sjwi")]
+position = Vector2(957, 527)
+texture = ExtResource("5_c0klj")
+active = false
+
+[node name="CollisionPolygon2D" parent="Base/ForegroundElements/Pillar2/FadeZone" index="0"]
+visible = false
+polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
+
+[node name="Pillar3" parent="Base/ForegroundElements" instance=ExtResource("4_0sjwi")]
+position = Vector2(957, 377)
+texture = ExtResource("5_c0klj")
+active = false
+
+[node name="CollisionPolygon2D" parent="Base/ForegroundElements/Pillar3/FadeZone" index="0"]
+visible = false
+polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
+
+[node name="Pillar4" parent="Base/ForegroundElements" instance=ExtResource("4_0sjwi")]
+position = Vector2(1107, 378)
+texture = ExtResource("5_c0klj")
+active = false
+
+[node name="CollisionPolygon2D" parent="Base/ForegroundElements/Pillar4/FadeZone" index="0"]
+visible = false
+polygon = PackedVector2Array(-77, -33, 150, -33, 150, 44, -77, 44)
+
+[node name="Pillar5" parent="Base/ForegroundElements" instance=ExtResource("4_0sjwi")]
+position = Vector2(1257, 377)
+texture = ExtResource("5_c0klj")
+active = false
+
+[node name="CollisionPolygon2D" parent="Base/ForegroundElements/Pillar5/FadeZone" index="0"]
+visible = false
+polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
+
+[node name="Pillar6" parent="Base/ForegroundElements" instance=ExtResource("4_0sjwi")]
+position = Vector2(1107, 227)
+texture = ExtResource("5_c0klj")
+active = false
+
+[node name="CollisionPolygon2D" parent="Base/ForegroundElements/Pillar6/FadeZone" index="0"]
+visible = false
+polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
+
+[node name="Pillar7" parent="Base/ForegroundElements" instance=ExtResource("4_0sjwi")]
+position = Vector2(957, 227)
+texture = ExtResource("5_c0klj")
+active = false
+
+[node name="CollisionPolygon2D" parent="Base/ForegroundElements/Pillar7/FadeZone" index="0"]
+visible = false
+polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
+
+[node name="Pillar8" parent="Base/ForegroundElements" instance=ExtResource("4_0sjwi")]
+position = Vector2(957, 77)
+texture = ExtResource("5_c0klj")
+active = false
+
+[node name="CollisionPolygon2D" parent="Base/ForegroundElements/Pillar8/FadeZone" index="0"]
+visible = false
+polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
+
+[node name="Pillar9" parent="Base/ForegroundElements" instance=ExtResource("4_0sjwi")]
+position = Vector2(1107, 77)
+texture = ExtResource("5_c0klj")
+active = false
+
+[node name="CollisionPolygon2D" parent="Base/ForegroundElements/Pillar9/FadeZone" index="0"]
+visible = false
+polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
+
+[node name="LongPillar" parent="Base/ForegroundElements" instance=ExtResource("4_0sjwi")]
+position = Vector2(1107, 527)
+texture = ExtResource("6_x6q01")
+active = false
+
+[node name="CollisionPolygon2D" parent="Base/ForegroundElements/LongPillar/FadeZone" index="0"]
+visible = false
+polygon = PackedVector2Array(-77, -32, 300, -32, 300, 45, -77, 45)
+
+[node name="LongPillar2" parent="Base/ForegroundElements" instance=ExtResource("4_0sjwi")]
+position = Vector2(957, 677)
+texture = ExtResource("7_y32nk")
+active = false
+
+[node name="CollisionPolygon2D" parent="Base/ForegroundElements/LongPillar2/FadeZone" index="0"]
+visible = false
+polygon = PackedVector2Array(-77, -32, 299, -32, 300, 45, -77, 45)
+
+[node name="Entities" type="Node2D" parent="."]
+
+[node name="Player" parent="Entities" instance=ExtResource("3_u0psi")]
 position = Vector2(463, 280)
 
-[node name="OverworldEncounters" type="Node2D" parent="."]
+[node name="OverworldEncounters" type="Node2D" parent="Entities"]
 
-[node name="Gelif" parent="OverworldEncounters" instance=ExtResource("6_eu742")]
+[node name="Gelif" parent="Entities/OverworldEncounters" instance=ExtResource("6_eu742")]
 position = Vector2(471, 714)
 collision_mask = 532
 script = ExtResource("7_um4l4")
@@ -86,7 +190,7 @@ mon3Level = 0
 mon4Type = 0
 mon4Level = 0
 
-[node name="Gelif2" parent="OverworldEncounters" instance=ExtResource("6_eu742")]
+[node name="Gelif2" parent="Entities/OverworldEncounters" instance=ExtResource("6_eu742")]
 position = Vector2(405, 510)
 collision_mask = 532
 script = ExtResource("7_um4l4")
@@ -104,7 +208,7 @@ mon3Level = 0
 mon4Type = 0
 mon4Level = 0
 
-[node name="Gelif3" parent="OverworldEncounters" instance=ExtResource("6_eu742")]
+[node name="Gelif3" parent="Entities/OverworldEncounters" instance=ExtResource("6_eu742")]
 position = Vector2(260, 677)
 collision_mask = 532
 script = ExtResource("7_um4l4")
@@ -122,7 +226,7 @@ mon3Level = 0
 mon4Type = 0
 mon4Level = 0
 
-[node name="Chorse6" parent="OverworldEncounters" instance=ExtResource("8_trmej")]
+[node name="Chorse6" parent="Entities/OverworldEncounters" instance=ExtResource("8_trmej")]
 position = Vector2(1370, 229)
 collision_layer = 34
 collision_mask = 532
@@ -141,7 +245,7 @@ mon3Level = 0
 mon4Type = 0
 mon4Level = 0
 
-[node name="Chorse5" parent="OverworldEncounters" instance=ExtResource("8_trmej")]
+[node name="Chorse5" parent="Entities/OverworldEncounters" instance=ExtResource("8_trmej")]
 position = Vector2(1213, 745)
 collision_layer = 34
 collision_mask = 532
@@ -160,7 +264,7 @@ mon3Level = 0
 mon4Type = 0
 mon4Level = 0
 
-[node name="Chorse7" parent="OverworldEncounters" instance=ExtResource("8_trmej")]
+[node name="Chorse7" parent="Entities/OverworldEncounters" instance=ExtResource("8_trmej")]
 position = Vector2(1058, 384)
 collision_layer = 34
 collision_mask = 532
@@ -179,7 +283,7 @@ mon3Level = 0
 mon4Type = 0
 mon4Level = 0
 
-[node name="Chorse8" parent="OverworldEncounters" instance=ExtResource("8_trmej")]
+[node name="Chorse8" parent="Entities/OverworldEncounters" instance=ExtResource("8_trmej")]
 position = Vector2(918, 85)
 collision_layer = 34
 collision_mask = 532
@@ -198,7 +302,7 @@ mon3Level = 0
 mon4Type = 0
 mon4Level = 0
 
-[node name="Chorse9" parent="OverworldEncounters" instance=ExtResource("8_trmej")]
+[node name="Chorse9" parent="Entities/OverworldEncounters" instance=ExtResource("8_trmej")]
 position = Vector2(1220, 526)
 collision_layer = 34
 collision_mask = 532
@@ -217,7 +321,7 @@ mon3Level = 0
 mon4Type = 0
 mon4Level = 0
 
-[node name="Pascalican" parent="OverworldEncounters" instance=ExtResource("9_jnuf3")]
+[node name="Pascalican" parent="Entities/OverworldEncounters" instance=ExtResource("9_jnuf3")]
 position = Vector2(156, 408)
 script = ExtResource("10_i4e28")
 mon1Type = 4
@@ -229,7 +333,7 @@ mon3Level = 0
 mon4Type = 0
 mon4Level = 0
 
-[node name="Pascalican2" parent="OverworldEncounters" instance=ExtResource("9_jnuf3")]
+[node name="Pascalican2" parent="Entities/OverworldEncounters" instance=ExtResource("9_jnuf3")]
 position = Vector2(495, 353)
 script = ExtResource("10_i4e28")
 mon1Type = 4
@@ -241,392 +345,133 @@ mon3Level = 0
 mon4Type = 0
 mon4Level = 0
 
-[node name="WaterFlows" type="Node2D" parent="."]
-z_index = 205
+[node name="Ladder" parent="Entities" instance=ExtResource("13_612sg")]
+position = Vector2(378, 300)
+area = 7
+spawn_point = "Cave8Ladder"
+LABEL_TEXT = "Climb"
 
-[node name="WaterFlow1" parent="WaterFlows" instance=ExtResource("10_j85m8")]
-position = Vector2(1257, 795)
-direction = 2
-metadata/_edit_group_ = true
+[node name="CollisionPolygon2D" parent="Entities/Ladder/Collision" index="0"]
+polygon = PackedVector2Array(-70.2594, 18.9714, 31.0154, 18.9714, 47.8945, 12.5176, 47.8945, -0.389893, 31.0154, -6.84369, -70.2594, -6.84369, -87.1385, -0.389893, -87.1385, 12.5176)
 
-[node name="Collision" parent="WaterFlows/WaterFlow1" index="0"]
-polygon = PackedVector2Array(0, -27, 73, -27, 73, 77, 0, 77)
+[node name="CollisionShape2D" parent="Entities/Ladder/InteractionArea" index="0"]
+position = Vector2(1, 0)
+shape = SubResource("RectangleShape2D_gpmta")
 
-[node name="ParticleZone" parent="WaterFlows/WaterFlow1" index="1"]
-polygon = PackedVector2Array(-2, -27, 76, -27, 76, 76, -2, 76)
+[node name="Label" parent="Entities/Ladder" index="3"]
+offset_left = -59.0
+offset_top = -27.0
+offset_right = 64.0
+offset_bottom = -4.0
+text = "[center][E] Climb[/center]"
 
-[node name="WaterFlow14" parent="WaterFlows" instance=ExtResource("10_j85m8")]
-position = Vector2(1332, 725)
-direction = 1
-metadata/_edit_group_ = true
+[node name="Chest" parent="Entities" instance=ExtResource("14_h5edw")]
+position = Vector2(283, 276)
+chest_id = "temple6testchest"
+dialogue_resource = ExtResource("15_vrvhg")
+dialogue_start = "test_chest"
 
-[node name="Collision" parent="WaterFlows/WaterFlow14" index="0"]
-polygon = PackedVector2Array(-2, -3, 75, -3, 75, 70, -2, 70)
+[node name="Data" type="Node2D" parent="."]
 
-[node name="ParticleZone" parent="WaterFlows/WaterFlow14" index="1"]
-polygon = PackedVector2Array(-2, -6, 75, -6, 75, 72, -2, 72)
+[node name="MonCollision" type="StaticBody2D" parent="Data"]
+modulate = Color(0.278431, 1, 1, 1)
+z_index = 2000
+position = Vector2(-96, 150)
+collision_layer = 512
+collision_mask = 0
 
-[node name="WaterFlow15" parent="WaterFlows" instance=ExtResource("10_j85m8")]
-position = Vector2(1032, 575)
-direction = 1
-metadata/_edit_group_ = true
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Data/MonCollision"]
+polygon = PackedVector2Array(1353, 722, 1353, 495, 1276, 495, 1276, 722, 1261, 722, 1264, 480, 1377, 480, 1375, 737, 1261, 737, 1261, 722)
 
-[node name="Collision" parent="WaterFlows/WaterFlow15" index="0"]
-polygon = PackedVector2Array(-2, -3, 75, -3, 75, 70, -2, 70)
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Data/MonCollision"]
+polygon = PackedVector2Array(975, -29, 1054, -29, 1054, -149, 1354, -150, 1354, 45, 1053, 45, 976, 45)
 
-[node name="ParticleZone" parent="WaterFlows/WaterFlow15" index="1"]
-polygon = PackedVector2Array(-2, -6, 75, -6, 75, 72, -2, 72)
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Data/MonCollision"]
+polygon = PackedVector2Array(976, 20, 976, 161, 951, 158, 946, 40)
 
-[node name="WaterFlow18" parent="WaterFlows" instance=ExtResource("10_j85m8")]
-position = Vector2(882, 575)
-direction = 1
-metadata/_edit_group_ = true
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Data/MonCollision"]
+polygon = PackedVector2Array(1353, 167, 1426, 168, 1426, 449, 1353, 450)
 
-[node name="Collision" parent="WaterFlows/WaterFlow18" index="0"]
-polygon = PackedVector2Array(-2, -3, 75, -3, 75, 70, -2, 70)
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="Data/MonCollision"]
+polygon = PackedVector2Array(975, 422, 1204, 423, 1205, 495, 975, 495)
 
-[node name="ParticleZone" parent="WaterFlows/WaterFlow18" index="1"]
-polygon = PackedVector2Array(-2, -6, 75, -6, 75, 72, -2, 72)
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="Data/MonCollision"]
+polygon = PackedVector2Array(1426, 194, 1503, 195, 1504, 143, 1425, 147)
 
-[node name="WaterFlow16" parent="WaterFlows" instance=ExtResource("10_j85m8")]
-position = Vector2(1032, 425)
-direction = 1
-metadata/_edit_group_ = true
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="Data/MonCollision"]
+polygon = PackedVector2Array(1425, -150, 1426, -37, 1505, -37, 1505, -150)
 
-[node name="Collision" parent="WaterFlows/WaterFlow16" index="0"]
-polygon = PackedVector2Array(-2, -3, 75, -3, 75, 70, -2, 70)
+[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="Data/MonCollision"]
+polygon = PackedVector2Array(652, 647, 721, 482, 673, 321, 823, 340, 812, 669)
 
-[node name="ParticleZone" parent="WaterFlows/WaterFlow16" index="1"]
-polygon = PackedVector2Array(-2, -6, 75, -6, 75, 72, -2, 72)
+[node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="Data/MonCollision"]
+polygon = PackedVector2Array(265, 330, 235, 493, 300, 655, 182, 618, 191, 364)
 
-[node name="WaterFlow17" parent="WaterFlows" instance=ExtResource("10_j85m8")]
-position = Vector2(882, 425)
-direction = 0
-metadata/_edit_group_ = true
+[node name="CollisionPolygon2D10" type="CollisionPolygon2D" parent="Data/MonCollision"]
+polygon = PackedVector2Array(1568, 644, 1651, 644, 1662, 744, 1570, 736)
 
-[node name="Collision" parent="WaterFlows/WaterFlow17" index="0"]
-polygon = PackedVector2Array(-2, -3, 75, -3, 75, 70, -2, 70)
+[node name="Collision" type="StaticBody2D" parent="Data"]
+modulate = Color(0, 1, 0, 1)
+position = Vector2(-96, 150)
+collision_layer = 4
+collision_mask = 0
 
-[node name="ParticleZone" parent="WaterFlows/WaterFlow17" index="1"]
-polygon = PackedVector2Array(-2, -6, 75, -6, 75, 72, -2, 72)
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Data/Collision"]
+polygon = PackedVector2Array(1053, 645, 1126, 645, 1126, 607, 1203, 607, 1203, 645, 1276, 645, 1276, 608, 1276, 572, 1053, 572)
 
-[node name="WaterFlow20" parent="WaterFlows" instance=ExtResource("10_j85m8")]
-position = Vector2(1182, 424)
-direction = 0
-metadata/_edit_group_ = true
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Data/Collision"]
+polygon = PackedVector2Array(1353, 572, 1353, 645, 1426, 645, 1426, 572)
 
-[node name="Collision" parent="WaterFlows/WaterFlow20" index="0"]
-polygon = PackedVector2Array(-2, -3, 75, -3, 75, 70, -2, 70)
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Data/Collision"]
+polygon = PackedVector2Array(1426, 495, 1426, 422, 1203, 422, 1203, 495)
 
-[node name="ParticleZone" parent="WaterFlows/WaterFlow20" index="1"]
-polygon = PackedVector2Array(-2, -6, 75, -6, 75, 72, -2, 72)
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Data/Collision"]
+polygon = PackedVector2Array(1053, 422, 1053, 495, 1126, 495, 1126, 422)
 
-[node name="WaterFlow21" parent="WaterFlows" instance=ExtResource("10_j85m8")]
-position = Vector2(1182, 275)
-direction = 0
-metadata/_edit_group_ = true
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="Data/Collision"]
+polygon = PackedVector2Array(753, 495, 976, 495, 976, 122, 753, 122)
 
-[node name="Collision" parent="WaterFlows/WaterFlow21" index="0"]
-polygon = PackedVector2Array(-2, -3, 75, -3, 75, 70, -2, 70)
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="Data/Collision"]
+polygon = PackedVector2Array(753, 572, 976, 572, 976, 722, 1664, 722, 1663, 645, 1503, 645, 1504, -174, 1424, -174, 1426, 195, 1353, 195, 1353, -105, 976, -105, 976, 45, 199, 45, 199, 573, 376, 662, 377, 798, 96, 798, 96, -213, 1362, -217, 1696, -214, 1697, 490, 1697, 810, 377, 797, 376, 662, 574, 662)
 
-[node name="ParticleZone" parent="WaterFlows/WaterFlow21" index="1"]
-polygon = PackedVector2Array(-2, -6, 75, -6, 75, 72, -2, 72)
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="Data/Collision"]
+polygon = PackedVector2Array(1053, 272, 1053, 345, 1126, 345, 1126, 272)
 
-[node name="WaterFlow22" parent="WaterFlows" instance=ExtResource("10_j85m8")]
-position = Vector2(1032, 275)
-direction = 0
-metadata/_edit_group_ = true
+[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="Data/Collision"]
+polygon = PackedVector2Array(1203, 272, 1276, 272, 1276, 345, 1203, 345)
 
-[node name="Collision" parent="WaterFlows/WaterFlow22" index="0"]
-polygon = PackedVector2Array(-2, -3, 75, -3, 75, 70, -2, 70)
+[node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="Data/Collision"]
+polygon = PackedVector2Array(1353, 272, 1426, 272, 1426, 345, 1353, 345)
 
-[node name="ParticleZone" parent="WaterFlows/WaterFlow22" index="1"]
-polygon = PackedVector2Array(-2, -6, 75, -6, 75, 72, -2, 72)
+[node name="CollisionPolygon2D10" type="CollisionPolygon2D" parent="Data/Collision"]
+polygon = PackedVector2Array(1203, 122, 1276, 122, 1276, 195, 1203, 195)
 
-[node name="WaterFlow23" parent="WaterFlows" instance=ExtResource("10_j85m8")]
-position = Vector2(1032, 125)
-direction = 0
-metadata/_edit_group_ = true
+[node name="CollisionPolygon2D11" type="CollisionPolygon2D" parent="Data/Collision"]
+polygon = PackedVector2Array(1053, 122, 1126, 122, 1126, 195, 1053, 195)
 
-[node name="Collision" parent="WaterFlows/WaterFlow23" index="0"]
-polygon = PackedVector2Array(-2, -3, 75, -3, 75, 70, -2, 70)
+[node name="CollisionPolygon2D12" type="CollisionPolygon2D" parent="Data/Collision"]
+polygon = PackedVector2Array(1053, -28, 1126, -28, 1126, 45, 1053, 45)
 
-[node name="ParticleZone" parent="WaterFlows/WaterFlow23" index="1"]
-polygon = PackedVector2Array(-2, -6, 75, -6, 75, 72, -2, 72)
+[node name="CollisionPolygon2D13" type="CollisionPolygon2D" parent="Data/Collision"]
+polygon = PackedVector2Array(1203, -28, 1276, -28, 1276, 45, 1203, 45)
 
-[node name="WaterFlow25" parent="WaterFlows" instance=ExtResource("10_j85m8")]
-position = Vector2(1182, 125)
-direction = 0
-metadata/_edit_group_ = true
+[node name="CollisionPolygon2D14" type="CollisionPolygon2D" parent="Data/Collision"]
+polygon = PackedVector2Array(199, 371, 377, 282, 574, 282, 753, 372, 753, 316, 574, 227, 377, 227, 199, 316)
 
-[node name="Collision" parent="WaterFlows/WaterFlow25" index="0"]
-polygon = PackedVector2Array(-2, -3, 75, -3, 75, 70, -2, 70)
+[node name="Points" type="Node2D" parent="Data"]
 
-[node name="ParticleZone" parent="WaterFlows/WaterFlow25" index="1"]
-polygon = PackedVector2Array(-2, -6, 75, -6, 75, 72, -2, 72)
-
-[node name="WaterFlow19" parent="WaterFlows" instance=ExtResource("10_j85m8")]
-position = Vector2(882, 275)
-direction = 1
-metadata/_edit_group_ = true
-
-[node name="Collision" parent="WaterFlows/WaterFlow19" index="0"]
-polygon = PackedVector2Array(-2, -3, 75, -3, 75, 70, -2, 70)
-
-[node name="ParticleZone" parent="WaterFlows/WaterFlow19" index="1"]
-polygon = PackedVector2Array(-2, -6, 75, -6, 75, 72, -2, 72)
-
-[node name="WaterFlow24" parent="WaterFlows" instance=ExtResource("10_j85m8")]
-position = Vector2(882, 125)
-direction = 1
-metadata/_edit_group_ = true
-
-[node name="Collision" parent="WaterFlows/WaterFlow24" index="0"]
-polygon = PackedVector2Array(-2, -3, 75, -3, 75, 70, -2, 70)
-
-[node name="ParticleZone" parent="WaterFlows/WaterFlow24" index="1"]
-polygon = PackedVector2Array(-2, -6, 75, -6, 75, 72, -2, 72)
-
-[node name="WaterFlow4" parent="WaterFlows" instance=ExtResource("10_j85m8")]
-position = Vector2(1257, 645)
-metadata/_edit_group_ = true
-
-[node name="Collision" parent="WaterFlows/WaterFlow4" index="0"]
-polygon = PackedVector2Array(0, -27, 73, -27, 73, 77, 0, 77)
-
-[node name="ParticleZone" parent="WaterFlows/WaterFlow4" index="1"]
-polygon = PackedVector2Array(-2, -27, 76, -27, 76, 76, -2, 76)
-
-[node name="WaterFlow5" parent="WaterFlows" instance=ExtResource("10_j85m8")]
-position = Vector2(957, 495)
-direction = 2
-metadata/_edit_group_ = true
-
-[node name="Collision" parent="WaterFlows/WaterFlow5" index="0"]
-polygon = PackedVector2Array(0, -27, 73, -27, 73, 77, 0, 77)
-
-[node name="ParticleZone" parent="WaterFlows/WaterFlow5" index="1"]
-polygon = PackedVector2Array(-2, -27, 76, -27, 76, 76, -2, 76)
-
-[node name="WaterFlow9" parent="WaterFlows" instance=ExtResource("10_j85m8")]
-position = Vector2(957, 345)
-metadata/_edit_group_ = true
-
-[node name="Collision" parent="WaterFlows/WaterFlow9" index="0"]
-polygon = PackedVector2Array(0, -27, 73, -27, 73, 77, 0, 77)
-
-[node name="ParticleZone" parent="WaterFlows/WaterFlow9" index="1"]
-polygon = PackedVector2Array(-2, -27, 76, -27, 76, 76, -2, 76)
-
-[node name="WaterFlow10" parent="WaterFlows" instance=ExtResource("10_j85m8")]
-position = Vector2(1107, 345)
-metadata/_edit_group_ = true
-
-[node name="Collision" parent="WaterFlows/WaterFlow10" index="0"]
-polygon = PackedVector2Array(0, -27, 73, -27, 73, 77, 0, 77)
-
-[node name="ParticleZone" parent="WaterFlows/WaterFlow10" index="1"]
-polygon = PackedVector2Array(-2, -27, 76, -27, 76, 76, -2, 76)
-
-[node name="WaterFlow11" parent="WaterFlows" instance=ExtResource("10_j85m8")]
-position = Vector2(1107, 195)
-metadata/_edit_group_ = true
-
-[node name="Collision" parent="WaterFlows/WaterFlow11" index="0"]
-polygon = PackedVector2Array(0, -27, 73, -27, 73, 77, 0, 77)
-
-[node name="ParticleZone" parent="WaterFlows/WaterFlow11" index="1"]
-polygon = PackedVector2Array(-2, -27, 76, -27, 76, 76, -2, 76)
-
-[node name="LongTopFlow" parent="WaterFlows" instance=ExtResource("10_j85m8")]
-position = Vector2(1107, 45)
-PARTICLE_COUNT = 120
-direction = 2
-metadata/_edit_group_ = true
-
-[node name="Collision" parent="WaterFlows/LongTopFlow" index="0"]
-polygon = PackedVector2Array(-149, -26, 151, -27, 150, 77, -149, 77)
-
-[node name="ParticleZone" parent="WaterFlows/LongTopFlow" index="1"]
-polygon = PackedVector2Array(-153, -26, 151, -26, 151, 76, -153, 76)
-
-[node name="WaterFlow12" parent="WaterFlows" instance=ExtResource("10_j85m8")]
-position = Vector2(957, 195)
-metadata/_edit_group_ = true
-
-[node name="Collision" parent="WaterFlows/WaterFlow12" index="0"]
-polygon = PackedVector2Array(0, -27, 73, -27, 73, 77, 0, 77)
-
-[node name="ParticleZone" parent="WaterFlows/WaterFlow12" index="1"]
-polygon = PackedVector2Array(-2, -27, 76, -27, 76, 76, -2, 76)
-
-[node name="WaterFlow6" parent="WaterFlows" instance=ExtResource("10_j85m8")]
-position = Vector2(1107, 495)
-metadata/_edit_group_ = true
-
-[node name="Collision" parent="WaterFlows/WaterFlow6" index="0"]
-polygon = PackedVector2Array(0, -27, 73, -27, 73, 77, 0, 77)
-
-[node name="ParticleZone" parent="WaterFlows/WaterFlow6" index="1"]
-polygon = PackedVector2Array(-2, -27, 76, -27, 76, 76, -2, 76)
-
-[node name="WaterFlow7" parent="WaterFlows" instance=ExtResource("10_j85m8")]
-position = Vector2(1257, 495)
-metadata/_edit_group_ = true
-
-[node name="Collision" parent="WaterFlows/WaterFlow7" index="0"]
-polygon = PackedVector2Array(0, -27, 73, -27, 73, 77, 0, 77)
-
-[node name="ParticleZone" parent="WaterFlows/WaterFlow7" index="1"]
-polygon = PackedVector2Array(-2, -27, 76, -27, 76, 76, -2, 76)
-
-[node name="WaterFlow8" parent="WaterFlows" instance=ExtResource("10_j85m8")]
-position = Vector2(1257, 345)
-direction = 2
-metadata/_edit_group_ = true
-
-[node name="Collision" parent="WaterFlows/WaterFlow8" index="0"]
-polygon = PackedVector2Array(0, -27, 73, -27, 73, 77, 0, 77)
-
-[node name="ParticleZone" parent="WaterFlows/WaterFlow8" index="1"]
-polygon = PackedVector2Array(-2, -27, 76, -27, 76, 76, -2, 76)
-
-[node name="LongBottomFlow" parent="WaterFlows" instance=ExtResource("10_j85m8")]
-position = Vector2(957, 795)
-PARTICLE_COUNT = 90
-metadata/_edit_group_ = true
-
-[node name="Collision" parent="WaterFlows/LongBottomFlow" index="0"]
-polygon = PackedVector2Array(0, -1, 223, 0, 223, 77, 0, 77)
-
-[node name="ParticleZone" parent="WaterFlows/LongBottomFlow" index="1"]
-polygon = PackedVector2Array(-2, -27, 226, -27, 226, 76, -2, 76)
-
-[node name="ForegroundElements" type="Node2D" parent="."]
-z_index = 210
-
-[node name="Wall" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
-position = Vector2(657, 227)
-texture = ExtResource("6_lw8og")
-active = false
-
-[node name="CollisionPolygon2D" parent="ForegroundElements/Wall/FadeZone" index="0"]
-visible = false
-polygon = PackedVector2Array(-25, -32, 300, -32, 300, 45, 0, 45, 0, 61, -25, 61)
-
-[node name="Pillar1" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
-position = Vector2(1257, 677)
-texture = ExtResource("5_c0klj")
-active = false
-
-[node name="CollisionPolygon2D" parent="ForegroundElements/Pillar1/FadeZone" index="0"]
-visible = false
-polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
-
-[node name="Pillar2" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
-position = Vector2(957, 527)
-texture = ExtResource("5_c0klj")
-active = false
-
-[node name="CollisionPolygon2D" parent="ForegroundElements/Pillar2/FadeZone" index="0"]
-visible = false
-polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
-
-[node name="Pillar3" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
-position = Vector2(957, 377)
-texture = ExtResource("5_c0klj")
-active = false
-
-[node name="CollisionPolygon2D" parent="ForegroundElements/Pillar3/FadeZone" index="0"]
-visible = false
-polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
-
-[node name="Pillar4" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
-position = Vector2(1107, 378)
-texture = ExtResource("5_c0klj")
-active = false
-
-[node name="CollisionPolygon2D" parent="ForegroundElements/Pillar4/FadeZone" index="0"]
-visible = false
-polygon = PackedVector2Array(-77, -33, 150, -33, 150, 44, -77, 44)
-
-[node name="Pillar5" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
-position = Vector2(1257, 377)
-texture = ExtResource("5_c0klj")
-active = false
-
-[node name="CollisionPolygon2D" parent="ForegroundElements/Pillar5/FadeZone" index="0"]
-visible = false
-polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
-
-[node name="Pillar6" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
-position = Vector2(1107, 227)
-texture = ExtResource("5_c0klj")
-active = false
-
-[node name="CollisionPolygon2D" parent="ForegroundElements/Pillar6/FadeZone" index="0"]
-visible = false
-polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
-
-[node name="Pillar7" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
-position = Vector2(957, 227)
-texture = ExtResource("5_c0klj")
-active = false
-
-[node name="CollisionPolygon2D" parent="ForegroundElements/Pillar7/FadeZone" index="0"]
-visible = false
-polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
-
-[node name="Pillar8" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
-position = Vector2(957, 77)
-texture = ExtResource("5_c0klj")
-active = false
-
-[node name="CollisionPolygon2D" parent="ForegroundElements/Pillar8/FadeZone" index="0"]
-visible = false
-polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
-
-[node name="Pillar9" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
-position = Vector2(1107, 77)
-texture = ExtResource("5_c0klj")
-active = false
-
-[node name="CollisionPolygon2D" parent="ForegroundElements/Pillar9/FadeZone" index="0"]
-visible = false
-polygon = PackedVector2Array(-77, -32, 150, -32, 150, 45, -77, 45)
-
-[node name="LongPillar" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
-position = Vector2(1107, 527)
-texture = ExtResource("6_x6q01")
-active = false
-
-[node name="CollisionPolygon2D" parent="ForegroundElements/LongPillar/FadeZone" index="0"]
-visible = false
-polygon = PackedVector2Array(-77, -32, 300, -32, 300, 45, -77, 45)
-
-[node name="LongPillar2" parent="ForegroundElements" instance=ExtResource("4_0sjwi")]
-position = Vector2(957, 677)
-texture = ExtResource("7_y32nk")
-active = false
-
-[node name="CollisionPolygon2D" parent="ForegroundElements/LongPillar2/FadeZone" index="0"]
-visible = false
-polygon = PackedVector2Array(-77, -32, 299, -32, 300, 45, -77, 45)
-
-[node name="Points" type="Node2D" parent="."]
-
-[node name="Cave6Top" type="Node2D" parent="Points"]
+[node name="Cave6Top" type="Node2D" parent="Data/Points"]
 position = Vector2(1368, 16)
 
-[node name="Cave6Ladder" type="Node2D" parent="Points"]
+[node name="Cave6Ladder" type="Node2D" parent="Data/Points"]
 position = Vector2(379, 272)
 
-[node name="Cave6Right" type="Node2D" parent="Points"]
+[node name="Cave6Right" type="Node2D" parent="Data/Points"]
 position = Vector2(1536, 832)
 
-[node name="Warps" type="Node2D" parent="."]
+[node name="Warps" type="Node2D" parent="Data"]
 
-[node name="WarpToWhirlcavern" type="Area2D" parent="Warps"]
+[node name="WarpToWhirlcavern" type="Area2D" parent="Data/Warps"]
 position = Vector2(372, 641)
 collision_layer = 0
 script = ExtResource("4_n8bn1")
@@ -634,11 +479,11 @@ area = 6
 spawn_point = "Cave7Top"
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/WarpToWhirlcavern"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Data/Warps/WarpToWhirlcavern"]
 position = Vector2(12, -17)
 shape = SubResource("CircleShape2D_a4hac")
 
-[node name="WarpToRuins2D" type="Area2D" parent="Warps"]
+[node name="WarpToRuins2D" type="Area2D" parent="Data/Warps"]
 position = Vector2(1547, 813)
 collision_layer = 0
 script = ExtResource("4_n8bn1")
@@ -646,11 +491,11 @@ area = 4
 spawn_point = "Cave5Left"
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/WarpToRuins2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Data/Warps/WarpToRuins2D"]
 position = Vector2(10.5, 21)
 shape = SubResource("RectangleShape2D_waod4")
 
-[node name="WarpToTidal" type="Area2D" parent="Warps"]
+[node name="WarpToTidal" type="Area2D" parent="Data/Warps"]
 position = Vector2(1336, -5)
 collision_layer = 0
 script = ExtResource("4_n8bn1")
@@ -658,158 +503,318 @@ area = 8
 spawn_point = "Cave9Bottom"
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/WarpToTidal"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Data/Warps/WarpToTidal"]
 position = Vector2(32.5, 1)
 shape = SubResource("RectangleShape2D_5a52f")
 
-[node name="Collision" type="StaticBody2D" parent="."]
-visible = false
-modulate = Color(0, 1, 0, 1)
-position = Vector2(-96, 150)
-collision_layer = 4
-collision_mask = 0
+[node name="WaterFlows" type="Node2D" parent="Data"]
+z_index = 205
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collision"]
-polygon = PackedVector2Array(1053, 645, 1126, 645, 1126, 607, 1203, 607, 1203, 645, 1276, 645, 1276, 608, 1276, 572, 1053, 572)
+[node name="WaterFlow1" parent="Data/WaterFlows" instance=ExtResource("10_j85m8")]
+position = Vector2(1257, 795)
+direction = 2
+metadata/_edit_group_ = true
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Collision"]
-polygon = PackedVector2Array(1353, 572, 1353, 645, 1426, 645, 1426, 572)
+[node name="Collision" parent="Data/WaterFlows/WaterFlow1" index="0"]
+polygon = PackedVector2Array(0, -27, 73, -27, 73, 77, 0, 77)
 
-[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Collision"]
-polygon = PackedVector2Array(1426, 495, 1426, 422, 1203, 422, 1203, 495)
+[node name="ParticleZone" parent="Data/WaterFlows/WaterFlow1" index="1"]
+polygon = PackedVector2Array(-2, -27, 76, -27, 76, 76, -2, 76)
 
-[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Collision"]
-polygon = PackedVector2Array(1053, 422, 1053, 495, 1126, 495, 1126, 422)
+[node name="WaterFlow14" parent="Data/WaterFlows" instance=ExtResource("10_j85m8")]
+position = Vector2(1332, 725)
+direction = 1
+metadata/_edit_group_ = true
 
-[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="Collision"]
-polygon = PackedVector2Array(753, 495, 976, 495, 976, 122, 753, 122)
+[node name="Collision" parent="Data/WaterFlows/WaterFlow14" index="0"]
+polygon = PackedVector2Array(-2, -3, 75, -3, 75, 70, -2, 70)
 
-[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="Collision"]
-polygon = PackedVector2Array(753, 572, 976, 572, 976, 722, 1664, 722, 1663, 645, 1503, 645, 1504, -174, 1424, -174, 1426, 195, 1353, 195, 1353, -105, 976, -105, 976, 45, 199, 45, 199, 573, 376, 662, 377, 798, 96, 798, 96, -213, 1362, -217, 1696, -214, 1697, 490, 1697, 810, 377, 797, 376, 662, 574, 662)
+[node name="ParticleZone" parent="Data/WaterFlows/WaterFlow14" index="1"]
+polygon = PackedVector2Array(-2, -6, 75, -6, 75, 72, -2, 72)
 
-[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="Collision"]
-polygon = PackedVector2Array(1053, 272, 1053, 345, 1126, 345, 1126, 272)
+[node name="WaterFlow15" parent="Data/WaterFlows" instance=ExtResource("10_j85m8")]
+position = Vector2(1032, 575)
+direction = 1
+metadata/_edit_group_ = true
 
-[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="Collision"]
-polygon = PackedVector2Array(1203, 272, 1276, 272, 1276, 345, 1203, 345)
+[node name="Collision" parent="Data/WaterFlows/WaterFlow15" index="0"]
+polygon = PackedVector2Array(-2, -3, 75, -3, 75, 70, -2, 70)
 
-[node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="Collision"]
-polygon = PackedVector2Array(1353, 272, 1426, 272, 1426, 345, 1353, 345)
+[node name="ParticleZone" parent="Data/WaterFlows/WaterFlow15" index="1"]
+polygon = PackedVector2Array(-2, -6, 75, -6, 75, 72, -2, 72)
 
-[node name="CollisionPolygon2D10" type="CollisionPolygon2D" parent="Collision"]
-polygon = PackedVector2Array(1203, 122, 1276, 122, 1276, 195, 1203, 195)
+[node name="WaterFlow18" parent="Data/WaterFlows" instance=ExtResource("10_j85m8")]
+position = Vector2(882, 575)
+direction = 1
+metadata/_edit_group_ = true
 
-[node name="CollisionPolygon2D11" type="CollisionPolygon2D" parent="Collision"]
-polygon = PackedVector2Array(1053, 122, 1126, 122, 1126, 195, 1053, 195)
+[node name="Collision" parent="Data/WaterFlows/WaterFlow18" index="0"]
+polygon = PackedVector2Array(-2, -3, 75, -3, 75, 70, -2, 70)
 
-[node name="CollisionPolygon2D12" type="CollisionPolygon2D" parent="Collision"]
-polygon = PackedVector2Array(1053, -28, 1126, -28, 1126, 45, 1053, 45)
+[node name="ParticleZone" parent="Data/WaterFlows/WaterFlow18" index="1"]
+polygon = PackedVector2Array(-2, -6, 75, -6, 75, 72, -2, 72)
 
-[node name="CollisionPolygon2D13" type="CollisionPolygon2D" parent="Collision"]
-polygon = PackedVector2Array(1203, -28, 1276, -28, 1276, 45, 1203, 45)
+[node name="WaterFlow16" parent="Data/WaterFlows" instance=ExtResource("10_j85m8")]
+position = Vector2(1032, 425)
+direction = 1
+metadata/_edit_group_ = true
 
-[node name="CollisionPolygon2D14" type="CollisionPolygon2D" parent="Collision"]
-polygon = PackedVector2Array(199, 371, 377, 282, 574, 282, 753, 372, 753, 316, 574, 227, 377, 227, 199, 316)
+[node name="Collision" parent="Data/WaterFlows/WaterFlow16" index="0"]
+polygon = PackedVector2Array(-2, -3, 75, -3, 75, 70, -2, 70)
 
-[node name="WarpInteractable" parent="." instance=ExtResource("13_612sg")]
-position = Vector2(378, 300)
-area = 7
-spawn_point = "Cave8Ladder"
-LABEL_TEXT = "Climb"
+[node name="ParticleZone" parent="Data/WaterFlows/WaterFlow16" index="1"]
+polygon = PackedVector2Array(-2, -6, 75, -6, 75, 72, -2, 72)
 
-[node name="CollisionPolygon2D" parent="WarpInteractable/Collision" index="0"]
-polygon = PackedVector2Array(-70.2594, 18.9714, 31.0154, 18.9714, 47.8945, 12.5176, 47.8945, -0.389893, 31.0154, -6.84369, -70.2594, -6.84369, -87.1385, -0.389893, -87.1385, 12.5176)
+[node name="WaterFlow17" parent="Data/WaterFlows" instance=ExtResource("10_j85m8")]
+position = Vector2(882, 425)
+direction = 0
+metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" parent="WarpInteractable/InteractionArea" index="0"]
-position = Vector2(1, 0)
-shape = SubResource("RectangleShape2D_gpmta")
+[node name="Collision" parent="Data/WaterFlows/WaterFlow17" index="0"]
+polygon = PackedVector2Array(-2, -3, 75, -3, 75, 70, -2, 70)
 
-[node name="Label" parent="WarpInteractable" index="3"]
-offset_left = -59.0
-offset_top = -27.0
-offset_right = 64.0
-offset_bottom = -4.0
-text = "[center][E] Climb[/center]"
+[node name="ParticleZone" parent="Data/WaterFlows/WaterFlow17" index="1"]
+polygon = PackedVector2Array(-2, -6, 75, -6, 75, 72, -2, 72)
 
-[node name="Chest" parent="." instance=ExtResource("14_h5edw")]
-position = Vector2(283, 276)
-chest_id = "temple6testchest"
-dialogue_resource = ExtResource("15_vrvhg")
-dialogue_start = "test_chest"
+[node name="WaterFlow20" parent="Data/WaterFlows" instance=ExtResource("10_j85m8")]
+position = Vector2(1182, 424)
+direction = 0
+metadata/_edit_group_ = true
 
-[node name="MonCollision" type="StaticBody2D" parent="."]
-modulate = Color(0.278431, 1, 1, 1)
-z_index = 2000
-position = Vector2(-96, 150)
-collision_layer = 512
-collision_mask = 0
+[node name="Collision" parent="Data/WaterFlows/WaterFlow20" index="0"]
+polygon = PackedVector2Array(-2, -3, 75, -3, 75, 70, -2, 70)
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MonCollision"]
-polygon = PackedVector2Array(1353, 722, 1353, 495, 1276, 495, 1276, 722, 1261, 722, 1264, 480, 1377, 480, 1375, 737, 1261, 737, 1261, 722)
+[node name="ParticleZone" parent="Data/WaterFlows/WaterFlow20" index="1"]
+polygon = PackedVector2Array(-2, -6, 75, -6, 75, 72, -2, 72)
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="MonCollision"]
-polygon = PackedVector2Array(975, -29, 1054, -29, 1054, -149, 1354, -150, 1354, 45, 1053, 45, 976, 45)
+[node name="WaterFlow21" parent="Data/WaterFlows" instance=ExtResource("10_j85m8")]
+position = Vector2(1182, 275)
+direction = 0
+metadata/_edit_group_ = true
 
-[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="MonCollision"]
-polygon = PackedVector2Array(976, 20, 976, 161, 951, 158, 946, 40)
+[node name="Collision" parent="Data/WaterFlows/WaterFlow21" index="0"]
+polygon = PackedVector2Array(-2, -3, 75, -3, 75, 70, -2, 70)
 
-[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="MonCollision"]
-polygon = PackedVector2Array(1353, 167, 1426, 168, 1426, 449, 1353, 450)
+[node name="ParticleZone" parent="Data/WaterFlows/WaterFlow21" index="1"]
+polygon = PackedVector2Array(-2, -6, 75, -6, 75, 72, -2, 72)
 
-[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="MonCollision"]
-polygon = PackedVector2Array(975, 422, 1204, 423, 1205, 495, 975, 495)
+[node name="WaterFlow22" parent="Data/WaterFlows" instance=ExtResource("10_j85m8")]
+position = Vector2(1032, 275)
+direction = 0
+metadata/_edit_group_ = true
 
-[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="MonCollision"]
-polygon = PackedVector2Array(1426, 194, 1503, 195, 1504, 143, 1425, 147)
+[node name="Collision" parent="Data/WaterFlows/WaterFlow22" index="0"]
+polygon = PackedVector2Array(-2, -3, 75, -3, 75, 70, -2, 70)
 
-[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="MonCollision"]
-polygon = PackedVector2Array(1425, -150, 1426, -37, 1505, -37, 1505, -150)
+[node name="ParticleZone" parent="Data/WaterFlows/WaterFlow22" index="1"]
+polygon = PackedVector2Array(-2, -6, 75, -6, 75, 72, -2, 72)
 
-[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="MonCollision"]
-polygon = PackedVector2Array(652, 647, 721, 482, 673, 321, 823, 340, 812, 669)
+[node name="WaterFlow23" parent="Data/WaterFlows" instance=ExtResource("10_j85m8")]
+position = Vector2(1032, 125)
+direction = 0
+metadata/_edit_group_ = true
 
-[node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="MonCollision"]
-polygon = PackedVector2Array(265, 330, 235, 493, 300, 655, 182, 618, 191, 364)
+[node name="Collision" parent="Data/WaterFlows/WaterFlow23" index="0"]
+polygon = PackedVector2Array(-2, -3, 75, -3, 75, 70, -2, 70)
 
-[node name="CollisionPolygon2D10" type="CollisionPolygon2D" parent="MonCollision"]
-polygon = PackedVector2Array(1568, 644, 1651, 644, 1662, 744, 1570, 736)
+[node name="ParticleZone" parent="Data/WaterFlows/WaterFlow23" index="1"]
+polygon = PackedVector2Array(-2, -6, 75, -6, 75, 72, -2, 72)
 
-[editable path="Whirlpool"]
-[editable path="WaterFlows/WaterFlow1"]
-[editable path="WaterFlows/WaterFlow14"]
-[editable path="WaterFlows/WaterFlow15"]
-[editable path="WaterFlows/WaterFlow18"]
-[editable path="WaterFlows/WaterFlow16"]
-[editable path="WaterFlows/WaterFlow17"]
-[editable path="WaterFlows/WaterFlow20"]
-[editable path="WaterFlows/WaterFlow21"]
-[editable path="WaterFlows/WaterFlow22"]
-[editable path="WaterFlows/WaterFlow23"]
-[editable path="WaterFlows/WaterFlow25"]
-[editable path="WaterFlows/WaterFlow19"]
-[editable path="WaterFlows/WaterFlow24"]
-[editable path="WaterFlows/WaterFlow4"]
-[editable path="WaterFlows/WaterFlow5"]
-[editable path="WaterFlows/WaterFlow9"]
-[editable path="WaterFlows/WaterFlow10"]
-[editable path="WaterFlows/WaterFlow11"]
-[editable path="WaterFlows/LongTopFlow"]
-[editable path="WaterFlows/WaterFlow12"]
-[editable path="WaterFlows/WaterFlow6"]
-[editable path="WaterFlows/WaterFlow7"]
-[editable path="WaterFlows/WaterFlow8"]
-[editable path="WaterFlows/LongBottomFlow"]
-[editable path="ForegroundElements/Wall"]
-[editable path="ForegroundElements/Pillar1"]
-[editable path="ForegroundElements/Pillar2"]
-[editable path="ForegroundElements/Pillar3"]
-[editable path="ForegroundElements/Pillar4"]
-[editable path="ForegroundElements/Pillar5"]
-[editable path="ForegroundElements/Pillar6"]
-[editable path="ForegroundElements/Pillar7"]
-[editable path="ForegroundElements/Pillar8"]
-[editable path="ForegroundElements/Pillar9"]
-[editable path="ForegroundElements/LongPillar"]
-[editable path="ForegroundElements/LongPillar2"]
-[editable path="WarpInteractable"]
-[editable path="Chest"]
+[node name="WaterFlow25" parent="Data/WaterFlows" instance=ExtResource("10_j85m8")]
+position = Vector2(1182, 125)
+direction = 0
+metadata/_edit_group_ = true
+
+[node name="Collision" parent="Data/WaterFlows/WaterFlow25" index="0"]
+polygon = PackedVector2Array(-2, -3, 75, -3, 75, 70, -2, 70)
+
+[node name="ParticleZone" parent="Data/WaterFlows/WaterFlow25" index="1"]
+polygon = PackedVector2Array(-2, -6, 75, -6, 75, 72, -2, 72)
+
+[node name="WaterFlow19" parent="Data/WaterFlows" instance=ExtResource("10_j85m8")]
+position = Vector2(882, 275)
+direction = 1
+metadata/_edit_group_ = true
+
+[node name="Collision" parent="Data/WaterFlows/WaterFlow19" index="0"]
+polygon = PackedVector2Array(-2, -3, 75, -3, 75, 70, -2, 70)
+
+[node name="ParticleZone" parent="Data/WaterFlows/WaterFlow19" index="1"]
+polygon = PackedVector2Array(-2, -6, 75, -6, 75, 72, -2, 72)
+
+[node name="WaterFlow24" parent="Data/WaterFlows" instance=ExtResource("10_j85m8")]
+position = Vector2(882, 125)
+direction = 1
+metadata/_edit_group_ = true
+
+[node name="Collision" parent="Data/WaterFlows/WaterFlow24" index="0"]
+polygon = PackedVector2Array(-2, -3, 75, -3, 75, 70, -2, 70)
+
+[node name="ParticleZone" parent="Data/WaterFlows/WaterFlow24" index="1"]
+polygon = PackedVector2Array(-2, -6, 75, -6, 75, 72, -2, 72)
+
+[node name="WaterFlow4" parent="Data/WaterFlows" instance=ExtResource("10_j85m8")]
+position = Vector2(1257, 645)
+metadata/_edit_group_ = true
+
+[node name="Collision" parent="Data/WaterFlows/WaterFlow4" index="0"]
+polygon = PackedVector2Array(0, -27, 73, -27, 73, 77, 0, 77)
+
+[node name="ParticleZone" parent="Data/WaterFlows/WaterFlow4" index="1"]
+polygon = PackedVector2Array(-2, -27, 76, -27, 76, 76, -2, 76)
+
+[node name="WaterFlow5" parent="Data/WaterFlows" instance=ExtResource("10_j85m8")]
+position = Vector2(957, 495)
+direction = 2
+metadata/_edit_group_ = true
+
+[node name="Collision" parent="Data/WaterFlows/WaterFlow5" index="0"]
+polygon = PackedVector2Array(0, -27, 73, -27, 73, 77, 0, 77)
+
+[node name="ParticleZone" parent="Data/WaterFlows/WaterFlow5" index="1"]
+polygon = PackedVector2Array(-2, -27, 76, -27, 76, 76, -2, 76)
+
+[node name="WaterFlow9" parent="Data/WaterFlows" instance=ExtResource("10_j85m8")]
+position = Vector2(957, 345)
+metadata/_edit_group_ = true
+
+[node name="Collision" parent="Data/WaterFlows/WaterFlow9" index="0"]
+polygon = PackedVector2Array(0, -27, 73, -27, 73, 77, 0, 77)
+
+[node name="ParticleZone" parent="Data/WaterFlows/WaterFlow9" index="1"]
+polygon = PackedVector2Array(-2, -27, 76, -27, 76, 76, -2, 76)
+
+[node name="WaterFlow10" parent="Data/WaterFlows" instance=ExtResource("10_j85m8")]
+position = Vector2(1107, 345)
+metadata/_edit_group_ = true
+
+[node name="Collision" parent="Data/WaterFlows/WaterFlow10" index="0"]
+polygon = PackedVector2Array(0, -27, 73, -27, 73, 77, 0, 77)
+
+[node name="ParticleZone" parent="Data/WaterFlows/WaterFlow10" index="1"]
+polygon = PackedVector2Array(-2, -27, 76, -27, 76, 76, -2, 76)
+
+[node name="WaterFlow11" parent="Data/WaterFlows" instance=ExtResource("10_j85m8")]
+position = Vector2(1107, 195)
+metadata/_edit_group_ = true
+
+[node name="Collision" parent="Data/WaterFlows/WaterFlow11" index="0"]
+polygon = PackedVector2Array(0, -27, 73, -27, 73, 77, 0, 77)
+
+[node name="ParticleZone" parent="Data/WaterFlows/WaterFlow11" index="1"]
+polygon = PackedVector2Array(-2, -27, 76, -27, 76, 76, -2, 76)
+
+[node name="LongTopFlow" parent="Data/WaterFlows" instance=ExtResource("10_j85m8")]
+position = Vector2(1107, 45)
+PARTICLE_COUNT = 120
+direction = 2
+metadata/_edit_group_ = true
+
+[node name="Collision" parent="Data/WaterFlows/LongTopFlow" index="0"]
+polygon = PackedVector2Array(-149, -26, 151, -27, 150, 77, -149, 77)
+
+[node name="ParticleZone" parent="Data/WaterFlows/LongTopFlow" index="1"]
+polygon = PackedVector2Array(-153, -26, 151, -26, 151, 76, -153, 76)
+
+[node name="WaterFlow12" parent="Data/WaterFlows" instance=ExtResource("10_j85m8")]
+position = Vector2(957, 195)
+metadata/_edit_group_ = true
+
+[node name="Collision" parent="Data/WaterFlows/WaterFlow12" index="0"]
+polygon = PackedVector2Array(0, -27, 73, -27, 73, 77, 0, 77)
+
+[node name="ParticleZone" parent="Data/WaterFlows/WaterFlow12" index="1"]
+polygon = PackedVector2Array(-2, -27, 76, -27, 76, 76, -2, 76)
+
+[node name="WaterFlow6" parent="Data/WaterFlows" instance=ExtResource("10_j85m8")]
+position = Vector2(1107, 495)
+metadata/_edit_group_ = true
+
+[node name="Collision" parent="Data/WaterFlows/WaterFlow6" index="0"]
+polygon = PackedVector2Array(0, -27, 73, -27, 73, 77, 0, 77)
+
+[node name="ParticleZone" parent="Data/WaterFlows/WaterFlow6" index="1"]
+polygon = PackedVector2Array(-2, -27, 76, -27, 76, 76, -2, 76)
+
+[node name="WaterFlow7" parent="Data/WaterFlows" instance=ExtResource("10_j85m8")]
+position = Vector2(1257, 495)
+metadata/_edit_group_ = true
+
+[node name="Collision" parent="Data/WaterFlows/WaterFlow7" index="0"]
+polygon = PackedVector2Array(0, -27, 73, -27, 73, 77, 0, 77)
+
+[node name="ParticleZone" parent="Data/WaterFlows/WaterFlow7" index="1"]
+polygon = PackedVector2Array(-2, -27, 76, -27, 76, 76, -2, 76)
+
+[node name="WaterFlow8" parent="Data/WaterFlows" instance=ExtResource("10_j85m8")]
+position = Vector2(1257, 345)
+direction = 2
+metadata/_edit_group_ = true
+
+[node name="Collision" parent="Data/WaterFlows/WaterFlow8" index="0"]
+polygon = PackedVector2Array(0, -27, 73, -27, 73, 77, 0, 77)
+
+[node name="ParticleZone" parent="Data/WaterFlows/WaterFlow8" index="1"]
+polygon = PackedVector2Array(-2, -27, 76, -27, 76, 76, -2, 76)
+
+[node name="LongBottomFlow" parent="Data/WaterFlows" instance=ExtResource("10_j85m8")]
+position = Vector2(957, 795)
+PARTICLE_COUNT = 90
+metadata/_edit_group_ = true
+
+[node name="Collision" parent="Data/WaterFlows/LongBottomFlow" index="0"]
+polygon = PackedVector2Array(0, -1, 223, 0, 223, 77, 0, 77)
+
+[node name="ParticleZone" parent="Data/WaterFlows/LongBottomFlow" index="1"]
+polygon = PackedVector2Array(-2, -27, 226, -27, 226, 76, -2, 76)
+
+[node name="Whirlpool" parent="Data" instance=ExtResource("4_uqqbu")]
+z_index = 160
+position = Vector2(384, 620)
+CIRCLE_COLOR = null
+NUM_CIRCLES = null
+CIRCLE_SPEED = null
+SUCTION_STRENGTH = 90.0
+
+[node name="SuckCircle" parent="Data/Whirlpool" index="0"]
+shape = SubResource("CircleShape2D_pim6k")
+
+[editable path="Base/ForegroundElements/Wall"]
+[editable path="Base/ForegroundElements/Pillar1"]
+[editable path="Base/ForegroundElements/Pillar2"]
+[editable path="Base/ForegroundElements/Pillar3"]
+[editable path="Base/ForegroundElements/Pillar4"]
+[editable path="Base/ForegroundElements/Pillar5"]
+[editable path="Base/ForegroundElements/Pillar6"]
+[editable path="Base/ForegroundElements/Pillar7"]
+[editable path="Base/ForegroundElements/Pillar8"]
+[editable path="Base/ForegroundElements/Pillar9"]
+[editable path="Base/ForegroundElements/LongPillar"]
+[editable path="Base/ForegroundElements/LongPillar2"]
+[editable path="Entities/Ladder"]
+[editable path="Entities/Chest"]
+[editable path="Data/WaterFlows/WaterFlow1"]
+[editable path="Data/WaterFlows/WaterFlow14"]
+[editable path="Data/WaterFlows/WaterFlow15"]
+[editable path="Data/WaterFlows/WaterFlow18"]
+[editable path="Data/WaterFlows/WaterFlow16"]
+[editable path="Data/WaterFlows/WaterFlow17"]
+[editable path="Data/WaterFlows/WaterFlow20"]
+[editable path="Data/WaterFlows/WaterFlow21"]
+[editable path="Data/WaterFlows/WaterFlow22"]
+[editable path="Data/WaterFlows/WaterFlow23"]
+[editable path="Data/WaterFlows/WaterFlow25"]
+[editable path="Data/WaterFlows/WaterFlow19"]
+[editable path="Data/WaterFlows/WaterFlow24"]
+[editable path="Data/WaterFlows/WaterFlow4"]
+[editable path="Data/WaterFlows/WaterFlow5"]
+[editable path="Data/WaterFlows/WaterFlow9"]
+[editable path="Data/WaterFlows/WaterFlow10"]
+[editable path="Data/WaterFlows/WaterFlow11"]
+[editable path="Data/WaterFlows/LongTopFlow"]
+[editable path="Data/WaterFlows/WaterFlow12"]
+[editable path="Data/WaterFlows/WaterFlow6"]
+[editable path="Data/WaterFlows/WaterFlow7"]
+[editable path="Data/WaterFlows/WaterFlow8"]
+[editable path="Data/WaterFlows/LongBottomFlow"]
+[editable path="Data/Whirlpool"]

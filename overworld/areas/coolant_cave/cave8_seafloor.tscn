@@ -26,25 +26,29 @@ size = Vector2(14, 14)
 script = ExtResource("1_c21qo")
 area_enum = 7
 
-[node name="Map" type="Sprite2D" parent="."]
+[node name="Base" type="Node2D" parent="."]
+
+[node name="Map" type="Sprite2D" parent="Base"]
 z_index = 100
 texture = ExtResource("2_eo2i5")
 centered = false
 
-[node name="CanvasModulate" type="CanvasModulate" parent="Map"]
+[node name="CanvasModulate" type="CanvasModulate" parent="Base/Map"]
 color = Color(0, 0, 0, 1)
 
-[node name="Player" parent="." instance=ExtResource("3_x756a")]
+[node name="Entities" type="Node2D" parent="."]
+
+[node name="Player" parent="Entities" instance=ExtResource("3_x756a")]
 position = Vector2(661, 314)
 
-[node name="Light" type="PointLight2D" parent="Player"]
+[node name="Light" type="PointLight2D" parent="Entities/Player"]
 scale = Vector2(3, 3)
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_sn4if")
 
-[node name="OverworldEncounters" type="Node2D" parent="."]
+[node name="OverworldEncounters" type="Node2D" parent="Entities"]
 
-[node name="Anglerphish" parent="OverworldEncounters" instance=ExtResource("4_cloe7")]
+[node name="Anglerphish" parent="Entities/OverworldEncounters" instance=ExtResource("4_cloe7")]
 position = Vector2(642, 177)
 script = ExtResource("5_pcifn")
 speed = 25
@@ -61,13 +65,13 @@ mon3Level = 0
 mon4Type = 0
 mon4Level = 0
 
-[node name="Light" type="PointLight2D" parent="OverworldEncounters/Anglerphish"]
+[node name="Light" type="PointLight2D" parent="Entities/OverworldEncounters/Anglerphish"]
 position = Vector2(-11, -3)
 scale = Vector2(0.5, 0.5)
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_sn4if")
 
-[node name="Anglerphish2" parent="OverworldEncounters" instance=ExtResource("4_cloe7")]
+[node name="Anglerphish2" parent="Entities/OverworldEncounters" instance=ExtResource("4_cloe7")]
 position = Vector2(440, 303)
 script = ExtResource("5_pcifn")
 speed = 25
@@ -84,13 +88,13 @@ mon3Level = 0
 mon4Type = 0
 mon4Level = 0
 
-[node name="Light" type="PointLight2D" parent="OverworldEncounters/Anglerphish2"]
+[node name="Light" type="PointLight2D" parent="Entities/OverworldEncounters/Anglerphish2"]
 position = Vector2(-11, -3)
 scale = Vector2(0.5, 0.5)
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_sn4if")
 
-[node name="Mon3" parent="OverworldEncounters" instance=ExtResource("4_cloe7")]
+[node name="Mon3" parent="Entities/OverworldEncounters" instance=ExtResource("4_cloe7")]
 position = Vector2(250, 225)
 script = ExtResource("5_pcifn")
 speed = 25
@@ -107,13 +111,13 @@ mon3Level = 2
 mon4Type = 0
 mon4Level = 0
 
-[node name="Light" type="PointLight2D" parent="OverworldEncounters/Mon3"]
+[node name="Light" type="PointLight2D" parent="Entities/OverworldEncounters/Mon3"]
 position = Vector2(-11, -3)
 scale = Vector2(0.5, 0.5)
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_sn4if")
 
-[node name="Stingarray" parent="OverworldEncounters" instance=ExtResource("6_pq7c8")]
+[node name="Stingarray" parent="Entities/OverworldEncounters" instance=ExtResource("6_pq7c8")]
 position = Vector2(530, 243)
 script = ExtResource("7_nhyxu")
 mon1Type = 7
@@ -125,7 +129,7 @@ mon3Level = 0
 mon4Type = 0
 mon4Level = 0
 
-[node name="Stingarray3" parent="OverworldEncounters" instance=ExtResource("6_pq7c8")]
+[node name="Stingarray3" parent="Entities/OverworldEncounters" instance=ExtResource("6_pq7c8")]
 position = Vector2(275, 326)
 script = ExtResource("7_nhyxu")
 mon1Type = 7
@@ -137,7 +141,7 @@ mon3Level = 0
 mon4Type = 0
 mon4Level = 0
 
-[node name="Stingarray4" parent="OverworldEncounters" instance=ExtResource("6_pq7c8")]
+[node name="Stingarray4" parent="Entities/OverworldEncounters" instance=ExtResource("6_pq7c8")]
 position = Vector2(194, 502)
 script = ExtResource("7_nhyxu")
 mon1Type = 7
@@ -149,7 +153,7 @@ mon3Level = 2
 mon4Type = 0
 mon4Level = 0
 
-[node name="Stingarray5" parent="OverworldEncounters" instance=ExtResource("6_pq7c8")]
+[node name="Stingarray5" parent="Entities/OverworldEncounters" instance=ExtResource("6_pq7c8")]
 position = Vector2(332, 135)
 script = ExtResource("7_nhyxu")
 mon1Type = 7
@@ -161,60 +165,62 @@ mon3Level = 0
 mon4Type = 0
 mon4Level = 0
 
-[node name="WarpInteractable" parent="." instance=ExtResource("4_dowlu")]
+[node name="WarpInteractable" parent="Entities" instance=ExtResource("4_dowlu")]
 position = Vector2(273, 112)
 area = 5
 spawn_point = "Cave6Ladder"
 LABEL_TEXT = "Climb"
 
-[node name="Sprite" parent="WarpInteractable" index="0"]
+[node name="Sprite" parent="Entities/WarpInteractable" index="0"]
 visible = false
 
-[node name="Collision" parent="WarpInteractable" index="1"]
+[node name="Collision" parent="Entities/WarpInteractable" index="1"]
 position = Vector2(-3, -18)
 
-[node name="CollisionPolygon2D" parent="WarpInteractable/Collision" index="0"]
+[node name="CollisionPolygon2D" parent="Entities/WarpInteractable/Collision" index="0"]
 polygon = PackedVector2Array(-57.6001, 21.1227, 1.47681, 21.1227, 1.47681, 6.06386, -57.6001, 6.06386)
 
-[node name="CollisionShape2D" parent="WarpInteractable/InteractionArea" index="0"]
+[node name="CollisionShape2D" parent="Entities/WarpInteractable/InteractionArea" index="0"]
 position = Vector2(-4, -18)
 shape = SubResource("RectangleShape2D_87r1p")
 
-[node name="Label" parent="WarpInteractable" index="3"]
+[node name="Label" parent="Entities/WarpInteractable" index="3"]
 offset_left = -64.0
 offset_top = 6.0
 offset_right = 59.0
 offset_bottom = 29.0
 text = "[center][E] Climb[/center]"
 
-[node name="Points" type="Node2D" parent="."]
+[node name="Data" type="Node2D" parent="."]
 
-[node name="Cave8Entrance" type="Node2D" parent="Points"]
-position = Vector2(660, 314)
-
-[node name="Cave8Ladder" type="Node2D" parent="Points"]
-position = Vector2(269, 107)
-
-[node name="Warps" type="Node2D" parent="."]
-
-[node name="Collision" type="StaticBody2D" parent="."]
+[node name="Collision" type="StaticBody2D" parent="Data"]
 modulate = Color(0, 1, 0, 1)
 z_index = 3000
 position = Vector2(-96, 150)
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collision"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Data/Collision"]
 polygon = PackedVector2Array(258, 219, 258, 310, 250, 313, 235, 328, 228, 345, 228, 361, 230, 374, 235, 392, 241, 404, 249, 412, 260, 418, 270, 421, 280, 423, 292, 424, 291, 489, 160, 490, 54, 277, 52, 82, 150, -156, 1006, -151, 1017, 484, 292, 489, 292, 424, 314, 424, 328, 419, 334, 416, 341, 410, 350, 399, 354, 390, 356, 378, 356, 350, 346, 326, 334, 311, 320, 310, 320, 219, 333, 219, 356, 217, 365, 214, 393, 207, 422, 200, 449, 197, 474, 194, 535, 194, 566, 198, 592, 202, 616, 203, 636, 207, 657, 211, 675, 215, 713, 215, 735, 212, 763, 207, 791, 199, 813, 186, 833, 165, 838, 148, 837, 98, 835, 84, 818, 27, 798, -3, 774, -24, 737, -42, 708, -50, 673, -55, 648, -55, 633, -52, 591, -43, 552, -36, 505, -36, 494, -38, 466, -40, 435, -48, 389, -56, 336, -56, 287, -49, 239, -37, 216, -27, 202, -13, 178, 33, 168, 59, 164, 85, 165, 124, 177, 151, 187, 171, 205, 192, 219, 204, 230, 211, 242, 216)
 
-[node name="MonCollision" type="StaticBody2D" parent="."]
+[node name="MonCollision" type="StaticBody2D" parent="Data"]
 modulate = Color(0.278431, 1, 1, 1)
 z_index = 2000
 position = Vector2(-96, 150)
 collision_layer = 512
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MonCollision"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Data/MonCollision"]
 polygon = PackedVector2Array(258, 219, 320, 219, 320, 311, 258, 311)
 
-[editable path="WarpInteractable"]
+[node name="Points" type="Node2D" parent="Data"]
+
+[node name="Cave8Entrance" type="Node2D" parent="Data/Points"]
+position = Vector2(660, 314)
+
+[node name="Cave8Ladder" type="Node2D" parent="Data/Points"]
+position = Vector2(269, 107)
+
+[node name="Warps" type="Node2D" parent="Data"]
+
+[editable path="Entities/WarpInteractable"]

@@ -2,7 +2,7 @@
 # the Water area is used to tell when the player is in the water
 # the Topwater area is used to check when the water is at the top of the water
 # when in the Topwater, the player's jump is increased
-extends Node
+extends Node2D
 
 @onready var WATER = $Water
 @onready var TOPWATER = $Topwater

@@ -25,17 +25,70 @@ radius = 45.0111
 script = ExtResource("1_6nc0c")
 area_enum = 6
 
-[node name="Map" type="Sprite2D" parent="."]
+[node name="Base" type="Node2D" parent="."]
+
+[node name="Map" type="Sprite2D" parent="Base"]
 z_index = 100
 texture = ExtResource("2_jra30")
 centered = false
 
-[node name="Player" parent="." instance=ExtResource("3_24mgp")]
+[node name="Water" type="Sprite2D" parent="Base"]
+modulate = Color(1, 1, 1, 0.282353)
+z_index = 1000
+position = Vector2(3, -12)
+texture = ExtResource("4_kx0l5")
+centered = false
+
+[node name="ForegroundElements" type="Node2D" parent="Base"]
+z_index = 210
+
+[node name="Wall" parent="Base/ForegroundElements" instance=ExtResource("4_no6le")]
+position = Vector2(446, 174)
+texture = ExtResource("5_b1lb7")
+active = false
+
+[node name="CollisionPolygon2D" parent="Base/ForegroundElements/Wall/FadeZone" index="0"]
+polygon = PackedVector2Array(17, 0, 25, 0, 38, 17, 46, 39, 46, 94, 30, 79, 14, 79, 0, 110, 0, 55, 4, 35)
+
+[node name="Wall2" parent="Base/ForegroundElements" instance=ExtResource("4_no6le")]
+position = Vector2(387, 300)
+texture = ExtResource("6_bpich")
+active = false
+
+[node name="CollisionPolygon2D" parent="Base/ForegroundElements/Wall2/FadeZone" index="0"]
+polygon = PackedVector2Array(8, 0, 17, 0, 20, 5, 24, 7, 37, 36, 46, 64, 47, 140, 37, 96, 20, 60, 5, 58, 0, 69, 0, 55, 0, 13, 2, 5)
+
+[node name="Wall3" parent="Base/ForegroundElements" instance=ExtResource("4_no6le")]
+position = Vector2(496, 295)
+texture = ExtResource("7_gpok0")
+active = false
+
+[node name="CollisionPolygon2D" parent="Base/ForegroundElements/Wall3/FadeZone" index="0"]
+polygon = PackedVector2Array(28, 14, 35, 9, 50, 2, 59, 0, 66, 0, 81, 6, 94, 21, 94, 76, 66, 56, 59, 55, 58, 57, 50, 58, 32, 67, 20, 80, 14, 90, 0, 128, 0, 73, 5, 51, 14, 32)
+
+[node name="Cove" parent="Base/ForegroundElements" instance=ExtResource("4_no6le")]
+position = Vector2(514, 419)
+texture = ExtResource("8_spo1b")
+
+[node name="CollisionPolygon2D" parent="Base/ForegroundElements/Cove/FadeZone" index="0"]
+polygon = PackedVector2Array(50, 2, 59, 0, 67, 2, 68, 60, 61, 58, 42, 61, 15, 61, 2, 53, -1, 10, 7, -1, 21, 5, 39, 5)
+
+[node name="Wall4" parent="Base/ForegroundElements" instance=ExtResource("4_no6le")]
+position = Vector2(447, 531)
+texture = ExtResource("9_sxt7u")
+active = false
+
+[node name="CollisionPolygon2D" parent="Base/ForegroundElements/Wall4/FadeZone" index="0"]
+polygon = PackedVector2Array(43, 11, 52, 21, 56, 31, 56, 86, 31, 55, 20, 57, 0, 97, 0, 54, -1, 40, 14, 9, 18, 5, 23, 0, 31, 0)
+
+[node name="Entities" type="Node2D" parent="."]
+
+[node name="Player" parent="Entities" instance=ExtResource("3_24mgp")]
 position = Vector2(461, 105)
 
-[node name="OverworldEncounters" type="Node2D" parent="."]
+[node name="OverworldEncounters" type="Node2D" parent="Entities"]
 
-[node name="Orchin1TODO" parent="OverworldEncounters" instance=ExtResource("4_aue2l")]
+[node name="Orchin1TODO" parent="Entities/OverworldEncounters" instance=ExtResource("4_aue2l")]
 position = Vector2(291, 492)
 collision_mask = 548
 script = ExtResource("5_py7nl")
@@ -48,7 +101,7 @@ mon3Level = 0
 mon4Type = 0
 mon4Level = 0
 
-[node name="Orchin1TODO2" parent="OverworldEncounters" instance=ExtResource("4_aue2l")]
+[node name="Orchin1TODO2" parent="Entities/OverworldEncounters" instance=ExtResource("4_aue2l")]
 position = Vector2(546, 433)
 collision_mask = 548
 script = ExtResource("5_py7nl")
@@ -61,307 +114,259 @@ mon3Level = 0
 mon4Type = 0
 mon4Level = 0
 
-[node name="ForegroundElements" type="Node2D" parent="."]
-z_index = 210
+[node name="Data" type="Node2D" parent="."]
 
-[node name="Wall" parent="ForegroundElements" instance=ExtResource("4_no6le")]
-position = Vector2(446, 174)
-texture = ExtResource("5_b1lb7")
-active = false
-
-[node name="CollisionPolygon2D" parent="ForegroundElements/Wall/FadeZone" index="0"]
-polygon = PackedVector2Array(17, 0, 25, 0, 38, 17, 46, 39, 46, 94, 30, 79, 14, 79, 0, 110, 0, 55, 4, 35)
-
-[node name="Wall2" parent="ForegroundElements" instance=ExtResource("4_no6le")]
-position = Vector2(387, 300)
-texture = ExtResource("6_bpich")
-active = false
-
-[node name="CollisionPolygon2D" parent="ForegroundElements/Wall2/FadeZone" index="0"]
-polygon = PackedVector2Array(8, 0, 17, 0, 20, 5, 24, 7, 37, 36, 46, 64, 47, 140, 37, 96, 20, 60, 5, 58, 0, 69, 0, 55, 0, 13, 2, 5)
-
-[node name="Wall3" parent="ForegroundElements" instance=ExtResource("4_no6le")]
-position = Vector2(496, 295)
-texture = ExtResource("7_gpok0")
-active = false
-
-[node name="CollisionPolygon2D" parent="ForegroundElements/Wall3/FadeZone" index="0"]
-polygon = PackedVector2Array(28, 14, 35, 9, 50, 2, 59, 0, 66, 0, 81, 6, 94, 21, 94, 76, 66, 56, 59, 55, 58, 57, 50, 58, 32, 67, 20, 80, 14, 90, 0, 128, 0, 73, 5, 51, 14, 32)
-
-[node name="Cove" parent="ForegroundElements" instance=ExtResource("4_no6le")]
-position = Vector2(514, 419)
-texture = ExtResource("8_spo1b")
-
-[node name="CollisionPolygon2D" parent="ForegroundElements/Cove/FadeZone" index="0"]
-polygon = PackedVector2Array(50, 2, 59, 0, 67, 2, 68, 60, 61, 58, 42, 61, 15, 61, 2, 53, -1, 10, 7, -1, 21, 5, 39, 5)
-
-[node name="Wall4" parent="ForegroundElements" instance=ExtResource("4_no6le")]
-position = Vector2(447, 531)
-texture = ExtResource("9_sxt7u")
-active = false
-
-[node name="CollisionPolygon2D" parent="ForegroundElements/Wall4/FadeZone" index="0"]
-polygon = PackedVector2Array(43, 11, 52, 21, 56, 31, 56, 86, 31, 55, 20, 57, 0, 97, 0, 54, -1, 40, 14, 9, 18, 5, 23, 0, 31, 0)
-
-[node name="Water" type="Sprite2D" parent="."]
-modulate = Color(1, 1, 1, 0.282353)
-z_index = 1000
-position = Vector2(3, -12)
-texture = ExtResource("4_kx0l5")
-centered = false
-
-[node name="Points" type="Node2D" parent="."]
-visible = false
-
-[node name="Cave7Top" type="Node2D" parent="Points"]
-position = Vector2(461, 84)
-
-[node name="Warps" type="Node2D" parent="."]
-
-[node name="WarpToSeafloor" type="Area2D" parent="Warps"]
-position = Vector2(496, 781)
-collision_layer = 0
-script = ExtResource("4_ckphf")
-area = 7
-spawn_point = "Cave8Entrance"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/WarpToSeafloor"]
-position = Vector2(2, -3)
-shape = SubResource("CircleShape2D_41i08")
-
-[node name="Collision" type="StaticBody2D" parent="."]
+[node name="Collision" type="StaticBody2D" parent="Data"]
 visible = false
 modulate = Color(0, 1, 0, 1)
 position = Vector2(-96, 150)
 collision_layer = 4
 collision_mask = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collision"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Data/Collision"]
 polygon = PackedVector2Array(562, 79, 558, 82, 549, 105, 542, 134, 542, 143, 551, 162, 555, 163, 565, 163, 578, 159, 582, 154, 587, 140, 588, 128, 586.753, 120.204, 584, 103, 580, 95, 566, 79)
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Collision"]
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Data/Collision"]
 polygon = PackedVector2Array(491, 205, 500, 205, 503, 209, 507, 212, 511, 220, 514, 227, 517, 234, 520, 241, 521, 246, 529, 269, 530, 290, 530, 312, 524, 336, 518, 348, 505, 361, 499, 361, 495, 353, 489, 325, 488, 294, 484, 251, 483, 238, 483, 218, 486, 209)
 
-[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Collision"]
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Data/Collision"]
 polygon = PackedVector2Array(666, 266, 674, 266, 680, 263, 684, 254, 686, 244, 686, 221, 677, 210, 669, 204, 658, 200, 651, 200, 650, 202, 642, 202, 633, 207, 623, 211, 612, 223, 601, 242, 592, 273, 592, 311, 600, 335, 607, 349, 614, 357, 627, 362, 632, 363, 647, 363, 658, 360, 668, 353, 674, 344, 678, 333, 677, 326, 672, 325, 652, 329, 629, 329, 612, 315, 610, 312, 611, 282, 614, 272, 622, 268, 647, 266, 658, 264)
 
-[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Collision"]
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Data/Collision"]
 polygon = PackedVector2Array(567, 436, 574, 436, 585, 446, 595, 457, 597, 461, 599, 467, 599, 478, 595, 489, 590, 494, 586, 495, 580, 496, 558, 496, 547, 491, 543, 484, 543, 477, 549, 461, 553, 453, 555, 449, 557, 445, 561, 440)
 
-[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="Collision"]
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="Data/Collision"]
 polygon = PackedVector2Array(501, 544, 509, 555, 520, 589, 527, 610, 535, 624, 542, 644, 551, 659, 554, 663, 558, 668, 563, 670, 580, 674, 609, 674, 627, 670, 632, 665, 637, 657, 642, 646, 645, 633, 649, 589, 651, 571, 652, 551, 660, 540, 672, 532, 687, 523, 703, 508, 716.804, 473.275, 720, 413, 724, 353, 725, 323, 725, 234, 724, 221, 717, 190, 710, 172, 698, 151, 690, 141, 687, 139, 687, 136, 682, 131, 682, 127, 681, 127, 681, 125, 679, 124, 679, 119, 677, 118, 677, 115, 676, 115, 676, 112, 675, 112, 675, 109, 673, 109, 673, 105, 672, 103, 671, 103, 671, 101, 670, 101, 670, 97, 661, 78, 652, 58, 638, 41, 637, 39, 633, 36, 633, 34, 631, 34, 631, 31, 628, 30, 626, 25, 623, 22, 622, 18, 620, 16, 619, 13, 617, 12, 617, 6, 614, -11, 613, -30, 611, -40, 608, -44, 608, -47, 605, -51, 598, -63, 589, -73, 579, -78, 567, -83, 545, -83, 536, -80, 530, -75, 527, -70, 521, -65, 517, -59, 514, -55, 512, -49, 508, -38, 506, -26, 505, 21, 499, 25, 497, 29, 491, 32, 488, 38, 480, 50, 476, 55, 470, 67, 467, 79, 464, 88, 460, 97, 458, 104, 192, -187, 853, -200, 824, 714, 225, 725, 192, -186, 458, 104, 455, 108, 449, 125, 446, 138, 444, 143, 443, 149, 438, 163, 436, 174, 434, 182, 432, 196, 428, 206, 425, 221, 425, 233, 424, 233, 424, 277, 422, 279, 414, 278, 407, 276, 391, 276, 391, 277, 385, 277, 359, 291, 353, 298, 349, 307, 346, 311, 343, 318, 338, 331, 338, 341, 340, 354, 342, 358, 344, 365, 349, 375, 355, 381, 358, 385, 363, 390, 373, 392, 393, 392, 410, 393, 421, 394, 425, 397, 425, 413, 427, 425, 427, 444, 429, 461, 431, 478, 436, 495, 438, 502, 443, 511, 448, 515, 451, 520, 454, 523, 463, 532, 471, 534, 489, 540)
 
-[node name="PushingZones" type="Node2D" parent="."]
+[node name="Points" type="Node2D" parent="Data"]
 visible = false
 
-[node name="PushDown" parent="PushingZones" instance=ExtResource("12_dtqlw")]
+[node name="Cave7Top" type="Node2D" parent="Data/Points"]
+position = Vector2(461, 84)
+
+[node name="PushingZones" type="Node2D" parent="Data"]
+visible = false
+
+[node name="PushDown" parent="Data/PushingZones" instance=ExtResource("12_dtqlw")]
 direction = 1
 force = 85
 
-[node name="CollisionPolygon2D" parent="PushingZones/PushDown" index="0"]
+[node name="CollisionPolygon2D" parent="Data/PushingZones/PushDown" index="0"]
 polygon = PackedVector2Array(192, 619, 195, -12, 513, -12, 517, 360, 454, 378, 430, 424, 430, 490, 434, 518, 441, 530, 458, 543, 486, 545, 517, 546, 519, 547, 513, -12, 1195, -12, 1195, 988, 773, 476, 773, 413, 770, 416, 762, 416, 758, 414, 750, 414, 743, 416, 726, 416, 714, 419, 709, 423, 706, 432, 706, 462, 708, 469, 715, 474, 725, 479, 748, 479, 766, 475, 773, 476, 1195, 988, 640, 988, 646, 772, 646, 788, 657, 809, 668, 817, 687, 823, 701, 822, 721, 812, 733, 792, 733, 761, 714, 739, 703, 733, 679, 733, 655, 750, 645, 771, 640, 988, 195, 988)
 
-[node name="Upper" type="Node2D" parent="PushingZones"]
+[node name="Upper" type="Node2D" parent="Data/PushingZones"]
 visible = false
 
-[node name="Right" parent="PushingZones/Upper" instance=ExtResource("12_dtqlw")]
+[node name="Right" parent="Data/PushingZones/Upper" instance=ExtResource("12_dtqlw")]
 direction = 3
 force = 60
 
-[node name="CollisionPolygon2D" parent="PushingZones/Upper/Right" index="0"]
+[node name="CollisionPolygon2D" parent="Data/PushingZones/Upper/Right" index="0"]
 position = Vector2(-166, -21)
 polygon = PackedVector2Array(636, 245, 641, 250, 651, 259, 656, 272, 658, 289, 646, 261, 635, 250)
 
-[node name="Left" parent="PushingZones/Upper" instance=ExtResource("12_dtqlw")]
+[node name="Left" parent="Data/PushingZones/Upper" instance=ExtResource("12_dtqlw")]
 force = 60
 
-[node name="CollisionPolygon2D" parent="PushingZones/Upper/Left" index="0"]
+[node name="CollisionPolygon2D" parent="Data/PushingZones/Upper/Left" index="0"]
 position = Vector2(-194, -25)
 polygon = PackedVector2Array(653, 257, 658, 250, 664, 249, 663, 254, 640, 309, 641, 288, 648, 267)
 
-[node name="Tiebreaker" parent="PushingZones/Upper" instance=ExtResource("12_dtqlw")]
+[node name="Tiebreaker" parent="Data/PushingZones/Upper" instance=ExtResource("12_dtqlw")]
 force = 60
 
-[node name="CollisionPolygon2D" parent="PushingZones/Upper/Tiebreaker" index="0"]
+[node name="CollisionPolygon2D" parent="Data/PushingZones/Upper/Tiebreaker" index="0"]
 position = Vector2(-186, -25)
 polygon = PackedVector2Array(649, 249, 656, 249, 655, 254, 649, 257)
 
-[node name="Right" type="Node2D" parent="PushingZones"]
+[node name="Right" type="Node2D" parent="Data/PushingZones"]
 visible = false
 
-[node name="Right" parent="PushingZones/Right" instance=ExtResource("12_dtqlw")]
+[node name="Right" parent="Data/PushingZones/Right" instance=ExtResource("12_dtqlw")]
 direction = 3
 force = 60
 
-[node name="CollisionPolygon2D" parent="PushingZones/Right/Right" index="0"]
+[node name="CollisionPolygon2D" parent="Data/PushingZones/Right/Right" index="0"]
 position = Vector2(-64, 100)
 polygon = PackedVector2Array(623, 247, 639, 250, 649, 259, 654, 272, 646, 261, 623, 250)
 
-[node name="Left" parent="PushingZones/Right" instance=ExtResource("12_dtqlw")]
+[node name="Left" parent="Data/PushingZones/Right" instance=ExtResource("12_dtqlw")]
 force = 60
 
-[node name="CollisionPolygon2D" parent="PushingZones/Right/Left" index="0"]
+[node name="CollisionPolygon2D" parent="Data/PushingZones/Right/Left" index="0"]
 position = Vector2(-144, 107)
 polygon = PackedVector2Array(672, 248, 688, 242, 703, 240, 703, 243, 681, 250, 673, 253, 640, 309, 649, 275)
 
-[node name="Tiebreaker" parent="PushingZones/Right" instance=ExtResource("12_dtqlw")]
+[node name="Tiebreaker" parent="Data/PushingZones/Right" instance=ExtResource("12_dtqlw")]
 force = 60
 
-[node name="CollisionPolygon2D" parent="PushingZones/Right/Tiebreaker" index="0"]
+[node name="CollisionPolygon2D" parent="Data/PushingZones/Right/Tiebreaker" index="0"]
 position = Vector2(-104, 100)
 polygon = PackedVector2Array(648, 249, 663, 247, 663, 250, 655, 252, 649, 253)
 
-[node name="Left" type="Node2D" parent="PushingZones"]
+[node name="Left" type="Node2D" parent="Data/PushingZones"]
 visible = false
 
-[node name="Right" parent="PushingZones/Left" instance=ExtResource("12_dtqlw")]
+[node name="Right" parent="Data/PushingZones/Left" instance=ExtResource("12_dtqlw")]
 direction = 3
 force = 60
 
-[node name="CollisionPolygon2D" parent="PushingZones/Left/Right" index="0"]
+[node name="CollisionPolygon2D" parent="Data/PushingZones/Left/Right" index="0"]
 position = Vector2(-223, 104)
 polygon = PackedVector2Array(623, 248, 629, 250, 635, 255, 641, 269, 645, 278, 647, 286, 647, 288, 641, 277, 632, 256, 623, 251)
 
-[node name="Left" parent="PushingZones/Left" instance=ExtResource("12_dtqlw")]
+[node name="Left" parent="Data/PushingZones/Left" instance=ExtResource("12_dtqlw")]
 force = 60
 
-[node name="CollisionPolygon2D" parent="PushingZones/Left/Left" index="0"]
+[node name="CollisionPolygon2D" parent="Data/PushingZones/Left/Left" index="0"]
 position = Vector2(-300, 111)
 polygon = PackedVector2Array(688, 247, 692, 243, 699, 241, 699, 244, 688, 254, 687, 258, 685, 253)
 
-[node name="Tiebreaker" parent="PushingZones/Left" instance=ExtResource("12_dtqlw")]
+[node name="Tiebreaker" parent="Data/PushingZones/Left" instance=ExtResource("12_dtqlw")]
 direction = 3
 force = 60
 
-[node name="CollisionPolygon2D" parent="PushingZones/Left/Tiebreaker" index="0"]
+[node name="CollisionPolygon2D" parent="Data/PushingZones/Left/Tiebreaker" index="0"]
 position = Vector2(-250, 103)
 polygon = PackedVector2Array(650, 249, 656, 250, 659, 257, 656, 256, 655, 252, 650, 252)
 
-[node name="Down" type="Node2D" parent="PushingZones"]
+[node name="Down" type="Node2D" parent="Data/PushingZones"]
 visible = false
 
-[node name="Right" parent="PushingZones/Down" instance=ExtResource("12_dtqlw")]
+[node name="Right" parent="Data/PushingZones/Down" instance=ExtResource("12_dtqlw")]
 direction = 3
 force = 60
 
-[node name="CollisionPolygon2D" parent="PushingZones/Down/Right" index="0"]
+[node name="CollisionPolygon2D" parent="Data/PushingZones/Down/Right" index="0"]
 position = Vector2(-146, 337)
 polygon = PackedVector2Array(620, 246, 629, 251, 649, 275, 649, 280, 648, 280, 647, 275, 632, 256, 620, 249)
 
-[node name="Left" parent="PushingZones/Down" instance=ExtResource("12_dtqlw")]
+[node name="Left" parent="Data/PushingZones/Down" instance=ExtResource("12_dtqlw")]
 force = 60
 
-[node name="CollisionPolygon2D" parent="PushingZones/Down/Left" index="0"]
+[node name="CollisionPolygon2D" parent="Data/PushingZones/Down/Left" index="0"]
 position = Vector2(-240, 371)
 polygon = PackedVector2Array(706, 216, 714, 212, 714, 215, 707, 219, 699, 229, 695, 238, 688, 254, 687, 258, 686, 252, 697, 229)
 
-[node name="Tiebreaker" parent="PushingZones/Down" instance=ExtResource("12_dtqlw")]
+[node name="Tiebreaker" parent="Data/PushingZones/Down" instance=ExtResource("12_dtqlw")]
 force = 60
 
-[node name="CollisionPolygon2D" parent="PushingZones/Down/Tiebreaker" index="0"]
+[node name="CollisionPolygon2D" parent="Data/PushingZones/Down/Tiebreaker" index="0"]
 position = Vector2(-179, 334)
 polygon = PackedVector2Array(650, 250, 653, 249, 654, 252, 650, 253)
 
-[node name="LeftWall" parent="PushingZones" instance=ExtResource("12_dtqlw")]
+[node name="LeftWall" parent="Data/PushingZones" instance=ExtResource("12_dtqlw")]
 visible = false
 direction = 3
 force = 90
 
-[node name="CollisionPolygon2D" parent="PushingZones/LeftWall" index="0"]
+[node name="CollisionPolygon2D" parent="Data/PushingZones/LeftWall" index="0"]
 position = Vector2(-283, 389)
 polygon = PackedVector2Array(620, 246, 624, 256, 631, 269, 640, 278, 651, 289, 665, 294, 685, 301, 694, 309, 707, 344, 713, 365, 732, 409, 736, 418, 731, 411, 727, 401, 718, 381, 711, 365, 706, 349, 704, 343, 695, 315, 683, 303, 672, 300, 648, 292, 640, 282, 630, 270, 622, 256, 620, 249)
 
-[node name="LeftHelper" parent="PushingZones" instance=ExtResource("12_dtqlw")]
+[node name="LeftHelper" parent="Data/PushingZones" instance=ExtResource("12_dtqlw")]
 visible = false
 direction = 3
 force = 150
 
-[node name="CollisionPolygon2D" parent="PushingZones/LeftHelper" index="0"]
+[node name="CollisionPolygon2D" parent="Data/PushingZones/LeftHelper" index="0"]
 position = Vector2(250, 709)
 polygon = PackedVector2Array(181, 45, 194, 51, 197, 64, 201, 79, 213, 110, 199, 90, 190, 68)
 
-[node name="RightWall" parent="PushingZones" instance=ExtResource("12_dtqlw")]
+[node name="RightWall" parent="Data/PushingZones" instance=ExtResource("12_dtqlw")]
 visible = false
 force = 90
 
-[node name="CollisionPolygon2D" parent="PushingZones/RightWall" index="0"]
+[node name="CollisionPolygon2D" parent="Data/PushingZones/RightWall" index="0"]
 position = Vector2(-83, 405)
 polygon = PackedVector2Array(698, 232, 702, 221, 705, 196, 706, 199, 703, 222, 699, 232, 695, 242, 692, 250, 687, 258, 685.607, 259.393, 682, 263, 671, 270, 651, 282, 627, 398, 626, 397, 631, 367, 632, 355, 633, 340, 639, 293, 643, 287, 650, 281, 670, 269, 680, 261, 683, 257, 689, 250)
 
-[node name="RightHelper" parent="PushingZones" instance=ExtResource("12_dtqlw")]
+[node name="RightHelper" parent="Data/PushingZones" instance=ExtResource("12_dtqlw")]
 visible = false
 force = 150
 
-[node name="CollisionPolygon2D" parent="PushingZones/RightHelper" index="0"]
+[node name="CollisionPolygon2D" parent="Data/PushingZones/RightHelper" index="0"]
 position = Vector2(305, 688)
 polygon = PackedVector2Array(244, 64, 241, 70, 240, 94, 239, 102, 235, 118, 241, 104)
 
-[node name="Whirlpool" parent="." instance=ExtResource("13_i1p7n")]
-visible = false
+[node name="Warps" type="Node2D" parent="Data"]
+
+[node name="WarpToSeafloor" type="Area2D" parent="Data/Warps"]
+position = Vector2(496, 781)
+collision_layer = 0
+script = ExtResource("4_ckphf")
+area = 7
+spawn_point = "Cave8Entrance"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Data/Warps/WarpToSeafloor"]
+position = Vector2(2, -3)
+shape = SubResource("CircleShape2D_41i08")
+
+[node name="Whirlpool" parent="Data" instance=ExtResource("13_i1p7n")]
 position = Vector2(830, 387)
 NUM_CIRCLES = 4
 CIRCLE_SPEED = 15.0
 SUCTION_STRENGTH = 220.0
 
-[node name="SuckCircle" parent="Whirlpool" index="0"]
+[node name="SuckCircle" parent="Data/Whirlpool" index="0"]
 position = Vector2(-332, 391)
 shape = SubResource("CircleShape2D_f3604")
 
-[connection signal="body_entered" from="PushingZones/PushDown" to="PushingZones/PushDown" method="_on_body_entered"]
-[connection signal="body_exited" from="PushingZones/PushDown" to="PushingZones/PushDown" method="_on_body_exited"]
-[connection signal="body_entered" from="PushingZones/Upper/Right" to="PushingZones/Upper/Right" method="_on_body_entered"]
-[connection signal="body_exited" from="PushingZones/Upper/Right" to="PushingZones/Upper/Right" method="_on_body_exited"]
-[connection signal="body_entered" from="PushingZones/Upper/Left" to="PushingZones/Upper/Left" method="_on_body_entered"]
-[connection signal="body_exited" from="PushingZones/Upper/Left" to="PushingZones/Upper/Left" method="_on_body_exited"]
-[connection signal="body_entered" from="PushingZones/Upper/Tiebreaker" to="PushingZones/Upper/Tiebreaker" method="_on_body_entered"]
-[connection signal="body_exited" from="PushingZones/Upper/Tiebreaker" to="PushingZones/Upper/Tiebreaker" method="_on_body_exited"]
-[connection signal="body_entered" from="PushingZones/Right/Right" to="PushingZones/Right/Right" method="_on_body_entered"]
-[connection signal="body_exited" from="PushingZones/Right/Right" to="PushingZones/Right/Right" method="_on_body_exited"]
-[connection signal="body_entered" from="PushingZones/Right/Left" to="PushingZones/Right/Left" method="_on_body_entered"]
-[connection signal="body_exited" from="PushingZones/Right/Left" to="PushingZones/Right/Left" method="_on_body_exited"]
-[connection signal="body_entered" from="PushingZones/Right/Tiebreaker" to="PushingZones/Right/Tiebreaker" method="_on_body_entered"]
-[connection signal="body_exited" from="PushingZones/Right/Tiebreaker" to="PushingZones/Right/Tiebreaker" method="_on_body_exited"]
-[connection signal="body_entered" from="PushingZones/Left/Right" to="PushingZones/Left/Right" method="_on_body_entered"]
-[connection signal="body_exited" from="PushingZones/Left/Right" to="PushingZones/Left/Right" method="_on_body_exited"]
-[connection signal="body_entered" from="PushingZones/Left/Left" to="PushingZones/Left/Left" method="_on_body_entered"]
-[connection signal="body_exited" from="PushingZones/Left/Left" to="PushingZones/Left/Left" method="_on_body_exited"]
-[connection signal="body_entered" from="PushingZones/Left/Tiebreaker" to="PushingZones/Left/Tiebreaker" method="_on_body_entered"]
-[connection signal="body_exited" from="PushingZones/Left/Tiebreaker" to="PushingZones/Left/Tiebreaker" method="_on_body_exited"]
-[connection signal="body_entered" from="PushingZones/Down/Right" to="PushingZones/Down/Right" method="_on_body_entered"]
-[connection signal="body_exited" from="PushingZones/Down/Right" to="PushingZones/Down/Right" method="_on_body_exited"]
-[connection signal="body_entered" from="PushingZones/Down/Left" to="PushingZones/Down/Left" method="_on_body_entered"]
-[connection signal="body_exited" from="PushingZones/Down/Left" to="PushingZones/Down/Left" method="_on_body_exited"]
-[connection signal="body_entered" from="PushingZones/Down/Tiebreaker" to="PushingZones/Down/Tiebreaker" method="_on_body_entered"]
-[connection signal="body_exited" from="PushingZones/Down/Tiebreaker" to="PushingZones/Down/Tiebreaker" method="_on_body_exited"]
-[connection signal="body_entered" from="PushingZones/LeftWall" to="PushingZones/LeftWall" method="_on_body_entered"]
-[connection signal="body_exited" from="PushingZones/LeftWall" to="PushingZones/LeftWall" method="_on_body_exited"]
-[connection signal="body_entered" from="PushingZones/LeftHelper" to="PushingZones/LeftHelper" method="_on_body_entered"]
-[connection signal="body_exited" from="PushingZones/LeftHelper" to="PushingZones/LeftHelper" method="_on_body_exited"]
-[connection signal="body_entered" from="PushingZones/RightWall" to="PushingZones/RightWall" method="_on_body_entered"]
-[connection signal="body_exited" from="PushingZones/RightWall" to="PushingZones/RightWall" method="_on_body_exited"]
-[connection signal="body_entered" from="PushingZones/RightHelper" to="PushingZones/RightHelper" method="_on_body_entered"]
-[connection signal="body_exited" from="PushingZones/RightHelper" to="PushingZones/RightHelper" method="_on_body_exited"]
+[connection signal="body_entered" from="Data/PushingZones/PushDown" to="Data/PushingZones/PushDown" method="_on_body_entered"]
+[connection signal="body_exited" from="Data/PushingZones/PushDown" to="Data/PushingZones/PushDown" method="_on_body_exited"]
+[connection signal="body_entered" from="Data/PushingZones/Upper/Right" to="Data/PushingZones/Upper/Right" method="_on_body_entered"]
+[connection signal="body_exited" from="Data/PushingZones/Upper/Right" to="Data/PushingZones/Upper/Right" method="_on_body_exited"]
+[connection signal="body_entered" from="Data/PushingZones/Upper/Left" to="Data/PushingZones/Upper/Left" method="_on_body_entered"]
+[connection signal="body_exited" from="Data/PushingZones/Upper/Left" to="Data/PushingZones/Upper/Left" method="_on_body_exited"]
+[connection signal="body_entered" from="Data/PushingZones/Upper/Tiebreaker" to="Data/PushingZones/Upper/Tiebreaker" method="_on_body_entered"]
+[connection signal="body_exited" from="Data/PushingZones/Upper/Tiebreaker" to="Data/PushingZones/Upper/Tiebreaker" method="_on_body_exited"]
+[connection signal="body_entered" from="Data/PushingZones/Right/Right" to="Data/PushingZones/Right/Right" method="_on_body_entered"]
+[connection signal="body_exited" from="Data/PushingZones/Right/Right" to="Data/PushingZones/Right/Right" method="_on_body_exited"]
+[connection signal="body_entered" from="Data/PushingZones/Right/Left" to="Data/PushingZones/Right/Left" method="_on_body_entered"]
+[connection signal="body_exited" from="Data/PushingZones/Right/Left" to="Data/PushingZones/Right/Left" method="_on_body_exited"]
+[connection signal="body_entered" from="Data/PushingZones/Right/Tiebreaker" to="Data/PushingZones/Right/Tiebreaker" method="_on_body_entered"]
+[connection signal="body_exited" from="Data/PushingZones/Right/Tiebreaker" to="Data/PushingZones/Right/Tiebreaker" method="_on_body_exited"]
+[connection signal="body_entered" from="Data/PushingZones/Left/Right" to="Data/PushingZones/Left/Right" method="_on_body_entered"]
+[connection signal="body_exited" from="Data/PushingZones/Left/Right" to="Data/PushingZones/Left/Right" method="_on_body_exited"]
+[connection signal="body_entered" from="Data/PushingZones/Left/Left" to="Data/PushingZones/Left/Left" method="_on_body_entered"]
+[connection signal="body_exited" from="Data/PushingZones/Left/Left" to="Data/PushingZones/Left/Left" method="_on_body_exited"]
+[connection signal="body_entered" from="Data/PushingZones/Left/Tiebreaker" to="Data/PushingZones/Left/Tiebreaker" method="_on_body_entered"]
+[connection signal="body_exited" from="Data/PushingZones/Left/Tiebreaker" to="Data/PushingZones/Left/Tiebreaker" method="_on_body_exited"]
+[connection signal="body_entered" from="Data/PushingZones/Down/Right" to="Data/PushingZones/Down/Right" method="_on_body_entered"]
+[connection signal="body_exited" from="Data/PushingZones/Down/Right" to="Data/PushingZones/Down/Right" method="_on_body_exited"]
+[connection signal="body_entered" from="Data/PushingZones/Down/Left" to="Data/PushingZones/Down/Left" method="_on_body_entered"]
+[connection signal="body_exited" from="Data/PushingZones/Down/Left" to="Data/PushingZones/Down/Left" method="_on_body_exited"]
+[connection signal="body_entered" from="Data/PushingZones/Down/Tiebreaker" to="Data/PushingZones/Down/Tiebreaker" method="_on_body_entered"]
+[connection signal="body_exited" from="Data/PushingZones/Down/Tiebreaker" to="Data/PushingZones/Down/Tiebreaker" method="_on_body_exited"]
+[connection signal="body_entered" from="Data/PushingZones/LeftWall" to="Data/PushingZones/LeftWall" method="_on_body_entered"]
+[connection signal="body_exited" from="Data/PushingZones/LeftWall" to="Data/PushingZones/LeftWall" method="_on_body_exited"]
+[connection signal="body_entered" from="Data/PushingZones/LeftHelper" to="Data/PushingZones/LeftHelper" method="_on_body_entered"]
+[connection signal="body_exited" from="Data/PushingZones/LeftHelper" to="Data/PushingZones/LeftHelper" method="_on_body_exited"]
+[connection signal="body_entered" from="Data/PushingZones/RightWall" to="Data/PushingZones/RightWall" method="_on_body_entered"]
+[connection signal="body_exited" from="Data/PushingZones/RightWall" to="Data/PushingZones/RightWall" method="_on_body_exited"]
+[connection signal="body_entered" from="Data/PushingZones/RightHelper" to="Data/PushingZones/RightHelper" method="_on_body_entered"]
+[connection signal="body_exited" from="Data/PushingZones/RightHelper" to="Data/PushingZones/RightHelper" method="_on_body_exited"]
 
-[editable path="ForegroundElements/Wall"]
-[editable path="ForegroundElements/Wall2"]
-[editable path="ForegroundElements/Wall3"]
-[editable path="ForegroundElements/Cove"]
-[editable path="ForegroundElements/Wall4"]
-[editable path="PushingZones/PushDown"]
-[editable path="PushingZones/Upper/Right"]
-[editable path="PushingZones/Upper/Left"]
-[editable path="PushingZones/Upper/Tiebreaker"]
-[editable path="PushingZones/Right/Right"]
-[editable path="PushingZones/Right/Left"]
-[editable path="PushingZones/Right/Tiebreaker"]
-[editable path="PushingZones/Left/Right"]
-[editable path="PushingZones/Left/Left"]
-[editable path="PushingZones/Left/Tiebreaker"]
-[editable path="PushingZones/Down/Right"]
-[editable path="PushingZones/Down/Left"]
-[editable path="PushingZones/Down/Tiebreaker"]
-[editable path="PushingZones/LeftWall"]
-[editable path="PushingZones/LeftHelper"]
-[editable path="PushingZones/RightWall"]
-[editable path="PushingZones/RightHelper"]
-[editable path="Whirlpool"]
+[editable path="Base/ForegroundElements/Wall"]
+[editable path="Base/ForegroundElements/Wall2"]
+[editable path="Base/ForegroundElements/Wall3"]
+[editable path="Base/ForegroundElements/Cove"]
+[editable path="Base/ForegroundElements/Wall4"]
+[editable path="Data/PushingZones/PushDown"]
+[editable path="Data/PushingZones/Upper/Right"]
+[editable path="Data/PushingZones/Upper/Left"]
+[editable path="Data/PushingZones/Upper/Tiebreaker"]
+[editable path="Data/PushingZones/Right/Right"]
+[editable path="Data/PushingZones/Right/Left"]
+[editable path="Data/PushingZones/Right/Tiebreaker"]
+[editable path="Data/PushingZones/Left/Right"]
+[editable path="Data/PushingZones/Left/Left"]
+[editable path="Data/PushingZones/Left/Tiebreaker"]
+[editable path="Data/PushingZones/Down/Right"]
+[editable path="Data/PushingZones/Down/Left"]
+[editable path="Data/PushingZones/Down/Tiebreaker"]
+[editable path="Data/PushingZones/LeftWall"]
+[editable path="Data/PushingZones/LeftHelper"]
+[editable path="Data/PushingZones/RightWall"]
+[editable path="Data/PushingZones/RightHelper"]
+[editable path="Data/Whirlpool"]

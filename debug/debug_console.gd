@@ -58,8 +58,8 @@ func _on_text_submitted(txt):
 	# in that case... modify either debug console or undo those changes
 	assert(main_scene.OVERWORLD != null, "Debug Console can't get Overworld scene; was it renamed/moved?")
 	assert(main_scene.OVERWORLD.get_node("Area") != null, "Debug Console can't get Area from Overworld; was it renamed/moved?")	
-	assert(main_scene.OVERWORLD.get_node("Area").get_node("Player") != null, "Debug Console can't get Player from Overworld->Area; was it renamed/moved?")
-	assert(main_scene.OVERWORLD.get_node("Area").get_node("OverworldEncounters") != null, "Debug Console can't get Area->OverworldEncounters, was it renamed/moved?")
+	assert(main_scene.OVERWORLD.get_node("Area").get_node("Entities/Player") != null, "Debug Console can't get Player from Overworld->Area; was it renamed/moved?")
+	assert(main_scene.OVERWORLD.get_node("Area").get_node("Entities/OverworldEncounters") != null, "Debug Console can't get Area->OverworldEncounters, was it renamed/moved?")
 	assert(main_scene.BATTLE != null, "Debug Console can't get Battle scene; was it renamed/moved?")
 	assert(main_scene.BATTLE.get_node("PlayerMons") != null, "Debug Console can't get PlayerMons from battle scene; was it renamed/moved?")
 	assert(main_scene.BATTLE.get_node("ComputerMons") != null, "Debug Console can't get ComputerMons from battle scene; was it renamed/moved?")
@@ -68,8 +68,8 @@ func _on_text_submitted(txt):
 	# collect some variables that are likely to be useful...
 	var OVERWORLD = main_scene.OVERWORLD
 	var current_area = main_scene.OVERWORLD.get_node("Area")
-	var player = current_area.get_node("Player")
-	var overworld_encounters = current_area.get_node("OverworldEncounters")
+	var player = current_area.get_node("Entities/Player")
+	var overworld_encounters = current_area.get_node("Entities/OverworldEncounters")
 	var BATTLE = main_scene.BATTLE
 	var animator = BATTLE.get_node("Animator")
 	
@@ -80,8 +80,6 @@ func _on_text_submitted(txt):
 	assert(overworld_encounters)
 	assert(BATTLE)
 	assert(animator)
-	
-	
 	
 	var args = txt.to_lower().split(" ")
 	var cmd = args[0]

@@ -19,17 +19,21 @@ size = Vector2(44, 16)
 script = ExtResource("1_c2hk5")
 area_enum = 9
 
-[node name="Map" type="Sprite2D" parent="."]
+[node name="Base" type="Node2D" parent="."]
+
+[node name="Map" type="Sprite2D" parent="Base"]
 z_index = 100
 texture = ExtResource("2_dl0pi")
 centered = false
 
-[node name="Player" parent="." instance=ExtResource("3_jyrdr")]
+[node name="Entities" type="Node2D" parent="."]
+
+[node name="Player" parent="Entities" instance=ExtResource("3_jyrdr")]
 position = Vector2(405, 1952)
 
-[node name="OverworldEncounters" type="Node2D" parent="."]
+[node name="OverworldEncounters" type="Node2D" parent="Entities"]
 
-[node name="Pascalican2" parent="OverworldEncounters" instance=ExtResource("4_xct11")]
+[node name="Pascalican2" parent="Entities/OverworldEncounters" instance=ExtResource("4_xct11")]
 position = Vector2(317, 309)
 script = ExtResource("5_67v3a")
 mon1Type = 4
@@ -41,7 +45,7 @@ mon3Level = 3
 mon4Type = 6
 mon4Level = 3
 
-[node name="Pascalican3" parent="OverworldEncounters" instance=ExtResource("4_xct11")]
+[node name="Pascalican3" parent="Entities/OverworldEncounters" instance=ExtResource("4_xct11")]
 position = Vector2(315, 1924)
 script = ExtResource("5_67v3a")
 mon1Type = 4
@@ -53,23 +57,59 @@ mon3Level = 0
 mon4Type = 0
 mon4Level = 0
 
-[node name="Points" type="Node2D" parent="."]
+[node name="Ladder" parent="Entities" instance=ExtResource("6_ucxxx")]
+position = Vector2(181, 1940)
+area = 10
+spawn_point = "Cave11Ladder"
+LABEL_TEXT = "Climb"
+
+[node name="CollisionPolygon2D" parent="Entities/Ladder/Collision" index="0"]
+polygon = PackedVector2Array(-74.4792, 23.2739, 26.7955, 23.2739, 43.6747, 16.8203, 43.6747, 3.9126, 26.7955, -2.54102, -74.4792, -2.54102, -91.3584, 3.9126, -91.3584, 16.8203)
+
+[node name="Data" type="Node2D" parent="."]
+
+[node name="Collision" type="StaticBody2D" parent="Data"]
+modulate = Color(0, 1, 0, 1)
+position = Vector2(-96, 150)
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Data/Collision"]
+polygon = PackedVector2Array(563, 1757, 624, 1770, 635, 1770, 635, 1867, 624, 1867, 563, 1855, 563.162, 1864.57, 564, 1914, 689, 1912, 701, 1683, 563, 1708)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Data/Collision"]
+polygon = PackedVector2Array(405, 130, 405, -10, 382, -22, 382, -38, 338, -38, 338, -22, 316, -11, 316, 130, 221, 130, 221, -80, 492, -79, 487, 130)
+
+[node name="MonCollision" type="StaticBody2D" parent="Data"]
+modulate = Color(0.278431, 1, 1, 1)
+z_index = 2000
+position = Vector2(-96, 150)
+collision_layer = 512
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Data/MonCollision"]
+polygon = PackedVector2Array(232, 1727, 194, 1755, 209, 1883, 563, 1887, 563, 1855, 240, 1855, 231, 1846, 231, 1766, 240, 1757, 563, 1757, 563, 1855, 563, 1887, 576, 1888, 581, 1753, 563, 1732)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Data/MonCollision"]
+polygon = PackedVector2Array(434, 183, 459, 130, 491, 114, 451, 207, 266, 205, 246, 111, 491, 114, 459, 130, 262, 130, 287, 183)
+
+[node name="Points" type="Node2D" parent="Data"]
 visible = false
 
-[node name="Cave10Right" type="Node2D" parent="Points"]
+[node name="Cave10Right" type="Node2D" parent="Data/Points"]
 position = Vector2(517, 1963)
 
-[node name="Cave10Ladder" type="Node2D" parent="Points"]
+[node name="Cave10Ladder" type="Node2D" parent="Data/Points"]
 position = Vector2(180, 1957)
 
-[node name="Cave10Top" type="Node2D" parent="Points"]
+[node name="Cave10Top" type="Node2D" parent="Data/Points"]
 position = Vector2(264, 128)
 
-[node name="Warps" type="Node2D" parent="."]
+[node name="Warps" type="Node2D" parent="Data"]
 visible = false
 z_index = 2000
 
-[node name="WarpToTidal" type="Area2D" parent="Warps"]
+[node name="WarpToTidal" type="Area2D" parent="Data/Warps"]
 position = Vector2(535, 2012)
 collision_layer = 0
 script = ExtResource("4_o02w7")
@@ -77,11 +117,11 @@ area = 8
 spawn_point = "Cave9Left"
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/WarpToTidal"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Data/Warps/WarpToTidal"]
 position = Vector2(-1.5, -43.5)
 shape = SubResource("RectangleShape2D_ipd0d")
 
-[node name="WarpToBoss" type="Area2D" parent="Warps"]
+[node name="WarpToBoss" type="Area2D" parent="Data/Warps"]
 position = Vector2(243, 123)
 collision_layer = 0
 script = ExtResource("4_o02w7")
@@ -89,63 +129,63 @@ area = 11
 spawn_point = "Cave12Bottom"
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Warps/WarpToBoss"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Data/Warps/WarpToBoss"]
 position = Vector2(21, -3)
 shape = SubResource("RectangleShape2D_kv1gw")
 
-[node name="WarpsTo2DWaterfallRight" type="Area2D" parent="Warps"]
+[node name="WarpsTo2DWaterfallRight" type="Area2D" parent="Data/Warps"]
 position = Vector2(429, 1839)
 collision_layer = 0
 script = ExtResource("4_o02w7")
 area = 10
 spawn_point = "Cave11Right"
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Warps/WarpsTo2DWaterfallRight"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Data/Warps/WarpsTo2DWaterfallRight"]
 polygon = PackedVector2Array(113, -1568, -64, -1559, -64, -1556, -91, -1504, -149, -1504, -149, -1475, -145, -1472, -145, -1443, -138, -1429, -138, -1398, -123, -1383, -123, -1352, -30, -1260, -27, -1256, 36, -1128, 36, -933, -21, -904, -20, -727, -78, -699, -78, -577, -20, -547, -20, -341, -34, -312, -97, -249, -97, -219, -66, -188, -66, -92, -130, -29, -130, 65, 38, 65, 38, 19, 99, 7)
 
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Warps/WarpsTo2DWaterfallRight"]
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Data/Warps/WarpsTo2DWaterfallRight"]
 position = Vector2(-187, -121)
 polygon = PackedVector2Array(-7, -3, 5, 10, 39, 10, 51, -3, 51, -34, 38, -48, 6, -48, -7, -35)
 
-[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Warps/WarpsTo2DWaterfallRight"]
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="Data/Warps/WarpsTo2DWaterfallRight"]
 position = Vector2(-236, -331)
 polygon = PackedVector2Array(-7, -3, 5, 10, 39, 10, 51, -3, 51, -34, 38, -48, 6, -48, -7, -35)
 
-[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Warps/WarpsTo2DWaterfallRight"]
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="Data/Warps/WarpsTo2DWaterfallRight"]
 position = Vector2(-117, -375)
 polygon = PackedVector2Array(-7, -3, 5, 10, 39, 10, 51, -3, 51, -34, 38, -48, 6, -48, -7, -35)
 
-[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="Warps/WarpsTo2DWaterfallRight"]
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="Data/Warps/WarpsTo2DWaterfallRight"]
 position = Vector2(-207, -457)
 polygon = PackedVector2Array(-7, -3, 5, 10, 39, 10, 51, -3, 51, -34, 38, -48, 6, -48, -7, -35)
 
-[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="Warps/WarpsTo2DWaterfallRight"]
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="Data/Warps/WarpsTo2DWaterfallRight"]
 polygon = PackedVector2Array(-200, 65, -285, 65, -297, 77, -297, 159, -285, 168, 38, 169, 39, 224, -409, 224, -431, -1562, -265, -1559, -265, -1556, -238, -1504, -180, -1504, -180, -1475, -184, -1472, -184, -1444, -191, -1430, -191, -1398, -206, -1383, -206, -1352, -301, -1256, -366, -1128, -366, -934, -309, -905, -309, -729, -252, -700, -252, -576, -356, -524, -356, -459, -310, -436, -309, -342, -294, -311, -231, -248, -231, -219, -262, -188, -262, -92, -200, -29)
 
-[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="Warps/WarpsTo2DWaterfallRight"]
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="Data/Warps/WarpsTo2DWaterfallRight"]
 polygon = PackedVector2Array(-167, -563, -163, -563, -136, -578, -136, -699, -163, -713, -167, -713, -194, -699, -194, -578)
 
-[node name="CollisionPolygon2D13" type="CollisionPolygon2D" parent="Warps/WarpsTo2DWaterfallRight"]
+[node name="CollisionPolygon2D13" type="CollisionPolygon2D" parent="Data/Warps/WarpsTo2DWaterfallRight"]
 position = Vector2(0, -410)
 polygon = PackedVector2Array(-167, -563, -162, -563, -135, -578, -135, -699, -162, -713, -167, -713, -194, -699, -194, -578)
 
-[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="Warps/WarpsTo2DWaterfallRight"]
+[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="Data/Warps/WarpsTo2DWaterfallRight"]
 position = Vector2(-58, -205)
 polygon = PackedVector2Array(-166, -563, -163, -563, -136, -578, -136, -699, -163, -713, -166, -713, -193, -699, -193, -577)
 
-[node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="Warps/WarpsTo2DWaterfallRight"]
+[node name="CollisionPolygon2D9" type="CollisionPolygon2D" parent="Data/Warps/WarpsTo2DWaterfallRight"]
 position = Vector2(57, -205)
 polygon = PackedVector2Array(-166, -563, -163, -563, -136, -578, -136, -699, -163, -713, -166, -713, -193, -699, -193, -577)
 
-[node name="CollisionPolygon2D10" type="CollisionPolygon2D" parent="Warps/WarpsTo2DWaterfallRight"]
+[node name="CollisionPolygon2D10" type="CollisionPolygon2D" parent="Data/Warps/WarpsTo2DWaterfallRight"]
 position = Vector2(115, -410)
 polygon = PackedVector2Array(-166, -563, -163, -563, -136, -578, -136, -699, -163, -713, -166, -713, -193, -699, -193, -577)
 
-[node name="CollisionPolygon2D11" type="CollisionPolygon2D" parent="Warps/WarpsTo2DWaterfallRight"]
+[node name="CollisionPolygon2D11" type="CollisionPolygon2D" parent="Data/Warps/WarpsTo2DWaterfallRight"]
 position = Vector2(-115, -411)
 polygon = PackedVector2Array(-166, -563, -163, -563, -136, -578, -136, -699, -163, -713, -166, -713, -193, -699, -193, -577)
 
-[node name="WarpTo2DWaterfallLeft" type="Area2D" parent="Warps"]
+[node name="WarpTo2DWaterfallLeft" type="Area2D" parent="Data/Warps"]
 position = Vector2(95, 1366)
 collision_layer = 0
 script = ExtResource("4_o02w7")
@@ -153,63 +193,29 @@ area = 10
 spawn_point = "Cave11Left"
 metadata/_edit_group_ = true
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Warps/WarpTo2DWaterfallLeft"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Data/Warps/WarpTo2DWaterfallLeft"]
 polygon = PackedVector2Array(-7, -3, 5, 10, 39, 10, 51, -3, 51, -34, 38, -48, 6, -48, -7, -35)
 
-[node name="Collision" type="StaticBody2D" parent="."]
-modulate = Color(0, 1, 0, 1)
-position = Vector2(-96, 150)
-collision_layer = 4
-collision_mask = 0
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Collision"]
-polygon = PackedVector2Array(563, 1757, 624, 1770, 635, 1770, 635, 1867, 624, 1867, 563, 1855, 563.162, 1864.57, 564, 1914, 689, 1912, 701, 1683, 563, 1708)
-
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Collision"]
-polygon = PackedVector2Array(405, 130, 405, -10, 382, -22, 382, -38, 338, -38, 338, -22, 316, -11, 316, 130, 221, 130, 221, -80, 492, -79, 487, 130)
-
-[node name="MonCollision" type="StaticBody2D" parent="."]
-modulate = Color(0.278431, 1, 1, 1)
-z_index = 2000
-position = Vector2(-96, 150)
-collision_layer = 512
-collision_mask = 0
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MonCollision"]
-polygon = PackedVector2Array(232, 1727, 194, 1755, 209, 1883, 563, 1887, 563, 1855, 240, 1855, 231, 1846, 231, 1766, 240, 1757, 563, 1757, 563, 1855, 563, 1887, 576, 1888, 581, 1753, 563, 1732)
-
-[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="MonCollision"]
-polygon = PackedVector2Array(434, 183, 459, 130, 491, 114, 451, 207, 266, 205, 246, 111, 491, 114, 459, 130, 262, 130, 287, 183)
-
-[node name="Ice" type="Node2D" parent="."]
+[node name="Ice" type="Node2D" parent="Data"]
 visible = false
 script = ExtResource("5_t63x7")
 
-[node name="IceArea" type="Area2D" parent="Ice"]
+[node name="IceArea" type="Area2D" parent="Data/Ice"]
 collision_layer = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Ice/IceArea"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Data/Ice/IceArea"]
 polygon = PackedVector2Array(232, 1907, 232, 1835, 11, 1831, -2, 740, 18, 369, 251, 364, 251, 333, 278, 333, 278, 364, 533, 387, 527, 1842, 296, 1835, 296, 1907)
 
-[node name="Bottom" type="Area2D" parent="Ice"]
+[node name="Bottom" type="Area2D" parent="Data/Ice"]
 collision_layer = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Ice/Bottom"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Data/Ice/Bottom"]
 polygon = PackedVector2Array(232, 1907, 296, 1907, 296, 1883, 232, 1883)
 
-[node name="Top" type="Area2D" parent="Ice"]
+[node name="Top" type="Area2D" parent="Data/Ice"]
 collision_layer = 0
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Ice/Top"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Data/Ice/Top"]
 polygon = PackedVector2Array(251, 333, 251, 351, 278, 351, 278, 333)
 
-[node name="Ladder" parent="." instance=ExtResource("6_ucxxx")]
-position = Vector2(181, 1940)
-area = 10
-spawn_point = "Cave11Ladder"
-LABEL_TEXT = "Climb"
-
-[node name="CollisionPolygon2D" parent="Ladder/Collision" index="0"]
-polygon = PackedVector2Array(-74.4792, 23.2739, 26.7955, 23.2739, 43.6747, 16.8203, 43.6747, 3.9126, 26.7955, -2.54102, -74.4792, -2.54102, -91.3584, 3.9126, -91.3584, 16.8203)
-
-[editable path="Ladder"]
+[editable path="Entities/Ladder"]
