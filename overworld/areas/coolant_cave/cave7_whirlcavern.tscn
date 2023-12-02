@@ -303,6 +303,7 @@ position = Vector2(2, -3)
 shape = SubResource("CircleShape2D_41i08")
 
 [node name="Whirlpool" parent="Data" instance=ExtResource("13_i1p7n")]
+z_index = 205
 position = Vector2(830, 387)
 NUM_CIRCLES = 4
 CIRCLE_SPEED = 15.0
