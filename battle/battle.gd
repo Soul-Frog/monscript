@@ -91,6 +91,7 @@ func clear_battle():
 		mon.queue_free();
 	state = BattleState.EMPTY
 	battle_result = BattleResult.new()
+	$Log.clear()
 	timer.start() # sets timer to 0
 
 func _battle_tick():
@@ -125,7 +126,7 @@ func _battle_tick():
 		
 		var friends = player_mons if active_mon in player_mons else computer_mons
 		var foes = computer_mons if active_mon in player_mons else player_mons
-		active_mon.take_action(friends, foes, $Animator)
+		active_mon.take_action(friends, foes, $Log, $Animator)
 
 func _are_any_computer_mons_alive():
 	for computer_mon in $ComputerMons.get_children():

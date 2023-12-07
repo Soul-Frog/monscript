@@ -15,7 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://b22sjaueu4u82" path="res://assets/isometric/tilemap/tile-glitch-north.png" id="11_lqlgq"]
 [ext_resource type="Texture2D" uid="uid://ois27ecttbv3" path="res://assets/isometric/tilemap/tile-glitch-middle.png" id="12_k6xdm"]
 [ext_resource type="PackedScene" uid="uid://dwydicdw81oc0" path="res://battle/animator.tscn" id="15_dus4q"]
-[ext_resource type="Texture2D" uid="uid://binyaw8wlp5ye" path="res://battle/test.png" id="16_yph4q"]
+[ext_resource type="PackedScene" uid="uid://4c05s8pkxawq" path="res://battle/log.tscn" id="16_ugd8u"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_v6wcl"]
 texture = ExtResource("1_cm50e")
@@ -96,7 +96,6 @@ wait_time = 0.2
 autostart = true
 
 [node name="PlayerMons" type="Node2D" parent="."]
-visible = false
 
 [node name="MONPLACEHOLDER1" parent="PlayerMons" instance=ExtResource("2_qhxpi")]
 position = Vector2(120, 40)
@@ -123,7 +122,6 @@ collision_mask = 1
 safe_margin = 0.08
 
 [node name="ComputerMons" type="Node2D" parent="."]
-visible = false
 
 [node name="MONPLACEHOLDER1" parent="ComputerMons" instance=ExtResource("2_qhxpi")]
 position = Vector2(200, 40)
@@ -161,10 +159,6 @@ layer_0/tile_data = PackedInt32Array(-262130, 1, 0, -262131, 11, 0, -196595, 1, 
 
 [node name="Animator" parent="." instance=ExtResource("15_dus4q")]
 
-[node name="Test" type="Sprite2D" parent="."]
-position = Vector2(83, 47)
-texture = ExtResource("16_yph4q")
-
 [node name="Label" type="Label" parent="."]
 z_index = 1
 offset_left = 59.0
@@ -177,5 +171,8 @@ text = "Magnetfrog LV64
 100/100
 100/100"
 horizontal_alignment = 1
+
+[node name="Log" parent="." instance=ExtResource("16_ugd8u")]
+position = Vector2(84, 136)
 
 [connection signal="timeout" from="Timer" to="." method="_battle_tick"]

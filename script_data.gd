@@ -16,15 +16,15 @@ class MonScript:
 	func _init(string: String) -> void:
 		_from_string(string.strip_edges())
 	
-	func execute(mon: BattleMon, friends: Array, foes: Array, animator: BattleAnimator) -> void:
+	func execute(mon: BattleMon, friends: Array, foes: Array, battle_log: BattleLog, animator: BattleAnimator) -> void:
 		assert(not mon.is_defeated())
 		assert(not friends.is_empty())
 		assert(not foes.is_empty())
 		if lines.size() == 0: #empty script, just run error
-			await ScriptData._ERROR_DO.function.call(mon, friends, foes, null, animator)
+			await ScriptData._ERROR_DO.function.call(mon, friends, foes, null, battle_log, animator)
 			mon.alert_turn_over()
 		for line in lines:
-			if await line.try_execute(mon, friends, foes, animator):
+			if await line.try_execute(mon, friends, foes, battle_log, animator):
 				return
 	
 	func is_valid() -> bool:
@@ -102,10 +102,10 @@ class Line:
 			return false
 		return true
 
-	func try_execute(mon: BattleMon, friends: Array, foes: Array, animator: BattleAnimator) -> bool:
+	func try_execute(mon: BattleMon, friends: Array, foes: Array, battle_log: BattleLog, animator: BattleAnimator) -> bool:
 		# if this line is invalid, terminate with error
 		if not is_valid(): 
-			await ScriptData._ERROR_DO.function.call(mon, friends, foes, null, animator)
+			await ScriptData._ERROR_DO.function.call(mon, friends, foes, null, battle_log, animator)
 			mon.alert_turn_over()
 			return true #we 'executed' this line, so return false to stop execution
 		
@@ -118,7 +118,7 @@ class Line:
 			# if there is no TO block, this must be a DO which does not require one
 			var targets = null if toBlock == null else toBlock.function.call(mon, friends, foes)
 			# perform the battle action
-			await doBlock.function.call(mon, friends, foes, targets, animator)
+			await doBlock.function.call(mon, friends, foes, targets, battle_log, animator)
 			mon.alert_turn_over()
 		
 		# return if this line was executed, so script knows not to 
@@ -179,7 +179,7 @@ var IF_BLOCK_LIST := [
 		return false
 		),
 	
-	Block.new(Block.Type.IF, "PalDamaged", Block.Type.DO,  "Triggers if a pal is damaged.",
+	Block.new(Block.Type.IF, "PalDamaged", Block.Type.DO, "Triggers if a pal is damaged.",
 	func(mon: BattleMon, friends: Array, foes: Array) -> bool: 
 		for friend in friends:
 			if friend.current_health < friend.max_health:
@@ -197,18 +197,20 @@ var IF_BLOCK_LIST := [
 
 # DO FUNCTIONS
 # Perform a battle action 
-#      self       friends      foes         target		animation helper      function should perform a battle action
-# func(BattleMon, [BattleMon], [BattleMon], BattleMon	Animator]) -> void
+#      self       friends      foes         target		battle_log		animation helper      function should perform a battle action
+# func(BattleMon, [BattleMon], [BattleMon], BattleMon	battle_log		Animator]) -> void
 var DO_BLOCK_LIST := [
 	Block.new(Block.Type.DO, "Pass", Block.Type.NONE, "Do nothing, but conserve half of your AP.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
 		mon.action_points = int(mon.action_points / 2.0)
 		mon.reset_AP_after_action = false # don't reset to 0 after this action
 		),
 		
 	Block.new(Block.Type.DO, "Attack", Block.Type.TO, "Deals 100% damage to a single target.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
 		assert(not target.is_defeated())
+		
+		battle_log.add_text("Attacked! %d" % Global.RNG.randi_range(0, 100000))
 		
 		# play the animation and wait for it to finish
 		animator.slash(target)
@@ -219,17 +221,17 @@ var DO_BLOCK_LIST := [
 		),
 	
 	Block.new(Block.Type.DO, "Defend", Block.Type.NONE, "Do nothing, but reduce damage taken by 50% until your next turn.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
 		mon.is_defending = true
 		),
 		
 	Block.new(Block.Type.DO, "Escape", Block.Type.NONE, "Attempt to escape the battle. Chance of success depends on SPEED.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
 		mon.emit_signal("try_to_escape", mon)
 		),
 		
 	Block.new(Block.Type.DO, "ShellBash", Block.Type.TO, "Attack an enemy for 70% damage, and defend until your next turn.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
 		animator.slash(target)
 		await animator.animation_finished
 		
@@ -238,13 +240,13 @@ var DO_BLOCK_LIST := [
 		),
 		
 	Block.new(Block.Type.DO, "Repair", Block.Type.NONE, "Heal 40% of your HP and clear status conditions.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
 		mon.heal_damage(int(mon.max_health * 0.4))
 		mon.heal_all_statuses()
 		),
 		
 	Block.new(Block.Type.DO, "C-gun", Block.Type.TO, "Deals 80% Chill damage to a single target (140% Chill damage instead if this is your 5th turn or later).",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
 		#todo - animation
 		animator.slash(target)
 		await animator.animation_finished
@@ -257,7 +259,7 @@ var DO_BLOCK_LIST := [
 		),
 	
 	Block.new(Block.Type.DO, "Triangulate", Block.Type.TO, "Deals 50% damage to a single target. Increases by +10%/20%/30%/60%/100% each use in the same battle.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
 		#todo - animation
 		animator.slash(target)
 		await animator.animation_finished
@@ -286,7 +288,7 @@ var DO_BLOCK_LIST := [
 		),
 	
 	Block.new(Block.Type.DO, "SpikOR", Block.Type.TO, "Deals 60% damage to a single target (125% damage instead if target is leaky or above 80% HP.)",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
 		#todo - animation
 		animator.slash(target)
 		await animator.animation_finished
@@ -299,7 +301,7 @@ var DO_BLOCK_LIST := [
 		),
 	
 	Block.new(Block.Type.DO, "Multitack", Block.Type.NONE, "Four times, deal 25% damage to a random target.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
 		for i in range(0, 4):
 			var rand_target = Global.choose_one(foes)
 			animator.slash(rand_target) #todo - animation
@@ -314,14 +316,14 @@ var DO_BLOCK_LIST := [
 		),
 		
 	Block.new(Block.Type.DO, "Spearphishing", Block.Type.TO, "Inflict leak on a single target.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
 		animator.slash(target) #todo - animation
 		await animator.animation_finished
 		target.inflict_status(BattleMon.Status.LEAK)
 		),
 		
 	Block.new(Block.Type.DO, "Transfer", Block.Type.TO, "Heal a mon by transfering up to 50% of the user's HP to a single target.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
 		# heal amount is up to 50% of user's health; if not enough health, use all but 1
 		var heal_possible = min(mon.max_health * 0.5, mon.current_health - 1)
 		# heal amount is ideally the previous value, but if we don't need to heal that much, use the diff between target's
