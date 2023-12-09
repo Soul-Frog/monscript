@@ -129,7 +129,7 @@ func alert_turn_over() -> void:
 	
 	# after taking an action, if inflicted with leak, take 5% health as damage
 	if statuses[Status.LEAK]:
-		battle_log.add_text("%s is suffering from a memory leak!" % battle_log.MON_NAME_PLACEHOLDER, self)
+		battle_log.add_text("%s is leaking memory!" % battle_log.MON_NAME_PLACEHOLDER, self)
 		take_damage(max(int(max_health * 0.05), 1))
 		#todo - animate this better
 	
@@ -198,13 +198,15 @@ func heal_damage(heal: int) -> void:
 	_update_labels()
 
 func inflict_status(status: Status) -> void:
-	statuses[status] = true
-	
+	# only display inflicted message if don't actually have this status
 	match status:
 		Status.LEAK:
-			battle_log.add_text("%s is suffering from a memory leak!" % battle_log.MON_NAME_PLACEHOLDER, self)
+			if not statuses[status]:
+				battle_log.add_text("%s is suffering from a memory leak!" % battle_log.MON_NAME_PLACEHOLDER, self)
 		_:
 			assert(false, "No message for status!")
+			
+	statuses[status] = true
 	
 	# todo - play some effect here, add some icons, idk
 
