@@ -58,6 +58,7 @@ func _create_and_setup_mon(base_mon, teamNode, pos):
 	new_mon.zero_health.connect(self._on_mon_zero_health)
 	new_mon.action_completed.connect(self._on_mon_action_completed)
 	new_mon.position = pos
+	new_mon.battle_log = $Log
 
 # Sets up a new battle scene
 func setup_battle(player_team, computer_team):
@@ -67,12 +68,52 @@ func setup_battle(player_team, computer_team):
 	assert(player_team.size() == Global.MONS_PER_TEAM, "Wrong num of mons in player team!")
 	assert(computer_team.size() == COMPUTER_MON_POSITIONS.size(), "Wrong num of mons in computer team!")
 	
+	# fancy lambda which makes the log_name of each mon unique
+	# if a mon has no shared name, does nothing
+	# otherwise changes it to "Bitleon1", "Bitleon2", "Bitleon3", etc
+	# name_map is a dictionary of names (string) -> array[battlemons with that name]
+	var make_unique_log_names = func(name_map):
+		for mon_name in name_map.keys():
+			if name_map[mon_name].size() == 1:
+				continue # don't append numbers if name is not shared
+			for i in name_map[mon_name].size():
+				name_map[mon_name][i].log_name = "%s%d" % [mon_name, i+1]
+	
 	# add mons for the new battle
+	var name_map = {} # store all mon names to handle duplicates for the battle log
 	for i in Global.MONS_PER_TEAM:
 		if player_team[i] != null:
 			_create_and_setup_mon(player_team[i], $PlayerMons, PLAYER_MON_POSITIONS[i])
+			var new_mon: BattleMon = $PlayerMons.get_child(i)
+			
+			# set up log name and color for this mon
+			new_mon.log_color = $Log.PLAYER_TEAM_COLOR
+			var mon_name = new_mon.log_name
+			if name_map.has(mon_name):
+				name_map[mon_name].append(new_mon) 
+			else:
+				name_map[mon_name] = [new_mon]
+	
+	# handle any duplicate names
+	make_unique_log_names.call(name_map)
+	name_map.clear()
+	
+	for i in Global.MONS_PER_TEAM:
 		if computer_team[i] != null:
 			_create_and_setup_mon(computer_team[i], $ComputerMons, COMPUTER_MON_POSITIONS[i])
+			var new_mon: BattleMon = $ComputerMons.get_child(i)
+			
+			# set up log name and color for this mon
+			new_mon.log_color = $Log.ENEMY_TEAM_COLOR
+			var mon_name = new_mon.log_name
+			if name_map.has(mon_name):
+				name_map[mon_name].append(new_mon) 
+			else:
+				name_map[mon_name] = [new_mon]
+
+	# handle any duplicate names
+	make_unique_log_names.call(name_map)
+	
 	action_queue.clear()
 	is_a_mon_taking_action = false
 	
@@ -81,6 +122,8 @@ func setup_battle(player_team, computer_team):
 	assert(action_queue.size() == 0)
 	assert(not is_a_mon_taking_action)
 	state = BattleState.BATTLING
+	
+	$Log.add_text("Executing battle!")
 
 # Should be called after a battle ends, before the next call to setup_battle
 func clear_battle():
@@ -126,7 +169,7 @@ func _battle_tick():
 		
 		var friends = player_mons if active_mon in player_mons else computer_mons
 		var foes = computer_mons if active_mon in player_mons else player_mons
-		active_mon.take_action(friends, foes, $Log, $Animator)
+		active_mon.take_action(friends, foes, $Animator)
 
 func _are_any_computer_mons_alive():
 	for computer_mon in $ComputerMons.get_children():
@@ -179,6 +222,9 @@ func _on_mon_action_completed():
 
 func _on_mon_zero_health(mon):
 	assert(state == BattleState.BATTLING)
+	
+	$Log.add_text("%s has been terminated!" % $Log.MON_NAME_PLACEHOLDER, mon)
+	
 	# increment xp earned from battle if this was a computer mon
 	# min exp earn is 1; so level 0 mons still provide 1 xp
 	if mon in $ComputerMons.get_children():
@@ -205,14 +251,17 @@ func _check_battle_end_condition():
 		state = BattleState.FINISHED
 		timer.stop()
 		battle_result.end_condition = Global.BattleEndCondition.WIN
+		$Log.add_text("Battle terminated.")
 		Events.emit_signal("battle_ended", battle_result)
 	elif not player_mons_alive and computer_mons_alive:
 		state = BattleState.FINISHED
 		timer.stop()
 		battle_result.end_condition = Global.BattleEndCondition.LOSE
+		$Log.add_text("Battle terminated.")
 		Events.emit_signal("battle_ended", battle_result)
 	elif not player_mons_alive and not computer_mons_alive:
 		state = BattleState.FINISHED
 		timer.stop()
 		battle_result.end_condition = Global.BattleEndCondition.WIN
+		$Log.add_text("Battle terminated.")
 		Events.emit_signal("battle_ended", battle_result) # tie also counts as a win

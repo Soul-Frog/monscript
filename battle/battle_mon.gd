@@ -24,6 +24,12 @@ const ACTION_POINTS_PER_TURN := 100
 # Set this with init_mon before doing anything else with this scene
 var base_mon: MonData.Mon = null
 
+# The name and color used for this mon's entries into the battle log
+var log_name: String = ""
+var log_color: Color = Color.BLACK
+# Reference to the battle log
+var battle_log: BattleLog
+
 # current action points - increases by speed each tick
 # when this reaches 100, signals to take a turn
 var action_points := 0
@@ -82,6 +88,7 @@ func init_mon(mon: MonData.Mon) -> void:
 	is_defending = false
 	escaped_from_battle = false
 	reset_AP_after_action = true
+	log_name = mon.get_name()
 	$BattleComponents/ActionPointsBar.max_value = ACTION_POINTS_PER_TURN
 	$BattleComponents/HealthBar.max_value = max_health
 	$BattleComponents/ActionPointsBar.modulate = Global.COLOR_YELLOW
@@ -102,7 +109,7 @@ func battle_tick() -> void:
 			emit_signal("ready_to_take_action", self) # signal that it's time for this mon to act
 
 # Take a single turn in battle
-func take_action(friends: Array, foes: Array, battle_log: BattleLog, animator: BattleAnimator) -> void:
+func take_action(friends: Array, foes: Array, animator: BattleAnimator) -> void:
 	assert(friends.size() != 0, "No friends?")
 	assert(foes.size() != 0, "No foes?")
 	is_defending = false
@@ -122,6 +129,7 @@ func alert_turn_over() -> void:
 	
 	# after taking an action, if inflicted with leak, take 5% health as damage
 	if statuses[Status.LEAK]:
+		battle_log.add_text("%s is suffering from a memory leak!" % battle_log.MON_NAME_PLACEHOLDER, self)
 		take_damage(max(int(max_health * 0.05), 1))
 		#todo - animate this better
 	
@@ -154,6 +162,8 @@ func take_damage(damage_taken: int) -> void:
 	current_health -= damage_taken # deal a minimum of 1 damage
 	current_health = max(current_health, 0);
 	
+	battle_log.add_text("%s took %d damage!" % [battle_log.MON_NAME_PLACEHOLDER, damage_taken], self)
+	
 	# make text effect
 	self.add_child(
 		MOVING_TEXT_SCENE.instantiate()
@@ -175,7 +185,7 @@ func heal_damage(heal: int) -> void:
 	var heal_amt = heal
 	if current_health + heal >= max_health:
 		heal_amt = max_health - current_health
-	
+	battle_log.add_text("%s healed %d HP!" % [battle_log.MON_NAME_PLACEHOLDER, heal_amt], self)
 	current_health += heal_amt
 	
 	# make text effect
@@ -190,9 +200,23 @@ func heal_damage(heal: int) -> void:
 func inflict_status(status: Status) -> void:
 	statuses[status] = true
 	
+	match status:
+		Status.LEAK:
+			battle_log.add_text("%s is suffering from a memory leak!" % battle_log.MON_NAME_PLACEHOLDER, self)
+		_:
+			assert(false, "No message for status!")
+	
 	# todo - play some effect here, add some icons, idk
 
 func heal_status(status: Status) -> void:
+	# only display 'healed status!' message if we actually had that status
+	if statuses[status]:
+		match status:
+			Status.LEAK:
+				battle_log.add_text("%s is no longer leaking memory!" % battle_log.MON_NAME_PLACEHOLDER, self)
+			_:
+				assert(false, "No message for status!")
+	
 	statuses[status] = false
 	
 	# todo - play some effect here
@@ -200,8 +224,6 @@ func heal_status(status: Status) -> void:
 func heal_all_statuses() -> void:
 	for status in statuses.keys():
 		statuses[status] = false
-	
-	#todo - play some effect here
 
 func _update_labels() -> void:
 	$BattleComponents/ActionPointsBar.value = action_points

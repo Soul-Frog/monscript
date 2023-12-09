@@ -202,6 +202,7 @@ var IF_BLOCK_LIST := [
 var DO_BLOCK_LIST := [
 	Block.new(Block.Type.DO, "Pass", Block.Type.NONE, "Do nothing, but conserve half of your AP.",
 	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
+		battle_log.add_text("%s passed." % battle_log.MON_NAME_PLACEHOLDER, mon)
 		mon.action_points = int(mon.action_points / 2.0)
 		mon.reset_AP_after_action = false # don't reset to 0 after this action
 		),
@@ -210,7 +211,7 @@ var DO_BLOCK_LIST := [
 	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
 		assert(not target.is_defeated())
 		
-		battle_log.add_text("Attacked! %d" % Global.RNG.randi_range(0, 100000))
+		battle_log.add_text("%s attacked!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		
 		# play the animation and wait for it to finish
 		animator.slash(target)
@@ -222,16 +223,19 @@ var DO_BLOCK_LIST := [
 	
 	Block.new(Block.Type.DO, "Defend", Block.Type.NONE, "Do nothing, but reduce damage taken by 50% until your next turn.",
 	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
+		battle_log.add_text("%s is defending!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		mon.is_defending = true
 		),
 		
 	Block.new(Block.Type.DO, "Escape", Block.Type.NONE, "Attempt to escape the battle. Chance of success depends on SPEED.",
 	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
+		battle_log.add_text("%s tried to escape!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		mon.emit_signal("try_to_escape", mon)
 		),
 		
 	Block.new(Block.Type.DO, "ShellBash", Block.Type.TO, "Attack an enemy for 70% damage, and defend until your next turn.",
 	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
+		battle_log.add_text("%s used ShellBash!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		animator.slash(target)
 		await animator.animation_finished
 		
@@ -241,12 +245,15 @@ var DO_BLOCK_LIST := [
 		
 	Block.new(Block.Type.DO, "Repair", Block.Type.NONE, "Heal 40% of your HP and clear status conditions.",
 	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
+		battle_log.add_text("%s used Repair!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		mon.heal_damage(int(mon.max_health * 0.4))
 		mon.heal_all_statuses()
 		),
 		
 	Block.new(Block.Type.DO, "C-gun", Block.Type.TO, "Deals 80% Chill damage to a single target (140% Chill damage instead if this is your 5th turn or later).",
 	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
+		battle_log.add_text("%s used C-Gun!" % battle_log.MON_NAME_PLACEHOLDER, mon)
+		
 		#todo - animation
 		animator.slash(target)
 		await animator.animation_finished
@@ -260,6 +267,8 @@ var DO_BLOCK_LIST := [
 	
 	Block.new(Block.Type.DO, "Triangulate", Block.Type.TO, "Deals 50% damage to a single target. Increases by +10%/20%/30%/60%/100% each use in the same battle.",
 	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
+		battle_log.add_text("%s used Triangulate!" % battle_log.MON_NAME_PLACEHOLDER, mon)
+		
 		#todo - animation
 		animator.slash(target)
 		await animator.animation_finished
@@ -289,12 +298,22 @@ var DO_BLOCK_LIST := [
 	
 	Block.new(Block.Type.DO, "SpikOR", Block.Type.TO, "Deals 60% damage to a single target (125% damage instead if target is leaky or above 80% HP.)",
 	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
+		var leak_condition = target.statuses[BattleMon.Status.LEAK]
+		var health_condition = float(target.current_health) / target.max_health >= 0.8
+		
+		battle_log.add_text("%s used SpikOR!" % battle_log.MON_NAME_PLACEHOLDER, mon)
+		
+		if leak_condition:
+			battle_log.add_text("It dealt bonus damage to the leaky target!")
+		elif health_condition:
+			battle_log.add_text("It dealt bonus damage to the high HP target!")
+		
 		#todo - animation
 		animator.slash(target)
 		await animator.animation_finished
 		
 		var dmg_mult = 0.6
-		if mon.statuses[BattleMon.Status.LEAK] or float(mon.current_health) / mon.max_health >= 0.8:
+		if leak_condition or health_condition:
 			dmg_mult = 1.25
 		
 		target.apply_attack(mon.attack, dmg_mult) #todo - volt damage
@@ -302,6 +321,7 @@ var DO_BLOCK_LIST := [
 	
 	Block.new(Block.Type.DO, "Multitack", Block.Type.NONE, "Four times, deal 25% damage to a random target.",
 	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
+		battle_log.add_text("%s used Multitack!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		for i in range(0, 4):
 			var rand_target = Global.choose_one(foes)
 			animator.slash(rand_target) #todo - animation
@@ -317,6 +337,7 @@ var DO_BLOCK_LIST := [
 		
 	Block.new(Block.Type.DO, "Spearphishing", Block.Type.TO, "Inflict leak on a single target.",
 	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
+		battle_log.add_text("%s used Spearphishing!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		animator.slash(target) #todo - animation
 		await animator.animation_finished
 		target.inflict_status(BattleMon.Status.LEAK)
@@ -324,6 +345,8 @@ var DO_BLOCK_LIST := [
 		
 	Block.new(Block.Type.DO, "Transfer", Block.Type.TO, "Heal a mon by transfering up to 50% of the user's HP to a single target.",
 	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
+		battle_log.add_text("%s used Transfer!" % battle_log.MON_NAME_PLACEHOLDER, mon)
+		
 		# heal amount is up to 50% of user's health; if not enough health, use all but 1
 		var heal_possible = min(mon.max_health * 0.5, mon.current_health - 1)
 		# heal amount is ideally the previous value, but if we don't need to heal that much, use the diff between target's

@@ -3,11 +3,16 @@ extends Node2D
 
 @onready var text = $Text
 
-const _TEXT_SPEED_DELTA := 60.0
+const _TEXT_SPEED_DELTA := 130.0
 var _visible_characters := 0.0
 
-const _AUTOSCROLL_SPEED := 40.0
+const _AUTOSCROLL_SPEED := 50.0
 var _scroll_value := 0.0
+
+const PLAYER_TEAM_COLOR: Color = Global.COLOR_GREEN
+const ENEMY_TEAM_COLOR: Color = Global.COLOR_RED
+
+const MON_NAME_PLACEHOLDER = "[MONNAME]"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -29,9 +34,13 @@ func _process(delta):
 		scroll_bar.value = int(_scroll_value)
 
 # Add a new line of text to the log
-func add_text(line: String) -> void:
-	# todo - process [MON] into a name, pass a mon name and team color
-	text.append_text(line + "\n")
+func add_text(line: String, mon: BattleMon = null) -> void:
+	if mon != null:
+		# replace [MONNAME] with a colored name
+		line = line.replace(MON_NAME_PLACEHOLDER, "[color=%s]%s[/color]" % [mon.log_color.to_html(), mon.log_name])
+	
+	# add new line to the log
+	text.append_text("%s\n" % line)
 
 # Clears and resets the log
 func clear() -> void:
