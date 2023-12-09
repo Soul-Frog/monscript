@@ -6,6 +6,7 @@ func _play_fx(fx):
 	add_child(fx)
 	fx.play()
 	await fx.animation_finished
+	fx.queue_free()
 	remove_child(fx)
 
 func slash(mon):

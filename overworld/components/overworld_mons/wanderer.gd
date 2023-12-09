@@ -82,13 +82,6 @@ func _randomize_wander_target():
 		state = MOVING
 		
 		success = true
-		
-		$DebugTool.clear_drawables()
-		$DebugTool.add_line(line_start, line_end, Color.AZURE)
-		$DebugTool.add_line(line_start2, line_end2, Color.BLUE_VIOLET)
-		$DebugTool.add_line(line_start3, line_end3, Color.MAGENTA)
-		$DebugTool.add_line(line_start4, line_end4, Color.GREEN)
-		$DebugTool.add_point(target, Color.BLUE)
 	
 	if not success:
 		print("couldn't find a valid path for %s" % name)

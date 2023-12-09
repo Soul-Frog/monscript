@@ -55,6 +55,7 @@ func _add_drawable(drawable):
 	drawables.append(drawable)
 	get_tree().create_timer(drawable_timeout_time).timeout.connect(drawable.on_timeout)
 
+# has a memory leak somewhere
 func _clean_drawables():
 	for i in range(drawables.size() -1, -1, -1):
 		if drawables[i].should_be_deleted:
