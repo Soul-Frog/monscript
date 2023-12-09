@@ -16,6 +16,9 @@ signal action_completed
 # emitted after this mon's animation completes
 signal action_animation_completed
 
+# emitted after this mon's health or ap have changed
+signal health_or_ap_changed
+
 const MOVING_TEXT_SCENE = preload("res://battle/moving_text.tscn")
 
 const ACTION_POINTS_PER_TURN := 100
@@ -89,11 +92,7 @@ func init_mon(mon: MonData.Mon) -> void:
 	escaped_from_battle = false
 	reset_AP_after_action = true
 	log_name = mon.get_name()
-	$BattleComponents/ActionPointsBar.max_value = ACTION_POINTS_PER_TURN
-	$BattleComponents/HealthBar.max_value = max_health
-	$BattleComponents/ActionPointsBar.modulate = Global.COLOR_YELLOW
-	$BattleComponents/HealthBar.modulate = Global.COLOR_GREEN
-	_update_labels();
+	emit_signal("health_or_ap_changed")
 
 # Called once for each mon by battle.gd at a regular time interval
 func battle_tick() -> void:
@@ -102,9 +101,10 @@ func battle_tick() -> void:
 	if not is_defeated():
 		action_points += speed
 		action_points = clamp(action_points, 0, ACTION_POINTS_PER_TURN)
-		_update_labels();
+		emit_signal("health_or_ap_changed")
+		
 		if action_points >= ACTION_POINTS_PER_TURN:
-			$BattleComponents/ActionPointsBar.modulate = Global.COLOR_RED
+			# TODO $BattleComponents/ActionPointsBar.modulate = Global.COLOR_RED
 			turn_count += 1
 			emit_signal("ready_to_take_action", self) # signal that it's time for this mon to act
 
@@ -125,7 +125,7 @@ func alert_turn_over() -> void:
 	if reset_AP_after_action:
 		action_points = 0
 	reset_AP_after_action = true
-	$BattleComponents/ActionPointsBar.modulate = Global.COLOR_YELLOW
+	# TODO $BattleComponents/ActionPointsBar.modulate = Global.COLOR_YELLOW
 	
 	# after taking an action, if inflicted with leak, take 5% health as damage
 	if statuses[Status.LEAK]:
@@ -133,7 +133,6 @@ func alert_turn_over() -> void:
 		take_damage(max(int(max_health * 0.05), 1))
 		#todo - animate this better
 	
-	_update_labels();
 	emit_signal("action_completed")
 
 func is_defeated() -> bool:
@@ -161,6 +160,7 @@ func apply_attack(attacker_atk: int, multiplier: float) -> void:
 func take_damage(damage_taken: int) -> void:
 	current_health -= damage_taken # deal a minimum of 1 damage
 	current_health = max(current_health, 0);
+	emit_signal("health_or_ap_changed")
 	
 	battle_log.add_text("%s took %d damage!" % [battle_log.MON_NAME_PLACEHOLDER, damage_taken], self)
 	
@@ -178,15 +178,16 @@ func take_damage(damage_taken: int) -> void:
 	if current_health == 0:
 		action_points = 0
 		emit_signal("zero_health", self)
-	
-	_update_labels();
 
 func heal_damage(heal: int) -> void:
 	var heal_amt = heal
 	if current_health + heal >= max_health:
 		heal_amt = max_health - current_health
-	battle_log.add_text("%s healed %d HP!" % [battle_log.MON_NAME_PLACEHOLDER, heal_amt], self)
 	current_health += heal_amt
+	
+	battle_log.add_text("%s healed %d HP!" % [battle_log.MON_NAME_PLACEHOLDER, heal_amt], self)
+	
+	emit_signal("health_or_ap_changed")
 	
 	# make text effect
 	self.add_child(
@@ -194,8 +195,6 @@ func heal_damage(heal: int) -> void:
 		.tx(heal_amt).direction_up().speed(40).time(0.2).color(Global.COLOR_GREEN))
 	
 	# TODO - make self glow green or something for a sec
-	
-	_update_labels()
 
 func inflict_status(status: Status) -> void:
 	# only display inflicted message if don't actually have this status
@@ -226,10 +225,6 @@ func heal_status(status: Status) -> void:
 func heal_all_statuses() -> void:
 	for status in statuses.keys():
 		statuses[status] = false
-
-func _update_labels() -> void:
-	$BattleComponents/ActionPointsBar.value = action_points
-	$BattleComponents/HealthBar.value = current_health
 
 func _process(delta: float) -> void:
 	if is_shaking:

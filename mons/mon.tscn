@@ -16,26 +16,4 @@ texture_filter = 1
 [node name="CollisionHitbox" type="CollisionShape2D" parent="."]
 position = Vector2(0, -2)
 
-[node name="BattleComponents" type="Node2D" parent="."]
-
-[node name="ActionPointsBar" type="ProgressBar" parent="BattleComponents"]
-visible = false
-modulate = Color(1, 0.639216, 0, 1)
-offset_left = -24.0
-offset_top = -25.0
-offset_right = 24.0
-offset_bottom = -21.0
-value = 50.0
-show_percentage = false
-
-[node name="HealthBar" type="ProgressBar" parent="BattleComponents"]
-visible = false
-modulate = Color(0, 1, 0.286275, 1)
-offset_left = -24.0
-offset_top = 24.0
-offset_right = 24.0
-offset_bottom = 32.0
-value = 50.0
-show_percentage = false
-
 [node name="DebugTool" parent="." instance=ExtResource("2_cagr3")]

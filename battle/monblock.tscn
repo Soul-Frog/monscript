@@ -1,0 +1,79 @@
+[gd_scene load_steps=9 format=3 uid="uid://ds2pwty7e10tr"]
+
+[ext_resource type="Shader" path="res://battle/monblock.gdshader" id="1_s8mve"]
+[ext_resource type="Texture2D" uid="uid://dks63puoqxj02" path="res://assets/ui/battle/moninfoblock9patch.png" id="2_553t4"]
+[ext_resource type="Script" path="res://battle/monblock.gd" id="3_cfmbf"]
+[ext_resource type="Texture2D" uid="uid://35ogemi0hq4b" path="res://assets/ui/battle/healthbarunder9patch.png" id="4_2hcyg"]
+[ext_resource type="Texture2D" uid="uid://bdamyne2wcrnj" path="res://assets/ui/battle/healthbarprogress9patch.png" id="5_3834q"]
+[ext_resource type="Texture2D" uid="uid://cjh5fojlyuxsi" path="res://assets/ui/battle/actionbarunder9patch.png" id="6_vmggo"]
+[ext_resource type="Texture2D" uid="uid://nmbbcykfbpli" path="res://assets/ui/battle/actionbarprogress9patch.png" id="7_avpj6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vbfmc"]
+shader = ExtResource("1_s8mve")
+shader_parameter/white_replace = Vector3(1, 0, 1)
+shader_parameter/lightgray_replace = Vector3(0, 1, 1)
+shader_parameter/darkgray_replace = Vector3(1, 1, 0)
+
+[node name="Computer1" type="NinePatchRect"]
+z_index = 200
+material = SubResource("ShaderMaterial_vbfmc")
+offset_right = 46.0
+offset_bottom = 21.0
+texture = ExtResource("2_553t4")
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+script = ExtResource("3_cfmbf")
+
+[node name="HealthBar" type="TextureProgressBar" parent="."]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 9.0
+offset_right = 43.0
+offset_bottom = 13.0
+value = 25.0
+nine_patch_stretch = true
+stretch_margin_left = 1
+stretch_margin_top = 1
+stretch_margin_right = 1
+stretch_margin_bottom = 1
+texture_under = ExtResource("4_2hcyg")
+texture_progress = ExtResource("5_3834q")
+
+[node name="ActionBar" type="TextureProgressBar" parent="."]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 14.0
+offset_right = 43.0
+offset_bottom = 18.0
+value = 50.0
+nine_patch_stretch = true
+stretch_margin_left = 1
+stretch_margin_top = 1
+stretch_margin_right = 1
+stretch_margin_bottom = 1
+texture_under = ExtResource("6_vmggo")
+texture_progress = ExtResource("7_avpj6")
+
+[node name="NameLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 3.5
+offset_top = 2.0
+offset_right = 35.5
+offset_bottom = 10.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 7
+text = "Bitleon"
+
+[node name="LevelLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 32.5
+offset_top = 2.0
+offset_right = 43.5
+offset_bottom = 10.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 7
+text = "Lv64"

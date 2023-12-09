@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://dtpehdp2rfsuh"]
+[gd_scene load_steps=32 format=3 uid="uid://dtpehdp2rfsuh"]
 
 [ext_resource type="Script" path="res://battle/battle.gd" id="1_85t5n"]
 [ext_resource type="Texture2D" uid="uid://bklubekxfne1h" path="res://assets/isometric/tilemap/tile-test.png" id="1_cm50e"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dic4krsgbv40j" path="res://mons/magnetfrog.tscn" id="2_qhxpi"]
 [ext_resource type="Texture2D" uid="uid://oi4kcqckvfkc" path="res://assets/isometric/tilemap/tile-glitch-northwest.png" id="3_gqa8o"]
 [ext_resource type="Texture2D" uid="uid://ca80q2fnuqafx" path="res://assets/isometric/tilemap/tile-glitch-southeast.png" id="4_st34a"]
+[ext_resource type="PackedScene" uid="uid://ds2pwty7e10tr" path="res://battle/monblock.tscn" id="5_fkqod"]
 [ext_resource type="Texture2D" uid="uid://bhaoya2y54e0b" path="res://assets/isometric/tilemap/tile-glitch-southwest.png" id="5_wfe3a"]
 [ext_resource type="Texture2D" uid="uid://be28uqbaoyvd6" path="res://assets/isometric/tilemap/tile-red.png" id="6_3rn4u"]
 [ext_resource type="Texture2D" uid="uid://dyfx2y0h4non2" path="res://assets/isometric/tilemap/tile-glitch.png" id="7_8ur0u"]
@@ -16,8 +17,6 @@
 [ext_resource type="Texture2D" uid="uid://ois27ecttbv3" path="res://assets/isometric/tilemap/tile-glitch-middle.png" id="12_k6xdm"]
 [ext_resource type="PackedScene" uid="uid://dwydicdw81oc0" path="res://battle/animator.tscn" id="15_dus4q"]
 [ext_resource type="PackedScene" uid="uid://4c05s8pkxawq" path="res://battle/log.tscn" id="16_ugd8u"]
-[ext_resource type="Shader" path="res://battle/monblock.gdshader" id="17_f5gwn"]
-[ext_resource type="Texture2D" uid="uid://dks63puoqxj02" path="res://assets/ui/battle/moninfoblock9patch.png" id="17_vxnob"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_v6wcl"]
 texture = ExtResource("1_cm50e")
@@ -89,12 +88,6 @@ sources/12 = SubResource("TileSetAtlasSource_3c50h")
 sources/13 = SubResource("TileSetAtlasSource_y8kj3")
 sources/14 = SubResource("TileSetAtlasSource_qll6v")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vbfmc"]
-shader = ExtResource("17_f5gwn")
-shader_parameter/white_replace = Vector3(1, 0, 1)
-shader_parameter/lightgray_replace = Vector3(0, 1, 1)
-shader_parameter/darkgray_replace = Vector3(1, 1, 0)
-
 [node name="Battle" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_85t5n")
@@ -129,6 +122,58 @@ position = Vector2(120, 112)
 collision_layer = 1
 collision_mask = 1
 safe_margin = 0.08
+
+[node name="PlayerMonBlocks" type="Node2D" parent="."]
+
+[node name="Player1" parent="PlayerMonBlocks" instance=ExtResource("5_fkqod")]
+offset_left = 57.0
+offset_top = 28.0
+offset_right = 103.0
+offset_bottom = 49.0
+
+[node name="Player2" parent="PlayerMonBlocks" instance=ExtResource("5_fkqod")]
+offset_left = 57.0
+offset_top = 53.0
+offset_right = 103.0
+offset_bottom = 74.0
+
+[node name="Player3" parent="PlayerMonBlocks" instance=ExtResource("5_fkqod")]
+offset_left = 57.0
+offset_top = 77.0
+offset_right = 103.0
+offset_bottom = 98.0
+
+[node name="Player4" parent="PlayerMonBlocks" instance=ExtResource("5_fkqod")]
+offset_left = 57.0
+offset_top = 101.0
+offset_right = 103.0
+offset_bottom = 122.0
+
+[node name="ComputerMonBlocks" type="Node2D" parent="."]
+
+[node name="Computer1" parent="ComputerMonBlocks" instance=ExtResource("5_fkqod")]
+offset_left = 217.0
+offset_top = 29.0
+offset_right = 263.0
+offset_bottom = 50.0
+
+[node name="Computer2" parent="ComputerMonBlocks" instance=ExtResource("5_fkqod")]
+offset_left = 217.0
+offset_top = 53.0
+offset_right = 263.0
+offset_bottom = 74.0
+
+[node name="Computer3" parent="ComputerMonBlocks" instance=ExtResource("5_fkqod")]
+offset_left = 217.0
+offset_top = 77.0
+offset_right = 263.0
+offset_bottom = 98.0
+
+[node name="Computer4" parent="ComputerMonBlocks" instance=ExtResource("5_fkqod")]
+offset_left = 217.0
+offset_top = 101.0
+offset_right = 263.0
+offset_bottom = 122.0
 
 [node name="ComputerMons" type="Node2D" parent="."]
 z_index = 30
@@ -186,117 +231,10 @@ horizontal_alignment = 1
 z_index = 100
 position = Vector2(84, 138)
 
-[node name="ColorRect" type="ColorRect" parent="."]
-visible = false
+[node name="Background" type="ColorRect" parent="."]
 z_index = 2
 offset_right = 320.0
 offset_bottom = 180.0
 color = Color(0.188235, 0.882353, 1, 1)
-
-[node name="MonBlocks" type="Node2D" parent="."]
-
-[node name="Player1" type="NinePatchRect" parent="MonBlocks"]
-z_index = 200
-material = SubResource("ShaderMaterial_vbfmc")
-offset_left = 57.0
-offset_top = 29.0
-offset_right = 103.0
-offset_bottom = 50.0
-texture = ExtResource("17_vxnob")
-patch_margin_left = 3
-patch_margin_top = 3
-patch_margin_right = 3
-patch_margin_bottom = 3
-
-[node name="Player2" type="NinePatchRect" parent="MonBlocks"]
-z_index = 200
-material = SubResource("ShaderMaterial_vbfmc")
-offset_left = 57.0
-offset_top = 53.0
-offset_right = 103.0
-offset_bottom = 74.0
-texture = ExtResource("17_vxnob")
-patch_margin_left = 3
-patch_margin_top = 3
-patch_margin_right = 3
-patch_margin_bottom = 3
-
-[node name="Player3" type="NinePatchRect" parent="MonBlocks"]
-z_index = 200
-material = SubResource("ShaderMaterial_vbfmc")
-offset_left = 57.0
-offset_top = 77.0
-offset_right = 103.0
-offset_bottom = 98.0
-texture = ExtResource("17_vxnob")
-patch_margin_left = 3
-patch_margin_top = 3
-patch_margin_right = 3
-patch_margin_bottom = 3
-
-[node name="Player4" type="NinePatchRect" parent="MonBlocks"]
-z_index = 200
-material = SubResource("ShaderMaterial_vbfmc")
-offset_left = 57.0
-offset_top = 101.0
-offset_right = 103.0
-offset_bottom = 122.0
-texture = ExtResource("17_vxnob")
-patch_margin_left = 3
-patch_margin_top = 3
-patch_margin_right = 3
-patch_margin_bottom = 3
-
-[node name="Computer1" type="NinePatchRect" parent="MonBlocks"]
-z_index = 200
-material = SubResource("ShaderMaterial_vbfmc")
-offset_left = 217.0
-offset_top = 27.0
-offset_right = 263.0
-offset_bottom = 48.0
-texture = ExtResource("17_vxnob")
-patch_margin_left = 3
-patch_margin_top = 3
-patch_margin_right = 3
-patch_margin_bottom = 3
-
-[node name="Computer2" type="NinePatchRect" parent="MonBlocks"]
-z_index = 200
-material = SubResource("ShaderMaterial_vbfmc")
-offset_left = 217.0
-offset_top = 53.0
-offset_right = 263.0
-offset_bottom = 74.0
-texture = ExtResource("17_vxnob")
-patch_margin_left = 3
-patch_margin_top = 3
-patch_margin_right = 3
-patch_margin_bottom = 3
-
-[node name="Computer3" type="NinePatchRect" parent="MonBlocks"]
-z_index = 200
-material = SubResource("ShaderMaterial_vbfmc")
-offset_left = 217.0
-offset_top = 77.0
-offset_right = 263.0
-offset_bottom = 98.0
-texture = ExtResource("17_vxnob")
-patch_margin_left = 3
-patch_margin_top = 3
-patch_margin_right = 3
-patch_margin_bottom = 3
-
-[node name="Computer4" type="NinePatchRect" parent="MonBlocks"]
-z_index = 200
-material = SubResource("ShaderMaterial_vbfmc")
-offset_left = 217.0
-offset_top = 101.0
-offset_right = 263.0
-offset_bottom = 122.0
-texture = ExtResource("17_vxnob")
-patch_margin_left = 3
-patch_margin_top = 3
-patch_margin_right = 3
-patch_margin_bottom = 3
 
 [connection signal="timeout" from="Timer" to="." method="_battle_tick"]
