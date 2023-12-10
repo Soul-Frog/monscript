@@ -41,6 +41,16 @@ stretch_margin_bottom = 1
 texture_under = ExtResource("4_2hcyg")
 texture_progress = ExtResource("5_3834q")
 
+[node name="HealthLabel" type="Label" parent="HealthBar"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 8.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 4
+text = "1000/1000"
+horizontal_alignment = 1
+
 [node name="ActionBar" type="TextureProgressBar" parent="."]
 layout_mode = 0
 offset_left = 3.0
@@ -55,6 +65,16 @@ stretch_margin_right = 1
 stretch_margin_bottom = 1
 texture_under = ExtResource("6_vmggo")
 texture_progress = ExtResource("7_avpj6")
+
+[node name="ActionLabel" type="Label" parent="ActionBar"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 8.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 4
+text = "100/100"
+horizontal_alignment = 1
 
 [node name="NameLabel" type="Label" parent="."]
 layout_mode = 0

@@ -4,7 +4,11 @@ extends NinePatchRect
 @onready var level_label = $LevelLabel
 const LEVEL_FORMAT = "Lv%d"
 @onready var health_bar = $HealthBar
+@onready var health_label = $HealthBar/HealthLabel
 @onready var action_bar = $ActionBar
+const HEALTH_FORMAT = "%d/%d"
+@onready var action_label = $ActionBar/ActionLabel
+const ACTION_FORMAT = "%d/%d"
 
 var active_mon: BattleMon = null
 
@@ -46,6 +50,9 @@ func remove_mon() -> void:
 func _on_mon_health_or_ap_changed() -> void:
 	action_bar.value = active_mon.action_points
 	health_bar.value = active_mon.current_health
+	
+	action_label.text = ACTION_FORMAT % [action_bar.value, action_bar.max_value]
+	health_label.text = HEALTH_FORMAT % [health_bar.value, health_bar.max_value]
 	
 	if active_mon.is_defeated():
 		hide() # hide this control if the mon is defeated
