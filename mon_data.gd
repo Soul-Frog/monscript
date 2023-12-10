@@ -35,10 +35,12 @@ class MonBase:
 	var _special_block: ScriptData.Block
 	var _passive_name: String
 	var _passive_description: String
+	var _colors: Array[Color]
 	
 	func _init(monSpecies: String, mon_scene: String, default_script_file_path: String,
 		healthAt64: int, attackAt64: int, defenseAt64: int, speedAt64: int,
-		specialBlock: ScriptData.Block, passiveName: String, passiveDesc: String) -> void:
+		specialBlock: ScriptData.Block, passiveName: String, passiveDesc: String,
+		colors: Array[Color]) -> void:
 		self._species_name = monSpecies
 		self._scene_path = mon_scene
 		assert(Global.does_file_exist(_scene_path))
@@ -51,6 +53,7 @@ class MonBase:
 		self._special_block = specialBlock
 		self._passive_name = passiveName
 		self._passive_description = passiveDesc
+		self._colors = colors
 	
 	# functions to determine a mon's stat value for a given level
 	func health_for_level(level: int) -> int:
@@ -146,6 +149,9 @@ class Mon:
 	func get_level() -> int:
 		return _level
 	
+	func get_colors() -> Array[Color]:
+		return _base._colors
+	
 	func get_species_name() -> String:
 		return _base._species_name
 	
@@ -186,37 +192,45 @@ class Mon:
 var _BITLEON_BASE = MonBase.new("Bitleon", "res://mons/bitleon.tscn", "res://monscripts/attack.txt",
 	256, 128, 64, 96,
 	ScriptData.get_block_by_name("Repair"),
-	"Passive", "Bitleon passive")
+	"Passive", "Bitleon passive",
+	[Color.WHITE, Color.WHITE_SMOKE, Color.LIGHT_GRAY])
 
 # Coolant Cave
 var _GELIF_BASE = MonBase.new("Gelif", "res://mons/gelif.tscn", "res://monscripts/attack.txt",
 	540, 98, 14, 74,
 	ScriptData.get_block_by_name("Transfer"),
-	"Passive", "Gelif passive")
+	"Passive", "Gelif passive",
+	[Color("#26a69a"), Color("#009688"), Color("#00796b")])
 var _CHORSE_BASE = MonBase.new("C-horse", "res://mons/chorse.tscn", "res://monscripts/attack.txt",
 	220, 100, 42, 95,
 	ScriptData.get_block_by_name("C-gun"),
-	"Passive", "C-horse passive")
+	"Passive", "C-horse passive",
+	[Color("#ff7043"), Color("#f4511e"), Color("#d84315")])
 var _PASCALICAN_BASE = MonBase.new("Pascalican", "res://mons/pascalican.tscn", "res://monscripts/attack.txt",
 	210, 84, 56, 126,
 	ScriptData.get_block_by_name("Triangulate"),
-	"Passive", "Pascalican passive")
+	"Passive", "Pascalican passive",
+	[Color("#ffffff"), Color("#eeeeee"), Color("#bdbdbd")])
 var _ORCHIN_BASE = MonBase.new("Orchin", "res://mons/orchin.tscn", "res://monscripts/attack.txt",
 	198, 115, 86, 65,
 	ScriptData.get_block_by_name("SpikOR"),
-	"Passive", "Orchin passive")
+	"Passive", "Orchin passive",
+	[Color("#4a5462"), Color("#333941"), Color("#242234")])
 var _TURTMINAL_BASE = MonBase.new("Turtminal", "res://mons/turtminal.tscn", "res://monscripts/attack.txt",
 	328, 98, 88, 28,
 	ScriptData.get_block_by_name("ShellBash"),
-	"Passive", "Turtminal passive")
+	"Passive", "Turtminal passive",
+	[Color("#2baf2b"), Color("#0a8f08"), Color("#0d5302")])
 var _STINGARRAY_BASE = MonBase.new("Stringarray", "res://mons/stingarray.tscn", "res://monscripts/attack.txt",
 	212, 144, 58, 89,
 	ScriptData.get_block_by_name("Multitack"),
-	"Passive", "Stingarray passive")
+	"Passive", "Stingarray passive",
+	[Color("#795548"), Color("#5d4037"), Color("#3e2723")])
 var _ANGLERPHISH_BASE = MonBase.new("Anglerphish", "res://mons/anglerphish.tscn", "res://monscripts/attack.txt",
 	328, 170, 44, 59,
 	ScriptData.get_block_by_name("Spearphishing"),
-	"Passive", "Anglerphish passive")
+	"Passive", "Anglerphish passive",
+	[Color("#5677fc"), Color("#455ede"), Color("#2a36b1")])
 
 # Extras
 #var _MAGNETFROG_BASE = MonBase.new("magnetFrog", "res://mons/magnetfrog.tscn", "res://monscripts/attack.txt", 

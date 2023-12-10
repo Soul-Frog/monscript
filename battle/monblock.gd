@@ -21,6 +21,11 @@ func assign_mon(mon: BattleMon) -> void:
 	
 	active_mon = mon
 	
+	# recolor this block using the mon's three colors
+	material.set_shader_parameter("white_replace", mon.base_mon.get_colors()[0])
+	material.set_shader_parameter("lightgray_replace", mon.base_mon.get_colors()[1])
+	material.set_shader_parameter("darkgray_replace", mon.base_mon.get_colors()[2])
+	
 	# connect the new mon
 	active_mon.connect("health_or_ap_changed", _on_mon_health_or_ap_changed)
 	

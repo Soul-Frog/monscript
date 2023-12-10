@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cjh5fojlyuxsi" path="res://assets/ui/battle/actionbarunder9patch.png" id="6_vmggo"]
 [ext_resource type="Texture2D" uid="uid://nmbbcykfbpli" path="res://assets/ui/battle/actionbarprogress9patch.png" id="7_avpj6"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vbfmc"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bv2jl"]
 shader = ExtResource("1_s8mve")
 shader_parameter/white_replace = Vector3(1, 0, 1)
 shader_parameter/lightgray_replace = Vector3(0, 1, 1)
@@ -16,7 +16,7 @@ shader_parameter/darkgray_replace = Vector3(1, 1, 0)
 
 [node name="Computer1" type="NinePatchRect"]
 z_index = 200
-material = SubResource("ShaderMaterial_vbfmc")
+material = SubResource("ShaderMaterial_bv2jl")
 offset_right = 46.0
 offset_bottom = 21.0
 texture = ExtResource("2_553t4")

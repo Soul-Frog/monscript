@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://dtpehdp2rfsuh"]
+[gd_scene load_steps=41 format=3 uid="uid://dtpehdp2rfsuh"]
 
 [ext_resource type="Script" path="res://battle/battle.gd" id="1_85t5n"]
 [ext_resource type="Texture2D" uid="uid://bklubekxfne1h" path="res://assets/isometric/tilemap/tile-test.png" id="1_cm50e"]
@@ -17,6 +17,55 @@
 [ext_resource type="Texture2D" uid="uid://ois27ecttbv3" path="res://assets/isometric/tilemap/tile-glitch-middle.png" id="12_k6xdm"]
 [ext_resource type="PackedScene" uid="uid://dwydicdw81oc0" path="res://battle/animator.tscn" id="15_dus4q"]
 [ext_resource type="PackedScene" uid="uid://4c05s8pkxawq" path="res://battle/log.tscn" id="16_ugd8u"]
+[ext_resource type="Shader" path="res://battle/monblock.gdshader" id="17_f5gwn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_on0ph"]
+shader = ExtResource("17_f5gwn")
+shader_parameter/white_replace = Vector3(1, 0, 1)
+shader_parameter/lightgray_replace = Vector3(0, 1, 1)
+shader_parameter/darkgray_replace = Vector3(1, 1, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k4e6h"]
+shader = ExtResource("17_f5gwn")
+shader_parameter/white_replace = Vector3(1, 0, 1)
+shader_parameter/lightgray_replace = Vector3(0, 1, 1)
+shader_parameter/darkgray_replace = Vector3(1, 1, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wi5ma"]
+shader = ExtResource("17_f5gwn")
+shader_parameter/white_replace = Vector3(1, 0, 1)
+shader_parameter/lightgray_replace = Vector3(0, 1, 1)
+shader_parameter/darkgray_replace = Vector3(1, 1, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f23en"]
+shader = ExtResource("17_f5gwn")
+shader_parameter/white_replace = Vector3(1, 0, 1)
+shader_parameter/lightgray_replace = Vector3(0, 1, 1)
+shader_parameter/darkgray_replace = Vector3(1, 1, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rdcfl"]
+shader = ExtResource("17_f5gwn")
+shader_parameter/white_replace = Vector3(1, 0, 1)
+shader_parameter/lightgray_replace = Vector3(0, 1, 1)
+shader_parameter/darkgray_replace = Vector3(1, 1, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_deh2h"]
+shader = ExtResource("17_f5gwn")
+shader_parameter/white_replace = Vector3(1, 0, 1)
+shader_parameter/lightgray_replace = Vector3(0, 1, 1)
+shader_parameter/darkgray_replace = Vector3(1, 1, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iher2"]
+shader = ExtResource("17_f5gwn")
+shader_parameter/white_replace = Vector3(1, 0, 1)
+shader_parameter/lightgray_replace = Vector3(0, 1, 1)
+shader_parameter/darkgray_replace = Vector3(1, 1, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_837it"]
+shader = ExtResource("17_f5gwn")
+shader_parameter/white_replace = Vector3(1, 0, 1)
+shader_parameter/lightgray_replace = Vector3(0, 1, 1)
+shader_parameter/darkgray_replace = Vector3(1, 1, 0)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_v6wcl"]
 texture = ExtResource("1_cm50e")
@@ -126,24 +175,28 @@ safe_margin = 0.08
 [node name="PlayerMonBlocks" type="Node2D" parent="."]
 
 [node name="Player1" parent="PlayerMonBlocks" instance=ExtResource("5_fkqod")]
+material = SubResource("ShaderMaterial_on0ph")
 offset_left = 57.0
 offset_top = 28.0
 offset_right = 103.0
 offset_bottom = 49.0
 
 [node name="Player2" parent="PlayerMonBlocks" instance=ExtResource("5_fkqod")]
+material = SubResource("ShaderMaterial_k4e6h")
 offset_left = 57.0
 offset_top = 53.0
 offset_right = 103.0
 offset_bottom = 74.0
 
 [node name="Player3" parent="PlayerMonBlocks" instance=ExtResource("5_fkqod")]
+material = SubResource("ShaderMaterial_wi5ma")
 offset_left = 57.0
 offset_top = 77.0
 offset_right = 103.0
 offset_bottom = 98.0
 
 [node name="Player4" parent="PlayerMonBlocks" instance=ExtResource("5_fkqod")]
+material = SubResource("ShaderMaterial_f23en")
 offset_left = 57.0
 offset_top = 101.0
 offset_right = 103.0
@@ -152,24 +205,28 @@ offset_bottom = 122.0
 [node name="ComputerMonBlocks" type="Node2D" parent="."]
 
 [node name="Computer1" parent="ComputerMonBlocks" instance=ExtResource("5_fkqod")]
+material = SubResource("ShaderMaterial_rdcfl")
 offset_left = 217.0
 offset_top = 29.0
 offset_right = 263.0
 offset_bottom = 50.0
 
 [node name="Computer2" parent="ComputerMonBlocks" instance=ExtResource("5_fkqod")]
+material = SubResource("ShaderMaterial_deh2h")
 offset_left = 217.0
 offset_top = 53.0
 offset_right = 263.0
 offset_bottom = 74.0
 
 [node name="Computer3" parent="ComputerMonBlocks" instance=ExtResource("5_fkqod")]
+material = SubResource("ShaderMaterial_iher2")
 offset_left = 217.0
 offset_top = 77.0
 offset_right = 263.0
 offset_bottom = 98.0
 
 [node name="Computer4" parent="ComputerMonBlocks" instance=ExtResource("5_fkqod")]
+material = SubResource("ShaderMaterial_837it")
 offset_left = 217.0
 offset_top = 101.0
 offset_right = 263.0
