@@ -16,8 +16,10 @@ signal action_completed
 # emitted after this mon's animation completes
 signal action_animation_completed
 
-# emitted after this mon's health or ap have changed
+# emitted after this mon's health, ap, or status has changed
 signal health_or_ap_changed
+# emitted after this mon's status conditions change (passes the modified status)
+signal status_changed
 
 const MOVING_TEXT_SCENE = preload("res://battle/moving_text.tscn")
 
@@ -66,11 +68,12 @@ var shake_direction := 1
 var metadata = {}
 
 enum Status {
-	LEAK
+	LEAK, SLEEP
 }
 
 var statuses = {
-	Status.LEAK : false
+	Status.LEAK : false,
+	Status.SLEEP : false
 }
 
 func _ready() -> void:
@@ -114,6 +117,12 @@ func take_action(friends: Array, foes: Array, animator: BattleAnimator) -> void:
 	assert(foes.size() != 0, "No foes?")
 	is_defending = false
 	
+	# if we're asleep, just wake up and that's our turn
+	if statuses[Status.SLEEP]:
+		heal_status(Status.SLEEP)
+		alert_turn_over()
+		return
+	
 	# tell our script to go ahead and execute an action
 	base_mon.get_active_monscript().execute(self, friends, foes, battle_log, animator)
 	# don't do anything after here, the turn is over when we hit alert_turn_over
@@ -130,7 +139,7 @@ func alert_turn_over() -> void:
 	# after taking an action, if inflicted with leak, take 5% health as damage
 	if statuses[Status.LEAK]:
 		battle_log.add_text("%s is leaking memory!" % battle_log.MON_NAME_PLACEHOLDER, self)
-		take_damage(max(int(max_health * 0.05), 1))
+		take_damage(max(ceil(max_health * 0.05), 1))
 		#todo - animate this better
 	
 	emit_signal("action_completed")
@@ -202,12 +211,21 @@ func inflict_status(status: Status) -> void:
 		Status.LEAK:
 			if not statuses[status]:
 				battle_log.add_text("%s is suffering from a memory leak!" % battle_log.MON_NAME_PLACEHOLDER, self)
+				emit_signal("status_changed", status, true)
+			else:
+				battle_log.add_text("%s is already leaking memory!" % battle_log.MON_NAME_PLACEHOLDER, self)
+		Status.SLEEP:
+			if not statuses[status]:
+				battle_log.add_text("%s has been put to sleep!" % battle_log.MON_NAME_PLACEHOLDER, self)
+				emit_signal("status_changed", status, true)
+			else:
+				battle_log.add_text("%s is already asleep!" % battle_log.MON_NAME_PLACEHOLDER, self)
 		_:
 			assert(false, "No message for status!")
 			
 	statuses[status] = true
 	
-	# todo - play some effect here, add some icons, idk
+	# todo - play some effect here
 
 func heal_status(status: Status) -> void:
 	# only display 'healed status!' message if we actually had that status
@@ -215,6 +233,10 @@ func heal_status(status: Status) -> void:
 		match status:
 			Status.LEAK:
 				battle_log.add_text("%s is no longer leaking memory!" % battle_log.MON_NAME_PLACEHOLDER, self)
+				emit_signal("status_changed", status, false)
+			Status.SLEEP:
+				battle_log.add_text("%s has resumed execution!" % battle_log.MON_NAME_PLACEHOLDER, self)
+				emit_signal("status_changed", status, false)
 			_:
 				assert(false, "No message for status!")
 	

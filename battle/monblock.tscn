@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ds2pwty7e10tr"]
+[gd_scene load_steps=10 format=3 uid="uid://ds2pwty7e10tr"]
 
 [ext_resource type="Shader" path="res://battle/monblock.gdshader" id="1_s8mve"]
 [ext_resource type="Texture2D" uid="uid://dks63puoqxj02" path="res://assets/ui/battle/moninfoblock9patch.png" id="2_553t4"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bdamyne2wcrnj" path="res://assets/ui/battle/healthbarprogress9patch.png" id="5_3834q"]
 [ext_resource type="Texture2D" uid="uid://cjh5fojlyuxsi" path="res://assets/ui/battle/actionbarunder9patch.png" id="6_vmggo"]
 [ext_resource type="Texture2D" uid="uid://nmbbcykfbpli" path="res://assets/ui/battle/actionbarprogress9patch.png" id="7_avpj6"]
+[ext_resource type="PackedScene" uid="uid://dufdijd12kum3" path="res://battle/status_icon.tscn" id="8_j5evr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bv2jl"]
 shader = ExtResource("1_s8mve")
@@ -67,6 +68,7 @@ texture_under = ExtResource("6_vmggo")
 texture_progress = ExtResource("7_avpj6")
 
 [node name="ActionLabel" type="Label" parent="ActionBar"]
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 8.0
@@ -97,3 +99,6 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 7
 text = "Lv64"
+
+[node name="StatusIcon" parent="." instance=ExtResource("8_j5evr")]
+position = Vector2(45, 2)
