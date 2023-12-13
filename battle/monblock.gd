@@ -10,6 +10,7 @@ const HEALTH_FORMAT = "%d/%d"
 @onready var action_label = $ActionBar/ActionLabel
 const ACTION_FORMAT = "%d/%d"
 @onready var status_icon = $StatusIcon
+@onready var stat_arrows = $StatsArrows
 
 var active_mon: BattleMon = null
 
@@ -19,6 +20,7 @@ func _ready():
 	assert(health_bar)
 	assert(action_bar)
 	assert(status_icon)
+	assert(stat_arrows)
 
 # assign a new mon for this block to track
 func assign_mon(mon: BattleMon) -> void:
@@ -28,6 +30,7 @@ func assign_mon(mon: BattleMon) -> void:
 	active_mon = mon
 	
 	status_icon.reset()
+	stat_arrows.reset()
 	
 	# recolor this block using the mon's three colors
 	material.set_shader_parameter("white_replace", mon.base_mon.get_colors()[0])
@@ -37,6 +40,7 @@ func assign_mon(mon: BattleMon) -> void:
 	# connect the new mon
 	active_mon.connect("health_or_ap_changed", _on_mon_health_or_ap_changed)
 	active_mon.connect("status_changed", status_icon.on_status_changed)
+	active_mon.connect("stats_changed", _on_mon_stats_changed)
 	
 	# update name and level label
 	name_label.text = active_mon.base_mon.get_name()
@@ -61,3 +65,6 @@ func _on_mon_health_or_ap_changed() -> void:
 	
 	if active_mon.is_defeated():
 		hide() # hide this control if the mon is defeated
+	
+func _on_mon_stats_changed() -> void:
+	stat_arrows.on_stats_changed(active_mon)

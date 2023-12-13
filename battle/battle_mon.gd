@@ -20,6 +20,8 @@ signal action_animation_completed
 signal health_or_ap_changed
 # emitted after this mon's status conditions change (passes the modified status)
 signal status_changed
+# emitted after this mon's atk/def/spd stage is changed (buff/debuffs)
+signal stats_changed
 
 const MOVING_TEXT_SCENE = preload("res://battle/moving_text.tscn")
 
@@ -51,9 +53,13 @@ var reset_AP_after_action := true
 
 var max_health := -1
 var current_health := -1
-var speed := -1
-var attack := -1
-var defense := -1
+var _base_speed := -1
+var _base_attack := -1
+var _base_defense := -1
+
+var atk_buff_stage := 0
+var def_buff_stage := 0
+var spd_buff_stage := 0
 
 var original_position: Vector2
 var is_shaking := false
@@ -66,6 +72,28 @@ var shake_direction := 1
 # a dictionary that anything can be stored in that needs to be tracked
 # for example, some moves will store information in here to use later
 var metadata = {}
+
+ 
+const MAX_BUFF_STAGE = 4 # the maximum positive buff stage
+const MIN_DEBUFF_STAGE = -4 # the minimum negative debuff stage
+# map a stage to its modification amount for that stat
+# an additional +4 - -4 is applied to the final result after multipliers as well based on stage
+# this players a bit nicer at lower levels
+const _BUFF_STAGE_TO_MODIFIER = {
+	-4 : 0.36,
+	-3 : 0.68,
+	-2 : 0.84,
+	-1 : 0.92,
+	 0 : 1.0,
+	 1 : 1.08,
+	 2 : 1.16,
+	 3 : 1.32,
+	 4 : 1.64
+}
+
+enum BuffableStat {
+	ATK, DEF, SPD
+}
 
 enum Status {
 	LEAK, SLEEP
@@ -88,21 +116,33 @@ func init_mon(mon: MonData.Mon) -> void:
 	base_mon = mon
 	current_health = mon.get_max_health()
 	max_health = mon.get_max_health()
-	attack = mon.get_attack()
-	defense = mon.get_defense()
-	speed = mon.get_speed()
+	_base_attack = mon.get_attack()
+	_base_defense = mon.get_defense()
+	_base_speed = mon.get_speed()
 	is_defending = false
 	escaped_from_battle = false
 	reset_AP_after_action = true
 	log_name = mon.get_name()
 	emit_signal("health_or_ap_changed")
 
+# returns attack modified by buffs/debuffs
+func get_attack() -> int:
+	return _base_attack * _BUFF_STAGE_TO_MODIFIER[atk_buff_stage]
+
+# returns defense modified by buffs/debuffs
+func get_defense() -> int:
+	return _base_defense * _BUFF_STAGE_TO_MODIFIER[atk_buff_stage]
+
+# returns speed modified by buffs/debuffs
+func get_speed() -> int:
+	return _base_speed * _BUFF_STAGE_TO_MODIFIER[spd_buff_stage]
+
 # Called once for each mon by battle.gd at a regular time interval
 func battle_tick() -> void:
 	assert(base_mon != null, "Didn't add a mon with init_mon!")
-	assert(attack != -1 and speed != -1 and defense != -1 and max_health != -1, "Stats were never initialized?")
+	assert(_base_attack != -1 and _base_speed != -1 and _base_defense != -1 and max_health != -1, "Stats were never initialized?")
 	if not is_defeated():
-		action_points += speed
+		action_points += max(get_speed(), 1)
 		action_points = clamp(action_points, 0, ACTION_POINTS_PER_TURN)
 		emit_signal("health_or_ap_changed")
 		
@@ -150,9 +190,9 @@ func is_defeated() -> bool:
 
 # apply an attack against this mon with a given attack value and damage multiplier
 # this function factors in defense and defending
-func apply_attack(attacker_atk: int, multiplier: float) -> void:
+func apply_attack(attacker: BattleMon, multiplier: float) -> void:
 	# damage taken is ATK-DEF, to a minimum of 1
-	var damage_taken = max(attacker_atk - defense, 1) 
+	var damage_taken = max(attacker.get_attack() - get_defense(), 1)
 	
 	# increase damage taken by attack multiplier
 	damage_taken *= multiplier
@@ -160,6 +200,11 @@ func apply_attack(attacker_atk: int, multiplier: float) -> void:
 	# if defending, reduce the damage taken by half
 	if is_defending:
 		damage_taken /= 2
+		
+	# apply an additional constant modifier based on defense buff stage and attacker attack stage;
+	# example: if our def stage is -1 and attacker's attack stage is 4, we take an additional flat 3 damage
+	# example2: if our def stage is 4 and attacker's attack stage if -3, we reduce damage taken by a flat 7
+	damage_taken = max(damage_taken + attacker.atk_buff_stage - def_buff_stage, 1)
 	
 	take_damage(damage_taken)
 
@@ -167,7 +212,7 @@ func apply_attack(attacker_atk: int, multiplier: float) -> void:
 # ignores defense and defending
 # generally, don't call this directly in attack blocks, call apply_attack instead
 func take_damage(damage_taken: int) -> void:
-	current_health -= damage_taken # deal a minimum of 1 damage
+	current_health -= damage_taken
 	current_health = max(current_health, 0);
 	emit_signal("health_or_ap_changed")
 	
@@ -247,6 +292,18 @@ func heal_status(status: Status) -> void:
 func heal_all_statuses() -> void:
 	for status in statuses.keys():
 		statuses[status] = false
+
+# apply a buff/debuff
+func apply_stat_change(stat: BuffableStat, mod: int):
+	match stat:
+		BuffableStat.ATK:
+			atk_buff_stage = clamp(atk_buff_stage + mod, MIN_DEBUFF_STAGE, MAX_BUFF_STAGE)
+		BuffableStat.DEF:
+			def_buff_stage = clamp(def_buff_stage + mod, MIN_DEBUFF_STAGE, MAX_BUFF_STAGE)
+			print(def_buff_stage)
+		BuffableStat.SPD:
+			spd_buff_stage = clamp(spd_buff_stage + mod, MIN_DEBUFF_STAGE, MAX_BUFF_STAGE)
+	emit_signal("stats_changed")
 
 func _process(delta: float) -> void:
 	if is_shaking:

@@ -218,7 +218,7 @@ var DO_BLOCK_LIST := [
 		await animator.animation_finished
 		
 		# then apply the actual damage from this attack
-		target.apply_attack(mon.attack, 1)
+		target.apply_attack(mon, 1)
 		),
 	
 	Block.new(Block.Type.DO, "Defend", Block.Type.NONE, "Do nothing, but reduce damage taken by 50% until your next turn.",
@@ -239,7 +239,7 @@ var DO_BLOCK_LIST := [
 		animator.slash(target)
 		await animator.animation_finished
 		
-		target.apply_attack(mon.attack, 0.7)
+		target.apply_attack(mon, 0.7)
 		mon.is_defending = true
 		),
 		
@@ -262,7 +262,7 @@ var DO_BLOCK_LIST := [
 		if mon.turn_count >= 5:
 			dmg_mult = 1.4
 		
-		target.apply_attack(mon.attack, dmg_mult) #todo - chill damage
+		target.apply_attack(mon, dmg_mult) #todo - chill damage
 		),
 	
 	Block.new(Block.Type.DO, "Triangulate", Block.Type.TO, "Deals 50% damage to a single target. Increases by +10%/20%/30%/60%/100% each use in the same battle.",
@@ -293,7 +293,7 @@ var DO_BLOCK_LIST := [
 		else:
 			mon.metadata[metadata_key] = 1
 		
-		target.apply_attack(mon.attack, dmg_mult)
+		target.apply_attack(mon, dmg_mult)
 		),
 	
 	Block.new(Block.Type.DO, "SpikOR", Block.Type.TO, "Deals 60% damage to a single target (125% damage instead if target is leaky or above 80% HP.)",
@@ -316,7 +316,7 @@ var DO_BLOCK_LIST := [
 		if leak_condition or health_condition:
 			dmg_mult = 1.25
 		
-		target.apply_attack(mon.attack, dmg_mult) #todo - volt damage
+		target.apply_attack(mon, dmg_mult) #todo - volt damage
 		),
 	
 	Block.new(Block.Type.DO, "Multitack", Block.Type.NONE, "Four times, deal 25% damage to a random target.",
@@ -326,7 +326,7 @@ var DO_BLOCK_LIST := [
 			var rand_target = Global.choose_one(foes)
 			animator.slash(rand_target) #todo - animation
 			await animator.animation_finished
-			rand_target.apply_attack(mon.attack, 0.25)
+			rand_target.apply_attack(mon, 0.25)
 			
 			# if we killed the target, don't let it be a target for future attacks
 			if rand_target.current_health == 0:
