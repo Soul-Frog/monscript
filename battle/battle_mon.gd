@@ -25,7 +25,7 @@ signal stats_changed
 
 const MOVING_TEXT_SCENE = preload("res://battle/moving_text.tscn")
 
-const ACTION_POINTS_PER_TURN := 100
+const ACTION_POINTS_PER_TURN := 100.0
 
 # The underlying Mon Object this battle mon scene represents
 # Set this with init_mon before doing anything else with this scene
@@ -39,7 +39,7 @@ var battle_log: BattleLog
 
 # current action points - increases by speed each tick
 # when this reaches 100, signals to take a turn
-var action_points := 0
+var action_points := 0.0
 
 # how many turns this mon has taken this battle
 var turn_count := 0
@@ -138,12 +138,12 @@ func get_speed() -> int:
 	return _base_speed * _BUFF_STAGE_TO_MODIFIER[spd_buff_stage]
 
 # Called once for each mon by battle.gd at a regular time interval
-func battle_tick() -> void:
+func battle_tick(delta: float) -> void:
 	assert(base_mon != null, "Didn't add a mon with init_mon!")
 	assert(_base_attack != -1 and _base_speed != -1 and _base_defense != -1 and max_health != -1, "Stats were never initialized?")
 	if not is_defeated():
-		action_points += max(get_speed(), 1)
-		action_points = clamp(action_points, 0, ACTION_POINTS_PER_TURN)
+		action_points += max(get_speed(), 1) * delta
+		action_points = clamp(action_points, 0.0, ACTION_POINTS_PER_TURN)
 		emit_signal("health_or_ap_changed")
 		
 		if action_points >= ACTION_POINTS_PER_TURN:
@@ -170,9 +170,9 @@ func take_action(friends: Array, foes: Array, animator: BattleAnimator) -> void:
 
 # called after a mon takes its turn
 func alert_turn_over() -> void:
-	assert(action_points == 100 or not reset_AP_after_action)
+	assert(action_points == 100.0 or not reset_AP_after_action)
 	if reset_AP_after_action:
-		action_points = 0
+		action_points = 0.0
 	reset_AP_after_action = true
 	# TODO $BattleComponents/ActionPointsBar.modulate = Global.COLOR_YELLOW
 	
@@ -230,7 +230,7 @@ func take_damage(damage_taken: int) -> void:
 	# when taking fire damage, glow redder; chill glow blue, volt glow yellow; white on normal damage?
 	
 	if current_health == 0:
-		action_points = 0
+		action_points = 0.0
 		emit_signal("zero_health", self)
 
 func heal_damage(heal: int) -> void:

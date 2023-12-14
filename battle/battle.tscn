@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://dtpehdp2rfsuh"]
+[gd_scene load_steps=61 format=3 uid="uid://dtpehdp2rfsuh"]
 
 [ext_resource type="Script" path="res://battle/battle.gd" id="1_85t5n"]
 [ext_resource type="Texture2D" uid="uid://bklubekxfne1h" path="res://assets/isometric/tilemap/tile-test.png" id="1_cm50e"]
@@ -18,6 +18,26 @@
 [ext_resource type="PackedScene" uid="uid://dwydicdw81oc0" path="res://battle/animator.tscn" id="15_dus4q"]
 [ext_resource type="PackedScene" uid="uid://4c05s8pkxawq" path="res://battle/log.tscn" id="16_ugd8u"]
 [ext_resource type="Shader" path="res://battle/monblock.gdshader" id="17_f5gwn"]
+[ext_resource type="Script" path="res://battle/speed_controls.gd" id="19_4ka6e"]
+[ext_resource type="Script" path="res://battle/selectable_button.gd" id="19_8gl6u"]
+[ext_resource type="Texture2D" uid="uid://dk21l7v2aax6u" path="res://assets/ui/battle/play_selected.png" id="19_gnxuv"]
+[ext_resource type="Texture2D" uid="uid://cfjdvwuvnd85b" path="res://assets/ui/battle/play_selected_hover.png" id="21_lxmei"]
+[ext_resource type="Texture2D" uid="uid://hxinacukfcas" path="res://assets/ui/battle/play_selected_pressed.png" id="22_6wf36"]
+[ext_resource type="Texture2D" uid="uid://dbfqgr6err8q3" path="res://assets/ui/battle/play_unselected.png" id="22_sc4kn"]
+[ext_resource type="Texture2D" uid="uid://6qcrwq5fgl26" path="res://assets/ui/battle/play_unselected_hover.png" id="23_ovl1o"]
+[ext_resource type="Texture2D" uid="uid://bfq2ftx62qyut" path="res://assets/ui/battle/play_unselected_pressed.png" id="25_58t56"]
+[ext_resource type="Texture2D" uid="uid://cv675y4gfjwr2" path="res://assets/ui/battle/speedup_unselected.png" id="26_de88d"]
+[ext_resource type="Texture2D" uid="uid://bpc0ngkg0np2u" path="res://assets/ui/battle/pause_unselected.png" id="27_c6ocw"]
+[ext_resource type="Texture2D" uid="uid://c8qj8pbqg6m4l" path="res://assets/ui/battle/speedup_selected.png" id="27_t3g37"]
+[ext_resource type="Texture2D" uid="uid://b3v2y41o8bebb" path="res://assets/ui/battle/speedup_selected_hover.png" id="28_fxlpu"]
+[ext_resource type="Texture2D" uid="uid://c423u5654d71" path="res://assets/ui/battle/pause_selected.png" id="28_iasl6"]
+[ext_resource type="Texture2D" uid="uid://b1js2j5fd4y3b" path="res://assets/ui/battle/pause_selected_hover.png" id="29_4mak5"]
+[ext_resource type="Texture2D" uid="uid://gp45q4afw7ue" path="res://assets/ui/battle/speedup_selected_pressed.png" id="29_iu8h3"]
+[ext_resource type="Texture2D" uid="uid://b12o4kqn5jjfr" path="res://assets/ui/battle/speedup_unselected_hover.png" id="30_5hm2j"]
+[ext_resource type="Texture2D" uid="uid://jkpq66hhfg7i" path="res://assets/ui/battle/pause_selected_pressed.png" id="30_uk6xc"]
+[ext_resource type="Texture2D" uid="uid://cxbag2ijkv0vk" path="res://assets/ui/battle/speedup_unselected_pressed.png" id="31_52kg2"]
+[ext_resource type="Texture2D" uid="uid://dnr0dbvcp8353" path="res://assets/ui/battle/pause_unselected_hover.png" id="31_wocrg"]
+[ext_resource type="Texture2D" uid="uid://dyq5ntyl5ibnp" path="res://assets/ui/battle/pause_unselected_pressed.png" id="32_muvxr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_on0ph"]
 shader = ExtResource("17_f5gwn")
@@ -140,10 +160,6 @@ sources/14 = SubResource("TileSetAtlasSource_qll6v")
 [node name="Battle" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_85t5n")
-
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.5
-autostart = true
 
 [node name="PlayerMons" type="Node2D" parent="."]
 z_index = 30
@@ -294,4 +310,53 @@ offset_right = 320.0
 offset_bottom = 180.0
 color = Color(0.188235, 0.882353, 1, 1)
 
-[connection signal="timeout" from="Timer" to="." method="_battle_tick"]
+[node name="SpeedControls" type="Node2D" parent="."]
+z_index = 100
+script = ExtResource("19_4ka6e")
+
+[node name="Run" type="TextureButton" parent="SpeedControls"]
+offset_left = 1.0
+offset_top = 164.0
+offset_right = 16.0
+offset_bottom = 179.0
+texture_normal = ExtResource("19_gnxuv")
+script = ExtResource("19_8gl6u")
+texture_selected = ExtResource("19_gnxuv")
+texture_selected_hover = ExtResource("21_lxmei")
+texture_selected_pressed = ExtResource("22_6wf36")
+texture_unselected = ExtResource("22_sc4kn")
+texture_unselected_hover = ExtResource("23_ovl1o")
+texture_unselected_pressed = ExtResource("25_58t56")
+selected = true
+
+[node name="Speedup" type="TextureButton" parent="SpeedControls"]
+offset_left = 16.0
+offset_top = 164.0
+offset_right = 31.0
+offset_bottom = 179.0
+texture_normal = ExtResource("26_de88d")
+script = ExtResource("19_8gl6u")
+texture_selected = ExtResource("27_t3g37")
+texture_selected_hover = ExtResource("28_fxlpu")
+texture_selected_pressed = ExtResource("29_iu8h3")
+texture_unselected = ExtResource("26_de88d")
+texture_unselected_hover = ExtResource("30_5hm2j")
+texture_unselected_pressed = ExtResource("31_52kg2")
+
+[node name="Pause" type="TextureButton" parent="SpeedControls"]
+offset_left = 31.0
+offset_top = 164.0
+offset_right = 46.0
+offset_bottom = 179.0
+texture_normal = ExtResource("27_c6ocw")
+script = ExtResource("19_8gl6u")
+texture_selected = ExtResource("28_iasl6")
+texture_selected_hover = ExtResource("29_4mak5")
+texture_selected_pressed = ExtResource("30_uk6xc")
+texture_unselected = ExtResource("27_c6ocw")
+texture_unselected_hover = ExtResource("31_wocrg")
+texture_unselected_pressed = ExtResource("32_muvxr")
+
+[connection signal="pressed" from="SpeedControls/Run" to="SpeedControls/Run" method="_on_pressed"]
+[connection signal="pressed" from="SpeedControls/Speedup" to="SpeedControls/Speedup" method="_on_pressed"]
+[connection signal="pressed" from="SpeedControls/Pause" to="SpeedControls/Pause" method="_on_pressed"]

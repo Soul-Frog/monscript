@@ -1,6 +1,8 @@
 class_name Battle
 extends Node2D
 
+const BATTLE_MON_SCRIPT := preload("res://battle/battle_mon.gd")
+
 class BattleResult:
 	var end_condition
 	var xp_earned
@@ -16,9 +18,15 @@ enum BattleState {
 	FINISHED # this battle scene is over; it's ready for a call to clear_battle
 }
 
-const BATTLE_MON_SCRIPT := preload("res://battle/battle_mon.gd")
-
-@onready var timer = $Timer
+enum Speed {
+	NORMAL, SPEEDUP, PAUSE
+}
+var _speed_to_speed = {
+	Speed.NORMAL : 1.0,
+	Speed.SPEEDUP : 2.0,
+	Speed.PAUSE : 0.0
+}
+@onready var _speed_controls = $SpeedControls
 
 # positions of mons in battle scene
 var PLAYER_MON_POSITIONS = []
@@ -35,6 +43,7 @@ var is_a_mon_taking_action = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	assert(_speed_controls)
 	assert($PlayerMons.get_children().size() == Global.MONS_PER_TEAM, "Wrong number of player placeholder positions!")
 	assert($ComputerMons.get_children().size() == Global.MONS_PER_TEAM, "Wrong number of computer placeholder positions!")
 	for placeholder in $PlayerMons.get_children():
@@ -116,6 +125,8 @@ func setup_battle(player_team, computer_team):
 	action_queue.clear()
 	is_a_mon_taking_action = false
 	
+	_speed_controls.reset()
+	
 	assert($PlayerMons.get_child_count() != 0, "No valid player mons!")
 	assert($ComputerMons.get_child_count() != 0, "No valid computer mons!")
 	assert(action_queue.size() == 0)
@@ -139,9 +150,8 @@ func clear_battle():
 	state = BattleState.EMPTY
 	battle_result = BattleResult.new()
 	$Log.clear()
-	timer.start() # sets timer to 0
 
-func _battle_tick():
+func _process(delta: float):
 	assert(state == BattleState.BATTLING) 	# make sure battle was set up properly
 	
 	# let everyone update/action
@@ -149,10 +159,10 @@ func _battle_tick():
 	# don't need to recieve updates
 	for player_mon in $PlayerMons.get_children():
 		if not player_mon in action_queue:
-			player_mon.battle_tick()
+			player_mon.battle_tick(delta * _speed_to_speed[_speed_controls.speed])
 	for computer_mon in $ComputerMons.get_children():
 		if not computer_mon in action_queue:
-			computer_mon.battle_tick()
+			computer_mon.battle_tick(delta * _speed_to_speed[_speed_controls.speed])
 	
 	# if no other mon is active, let the mon in front of queue take action
 	if not is_a_mon_taking_action and not action_queue.is_empty():
@@ -253,19 +263,16 @@ func _check_battle_end_condition():
 	
 	if player_mons_alive and not computer_mons_alive:
 		state = BattleState.FINISHED
-		timer.stop()
 		battle_result.end_condition = Global.BattleEndCondition.WIN
 		$Log.add_text("Battle terminated.")
 		Events.emit_signal("battle_ended", battle_result)
 	elif not player_mons_alive and computer_mons_alive:
 		state = BattleState.FINISHED
-		timer.stop()
 		battle_result.end_condition = Global.BattleEndCondition.LOSE
 		$Log.add_text("Battle terminated.")
 		Events.emit_signal("battle_ended", battle_result)
 	elif not player_mons_alive and not computer_mons_alive:
 		state = BattleState.FINISHED
-		timer.stop()
 		battle_result.end_condition = Global.BattleEndCondition.WIN
 		$Log.add_text("Battle terminated.")
 		Events.emit_signal("battle_ended", battle_result) # tie also counts as a win
