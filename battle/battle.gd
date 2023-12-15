@@ -152,6 +152,7 @@ func clear_battle():
 	$Log.clear()
 
 func _process(delta: float):
+	return
 	assert(state == BattleState.BATTLING) 	# make sure battle was set up properly
 	
 	# let everyone update/action

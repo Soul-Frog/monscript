@@ -7,7 +7,8 @@ extends TextureButton
 @export var texture_unselected: Texture2D
 @export var texture_unselected_hover: Texture2D
 @export var texture_unselected_pressed: Texture2D
-@export var selected = false
+@export var selected = false # if this button starts in the selected position
+@export var toggleable = false # if this button can be toggled between states (or if it just goes from unselected->selected)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -31,4 +32,7 @@ func _update_textures():
 	texture_hover = texture_selected_hover if selected else texture_unselected_hover
 
 func _on_pressed():
-	select()
+	if toggleable and selected:
+		unselect()
+	else:
+		select()

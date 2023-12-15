@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://dtpehdp2rfsuh"]
+[gd_scene load_steps=67 format=3 uid="uid://dtpehdp2rfsuh"]
 
 [ext_resource type="Script" path="res://battle/battle.gd" id="1_85t5n"]
 [ext_resource type="Texture2D" uid="uid://bklubekxfne1h" path="res://assets/isometric/tilemap/tile-test.png" id="1_cm50e"]
@@ -38,6 +38,12 @@
 [ext_resource type="Texture2D" uid="uid://cxbag2ijkv0vk" path="res://assets/ui/battle/speedup_unselected_pressed.png" id="31_52kg2"]
 [ext_resource type="Texture2D" uid="uid://dnr0dbvcp8353" path="res://assets/ui/battle/pause_unselected_hover.png" id="31_wocrg"]
 [ext_resource type="Texture2D" uid="uid://dyq5ntyl5ibnp" path="res://assets/ui/battle/pause_unselected_pressed.png" id="32_muvxr"]
+[ext_resource type="Texture2D" uid="uid://6daimh3y1x0t" path="res://assets/ui/battle/escape_unselected.png" id="39_7mjlu"]
+[ext_resource type="Texture2D" uid="uid://cavj5xwulo4j5" path="res://assets/ui/battle/escape_selected.png" id="40_vytcv"]
+[ext_resource type="Texture2D" uid="uid://il1qnpcind02" path="res://assets/ui/battle/escape_selected_hover.png" id="41_yk0s4"]
+[ext_resource type="Texture2D" uid="uid://dydqenioadj7m" path="res://assets/ui/battle/escape_selected_pressed.png" id="42_yy8nj"]
+[ext_resource type="Texture2D" uid="uid://b6ompunyhpbw3" path="res://assets/ui/battle/escape_unselected_hover.png" id="43_ctmj8"]
+[ext_resource type="Texture2D" uid="uid://c74vtibrdvx6s" path="res://assets/ui/battle/escape_unselected_pressed.png" id="44_rf0fw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_on0ph"]
 shader = ExtResource("17_f5gwn")
@@ -357,6 +363,23 @@ texture_unselected = ExtResource("27_c6ocw")
 texture_unselected_hover = ExtResource("31_wocrg")
 texture_unselected_pressed = ExtResource("32_muvxr")
 
+[node name="Escape" type="TextureButton" parent="."]
+z_index = 10
+offset_left = 262.0
+offset_top = 161.0
+offset_right = 317.0
+offset_bottom = 179.0
+texture_normal = ExtResource("39_7mjlu")
+script = ExtResource("19_8gl6u")
+texture_selected = ExtResource("40_vytcv")
+texture_selected_hover = ExtResource("41_yk0s4")
+texture_selected_pressed = ExtResource("42_yy8nj")
+texture_unselected = ExtResource("39_7mjlu")
+texture_unselected_hover = ExtResource("43_ctmj8")
+texture_unselected_pressed = ExtResource("44_rf0fw")
+toggleable = true
+
 [connection signal="pressed" from="SpeedControls/Run" to="SpeedControls/Run" method="_on_pressed"]
 [connection signal="pressed" from="SpeedControls/Speedup" to="SpeedControls/Speedup" method="_on_pressed"]
 [connection signal="pressed" from="SpeedControls/Pause" to="SpeedControls/Pause" method="_on_pressed"]
+[connection signal="pressed" from="Escape" to="Escape" method="_on_pressed"]
