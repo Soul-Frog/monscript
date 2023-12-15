@@ -379,6 +379,7 @@ texture_unselected_hover = ExtResource("43_ctmj8")
 texture_unselected_pressed = ExtResource("44_rf0fw")
 toggleable = true
 
+[connection signal="speed_changed" from="SpeedControls" to="." method="_on_speed_controls_changed"]
 [connection signal="pressed" from="SpeedControls/Run" to="SpeedControls/Run" method="_on_pressed"]
 [connection signal="pressed" from="SpeedControls/Speedup" to="SpeedControls/Speedup" method="_on_pressed"]
 [connection signal="pressed" from="SpeedControls/Pause" to="SpeedControls/Pause" method="_on_pressed"]

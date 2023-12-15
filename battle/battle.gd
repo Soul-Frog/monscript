@@ -23,7 +23,7 @@ enum Speed {
 }
 var _speed_to_speed = {
 	Speed.NORMAL : 1.0,
-	Speed.SPEEDUP : 2.0,
+	Speed.SPEEDUP : 3.0,
 	Speed.PAUSE : 0.0
 }
 @onready var _speed_controls = $SpeedControls
@@ -146,13 +146,14 @@ func clear_battle():
 		block.remove_mon()
 	for block in $ComputerMonBlocks.get_children():
 		block.remove_mon()
+	
+	Engine.time_scale = 1.0
 		
 	state = BattleState.EMPTY
 	battle_result = BattleResult.new()
 	$Log.clear()
 
 func _process(delta: float):
-	return
 	assert(state == BattleState.BATTLING) 	# make sure battle was set up properly
 	
 	# let everyone update/action
@@ -160,10 +161,10 @@ func _process(delta: float):
 	# don't need to recieve updates
 	for player_mon in $PlayerMons.get_children():
 		if not player_mon in action_queue:
-			player_mon.battle_tick(delta * _speed_to_speed[_speed_controls.speed])
+			player_mon.battle_tick(delta)
 	for computer_mon in $ComputerMons.get_children():
 		if not computer_mon in action_queue:
-			computer_mon.battle_tick(delta * _speed_to_speed[_speed_controls.speed])
+			computer_mon.battle_tick(delta)
 	
 	# if no other mon is active, let the mon in front of queue take action
 	if not is_a_mon_taking_action and not action_queue.is_empty():
@@ -277,3 +278,6 @@ func _check_battle_end_condition():
 		battle_result.end_condition = Global.BattleEndCondition.WIN
 		$Log.add_text("Battle terminated.")
 		Events.emit_signal("battle_ended", battle_result) # tie also counts as a win
+
+func _on_speed_controls_changed():
+	Engine.time_scale = _speed_to_speed[_speed_controls.speed]
