@@ -29,6 +29,7 @@ var _speed_to_speed = {
 @onready var _speed_controls = $SpeedControls
 
 # positions of mons in battle scene
+var MON_Z
 var PLAYER_MON_POSITIONS = []
 var COMPUTER_MON_POSITIONS = []
 # Returned at the end of battle; update with battle results and add XP when mons are defeated
@@ -50,6 +51,7 @@ func _ready():
 		PLAYER_MON_POSITIONS.append(placeholder.position)
 	for placeholder in $ComputerMons.get_children():
 		COMPUTER_MON_POSITIONS.append(placeholder.position)
+	MON_Z = $PlayerMons.z_index
 	state = BattleState.FINISHED
 	battle_result = BattleResult.new()
 	clear_battle();
@@ -57,6 +59,8 @@ func _ready():
 # Helper function which creates and connects signals for BattleMon
 func _create_and_setup_mon(base_mon, teamNode, pos, monblock):
 	var new_mon = load(base_mon.get_scene_path()).instantiate()
+	new_mon.z_index = MON_Z
+	new_mon.add_to_group("battle_speed_scaled")
 	new_mon.set_script(BATTLE_MON_SCRIPT)
 	new_mon.init_mon(base_mon)
 	monblock.assign_mon(new_mon)
@@ -146,8 +150,6 @@ func clear_battle():
 		block.remove_mon()
 	for block in $ComputerMonBlocks.get_children():
 		block.remove_mon()
-	
-	Engine.time_scale = 1.0
 		
 	state = BattleState.EMPTY
 	battle_result = BattleResult.new()
@@ -279,5 +281,7 @@ func _check_battle_end_condition():
 		$Log.add_text("Battle terminated.")
 		Events.emit_signal("battle_ended", battle_result) # tie also counts as a win
 
-func _on_speed_controls_changed():
-	Engine.time_scale = _speed_to_speed[_speed_controls.speed]
+func _on_speed_changed():
+	if is_inside_tree():
+		for node in get_tree().get_nodes_in_group("battle_speed_scaled"):
+			node.speed_scale = _speed_to_speed[_speed_controls.speed]

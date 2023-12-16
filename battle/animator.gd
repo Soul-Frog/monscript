@@ -2,7 +2,10 @@ class_name BattleAnimator extends Node2D
 
 signal animation_finished 
 
+var speed_scale = 1.0
+
 func _play_fx(fx):
+	fx.speed_scale = speed_scale
 	add_child(fx)
 	fx.play()
 	await fx.animation_finished

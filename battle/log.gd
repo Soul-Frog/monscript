@@ -14,14 +14,17 @@ const ENEMY_TEAM_COLOR: Color = Global.COLOR_RED
 
 const MON_NAME_PLACEHOLDER = "[MONNAME]"
 
+var speed_scale = 1.0
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	assert(text)
 	clear()
-	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(unscaled_delta):
+	var delta = unscaled_delta * speed_scale
+	
 	# new characters in log should appear gradually instead of immediately
 	if _visible_characters < text.get_parsed_text().length():
 		_visible_characters = min(_visible_characters + (delta * _TEXT_SPEED_DELTA), text.get_parsed_text().length())

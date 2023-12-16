@@ -8,7 +8,7 @@ script = ExtResource("1_e7qq1")
 
 [node name="Background" type="NinePatchRect" parent="."]
 offset_right = 154.0
-offset_bottom = 41.0
+offset_bottom = 44.0
 texture = ExtResource("1_cdhto")
 patch_margin_left = 3
 patch_margin_top = 3
@@ -16,17 +16,15 @@ patch_margin_right = 3
 patch_margin_bottom = 3
 
 [node name="Text" type="RichTextLabel" parent="."]
-offset_left = 3.0
+offset_left = 4.0
 offset_top = 2.0
 offset_right = 151.0
-offset_bottom = 38.0
+offset_bottom = 41.0
 theme_override_font_sizes/normal_font_size = 12
 bbcode_enabled = true
 text = "[color=green]Line1![/color]
 Line2!
 Line3!
-Line4!"
+Stingarray"
 scroll_active = false
-visible_characters = 0
 visible_characters_behavior = 1
-visible_ratio = 0.0

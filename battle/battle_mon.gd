@@ -27,6 +27,9 @@ const MOVING_TEXT_SCENE = preload("res://battle/moving_text.tscn")
 
 const ACTION_POINTS_PER_TURN := 100.0
 
+# Multiplier to delta to control speed of battles
+var speed_scale = 1.0
+
 # The underlying Mon Object this battle mon scene represents
 # Set this with init_mon before doing anything else with this scene
 var base_mon: MonData.Mon = null
@@ -138,7 +141,8 @@ func get_speed() -> int:
 	return _base_speed * _BUFF_STAGE_TO_MODIFIER[spd_buff_stage]
 
 # Called once for each mon by battle.gd at a regular time interval
-func battle_tick(delta: float) -> void:
+func battle_tick(unscaled_delta: float) -> void:
+	var delta = unscaled_delta * speed_scale
 	assert(base_mon != null, "Didn't add a mon with init_mon!")
 	assert(_base_attack != -1 and _base_speed != -1 and _base_defense != -1 and max_health != -1, "Stats were never initialized?")
 	if not is_defeated():
