@@ -20,7 +20,7 @@ const COLOR_DARK_RED = Color.DARK_RED
 
 # turns various debug functionality on and off
 var DEBUG_DRAW = false # Draw additional debug shapes through DebugTool
-var DEBUG_NO_INVINCIBLE = true # Turn off invincibility after ending a battle
+var DEBUG_NO_INVINCIBLE = false # Turn off invincibility after ending a battle
 var DEBUG_CONSOLE = true # Enables the debug console when typing `
 var DEBUG_FAST_START = true # Continue is available even with no save file; speeds up main menu->overworld transition
 

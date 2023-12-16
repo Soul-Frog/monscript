@@ -12,6 +12,8 @@ var _current_icon: Sprite2D = null
 
 func reset() -> void:
 	_icon_rotation = []
+	if _current_icon:
+		_current_icon.hide()
 	_current_icon = null
 
 func on_status_changed(status: BattleMon.Status, has_status: bool) -> void:

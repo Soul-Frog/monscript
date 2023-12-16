@@ -370,7 +370,7 @@ mouse_filter = 2
 [node name="Fade" type="Node" parent="SpeedControls/PauseFilter"]
 script = ExtResource("2_cfdr2")
 autostart_effect_type = 2
-max_alpha = 0.15
+max_alpha = 0.3
 fade_speed = 1.5
 
 [node name="SpeedUpFilter" type="ColorRect" parent="SpeedControls"]
@@ -384,7 +384,7 @@ mouse_filter = 2
 [node name="Fade" type="Node" parent="SpeedControls/SpeedUpFilter"]
 script = ExtResource("2_cfdr2")
 autostart_effect_type = 2
-max_alpha = 0.15
+max_alpha = 0.2
 fade_speed = 1.5
 
 [node name="Escape" type="TextureButton" parent="."]
@@ -408,3 +408,4 @@ toggleable = true
 [connection signal="pressed" from="SpeedControls/Speedup" to="SpeedControls/Speedup" method="_on_pressed"]
 [connection signal="pressed" from="SpeedControls/Pause" to="SpeedControls/Pause" method="_on_pressed"]
 [connection signal="pressed" from="Escape" to="Escape" method="_on_pressed"]
+[connection signal="state_changed" from="Escape" to="." method="_on_escape_state_changed"]

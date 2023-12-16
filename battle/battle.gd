@@ -42,6 +42,9 @@ var action_queue = []
 # Only one mon can take an action at a time (due to animations, etc)
 var is_a_mon_taking_action = false
 
+# If mons are being commanded to escape
+var trying_to_escape = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	assert(_speed_controls)
@@ -128,8 +131,10 @@ func setup_battle(player_team, computer_team):
 	
 	action_queue.clear()
 	is_a_mon_taking_action = false
+	trying_to_escape = false
 	
 	_speed_controls.reset()
+	$Escape.reset()
 	
 	assert($PlayerMons.get_child_count() != 0, "No valid player mons!")
 	assert($ComputerMons.get_child_count() != 0, "No valid computer mons!")
@@ -187,7 +192,10 @@ func _process(delta: float):
 		
 		var friends = player_mons if active_mon in player_mons else computer_mons
 		var foes = computer_mons if active_mon in player_mons else player_mons
-		active_mon.take_action(friends, foes, $Animator)
+		if active_mon in player_mons and trying_to_escape:
+			_on_mon_try_to_escape(active_mon)
+		else:
+			active_mon.take_action(friends, foes, $Animator)
 
 func _are_any_computer_mons_alive():
 	for computer_mon in $ComputerMons.get_children():
@@ -209,6 +217,8 @@ func _on_mon_ready_to_take_action(mon):
 func _on_mon_try_to_escape(battle_mon):
 	assert(state == BattleState.BATTLING)
 	
+	$Log.add_text("%s is trying to escape..." % $Log.MON_NAME_PLACEHOLDER, battle_mon)
+	
 	var mon = battle_mon.base_mon
 	
 	# if a player's mon is trying to escape
@@ -225,9 +235,13 @@ func _on_mon_try_to_escape(battle_mon):
 		if escape_chance >= Global.RNG.randi_range(1, 100):
 			battle_result.end_condition = Global.BattleEndCondition.ESCAPE
 			state = BattleState.FINISHED
+			$Log.add_text("Escaped successfully!")
 			Events.emit_signal("battle_ended", battle_result)
+		else:
+			$Log.add_text("Escape failed.")
 	else:
 		assert(battle_mon in $ComputerMons.get_children(), "Escaping enemy mon isn't in ComputerMons?")
+		$Log.add_text("%s ran away!" % $Log.MON_NAME_PLACEHOLDER, battle_mon)
 		$ComputerMons.remove_child(battle_mon)
 		battle_mon.queue_free()
 		_check_battle_end_condition()
@@ -285,3 +299,7 @@ func _on_speed_changed():
 	if is_inside_tree():
 		for node in get_tree().get_nodes_in_group("battle_speed_scaled"):
 			node.speed_scale = _speed_to_speed[_speed_controls.speed]
+
+
+func _on_escape_state_changed():
+	trying_to_escape = $Escape.selected
