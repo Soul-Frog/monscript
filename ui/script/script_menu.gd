@@ -230,6 +230,7 @@ func _on_clear() -> void:
 	_update_line_numbers()
 	_update_file_tabs()
 
+
 func _on_x_button_pressed() -> void:
 	# ignore this click if we're holding a block
 	if HELD.get_child_count() != 0:
@@ -282,6 +283,8 @@ func _input(event) -> void:
 		_active_drawer_tab = _active_drawer_tab + 1 if _active_drawer_tab < 2 else 0
 		_update_drawer()
 		UITooltip.clear_tooltips()
+	if Input.is_action_just_released("toggle_menu"):
+		_on_x_button_pressed()
 
 func _on_discard_block_area_input_event(viewport, event, shape_idx) -> void:
 	if event is InputEventMouseButton:

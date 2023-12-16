@@ -32,6 +32,10 @@ func _ready() -> void:
 				child.visible = false
 	_update_completion()
 
+func _input(_event) -> void:
+	if Input.is_action_just_released("toggle_menu"):
+		_on_exit_pressed()
+
 func setup() -> void:
 	active_entry = null
 	for child in $MonInfo.get_children():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://dtpehdp2rfsuh"]
+[gd_scene load_steps=69 format=3 uid="uid://dtpehdp2rfsuh"]
 
 [ext_resource type="Script" path="res://battle/battle.gd" id="1_85t5n"]
 [ext_resource type="Texture2D" uid="uid://bklubekxfne1h" path="res://assets/isometric/tilemap/tile-test.png" id="1_cm50e"]
@@ -40,6 +40,7 @@
 [ext_resource type="Texture2D" uid="uid://dnr0dbvcp8353" path="res://assets/ui/battle/pause_unselected_hover.png" id="31_wocrg"]
 [ext_resource type="Texture2D" uid="uid://dyq5ntyl5ibnp" path="res://assets/ui/battle/pause_unselected_pressed.png" id="32_muvxr"]
 [ext_resource type="Texture2D" uid="uid://6daimh3y1x0t" path="res://assets/ui/battle/escape_unselected.png" id="39_7mjlu"]
+[ext_resource type="Script" path="res://battle/escape_controls.gd" id="40_migwn"]
 [ext_resource type="Texture2D" uid="uid://cavj5xwulo4j5" path="res://assets/ui/battle/escape_selected.png" id="40_vytcv"]
 [ext_resource type="Texture2D" uid="uid://il1qnpcind02" path="res://assets/ui/battle/escape_selected_hover.png" id="41_yk0s4"]
 [ext_resource type="Texture2D" uid="uid://dydqenioadj7m" path="res://assets/ui/battle/escape_selected_pressed.png" id="42_yy8nj"]
@@ -387,7 +388,10 @@ autostart_effect_type = 2
 max_alpha = 0.2
 fade_speed = 1.5
 
-[node name="Escape" type="TextureButton" parent="."]
+[node name="EscapeControls" type="Node2D" parent="."]
+script = ExtResource("40_migwn")
+
+[node name="Button" type="TextureButton" parent="EscapeControls"]
 z_index = 100
 offset_left = 262.0
 offset_top = 161.0
@@ -403,9 +407,30 @@ texture_unselected_hover = ExtResource("43_ctmj8")
 texture_unselected_pressed = ExtResource("44_rf0fw")
 toggleable = true
 
+[node name="Text" type="RichTextLabel" parent="EscapeControls"]
+modulate = Color(1, 1, 0.619608, 0)
+z_index = 100
+offset_right = 320.0
+offset_bottom = 40.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+bbcode_enabled = true
+text = "Attempting to escape."
+
+[node name="FadeDecorator" type="Node" parent="EscapeControls/Text"]
+script = ExtResource("2_cfdr2")
+autostart_effect_type = 2
+fade_speed = 4.0
+
+[node name="DotTimer" type="Timer" parent="EscapeControls"]
+wait_time = 0.5
+autostart = true
+
 [connection signal="speed_changed" from="SpeedControls" to="." method="_on_speed_changed"]
 [connection signal="pressed" from="SpeedControls/Run" to="SpeedControls/Run" method="_on_pressed"]
 [connection signal="pressed" from="SpeedControls/Speedup" to="SpeedControls/Speedup" method="_on_pressed"]
 [connection signal="pressed" from="SpeedControls/Pause" to="SpeedControls/Pause" method="_on_pressed"]
-[connection signal="pressed" from="Escape" to="Escape" method="_on_pressed"]
-[connection signal="state_changed" from="Escape" to="." method="_on_escape_state_changed"]
+[connection signal="escape_state_changed" from="EscapeControls" to="." method="_on_escape_state_changed"]
+[connection signal="pressed" from="EscapeControls/Button" to="EscapeControls/Button" method="_on_pressed"]
+[connection signal="state_changed" from="EscapeControls/Button" to="EscapeControls" method="_on_escape_state_changed"]
+[connection signal="timeout" from="EscapeControls/DotTimer" to="EscapeControls" method="_on_dot_timer_timeout"]

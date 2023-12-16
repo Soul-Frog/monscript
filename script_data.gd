@@ -16,10 +16,14 @@ class MonScript:
 	func _init(string: String) -> void:
 		_from_string(string.strip_edges())
 	
-	func execute(mon: BattleMon, friends: Array, foes: Array, battle_log: BattleLog, animator: BattleAnimator) -> void:
+	func execute(mon: BattleMon, friends: Array, foes: Array, battle_log: BattleLog, animator: BattleAnimator, escaping: bool) -> void:
 		assert(not mon.is_defeated())
 		assert(not friends.is_empty())
 		assert(not foes.is_empty())
+		if escaping:
+			await ScriptData.get_block_by_name("Escape").function.call(mon, friends, foes, null, battle_log, animator)
+			mon.alert_turn_over()
+			return
 		if lines.size() == 0: #empty script, just run error
 			await ScriptData._ERROR_DO.function.call(mon, friends, foes, null, battle_log, animator)
 			mon.alert_turn_over()
@@ -402,7 +406,7 @@ var TO_BLOCK_LIST := [
 # Godot warns here but it's wrong, this is being used by an internal class.
 @warning_ignore("unused_private_class_variable")
 var _ERROR_DO := Block.new(Block.Type.DO, "ERROR", Block.Type.NONE, "ERROR - do nothing.",
-	func (mon: BattleMon, friends:Array, foes: Array, target: BattleMon, animator: BattleAnimator):
-		# TODO - something better here
-		print("ERROR")
+	func (mon: BattleMon, friends:Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator):
+		battle_log.add_text("%s has an script [color=red]ERROR[/color]!" % battle_log.MON_NAME_PLACEHOLDER, mon)
+		battle_log.add_text("%s could not move!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 )

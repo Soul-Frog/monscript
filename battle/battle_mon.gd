@@ -156,7 +156,7 @@ func battle_tick(unscaled_delta: float) -> void:
 			emit_signal("ready_to_take_action", self) # signal that it's time for this mon to act
 
 # Take a single turn in battle
-func take_action(friends: Array, foes: Array, animator: BattleAnimator) -> void:
+func take_action(friends: Array, foes: Array, animator: BattleAnimator, escaping: bool) -> void:
 	assert(friends.size() != 0, "No friends?")
 	assert(foes.size() != 0, "No foes?")
 	is_defending = false
@@ -168,7 +168,7 @@ func take_action(friends: Array, foes: Array, animator: BattleAnimator) -> void:
 		return
 	
 	# tell our script to go ahead and execute an action
-	base_mon.get_active_monscript().execute(self, friends, foes, battle_log, animator)
+	base_mon.get_active_monscript().execute(self, friends, foes, battle_log, animator, escaping)
 	# don't do anything after here, the turn is over when we hit alert_turn_over
 	# todo - maybe alert_turn_over is useless and we can just cram more info here...?
 

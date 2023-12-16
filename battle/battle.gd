@@ -43,6 +43,7 @@ var action_queue = []
 var is_a_mon_taking_action = false
 
 # If mons are being commanded to escape
+@onready var _escape_controls = $EscapeControls
 var trying_to_escape = false
 
 # Called when the node enters the scene tree for the first time.
@@ -134,7 +135,7 @@ func setup_battle(player_team, computer_team):
 	trying_to_escape = false
 	
 	_speed_controls.reset()
-	$Escape.reset()
+	_escape_controls.reset()
 	
 	assert($PlayerMons.get_child_count() != 0, "No valid player mons!")
 	assert($ComputerMons.get_child_count() != 0, "No valid computer mons!")
@@ -192,10 +193,8 @@ func _process(delta: float):
 		
 		var friends = player_mons if active_mon in player_mons else computer_mons
 		var foes = computer_mons if active_mon in player_mons else player_mons
-		if active_mon in player_mons and trying_to_escape:
-			_on_mon_try_to_escape(active_mon)
-		else:
-			active_mon.take_action(friends, foes, $Animator)
+		var force_escape =  active_mon in player_mons and trying_to_escape
+		active_mon.take_action(friends, foes, $Animator, force_escape)
 
 func _are_any_computer_mons_alive():
 	for computer_mon in $ComputerMons.get_children():
@@ -300,6 +299,5 @@ func _on_speed_changed():
 		for node in get_tree().get_nodes_in_group("battle_speed_scaled"):
 			node.speed_scale = _speed_to_speed[_speed_controls.speed]
 
-
-func _on_escape_state_changed():
-	trying_to_escape = $Escape.selected
+func _on_escape_state_changed(is_escaping: bool):
+	trying_to_escape = is_escaping

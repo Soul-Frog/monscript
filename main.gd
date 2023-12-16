@@ -38,7 +38,7 @@ func _ready() -> void:
 	Events.battle_ended.connect(_on_battle_ended)
 
 func _input(_event) -> void:
-	if Input.is_action_just_released("open_pause_menu") and not FADE.is_active():
+	if Input.is_action_just_released("toggle_menu") and not FADE.is_active():
 		if active_scene == OVERWORLD:
 			PAUSE_MENU.setup()
 			await _switch_to_scene(PAUSE_MENU, FADE)
