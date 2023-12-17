@@ -64,13 +64,7 @@ var atk_buff_stage := 0
 var def_buff_stage := 0
 var spd_buff_stage := 0
 
-var original_position: Vector2
-var is_shaking := false
-var shake_timer: Timer
-const SHAKE_TIME := 0.10
-const shake_amount := 3
-const shake_speed := 0.8
-var shake_direction := 1
+@onready var shake_animation_player = $ShakeAnimationPlayer
 
 # a dictionary that anything can be stored in that needs to be tracked
 # for example, some moves will store information in here to use later
@@ -107,12 +101,8 @@ var statuses = {
 	Status.SLEEP : false
 }
 
-func _ready() -> void:
-	original_position = position
-	shake_timer = Timer.new()
-	shake_timer.wait_time = SHAKE_TIME
-	shake_timer.timeout.connect(_stop_shaking)
-	add_child(shake_timer)
+func _ready():
+	assert(shake_animation_player)
 
 # Initializes this battle_mon with an underlying mon object
 func init_mon(mon: MonData.Mon) -> void:
@@ -226,9 +216,12 @@ func take_damage(damage_taken: int) -> void:
 	self.add_child(
 		MOVING_TEXT_SCENE.instantiate()
 		.tx(damage_taken).direction_up().speed(40).time(0.2).color(Global.COLOR_RED))
+		
 	# make the damaged mon shake
-	is_shaking = true
-	shake_timer.start()
+	shake_animation_player.speed_scale = speed_scale
+	if shake_animation_player.current_animation == "shake":
+		shake_animation_player.seek(0) #restart shake
+	shake_animation_player.play("shake")
 	
 	# TODO - make mon glow red or something for a sec
 	# when taking fire damage, glow redder; chill glow blue, volt glow yellow; white on normal damage?
@@ -304,18 +297,6 @@ func apply_stat_change(stat: BuffableStat, mod: int):
 			atk_buff_stage = clamp(atk_buff_stage + mod, MIN_DEBUFF_STAGE, MAX_BUFF_STAGE)
 		BuffableStat.DEF:
 			def_buff_stage = clamp(def_buff_stage + mod, MIN_DEBUFF_STAGE, MAX_BUFF_STAGE)
-			print(def_buff_stage)
 		BuffableStat.SPD:
 			spd_buff_stage = clamp(spd_buff_stage + mod, MIN_DEBUFF_STAGE, MAX_BUFF_STAGE)
 	emit_signal("stats_changed")
-
-func _process(delta: float) -> void:
-	if is_shaking:
-		if position.x >= (original_position.x + shake_amount) or position.x <= (original_position.x - shake_amount):
-			shake_direction = -shake_direction
-		position.x += shake_direction * shake_speed
-
-func _stop_shaking() -> void:
-	is_shaking = false
-	position = original_position
-	shake_direction = 1
