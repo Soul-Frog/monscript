@@ -18,6 +18,10 @@ enum BattleState {
 	FINISHED # this battle scene is over; it's ready for a call to clear_battle
 }
 
+enum Team {
+	PLAYER, COMPUTER
+}
+
 enum Speed {
 	NORMAL, SPEEDUP, PAUSE
 }
@@ -61,12 +65,12 @@ func _ready():
 	clear_battle();
 
 # Helper function which creates and connects signals for BattleMon
-func _create_and_setup_mon(base_mon, teamNode, pos, monblock):
+func _create_and_setup_mon(base_mon, teamNode, pos, monblock, team):
 	var new_mon = load(base_mon.get_scene_path()).instantiate()
 	new_mon.z_index = MON_Z
 	new_mon.add_to_group("battle_speed_scaled")
 	new_mon.set_script(BATTLE_MON_SCRIPT)
-	new_mon.init_mon(base_mon)
+	new_mon.init_mon(base_mon, team)
 	monblock.assign_mon(new_mon)
 	teamNode.add_child(new_mon)
 	new_mon.ready_to_take_action.connect(self._on_mon_ready_to_take_action)
@@ -99,7 +103,7 @@ func setup_battle(player_team, computer_team):
 	var name_map = {} # store all mon names to handle duplicates for the battle log
 	for i in Global.MONS_PER_TEAM:
 		if player_team[i] != null:
-			_create_and_setup_mon(player_team[i], $PlayerMons, PLAYER_MON_POSITIONS[i], $PlayerMonBlocks.get_child(i))
+			_create_and_setup_mon(player_team[i], $PlayerMons, PLAYER_MON_POSITIONS[i], $PlayerMonBlocks.get_child(i), Team.PLAYER)
 			var new_mon: BattleMon = $PlayerMons.get_child(i)
 			
 			# set up log name and color for this mon
@@ -116,7 +120,7 @@ func setup_battle(player_team, computer_team):
 	
 	for i in Global.MONS_PER_TEAM:
 		if computer_team[i] != null:
-			_create_and_setup_mon(computer_team[i], $ComputerMons, COMPUTER_MON_POSITIONS[i], $ComputerMonBlocks.get_child(i))
+			_create_and_setup_mon(computer_team[i], $ComputerMons, COMPUTER_MON_POSITIONS[i], $ComputerMonBlocks.get_child(i), Team.COMPUTER)
 			var new_mon: BattleMon = $ComputerMons.get_child(i)
 			
 			# set up log name and color for this mon

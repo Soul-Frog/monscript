@@ -40,6 +40,8 @@ var log_color: Color = Color.BLACK
 # Reference to the battle log
 var battle_log: BattleLog
 
+var team: Battle.Team
+
 # current action points - increases by speed each tick
 # when this reaches 100, signals to take a turn
 var action_points := 0.0
@@ -105,8 +107,9 @@ func _ready():
 	assert(shake_animation_player)
 
 # Initializes this battle_mon with an underlying mon object
-func init_mon(mon: MonData.Mon) -> void:
+func init_mon(mon: MonData.Mon, monTeam: Battle.Team) -> void:
 	base_mon = mon
+	team = monTeam
 	current_health = mon.get_max_health()
 	max_health = mon.get_max_health()
 	_base_attack = mon.get_attack()
@@ -157,10 +160,17 @@ func take_action(friends: Array, foes: Array, animator: BattleAnimator, escaping
 		alert_turn_over()
 		return
 	
-	# tell our script to go ahead and execute an action
-	base_mon.get_active_monscript().execute(self, friends, foes, battle_log, animator, escaping)
+	# move forward,
+	var tween = get_tree().create_tween()
+	tween.tween_property(self, "position:x", position.x + (20 if team == Battle.Team.PLAYER else -20), 0.4).set_trans(Tween.TRANS_CUBIC)
+	# thenh tell our script to go ahead and execute an action
+	tween.tween_callback(execute_script.bind(friends, foes, animator, escaping))
+
 	# don't do anything after here, the turn is over when we hit alert_turn_over
 	# todo - maybe alert_turn_over is useless and we can just cram more info here...?
+
+func execute_script(friends: Array, foes: Array, animator: BattleAnimator, escaping: bool):
+	base_mon.get_active_monscript().execute(self, friends, foes, battle_log, animator, escaping)
 
 # called after a mon takes its turn
 func alert_turn_over() -> void:
@@ -168,13 +178,16 @@ func alert_turn_over() -> void:
 	if reset_AP_after_action:
 		action_points = 0.0
 	reset_AP_after_action = true
-	# TODO $BattleComponents/ActionPointsBar.modulate = Global.COLOR_YELLOW
 	
 	# after taking an action, if inflicted with leak, take 5% health as damage
 	if statuses[Status.LEAK]:
 		battle_log.add_text("%s is leaking memory!" % battle_log.MON_NAME_PLACEHOLDER, self)
 		take_damage(max(ceil(max_health * 0.05), 1))
 		#todo - animate this better
+
+	var tween = get_tree().create_tween()
+	tween.tween_property(self, "position:x", position.x - (20 if team == Battle.Team.PLAYER else -20), 0.4).set_trans(Tween.TRANS_CUBIC)
+	await tween.finished
 	
 	emit_signal("action_completed")
 
