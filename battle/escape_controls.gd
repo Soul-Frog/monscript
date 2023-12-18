@@ -15,6 +15,7 @@ func _ready():
 	assert(button)
 	assert(text)
 	assert(_dots <= MAX_DOTS)
+	text.modulate.a = 0
 	reset()
 
 func _on_dot_timer_timeout():

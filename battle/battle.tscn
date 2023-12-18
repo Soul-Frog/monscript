@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://dtpehdp2rfsuh"]
+[gd_scene load_steps=72 format=3 uid="uid://dtpehdp2rfsuh"]
 
 [ext_resource type="Script" path="res://battle/battle.gd" id="1_85t5n"]
 [ext_resource type="Texture2D" uid="uid://bklubekxfne1h" path="res://assets/isometric/tilemap/tile-test.png" id="1_cm50e"]
@@ -46,6 +46,9 @@
 [ext_resource type="Texture2D" uid="uid://dydqenioadj7m" path="res://assets/ui/battle/escape_selected_pressed.png" id="42_yy8nj"]
 [ext_resource type="Texture2D" uid="uid://b6ompunyhpbw3" path="res://assets/ui/battle/escape_unselected_hover.png" id="43_ctmj8"]
 [ext_resource type="Texture2D" uid="uid://c74vtibrdvx6s" path="res://assets/ui/battle/escape_unselected_pressed.png" id="44_rf0fw"]
+[ext_resource type="Texture2D" uid="uid://bowg27ny7ev06" path="res://assets/ui/battle/console9patch.png" id="47_me3k7"]
+[ext_resource type="Script" path="res://battle/action_name_box.gd" id="47_yq6eb"]
+[ext_resource type="Theme" uid="uid://612i0h3ltb6t" path="res://monscript_theme.tres" id="49_cid02"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_on0ph"]
 shader = ExtResource("17_f5gwn")
@@ -385,7 +388,7 @@ mouse_filter = 2
 [node name="Fade" type="Node" parent="SpeedControls/SpeedUpFilter"]
 script = ExtResource("2_cfdr2")
 autostart_effect_type = 2
-max_alpha = 0.2
+max_alpha = 0.4
 fade_speed = 1.5
 
 [node name="EscapeControls" type="Node2D" parent="."]
@@ -408,14 +411,17 @@ texture_unselected_pressed = ExtResource("44_rf0fw")
 toggleable = true
 
 [node name="Text" type="RichTextLabel" parent="EscapeControls"]
-modulate = Color(1, 1, 0.619608, 0)
+modulate = Color(1, 1, 0.619608, 1)
 z_index = 100
+offset_left = 238.0
+offset_top = 133.0
 offset_right = 320.0
-offset_bottom = 40.0
+offset_bottom = 170.0
+mouse_filter = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
 bbcode_enabled = true
-text = "Attempting to escape."
+text = "[center]Attempting to escape.[/center]"
 
 [node name="FadeDecorator" type="Node" parent="EscapeControls/Text"]
 script = ExtResource("2_cfdr2")
@@ -425,6 +431,36 @@ fade_speed = 4.0
 [node name="DotTimer" type="Timer" parent="EscapeControls"]
 wait_time = 0.5
 autostart = true
+
+[node name="ActionNameBox" type="Node2D" parent="." groups=["battle_speed_scaled"]]
+modulate = Color(1, 1, 1, 0)
+z_index = 101
+position = Vector2(0, 1)
+script = ExtResource("47_yq6eb")
+
+[node name="Background" type="NinePatchRect" parent="ActionNameBox"]
+offset_top = 2.0
+offset_right = 50.0
+offset_bottom = 19.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("47_me3k7")
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+
+[node name="ActionLabel" type="RichTextLabel" parent="ActionNameBox"]
+offset_left = 4.0
+offset_top = 3.0
+offset_right = 45.0
+offset_bottom = 16.0
+size_flags_vertical = 4
+theme = ExtResource("49_cid02")
+text = "> Attack"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
 
 [connection signal="speed_changed" from="SpeedControls" to="." method="_on_speed_changed"]
 [connection signal="pressed" from="SpeedControls/Run" to="SpeedControls/Run" method="_on_pressed"]

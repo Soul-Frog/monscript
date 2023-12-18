@@ -14,6 +14,8 @@ const ACTION_FORMAT = "%d/%d"
 
 var active_mon: BattleMon = null
 
+var _full_ap_color = Color(255.0/255.0, 58.0/255.0, 50.0/255.0, 1)
+
 func _ready():
 	assert(name_label)
 	assert(level_label)
@@ -58,6 +60,7 @@ func remove_mon() -> void:
 
 func _on_mon_health_or_ap_changed() -> void:
 	action_bar.value = active_mon.action_points
+	action_bar.tint_progress = _full_ap_color if action_bar.value == action_bar.max_value else Color.WHITE
 	health_bar.value = active_mon.current_health
 	
 	action_label.text = ACTION_FORMAT % [action_bar.value, action_bar.max_value]

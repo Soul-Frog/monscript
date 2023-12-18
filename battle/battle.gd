@@ -50,9 +50,12 @@ var is_a_mon_taking_action = false
 @onready var _escape_controls = $EscapeControls
 var trying_to_escape = false
 
+@onready var _action_name_box = $ActionNameBox
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	assert(_speed_controls)
+	assert(_action_name_box)
 	assert($PlayerMons.get_children().size() == Global.MONS_PER_TEAM, "Wrong number of player placeholder positions!")
 	assert($ComputerMons.get_children().size() == Global.MONS_PER_TEAM, "Wrong number of computer placeholder positions!")
 	for placeholder in $PlayerMons.get_children():
@@ -79,6 +82,7 @@ func _create_and_setup_mon(base_mon, teamNode, pos, monblock, team):
 	new_mon.action_completed.connect(self._on_mon_action_completed)
 	new_mon.position = pos
 	new_mon.battle_log = $Log
+	new_mon.action_name_box = _action_name_box
 
 # Sets up a new battle scene
 func setup_battle(player_team, computer_team):
@@ -140,6 +144,7 @@ func setup_battle(player_team, computer_team):
 	
 	_speed_controls.reset()
 	_escape_controls.reset()
+	_action_name_box.reset()
 	
 	assert($PlayerMons.get_child_count() != 0, "No valid player mons!")
 	assert($ComputerMons.get_child_count() != 0, "No valid computer mons!")
@@ -305,3 +310,5 @@ func _on_speed_changed():
 
 func _on_escape_state_changed(is_escaping: bool):
 	trying_to_escape = is_escaping
+	if trying_to_escape:
+		$Log.add_text("Your mons will try to escape!")

@@ -39,6 +39,8 @@ var log_name: String = ""
 var log_color: Color = Color.BLACK
 # Reference to the battle log
 var battle_log: BattleLog
+# Reference to the box showing action name
+var action_name_box: BattleActionNameBox
 
 var team: Battle.Team
 
@@ -171,7 +173,8 @@ func take_action(friends: Array, foes: Array, animator: BattleAnimator, escaping
 	# todo - maybe alert_turn_over is useless and we can just cram more info here...?
 
 func execute_script(friends: Array, foes: Array, animator: BattleAnimator, escaping: bool):
-	base_mon.get_active_monscript().execute(self, friends, foes, battle_log, animator, escaping)
+	action_name_box.make_visible()
+	base_mon.get_active_monscript().execute(self, friends, foes, battle_log, action_name_box, animator, escaping)
 
 # called after a mon takes its turn
 func alert_turn_over() -> void:
@@ -190,6 +193,7 @@ func alert_turn_over() -> void:
 	tween.set_speed_scale(speed_scale)
 	await tween.finished
 	await Global.delay(0.2)
+	action_name_box.make_invisible()
 	emit_signal("action_completed")
 
 func is_defeated() -> bool:
