@@ -165,6 +165,7 @@ func take_action(friends: Array, foes: Array, animator: BattleAnimator, escaping
 	tween.tween_property(self, "position:x", position.x + (20 if team == Battle.Team.PLAYER else -20), 0.4).set_trans(Tween.TRANS_CUBIC)
 	# thenh tell our script to go ahead and execute an action
 	tween.tween_callback(execute_script.bind(friends, foes, animator, escaping))
+	tween.set_speed_scale(speed_scale)
 
 	# don't do anything after here, the turn is over when we hit alert_turn_over
 	# todo - maybe alert_turn_over is useless and we can just cram more info here...?
@@ -184,11 +185,11 @@ func alert_turn_over() -> void:
 		battle_log.add_text("%s is leaking memory!" % battle_log.MON_NAME_PLACEHOLDER, self)
 		take_damage(max(ceil(max_health * 0.05), 1))
 		#todo - animate this better
-
 	var tween = get_tree().create_tween()
 	tween.tween_property(self, "position:x", position.x - (20 if team == Battle.Team.PLAYER else -20), 0.4).set_trans(Tween.TRANS_CUBIC)
+	tween.set_speed_scale(speed_scale)
 	await tween.finished
-	
+	await Global.delay(0.2)
 	emit_signal("action_completed")
 
 func is_defeated() -> bool:
