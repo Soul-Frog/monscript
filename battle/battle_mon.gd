@@ -183,17 +183,20 @@ func alert_turn_over() -> void:
 		action_points = 0.0
 	reset_AP_after_action = true
 	
+	
+	var tween = get_tree().create_tween()
+	tween.tween_property(self, "position:x", position.x - (20 if team == Battle.Team.PLAYER else -20), 0.4).set_trans(Tween.TRANS_CUBIC)
+	tween.set_speed_scale(speed_scale)
+	await tween.finished
+	await Global.delay(0.25)
+	action_name_box.make_invisible()
+	
 	# after taking an action, if inflicted with leak, take 5% health as damage
 	if statuses[Status.LEAK]:
 		battle_log.add_text("%s is leaking memory!" % battle_log.MON_NAME_PLACEHOLDER, self)
 		take_damage(max(ceil(max_health * 0.05), 1))
 		#todo - animate this better
-	var tween = get_tree().create_tween()
-	tween.tween_property(self, "position:x", position.x - (20 if team == Battle.Team.PLAYER else -20), 0.4).set_trans(Tween.TRANS_CUBIC)
-	tween.set_speed_scale(speed_scale)
-	await tween.finished
-	await Global.delay(0.2)
-	action_name_box.make_invisible()
+	
 	emit_signal("action_completed")
 
 func is_defeated() -> bool:

@@ -83,6 +83,7 @@ func _create_and_setup_mon(base_mon, teamNode, pos, monblock, team):
 	new_mon.position = pos
 	new_mon.battle_log = $Log
 	new_mon.action_name_box = _action_name_box
+	return new_mon
 
 # Sets up a new battle scene
 func setup_battle(player_team, computer_team):
@@ -107,8 +108,7 @@ func setup_battle(player_team, computer_team):
 	var name_map = {} # store all mon names to handle duplicates for the battle log
 	for i in Global.MONS_PER_TEAM:
 		if player_team[i] != null:
-			_create_and_setup_mon(player_team[i], $PlayerMons, PLAYER_MON_POSITIONS[i], $PlayerMonBlocks.get_child(i), Team.PLAYER)
-			var new_mon: BattleMon = $PlayerMons.get_child(i)
+			var new_mon = _create_and_setup_mon(player_team[i], $PlayerMons, PLAYER_MON_POSITIONS[i], $PlayerMonBlocks.get_child(i), Team.PLAYER)
 			
 			# set up log name and color for this mon
 			new_mon.log_color = $Log.PLAYER_TEAM_COLOR
@@ -124,8 +124,7 @@ func setup_battle(player_team, computer_team):
 	
 	for i in Global.MONS_PER_TEAM:
 		if computer_team[i] != null:
-			_create_and_setup_mon(computer_team[i], $ComputerMons, COMPUTER_MON_POSITIONS[i], $ComputerMonBlocks.get_child(i), Team.COMPUTER)
-			var new_mon: BattleMon = $ComputerMons.get_child(i)
+			var new_mon = _create_and_setup_mon(computer_team[i], $ComputerMons, COMPUTER_MON_POSITIONS[i], $ComputerMonBlocks.get_child(i), Team.COMPUTER)
 			
 			# set up log name and color for this mon
 			new_mon.log_color = $Log.ENEMY_TEAM_COLOR
@@ -274,7 +273,9 @@ func _on_mon_zero_health(mon):
 	mon.visible = false
 	
 	# remove this mon from the action queue if needed
-	for i in range(0, action_queue.size()):
+	# don't remove from front of queue; since if this mon died performing an action, it will remove itself
+	# and if it died from another mon's action, it must not have been at the front
+	for i in range(1, action_queue.size()):
 		if action_queue[i] == mon:
 			action_queue.remove_at(i)
 			break
