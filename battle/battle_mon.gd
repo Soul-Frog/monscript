@@ -69,6 +69,7 @@ var def_buff_stage := 0
 var spd_buff_stage := 0
 
 @onready var shake_animation_player = $ShakeAnimationPlayer
+@onready var flash_animation_player = $FlashAnimationPlayer
 
 # a dictionary that anything can be stored in that needs to be tracked
 # for example, some moves will store information in here to use later
@@ -107,6 +108,7 @@ var statuses = {
 
 func _ready():
 	assert(shake_animation_player)
+	assert(flash_animation_player)
 
 # Initializes this battle_mon with an underlying mon object
 func init_mon(mon: MonData.Mon, monTeam: Battle.Team) -> void:
@@ -243,6 +245,11 @@ func take_damage(damage_taken: int) -> void:
 	if shake_animation_player.current_animation == "shake":
 		shake_animation_player.seek(0) #restart shake
 	shake_animation_player.play("shake")
+	
+	flash_animation_player.speed_scale = speed_scale
+	if flash_animation_player.current_animation == "flash_white":
+		flash_animation_player.seek(0)
+	flash_animation_player.play("flash_white")
 	
 	# TODO - make mon glow red or something for a sec
 	# when taking fire damage, glow redder; chill glow blue, volt glow yellow; white on normal damage?

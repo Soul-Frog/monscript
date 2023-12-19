@@ -1,7 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://qd8gobfrvv8u"]
+[gd_scene load_steps=10 format=3 uid="uid://qd8gobfrvv8u"]
 
+[ext_resource type="Shader" path="res://mons/mon.gdshader" id="1_lg85r"]
 [ext_resource type="Script" path="res://mons/mon_scene.gd" id="1_q78nc"]
 [ext_resource type="PackedScene" uid="uid://diodlu0baosyk" path="res://debug/debug_tool.tscn" id="2_cagr3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o6fr2"]
+resource_local_to_scene = true
+shader = ExtResource("1_lg85r")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_modifier = 0.0
 
 [sub_resource type="Animation" id="Animation_cx2c3"]
 resource_name = "shake"
@@ -23,6 +30,43 @@ _data = {
 "shake": SubResource("Animation_cx2c3")
 }
 
+[sub_resource type="Animation" id="Animation_pbjxt"]
+resource_name = "flash_white"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:material:shader_parameter/flash_modifier")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.075),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [1.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_tkloo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:material:shader_parameter/flash_modifier")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [null]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hre05"]
+_data = {
+"RESET": SubResource("Animation_tkloo"),
+"flash_white": SubResource("Animation_pbjxt")
+}
+
 [node name="Mon" type="CharacterBody2D"]
 z_index = 200
 collision_layer = 2
@@ -32,6 +76,7 @@ script = ExtResource("1_q78nc")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
+material = SubResource("ShaderMaterial_o6fr2")
 
 [node name="CollisionHitbox" type="CollisionShape2D" parent="."]
 position = Vector2(0, -2)
@@ -41,4 +86,9 @@ position = Vector2(0, -2)
 [node name="ShakeAnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_sbyuh")
+}
+
+[node name="FlashAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_hre05")
 }
