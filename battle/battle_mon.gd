@@ -28,7 +28,7 @@ const MOVING_TEXT_SCENE = preload("res://battle/moving_text.tscn")
 const ACTION_POINTS_PER_TURN := 100.0
 
 # Multiplier to delta to control speed of battles
-var speed_scale = 1.0
+var _speed_scale = 1.0
 
 # The underlying Mon Object this battle mon scene represents
 # Set this with init_mon before doing anything else with this scene
@@ -75,6 +75,7 @@ var spd_buff_stage := 0
 # for example, some moves will store information in here to use later
 var metadata = {}
 
+var active_tweens = []
  
 const MAX_BUFF_STAGE = 4 # the maximum positive buff stage
 const MIN_DEBUFF_STAGE = -4 # the minimum negative debuff stage
@@ -139,7 +140,7 @@ func get_speed() -> int:
 
 # Called once for each mon by battle.gd at a regular time interval
 func battle_tick(unscaled_delta: float) -> void:
-	var delta = unscaled_delta * speed_scale
+	var delta = unscaled_delta * _speed_scale
 	assert(base_mon != null, "Didn't add a mon with init_mon!")
 	assert(_base_attack != -1 and _base_speed != -1 and _base_defense != -1 and max_health != -1, "Stats were never initialized?")
 	if not is_defeated():
@@ -165,11 +166,12 @@ func take_action(friends: Array, foes: Array, animator: BattleAnimator, escaping
 		return
 	
 	# move forward,
-	var tween = get_tree().create_tween()
+	var tween = create_tween()
+	active_tweens.append(tween)
 	tween.tween_property(self, "position:x", position.x + (20 if team == Battle.Team.PLAYER else -20), 0.4).set_trans(Tween.TRANS_CUBIC)
 	# thenh tell our script to go ahead and execute an action
 	tween.tween_callback(execute_script.bind(friends, foes, animator, escaping))
-	tween.set_speed_scale(speed_scale)
+	tween.set_speed_scale(_speed_scale)
 
 	# don't do anything after here, the turn is over when we hit alert_turn_over
 	# todo - maybe alert_turn_over is useless and we can just cram more info here...?
@@ -186,9 +188,10 @@ func alert_turn_over() -> void:
 	reset_AP_after_action = true
 	
 	
-	var tween = get_tree().create_tween()
+	var tween = create_tween()
+	active_tweens.append(tween)
 	tween.tween_property(self, "position:x", position.x - (20 if team == Battle.Team.PLAYER else -20), 0.4).set_trans(Tween.TRANS_CUBIC)
-	tween.set_speed_scale(speed_scale)
+	tween.set_speed_scale(_speed_scale)
 	await tween.finished
 	await Global.delay(0.25)
 	action_name_box.make_invisible()
@@ -241,12 +244,12 @@ func take_damage(damage_taken: int) -> void:
 		.tx(damage_taken).direction_up().speed(40).time(0.2).color(Global.COLOR_RED))
 		
 	# make the damaged mon shake
-	shake_animation_player.speed_scale = speed_scale
+	shake_animation_player.speed_scale = _speed_scale #TODODO
 	if shake_animation_player.current_animation == "shake":
 		shake_animation_player.seek(0) #restart shake
 	shake_animation_player.play("shake")
 	
-	flash_animation_player.speed_scale = speed_scale
+	flash_animation_player.speed_scale = _speed_scale #TODODO
 	if flash_animation_player.current_animation == "flash_white":
 		flash_animation_player.seek(0)
 	flash_animation_player.play("flash_white")
@@ -328,3 +331,13 @@ func apply_stat_change(stat: BuffableStat, mod: int):
 		BuffableStat.SPD:
 			spd_buff_stage = clamp(spd_buff_stage + mod, MIN_DEBUFF_STAGE, MAX_BUFF_STAGE)
 	emit_signal("stats_changed")
+
+func set_speed_scale(speed_scale: float) -> void:
+	_speed_scale = speed_scale
+	for tween in active_tweens:
+		if not tween.is_valid():
+			active_tweens.erase(tween)
+			continue
+		tween.set_speed_scale(speed_scale)
+	shake_animation_player.speed_scale = speed_scale
+	flash_animation_player.speed_scale = speed_scale

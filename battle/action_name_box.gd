@@ -5,7 +5,8 @@ extends Node2D
 @onready var _label = $ActionLabel
 const _LABEL_FORMAT = "> %s"
 
-var speed_scale = 1.0
+var _speed_scale := 1.0
+var _active_tweens = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -17,14 +18,16 @@ func reset():
 	modulate.a = 0
 
 func make_visible():
-	var tween = get_tree().create_tween()
-	tween.set_speed_scale(speed_scale)
+	var tween = create_tween() #TODODO
+	tween.set_speed_scale(_speed_scale)
 	tween.tween_property(self, "modulate:a", 1, 0.125)
+	_active_tweens.append(tween)
 
 func make_invisible():
-	var tween = get_tree().create_tween()
-	tween.set_speed_scale(speed_scale)
+	var tween = create_tween() #TODODO
+	tween.set_speed_scale(_speed_scale)
 	tween.tween_property(self, "modulate:a", 0, 0.125)
+	_active_tweens.append(tween)
 
 func set_action_text(action: String):
 	_label.text = _LABEL_FORMAT % action
@@ -36,3 +39,11 @@ func set_action_text(action: String):
 	var viewport_size = get_viewport_rect().size
 	_label.position.x = (viewport_size.x / 2) - (string_size.x / 2)
 	_background.position.x = (viewport_size.x / 2) - (_background.size.x / 2)
+
+func set_speed_scale(speed_scale: float) -> void:
+	_speed_scale = speed_scale
+	for tween in _active_tweens:
+		if not tween.is_valid():
+			_active_tweens.erase(tween)
+			continue
+		tween.set_speed_scale(speed_scale)

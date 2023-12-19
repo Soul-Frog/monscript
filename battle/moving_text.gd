@@ -4,7 +4,7 @@ enum Direction {
 	UP, DOWN
 }
 
-var speed_scale = 1.0
+var _speed_scale = 1.0
 
 var text_content = ""
 var move_direction = Direction.UP
@@ -52,7 +52,10 @@ func _ready():
 		velocity = move_speed
 
 func _process(delta):
-	position.y += velocity * delta * speed_scale
-	display_time -= delta * speed_scale
+	position.y += velocity * delta * _speed_scale
+	display_time -= delta * _speed_scale
 	if display_time <= 0:
 		queue_free()
+
+func set_speed_scale(speed_scale: float):
+	_speed_scale = speed_scale

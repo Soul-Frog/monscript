@@ -2,14 +2,18 @@ class_name BattleAnimator extends Node2D
 
 signal animation_finished 
 
-var speed_scale = 1.0
+var _speed_scale = 1.0
+
+var current_fx = null
 
 func _play_fx(fx):
-	fx.speed_scale = speed_scale
+	current_fx = fx
+	fx.speed_scale = _speed_scale
 	add_child(fx)
 	fx.play()
 	await fx.animation_finished
 	fx.queue_free()
+	current_fx = null
 	remove_child(fx)
 
 func slash(mon):
@@ -24,3 +28,8 @@ func slash(mon):
 
 	#signal that animation is done
 	emit_signal("animation_finished")
+
+func set_speed_scale(speed_scale: float) -> void:
+	_speed_scale = speed_scale
+	if current_fx:
+		current_fx.speed_scale = speed_scale

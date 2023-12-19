@@ -1,7 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://0pfd6i8pcnc1"]
+[gd_scene load_steps=7 format=3 uid="uid://0pfd6i8pcnc1"]
 
 [ext_resource type="PackedScene" uid="uid://qd8gobfrvv8u" path="res://mons/mon.tscn" id="1_qiq4j"]
 [ext_resource type="Texture2D" uid="uid://bnex5y2itwgt8" path="res://assets/mons/gelif.png" id="2_6pysy"]
+[ext_resource type="Shader" path="res://mons/mon.gdshader" id="2_why67"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5qkea"]
+resource_local_to_scene = true
+shader = ExtResource("2_why67")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_modifier = 0.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4vobj"]
 animations = [{
@@ -20,6 +27,7 @@ size = Vector2(8.95572, 13.4467)
 [node name="Mon" instance=ExtResource("1_qiq4j")]
 
 [node name="Sprite" parent="." index="0"]
+material = SubResource("ShaderMaterial_5qkea")
 sprite_frames = SubResource("SpriteFrames_4vobj")
 
 [node name="CollisionHitbox" parent="." index="1"]
