@@ -6,6 +6,8 @@ signal speed_changed
 @onready var _run_button: SelectableButton = $Run
 @onready var _speedup_button: SelectableButton = $Speedup
 @onready var _pause_button: SelectableButton = $Pause
+@onready var _pause_filter = $PauseFilter
+@onready var _speedup_filter = $SpeedupFilter
 @onready var _pause_filter_fade: FadeDecorator = $PauseFilter/Fade
 @onready var _speedup_filter_fade: FadeDecorator = $SpeedUpFilter/Fade
 
@@ -29,6 +31,8 @@ func _ready():
 
 func reset():
 	_on_run_button_pressed()
+	_pause_filter.modulate.a = 0
+	_speedup_filter.modulate.a = 0
 
 func _on_run_button_pressed():
 	_on_button_pressed(_run_button)
