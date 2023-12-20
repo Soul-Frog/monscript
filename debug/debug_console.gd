@@ -119,7 +119,7 @@ func _on_text_submitted(txt):
 			BATTLE.add_child(load("res://battle/animator.tscn").instantiate())
 			# kill all the computer mons
 			for computer_mon in BATTLE.get_node("ComputerMons").get_children():
-				computer_mon.take_damage(88888888)
+				computer_mon.take_damage(88888888, MonData.DamageType.TYPELESS)
 	# loses a battle instantly
 	elif cmd == "losebattle" or cmd == "lose" or cmd == "l":
 		if main_scene.active_scene != main_scene.BATTLE:
@@ -137,7 +137,7 @@ func _on_text_submitted(txt):
 			BATTLE.add_child(load("res://battle/animator.tscn").instantiate())
 			# kill all the player mons
 			for player_mon in BATTLE.get_node("PlayerMons").get_children():
-				player_mon.take_damage(88888888)
+				player_mon.take_damage(88888888, MonData.DamageType.TYPELESS)
 	# in the overworld, warp to a new area
 	elif cmd == "warp":
 		if not args.size() >= 2:

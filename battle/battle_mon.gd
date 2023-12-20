@@ -199,7 +199,7 @@ func alert_turn_over() -> void:
 	# after taking an action, if inflicted with leak, take 5% health as damage
 	if statuses[Status.LEAK]:
 		battle_log.add_text("%s is leaking memory!" % battle_log.MON_NAME_PLACEHOLDER, self)
-		take_damage(max(ceil(max_health * 0.05), 1))
+		take_damage(max(ceil(max_health * 0.05), 1), MonData.DamageType.TYPELESS)
 		#todo - animate this better
 	
 	emit_signal("action_completed")
@@ -210,12 +210,15 @@ func is_defeated() -> bool:
 
 # apply an attack against this mon with a given attack value and damage multiplier
 # this function factors in defense and defending
-func apply_attack(attacker: BattleMon, multiplier: float) -> void:
+func apply_attack(attacker: BattleMon, multiplier: float, damage_type: MonData.DamageType) -> void:
 	# damage taken is ATK-DEF, to a minimum of 1
 	var damage_taken = max(attacker.get_attack() - get_defense(), 1)
 	
 	# increase damage taken by attack multiplier
 	damage_taken *= multiplier
+	
+	# now modify by resistances/weaknesses
+	damage_taken *= base_mon.get_damage_multiplier_for_type(damage_type)
 	
 	# if defending, reduce the damage taken by half
 	if is_defending:
@@ -226,17 +229,32 @@ func apply_attack(attacker: BattleMon, multiplier: float) -> void:
 	# example2: if our def stage is 4 and attacker's attack stage if -3, we reduce damage taken by a flat 7
 	damage_taken = max(damage_taken + attacker.atk_buff_stage - def_buff_stage, 1)
 	
-	take_damage(damage_taken)
+	take_damage(damage_taken, damage_type)
 
 # deal an absolute amount of damage to a mon
 # ignores defense and defending
 # generally, don't call this directly in attack blocks, call apply_attack instead
-func take_damage(damage_taken: int) -> void:
+func take_damage(damage_taken: int, damage_type: MonData.DamageType) -> void:
 	current_health -= damage_taken
 	current_health = max(current_health, 0);
 	emit_signal("health_or_ap_changed")
 	
-	battle_log.add_text("%s took %d damage!" % [battle_log.MON_NAME_PLACEHOLDER, damage_taken], self)
+	var log_message = "%s took %d %sdamage!"
+	if base_mon.get_damage_multiplier_for_type(damage_type) > 1:
+		log_message = "%s took %d %sdamage! Super effective!"
+	elif base_mon.get_damage_multiplier_for_type(damage_type) < 1:
+		log_message = "%s took %d %sdamage! Not very effective!"
+	
+	var type_str = ""
+	match(damage_type):
+		MonData.DamageType.HEAT:
+			type_str = "Heat "
+		MonData.DamageType.CHILL:
+			type_str = "Chill "
+		MonData.DamageType.VOLT:
+			type_str = "Volt "
+	
+	battle_log.add_text(log_message % [battle_log.MON_NAME_PLACEHOLDER, damage_taken, type_str], self)
 	
 	# make text effect
 	self.add_child(
@@ -244,19 +262,17 @@ func take_damage(damage_taken: int) -> void:
 		.tx(damage_taken).direction_up().speed(40).time(0.2).color(Global.COLOR_RED))
 		
 	# make the damaged mon shake
-	shake_animation_player.speed_scale = _speed_scale #TODODO
 	if shake_animation_player.current_animation == "shake":
 		shake_animation_player.seek(0) #restart shake
 	shake_animation_player.play("shake")
 	
-	flash_animation_player.speed_scale = _speed_scale #TODODO
+	# TODO - make mon glow red or something for a sec
+	# when taking fire damage, glow redder; chill glow blue, volt glow yellow; white on normal damage?
 	if flash_animation_player.current_animation == "flash_white":
 		flash_animation_player.seek(0)
 	flash_animation_player.play("flash_white")
-	
-	# TODO - make mon glow red or something for a sec
-	# when taking fire damage, glow redder; chill glow blue, volt glow yellow; white on normal damage?
-	
+
+	# TODO ANIMATE DEFEAT (maybe we await on a tween in zero_health or something)
 	if current_health == 0:
 		action_points = 0.0
 		emit_signal("zero_health", self)
