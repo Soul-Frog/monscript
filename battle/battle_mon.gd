@@ -222,16 +222,25 @@ func apply_attack(attacker: BattleMon, multiplier: float, damage_type: MonData.D
 	
 	# if defending, reduce the damage taken by half
 	if is_defending:
-		damage_taken /= 2
+		damage_taken /= 2.0
 		
 	# apply an additional constant modifier based on defense buff stage and attacker attack stage;
 	# example: if our def stage is -1 and attacker's attack stage is 4, we take an additional flat 3 damage
 	# example2: if our def stage is 4 and attacker's attack stage if -3, we reduce damage taken by a flat 7
-	damage_taken = max(damage_taken + attacker.atk_buff_stage - def_buff_stage, 1)
+	damage_taken += attacker.atk_buff_stage - def_buff_stage
+	
+	# apply a further flat bonus/deduction for hitting a weakness/resist
+	if base_mon.get_damage_multiplier_for_type(damage_type) > 1:
+		damage_taken += 1 # add a further flat bonus when striking a weakness
+	elif base_mon.get_damage_multiplier_for_type(damage_type) < 1:
+		damage_taken -= 1 # add a further flat bonus when striking a weakness
+	
+	# deal a minimum of 1 damage
+	damage_taken = max(damage_taken, 1)
 	
 	take_damage(damage_taken, damage_type)
 
-# deal an absolute amount of damage to a mon
+# deals damage to a mon
 # ignores defense and defending
 # generally, don't call this directly in attack blocks, call apply_attack instead
 func take_damage(damage_taken: int, damage_type: MonData.DamageType) -> void:
@@ -239,38 +248,43 @@ func take_damage(damage_taken: int, damage_type: MonData.DamageType) -> void:
 	current_health = max(current_health, 0);
 	emit_signal("health_or_ap_changed")
 	
+	var type_str = ""
+	var damage_color = Global.COLOR_WHITE
+	var flash_color = "white"
+	match(damage_type):
+		MonData.DamageType.HEAT:
+			type_str = "Heat "
+			damage_color = Global.COLOR_RED
+			flash_color = "red"
+		MonData.DamageType.CHILL:
+			type_str = "Chill "
+			damage_color = Global.COLOR_LIGHT_BLUE
+			flash_color = "blue"
+		MonData.DamageType.VOLT:
+			type_str = "Volt "
+			damage_color = Global.COLOR_YELLOW
+			flash_color = "yellow"
+	
 	var log_message = "%s took %d %sdamage!"
 	if base_mon.get_damage_multiplier_for_type(damage_type) > 1:
 		log_message = "%s took %d %sdamage! Super effective!"
 	elif base_mon.get_damage_multiplier_for_type(damage_type) < 1:
 		log_message = "%s took %d %sdamage! Not very effective!"
 	
-	var type_str = ""
-	match(damage_type):
-		MonData.DamageType.HEAT:
-			type_str = "Heat "
-		MonData.DamageType.CHILL:
-			type_str = "Chill "
-		MonData.DamageType.VOLT:
-			type_str = "Volt "
-	
 	battle_log.add_text(log_message % [battle_log.MON_NAME_PLACEHOLDER, damage_taken, type_str], self)
 	
 	# make text effect
 	self.add_child(
 		MOVING_TEXT_SCENE.instantiate()
-		.tx(damage_taken).direction_up().speed(40).time(0.2).color(Global.COLOR_RED))
+		.tx(damage_taken).direction_up().speed(20).time(0.5).color(damage_color))
 		
-	# make the damaged mon shake
-	if shake_animation_player.current_animation == "shake":
-		shake_animation_player.seek(0) #restart shake
+	# make the damaged mon shake a bit
+	shake_animation_player.seek(0) #restart shake
 	shake_animation_player.play("shake")
 	
-	# TODO - make mon glow red or something for a sec
-	# when taking fire damage, glow redder; chill glow blue, volt glow yellow; white on normal damage?
-	if flash_animation_player.current_animation == "flash_white":
-		flash_animation_player.seek(0)
-	flash_animation_player.play("flash_white")
+	# flash color based on the type of damage taken
+	flash_animation_player.seek(0)
+	flash_animation_player.play("flash_%s" % flash_color)
 
 	# TODO ANIMATE DEFEAT (maybe we await on a tween in zero_health or something)
 	if current_health == 0:
