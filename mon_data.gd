@@ -4,7 +4,10 @@
 extends Node
 
 enum DamageType {
-	NORMAL, HEAT, CHILL, VOLT, TYPELESS
+	NORMAL, 
+	HEAT, CHILL, VOLT, 
+	TYPELESS, 
+	LEAK
 }
 
 const MIN_LEVEL: int = 0
@@ -65,6 +68,7 @@ class MonBase:
 		self._damage_type_multipliers[DamageType.CHILL] = chill_damage_mult
 		self._damage_type_multipliers[DamageType.VOLT] = volt_damage_mult
 		self._damage_type_multipliers[DamageType.TYPELESS] = 1.0
+		self._damage_type_multipliers[DamageType.LEAK] = 1.0
 	
 	# functions to determine a mon's stat value for a given level
 	func health_for_level(level: int) -> int:

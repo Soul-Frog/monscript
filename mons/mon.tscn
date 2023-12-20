@@ -59,6 +59,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_lrwew"]
 resource_name = "flash_blue"
+length = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -68,7 +69,7 @@ tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
+"update": 0,
 "values": [Color(0.254902, 0.745098, 1, 1)]
 }
 tracks/1/type = "value"
@@ -78,7 +79,7 @@ tracks/1/path = NodePath("Sprite:material:shader_parameter/flash_modifier")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2),
+"times": PackedFloat32Array(0, 0.25),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [1.0, 0.0]
@@ -86,6 +87,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_u4wse"]
 resource_name = "flash_green"
+length = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -105,7 +107,7 @@ tracks/1/path = NodePath("Sprite:material:shader_parameter/flash_modifier")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1),
+"times": PackedFloat32Array(0, 0.25),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [1.0, 0.0]
@@ -113,6 +115,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_oadgs"]
 resource_name = "flash_purple"
+length = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -132,7 +135,7 @@ tracks/1/path = NodePath("Sprite:material:shader_parameter/flash_modifier")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1),
+"times": PackedFloat32Array(0, 0.25),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [1.0, 0.0]
@@ -140,6 +143,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_8fc25"]
 resource_name = "flash_red"
+length = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -159,7 +163,7 @@ tracks/1/path = NodePath("Sprite:material:shader_parameter/flash_modifier")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1),
+"times": PackedFloat32Array(0, 0.25),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [1.0, 0.0]
@@ -167,7 +171,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_pbjxt"]
 resource_name = "flash_white"
-length = 0.2
+length = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -175,9 +179,9 @@ tracks/0/path = NodePath("Sprite:material:shader_parameter/flash_modifier")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
+"times": PackedFloat32Array(0, 0.25),
 "transitions": PackedFloat32Array(1, 1),
-"update": 1,
+"update": 0,
 "values": [1.0, 0.0]
 }
 tracks/1/type = "value"
@@ -195,6 +199,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_44i34"]
 resource_name = "flash_yellow"
+length = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -214,7 +219,7 @@ tracks/1/path = NodePath("Sprite:material:shader_parameter/flash_modifier")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1),
+"times": PackedFloat32Array(0, 0.25),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [1.0, 0.0]

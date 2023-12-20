@@ -199,8 +199,7 @@ func alert_turn_over() -> void:
 	# after taking an action, if inflicted with leak, take 5% health as damage
 	if statuses[Status.LEAK]:
 		battle_log.add_text("%s is leaking memory!" % battle_log.MON_NAME_PLACEHOLDER, self)
-		take_damage(max(ceil(max_health * 0.05), 1), MonData.DamageType.TYPELESS)
-		#todo - animate this better
+		take_damage(max(ceil(max_health * 0.05), 1), MonData.DamageType.LEAK)
 	
 	emit_signal("action_completed")
 
@@ -264,6 +263,9 @@ func take_damage(damage_taken: int, damage_type: MonData.DamageType) -> void:
 			type_str = "Volt "
 			damage_color = Global.COLOR_YELLOW
 			flash_color = "yellow"
+		MonData.DamageType.LEAK:
+			damage_color = Global.COLOR_PURPLE
+			flash_color = "purple"
 	
 	var log_message = "%s took %d %sdamage!"
 	if base_mon.get_damage_multiplier_for_type(damage_type) > 1:
@@ -276,20 +278,23 @@ func take_damage(damage_taken: int, damage_type: MonData.DamageType) -> void:
 	# make text effect
 	self.add_child(
 		MOVING_TEXT_SCENE.instantiate()
-		.tx(damage_taken).direction_up().speed(20).time(0.5).color(damage_color))
+		.tx(damage_taken).direction_up().speed(15).time(0.7).color(damage_color))
 		
-	# make the damaged mon shake a bit
-	shake_animation_player.seek(0) #restart shake
-	shake_animation_player.play("shake")
+	shake() # make the damaged mon shake a bit
+	flash(flash_color) # flash color based on the type of damage taken
 	
-	# flash color based on the type of damage taken
-	flash_animation_player.seek(0)
-	flash_animation_player.play("flash_%s" % flash_color)
-
 	# TODO ANIMATE DEFEAT (maybe we await on a tween in zero_health or something)
 	if current_health == 0:
 		action_points = 0.0
 		emit_signal("zero_health", self)
+
+func shake() -> void:
+	shake_animation_player.seek(0) #restart shake
+	shake_animation_player.play("shake")
+
+func flash(color: String) -> void:
+	flash_animation_player.seek(0)
+	flash_animation_player.play("flash_%s" % color)
 
 func heal_damage(heal: int) -> void:
 	var heal_amt = heal
@@ -304,9 +309,11 @@ func heal_damage(heal: int) -> void:
 	# make text effect
 	self.add_child(
 		MOVING_TEXT_SCENE.instantiate()
-		.tx(heal_amt).direction_up().speed(40).time(0.2).color(Global.COLOR_GREEN))
+		.tx(heal_amt).direction_up().speed(15).time(0.7).color(Global.COLOR_GREEN))
 	
-	# TODO - make self glow green or something for a sec
+	# make self glow green for a sec
+	flash_animation_player.seek(0)
+	flash_animation_player.play("flash_green")
 
 func inflict_status(status: Status) -> void:
 	# only display inflicted message if don't actually have this status
@@ -314,6 +321,7 @@ func inflict_status(status: Status) -> void:
 		Status.LEAK:
 			if not statuses[status]:
 				battle_log.add_text("%s is suffering from a memory leak!" % battle_log.MON_NAME_PLACEHOLDER, self)
+				flash("purple")
 				emit_signal("status_changed", status, true)
 			else:
 				battle_log.add_text("%s is already leaking memory!" % battle_log.MON_NAME_PLACEHOLDER, self)
@@ -327,8 +335,6 @@ func inflict_status(status: Status) -> void:
 			assert(false, "No message for status!")
 			
 	statuses[status] = true
-	
-	# todo - play some effect here
 
 func heal_status(status: Status) -> void:
 	# only display 'healed status!' message if we actually had that status

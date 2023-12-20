@@ -18,6 +18,7 @@ const COLOR_GREEN = Color(20.0/255.0, 160.0/255.0, 46.0/255.0)
 const COLOR_RED = Color.RED
 const COLOR_DARK_RED = Color.DARK_RED
 const COLOR_LIGHT_BLUE = Color.SKY_BLUE
+const COLOR_PURPLE = Color.MEDIUM_PURPLE
 
 # turns various debug functionality on and off
 var DEBUG_DRAW = false # Draw additional debug shapes through DebugTool
