@@ -187,7 +187,6 @@ func alert_turn_over() -> void:
 		action_points = 0.0
 	reset_AP_after_action = true
 	
-	
 	var tween = create_tween()
 	active_tweens.append(tween)
 	tween.tween_property(self, "position:x", position.x - (20 if team == Battle.Team.PLAYER else -20), 0.4).set_trans(Tween.TRANS_CUBIC)

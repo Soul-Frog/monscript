@@ -7,7 +7,7 @@
 script = ExtResource("1_e7qq1")
 
 [node name="Background" type="NinePatchRect" parent="."]
-offset_right = 154.0
+offset_right = 186.0
 offset_bottom = 44.0
 texture = ExtResource("1_cdhto")
 patch_margin_left = 3
@@ -18,7 +18,7 @@ patch_margin_bottom = 3
 [node name="Text" type="RichTextLabel" parent="."]
 offset_left = 4.0
 offset_top = 2.0
-offset_right = 151.0
+offset_right = 182.0
 offset_bottom = 41.0
 theme_override_font_sizes/normal_font_size = 12
 bbcode_enabled = true

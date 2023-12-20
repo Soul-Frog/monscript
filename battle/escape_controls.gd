@@ -8,7 +8,7 @@ signal escape_state_changed
 
 const TEXT_FORMAT = "[center]%s%s[/center]"
 const TEXT = "Attempting to escape"
-const MAX_DOTS = 6
+const MAX_DOTS = 3
 var _dots = 1
 
 func _ready():

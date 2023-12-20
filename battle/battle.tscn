@@ -308,7 +308,7 @@ layer_0/tile_data = PackedInt32Array(-262130, 1, 0, -262131, 11, 0, -196595, 1, 
 
 [node name="Log" parent="." groups=["battle_speed_scaled"] instance=ExtResource("16_ugd8u")]
 z_index = 100
-position = Vector2(84, 135)
+position = Vector2(67, 136)
 
 [node name="Background" type="ColorRect" parent="."]
 z_index = 2
@@ -413,7 +413,7 @@ toggleable = true
 [node name="Text" type="RichTextLabel" parent="EscapeControls"]
 modulate = Color(1, 1, 0.619608, 1)
 z_index = 100
-offset_left = 238.0
+offset_left = 252.0
 offset_top = 133.0
 offset_right = 320.0
 offset_bottom = 170.0
