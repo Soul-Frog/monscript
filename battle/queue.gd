@@ -81,6 +81,15 @@ func _get_next_six_mons(action_queue: Array, player_mons: Node2D, computer_mons:
 	
 	results.sort_custom(SORT)
 	
+	# iterate over results, delete any mon that is already in the action queue 
+	# (and has been added already to our queue)
+	# this fixes a bug where mons may show twice
+	for result in results:
+		if result.time_til_action == 0 and action_queue.has(result.mon):
+			results.erase(result)
+		if result.time_til_action != 0:
+			break
+	
 	# add 6 of these to the queue...
 	for i in range(0, 6):
 		queue.append(results[i].mon)
