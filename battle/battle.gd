@@ -52,10 +52,14 @@ var trying_to_escape = false
 
 @onready var _action_name_box = $ActionNameBox
 
+@onready var _mon_action_queue = $Queue
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	assert(_speed_controls)
 	assert(_action_name_box)
+	assert(_mon_action_queue)
 	assert($PlayerMons.get_children().size() == Global.MONS_PER_TEAM, "Wrong number of player placeholder positions!")
 	assert($ComputerMons.get_children().size() == Global.MONS_PER_TEAM, "Wrong number of computer placeholder positions!")
 	for placeholder in $PlayerMons.get_children():
@@ -151,6 +155,8 @@ func setup_battle(player_team, computer_team):
 	assert(not is_a_mon_taking_action)
 	state = BattleState.BATTLING
 	
+	_mon_action_queue.update_queue(action_queue, $PlayerMons, $ComputerMons)
+	
 	$Log.add_text("Executing battle!")
 
 # Should be called after a battle ends, before the next call to setup_battle
@@ -172,15 +178,16 @@ func clear_battle():
 func _process(delta: float):
 	assert(state == BattleState.BATTLING) 	# make sure battle was set up properly
 	
-	# let everyone update/action
-	# mons already in action queue are waiting to take a turn and 
-	# don't need to recieve updates
-	for player_mon in $PlayerMons.get_children():
-		if not player_mon in action_queue:
-			player_mon.battle_tick(delta)
-	for computer_mon in $ComputerMons.get_children():
-		if not computer_mon in action_queue:
-			computer_mon.battle_tick(delta)
+	if not is_a_mon_taking_action: #TODO DO WE WANT THIS??? SATURDAY
+		# let everyone update/action
+		# mons already in action queue are waiting to take a turn and 
+		# don't need to recieve updates
+		for player_mon in $PlayerMons.get_children():
+			if not player_mon in action_queue:
+				player_mon.battle_tick(delta)
+		for computer_mon in $ComputerMons.get_children():
+			if not computer_mon in action_queue:
+				computer_mon.battle_tick(delta)
 	
 	# if no other mon is active, let the mon in front of queue take action
 	if not is_a_mon_taking_action and not action_queue.is_empty():
@@ -258,6 +265,7 @@ func _on_mon_action_completed():
 	assert(is_a_mon_taking_action)
 	action_queue.remove_at(0)
 	is_a_mon_taking_action = false
+	_mon_action_queue.update_queue(action_queue, $PlayerMons, $ComputerMons)
 
 func _on_mon_zero_health(mon):
 	assert(state == BattleState.BATTLING)

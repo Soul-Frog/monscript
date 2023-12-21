@@ -327,7 +327,7 @@ var DO_BLOCK_LIST := [
 			var rand_target = Global.choose_one(foes)
 			animator.slash(rand_target) #todo - animation
 			await animator.animation_finished
-			rand_target.apply_attack(mon, 0.25)
+			rand_target.apply_attack(mon, 0.25, MonData.DamageType.NORMAL)
 			
 			# if we killed the target, don't let it be a target for future attacks
 			if rand_target.current_health == 0:

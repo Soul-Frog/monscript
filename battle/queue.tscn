@@ -1,0 +1,73 @@
+[gd_scene load_steps=5 format=3 uid="uid://c8wcyjwqiawd8"]
+
+[ext_resource type="Script" path="res://battle/queue.gd" id="1_o5w2p"]
+[ext_resource type="Texture2D" uid="uid://dk8uy8sfciri8" path="res://assets/ui/battle/queue.png" id="1_u3d8c"]
+[ext_resource type="Texture2D" uid="uid://bvyoaqbyxxe5l" path="res://assets/ui/battle/queue_background_block.png" id="2_e2iaj"]
+[ext_resource type="Texture2D" uid="uid://dos1wnic6bcd7" path="res://assets/mons/magnetfrog.png" id="3_l5jb8"]
+
+[node name="Queue" type="Node2D"]
+script = ExtResource("1_o5w2p")
+
+[node name="Frame" type="Sprite2D" parent="."]
+z_index = 2
+texture = ExtResource("1_u3d8c")
+centered = false
+
+[node name="Headshots" type="Node2D" parent="."]
+z_index = 1
+
+[node name="Headshot1" type="Sprite2D" parent="Headshots"]
+position = Vector2(4, 13)
+texture = ExtResource("3_l5jb8")
+centered = false
+
+[node name="Headshot2" type="Sprite2D" parent="Headshots"]
+position = Vector2(4, 32)
+texture = ExtResource("3_l5jb8")
+centered = false
+
+[node name="Headshot3" type="Sprite2D" parent="Headshots"]
+position = Vector2(4, 51)
+texture = ExtResource("3_l5jb8")
+centered = false
+
+[node name="Headshot4" type="Sprite2D" parent="Headshots"]
+position = Vector2(4, 70)
+texture = ExtResource("3_l5jb8")
+centered = false
+
+[node name="Headshot5" type="Sprite2D" parent="Headshots"]
+position = Vector2(4, 89)
+texture = ExtResource("3_l5jb8")
+centered = false
+
+[node name="Headshot6" type="Sprite2D" parent="Headshots"]
+position = Vector2(4, 108)
+texture = ExtResource("3_l5jb8")
+centered = false
+
+[node name="Backgrounds" type="Node2D" parent="."]
+
+[node name="BG1" type="Sprite2D" parent="Backgrounds"]
+position = Vector2(12, 21)
+texture = ExtResource("2_e2iaj")
+
+[node name="BG2" type="Sprite2D" parent="Backgrounds"]
+position = Vector2(12, 40)
+texture = ExtResource("2_e2iaj")
+
+[node name="BG3" type="Sprite2D" parent="Backgrounds"]
+position = Vector2(12, 59)
+texture = ExtResource("2_e2iaj")
+
+[node name="BG4" type="Sprite2D" parent="Backgrounds"]
+position = Vector2(12, 78)
+texture = ExtResource("2_e2iaj")
+
+[node name="BG5" type="Sprite2D" parent="Backgrounds"]
+position = Vector2(12, 97)
+texture = ExtResource("2_e2iaj")
+
+[node name="BG6" type="Sprite2D" parent="Backgrounds"]
+position = Vector2(12, 116)
+texture = ExtResource("2_e2iaj")

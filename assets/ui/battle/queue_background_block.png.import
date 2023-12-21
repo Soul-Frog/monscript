@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7khbitmyrpox"
-path="res://.godot/imported/queue_background.png-2cdf0b3df171dd28f6d19d1a60974a27.ctex"
+uid="uid://bvyoaqbyxxe5l"
+path="res://.godot/imported/queue_background_block.png-be25d637f6b792ed79ca745cfd1c11b1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/battle/queue_background.png"
-dest_files=["res://.godot/imported/queue_background.png-2cdf0b3df171dd28f6d19d1a60974a27.ctex"]
+source_file="res://assets/ui/battle/queue_background_block.png"
+dest_files=["res://.godot/imported/queue_background_block.png-be25d637f6b792ed79ca745cfd1c11b1.ctex"]
 
 [params]
 
