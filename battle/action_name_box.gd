@@ -18,13 +18,13 @@ func reset():
 	modulate.a = 0
 
 func make_visible():
-	var tween = create_tween() #TODODO
+	var tween = create_tween()
 	tween.set_speed_scale(_speed_scale)
 	tween.tween_property(self, "modulate:a", 1, 0.125)
 	_active_tweens.append(tween)
 
 func make_invisible():
-	var tween = create_tween() #TODODO
+	var tween = create_tween()
 	tween.set_speed_scale(_speed_scale)
 	tween.tween_property(self, "modulate:a", 0, 0.125)
 	_active_tweens.append(tween)
