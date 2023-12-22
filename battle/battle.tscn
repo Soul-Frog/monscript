@@ -308,8 +308,8 @@ layer_0/tile_data = PackedInt32Array(-262130, 1, 0, -262131, 11, 0, -196595, 1, 
 [node name="Animator" parent="." groups=["battle_speed_scaled"] instance=ExtResource("15_dus4q")]
 
 [node name="Log" parent="." groups=["battle_speed_scaled"] instance=ExtResource("16_ugd8u")]
-z_index = 100
-position = Vector2(67, 136)
+z_index = 1000
+position = Vector2(67, 135)
 
 [node name="Background" type="ColorRect" parent="."]
 z_index = 2

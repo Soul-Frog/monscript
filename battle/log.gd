@@ -1,15 +1,19 @@
 class_name BattleLog
 extends Node2D
 
+@onready var background = $Background
 @onready var text = $Text
 @onready var scroll_bar = text.get_v_scroll_bar()
 @onready var click_blocker = $ClickBlocker
+@onready var expand_button = $Expand
 
 const _TEXT_SPEED_DELTA := 130.0
 var _visible_characters := 0.0
 
 const _AUTOSCROLL_SPEED := 50.0
 var _scroll_value := 0.0
+
+const _GROWTH_AMOUNT = 120
 
 const PLAYER_TEAM_COLOR: Color = Global.COLOR_GREEN
 const ENEMY_TEAM_COLOR: Color = Global.COLOR_RED
@@ -19,21 +23,26 @@ const MON_NAME_PLACEHOLDER = "[MONNAME]"
 var _speed_scale = 1.0
 
 var _scrollable = false
+var _expanded = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	assert(text)
 	clear()
 
-func make_scrollable():
+func make_scrollable_and_expandable():
 	scroll_bar.modulate.a = 1
 	click_blocker.hide()
 	_scrollable = true
+	expand_button.show()
 
-func make_unscrollable():
+func make_unscrollable_and_unexpandable():
 	scroll_bar.modulate.a = 0
 	click_blocker.show()
 	_scrollable = false
+	expand_button.hide()
+	if _expanded: # if expanded, shrink back down to normal
+		_on_expand_pressed()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(unscaled_delta):
@@ -65,7 +74,26 @@ func clear() -> void:
 	text.get_v_scroll_bar().value = 0
 	_visible_characters = 0
 	_scroll_value = 0
-	make_unscrollable()
+	make_unscrollable_and_unexpandable()
+	expand_button.hide()
+	if _expanded: # if expanded, shrink back down to normal
+		_on_expand_pressed()
 
 func set_speed_scale(speed_scale: float) -> void:
 	_speed_scale = speed_scale
+
+func _on_expand_pressed():
+	if _expanded:
+		_move_and_resize(-_GROWTH_AMOUNT)
+	else:
+		_move_and_resize(_GROWTH_AMOUNT)
+	_expanded = not _expanded
+
+func _move_and_resize(amount: int):
+	background.size.y += amount
+	background.position.y -= amount
+	click_blocker.size.y += amount
+	click_blocker.position.y -= amount
+	text.size.y += amount
+	text.position.y -= amount
+	expand_button.position.y -= amount

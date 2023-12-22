@@ -168,8 +168,8 @@ func take_action(friends: Array, foes: Array, animator: BattleAnimator, escaping
 	# move forward,
 	var tween = create_tween()
 	active_tweens.append(tween)
-	tween.tween_property(self, "position:x", position.x + (20 if team == Battle.Team.PLAYER else -20), 0.4).set_trans(Tween.TRANS_CUBIC)
-	# thenh tell our script to go ahead and execute an action
+	tween.tween_property(self, "position:x", position.x + (25 if team == Battle.Team.PLAYER else -25), 0.4).set_trans(Tween.TRANS_CUBIC)
+	# then tell our script to go ahead and execute an action
 	tween.tween_callback(execute_script.bind(friends, foes, animator, escaping))
 	tween.set_speed_scale(_speed_scale)
 
@@ -189,10 +189,9 @@ func alert_turn_over() -> void:
 	
 	var tween = create_tween()
 	active_tweens.append(tween)
-	tween.tween_property(self, "position:x", position.x - (20 if team == Battle.Team.PLAYER else -20), 0.4).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(self, "position:x", position.x - (25 if team == Battle.Team.PLAYER else -25), 0.4).set_trans(Tween.TRANS_CUBIC)
 	tween.set_speed_scale(_speed_scale)
 	await tween.finished
-	await Global.delay(0.25)
 	action_name_box.make_invisible()
 	
 	# after taking an action, if inflicted with leak, take 5% health as damage

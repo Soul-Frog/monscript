@@ -27,7 +27,7 @@ enum Speed {
 }
 var _speed_to_speed = {
 	Speed.NORMAL : 1.0,
-	Speed.SPEEDUP : 3.0,
+	Speed.SPEEDUP : 5.0,
 	Speed.PAUSE : 0.0
 }
 @onready var _speed_controls = $SpeedControls
@@ -321,9 +321,9 @@ func _on_speed_changed():
 		
 		# if we paused, make the log scrollable, otherwise make it unscrollable again
 		if new_speed == 0:
-			$Log.make_scrollable()
+			$Log.make_scrollable_and_expandable()
 		else:
-			$Log.make_unscrollable()
+			$Log.make_unscrollable_and_unexpandable()
 
 func _on_escape_state_changed(is_escaping: bool):
 	trying_to_escape = is_escaping

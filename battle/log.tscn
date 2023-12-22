@@ -32,3 +32,11 @@ visible_characters_behavior = 1
 offset_right = 185.0
 offset_bottom = 43.0
 color = Color(1, 1, 1, 0)
+
+[node name="Expand" type="Button" parent="."]
+offset_left = 171.0
+offset_top = -12.0
+offset_right = 185.0
+offset_bottom = 1.0
+
+[connection signal="pressed" from="Expand" to="." method="_on_expand_pressed"]
