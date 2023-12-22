@@ -18,13 +18,17 @@ patch_margin_bottom = 3
 [node name="Text" type="RichTextLabel" parent="."]
 offset_left = 4.0
 offset_top = 2.0
-offset_right = 182.0
-offset_bottom = 41.0
+offset_right = 184.0
+offset_bottom = 42.0
 theme_override_font_sizes/normal_font_size = 12
 bbcode_enabled = true
 text = "[color=green]Line1![/color]
 Line2!
 Line3!
 Stingarray"
-scroll_active = false
 visible_characters_behavior = 1
+
+[node name="ClickBlocker" type="ColorRect" parent="."]
+offset_right = 185.0
+offset_bottom = 43.0
+color = Color(1, 1, 1, 0)

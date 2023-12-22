@@ -315,6 +315,7 @@ position = Vector2(67, 136)
 z_index = 2
 offset_right = 320.0
 offset_bottom = 180.0
+mouse_filter = 2
 color = Color(0.188235, 0.882353, 1, 1)
 
 [node name="SpeedControls" type="Node2D" parent="."]

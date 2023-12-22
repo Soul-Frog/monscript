@@ -2,6 +2,8 @@ class_name BattleLog
 extends Node2D
 
 @onready var text = $Text
+@onready var scroll_bar = text.get_v_scroll_bar()
+@onready var click_blocker = $ClickBlocker
 
 const _TEXT_SPEED_DELTA := 130.0
 var _visible_characters := 0.0
@@ -16,10 +18,22 @@ const MON_NAME_PLACEHOLDER = "[MONNAME]"
 
 var _speed_scale = 1.0
 
+var _scrollable = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	assert(text)
 	clear()
+
+func make_scrollable():
+	scroll_bar.modulate.a = 1
+	click_blocker.hide()
+	_scrollable = true
+
+func make_unscrollable():
+	scroll_bar.modulate.a = 0
+	click_blocker.show()
+	_scrollable = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(unscaled_delta):
@@ -31,8 +45,7 @@ func _process(unscaled_delta):
 		text.visible_characters = int(_visible_characters)
 	
 	# smoothly scroll when new lines are added to bottom of log
-	var scroll_bar: VScrollBar = text.get_v_scroll_bar()
-	if _scroll_value < scroll_bar.max_value - scroll_bar.page:
+	if _scroll_value < scroll_bar.max_value - scroll_bar.page and not _scrollable:
 		_scroll_value = min(_scroll_value + (delta * _AUTOSCROLL_SPEED), scroll_bar.max_value - scroll_bar.page)
 		scroll_bar.value = int(_scroll_value)
 
@@ -52,6 +65,7 @@ func clear() -> void:
 	text.get_v_scroll_bar().value = 0
 	_visible_characters = 0
 	_scroll_value = 0
+	make_unscrollable()
 
 func set_speed_scale(speed_scale: float) -> void:
 	_speed_scale = speed_scale

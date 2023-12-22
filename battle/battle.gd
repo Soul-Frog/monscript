@@ -314,8 +314,16 @@ func _check_battle_end_condition():
 
 func _on_speed_changed():
 	if is_inside_tree():
+		var new_speed = _speed_to_speed[_speed_controls.speed]
+		
 		for node in get_tree().get_nodes_in_group("battle_speed_scaled"):
-			node.set_speed_scale(_speed_to_speed[_speed_controls.speed])
+			node.set_speed_scale(new_speed)
+		
+		# if we paused, make the log scrollable, otherwise make it unscrollable again
+		if new_speed == 0:
+			$Log.make_scrollable()
+		else:
+			$Log.make_unscrollable()
 
 func _on_escape_state_changed(is_escaping: bool):
 	trying_to_escape = is_escaping
