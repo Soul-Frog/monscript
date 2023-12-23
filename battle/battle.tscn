@@ -469,10 +469,6 @@ z_index = 101
 position = Vector2(1, 1)
 
 [connection signal="speed_changed" from="SpeedControls" to="." method="_on_speed_changed"]
-[connection signal="pressed" from="SpeedControls/Run" to="SpeedControls/Run" method="_on_pressed"]
-[connection signal="pressed" from="SpeedControls/Speedup" to="SpeedControls/Speedup" method="_on_pressed"]
-[connection signal="pressed" from="SpeedControls/Pause" to="SpeedControls/Pause" method="_on_pressed"]
 [connection signal="escape_state_changed" from="EscapeControls" to="." method="_on_escape_state_changed"]
-[connection signal="pressed" from="EscapeControls/Button" to="EscapeControls/Button" method="_on_pressed"]
 [connection signal="state_changed" from="EscapeControls/Button" to="EscapeControls" method="_on_escape_state_changed"]
 [connection signal="timeout" from="EscapeControls/DotTimer" to="EscapeControls" method="_on_dot_timer_timeout"]

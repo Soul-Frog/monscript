@@ -13,12 +13,12 @@ signal state_changed
 var _default_state
 @export var toggleable = false # if this button can be toggled between states (or if it just goes from unselected->selected)
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	assert(texture_selected)
 	assert(texture_selected_hover)
 	assert(texture_unselected)
 	assert(texture_selected)
+	self.pressed.connect(_on_pressed)
 	_default_state = selected
 	_update_textures()
 

@@ -5,7 +5,7 @@ extends Node2D
 @onready var text = $Text
 @onready var scroll_bar = text.get_v_scroll_bar()
 @onready var click_blocker = $ClickBlocker
-@onready var expand_button = $Expand
+@onready var expand_button = $ExpandButton
 
 const _TEXT_SPEED_DELTA := 130.0
 var _visible_characters := 0.0
@@ -23,11 +23,13 @@ const MON_NAME_PLACEHOLDER = "[MONNAME]"
 var _speed_scale = 1.0
 
 var _scrollable = false
-var _expanded = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	assert(background)
 	assert(text)
+	assert(click_blocker)
+	assert(expand_button)
 	clear()
 
 func make_scrollable_and_expandable():
@@ -41,8 +43,8 @@ func make_unscrollable_and_unexpandable():
 	click_blocker.show()
 	_scrollable = false
 	expand_button.hide()
-	if _expanded: # if expanded, shrink back down to normal
-		_on_expand_pressed()
+	if expand_button.selected: # if expanded, shrink back down to normal
+		expand_button.unselect()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(unscaled_delta):
@@ -76,18 +78,17 @@ func clear() -> void:
 	_scroll_value = 0
 	make_unscrollable_and_unexpandable()
 	expand_button.hide()
-	if _expanded: # if expanded, shrink back down to normal
-		_on_expand_pressed()
+	if expand_button.selected: # if expanded, shrink back down to normal
+		expand_button.unselect()
 
 func set_speed_scale(speed_scale: float) -> void:
 	_speed_scale = speed_scale
 
 func _on_expand_pressed():
-	if _expanded:
+	if not expand_button.selected:
 		_move_and_resize(-_GROWTH_AMOUNT)
 	else:
 		_move_and_resize(_GROWTH_AMOUNT)
-	_expanded = not _expanded
 
 func _move_and_resize(amount: int):
 	background.size.y += amount
