@@ -8,7 +8,7 @@ func make_battlemon() -> BattleMon:
 	var mon := MonData.create_mon(MonData.MonType.BITLEON, 5)
 	var bmon = load(MON_SCENE_PATH).instantiate()
 	bmon.set_script(BATTLE_MON_SCRIPT)
-	bmon.init_mon(mon)
+	bmon.init_mon(mon, Battle.Team.PLAYER)
 	return bmon
 
 func test_make_battlemon():
@@ -22,11 +22,11 @@ func test_battle_tick():
 	var battlemon = make_battlemon()
 	battlemon.ready_to_take_action.connect(sigcounter.callback1)
 	
-	var speed = battlemon.speed
+	var speed = battlemon.get_speed()
 	var ctr = 0
 	
 	while ctr < battlemon.ACTION_POINTS_PER_TURN:
-		battlemon.battle_tick()
+		battlemon.battle_tick(1.0)
 		ctr += speed
 	
 	assert_eq(sigcounter.count(), 1)

@@ -411,6 +411,5 @@ var _ERROR_DO := Block.new(Block.Type.DO, "ERROR!!", Block.Type.NONE, "ERROR - d
 @warning_ignore("unused_private_class_variable")
 var _ESCAPE_DO := Block.new(Block.Type.DO, "Escape", Block.Type.NONE, "Attempt to escape the battle. Chance of success depends on SPEED.",
 func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, action_name_box: BattleActionNameBox, animator: BattleAnimator) -> void:
-	battle_log.add_text("%s tried to escape!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 	mon.emit_signal("try_to_escape", mon)
 )
