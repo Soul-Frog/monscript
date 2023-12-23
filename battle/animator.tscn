@@ -3,5 +3,5 @@
 [ext_resource type="Script" path="res://battle/animator.gd" id="1_dv72t"]
 
 [node name="Animator" type="Node2D"]
-z_index = 3999
+z_index = 499
 script = ExtResource("1_dv72t")

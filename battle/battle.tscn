@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://dtpehdp2rfsuh"]
+[gd_scene load_steps=74 format=3 uid="uid://dtpehdp2rfsuh"]
 
 [ext_resource type="Script" path="res://battle/battle.gd" id="1_85t5n"]
 [ext_resource type="Texture2D" uid="uid://bklubekxfne1h" path="res://assets/isometric/tilemap/tile-test.png" id="1_cm50e"]
@@ -50,6 +50,7 @@
 [ext_resource type="Script" path="res://battle/action_name_box.gd" id="47_yq6eb"]
 [ext_resource type="Theme" uid="uid://612i0h3ltb6t" path="res://monscript_theme.tres" id="49_cid02"]
 [ext_resource type="PackedScene" uid="uid://c8wcyjwqiawd8" path="res://battle/queue.tscn" id="50_q1kk0"]
+[ext_resource type="Texture2D" uid="uid://bv52a7doqfsck" path="res://assets/isometric/cave_isometric.png" id="51_4fgx1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_on0ph"]
 shader = ExtResource("17_f5gwn")
@@ -296,6 +297,7 @@ collision_mask = 1
 safe_margin = 0.08
 
 [node name="TileMap" type="TileMap" parent="."]
+visible = false
 z_index = 20
 z_as_relative = false
 y_sort_enabled = true
@@ -316,7 +318,7 @@ z_index = 2
 offset_right = 320.0
 offset_bottom = 180.0
 mouse_filter = 2
-color = Color(0.188235, 0.882353, 1, 1)
+color = Color(0.603922, 0.513726, 0.490196, 1)
 
 [node name="SpeedControls" type="Node2D" parent="."]
 z_index = 100
@@ -467,6 +469,11 @@ autowrap_mode = 0
 [node name="Queue" parent="." instance=ExtResource("50_q1kk0")]
 z_index = 101
 position = Vector2(1, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 20
+texture = ExtResource("51_4fgx1")
+centered = false
 
 [connection signal="speed_changed" from="SpeedControls" to="." method="_on_speed_changed"]
 [connection signal="escape_state_changed" from="EscapeControls" to="." method="_on_escape_state_changed"]

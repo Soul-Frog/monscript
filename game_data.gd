@@ -159,6 +159,10 @@ func save_game():
 	for i in storage.size():
 		save_dict["storage_mon_%d" % i] = storage[i].to_json() if storage[i] != null else "[STORAGENULL]"
 	
+	# save the compilation progress of each mon
+	for mon in compilation_progress_per_mon.keys():
+		save_dict["compilation_progress_for_%s" % mon] = compilation_progress_per_mon[mon]
+	
 	# convert to json
 	var json = JSON.stringify(save_dict)
 	
@@ -180,7 +184,8 @@ func load_game():
 	
 	# read back each flag
 	for var_key in save_dict.keys():
-		_variables[var_key] = save_dict[var_key]
+		if _variables.has(var_key):
+			_variables[var_key] = save_dict[var_key]
 	
 	# increase the storage size based on the number of pages
 	increase_storage_size(_variables[STORAGE_PAGES])
@@ -194,6 +199,12 @@ func load_game():
 	for i in storage.size():
 		var mon_str = save_dict["storage_mon_%d" % i]
 		storage[i] = MonData.mon_from_json(mon_str) if mon_str != "[STORAGENULL]" else null
+	
+	# read back the compilation progress of each mon
+	for mon in compilation_progress_per_mon:
+		var key = "compilation_progress_for_%s" % mon
+		if save_dict.has(key):
+			compilation_progress_per_mon[key] = save_dict[key]
 	
 	# set the player's position and area
 	Events.area_changed.emit(save_dict["current_area"], Vector2(save_dict["player_x"], save_dict["player_y"]), true)
