@@ -1,20 +1,39 @@
-[gd_scene load_steps=6 format=3 uid="uid://b5sx3ehv6u6ks"]
+[gd_scene load_steps=9 format=3 uid="uid://b5sx3ehv6u6ks"]
 
 [ext_resource type="PackedScene" uid="uid://qd8gobfrvv8u" path="res://mons/mon.tscn" id="1_3r1rt"]
+[ext_resource type="Shader" path="res://mons/mon.gdshader" id="2_ctejv"]
 [ext_resource type="Texture2D" uid="uid://crvccvbiw0w6i" path="res://assets/mons/pascalican.png" id="2_khsus"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_widuq"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_px6cw"]
+resource_local_to_scene = true
+shader = ExtResource("2_ctejv")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_modifier = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1goep"]
 atlas = ExtResource("2_khsus")
-region = Rect2(32, 0, 32, 32)
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_om2ml"]
+atlas = ExtResource("2_khsus")
+region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_pbs50"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_widuq")
+"texture": SubResource("AtlasTexture_1goep")
 }],
 "loop": true,
 "name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_om2ml")
+}],
+"loop": true,
+"name": &"headshot",
 "speed": 5.0
 }]
 
@@ -24,6 +43,7 @@ size = Vector2(11, 19)
 [node name="Mon" instance=ExtResource("1_3r1rt")]
 
 [node name="Sprite" parent="." index="0"]
+material = SubResource("ShaderMaterial_px6cw")
 sprite_frames = SubResource("SpriteFrames_pbs50")
 
 [node name="CollisionHitbox" parent="." index="1"]

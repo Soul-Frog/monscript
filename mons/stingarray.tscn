@@ -1,9 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://b1udhcbvv01om"]
+[gd_scene load_steps=9 format=3 uid="uid://b1udhcbvv01om"]
 
 [ext_resource type="PackedScene" uid="uid://qd8gobfrvv8u" path="res://mons/mon.tscn" id="1_jy5re"]
 [ext_resource type="Texture2D" uid="uid://cuhtrqefjsuhu" path="res://assets/mons/stingarray.png" id="2_6ilkj"]
+[ext_resource type="Shader" path="res://mons/mon.gdshader" id="2_dhq1x"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_urbit"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2357x"]
+resource_local_to_scene = true
+shader = ExtResource("2_dhq1x")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_modifier = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qfqm1"]
+atlas = ExtResource("2_6ilkj")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yksst"]
 atlas = ExtResource("2_6ilkj")
 region = Rect2(0, 0, 32, 32)
 
@@ -11,10 +22,18 @@ region = Rect2(0, 0, 32, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_urbit")
+"texture": SubResource("AtlasTexture_qfqm1")
 }],
 "loop": true,
 "name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yksst")
+}],
+"loop": true,
+"name": &"headshot",
 "speed": 5.0
 }]
 
@@ -24,7 +43,9 @@ size = Vector2(18, 11)
 [node name="Mon" instance=ExtResource("1_jy5re")]
 
 [node name="Sprite" parent="." index="0"]
+material = SubResource("ShaderMaterial_2357x")
 sprite_frames = SubResource("SpriteFrames_vx6k8")
+animation = &"headshot"
 
 [node name="CollisionHitbox" parent="." index="1"]
 position = Vector2(1, -0.5)

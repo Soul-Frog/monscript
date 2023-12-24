@@ -1,7 +1,14 @@
-[gd_scene load_steps=12 format=3 uid="uid://dm1epg70fkia2"]
+[gd_scene load_steps=15 format=3 uid="uid://dm1epg70fkia2"]
 
 [ext_resource type="PackedScene" uid="uid://qd8gobfrvv8u" path="res://mons/mon.tscn" id="1_vg63d"]
 [ext_resource type="Texture2D" uid="uid://ca5ih1flogtvs" path="res://assets/mons/orchin.png" id="2_sbhac"]
+[ext_resource type="Shader" path="res://mons/mon.gdshader" id="2_urot1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bgidk"]
+resource_local_to_scene = true
+shader = ExtResource("2_urot1")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_modifier = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_15tp5"]
 atlas = ExtResource("2_sbhac")
@@ -27,7 +34,11 @@ region = Rect2(160, 0, 32, 32)
 atlas = ExtResource("2_sbhac")
 region = Rect2(192, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gn4hh"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_lx83b"]
+atlas = ExtResource("2_sbhac")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2u3fb"]
 atlas = ExtResource("2_sbhac")
 region = Rect2(0, 0, 32, 32)
 
@@ -58,10 +69,18 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_gn4hh")
+"texture": SubResource("AtlasTexture_lx83b")
 }],
 "loop": true,
 "name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2u3fb")
+}],
+"loop": true,
+"name": &"headshot",
 "speed": 5.0
 }]
 
@@ -71,6 +90,7 @@ size = Vector2(10, 10)
 [node name="Mon" instance=ExtResource("1_vg63d")]
 
 [node name="Sprite" parent="." index="0"]
+material = SubResource("ShaderMaterial_bgidk")
 sprite_frames = SubResource("SpriteFrames_vn03o")
 
 [node name="CollisionHitbox" parent="." index="1"]

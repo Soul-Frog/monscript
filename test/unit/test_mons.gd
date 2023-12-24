@@ -29,3 +29,4 @@ func test_has_hitbox():
 func test_has_sprite():
 	for mon in mons:
 		assert_true(mon.get_texture() != null)
+		assert_true(mon.get_headshot() != null)

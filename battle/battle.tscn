@@ -4,9 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://bklubekxfne1h" path="res://assets/isometric/tilemap/tile-test.png" id="1_cm50e"]
 [ext_resource type="Script" path="res://decorators/fade_decorator.gd" id="2_cfdr2"]
 [ext_resource type="Texture2D" uid="uid://d3stk7g8144hl" path="res://assets/isometric/tilemap/tile-glitch-northeast.png" id="2_d1yi7"]
-[ext_resource type="PackedScene" uid="uid://dic4krsgbv40j" path="res://mons/magnetfrog.tscn" id="2_qhxpi"]
 [ext_resource type="Texture2D" uid="uid://oi4kcqckvfkc" path="res://assets/isometric/tilemap/tile-glitch-northwest.png" id="3_gqa8o"]
 [ext_resource type="Texture2D" uid="uid://ca80q2fnuqafx" path="res://assets/isometric/tilemap/tile-glitch-southeast.png" id="4_st34a"]
+[ext_resource type="PackedScene" uid="uid://bo77v3uohwvy1" path="res://mons/bitleon.tscn" id="5_a0vn4"]
 [ext_resource type="PackedScene" uid="uid://ds2pwty7e10tr" path="res://battle/monblock.tscn" id="5_fkqod"]
 [ext_resource type="Texture2D" uid="uid://bhaoya2y54e0b" path="res://assets/isometric/tilemap/tile-glitch-southwest.png" id="5_wfe3a"]
 [ext_resource type="Texture2D" uid="uid://be28uqbaoyvd6" path="res://assets/isometric/tilemap/tile-red.png" id="6_3rn4u"]
@@ -177,33 +177,17 @@ script = ExtResource("1_85t5n")
 [node name="PlayerMons" type="Node2D" parent="."]
 z_index = 30
 
-[node name="MONPLACEHOLDER1" parent="PlayerMons" instance=ExtResource("2_qhxpi")]
-z_index = 30
+[node name="MONPLACEHOLDER1" parent="PlayerMons" instance=ExtResource("5_a0vn4")]
 position = Vector2(120, 40)
-collision_layer = 1
-collision_mask = 1
-safe_margin = 0.08
 
-[node name="MONPLACEHOLDER2" parent="PlayerMons" instance=ExtResource("2_qhxpi")]
-z_index = 30
+[node name="MONPLACEHOLDER2" parent="PlayerMons" instance=ExtResource("5_a0vn4")]
 position = Vector2(120, 64)
-collision_layer = 1
-collision_mask = 1
-safe_margin = 0.08
 
-[node name="MONPLACEHOLDER3" parent="PlayerMons" instance=ExtResource("2_qhxpi")]
-z_index = 30
+[node name="MONPLACEHOLDER3" parent="PlayerMons" instance=ExtResource("5_a0vn4")]
 position = Vector2(120, 88)
-collision_layer = 1
-collision_mask = 1
-safe_margin = 0.08
 
-[node name="MONPLACEHOLDER4" parent="PlayerMons" instance=ExtResource("2_qhxpi")]
-z_index = 30
+[node name="MONPLACEHOLDER4" parent="PlayerMons" instance=ExtResource("5_a0vn4")]
 position = Vector2(120, 112)
-collision_layer = 1
-collision_mask = 1
-safe_margin = 0.08
 
 [node name="PlayerMonBlocks" type="Node2D" parent="."]
 
@@ -268,33 +252,17 @@ offset_bottom = 122.0
 [node name="ComputerMons" type="Node2D" parent="."]
 z_index = 30
 
-[node name="MONPLACEHOLDER1" parent="ComputerMons" instance=ExtResource("2_qhxpi")]
-z_index = 30
+[node name="MONPLACEHOLDER1" parent="ComputerMons" instance=ExtResource("5_a0vn4")]
 position = Vector2(200, 40)
-collision_layer = 1
-collision_mask = 1
-safe_margin = 0.08
 
-[node name="MONPLACEHOLDER2" parent="ComputerMons" instance=ExtResource("2_qhxpi")]
-z_index = 30
+[node name="MONPLACEHOLDER2" parent="ComputerMons" instance=ExtResource("5_a0vn4")]
 position = Vector2(200, 64)
-collision_layer = 1
-collision_mask = 1
-safe_margin = 0.08
 
-[node name="MONPLACEHOLDER3" parent="ComputerMons" instance=ExtResource("2_qhxpi")]
-z_index = 30
+[node name="MONPLACEHOLDER3" parent="ComputerMons" instance=ExtResource("5_a0vn4")]
 position = Vector2(200, 88)
-collision_layer = 1
-collision_mask = 1
-safe_margin = 0.08
 
-[node name="MONPLACEHOLDER4" parent="ComputerMons" instance=ExtResource("2_qhxpi")]
-z_index = 30
+[node name="MONPLACEHOLDER4" parent="ComputerMons" instance=ExtResource("5_a0vn4")]
 position = Vector2(200, 112)
-collision_layer = 1
-collision_mask = 1
-safe_margin = 0.08
 
 [node name="TileMap" type="TileMap" parent="."]
 visible = false

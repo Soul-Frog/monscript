@@ -1,13 +1,24 @@
-[gd_scene load_steps=7 format=3 uid="uid://wu6230b30hb2"]
+[gd_scene load_steps=10 format=3 uid="uid://wu6230b30hb2"]
 
 [ext_resource type="PackedScene" uid="uid://qd8gobfrvv8u" path="res://mons/mon.tscn" id="1_p3nuy"]
+[ext_resource type="Shader" path="res://mons/mon.gdshader" id="2_egite"]
 [ext_resource type="Texture2D" uid="uid://4joln8glrm8s" path="res://assets/mons/anglerphish.png" id="2_ow0vo"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_63vg2"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uhjqb"]
+resource_local_to_scene = true
+shader = ExtResource("2_egite")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_modifier = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f7ov7"]
+atlas = ExtResource("2_ow0vo")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6cotg"]
 atlas = ExtResource("2_ow0vo")
 region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0he3d"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_h6j8l"]
 atlas = ExtResource("2_ow0vo")
 region = Rect2(0, 0, 32, 32)
 
@@ -15,7 +26,7 @@ region = Rect2(0, 0, 32, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_63vg2")
+"texture": SubResource("AtlasTexture_f7ov7")
 }],
 "loop": true,
 "name": &"angry",
@@ -23,10 +34,18 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_0he3d")
+"texture": SubResource("AtlasTexture_6cotg")
 }],
 "loop": true,
 "name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h6j8l")
+}],
+"loop": true,
+"name": &"headshot",
 "speed": 5.0
 }]
 
@@ -36,8 +55,9 @@ size = Vector2(14, 9)
 [node name="Mon" instance=ExtResource("1_p3nuy")]
 
 [node name="Sprite" parent="." index="0"]
+material = SubResource("ShaderMaterial_uhjqb")
 sprite_frames = SubResource("SpriteFrames_q0uix")
-animation = &"angry"
+animation = &"headshot"
 
 [node name="CollisionHitbox" parent="." index="1"]
 position = Vector2(1, 1)

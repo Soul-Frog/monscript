@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://battle/queue.gd" id="1_o5w2p"]
 [ext_resource type="Texture2D" uid="uid://dk8uy8sfciri8" path="res://assets/ui/battle/queue.png" id="1_u3d8c"]
 [ext_resource type="Texture2D" uid="uid://bvyoaqbyxxe5l" path="res://assets/ui/battle/queue_background_block.png" id="2_e2iaj"]
-[ext_resource type="Texture2D" uid="uid://dos1wnic6bcd7" path="res://assets/mons/magnetfrog.png" id="3_l5jb8"]
+[ext_resource type="Texture2D" uid="uid://byj8era3nrhpv" path="res://assets/ui/battle/queue_headshot_placeholder.png" id="3_013gf"]
 
 [node name="Queue" type="Node2D"]
 script = ExtResource("1_o5w2p")
@@ -17,57 +17,57 @@ centered = false
 z_index = 1
 
 [node name="Headshot1" type="Sprite2D" parent="Headshots"]
-position = Vector2(4, 13)
-texture = ExtResource("3_l5jb8")
+position = Vector2(4, 15)
+texture = ExtResource("3_013gf")
 centered = false
 
 [node name="Headshot2" type="Sprite2D" parent="Headshots"]
-position = Vector2(4, 32)
-texture = ExtResource("3_l5jb8")
+position = Vector2(4, 34)
+texture = ExtResource("3_013gf")
 centered = false
 
 [node name="Headshot3" type="Sprite2D" parent="Headshots"]
-position = Vector2(4, 51)
-texture = ExtResource("3_l5jb8")
+position = Vector2(4, 53)
+texture = ExtResource("3_013gf")
 centered = false
 
 [node name="Headshot4" type="Sprite2D" parent="Headshots"]
-position = Vector2(4, 70)
-texture = ExtResource("3_l5jb8")
+position = Vector2(4, 72)
+texture = ExtResource("3_013gf")
 centered = false
 
 [node name="Headshot5" type="Sprite2D" parent="Headshots"]
-position = Vector2(4, 89)
-texture = ExtResource("3_l5jb8")
+position = Vector2(4, 91)
+texture = ExtResource("3_013gf")
 centered = false
 
 [node name="Headshot6" type="Sprite2D" parent="Headshots"]
-position = Vector2(4, 108)
-texture = ExtResource("3_l5jb8")
+position = Vector2(4, 110)
+texture = ExtResource("3_013gf")
 centered = false
 
 [node name="Backgrounds" type="Node2D" parent="."]
 
 [node name="BG1" type="Sprite2D" parent="Backgrounds"]
-position = Vector2(12, 21)
+position = Vector2(12, 23)
 texture = ExtResource("2_e2iaj")
 
 [node name="BG2" type="Sprite2D" parent="Backgrounds"]
-position = Vector2(12, 40)
+position = Vector2(12, 42)
 texture = ExtResource("2_e2iaj")
 
 [node name="BG3" type="Sprite2D" parent="Backgrounds"]
-position = Vector2(12, 59)
+position = Vector2(12, 61)
 texture = ExtResource("2_e2iaj")
 
 [node name="BG4" type="Sprite2D" parent="Backgrounds"]
-position = Vector2(12, 78)
+position = Vector2(12, 80)
 texture = ExtResource("2_e2iaj")
 
 [node name="BG5" type="Sprite2D" parent="Backgrounds"]
-position = Vector2(12, 97)
+position = Vector2(12, 99)
 texture = ExtResource("2_e2iaj")
 
 [node name="BG6" type="Sprite2D" parent="Backgrounds"]
-position = Vector2(12, 116)
+position = Vector2(12, 118)
 texture = ExtResource("2_e2iaj")

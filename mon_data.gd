@@ -263,16 +263,6 @@ var _ANGLERPHISH_BASE = MonBase.new(MonType.ANGLERPHISH, "Anglerphish", "res://m
 	"Passive", "Anglerphish passive",
 	[Color("#5677fc"), Color("#455ede"), Color("#2a36b1")])
 
-# Extras
-#var _MAGNETFROG_BASE = MonBase.new("magnetFrog", "res://mons/magnetfrog.tscn", "res://monscripts/attack.txt", 
-#	500, 500, 500, 500,
-#	ScriptData.get_block_by_name("Shellbash"), 
-#	"Passive", "Passive desc")
-#var _MAGNETFROGBLUE_BASE = MonBase.new("magnetFrogBLUE", "res://mons/magnetfrogblue.tscn", "res://monscripts/attack.txt", 
-#	500, 500, 500, 500,
-#	ScriptData.get_block_by_name("Shellbash"), 
-#	"Bluenatism", "MagnetFrog Blue's passive ability information!")
-
 # dictionary mapping MonTypes -> MonBases
 var _MON_MAP := {
 	MonType.BITLEON : _BITLEON_BASE,
@@ -284,16 +274,12 @@ var _MON_MAP := {
 	MonType.TURTMINAL : _TURTMINAL_BASE,
 	MonType.STINGARRAY : _STINGARRAY_BASE,
 	MonType.ANGLERPHISH : _ANGLERPHISH_BASE,
-	
-	#MonType.MAGNETFROG : _MAGNETFROG_BASE,
-	#MonType.MAGNETFROGBLUE : _MAGNETFROGBLUE_BASE,
 }
 
 # This enum is used by the overworld_encounter.tscn, so don't delete it
 enum MonType
 {
 	NONE, BITLEON, GELIF, CHORSE, PASCALICAN, ORCHIN, TURTMINAL, STINGARRAY, ANGLERPHISH,
-	#MagnetFrog, MagnetFrogBlue
 }
 
 
@@ -303,6 +289,16 @@ func get_texture_for(montype: MonType) -> Texture2D:
 	var mon_scene = load(_MON_MAP[montype]._scene_path).instantiate()
 	# get texture from scene
 	var tex = mon_scene.get_texture()
+	# free the scene
+	mon_scene.free()
+	return tex
+
+func get_headshot_for(montype: MonType) -> Texture2D:
+	assert(montype != MonType.NONE)
+	# make an instance of the mon's scene
+	var mon_scene = load(_MON_MAP[montype]._scene_path).instantiate()
+	# get texture from scene
+	var tex = mon_scene.get_headshot()
 	# free the scene
 	mon_scene.free()
 	return tex

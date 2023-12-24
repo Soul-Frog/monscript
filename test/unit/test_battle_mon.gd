@@ -1,6 +1,6 @@
 extends GutTest
 
-const MON_SCENE_PATH := "res://mons/magnetfrog.tscn"
+const MON_SCENE_PATH := "res://mons/bitleon.tscn"
 const BATTLE_MON_SCRIPT := preload("res://battle/battle_mon.gd")
 
 # creates and returns a battlemon

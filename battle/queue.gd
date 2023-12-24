@@ -5,7 +5,7 @@ extends Node2D
 @onready var headshots = $Headshots
 const _team_to_color = {
 	Battle.Team.PLAYER : Color.AQUAMARINE,
-	Battle.Team.COMPUTER : Color.PALE_VIOLET_RED
+	Battle.Team.COMPUTER : Color.INDIAN_RED
 }
 const SIZE = 6
 
@@ -108,7 +108,7 @@ func _update_queue_display(mons: Array):
 		
 		# update headshot
 		var headshot = headshots.get_child(i)
-		headshot.texture = MonData.get_texture_for(mon.base_mon.get_mon_type())
+		headshot.texture = MonData.get_headshot_for(mon.base_mon.get_mon_type())
 		
 		# update background color based on mon team
 		var bg = backgrounds.get_child(i)
