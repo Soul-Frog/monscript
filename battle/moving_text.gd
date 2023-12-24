@@ -20,8 +20,9 @@ func tx(txt):
 	self.text_content = txt
 	return self
 
-func speed(spd):
+func speed(spd, spd_scale):
 	self.move_speed = spd
+	self._speed_scale = spd_scale
 	return self
 
 func time(tm):
@@ -58,4 +59,5 @@ func _process(delta):
 		queue_free()
 
 func set_speed_scale(speed_scale: float):
+	print("speed scaled")
 	_speed_scale = speed_scale
