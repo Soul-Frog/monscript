@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://fsp55qrvdmua"]
+
+[ext_resource type="Script" path="res://battle/inject_battery.gd" id="1_18h0m"]
+[ext_resource type="Texture2D" uid="uid://dq0c68vk6l562" path="res://assets/ui/battle/inject_battery_top_under.png" id="1_p2tt8"]
+[ext_resource type="Texture2D" uid="uid://cgbjx6jjnelvl" path="res://assets/ui/battle/inject_battery_top_progress.png" id="2_vovuf"]
+
+[node name="InjectBattery" type="Node2D"]
+script = ExtResource("1_18h0m")
+
+[node name="Bar" type="Node2D" parent="."]
+
+[node name="Top" type="TextureProgressBar" parent="Bar"]
+offset_right = 14.0
+offset_bottom = 18.0
+max_value = 10.0
+fill_mode = 3
+texture_under = ExtResource("1_p2tt8")
+texture_progress = ExtResource("2_vovuf")

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://jlwuxvscypv4"
-path="res://.godot/imported/inject_battery_top.png-7518877a15eddf27f955ddc95a6cf074.ctex"
+uid="uid://brnw3syabc2uj"
+path="res://.godot/imported/inject_battery_segment_under.png-6064f3601771e8877d79bf0ad6cb7452.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/battle/inject_battery_top.png"
-dest_files=["res://.godot/imported/inject_battery_top.png-7518877a15eddf27f955ddc95a6cf074.ctex"]
+source_file="res://assets/ui/battle/inject_battery_segment_under.png"
+dest_files=["res://.godot/imported/inject_battery_segment_under.png-6064f3601771e8877d79bf0ad6cb7452.ctex"]
 
 [params]
 

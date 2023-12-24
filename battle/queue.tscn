@@ -17,32 +17,32 @@ centered = false
 z_index = 1
 
 [node name="Headshot1" type="Sprite2D" parent="Headshots"]
-position = Vector2(4, 15)
+position = Vector2(4, 14)
 texture = ExtResource("3_013gf")
 centered = false
 
 [node name="Headshot2" type="Sprite2D" parent="Headshots"]
-position = Vector2(4, 34)
+position = Vector2(4, 33)
 texture = ExtResource("3_013gf")
 centered = false
 
 [node name="Headshot3" type="Sprite2D" parent="Headshots"]
-position = Vector2(4, 53)
+position = Vector2(4, 52)
 texture = ExtResource("3_013gf")
 centered = false
 
 [node name="Headshot4" type="Sprite2D" parent="Headshots"]
-position = Vector2(4, 72)
+position = Vector2(4, 71)
 texture = ExtResource("3_013gf")
 centered = false
 
 [node name="Headshot5" type="Sprite2D" parent="Headshots"]
-position = Vector2(4, 91)
+position = Vector2(4, 90)
 texture = ExtResource("3_013gf")
 centered = false
 
 [node name="Headshot6" type="Sprite2D" parent="Headshots"]
-position = Vector2(4, 110)
+position = Vector2(4, 109)
 texture = ExtResource("3_013gf")
 centered = false
 
