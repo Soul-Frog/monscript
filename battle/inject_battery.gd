@@ -1,7 +1,5 @@
 extends Node2D
 
-const MAX_VALUE = 10
-
 const BATTERY_SEGMENT_UNDER = preload("res://assets/ui/battle/inject_battery_segment_under.png")
 const BATTERY_SEGMENT_PROGRESS = preload("res://assets/ui/battle/inject_battery_segment_progress.png")
 
@@ -11,7 +9,7 @@ const BATTERY_SEGMENT_PROGRESS = preload("res://assets/ui/battle/inject_battery_
 func _ready() -> void:
 	assert(_bar)
 	assert(_top)
-	assert(_top.max_value == MAX_VALUE)
+	_top.max_value = GameData.POINTS_PER_INJECT
 	assert(BATTERY_SEGMENT_UNDER)
 	assert(BATTERY_SEGMENT_PROGRESS)
 	update()
@@ -24,7 +22,7 @@ func _grow() -> void:
 	var new_segment := TextureProgressBar.new()
 	new_segment.texture_under = BATTERY_SEGMENT_UNDER
 	new_segment.texture_progress = BATTERY_SEGMENT_PROGRESS
-	new_segment.max_value = MAX_VALUE
+	new_segment.max_value = GameData.POINTS_PER_INJECT
 	new_segment.fill_mode = new_segment.FILL_BOTTOM_TO_TOP
 	
 	# it should be placed 3 pixels above the bottom pixel of the bottommost bar..
@@ -52,19 +50,18 @@ func update() -> void:
 	_update_progress()
 
 func _update_progress() -> void:
-	var progress_left = 25 
+	var progress_left = GameData.inject_points
 	
 	# from bottom to top bar, fill according to progress
 	var segs_reversed = _bar.get_children()
 	segs_reversed.reverse()
 	for segment in segs_reversed:
 		var progress_for_bar = 10 if progress_left > 10 else progress_left
-		print(progress_for_bar)
 		progress_left -= progress_for_bar
 		segment.value = progress_for_bar
 
 func _update_bar_size() -> void:
-	var segments = 3 #todo - get from global
+	var segments = GameData.get_var(GameData.MAX_INJECTS)
 	if segments == 0:
 		hide()
 	else:

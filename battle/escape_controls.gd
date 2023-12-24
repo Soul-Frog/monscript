@@ -29,6 +29,9 @@ func reset():
 	text_fade.fade_out()
 	text.modulate.a = 0
 
+func toggle_escape():
+	button.emit_signal("pressed")
+
 func _on_escape_state_changed():
 	if button.selected:
 		text_fade.fade_in()

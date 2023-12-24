@@ -49,6 +49,15 @@ func _on_pause_button_pressed():
 	_pause_filter_fade.fade_in()
 	_speedup_filter_fade.fade_out()
 
+func run():
+	_run_button.emit_signal("pressed")
+
+func speedup():
+	_speedup_button.emit_signal("pressed")
+
+func pause(): 
+	_pause_button.emit_signal("pressed")
+
 func _on_button_pressed(button: SelectableButton):
 	# update the speed
 	speed = _button_to_speed[button]

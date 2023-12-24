@@ -4,6 +4,7 @@ extends Node
 ## Constants ##
 const MONS_PER_STORAGE_PAGE = 8 # how many mons are on a single page of pause menu storage
 const SAVE_FILE_NAME = "user://save.monsave" # path to the save file
+const POINTS_PER_INJECT = 10
 
 ## Areas ##
 enum Area
@@ -42,6 +43,8 @@ const PLAYER_NAME = "PlAYER_NAME"
 const LINE_LIMIT = "LINE_LIMIT"
 # Number of pages of mon storage in pause menu
 const STORAGE_PAGES = "STORAGE_PAGES"
+# Number of segments of the inject bar
+const MAX_INJECTS = "MAX_INJECTS"
 # During the intro, the computer needs to be examined twice to progress. This tracks if the first examine has occurred.
 const INTRO_EXAMINED_COMPUTER_ONCE = "INTRO_EXAMINED_COMPUTER_ONCE"
 # During the intro, after examining the computer twice and playing the game, this is enabled so we can sleep at the bed.
@@ -57,6 +60,7 @@ var _variables : Dictionary = {
 	PLAYER_NAME : "???", #default name is displayed in intro dialogue before the player enters the real name
 	LINE_LIMIT : 3, #default number of lines in a script is 3
 	STORAGE_PAGES : 2, #default number of storage pages is 2 (16 mons storage)
+	MAX_INJECTS : 0, #default injects is 0
 	
 	INTRO_EXAMINED_COMPUTER_ONCE : false,
 	INTRO_READY_TO_SLEEP : false,
@@ -68,6 +72,7 @@ var team = [] # player's active team
 var storage = []  # player's mon storage
 var compilation_progress_per_mon := {} # MonType -> int; maps MonType to unlock progress
 var _block_unlock_map := {} # tracks which blocks have been unlocked for use in the script editor
+var inject_points = 0
 
 # returns a variable, or null if that variable is not set
 func get_var(variable_name: String):
@@ -133,7 +138,6 @@ func _ready():
 	storage[4] = MonData.create_mon(MonData.MonType.TURTMINAL, 0)
 	storage[5] = MonData.create_mon(MonData.MonType.STINGARRAY, 0)
 	storage[6] = MonData.create_mon(MonData.MonType.ANGLERPHISH, 0)
-	
 
 # saves the game state to file
 func save_game():
@@ -212,6 +216,9 @@ func load_game():
 	# set the player's mask
 	get_tree().get_first_node_in_group("main").get_player().collision_mask = save_dict["player_collision_mask"]
 	get_tree().get_first_node_in_group("main").get_player().collision_layer = save_dict["player_collision_layer"]
+	
+	# start with full injects on game load
+	inject_points = get_var(MAX_INJECTS) * POINTS_PER_INJECT
 
 func increase_storage_size(new_size: int):
 	assert(_variables[STORAGE_PAGES] <= new_size, "Can't decrease storage size!")

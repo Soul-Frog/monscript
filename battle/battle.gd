@@ -54,7 +54,6 @@ var trying_to_escape = false
 
 @onready var _mon_action_queue = $Queue
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	assert(_speed_controls)
@@ -329,3 +328,20 @@ func _on_escape_state_changed(is_escaping: bool):
 	trying_to_escape = is_escaping
 	if trying_to_escape:
 		$Log.add_text("Your mons will try to escape!")
+
+func _input(event: InputEvent):
+	if Input.is_action_just_pressed("battle_run"):
+		_speed_controls.run()
+	elif Input.is_action_just_pressed("battle_speedup"):
+		_speed_controls.speedup()
+	elif Input.is_action_just_pressed("battle_pause"):
+		_speed_controls.pause()
+	
+	if Input.is_action_just_pressed("battle_toggle_escape"):
+		_escape_controls.toggle_escape()
+	
+	if Input.is_action_just_pressed("battle_log_expand_or_shrink") and $Log.can_expand():
+		$Log.toggle_expand()
+	
+	if Input.is_action_just_pressed("battle_inject"):
+		print("Inject me!")

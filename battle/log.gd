@@ -90,6 +90,12 @@ func _on_expand_pressed():
 	else:
 		_move_and_resize(_GROWTH_AMOUNT)
 
+func can_expand():
+	return expand_button.visible
+
+func toggle_expand():
+	expand_button.emit_signal("pressed")
+
 func _move_and_resize(amount: int):
 	background.size.y += amount
 	background.position.y -= amount
