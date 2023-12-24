@@ -60,7 +60,7 @@ var _variables : Dictionary = {
 	PLAYER_NAME : "???", #default name is displayed in intro dialogue before the player enters the real name
 	LINE_LIMIT : 3, #default number of lines in a script is 3
 	STORAGE_PAGES : 2, #default number of storage pages is 2 (16 mons storage)
-	MAX_INJECTS : 0, #default injects is 0
+	MAX_INJECTS : 3, #default injects is 0
 	
 	INTRO_EXAMINED_COMPUTER_ONCE : false,
 	INTRO_READY_TO_SLEEP : false,

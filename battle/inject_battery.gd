@@ -37,13 +37,6 @@ func _shrink() -> void:
 	var bottom = _get_bottommost_bar()
 	_bar.remove_child(bottom)
 	bottom.queue_free()
-
-# returns whether an inject is possible
-func can_inject() -> bool:
-	var bottom = _get_bottommost_bar()
-	if not visible or bottom.value != bottom.max_value:
-		return false
-	return true #TODO
 	
 func update() -> void:
 	_update_bar_size()

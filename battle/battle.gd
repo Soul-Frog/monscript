@@ -54,6 +54,8 @@ var trying_to_escape = false
 
 @onready var _mon_action_queue = $Queue
 
+@onready var _inject_battery = $InjectBattery
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	assert(_speed_controls)
@@ -148,6 +150,8 @@ func setup_battle(player_team, computer_team):
 	_escape_controls.reset()
 	_action_name_box.reset()
 	
+	_inject_battery.update()
+	
 	assert($PlayerMons.get_child_count() != 0, "No valid player mons!")
 	assert($ComputerMons.get_child_count() != 0, "No valid computer mons!")
 	assert(action_queue.size() == 0)
@@ -177,7 +181,7 @@ func clear_battle():
 func _process(delta: float):
 	assert(state == BattleState.BATTLING) 	# make sure battle was set up properly
 	
-	if not is_a_mon_taking_action: #TODO DO WE WANT THIS??? SATURDAY
+	if not is_a_mon_taking_action:
 		# let everyone update/action
 		# mons already in action queue are waiting to take a turn and 
 		# don't need to recieve updates
@@ -262,9 +266,18 @@ func _on_mon_try_to_escape(battle_mon):
 
 func _on_mon_action_completed():
 	assert(is_a_mon_taking_action)
+	
+	# if this action was performed by a player mon, make progress towards inject
+	if action_queue[0].team == Team.PLAYER:
+		# add 1 point, but not more than the maximum amount for the bars
+		GameData.inject_points = min(GameData.inject_points + 1, GameData.get_var(GameData.MAX_INJECTS) * GameData.POINTS_PER_INJECT)
+		_inject_battery.update() # and update the graphic
+	
 	action_queue.remove_at(0)
 	is_a_mon_taking_action = false
 	_mon_action_queue.update_queue(action_queue, $PlayerMons, $ComputerMons)
+	
+	
 
 func _on_mon_zero_health(mon):
 	assert(state == BattleState.BATTLING)
@@ -329,6 +342,10 @@ func _on_escape_state_changed(is_escaping: bool):
 	if trying_to_escape:
 		$Log.add_text("Your mons will try to escape!")
 
+# returns whether an inject is possible
+func _can_inject() -> bool:
+	return GameData.inject_points >= GameData.POINTS_PER_INJECT
+
 func _input(event: InputEvent):
 	if Input.is_action_just_pressed("battle_run"):
 		_speed_controls.run()
@@ -343,5 +360,9 @@ func _input(event: InputEvent):
 	if Input.is_action_just_pressed("battle_log_expand_or_shrink") and $Log.can_expand():
 		$Log.toggle_expand()
 	
-	if Input.is_action_just_pressed("battle_inject"):
+	if Input.is_action_just_pressed("battle_inject") and _can_inject():
+		# reduce inject points and update bar
+		assert(GameData.inject_points >= GameData.POINTS_PER_INJECT)
+		GameData.inject_points -= GameData.POINTS_PER_INJECT
+		_inject_battery.update()
 		print("Inject me!")
