@@ -2,6 +2,7 @@
 extends Node
 
 ## Constants ##
+const MONS_PER_TEAM = 4 # how many mons in a team
 const MONS_PER_STORAGE_PAGE = 8 # how many mons are on a single page of pause menu storage
 const SAVE_FILE_NAME = "user://save.monsave" # path to the save file
 const POINTS_PER_INJECT = 10
@@ -125,7 +126,7 @@ func _ready():
 	
 	# create the default team
 	team = [MonData.create_mon(MonData.MonType.BITLEON, 0), null, null, null]
-	assert(team.size() == Global.MONS_PER_TEAM)
+	assert(team.size() == GameData.MONS_PER_TEAM)
 	
 	# create the mon storage
 	increase_storage_size(_variables[STORAGE_PAGES])

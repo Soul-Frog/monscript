@@ -3,8 +3,6 @@ extends Node
 const INT_MAX = 9223372036854775806
 const INT_MIN = -9223372036854775807
 
-const MONS_PER_TEAM = 4
-
 var RNG := RandomNumberGenerator.new()
 
 const COLOR_WHITE_TEXT = Color(255.0/255.0, 255.0/255.0, 255.0/255.0, 255)

@@ -2,6 +2,8 @@ class_name SelectableButton
 extends TextureButton
 
 signal state_changed
+signal button_selected
+signal button_unselected
 
 @export var texture_selected: Texture2D
 @export var texture_selected_hover: Texture2D
@@ -32,11 +34,13 @@ func select():
 	selected = true
 	_update_textures()
 	emit_signal("state_changed")
+	emit_signal("button_selected")
 
 func unselect():
 	selected = false
 	_update_textures()
 	emit_signal("state_changed")
+	emit_signal("button_unselected")
 
 func _update_textures():
 	texture_normal = texture_selected if selected else texture_unselected

@@ -56,13 +56,17 @@ var trying_to_escape = false
 
 @onready var _inject_battery = $InjectBattery
 
+@onready var _inject_layer = $InjectLayer
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	assert(_speed_controls)
 	assert(_action_name_box)
 	assert(_mon_action_queue)
-	assert($PlayerMons.get_children().size() == Global.MONS_PER_TEAM, "Wrong number of player placeholder positions!")
-	assert($ComputerMons.get_children().size() == Global.MONS_PER_TEAM, "Wrong number of computer placeholder positions!")
+	assert(_inject_battery)
+	assert(_inject_layer)
+	assert($PlayerMons.get_children().size() == GameData.MONS_PER_TEAM, "Wrong number of player placeholder positions!")
+	assert($ComputerMons.get_children().size() == GameData.MONS_PER_TEAM, "Wrong number of computer placeholder positions!")
 	for placeholder in $PlayerMons.get_children():
 		PLAYER_MON_POSITIONS.append(placeholder.position)
 	for placeholder in $ComputerMons.get_children():
@@ -95,7 +99,7 @@ func setup_battle(player_team, computer_team):
 	assert(state == BattleState.EMPTY) # Make sure previous battle was cleaned up; this can also happen if 2 battle start at once (accidentally layered overworld mons)
 	assert($PlayerMons.get_child_count() == 0, "Shouldn't have any mons at start of setup! (forgot to clear_battle()?)")
 	assert($ComputerMons.get_child_count() == 0, "Shouldn't have any mons at start of setup! (forgot to clear_battle()?)")
-	assert(player_team.size() == Global.MONS_PER_TEAM, "Wrong num of mons in player team!")
+	assert(player_team.size() == GameData.MONS_PER_TEAM, "Wrong num of mons in player team!")
 	assert(computer_team.size() == COMPUTER_MON_POSITIONS.size(), "Wrong num of mons in computer team!")
 	
 	# fancy lambda which makes the log_name of each mon unique
@@ -111,7 +115,7 @@ func setup_battle(player_team, computer_team):
 	
 	# add mons for the new battle
 	var name_map = {} # store all mon names to handle duplicates for the battle log
-	for i in Global.MONS_PER_TEAM:
+	for i in GameData.MONS_PER_TEAM:
 		if player_team[i] != null:
 			var new_mon = _create_and_setup_mon(player_team[i], $PlayerMons, PLAYER_MON_POSITIONS[i], $PlayerMonBlocks.get_child(i), Team.PLAYER)
 			
@@ -127,7 +131,7 @@ func setup_battle(player_team, computer_team):
 	make_unique_log_names.call(name_map)
 	name_map.clear()
 	
-	for i in Global.MONS_PER_TEAM:
+	for i in GameData.MONS_PER_TEAM:
 		if computer_team[i] != null:
 			var new_mon = _create_and_setup_mon(computer_team[i], $ComputerMons, COMPUTER_MON_POSITIONS[i], $ComputerMonBlocks.get_child(i), Team.COMPUTER)
 			
@@ -178,10 +182,18 @@ func clear_battle():
 	battle_result = BattleResult.new()
 	$Log.clear()
 
+func _get_living_mons(mons: Array) -> Array:
+	var living = []
+	for m in mons:
+		if not m.is_defeated():
+			living.append(m)
+	return living
+
 func _process(delta: float):
 	assert(state == BattleState.BATTLING) 	# make sure battle was set up properly
 	
-	if not is_a_mon_taking_action:
+	# if nobody is moving and we aren't in an inject, update the mons
+	if not is_a_mon_taking_action and not $InjectLayer.is_injecting():
 		# let everyone update/action
 		# mons already in action queue are waiting to take a turn and 
 		# don't need to recieve updates
@@ -192,27 +204,20 @@ func _process(delta: float):
 			if not computer_mon in action_queue:
 				computer_mon.battle_tick(delta)
 	
-	# if no other mon is active, let the mon in front of queue take action
-	if not is_a_mon_taking_action and not action_queue.is_empty():
-		var active_mon = action_queue.front()
-		is_a_mon_taking_action = true
-		
-		# get living player mons
-		var player_mons = []
-		for m in $PlayerMons.get_children():
-			if not m.is_defeated():
-				player_mons.append(m)
-		
-		# get living computer mons
-		var computer_mons = []
-		for m in $ComputerMons.get_children():
-			if not m.is_defeated():
-				computer_mons.append(m)
-		
-		var friends = player_mons if active_mon in player_mons else computer_mons
-		var foes = computer_mons if active_mon in player_mons else player_mons
-		var force_escape =  active_mon in player_mons and trying_to_escape
-		active_mon.take_action(friends, foes, $Animator, force_escape)
+		# and if someone is ready to move, go ahead and let them take an action
+		if not action_queue.is_empty():
+			var active_mon = action_queue.front()
+			is_a_mon_taking_action = true
+			
+			# get living player mons
+			var player_mons = _get_living_mons($PlayerMons.get_children())
+			# get living computer mons
+			var computer_mons = _get_living_mons($ComputerMons.get_children())
+			
+			var friends = player_mons if active_mon in player_mons else computer_mons
+			var foes = computer_mons if active_mon in player_mons else player_mons
+			var force_escape =  active_mon in player_mons and trying_to_escape
+			active_mon.take_action(friends, foes, $Animator, force_escape)
 
 func _are_any_computer_mons_alive():
 	for computer_mon in $ComputerMons.get_children():
@@ -347,22 +352,32 @@ func _can_inject() -> bool:
 	return GameData.inject_points >= GameData.POINTS_PER_INJECT
 
 func _input(event: InputEvent):
-	if Input.is_action_just_pressed("battle_run"):
-		_speed_controls.run()
-	elif Input.is_action_just_pressed("battle_speedup"):
-		_speed_controls.speedup()
-	elif Input.is_action_just_pressed("battle_pause"):
-		_speed_controls.pause()
-	
-	if Input.is_action_just_pressed("battle_toggle_escape"):
-		_escape_controls.toggle_escape()
-	
-	if Input.is_action_just_pressed("battle_log_expand_or_shrink") and $Log.can_expand():
-		$Log.toggle_expand()
-	
-	if Input.is_action_just_pressed("battle_inject") and _can_inject():
-		# reduce inject points and update bar
-		assert(GameData.inject_points >= GameData.POINTS_PER_INJECT)
-		GameData.inject_points -= GameData.POINTS_PER_INJECT
-		_inject_battery.update()
-		print("Inject me!")
+	if not $InjectLayer.is_injecting():
+		if Input.is_action_just_pressed("battle_run"):
+			_speed_controls.run()
+		elif Input.is_action_just_pressed("battle_speedup"):
+			_speed_controls.speedup()
+		elif Input.is_action_just_pressed("battle_pause"):
+			_speed_controls.pause()
+		
+		if Input.is_action_just_pressed("battle_toggle_escape"):
+			_escape_controls.toggle_escape()
+		
+		if Input.is_action_just_pressed("battle_log_expand_or_shrink") and $Log.can_expand():
+			$Log.toggle_expand()
+		
+		if Input.is_action_just_pressed("battle_inject") and _can_inject():
+			# reduce inject points and update bar
+			assert(GameData.inject_points >= GameData.POINTS_PER_INJECT)
+			GameData.inject_points -= GameData.POINTS_PER_INJECT
+			_inject_battery.update()
+			_toggle_controls_visibility_for_inject() # hide the speeds, escape, and action queue
+			_inject_layer.start_inject($Log, $PlayerMons.get_children(), $ComputerMons.get_children())
+
+func _on_inject_completed():
+	_toggle_controls_visibility_for_inject()
+
+func _toggle_controls_visibility_for_inject():
+	_speed_controls.visible = not _speed_controls.visible
+	_escape_controls.visible = not _escape_controls.visible
+	_mon_action_queue.visible = not _mon_action_queue.visible

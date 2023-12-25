@@ -40,14 +40,14 @@ func _ready() -> void:
 	assert(HELD)
 	assert(STORAGE_PAGE_SLOTS.get_child_count() == GameData.MONS_PER_STORAGE_PAGE, "Not enough slots per page.")
 	
-	assert(TEAM_MONS.get_children().size() == Global.MONS_PER_TEAM, "Wrong number of team slots!")
+	assert(TEAM_MONS.get_children().size() == GameData.MONS_PER_TEAM, "Wrong number of team slots!")
 	_change_storage_page(0) # set the initial storage page
 	
 	setup() #todo - remove this
 
 func setup() -> void:
 	# put the player's mons into the team slots
-	for i in Global.MONS_PER_TEAM:
+	for i in GameData.MONS_PER_TEAM:
 		TEAM_MONS.get_child(i).set_mon(GameData.team[i])
 	
 	# update the storage page

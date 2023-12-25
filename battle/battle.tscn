@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=3 uid="uid://dtpehdp2rfsuh"]
+[gd_scene load_steps=76 format=3 uid="uid://dtpehdp2rfsuh"]
 
 [ext_resource type="Script" path="res://battle/battle.gd" id="1_85t5n"]
 [ext_resource type="Texture2D" uid="uid://bklubekxfne1h" path="res://assets/isometric/tilemap/tile-test.png" id="1_cm50e"]
@@ -52,6 +52,7 @@
 [ext_resource type="PackedScene" uid="uid://c8wcyjwqiawd8" path="res://battle/queue.tscn" id="50_q1kk0"]
 [ext_resource type="Texture2D" uid="uid://bv52a7doqfsck" path="res://assets/isometric/cave_isometric.png" id="51_4fgx1"]
 [ext_resource type="PackedScene" uid="uid://fsp55qrvdmua" path="res://battle/inject_battery.tscn" id="52_bd5mg"]
+[ext_resource type="PackedScene" uid="uid://dgaokh63peqxr" path="res://battle/inject_layer.tscn" id="53_4ccvo"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_on0ph"]
 shader = ExtResource("17_f5gwn")
@@ -447,6 +448,9 @@ centered = false
 [node name="InjectBattery" parent="." instance=ExtResource("52_bd5mg")]
 z_index = 101
 position = Vector2(304, 2)
+
+[node name="InjectLayer" parent="." instance=ExtResource("53_4ccvo")]
+z_index = 250
 
 [connection signal="speed_changed" from="SpeedControls" to="." method="_on_speed_changed"]
 [connection signal="escape_state_changed" from="EscapeControls" to="." method="_on_escape_state_changed"]
