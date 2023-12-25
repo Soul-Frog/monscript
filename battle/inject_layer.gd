@@ -81,10 +81,17 @@ func _on_player_target_selected() -> void:
 			target.hide()
 	assert(_injected_mon)
 	
+	_create_do_blocks()
+	
+	_update_inject_state(InjectState.SELECT_DO)
+
+func _create_do_blocks():
+	assert(_injected_mon)
+	
 	# create do blocks
 	var block = BLOCK_SCENE.instantiate()
 	block.set_data(ScriptData.Block.Type.DO, "Attack", false)
-	block.position = _injected_mon.position + Vector2(0, -4)
+	block.position = _injected_mon.position + Vector2(0, -8)
 	block.modulate.a = 0
 	block.clicked.connect(_on_do_block_selected)
 	_do_blocks.add_child(block)
@@ -92,8 +99,6 @@ func _on_player_target_selected() -> void:
 	var tween = create_tween()
 	tween.tween_property(block, "position", block.position + Vector2(15, 0), 0.3).set_trans(Tween.TRANS_CUBIC)
 	tween.parallel().tween_property(block, "modulate:a", 1, 0.3)
-	
-	_update_inject_state(InjectState.SELECT_DO)
 
 func _on_do_block_selected(selected_block) -> void:
 	if _inject_state != InjectState.SELECT_DO:
@@ -135,8 +140,6 @@ func _perform_inject() -> void:
 	
 	_update_inject_state(InjectState.EXECUTING)
 	
-	
-	
 	# TODO perform the specified actions
 	
 	end_inject()
@@ -158,19 +161,24 @@ func _undo() -> void:
 		for target in _player_targets.get_children():
 			target.show()
 			target.unselect()
-		for block in _do_blocks:
+		for block in _do_blocks.get_children():
 			block.queue_free()
+		_injected_mon = null
 		_update_inject_state(InjectState.SELECT_MON)
 	elif _inject_state == InjectState.SELECT_TARGET:
-		#todo
-		pass
+		_computer_targets.hide()
+		for block in _do_blocks.get_children():
+			block.queue_free()
+		_do_block = null
+		_create_do_blocks()
+		_update_inject_state(InjectState.SELECT_DO)
 
 func end_inject() -> void:
 	_log.add_text("Code injection complete!")
 	_update_inject_state(InjectState.INACTIVE)
 	
 	var tween = create_tween() # fade out
-	tween.tween_property(self, "modulate:a", 1, 0.1)
+	tween.tween_property(self, "modulate:a", 0, 0.1)
 	
 	emit_signal("inject_completed")
 
