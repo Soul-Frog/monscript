@@ -29,13 +29,16 @@ static func clear_tooltips():
 		tooltip.queue_free() #not sure this is safe; keep an eye on this
 	_ALL_TOOLTIPS.clear()
 
+var source_control: Control
+
 # call as: UITooltip.create(self, "tooltip txt", get_global_mouse_position(), get_tree().root)
 # unfortunately this is a static function so it cannot call the last two parameters itself
 # NOTE - Tooltips created by this function are automatically destroyed.
 static func create(source: Control, text: String, global_mouse_position: Vector2, scene_root: Node) -> void:
 	var tooltip: UITooltip = create_manual(source, text, global_mouse_position, scene_root)
-	source.mouse_exited.connect(tooltip.destroy_tooltip) # add a connect destroying this when mouse exits parent
-	source.tree_exiting.connect(tooltip.destroy_tooltip) # destroy tooltip when parent exits tree (ie parent is deleted)
+	tooltip.source_control = source
+	tooltip.source_control.mouse_exited.connect(tooltip.destroy_tooltip) # add a connect destroying this when mouse exits parent
+	tooltip.source_control.tree_exiting.connect(tooltip.destroy_tooltip) # destroy tooltip when parent exits tree (ie parent is deleted)
 
 # call as UITooltip.create(self, "tooltip txt", get_global_mouse_position(), get_tree().root)
 # NOTE - Tooltips created in this way must be manually deleted with destroy_tooltip.
@@ -81,11 +84,12 @@ static func create_manual(source: Control, text: String, global_mouse_position: 
 	
 	return tooltip
 
-func _input(event: InputEvent):
-	if event is InputEventMouseMotion:
-		var mouse_position = get_global_mouse_position()
-		position = Vector2(int(mouse_position.x), int(mouse_position.y)) + _TOOLTIP_OFFSET
-		_force_position_onto_screen()
+func _process(delta):
+	var mouse_position = get_global_mouse_position()
+	if not Rect2(source_control.global_position, source_control.size).has_point(mouse_position):
+		destroy_tooltip() # if the source_control has moved away from mouse, destroy the tooltip
+	position = Vector2(int(mouse_position.x), int(mouse_position.y)) + _TOOLTIP_OFFSET
+	_force_position_onto_screen()
 
 # force the tooltip to be within the screen boundaries and not overlapping the mouse
 func _force_position_onto_screen():

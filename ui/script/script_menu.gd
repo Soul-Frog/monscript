@@ -82,9 +82,8 @@ func setup(editing_mon: MonData.Mon) -> void:
 	for ifBlock in ScriptData.IF_BLOCK_LIST:
 		if GameData.is_block_unlocked(ifBlock):
 			_create_and_add_block_to(IF_DRAWER, ifBlock.type, ifBlock.name)
-	for doBlock in ScriptData.DO_BLOCK_LIST:
-		if GameData.is_block_unlocked(doBlock) or mon.is_block_a_special(doBlock):
-			_create_and_add_block_to(DO_DRAWER, doBlock.type, doBlock.name)
+	for doBlock in mon.get_possible_do_blocks():
+		_create_and_add_block_to(DO_DRAWER, doBlock.type, doBlock.name)
 	for toBlock in ScriptData.TO_BLOCK_LIST:
 		if GameData.is_block_unlocked(toBlock):
 			_create_and_add_block_to(TO_DRAWER, toBlock.type, toBlock.name)

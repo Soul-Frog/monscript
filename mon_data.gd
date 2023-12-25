@@ -121,13 +121,6 @@ class Mon:
 		}
 		return JSON.stringify(save)
 	
-	# if this mon can use this block
-	# right now, it just checks if the mon's base uses this block
-	# in the future when you can customize mon specials, 
-	# this function will also check that.
-	func is_block_a_special(block: ScriptData.Block):
-		return _base._special_block == block
-	
 	func get_name() -> String:
 		if _nickname == "":
 			return _base._species_name
@@ -162,6 +155,13 @@ class Mon:
 	func set_active_monscript_index(index: int) -> void:
 		assert(index > -1 and index < _monscripts.size())
 		_active_monscript_index = index
+		
+	func get_possible_do_blocks() -> Array:
+		var possible_dos = []
+		for doBlock in ScriptData.DO_BLOCK_LIST:
+			if GameData.is_block_unlocked(doBlock) or _base._special_block == doBlock:
+				possible_dos.append(doBlock)
+		return possible_dos
 	
 	func get_mon_type() -> MonType:
 		return _base._mon_type

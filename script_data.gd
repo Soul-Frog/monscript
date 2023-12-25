@@ -21,8 +21,8 @@ class MonScript:
 		assert(not friends.is_empty())
 		assert(not foes.is_empty())
 		if escaping:
-			action_name_box.set_action_text(ScriptData._ESCAPE_DO.name)
-			await ScriptData._ESCAPE_DO.function.call(mon, friends, foes, null, battle_log, action_name_box, animator)
+			action_name_box.set_action_text(ScriptData.get_block_by_name("Escape").name)
+			await ScriptData.get_block_by_name("Escape").function.call(mon, friends, foes, null, battle_log, action_name_box, animator)
 			mon.alert_turn_over()
 			return
 		if lines.size() == 0: #empty script, just run error
@@ -233,6 +233,11 @@ var DO_BLOCK_LIST := [
 		battle_log.add_text("%s is defending!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		mon.is_defending = true
 		),
+	
+	Block.new(Block.Type.DO, "Escape", Block.Type.NONE, "Attempt to escape the battle. Chance of success depends on SPEED.",
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, action_name_box: BattleActionNameBox, animator: BattleAnimator) -> void:
+		mon.emit_signal("try_to_escape", mon)
+		),
 		
 	Block.new(Block.Type.DO, "ShellBash", Block.Type.TO, "Attack an enemy for 70% damage, and defend until your next turn.",
 	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, action_name_box: BattleActionNameBox, animator: BattleAnimator) -> void:
@@ -406,10 +411,4 @@ var _ERROR_DO := Block.new(Block.Type.DO, "ERROR!!", Block.Type.NONE, "ERROR - d
 	func (mon: BattleMon, friends:Array, foes: Array, target: BattleMon, battle_log: BattleLog, action_name_box: BattleActionNameBox, animator: BattleAnimator):
 		battle_log.add_text("%s has an script [color=red]ERROR[/color]!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		battle_log.add_text("%s could not move!" % battle_log.MON_NAME_PLACEHOLDER, mon)
-)
-
-@warning_ignore("unused_private_class_variable")
-var _ESCAPE_DO := Block.new(Block.Type.DO, "Escape", Block.Type.NONE, "Attempt to escape the battle. Chance of success depends on SPEED.",
-func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, action_name_box: BattleActionNameBox, animator: BattleAnimator) -> void:
-	mon.emit_signal("try_to_escape", mon)
 )
