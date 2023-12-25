@@ -88,7 +88,7 @@ func _on_player_target_selected() -> void:
 func _create_do_blocks():
 	assert(_injected_mon)
 	
-	# create do blocks
+	# TODO - create do blocks
 	var block = BLOCK_SCENE.instantiate()
 	block.set_data(ScriptData.Block.Type.DO, "Attack", false)
 	block.position = _injected_mon.position + Vector2(0, -8)
@@ -109,14 +109,12 @@ func _on_do_block_selected(selected_block) -> void:
 	var tween = create_tween()
 	tween.tween_property(_do_block, "position", SELECTED_DO_POSITION - Vector2(_do_block.size.x/2, 0), 0.3).set_trans(Tween.TRANS_CUBIC)
 	
-	# if there is no target for this do, just perform it?
-	# _perform_inject()
-	# end_inject()
-	# else:
-	
-	_computer_targets.show()
-	
-	_update_inject_state(InjectState.SELECT_TARGET)
+	# if this block needs a target, initiate that
+	if selected_block.to_block().next_block_type == ScriptData.Block.Type.TO:
+		_computer_targets.show()
+		_update_inject_state(InjectState.SELECT_TARGET)
+	else: # otherwise go ahead and perform the inject
+		_perform_inject()
 
 func _on_computer_target_selected() -> void:
 	if _inject_state != InjectState.SELECT_TARGET:
@@ -139,6 +137,8 @@ func _perform_inject() -> void:
 	assert(_target)
 	
 	_update_inject_state(InjectState.EXECUTING)
+	
+	# TODO - rework the uh way the alert_turn_over thing happens so that we can perform a block without like, breaking stuff badly
 	
 	# TODO perform the specified actions
 	

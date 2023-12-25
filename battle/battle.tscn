@@ -456,3 +456,4 @@ z_index = 250
 [connection signal="escape_state_changed" from="EscapeControls" to="." method="_on_escape_state_changed"]
 [connection signal="state_changed" from="EscapeControls/Button" to="EscapeControls" method="_on_escape_state_changed"]
 [connection signal="timeout" from="EscapeControls/DotTimer" to="EscapeControls" method="_on_dot_timer_timeout"]
+[connection signal="inject_completed" from="InjectLayer" to="." method="_on_inject_completed"]
