@@ -1,116 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://dgaokh63peqxr"]
+[gd_scene load_steps=2 format=3 uid="uid://dgaokh63peqxr"]
 
 [ext_resource type="Script" path="res://battle/inject_layer.gd" id="1_sbsjt"]
-[ext_resource type="PackedScene" uid="uid://cxp0qtg8h0r51" path="res://battle/inject_target.tscn" id="2_3es32"]
-[ext_resource type="Texture2D" uid="uid://dqbq2cq2xkrhf" path="res://assets/ui/battle/inject_player_target.png" id="2_aru6i"]
-[ext_resource type="Script" path="res://battle/selectable_button.gd" id="3_ea4r1"]
-[ext_resource type="Texture2D" uid="uid://bcxg3qbc8wwev" path="res://assets/ui/battle/inject_player_target_hover.png" id="3_rm6mx"]
-[ext_resource type="Texture2D" uid="uid://mylg2ewimhrn" path="res://assets/ui/battle/inject_computer_target.png" id="5_jfem7"]
-[ext_resource type="Texture2D" uid="uid://dw54oahcvtq22" path="res://assets/ui/battle/inject_computer_target_hover.png" id="6_hyxdu"]
 
 [node name="InjectLayer" type="Node2D"]
 script = ExtResource("1_sbsjt")
 
 [node name="PlayerTargets" type="Node2D" parent="."]
 
-[node name="Target1" parent="PlayerTargets" instance=ExtResource("2_3es32")]
-
-[node name="Target2" type="TextureButton" parent="PlayerTargets"]
-offset_left = 109.0
-offset_top = 53.0
-offset_right = 131.0
-offset_bottom = 75.0
-texture_normal = ExtResource("2_aru6i")
-script = ExtResource("3_ea4r1")
-texture_selected = ExtResource("3_rm6mx")
-texture_selected_hover = ExtResource("3_rm6mx")
-texture_selected_pressed = ExtResource("3_rm6mx")
-texture_unselected = ExtResource("2_aru6i")
-texture_unselected_hover = ExtResource("3_rm6mx")
-texture_unselected_pressed = ExtResource("3_rm6mx")
-
-[node name="Target3" type="TextureButton" parent="PlayerTargets"]
-offset_left = 109.0
-offset_top = 77.0
-offset_right = 131.0
-offset_bottom = 99.0
-texture_normal = ExtResource("2_aru6i")
-script = ExtResource("3_ea4r1")
-texture_selected = ExtResource("3_rm6mx")
-texture_selected_hover = ExtResource("3_rm6mx")
-texture_selected_pressed = ExtResource("3_rm6mx")
-texture_unselected = ExtResource("2_aru6i")
-texture_unselected_hover = ExtResource("3_rm6mx")
-texture_unselected_pressed = ExtResource("3_rm6mx")
-
-[node name="Target4" type="TextureButton" parent="PlayerTargets"]
-offset_left = 109.0
-offset_top = 101.0
-offset_right = 131.0
-offset_bottom = 123.0
-texture_normal = ExtResource("2_aru6i")
-script = ExtResource("3_ea4r1")
-texture_selected = ExtResource("3_rm6mx")
-texture_selected_hover = ExtResource("3_rm6mx")
-texture_selected_pressed = ExtResource("3_rm6mx")
-texture_unselected = ExtResource("2_aru6i")
-texture_unselected_hover = ExtResource("3_rm6mx")
-texture_unselected_pressed = ExtResource("3_rm6mx")
+[node name="DoBlocks" type="Node2D" parent="."]
 
 [node name="ComputerTargets" type="Node2D" parent="."]
-
-[node name="Target5" type="TextureButton" parent="ComputerTargets"]
-offset_left = 189.0
-offset_top = 29.0
-offset_right = 213.0
-offset_bottom = 53.0
-texture_normal = ExtResource("5_jfem7")
-script = ExtResource("3_ea4r1")
-texture_selected = ExtResource("6_hyxdu")
-texture_selected_hover = ExtResource("6_hyxdu")
-texture_selected_pressed = ExtResource("6_hyxdu")
-texture_unselected = ExtResource("5_jfem7")
-texture_unselected_hover = ExtResource("6_hyxdu")
-texture_unselected_pressed = ExtResource("6_hyxdu")
-
-[node name="Target6" type="TextureButton" parent="ComputerTargets"]
-offset_left = 189.0
-offset_top = 53.0
-offset_right = 213.0
-offset_bottom = 77.0
-texture_normal = ExtResource("5_jfem7")
-script = ExtResource("3_ea4r1")
-texture_selected = ExtResource("6_hyxdu")
-texture_selected_hover = ExtResource("6_hyxdu")
-texture_selected_pressed = ExtResource("6_hyxdu")
-texture_unselected = ExtResource("5_jfem7")
-texture_unselected_hover = ExtResource("6_hyxdu")
-texture_unselected_pressed = ExtResource("6_hyxdu")
-
-[node name="Target7" type="TextureButton" parent="ComputerTargets"]
-offset_left = 189.0
-offset_top = 77.0
-offset_right = 213.0
-offset_bottom = 101.0
-texture_normal = ExtResource("5_jfem7")
-script = ExtResource("3_ea4r1")
-texture_selected = ExtResource("6_hyxdu")
-texture_selected_hover = ExtResource("6_hyxdu")
-texture_selected_pressed = ExtResource("6_hyxdu")
-texture_unselected = ExtResource("5_jfem7")
-texture_unselected_hover = ExtResource("6_hyxdu")
-texture_unselected_pressed = ExtResource("6_hyxdu")
-
-[node name="Target8" type="TextureButton" parent="ComputerTargets"]
-offset_left = 189.0
-offset_top = 101.0
-offset_right = 213.0
-offset_bottom = 125.0
-texture_normal = ExtResource("5_jfem7")
-script = ExtResource("3_ea4r1")
-texture_selected = ExtResource("6_hyxdu")
-texture_selected_hover = ExtResource("6_hyxdu")
-texture_selected_pressed = ExtResource("6_hyxdu")
-texture_unselected = ExtResource("5_jfem7")
-texture_unselected_hover = ExtResource("6_hyxdu")
-texture_unselected_pressed = ExtResource("6_hyxdu")

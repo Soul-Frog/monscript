@@ -6,8 +6,12 @@ enum InjectState {
 	INACTIVE, SELECT_MON, SELECT_DO, SELECT_TARGET, EXECUTING
 }
 
-const INJECT_SCENE = preload("res://battle/inject_target.tscn")
+const SELECTED_DO_POSITION = Vector2(160, 5)
+const PLAYER_INJECT_SCENE = preload("res://battle/player_inject_target.tscn")
+const COMPUTER_INJECT_SCENE = preload("res://battle/computer_inject_target.tscn")
+const BLOCK_SCENE = preload("res://ui/script/script_block.tscn")
 @onready var _player_targets = $PlayerTargets
+@onready var _do_blocks = $DoBlocks
 @onready var _computer_targets = $ComputerTargets
 var _target_to_mon = {}
 
@@ -20,6 +24,7 @@ var _target = null
 
 func _ready():
 	assert(_player_targets)
+	assert(_do_blocks)
 	assert(_computer_targets)
 	self.modulate.a = 0
 	_player_targets.hide()
@@ -41,26 +46,26 @@ func start_inject(battle_log: BattleLog, player_mons: Array, computer_mons: Arra
 	_computer_targets.hide()
 	_player_targets.show()
 	
-	# delete all existing targets
-	for target in _player_targets.get_children() + _computer_targets.get_children():
-		target.queue_free()
+	# delete all existing targets and do blocks
+	for child in _player_targets.get_children() + _computer_targets.get_children() + _do_blocks.get_children():
+		child.queue_free()
 	# and clear the map
 	_target_to_mon.clear()
 	
-	var create_targets := func(mons, add_to, callback):
+	var create_targets := func(mons, target_scene, add_to, callback):
 		for mon in mons:
 			if not mon.is_defeated():
-				var target = INJECT_SCENE.instantiate()
+				var target = target_scene.instantiate()
 				target.position = mon.position - target.texture_unselected.get_size()/2
 				_target_to_mon[target] = mon
 				target.button_selected.connect(callback)
 				add_to.add_child(target)
 	
-	create_targets.call(player_mons, _player_targets, _on_player_target_selected)
-	create_targets.call(computer_mons, _computer_targets, _on_computer_target_selected)
+	create_targets.call(player_mons, PLAYER_INJECT_SCENE, _player_targets, _on_player_target_selected)
+	create_targets.call(computer_mons, COMPUTER_INJECT_SCENE, _computer_targets, _on_computer_target_selected)
 	
 	var tween = create_tween() # fade in
-	tween.tween_property(self, "modulate:a", 1, 0.2)
+	tween.tween_property(self, "modulate:a", 1, 0.1)
 	
 
 func _on_player_target_selected() -> void:
@@ -76,14 +81,28 @@ func _on_player_target_selected() -> void:
 			target.hide()
 	assert(_injected_mon)
 	
-	# tween them out to the center in a list
-	# iterate over inject mon's do blocks...
+	# create do blocks
+	var block = BLOCK_SCENE.instantiate()
+	block.set_data(ScriptData.Block.Type.DO, "Attack", false)
+	block.position = _injected_mon.position + Vector2(0, -4)
+	block.modulate.a = 0
+	block.clicked.connect(_on_do_block_selected)
+	_do_blocks.add_child(block)
+	
+	var tween = create_tween()
+	tween.tween_property(block, "position", block.position + Vector2(15, 0), 0.3).set_trans(Tween.TRANS_CUBIC)
+	tween.parallel().tween_property(block, "modulate:a", 1, 0.3)
 	
 	_update_inject_state(InjectState.SELECT_DO)
 
-func _on_do_block_selected() -> void:
+func _on_do_block_selected(selected_block) -> void:
 	if _inject_state != InjectState.SELECT_DO:
 		return #ignore clicks on do while we should be selecting do/target
+	
+	_do_block = selected_block
+	
+	var tween = create_tween()
+	tween.tween_property(_do_block, "position", SELECTED_DO_POSITION - Vector2(_do_block.size.x/2, 0), 0.3).set_trans(Tween.TRANS_CUBIC)
 	
 	# if there is no target for this do, just perform it?
 	# _perform_inject()
@@ -100,7 +119,7 @@ func _on_computer_target_selected() -> void:
 	
 	# hide all other computer targets
 	for i in _computer_targets.get_child_count():
-		var target = _player_targets.get_child(i)
+		var target = _computer_targets.get_child(i)
 		if target.selected:
 			_target = _target_to_mon[target]
 		else:
@@ -139,6 +158,8 @@ func _undo() -> void:
 		for target in _player_targets.get_children():
 			target.show()
 			target.unselect()
+		for block in _do_blocks:
+			block.queue_free()
 		_update_inject_state(InjectState.SELECT_MON)
 	elif _inject_state == InjectState.SELECT_TARGET:
 		#todo
@@ -149,7 +170,7 @@ func end_inject() -> void:
 	_update_inject_state(InjectState.INACTIVE)
 	
 	var tween = create_tween() # fade out
-	tween.tween_property(self, "modulate:a", 1, 0.2)
+	tween.tween_property(self, "modulate:a", 1, 0.1)
 	
 	emit_signal("inject_completed")
 
