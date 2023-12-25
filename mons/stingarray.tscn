@@ -45,7 +45,6 @@ size = Vector2(18, 11)
 [node name="Sprite" parent="." index="0"]
 material = SubResource("ShaderMaterial_2357x")
 sprite_frames = SubResource("SpriteFrames_vx6k8")
-animation = &"headshot"
 
 [node name="CollisionHitbox" parent="." index="1"]
 position = Vector2(1, -0.5)
