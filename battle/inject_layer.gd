@@ -132,7 +132,8 @@ func _on_do_block_selected(selected_block) -> void:
 	if selected_block.to_block().next_block_type == ScriptData.Block.Type.TO:
 		_computer_targets.show()
 		_update_inject_state(InjectState.SELECT_TARGET)
-	else: # otherwise go ahead and perform the inject
+	else: # otherwise, wait for the block to reach the top for visual effect, then perform the inject
+		await tween.finished
 		_perform_inject()
 
 func _on_computer_target_selected() -> void:
