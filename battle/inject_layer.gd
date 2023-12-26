@@ -49,8 +49,6 @@ func start_inject(blog: BattleLog, animator: BattleAnimator, player_mons: Array,
 	assert(_log)
 	_log.add_text("Launching code injection!")
 	
-	for node in _player_targets.get_children() + _do_blocks.get_children() + _computer_targets.get_children():
-		node.queue_free()
 	_target_to_mon.clear()
 	_injected_mon = null
 	_do_block = null
