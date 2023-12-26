@@ -153,7 +153,6 @@ func setup_battle(player_team, computer_team):
 	_speed_controls.reset()
 	_escape_controls.reset()
 	_action_name_box.reset()
-	
 	_inject_battery.update()
 	
 	assert($PlayerMons.get_child_count() != 0, "No valid player mons!")
@@ -267,7 +266,6 @@ func _on_mon_try_to_escape(battle_mon):
 		$ComputerMons.remove_child(battle_mon)
 		battle_mon.queue_free()
 		_check_battle_end_condition()
-		
 
 func _on_mon_action_completed():
 	assert(is_a_mon_taking_action)
@@ -281,8 +279,6 @@ func _on_mon_action_completed():
 	action_queue.remove_at(0)
 	is_a_mon_taking_action = false
 	_mon_action_queue.update_queue(action_queue, $PlayerMons, $ComputerMons)
-	
-	
 
 func _on_mon_zero_health(mon):
 	assert(state == BattleState.BATTLING)
@@ -372,7 +368,7 @@ func _input(event: InputEvent):
 			GameData.inject_points -= GameData.POINTS_PER_INJECT
 			_inject_battery.update()
 			_toggle_controls_visibility_for_inject() # hide the speeds, escape, and action queue
-			_inject_layer.start_inject($Log, $PlayerMons.get_children(), $ComputerMons.get_children())
+			_inject_layer.start_inject($Log, $Animator, _get_living_mons($PlayerMons.get_children()), _get_living_mons($ComputerMons.get_children()))
 
 func _on_inject_completed():
 	_toggle_controls_visibility_for_inject()

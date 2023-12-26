@@ -153,6 +153,26 @@ func battle_tick(unscaled_delta: float) -> void:
 			turn_count += 1
 			emit_signal("ready_to_take_action", self) # signal that it's time for this mon to act
 
+func take_inject_action(friends: Array, foes: Array, animator: BattleAnimator, do_block: ScriptData.Block, target: BattleMon) -> void:
+	assert(friends.size() != 0, "No friends?")
+	assert(foes.size() != 0, "No foes?")
+	
+	# move forward
+	var tween = create_tween()
+	tween.tween_property(self, "position:x", position.x + (25 if team == Battle.Team.PLAYER else -25), 0.4).set_trans(Tween.TRANS_CUBIC)
+	await tween.finished
+	
+	# perform the do
+	action_name_box.make_visible()
+	action_name_box.set_action_text(do_block.name)
+	await do_block.function.call(self, friends, foes, target, battle_log, action_name_box, animator)
+	
+	# move backwards
+	tween = create_tween()
+	tween.tween_property(self, "position:x", position.x - (25 if team == Battle.Team.PLAYER else -25), 0.4).set_trans(Tween.TRANS_CUBIC)
+	await tween.finished
+	action_name_box.make_invisible()
+
 # Take a single turn in battle
 func take_action(friends: Array, foes: Array, animator: BattleAnimator, escaping: bool) -> void:
 	assert(friends.size() != 0, "No friends?")

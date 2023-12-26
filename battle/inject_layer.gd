@@ -16,11 +16,16 @@ const BLOCK_SCENE = preload("res://ui/script/script_block.tscn")
 var _target_to_mon = {}
 
 var _inject_state = InjectState.INACTIVE
-var _log: BattleLog
 
 var _injected_mon: BattleMon = null
 var _do_block: ScriptData.Block = null
+var _ui_do_block: UIScriptBlock = null
 var _target: BattleMon = null
+
+var _log: BattleLog
+var _animator: BattleAnimator
+var _friends
+var _foes
 
 func _ready():
 	assert(_player_targets)
@@ -33,24 +38,28 @@ func _ready():
 func is_injecting() -> bool:
 	return _inject_state != InjectState.INACTIVE
 
-func start_inject(battle_log: BattleLog, player_mons: Array, computer_mons: Array) -> void:
+func start_inject(blog: BattleLog, animator: BattleAnimator, player_mons: Array, computer_mons: Array) -> void:
+	_friends = player_mons
+	_foes = computer_mons
+	_animator = animator
+	_log = blog
+	assert(_friends)
+	assert(_foes)
+	assert(_animator)
+	assert(_log)
+	_log.add_text("Launching code injection!")
+	
+	for node in _player_targets.get_children() + _do_blocks.get_children() + _computer_targets.get_children():
+		node.queue_free()
+	_target_to_mon.clear()
 	_injected_mon = null
 	_do_block = null
 	_target = null
-	
-	_log = battle_log
-	_log.add_text("Launching code injection!")
 	
 	# show only the player targets
 	_update_inject_state(InjectState.SELECT_MON)
 	_computer_targets.hide()
 	_player_targets.show()
-	
-	# delete all existing targets and do blocks
-	for child in _player_targets.get_children() + _computer_targets.get_children() + _do_blocks.get_children():
-		child.queue_free()
-	# and clear the map
-	_target_to_mon.clear()
 	
 	var create_targets := func(mons, target_scene, add_to, callback):
 		for mon in mons:
@@ -66,7 +75,6 @@ func start_inject(battle_log: BattleLog, player_mons: Array, computer_mons: Arra
 	
 	var tween = create_tween() # fade in
 	tween.tween_property(self, "modulate:a", 1, 0.1)
-	
 
 func _on_player_target_selected() -> void:
 	if _inject_state != InjectState.SELECT_MON:
@@ -116,6 +124,7 @@ func _on_do_block_selected(selected_block) -> void:
 			tween.tween_property(block, "modulate:a", 0, 0.2)
 			tween.tween_callback(block.queue_free)
 	
+	_ui_do_block = selected_block
 	_do_block = selected_block.to_block()
 	
 	var tween = create_tween()
@@ -150,11 +159,26 @@ func _perform_inject() -> void:
 	
 	_update_inject_state(InjectState.EXECUTING)
 	
-	# TODO - rework the uh way the alert_turn_over thing happens so that we can perform a block without like, breaking stuff badly
+	# fade out the block
+	var to_fade_out = _do_blocks.get_children() + _player_targets.get_children() + _computer_targets.get_children()
+	for node in to_fade_out:
+		var tween = create_tween()
+		tween.tween_property(node, "modulate:a", 0, 0.125)
+		tween.tween_callback(node.queue_free)
 	
-	# TODO perform the specified actions
+	# perform the inject action
+	await _injected_mon.take_inject_action(_friends, _foes, _animator, _do_block, _target)
 	
 	end_inject()
+
+func end_inject() -> void:
+	_log.add_text("Code injection complete!")
+	_update_inject_state(InjectState.INACTIVE)
+	
+	var tween = create_tween() # fade out
+	tween.tween_property(self, "modulate:a", 0, 0.1)
+	
+	emit_signal("inject_completed")
 
 func _update_inject_state(new_state: InjectState):
 	_inject_state = new_state
@@ -184,15 +208,6 @@ func _undo() -> void:
 		_do_block = null
 		_create_do_blocks()
 		_update_inject_state(InjectState.SELECT_DO)
-
-func end_inject() -> void:
-	_log.add_text("Code injection complete!")
-	_update_inject_state(InjectState.INACTIVE)
-	
-	var tween = create_tween() # fade out
-	tween.tween_property(self, "modulate:a", 0, 0.1)
-	
-	emit_signal("inject_completed")
 
 func _input(event) -> void:
 	if Input.is_action_just_pressed("inject_undo") and is_injecting():
