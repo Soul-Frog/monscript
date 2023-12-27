@@ -31,7 +31,7 @@ func _ready():
 	assert(_player_targets)
 	assert(_do_blocks)
 	assert(_computer_targets)
-	self.modulate.a = 0
+	#self.modulate.a = 0
 	_player_targets.hide()
 	_computer_targets.hide()
 
@@ -66,13 +66,12 @@ func start_inject(blog: BattleLog, animator: BattleAnimator, player_mons: Array,
 				target.position = mon.position - target.texture_unselected.get_size()/2
 				_target_to_mon[target] = mon
 				target.button_selected.connect(callback)
+				target.modulate.a = 0
+				create_tween().tween_property(target, "modulate:a", 1, 0.2)
 				add_to.add_child(target)
 	
 	create_targets.call(player_mons, PLAYER_INJECT_SCENE, _player_targets, _on_player_target_selected)
 	create_targets.call(computer_mons, COMPUTER_INJECT_SCENE, _computer_targets, _on_computer_target_selected)
-	
-	var tween = create_tween() # fade in
-	tween.tween_property(self, "modulate:a", 1, 0.1)
 
 func _on_player_target_selected() -> void:
 	if _inject_state != InjectState.SELECT_MON:
@@ -174,8 +173,8 @@ func end_inject() -> void:
 	_log.add_text("Code injection complete!")
 	_update_inject_state(InjectState.INACTIVE)
 	
-	var tween = create_tween() # fade out
-	tween.tween_property(self, "modulate:a", 0, 0.1)
+	#var tween = create_tween() # fade out
+	#tween.tween_property(self, "modulate:a", 0, 0.1)
 	
 	emit_signal("inject_completed")
 

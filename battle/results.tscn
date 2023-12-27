@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cklrslmbq7v88"]
+
+[ext_resource type="Script" path="res://battle/results.gd" id="1_abqku"]
+
+[node name="Results" type="Node2D"]
+script = ExtResource("1_abqku")
+
+[node name="Exit" type="Button" parent="."]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Exit"
+
+[connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]

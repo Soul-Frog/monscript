@@ -58,6 +58,8 @@ var trying_to_escape = false
 
 @onready var _inject_layer = $InjectLayer
 
+var battle_completed
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	assert(_speed_controls)
@@ -149,6 +151,7 @@ func setup_battle(player_team, computer_team):
 	action_queue.clear()
 	is_a_mon_taking_action = false
 	trying_to_escape = false
+	battle_completed = false
 	
 	_speed_controls.reset()
 	_escape_controls.reset()
@@ -189,10 +192,12 @@ func _get_living_mons(mons: Array) -> Array:
 	return living
 
 func _process(delta: float):
-	assert(state == BattleState.BATTLING) 	# make sure battle was set up properly
+	if state == BattleState.FINISHED: #viewing results, so no need to update
+		return
 	
 	# if nobody is moving and we aren't in an inject, update the mons
 	if not is_a_mon_taking_action and not $InjectLayer.is_injecting():
+		assert(state == BattleState.BATTLING) 	# make sure battle was set up properly
 		# let everyone update/action
 		# mons already in action queue are waiting to take a turn and 
 		# don't need to recieve updates
@@ -254,10 +259,9 @@ func _on_mon_try_to_escape(battle_mon):
 		var escape_chance = clamp(50 + 3 * (my_speed - computer_avg_speed), 10, 100)
 		
 		if escape_chance >= Global.RNG.randi_range(1, 100):
-			battle_result.end_condition = Global.BattleEndCondition.ESCAPE
-			state = BattleState.FINISHED
 			$Log.add_text("Escaped successfully!")
-			Events.emit_signal("battle_ended", battle_result)
+			battle_result.end_condition = Global.BattleEndCondition.ESCAPE
+			_end_battle_and_show_results()
 		else:
 			$Log.add_text("Escape failed.")
 	else:
@@ -310,20 +314,24 @@ func _check_battle_end_condition():
 	var computer_mons_alive = _are_any_computer_mons_alive()
 	
 	if player_mons_alive and not computer_mons_alive:
-		state = BattleState.FINISHED
 		battle_result.end_condition = Global.BattleEndCondition.WIN
-		$Log.add_text("Battle terminated.")
-		Events.emit_signal("battle_ended", battle_result)
+		_end_battle_and_show_results()
 	elif not player_mons_alive and computer_mons_alive:
-		state = BattleState.FINISHED
 		battle_result.end_condition = Global.BattleEndCondition.LOSE
-		$Log.add_text("Battle terminated.")
-		Events.emit_signal("battle_ended", battle_result)
+		_end_battle_and_show_results()
 	elif not player_mons_alive and not computer_mons_alive:
-		state = BattleState.FINISHED
 		battle_result.end_condition = Global.BattleEndCondition.WIN
-		$Log.add_text("Battle terminated.")
-		Events.emit_signal("battle_ended", battle_result) # tie also counts as a win
+		_end_battle_and_show_results()
+
+func _end_battle_and_show_results():
+	assert(battle_result)
+	assert(battle_result.end_condition != Global.BattleEndCondition.NONE)
+	state = BattleState.FINISHED
+	$Log.add_text("Battle terminated.")
+	$Results.show_results(battle_result)
+
+func _on_results_exited():
+	Events.emit_signal("battle_ended", battle_result)
 
 func _on_speed_controls_changed():
 	if not _inject_layer.is_injecting(): # can't update speed during inject
