@@ -17,7 +17,6 @@ shader_parameter/lightgray_replace = Vector3(0, 1, 1)
 shader_parameter/darkgray_replace = Vector3(1, 1, 0)
 
 [node name="Computer1" type="NinePatchRect"]
-z_index = 200
 material = SubResource("ShaderMaterial_bv2jl")
 offset_right = 46.0
 offset_bottom = 21.0

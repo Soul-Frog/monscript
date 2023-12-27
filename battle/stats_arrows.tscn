@@ -12,6 +12,7 @@ script = ExtResource("1_3qwgl")
 layout_direction = 3
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 theme_override_constants/separation = -1
 
 [node name="AttackArrows" type="HBoxContainer" parent="ArrowContainer"]

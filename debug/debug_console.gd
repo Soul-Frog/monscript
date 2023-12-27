@@ -61,9 +61,9 @@ func _on_text_submitted(txt):
 	assert(main_scene.OVERWORLD.get_node("Area").get_node("Entities/Player") != null, "Debug Console can't get Player from Overworld->Area; was it renamed/moved?")
 	assert(main_scene.OVERWORLD.get_node("Area").get_node("Entities/OverworldEncounters") != null, "Debug Console can't get Area->OverworldEncounters, was it renamed/moved?")
 	assert(main_scene.BATTLE != null, "Debug Console can't get Battle scene; was it renamed/moved?")
-	assert(main_scene.BATTLE.get_node("PlayerMons") != null, "Debug Console can't get PlayerMons from battle scene; was it renamed/moved?")
-	assert(main_scene.BATTLE.get_node("ComputerMons") != null, "Debug Console can't get ComputerMons from battle scene; was it renamed/moved?")
-	assert(main_scene.BATTLE.get_node("Animator") != null, "Debug Console can't get Animator from battle scene; was it renamed/moved?")	
+	assert(main_scene.BATTLE.get_node("Mons/PlayerMons") != null, "Debug Console can't get PlayerMons from battle scene; was it renamed/moved?")
+	assert(main_scene.BATTLE.get_node("Mons/ComputerMons") != null, "Debug Console can't get ComputerMons from battle scene; was it renamed/moved?")
+	assert(main_scene.BATTLE.get_node("Mons/Animator") != null, "Debug Console can't get Animator from battle scene; was it renamed/moved?")	
 	
 	# collect some variables that are likely to be useful...
 	var OVERWORLD = main_scene.OVERWORLD
@@ -71,7 +71,7 @@ func _on_text_submitted(txt):
 	var player = current_area.get_node("Entities/Player")
 	var overworld_encounters = current_area.get_node("Entities/OverworldEncounters")
 	var BATTLE = main_scene.BATTLE
-	var animator = BATTLE.get_node("Animator")
+	var animator = BATTLE.get_node("Mons/Animator")
 	
 	
 	assert(OVERWORLD)
@@ -116,9 +116,9 @@ func _on_text_submitted(txt):
 			# hack - remove/free current animator and make a new one to 'cancel' active animation
 			animator.name = "OLDANIMATOR"
 			animator.queue_free()
-			BATTLE.add_child(load("res://battle/animator.tscn").instantiate())
+			BATTLE.find_child("Mons").add_child(load("res://battle/animator.tscn").instantiate())
 			# kill all the computer mons
-			for computer_mon in BATTLE.get_node("ComputerMons").get_children():
+			for computer_mon in BATTLE.get_node("Mons/ComputerMons").get_children():
 				computer_mon.take_damage(88888888, MonData.DamageType.TYPELESS)
 	# loses a battle instantly
 	elif cmd == "losebattle" or cmd == "lose" or cmd == "l":
@@ -136,7 +136,7 @@ func _on_text_submitted(txt):
 			animator.queue_free()
 			BATTLE.add_child(load("res://battle/animator.tscn").instantiate())
 			# kill all the player mons
-			for player_mon in BATTLE.get_node("PlayerMons").get_children():
+			for player_mon in BATTLE.get_node("Mons/PlayerMons").get_children():
 				player_mon.take_damage(88888888, MonData.DamageType.TYPELESS)
 	# in the overworld, warp to a new area
 	elif cmd == "warp":
