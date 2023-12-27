@@ -182,7 +182,7 @@ func take_action(friends: Array, foes: Array, animator: BattleAnimator, escaping
 	# if we're asleep, just wake up and that's our turn
 	if statuses[Status.SLEEP]:
 		heal_status(Status.SLEEP)
-		alert_turn_over()
+		_on_turn_over()
 		return
 	
 	# move forward,
@@ -198,10 +198,10 @@ func take_action(friends: Array, foes: Array, animator: BattleAnimator, escaping
 
 func execute_script(friends: Array, foes: Array, animator: BattleAnimator, escaping: bool):
 	action_name_box.make_visible()
-	base_mon.get_active_monscript().execute(self, friends, foes, battle_log, action_name_box, animator, escaping)
+	await base_mon.get_active_monscript().execute(self, friends, foes, battle_log, action_name_box, animator, escaping)
+	_on_turn_over()
 
-# called after a mon takes its turn
-func alert_turn_over() -> void:
+func _on_turn_over():
 	assert(action_points == 100.0 or not reset_AP_after_action)
 	if reset_AP_after_action:
 		action_points = 0.0

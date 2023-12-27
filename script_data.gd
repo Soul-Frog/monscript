@@ -23,12 +23,10 @@ class MonScript:
 		if escaping:
 			action_name_box.set_action_text(ScriptData.get_block_by_name("Escape").name)
 			await ScriptData.get_block_by_name("Escape").function.call(mon, friends, foes, null, battle_log, action_name_box, animator)
-			mon.alert_turn_over()
 			return
 		if lines.size() == 0: #empty script, just run error
 			action_name_box.set_action_text(ScriptData._ERROR_DO.name)
 			await ScriptData._ERROR_DO.function.call(mon, friends, foes, null, battle_log, action_name_box, animator)
-			mon.alert_turn_over()
 		for line in lines:
 			if await line.try_execute(mon, friends, foes, battle_log, action_name_box, animator):
 				return
@@ -113,7 +111,6 @@ class Line:
 		if not is_valid(): 
 			action_name_box.set_action_text(ScriptData._ERROR_DO.name)
 			await ScriptData._ERROR_DO.function.call(mon, friends, foes, null, battle_log, action_name_box, animator)
-			mon.alert_turn_over()
 			return true #we 'executed' this line, so return false to stop execution
 		
 		# this line is valid, so do normal processing
@@ -127,7 +124,6 @@ class Line:
 			# perform the battle action
 			action_name_box.set_action_text(doBlock.name)
 			await doBlock.function.call(mon, friends, foes, targets, battle_log, action_name_box, animator)
-			mon.alert_turn_over()
 		
 		# return if this line was executed, so script knows not to 
 		# attempt to execute other lines if this one took an action
