@@ -452,7 +452,7 @@ position = Vector2(304, 2)
 [node name="InjectLayer" parent="." instance=ExtResource("53_4ccvo")]
 z_index = 250
 
-[connection signal="speed_changed" from="SpeedControls" to="." method="_on_speed_changed"]
+[connection signal="speed_changed" from="SpeedControls" to="." method="_on_speed_controls_changed"]
 [connection signal="escape_state_changed" from="EscapeControls" to="." method="_on_escape_state_changed"]
 [connection signal="state_changed" from="EscapeControls/Button" to="EscapeControls" method="_on_escape_state_changed"]
 [connection signal="timeout" from="EscapeControls/DotTimer" to="EscapeControls" method="_on_dot_timer_timeout"]

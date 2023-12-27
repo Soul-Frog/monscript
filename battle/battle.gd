@@ -325,15 +325,19 @@ func _check_battle_end_condition():
 		$Log.add_text("Battle terminated.")
 		Events.emit_signal("battle_ended", battle_result) # tie also counts as a win
 
-func _on_speed_changed():
+func _on_speed_controls_changed():
+	if not _inject_layer.is_injecting(): # can't update speed during inject
+		_set_speed(_speed_controls.speed)
+
+func _set_speed(speed):
 	if is_inside_tree():
-		var new_speed = _speed_to_speed[_speed_controls.speed]
+		var new_speed_multiplier = _speed_to_speed[speed]
 		
 		for node in get_tree().get_nodes_in_group("battle_speed_scaled"):
-			node.set_speed_scale(new_speed)
+			node.set_speed_scale(new_speed_multiplier)
 		
 		# if we paused, make the log scrollable, otherwise make it unscrollable again
-		if new_speed == 0:
+		if new_speed_multiplier == 0:
 			$Log.make_scrollable_and_expandable()
 		else:
 			$Log.make_unscrollable_and_unexpandable()
@@ -367,13 +371,20 @@ func _input(event: InputEvent):
 			assert(GameData.inject_points >= GameData.POINTS_PER_INJECT)
 			GameData.inject_points -= GameData.POINTS_PER_INJECT
 			_inject_battery.update()
-			_toggle_controls_visibility_for_inject() # hide the speeds, escape, and action queue
+			
+			# hide the speed and escape controls while we inject
+			var tween = create_tween()
+			tween.tween_property(_speed_controls, "modulate:a", 0, 0.2)
+			tween.parallel().tween_property(_escape_controls, "modulate:a", 0, 0.2)
+			
+			_set_speed(Speed.NORMAL)
 			_inject_layer.start_inject($Log, $Animator, _get_living_mons($PlayerMons.get_children()), _get_living_mons($ComputerMons.get_children()))
 
 func _on_inject_completed():
-	_toggle_controls_visibility_for_inject()
-
-func _toggle_controls_visibility_for_inject():
-	_speed_controls.visible = not _speed_controls.visible
-	_escape_controls.visible = not _escape_controls.visible
-	_mon_action_queue.visible = not _mon_action_queue.visible
+	# show the controls
+	var tween = create_tween()
+	tween.tween_property(_speed_controls, "modulate:a", 1, 0.2)
+	tween.parallel().tween_property(_escape_controls, "modulate:a", 1, 0.2)
+	
+	# update the speed post-inject to match the buttons
+	_set_speed(_speed_controls.speed)

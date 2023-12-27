@@ -59,5 +59,4 @@ func _process(delta):
 		queue_free()
 
 func set_speed_scale(speed_scale: float):
-	print("speed scaled")
 	_speed_scale = speed_scale
