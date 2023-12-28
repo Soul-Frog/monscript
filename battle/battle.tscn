@@ -152,6 +152,7 @@ z_index = 2000
 position = Vector2(146, 72)
 
 [node name="InjectLayer" parent="UI" instance=ExtResource("53_4ccvo")]
+z_index = 1
 
 [node name="InjectBattery" parent="UI" instance=ExtResource("52_bd5mg")]
 position = Vector2(304, 2)

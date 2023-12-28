@@ -113,10 +113,6 @@ func _on_text_submitted(txt):
 			# if that attack ended battle, just return
 			if BATTLE.state != BATTLE.BattleState.BATTLING:
 				return
-			# hack - remove/free current animator and make a new one to 'cancel' active animation
-			animator.name = "OLDANIMATOR"
-			animator.queue_free()
-			BATTLE.find_child("Mons").add_child(load("res://battle/animator.tscn").instantiate())
 			# kill all the computer mons
 			for computer_mon in BATTLE.get_node("Mons/ComputerMons").get_children():
 				computer_mon.take_damage(88888888, MonData.DamageType.TYPELESS)
@@ -131,10 +127,6 @@ func _on_text_submitted(txt):
 			# if that attack ended battle, just return
 			if BATTLE.state != BATTLE.BattleState.BATTLING:
 				return
-			# hack - remove/free current animator and make a new one to 'cancel' active animation
-			animator.name = "OLDANIMATOR"
-			animator.queue_free()
-			BATTLE.add_child(load("res://battle/animator.tscn").instantiate())
 			# kill all the player mons
 			for player_mon in BATTLE.get_node("Mons/PlayerMons").get_children():
 				player_mon.take_damage(88888888, MonData.DamageType.TYPELESS)
