@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://conqj70b6ouir"]
+[gd_scene load_steps=23 format=3 uid="uid://conqj70b6ouir"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_1crr8"]
 [ext_resource type="Texture2D" uid="uid://drfvc5n36jass" path="res://assets/maps/coolant_cave/cave2_entrance/cave2.png" id="2_l834j"]
@@ -19,6 +19,7 @@
 [ext_resource type="Script" path="res://overworld/components/overworld_mons/wanderer.gd" id="13_5rf1m"]
 [ext_resource type="PackedScene" uid="uid://dm1epg70fkia2" path="res://mons/orchin.tscn" id="15_c7tfi"]
 [ext_resource type="Texture2D" uid="uid://bb7yokb2yw0dv" path="res://assets/objects/gateway.png" id="18_b6w6p"]
+[ext_resource type="PackedScene" uid="uid://cooanm8l6tpwi" path="res://overworld/interactables/save_memstick.tscn" id="20_hok6v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mkqcf"]
 size = Vector2(88, 11)
@@ -414,6 +415,9 @@ polygon = PackedVector2Array(33, 505.158, 99, 505.158, 99, 518.011, 33, 518.505)
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Data/TransitionDown"]
 position = Vector2(5, -3)
 polygon = PackedVector2Array(482, 489, 512, 488, 510, 552, 476, 553)
+
+[node name="SaveMemstick" parent="." instance=ExtResource("20_hok6v")]
+position = Vector2(276, 325)
 
 [connection signal="body_entered" from="Data/TransitionUp" to="Data/TransitionUp" method="_on_body_entered"]
 [connection signal="body_entered" from="Data/TransitionDown" to="Data/TransitionDown" method="_on_body_entered"]
