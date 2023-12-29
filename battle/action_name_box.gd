@@ -42,8 +42,12 @@ func set_action_text(action: String):
 
 func set_speed_scale(speed_scale: float) -> void:
 	_speed_scale = speed_scale
+	var invalid_tweens = []
 	for tween in _active_tweens:
 		if not tween.is_valid():
-			_active_tweens.erase(tween)
+			invalid_tweens.append(tween)
 			continue
 		tween.set_speed_scale(speed_scale)
+	
+	for invalid_tween in invalid_tweens:
+		_active_tweens.erase(invalid_tween)

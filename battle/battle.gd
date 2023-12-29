@@ -22,12 +22,13 @@ enum Team {
 }
 
 enum Speed {
-	NORMAL, SPEEDUP, PAUSE
+	NORMAL, SPEEDUP, PAUSE, INSTANT
 }
 var _speed_to_speed = {
 	Speed.NORMAL : 1.0,
 	Speed.SPEEDUP : 5.0,
-	Speed.PAUSE : 0.0
+	Speed.PAUSE : 0.0,
+	Speed.INSTANT: 10000.0
 }
 
 # positions of mons in battle scene
@@ -46,6 +47,8 @@ var action_queue = []
 # Tracks whether a mon is currently taking an action
 # Only one mon can take an action at a time (due to animations, etc)
 var is_a_mon_taking_action = false
+# If an inject has been inputted but not yet started
+var is_inject_queued = false
 
 # If mons are being commanded to escape
 var trying_to_escape = false
@@ -161,6 +164,7 @@ func setup_battle(player_team, computer_team):
 	
 	action_queue.clear()
 	is_a_mon_taking_action = false
+	is_inject_queued = false
 	trying_to_escape = false
 	
 	_speed_controls.reset()
@@ -204,6 +208,9 @@ func _get_living_mons(mons: Array) -> Array:
 func _process(delta: float):
 	if state == BattleState.FINISHED: #viewing results, so no need to update
 		return
+	
+	if not is_a_mon_taking_action and is_inject_queued:
+		_start_inject()
 	
 	# if nobody is moving and we aren't in an inject, update the mons
 	if not is_a_mon_taking_action and not _inject_layer.is_injecting():
@@ -344,7 +351,7 @@ func _on_results_exited():
 	Events.emit_signal("battle_ended", battle_result)
 
 func _on_speed_controls_changed():
-	if not _inject_layer.is_injecting(): # can't update speed during inject
+	if not _inject_layer.is_injecting() and not is_inject_queued: # can't update speed during inject
 		_set_speed(_speed_controls.speed)
 
 func _set_speed(speed):
@@ -384,19 +391,32 @@ func _input(event: InputEvent):
 		if Input.is_action_just_pressed("battle_log_expand_or_shrink") and _log.can_expand():
 			_log.toggle_expand()
 		
-		if Input.is_action_just_pressed("battle_inject") and _can_inject():
-			# reduce inject points and update bar
-			assert(GameData.inject_points >= GameData.POINTS_PER_INJECT)
-			GameData.inject_points -= GameData.POINTS_PER_INJECT
-			_inject_battery.update()
-			
-			# hide the speed and escape controls while we inject
-			var tween = create_tween()
-			tween.tween_property(_speed_controls, "modulate:a", 0, 0.2)
-			tween.parallel().tween_property(_escape_controls, "modulate:a", 0, 0.2)
-			
-			_set_speed(Speed.NORMAL)
-			_inject_layer.start_inject(_log, _animator, _get_living_mons(_player_mons.get_children()), _get_living_mons(_computer_mons.get_children()))
+		if Input.is_action_just_pressed("battle_inject") and _can_inject() and not is_inject_queued:
+			is_inject_queued = true
+			# speed up any animation (such as a mon moving back into place)
+			_set_speed(Speed.INSTANT)
+			# tell the active mon their move is canceled
+			if action_queue.size() != 0:
+				action_queue.front().cancel_action()
+			# cancel any active animation
+			_animator.cancel_animation()
+
+func _start_inject():
+	assert(is_inject_queued)
+	is_inject_queued = false
+	
+	# reduce inject points and update bar
+	assert(GameData.inject_points >= GameData.POINTS_PER_INJECT)
+	GameData.inject_points -= GameData.POINTS_PER_INJECT
+	_inject_battery.update()
+	
+	# hide the speed and escape controls while we inject
+	var tween = create_tween()
+	tween.tween_property(_speed_controls, "modulate:a", 0, 0.2)
+	tween.parallel().tween_property(_escape_controls, "modulate:a", 0, 0.2)
+	
+	_set_speed(Speed.NORMAL)
+	_inject_layer.start_inject(_log, _animator, _get_living_mons(_player_mons.get_children()), _get_living_mons(_computer_mons.get_children()))
 
 func _on_inject_completed():
 	# show the controls

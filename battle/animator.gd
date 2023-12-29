@@ -5,8 +5,10 @@ signal animation_finished
 var _speed_scale = 1.0
 
 var current_fx = null
+var was_animation_canceled = false
 
 func _play_fx(fx):
+	was_animation_canceled = false
 	current_fx = fx
 	fx.speed_scale = _speed_scale
 	add_child(fx)
@@ -33,3 +35,9 @@ func set_speed_scale(speed_scale: float) -> void:
 	_speed_scale = speed_scale
 	if current_fx:
 		current_fx.speed_scale = speed_scale
+
+func cancel_animation() -> void:
+	if current_fx != null:
+		was_animation_canceled = true
+		current_fx.stop()
+		current_fx.emit_signal("animation_finished")

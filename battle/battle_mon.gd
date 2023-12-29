@@ -54,6 +54,10 @@ var turn_count := 0
 var is_defending := false
 var escaped_from_battle := false
 
+# if the mon should skip trying to execute its script after moving forward
+# used to prevent a mon from starting an animation if an inject is queued
+var is_action_canceled := false
+
 # whether this mon's AP should be reset after this action ends
 # for example, the pass action sets this to false
 var reset_AP_after_action := true
@@ -75,7 +79,7 @@ var spd_buff_stage := 0
 # for example, some moves will store information in here to use later
 var metadata = {}
 
-var active_tweens = []
+var _active_tweens = []
  
 const MAX_BUFF_STAGE = 4 # the maximum positive buff stage
 const MIN_DEBUFF_STAGE = -4 # the minimum negative debuff stage
@@ -144,9 +148,8 @@ func battle_tick(unscaled_delta: float) -> void:
 	assert(base_mon != null, "Didn't add a mon with init_mon!")
 	assert(_base_attack != -1 and _base_speed != -1 and _base_defense != -1 and max_health != -1, "Stats were never initialized?")
 	if not is_defeated():
-		action_points += max(get_speed(), 1) * delta
-		action_points = clamp(action_points, 0.0, ACTION_POINTS_PER_TURN)
-		emit_signal("health_or_ap_changed")
+		# update action points, clamp between 0-100
+		set_action_points(clamp(action_points + max(get_speed(), 1) * delta, 0.0, ACTION_POINTS_PER_TURN))
 		
 		if action_points >= ACTION_POINTS_PER_TURN:
 			# TODO $BattleComponents/ActionPointsBar.modulate = Global.COLOR_RED
@@ -186,32 +189,36 @@ func take_action(friends: Array, foes: Array, animator: BattleAnimator, escaping
 		return
 	
 	# move forward,
-	var tween = create_tween()
-	active_tweens.append(tween)
-	tween.tween_property(self, "position:x", position.x + (25 if team == Battle.Team.PLAYER else -25), 0.4).set_trans(Tween.TRANS_CUBIC)
-	# then tell our script to go ahead and execute an action
-	tween.tween_callback(execute_script.bind(friends, foes, animator, escaping))
-	tween.set_speed_scale(_speed_scale)
+	await _move_forward()
+	
+	# execute our action, if an inject wasn't inputted
+	if is_action_canceled:
+		set_action_points(0)
+		await _move_backward() # move back to normal position
+		finish_action()
+	else:
+		execute_script(friends, foes, animator, escaping)
 
-	# don't do anything after here, the turn is over when we hit alert_turn_over
-	# todo - maybe alert_turn_over is useless and we can just cram more info here...?
+func cancel_action():
+	is_action_canceled = true
 
 func execute_script(friends: Array, foes: Array, animator: BattleAnimator, escaping: bool):
 	action_name_box.make_visible()
 	await base_mon.get_active_monscript().execute(self, friends, foes, battle_log, action_name_box, animator, escaping)
 	_on_turn_over()
 
+func set_action_points(points):
+	action_points = points
+	emit_signal("health_or_ap_changed")
+
 func _on_turn_over():
 	assert(action_points == 100.0 or not reset_AP_after_action)
 	if reset_AP_after_action:
-		action_points = 0.0
+		set_action_points(0.0)
 	reset_AP_after_action = true
 	
-	var tween = create_tween()
-	active_tweens.append(tween)
-	tween.tween_property(self, "position:x", position.x - (25 if team == Battle.Team.PLAYER else -25), 0.4).set_trans(Tween.TRANS_CUBIC)
-	tween.set_speed_scale(_speed_scale)
-	await tween.finished
+	await _move_backward()
+	
 	action_name_box.make_invisible()
 	
 	# after taking an action, if inflicted with leak, take 5% health as damage
@@ -219,7 +226,25 @@ func _on_turn_over():
 		battle_log.add_text("%s is leaking memory!" % battle_log.MON_NAME_PLACEHOLDER, self)
 		take_damage(max(ceil(max_health * 0.05), 1), MonData.DamageType.LEAK)
 	
+	finish_action()
+
+func finish_action():
+	is_action_canceled = false
 	emit_signal("action_completed")
+
+func _move_forward():
+	var tween = create_tween()
+	_active_tweens.append(tween)
+	tween.tween_property(self, "position:x", position.x + (25 if team == Battle.Team.PLAYER else -25), 0.4).set_trans(Tween.TRANS_CUBIC)
+	tween.set_speed_scale(_speed_scale)
+	await tween.finished
+
+func _move_backward():
+	var tween = create_tween()
+	_active_tweens.append(tween)
+	tween.tween_property(self, "position:x", position.x - (25 if team == Battle.Team.PLAYER else -25), 0.4).set_trans(Tween.TRANS_CUBIC)
+	tween.set_speed_scale(_speed_scale)
+	await tween.finished
 
 func is_defeated() -> bool:
 	assert(current_health >= 0, "Mon's health is somehow negative.")
@@ -303,7 +328,7 @@ func take_damage(damage_taken: int, damage_type: MonData.DamageType) -> void:
 	
 	# TODO ANIMATE DEFEAT (maybe we await on a tween in zero_health or something)
 	if current_health == 0:
-		action_points = 0.0
+		set_action_points(0)
 		emit_signal("zero_health", self)
 
 func shake() -> void:
@@ -388,10 +413,16 @@ func apply_stat_change(stat: BuffableStat, mod: int):
 
 func set_speed_scale(speed_scale: float) -> void:
 	_speed_scale = speed_scale
-	for tween in active_tweens:
+
+	var invalid_tweens = []
+	for tween in _active_tweens:
 		if not tween.is_valid():
-			active_tweens.erase(tween)
+			invalid_tweens.append(tween)
 			continue
 		tween.set_speed_scale(speed_scale)
+	
+	for invalid_tween in invalid_tweens:
+		_active_tweens.erase(invalid_tween)
+	
 	shake_animation_player.speed_scale = speed_scale
 	flash_animation_player.speed_scale = speed_scale

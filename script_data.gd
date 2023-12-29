@@ -207,7 +207,7 @@ var DO_BLOCK_LIST := [
 	Block.new(Block.Type.DO, "Pass", Block.Type.NONE, "Do nothing, but conserve half of your AP.",
 	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, action_name_box: BattleActionNameBox, animator: BattleAnimator) -> void:
 		battle_log.add_text("%s passed." % battle_log.MON_NAME_PLACEHOLDER, mon)
-		mon.action_points = int(mon.action_points / 2.0)
+		mon.set_action_points(mon.action_points / 2.0)
 		mon.reset_AP_after_action = false # don't reset to 0 after this action
 		),
 		
@@ -219,6 +219,8 @@ var DO_BLOCK_LIST := [
 		# play the animation and wait for it to finish
 		animator.slash(target)
 		await animator.animation_finished
+		if animator.was_animation_canceled:
+			return
 		
 		# then apply the actual damage from this attack
 		target.apply_attack(mon, 1, MonData.DamageType.NORMAL)
@@ -240,6 +242,8 @@ var DO_BLOCK_LIST := [
 		battle_log.add_text("%s used ShellBash!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		animator.slash(target)
 		await animator.animation_finished
+		if animator.was_animation_canceled:
+			return
 		
 		target.apply_attack(mon, 0.7, MonData.DamageType.NORMAL)
 		mon.is_defending = true
@@ -259,6 +263,8 @@ var DO_BLOCK_LIST := [
 		#todo - animation
 		animator.slash(target)
 		await animator.animation_finished
+		if animator.was_animation_canceled:
+			return
 		
 		var dmg_mult = 0.8
 		if mon.turn_count >= 5:
@@ -274,6 +280,8 @@ var DO_BLOCK_LIST := [
 		#todo - animation
 		animator.slash(target)
 		await animator.animation_finished
+		if animator.was_animation_canceled:
+			return
 		
 		const metadata_key = "TRIANGULATE_USES"
 		
@@ -313,6 +321,8 @@ var DO_BLOCK_LIST := [
 		#todo - animation
 		animator.slash(target)
 		await animator.animation_finished
+		if animator.was_animation_canceled:
+			return
 		
 		var dmg_mult = 0.6
 		if leak_condition or health_condition:
@@ -328,6 +338,9 @@ var DO_BLOCK_LIST := [
 			var rand_target = Global.choose_one(foes)
 			animator.slash(rand_target) #todo - animation
 			await animator.animation_finished
+			if animator.was_animation_canceled:
+				return
+			
 			rand_target.apply_attack(mon, 0.25, MonData.DamageType.NORMAL)
 			
 			# if we killed the target, don't let it be a target for future attacks
@@ -342,6 +355,8 @@ var DO_BLOCK_LIST := [
 		battle_log.add_text("%s used Spearphishing!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		animator.slash(target) #todo - animation
 		await animator.animation_finished
+		if animator.was_animation_canceled:
+			return
 		target.inflict_status(BattleMon.Status.LEAK)
 		),
 		
