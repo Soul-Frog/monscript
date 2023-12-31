@@ -131,6 +131,8 @@ func _ready():
 	# create the mon storage
 	increase_storage_size(_variables[STORAGE_PAGES])
 	
+	inject_points = get_var(MAX_INJECTS) * POINTS_PER_INJECT
+	
 	# TODO - remove this debug code
 	storage[0] = MonData.create_mon(MonData.MonType.GELIF, 0)
 	storage[1] = MonData.create_mon(MonData.MonType.CHORSE, 0)

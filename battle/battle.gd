@@ -306,13 +306,11 @@ func _on_mon_zero_health(mon):
 	
 	_log.add_text("%s has been terminated!" % _log.MON_NAME_PLACEHOLDER, mon)
 	
+	# TODO - do this at the end in battle results instead of when the mon is defeated
 	# increment xp earned from battle if this was a computer mon
 	# min exp earn is 1; so level 0 mons still provide 1 xp
 	if mon in _computer_mons.get_children():
 		battle_result.xp_earned += max(mon.base_mon.get_level(), 1)
-	# hide this mon to 'remove' it from the scene
-	# removing from scene here with something like queue_free would cause errors
-	mon.visible = false
 	
 	# remove this mon from the action queue if needed
 	# don't remove from front of queue; since if this mon died performing an action, it will remove itself

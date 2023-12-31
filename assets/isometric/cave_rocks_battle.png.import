@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://be28uqbaoyvd6"
-path="res://.godot/imported/tile-red.png-4ea26d221dc857761ed3ec296dd0046b.ctex"
+uid="uid://cu1dbv124n2kb"
+path="res://.godot/imported/cave_rocks_battle.png-811ee69d031c63ccd19d3760fdcc4d77.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/isometric/tilemap/tile-red.png"
-dest_files=["res://.godot/imported/tile-red.png-4ea26d221dc857761ed3ec296dd0046b.ctex"]
+source_file="res://assets/isometric/cave_rocks_battle.png"
+dest_files=["res://.godot/imported/cave_rocks_battle.png-811ee69d031c63ccd19d3760fdcc4d77.ctex"]
 
 [params]
 

@@ -1,6 +1,7 @@
 [gd_scene load_steps=51 format=3 uid="uid://dtpehdp2rfsuh"]
 
 [ext_resource type="Script" path="res://battle/battle.gd" id="1_85t5n"]
+[ext_resource type="Texture2D" uid="uid://3oirll1yg54k" path="res://assets/isometric/cave_temple_battle.png" id="2_cb4ye"]
 [ext_resource type="Script" path="res://decorators/fade_decorator.gd" id="2_cfdr2"]
 [ext_resource type="PackedScene" uid="uid://bo77v3uohwvy1" path="res://mons/bitleon.tscn" id="5_a0vn4"]
 [ext_resource type="PackedScene" uid="uid://ds2pwty7e10tr" path="res://battle/monblock.tscn" id="5_fkqod"]
@@ -38,7 +39,6 @@
 [ext_resource type="Script" path="res://battle/action_name_box.gd" id="47_yq6eb"]
 [ext_resource type="Theme" uid="uid://612i0h3ltb6t" path="res://monscript_theme.tres" id="49_cid02"]
 [ext_resource type="PackedScene" uid="uid://c8wcyjwqiawd8" path="res://battle/queue.tscn" id="50_q1kk0"]
-[ext_resource type="Texture2D" uid="uid://bv52a7doqfsck" path="res://assets/isometric/cave_isometric.png" id="51_4fgx1"]
 [ext_resource type="PackedScene" uid="uid://fsp55qrvdmua" path="res://battle/inject_battery.tscn" id="52_bd5mg"]
 [ext_resource type="PackedScene" uid="uid://dgaokh63peqxr" path="res://battle/inject_layer.tscn" id="53_4ccvo"]
 [ext_resource type="PackedScene" uid="uid://cklrslmbq7v88" path="res://battle/results.tscn" id="54_5vxty"]
@@ -106,7 +106,7 @@ color = Color(0.411765, 0.666667, 0.745098, 1)
 
 [node name="Terrain" type="Sprite2D" parent="Scene"]
 z_index = 20
-texture = ExtResource("51_4fgx1")
+texture = ExtResource("2_cb4ye")
 centered = false
 
 [node name="Mons" type="Node2D" parent="."]
