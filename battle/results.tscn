@@ -1,13 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://cklrslmbq7v88"]
+[gd_scene load_steps=5 format=3 uid="uid://cklrslmbq7v88"]
 
 [ext_resource type="Script" path="res://battle/results.gd" id="1_abqku"]
+[ext_resource type="Texture2D" uid="uid://b2r8psbjx6l0i" path="res://assets/ui/battle/result/result_continue.png" id="2_q258l"]
+[ext_resource type="Texture2D" uid="uid://ci10m6nj2fp7o" path="res://assets/ui/battle/result/result_continue_pressed.png" id="3_6js8l"]
+[ext_resource type="Texture2D" uid="uid://bc3r0wxe0vx6m" path="res://assets/ui/battle/result/result_continue_hover.png" id="4_vihk8"]
 
 [node name="Results" type="Node2D"]
 script = ExtResource("1_abqku")
 
-[node name="Exit" type="Button" parent="."]
+[node name="Exit" type="TextureButton" parent="."]
 offset_right = 8.0
 offset_bottom = 8.0
-text = "Exit"
+texture_normal = ExtResource("2_q258l")
+texture_pressed = ExtResource("3_6js8l")
+texture_hover = ExtResource("4_vihk8")
 
 [connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]
