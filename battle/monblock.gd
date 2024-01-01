@@ -67,7 +67,7 @@ func _on_mon_health_or_ap_changed() -> void:
 	health_label.text = HEALTH_FORMAT % [health_bar.value, health_bar.max_value]
 	
 	if active_mon.is_defeated():
-		hide() # hide this control if the mon is defeated
+		create_tween().tween_property(self, "modulate:a", 0.0, 0.2)
 	
 func _on_mon_stats_changed() -> void:
 	stat_arrows.on_stats_changed(active_mon)

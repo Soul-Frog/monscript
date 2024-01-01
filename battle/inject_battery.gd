@@ -3,6 +3,11 @@ extends Node2D
 const BATTERY_SEGMENT_UNDER = preload("res://assets/ui/battle/inject_battery_segment_under.png")
 const BATTERY_SEGMENT_PROGRESS = preload("res://assets/ui/battle/inject_battery_segment_progress.png")
 
+# green color of a full bar
+const BATTERY_FULL_COLOR = Color(114.0/255.0, 213.0/255.0, 114.0/225.0)
+# yellow color of a filling bar
+const BATTERY_PARTIAL_COLOR = Color(255.0/255.0, 245.0/255.0, 157.0/255.0)
+
 @onready var _bar = $Bar
 @onready var _top = $Bar/Top
 
@@ -24,6 +29,7 @@ func _grow() -> void:
 	new_segment.texture_progress = BATTERY_SEGMENT_PROGRESS
 	new_segment.max_value = GameData.POINTS_PER_INJECT
 	new_segment.fill_mode = new_segment.FILL_BOTTOM_TO_TOP
+	new_segment.texture_progress_offset = Vector2(3, 1)
 	
 	# it should be placed 3 pixels above the bottom pixel of the bottommost bar..
 	var bottom = _get_bottommost_bar()
@@ -49,9 +55,10 @@ func _update_progress() -> void:
 	var segs_reversed = _bar.get_children()
 	segs_reversed.reverse()
 	for segment in segs_reversed:
-		var progress_for_bar = 10 if progress_left > 10 else progress_left
+		var progress_for_bar = GameData.POINTS_PER_INJECT if progress_left > GameData.POINTS_PER_INJECT else progress_left
 		progress_left -= progress_for_bar
 		segment.value = progress_for_bar
+		segment.tint_progress = BATTERY_FULL_COLOR if segment.value == GameData.POINTS_PER_INJECT else BATTERY_PARTIAL_COLOR
 
 func _update_bar_size() -> void:
 	var segments = GameData.get_var(GameData.MAX_INJECTS)

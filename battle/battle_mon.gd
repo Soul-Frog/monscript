@@ -115,10 +115,6 @@ func _ready():
 	assert(shake_animation_player)
 	assert(flash_animation_player)
 
-func _process(delta):
-	if base_mon.get_mon_type() == MonData.MonType.GELIF:
-		print(self.modulate.a)
-
 # Initializes this battle_mon with an underlying mon object
 func init_mon(mon: MonData.Mon, monTeam: Battle.Team) -> void:
 	base_mon = mon
@@ -332,10 +328,7 @@ func take_damage(damage_taken: int, damage_type: MonData.DamageType) -> void:
 	
 	if current_health == 0:
 		set_action_points(0)
-		var tween = create_tween()
-		tween.tween_property(self, "modulate:a", 0.0, 1.0)
-		tween.set_speed_scale(_speed_scale)
-		_active_tweens.append(tween)
+		create_tween().tween_property(self, "modulate:a", 0.0, 0.25)
 		emit_signal("zero_health", self)
 
 func shake() -> void:
