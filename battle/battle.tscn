@@ -5,36 +5,36 @@
 [ext_resource type="Script" path="res://decorators/fade_decorator.gd" id="2_cfdr2"]
 [ext_resource type="PackedScene" uid="uid://bo77v3uohwvy1" path="res://mons/bitleon.tscn" id="5_a0vn4"]
 [ext_resource type="PackedScene" uid="uid://ds2pwty7e10tr" path="res://battle/monblock.tscn" id="5_fkqod"]
+[ext_resource type="Texture2D" uid="uid://6daimh3y1x0t" path="res://assets/ui/battle/escape/escape_unselected.png" id="13_wkbv7"]
 [ext_resource type="PackedScene" uid="uid://dwydicdw81oc0" path="res://battle/animator.tscn" id="15_dus4q"]
+[ext_resource type="Texture2D" uid="uid://cavj5xwulo4j5" path="res://assets/ui/battle/escape/escape_selected.png" id="15_mnvwo"]
+[ext_resource type="Texture2D" uid="uid://il1qnpcind02" path="res://assets/ui/battle/escape/escape_selected_hover.png" id="16_bfrlm"]
 [ext_resource type="PackedScene" uid="uid://4c05s8pkxawq" path="res://battle/log.tscn" id="16_ugd8u"]
 [ext_resource type="Shader" path="res://battle/monblock.gdshader" id="17_f5gwn"]
+[ext_resource type="Texture2D" uid="uid://dydqenioadj7m" path="res://assets/ui/battle/escape/escape_selected_pressed.png" id="17_tcwjb"]
+[ext_resource type="Texture2D" uid="uid://b6ompunyhpbw3" path="res://assets/ui/battle/escape/escape_unselected_hover.png" id="18_1a8j8"]
+[ext_resource type="Texture2D" uid="uid://c74vtibrdvx6s" path="res://assets/ui/battle/escape/escape_unselected_pressed.png" id="19_2tsbn"]
 [ext_resource type="Script" path="res://battle/speed_controls.gd" id="19_4ka6e"]
 [ext_resource type="Script" path="res://battle/selectable_button.gd" id="19_8gl6u"]
-[ext_resource type="Texture2D" uid="uid://dk21l7v2aax6u" path="res://assets/ui/battle/play_selected.png" id="19_gnxuv"]
-[ext_resource type="Texture2D" uid="uid://cfjdvwuvnd85b" path="res://assets/ui/battle/play_selected_hover.png" id="21_lxmei"]
-[ext_resource type="Texture2D" uid="uid://hxinacukfcas" path="res://assets/ui/battle/play_selected_pressed.png" id="22_6wf36"]
-[ext_resource type="Texture2D" uid="uid://dbfqgr6err8q3" path="res://assets/ui/battle/play_unselected.png" id="22_sc4kn"]
-[ext_resource type="Texture2D" uid="uid://6qcrwq5fgl26" path="res://assets/ui/battle/play_unselected_hover.png" id="23_ovl1o"]
-[ext_resource type="Texture2D" uid="uid://bfq2ftx62qyut" path="res://assets/ui/battle/play_unselected_pressed.png" id="25_58t56"]
-[ext_resource type="Texture2D" uid="uid://cv675y4gfjwr2" path="res://assets/ui/battle/speedup_unselected.png" id="26_de88d"]
-[ext_resource type="Texture2D" uid="uid://bpc0ngkg0np2u" path="res://assets/ui/battle/pause_unselected.png" id="27_c6ocw"]
-[ext_resource type="Texture2D" uid="uid://c8qj8pbqg6m4l" path="res://assets/ui/battle/speedup_selected.png" id="27_t3g37"]
-[ext_resource type="Texture2D" uid="uid://b3v2y41o8bebb" path="res://assets/ui/battle/speedup_selected_hover.png" id="28_fxlpu"]
-[ext_resource type="Texture2D" uid="uid://c423u5654d71" path="res://assets/ui/battle/pause_selected.png" id="28_iasl6"]
-[ext_resource type="Texture2D" uid="uid://b1js2j5fd4y3b" path="res://assets/ui/battle/pause_selected_hover.png" id="29_4mak5"]
-[ext_resource type="Texture2D" uid="uid://gp45q4afw7ue" path="res://assets/ui/battle/speedup_selected_pressed.png" id="29_iu8h3"]
-[ext_resource type="Texture2D" uid="uid://b12o4kqn5jjfr" path="res://assets/ui/battle/speedup_unselected_hover.png" id="30_5hm2j"]
-[ext_resource type="Texture2D" uid="uid://jkpq66hhfg7i" path="res://assets/ui/battle/pause_selected_pressed.png" id="30_uk6xc"]
-[ext_resource type="Texture2D" uid="uid://cxbag2ijkv0vk" path="res://assets/ui/battle/speedup_unselected_pressed.png" id="31_52kg2"]
-[ext_resource type="Texture2D" uid="uid://dnr0dbvcp8353" path="res://assets/ui/battle/pause_unselected_hover.png" id="31_wocrg"]
-[ext_resource type="Texture2D" uid="uid://dyq5ntyl5ibnp" path="res://assets/ui/battle/pause_unselected_pressed.png" id="32_muvxr"]
-[ext_resource type="Texture2D" uid="uid://6daimh3y1x0t" path="res://assets/ui/battle/escape_unselected.png" id="39_7mjlu"]
+[ext_resource type="Texture2D" uid="uid://dk21l7v2aax6u" path="res://assets/ui/battle/speed/play_selected.png" id="22_kji8a"]
+[ext_resource type="Texture2D" uid="uid://cfjdvwuvnd85b" path="res://assets/ui/battle/speed/play_selected_hover.png" id="23_1ytpl"]
+[ext_resource type="Texture2D" uid="uid://hxinacukfcas" path="res://assets/ui/battle/speed/play_selected_pressed.png" id="24_1t4ju"]
+[ext_resource type="Texture2D" uid="uid://dbfqgr6err8q3" path="res://assets/ui/battle/speed/play_unselected.png" id="25_lq63e"]
+[ext_resource type="Texture2D" uid="uid://6qcrwq5fgl26" path="res://assets/ui/battle/speed/play_unselected_hover.png" id="26_h0n2n"]
+[ext_resource type="Texture2D" uid="uid://bfq2ftx62qyut" path="res://assets/ui/battle/speed/play_unselected_pressed.png" id="27_cssnr"]
+[ext_resource type="Texture2D" uid="uid://cv675y4gfjwr2" path="res://assets/ui/battle/speed/speedup_unselected.png" id="28_i4lf7"]
+[ext_resource type="Texture2D" uid="uid://c8qj8pbqg6m4l" path="res://assets/ui/battle/speed/speedup_selected.png" id="29_o24bc"]
+[ext_resource type="Texture2D" uid="uid://b3v2y41o8bebb" path="res://assets/ui/battle/speed/speedup_selected_hover.png" id="30_b58kp"]
+[ext_resource type="Texture2D" uid="uid://gp45q4afw7ue" path="res://assets/ui/battle/speed/speedup_selected_pressed.png" id="31_bkbcv"]
+[ext_resource type="Texture2D" uid="uid://b12o4kqn5jjfr" path="res://assets/ui/battle/speed/speedup_unselected_hover.png" id="32_ysaop"]
+[ext_resource type="Texture2D" uid="uid://cxbag2ijkv0vk" path="res://assets/ui/battle/speed/speedup_unselected_pressed.png" id="33_vd5uu"]
+[ext_resource type="Texture2D" uid="uid://bpc0ngkg0np2u" path="res://assets/ui/battle/speed/pause_unselected.png" id="34_xjyo7"]
+[ext_resource type="Texture2D" uid="uid://c423u5654d71" path="res://assets/ui/battle/speed/pause_selected.png" id="35_nouvt"]
+[ext_resource type="Texture2D" uid="uid://b1js2j5fd4y3b" path="res://assets/ui/battle/speed/pause_selected_hover.png" id="36_g77gt"]
+[ext_resource type="Texture2D" uid="uid://jkpq66hhfg7i" path="res://assets/ui/battle/speed/pause_selected_pressed.png" id="37_cqkj2"]
+[ext_resource type="Texture2D" uid="uid://dnr0dbvcp8353" path="res://assets/ui/battle/speed/pause_unselected_hover.png" id="38_mi7fj"]
+[ext_resource type="Texture2D" uid="uid://dyq5ntyl5ibnp" path="res://assets/ui/battle/speed/pause_unselected_pressed.png" id="39_ni8be"]
 [ext_resource type="Script" path="res://battle/escape_controls.gd" id="40_migwn"]
-[ext_resource type="Texture2D" uid="uid://cavj5xwulo4j5" path="res://assets/ui/battle/escape_selected.png" id="40_vytcv"]
-[ext_resource type="Texture2D" uid="uid://il1qnpcind02" path="res://assets/ui/battle/escape_selected_hover.png" id="41_yk0s4"]
-[ext_resource type="Texture2D" uid="uid://dydqenioadj7m" path="res://assets/ui/battle/escape_selected_pressed.png" id="42_yy8nj"]
-[ext_resource type="Texture2D" uid="uid://b6ompunyhpbw3" path="res://assets/ui/battle/escape_unselected_hover.png" id="43_ctmj8"]
-[ext_resource type="Texture2D" uid="uid://c74vtibrdvx6s" path="res://assets/ui/battle/escape_unselected_pressed.png" id="44_rf0fw"]
 [ext_resource type="Texture2D" uid="uid://bowg27ny7ev06" path="res://assets/ui/battle/console9patch.png" id="47_me3k7"]
 [ext_resource type="Script" path="res://battle/action_name_box.gd" id="47_yq6eb"]
 [ext_resource type="Theme" uid="uid://612i0h3ltb6t" path="res://monscript_theme.tres" id="49_cid02"]
@@ -198,14 +198,14 @@ offset_left = 262.0
 offset_top = 161.0
 offset_right = 317.0
 offset_bottom = 179.0
-texture_normal = ExtResource("39_7mjlu")
+texture_normal = ExtResource("13_wkbv7")
 script = ExtResource("19_8gl6u")
-texture_selected = ExtResource("40_vytcv")
-texture_selected_hover = ExtResource("41_yk0s4")
-texture_selected_pressed = ExtResource("42_yy8nj")
-texture_unselected = ExtResource("39_7mjlu")
-texture_unselected_hover = ExtResource("43_ctmj8")
-texture_unselected_pressed = ExtResource("44_rf0fw")
+texture_selected = ExtResource("15_mnvwo")
+texture_selected_hover = ExtResource("16_bfrlm")
+texture_selected_pressed = ExtResource("17_tcwjb")
+texture_unselected = ExtResource("13_wkbv7")
+texture_unselected_hover = ExtResource("18_1a8j8")
+texture_unselected_pressed = ExtResource("19_2tsbn")
 toggleable = true
 
 [node name="Text" type="RichTextLabel" parent="UI/EscapeControls"]
@@ -238,14 +238,14 @@ offset_left = 1.0
 offset_top = 164.0
 offset_right = 16.0
 offset_bottom = 179.0
-texture_normal = ExtResource("19_gnxuv")
+texture_normal = ExtResource("22_kji8a")
 script = ExtResource("19_8gl6u")
-texture_selected = ExtResource("19_gnxuv")
-texture_selected_hover = ExtResource("21_lxmei")
-texture_selected_pressed = ExtResource("22_6wf36")
-texture_unselected = ExtResource("22_sc4kn")
-texture_unselected_hover = ExtResource("23_ovl1o")
-texture_unselected_pressed = ExtResource("25_58t56")
+texture_selected = ExtResource("22_kji8a")
+texture_selected_hover = ExtResource("23_1ytpl")
+texture_selected_pressed = ExtResource("24_1t4ju")
+texture_unselected = ExtResource("25_lq63e")
+texture_unselected_hover = ExtResource("26_h0n2n")
+texture_unselected_pressed = ExtResource("27_cssnr")
 selected = true
 
 [node name="Speedup" type="TextureButton" parent="UI/SpeedControls"]
@@ -253,28 +253,28 @@ offset_left = 16.0
 offset_top = 164.0
 offset_right = 31.0
 offset_bottom = 179.0
-texture_normal = ExtResource("26_de88d")
+texture_normal = ExtResource("28_i4lf7")
 script = ExtResource("19_8gl6u")
-texture_selected = ExtResource("27_t3g37")
-texture_selected_hover = ExtResource("28_fxlpu")
-texture_selected_pressed = ExtResource("29_iu8h3")
-texture_unselected = ExtResource("26_de88d")
-texture_unselected_hover = ExtResource("30_5hm2j")
-texture_unselected_pressed = ExtResource("31_52kg2")
+texture_selected = ExtResource("29_o24bc")
+texture_selected_hover = ExtResource("30_b58kp")
+texture_selected_pressed = ExtResource("31_bkbcv")
+texture_unselected = ExtResource("28_i4lf7")
+texture_unselected_hover = ExtResource("32_ysaop")
+texture_unselected_pressed = ExtResource("33_vd5uu")
 
 [node name="Pause" type="TextureButton" parent="UI/SpeedControls"]
 offset_left = 31.0
 offset_top = 164.0
 offset_right = 46.0
 offset_bottom = 179.0
-texture_normal = ExtResource("27_c6ocw")
+texture_normal = ExtResource("34_xjyo7")
 script = ExtResource("19_8gl6u")
-texture_selected = ExtResource("28_iasl6")
-texture_selected_hover = ExtResource("29_4mak5")
-texture_selected_pressed = ExtResource("30_uk6xc")
-texture_unselected = ExtResource("27_c6ocw")
-texture_unselected_hover = ExtResource("31_wocrg")
-texture_unselected_pressed = ExtResource("32_muvxr")
+texture_selected = ExtResource("35_nouvt")
+texture_selected_hover = ExtResource("36_g77gt")
+texture_selected_pressed = ExtResource("37_cqkj2")
+texture_unselected = ExtResource("34_xjyo7")
+texture_unselected_hover = ExtResource("38_mi7fj")
+texture_unselected_pressed = ExtResource("39_ni8be")
 
 [node name="PauseFilter" type="ColorRect" parent="UI/SpeedControls"]
 modulate = Color(0, 0, 1, 0)

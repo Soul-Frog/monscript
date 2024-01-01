@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://fsp55qrvdmua"]
 
 [ext_resource type="Script" path="res://battle/inject_battery.gd" id="1_18h0m"]
-[ext_resource type="Texture2D" uid="uid://dq0c68vk6l562" path="res://assets/ui/battle/inject_battery_top_under.png" id="1_p2tt8"]
-[ext_resource type="Texture2D" uid="uid://cgbjx6jjnelvl" path="res://assets/ui/battle/inject_battery_top_progress.png" id="2_vovuf"]
+[ext_resource type="Texture2D" uid="uid://dq0c68vk6l562" path="res://assets/ui/battle/inject/inject_battery_top_under.png" id="2_rdd21"]
+[ext_resource type="Texture2D" uid="uid://cgbjx6jjnelvl" path="res://assets/ui/battle/inject/inject_battery_top_progress.png" id="3_u0ypr"]
 
 [node name="InjectBattery" type="Node2D"]
 script = ExtResource("1_18h0m")
@@ -15,6 +15,6 @@ offset_bottom = 18.0
 max_value = 10.0
 value = 5.0
 fill_mode = 3
-texture_under = ExtResource("1_p2tt8")
-texture_progress = ExtResource("2_vovuf")
+texture_under = ExtResource("2_rdd21")
+texture_progress = ExtResource("3_u0ypr")
 texture_progress_offset = Vector2(3, 3)

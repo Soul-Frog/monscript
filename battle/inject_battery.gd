@@ -1,7 +1,7 @@
 extends Node2D
 
-const BATTERY_SEGMENT_UNDER = preload("res://assets/ui/battle/inject_battery_segment_under.png")
-const BATTERY_SEGMENT_PROGRESS = preload("res://assets/ui/battle/inject_battery_segment_progress.png")
+const BATTERY_SEGMENT_UNDER = preload("res://assets/ui/battle/inject/inject_battery_segment_under.png")
+const BATTERY_SEGMENT_PROGRESS = preload("res://assets/ui/battle/inject/inject_battery_segment_progress.png")
 
 # green color of a full bar
 const BATTERY_FULL_COLOR = Color(114.0/255.0, 213.0/255.0, 114.0/225.0)

@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://c8wcyjwqiawd8"]
 
 [ext_resource type="Script" path="res://battle/queue.gd" id="1_o5w2p"]
-[ext_resource type="Texture2D" uid="uid://dk8uy8sfciri8" path="res://assets/ui/battle/queue.png" id="1_u3d8c"]
-[ext_resource type="Texture2D" uid="uid://bvyoaqbyxxe5l" path="res://assets/ui/battle/queue_background_block.png" id="2_e2iaj"]
-[ext_resource type="Texture2D" uid="uid://byj8era3nrhpv" path="res://assets/ui/battle/queue_headshot_placeholder.png" id="3_013gf"]
+[ext_resource type="Texture2D" uid="uid://dk8uy8sfciri8" path="res://assets/ui/battle/queue/queue.png" id="1_u3d8c"]
+[ext_resource type="Texture2D" uid="uid://bvyoaqbyxxe5l" path="res://assets/ui/battle/queue/queue_background_block.png" id="2_e2iaj"]
+[ext_resource type="Texture2D" uid="uid://byj8era3nrhpv" path="res://assets/ui/battle/queue/queue_headshot_placeholder.png" id="3_013gf"]
 
 [node name="Queue" type="Node2D"]
 script = ExtResource("1_o5w2p")
