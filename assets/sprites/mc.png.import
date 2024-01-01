@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bb7yokb2yw0dv"
-path="res://.godot/imported/gateway.png-0037875c732bf981f784d696cfdb5c98.ctex"
+uid="uid://cjypeabhp8v4y"
+path="res://.godot/imported/mc.png-a883d22ba10c68c8b6b0446131bd45ee.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/objects/gateway.png"
-dest_files=["res://.godot/imported/gateway.png-0037875c732bf981f784d696cfdb5c98.ctex"]
+source_file="res://assets/sprites/mc.png"
+dest_files=["res://.godot/imported/mc.png-a883d22ba10c68c8b6b0446131bd45ee.ctex"]
 
 [params]
 

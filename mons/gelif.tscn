@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://0pfd6i8pcnc1"]
 
 [ext_resource type="PackedScene" uid="uid://qd8gobfrvv8u" path="res://mons/mon.tscn" id="1_qiq4j"]
-[ext_resource type="Texture2D" uid="uid://bnex5y2itwgt8" path="res://assets/mons/gelif.png" id="2_6pysy"]
+[ext_resource type="Texture2D" uid="uid://bnex5y2itwgt8" path="res://assets/sprites/mons/gelif.png" id="2_6pysy"]
 [ext_resource type="Shader" path="res://mons/mon.gdshader" id="2_why67"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5qkea"]

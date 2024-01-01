@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://tg5harh0rv1m"]
 
-[ext_resource type="Texture2D" uid="uid://dos1wnic6bcd7" path="res://assets/mons/magnetfrog.png" id="1_3isa0"]
+[ext_resource type="Texture2D" uid="uid://dos1wnic6bcd7" path="res://assets/sprites/mons/magnetfrog.png" id="1_3isa0"]
 [ext_resource type="Texture2D" uid="uid://cgd4ok4efdoau" path="res://assets/ui/database/database_entry_unselected.png" id="1_fqmop"]
 [ext_resource type="Texture2D" uid="uid://2wy01i3nfpl7" path="res://assets/ui/database/database_entry_selected.png" id="1_wpxe2"]
 [ext_resource type="Script" path="res://ui/database/database_entry.gd" id="1_wupum"]

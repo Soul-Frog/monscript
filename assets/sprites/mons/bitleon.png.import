@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b7rysph8rb228"
-path="res://.godot/imported/water_switch.png-1df16189574e6276a3e6debba0206eda.ctex"
+uid="uid://7f1xs6lh2wuf"
+path="res://.godot/imported/bitleon.png-40aba79c95ca89aefce882796246289d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/objects/water_switch.png"
-dest_files=["res://.godot/imported/water_switch.png-1df16189574e6276a3e6debba0206eda.ctex"]
+source_file="res://assets/sprites/mons/bitleon.png"
+dest_files=["res://.godot/imported/bitleon.png-40aba79c95ca89aefce882796246289d.ctex"]
 
 [params]
 

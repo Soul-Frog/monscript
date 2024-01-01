@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cuhtrqefjsuhu"
-path="res://.godot/imported/stingarray.png-281f4704d62246c1a360d1baacc6961b.ctex"
+uid="uid://ca5ih1flogtvs"
+path="res://.godot/imported/orchin.png-94b43c90251695d9bb73a770040400ce.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/mons/stingarray.png"
-dest_files=["res://.godot/imported/stingarray.png-281f4704d62246c1a360d1baacc6961b.ctex"]
+source_file="res://assets/sprites/mons/orchin.png"
+dest_files=["res://.godot/imported/orchin.png-94b43c90251695d9bb73a770040400ce.ctex"]
 
 [params]
 

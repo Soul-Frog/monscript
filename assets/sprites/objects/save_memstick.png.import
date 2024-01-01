@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://binyaw8wlp5ye"
-path="res://.godot/imported/test.png-b3f95e5af9f198c85e5a63d579e92d99.ctex"
+uid="uid://cx7wo2v5axv5i"
+path="res://.godot/imported/save_memstick.png-a55df4b3666e38f3085a35715d4aa5bf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://battle/test.png"
-dest_files=["res://.godot/imported/test.png-b3f95e5af9f198c85e5a63d579e92d99.ctex"]
+source_file="res://assets/sprites/objects/save_memstick.png"
+dest_files=["res://.godot/imported/save_memstick.png-a55df4b3666e38f3085a35715d4aa5bf.ctex"]
 
 [params]
 

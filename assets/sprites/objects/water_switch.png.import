@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cx7wo2v5axv5i"
-path="res://.godot/imported/save_memstick.png-f4231ee870446041a479f41c161d2a04.ctex"
+uid="uid://b7rysph8rb228"
+path="res://.godot/imported/water_switch.png-32fc0784c1c84809fa28833173412ac3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/objects/save_memstick.png"
-dest_files=["res://.godot/imported/save_memstick.png-f4231ee870446041a479f41c161d2a04.ctex"]
+source_file="res://assets/sprites/objects/water_switch.png"
+dest_files=["res://.godot/imported/water_switch.png-32fc0784c1c84809fa28833173412ac3.ctex"]
 
 [params]
 

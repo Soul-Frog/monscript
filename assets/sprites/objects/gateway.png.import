@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cwpyjlcub2n3i"
-path="res://.godot/imported/chorse.png-f85ce5733392dca98c8028c4ffccf2e1.ctex"
+uid="uid://bb7yokb2yw0dv"
+path="res://.godot/imported/gateway.png-5c28a59ec9ddf2fe073bb2477bae7184.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/mons/chorse.png"
-dest_files=["res://.godot/imported/chorse.png-f85ce5733392dca98c8028c4ffccf2e1.ctex"]
+source_file="res://assets/sprites/objects/gateway.png"
+dest_files=["res://.godot/imported/gateway.png-5c28a59ec9ddf2fe073bb2477bae7184.ctex"]
 
 [params]
 

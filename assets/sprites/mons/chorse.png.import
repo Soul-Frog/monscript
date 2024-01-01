@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cxg76f1ffb4ri"
-path="res://.godot/imported/chest.png-e94d8c1f185943ca71d819e6632a8e4e.ctex"
+uid="uid://cwpyjlcub2n3i"
+path="res://.godot/imported/chorse.png-97f4b953d2deaa1c3a25ec92c63af69c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/objects/chest.png"
-dest_files=["res://.godot/imported/chest.png-e94d8c1f185943ca71d819e6632a8e4e.ctex"]
+source_file="res://assets/sprites/mons/chorse.png"
+dest_files=["res://.godot/imported/chorse.png-97f4b953d2deaa1c3a25ec92c63af69c.ctex"]
 
 [params]
 

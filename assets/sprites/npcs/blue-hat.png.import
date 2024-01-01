@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ca5ih1flogtvs"
-path="res://.godot/imported/orchin.png-e6380b4fdbd99e3a1f25bd0095174e60.ctex"
+uid="uid://ldp8jp2472f3"
+path="res://.godot/imported/blue-hat.png-7f0912e3e4470a31a115a150eff0a832.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/mons/orchin.png"
-dest_files=["res://.godot/imported/orchin.png-e6380b4fdbd99e3a1f25bd0095174e60.ctex"]
+source_file="res://assets/sprites/npcs/blue-hat.png"
+dest_files=["res://.godot/imported/blue-hat.png-7f0912e3e4470a31a115a150eff0a832.ctex"]
 
 [params]
 

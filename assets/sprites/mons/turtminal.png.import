@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://crvccvbiw0w6i"
-path="res://.godot/imported/pascalican.png-b1d1c49775ce93d374a057ab82ff281d.ctex"
+uid="uid://b4f0df3adk8ty"
+path="res://.godot/imported/turtminal.png-d37343f51c9ca8065f4c89d0d0f2969d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/mons/pascalican.png"
-dest_files=["res://.godot/imported/pascalican.png-b1d1c49775ce93d374a057ab82ff281d.ctex"]
+source_file="res://assets/sprites/mons/turtminal.png"
+dest_files=["res://.godot/imported/turtminal.png-d37343f51c9ca8065f4c89d0d0f2969d.ctex"]
 
 [params]
 

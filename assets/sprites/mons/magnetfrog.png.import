@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7f1xs6lh2wuf"
-path="res://.godot/imported/bitleon.png-0da17ee5b80a6b44c2b0acbc687539e7.ctex"
+uid="uid://dos1wnic6bcd7"
+path="res://.godot/imported/magnetfrog.png-2c952d1723aa02fa071d810715d3cd35.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/mons/bitleon.png"
-dest_files=["res://.godot/imported/bitleon.png-0da17ee5b80a6b44c2b0acbc687539e7.ctex"]
+source_file="res://assets/sprites/mons/magnetfrog.png"
+dest_files=["res://.godot/imported/magnetfrog.png-2c952d1723aa02fa071d810715d3cd35.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b4f0df3adk8ty"
-path="res://.godot/imported/turtminal.png-1e30705bc655d70d5c55e2194c31fcf8.ctex"
+uid="uid://cuhtrqefjsuhu"
+path="res://.godot/imported/stingarray.png-52763b93b4f14ff6b3b2f13aff886f00.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/mons/turtminal.png"
-dest_files=["res://.godot/imported/turtminal.png-1e30705bc655d70d5c55e2194c31fcf8.ctex"]
+source_file="res://assets/sprites/mons/stingarray.png"
+dest_files=["res://.godot/imported/stingarray.png-52763b93b4f14ff6b3b2f13aff886f00.ctex"]
 
 [params]
 

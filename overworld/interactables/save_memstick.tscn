@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://overworld/interactables/save_memstick.gd" id="1_2u0cb"]
 [ext_resource type="PackedScene" uid="uid://cd6pj5homenki" path="res://overworld/interactables/interactable_base.tscn" id="1_sret2"]
 [ext_resource type="Resource" uid="uid://c3v1m5f3j7tx0" path="res://dialogue/save.dialogue" id="2_b6087"]
-[ext_resource type="Texture2D" uid="uid://cx7wo2v5axv5i" path="res://assets/objects/save_memstick.png" id="3_w77c4"]
+[ext_resource type="Texture2D" uid="uid://cx7wo2v5axv5i" path="res://assets/sprites/objects/save_memstick.png" id="3_w77c4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lou66"]
 atlas = ExtResource("3_w77c4")

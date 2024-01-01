@@ -18,7 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://rnh5madliw2g" path="res://assets/maps/coolant_cave/cave2_entrance/cave2_fg.png" id="12_wmi3w"]
 [ext_resource type="Script" path="res://overworld/components/overworld_mons/wanderer.gd" id="13_5rf1m"]
 [ext_resource type="PackedScene" uid="uid://dm1epg70fkia2" path="res://mons/orchin.tscn" id="15_c7tfi"]
-[ext_resource type="Texture2D" uid="uid://bb7yokb2yw0dv" path="res://assets/objects/gateway.png" id="18_b6w6p"]
+[ext_resource type="Texture2D" uid="uid://bb7yokb2yw0dv" path="res://assets/sprites/objects/gateway.png" id="18_b6w6p"]
 [ext_resource type="PackedScene" uid="uid://cooanm8l6tpwi" path="res://overworld/interactables/save_memstick.tscn" id="20_hok6v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mkqcf"]
