@@ -1,16 +1,44 @@
-[gd_scene load_steps=5 format=3 uid="uid://cklrslmbq7v88"]
+[gd_scene load_steps=9 format=3 uid="uid://cklrslmbq7v88"]
 
 [ext_resource type="Script" path="res://battle/results.gd" id="1_abqku"]
 [ext_resource type="Texture2D" uid="uid://b2r8psbjx6l0i" path="res://assets/ui/battle/result/result_continue.png" id="2_q258l"]
 [ext_resource type="Texture2D" uid="uid://ci10m6nj2fp7o" path="res://assets/ui/battle/result/result_continue_pressed.png" id="3_6js8l"]
 [ext_resource type="Texture2D" uid="uid://bc3r0wxe0vx6m" path="res://assets/ui/battle/result/result_continue_hover.png" id="4_vihk8"]
+[ext_resource type="Texture2D" uid="uid://b4fnopftplgyy" path="res://assets/ui/battle/result/result_xp.png" id="5_eth31"]
+[ext_resource type="Texture2D" uid="uid://r31n5rr7abrj" path="res://assets/ui/battle/result/result_bits.png" id="6_y7fa6"]
+[ext_resource type="Texture2D" uid="uid://1yset3u55dph" path="res://assets/ui/battle/result/result_bugs.png" id="7_uvtaj"]
+[ext_resource type="Texture2D" uid="uid://cheqyjiipksha" path="res://assets/ui/battle/result/result_decompilation.png" id="8_lyqbn"]
 
 [node name="Results" type="Node2D"]
 script = ExtResource("1_abqku")
 
+[node name="BG" type="Node2D" parent="."]
+
+[node name="XP" type="Sprite2D" parent="BG"]
+position = Vector2(138, 28)
+texture = ExtResource("5_eth31")
+centered = false
+
+[node name="Bits" type="Sprite2D" parent="BG"]
+position = Vector2(138, 44)
+texture = ExtResource("6_y7fa6")
+centered = false
+
+[node name="Bugs" type="Sprite2D" parent="BG"]
+position = Vector2(203, 28)
+texture = ExtResource("7_uvtaj")
+centered = false
+
+[node name="Decompilation" type="Sprite2D" parent="BG"]
+position = Vector2(138, 60)
+texture = ExtResource("8_lyqbn")
+centered = false
+
 [node name="Exit" type="TextureButton" parent="."]
-offset_right = 8.0
-offset_bottom = 8.0
+offset_left = 154.0
+offset_top = 116.0
+offset_right = 211.0
+offset_bottom = 133.0
 texture_normal = ExtResource("2_q258l")
 texture_pressed = ExtResource("3_6js8l")
 texture_hover = ExtResource("4_vihk8")
