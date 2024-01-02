@@ -5,11 +5,9 @@ const BATTLE_MON_SCRIPT := preload("res://battle/battle_mon.gd")
 
 class BattleResult:
 	var end_condition
-	var xp_earned
 	
 	func _init():
 		end_condition = Global.BattleEndCondition.NONE
-		xp_earned = 0
 
 enum BattleState {
 	EMPTY, # this battle scene has no mons; it's ready for a call to setup_battle
@@ -67,6 +65,9 @@ var trying_to_escape = false
 @onready var _player_mon_blocks = $UI/PlayerMonBlocks
 @onready var _computer_mon_blocks = $UI/ComputerMonBlocks
 @onready var _results = $UI/Results
+
+# bugs dropped by defeating opponent mons
+var _bugs_dropped = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -171,6 +172,8 @@ func setup_battle(player_team, computer_team):
 	_escape_controls.reset()
 	_action_name_box.reset()
 	_inject_battery.update()
+	
+	_bugs_dropped = []
 	
 	assert(_player_mons.get_child_count() != 0, "No valid player mons!")
 	assert(_computer_mons.get_child_count() != 0, "No valid computer mons!")
@@ -306,12 +309,6 @@ func _on_mon_zero_health(mon):
 	
 	_log.add_text("%s has been terminated!" % _log.MON_NAME_PLACEHOLDER, mon)
 	
-	# TODO - do this at the end in battle results instead of when the mon is defeated
-	# increment xp earned from battle if this was a computer mon
-	# min exp earn is 1; so level 0 mons still provide 1 xp
-	if mon in _computer_mons.get_children():
-		battle_result.xp_earned += max(mon.base_mon.get_level(), 1)
-	
 	# remove this mon from the action queue if needed
 	# don't remove from front of queue; since if this mon died performing an action, it will remove itself
 	# and if it died from another mon's action, it must not have been at the front
@@ -343,7 +340,36 @@ func _end_battle_and_show_results():
 	assert(battle_result.end_condition != Global.BattleEndCondition.NONE)
 	state = BattleState.FINISHED
 	_log.add_text("Battle terminated.")
-	_results.show_results(battle_result)
+	
+	# hide escape, speed, and queue
+	var tween = create_tween()
+	tween.tween_property(_speed_controls, "modulate:a", 0, 0.2)
+	tween.parallel().tween_property(_escape_controls, "modulate:a", 0, 0.2)
+	tween.parallel().tween_property(_mon_action_queue, "modulate:a", 0, 0.2)
+	
+	# calculate experience and bits earned
+	var xp_earned = 0
+	var bits_earned = 0
+	
+	# increment xp earned from battle if this was a computer mon
+	# min exp earn is 1; so level 0 mons still provide 1 xp
+	for mon in _computer_mons.get_children():
+		xp_earned += max(mon.base_mon.get_level(), 1)
+		bits_earned += 1 #todo
+	
+	# grant XP to mons
+	for mon in GameData.team: 
+		if mon != null:
+			mon.gain_XP(xp_earned)
+	
+	# give bits to the player
+	GameData.add_to_var(GameData.BITS, bits_earned)
+	
+	# give bug drops to player
+	for bug in _bugs_dropped:
+		GameData.bug_inventory[bug] += 1
+	
+	_results.show_results(battle_result, xp_earned, bits_earned, _bugs_dropped, _player_mon_blocks.get_children())
 
 func _on_results_exited():
 	Events.emit_signal("battle_ended", battle_result)

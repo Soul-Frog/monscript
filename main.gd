@@ -89,11 +89,6 @@ func _on_battle_ended(battle_result: Battle.BattleResult) -> void:
 	# delete overworld encounter if win; respawn player if lose; handle escaping
 	OVERWORLD.handle_battle_results(battle_result.end_condition)
 	
-	# give experience to player's mons who participated in battle
-	for mon in GameData.team: 
-		if mon != null:
-			mon.gain_XP(battle_result.xp_earned)
-	
 	await _switch_to_scene(OVERWORLD, FADE)
 	
 	# clean up the battle scene

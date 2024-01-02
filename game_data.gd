@@ -36,8 +36,9 @@ func path_for_area(area_enum: GameData.Area) -> String: # function to get script
 	assert(area_enum != Area.NONE, "Area enum is none!")
 	return _area_enum_to_path[area_enum]
 
-
 ## Persistent Variables. ##
+# Amount of bits (currency)
+const BITS = "BITS"
 # Key for the player's name.
 const PLAYER_NAME = "PlAYER_NAME"
 # Maximum number of lines in a script
@@ -58,6 +59,7 @@ const COOLANT_CAVE_WATER_RAISED = "COOLANT_CAVE_WATER_RAISED"
 # Do not access this directly, use get_var(String) and set_var(String, Variant) instead.
 # Variables can be bools, floats, Strings, or ints. Anything else will trigger an assertion for now.
 var _variables : Dictionary = {
+	BITS : 0,
 	PLAYER_NAME : "???", #default name is displayed in intro dialogue before the player enters the real name
 	LINE_LIMIT : 3, #default number of lines in a script is 3
 	STORAGE_PAGES : 2, #default number of storage pages is 2 (16 mons storage)
@@ -74,6 +76,7 @@ var storage = []  # player's mon storage
 var compilation_progress_per_mon := {} # MonType -> int; maps MonType to unlock progress
 var _block_unlock_map := {} # tracks which blocks have been unlocked for use in the script editor
 var inject_points = 0
+var bug_inventory = {} # dictionary of owned bugs (BugData.Type -> int)
 
 # returns a variable, or null if that variable is not set
 func get_var(variable_name: String):
@@ -85,6 +88,11 @@ func get_var(variable_name: String):
 func set_var(variable_name: String, value) -> void:
 	assert(value is bool or value is String or value is int or value is float, "Can't store values besides bools, Strings, ints, floats.")
 	_variables[variable_name] = value
+
+func add_to_var(variable_name: String, value) -> void:
+	assert(value is float or value is int)
+	assert(_variables[variable_name] is float or _variables[variable_name] is int)
+	_variables[variable_name] += value
 
 func has_var(variable_name: String) -> void:
 	return _variables.has(variable_name)
@@ -108,6 +116,10 @@ func _ready():
 	
 	# mark the initial mon as compiled
 	compilation_progress_per_mon[MonData.MonType.BITLEON] = 100
+	
+	# populate the bug inventory map
+	for bugtype in BugData.Type.values():
+		bug_inventory[bugtype] = 0
 	
 	# populate the block unlock map
 	for block in ScriptData.IF_BLOCK_LIST:
@@ -170,6 +182,9 @@ func save_game():
 	for mon in compilation_progress_per_mon.keys():
 		save_dict["compilation_progress_for_%s" % mon] = compilation_progress_per_mon[mon]
 	
+	for bug in bug_inventory.keys():
+		save_dict["bug_inventory_for_%s" % bug] = bug_inventory[bug]
+	
 	# convert to json
 	var json = JSON.stringify(save_dict)
 	
@@ -211,7 +226,13 @@ func load_game():
 	for mon in compilation_progress_per_mon:
 		var key = "compilation_progress_for_%s" % mon
 		if save_dict.has(key):
-			compilation_progress_per_mon[key] = save_dict[key]
+			compilation_progress_per_mon[mon] = save_dict[key]
+	
+	# read back the bug inventory
+	for bug in bug_inventory:
+		var key = "bug_inventory_for_%s" % bug
+		if save_dict.has(key):
+			bug_inventory[bug] = save_dict[key]
 	
 	# set the player's position and area
 	Events.area_changed.emit(save_dict["current_area"], Vector2(save_dict["player_x"], save_dict["player_y"]), true)

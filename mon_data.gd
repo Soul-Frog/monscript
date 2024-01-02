@@ -412,3 +412,6 @@ func mon_from_json(json_string: String) -> Mon:
 	
 	return mon
 	
+func feed_bug_to_mon(mon: Mon, bug: BugData.Bug) -> void:
+	#TODO EP2
+	pass
