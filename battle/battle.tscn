@@ -1,8 +1,9 @@
-[gd_scene load_steps=51 format=3 uid="uid://dtpehdp2rfsuh"]
+[gd_scene load_steps=52 format=3 uid="uid://dtpehdp2rfsuh"]
 
 [ext_resource type="Script" path="res://battle/battle.gd" id="1_85t5n"]
 [ext_resource type="Texture2D" uid="uid://3oirll1yg54k" path="res://assets/isometric/cave_temple_battle.png" id="2_cb4ye"]
 [ext_resource type="Script" path="res://decorators/fade_decorator.gd" id="2_cfdr2"]
+[ext_resource type="Texture2D" uid="uid://bvtsquwjsp5df" path="res://assets/isometric/wireframe.png" id="3_d8nu3"]
 [ext_resource type="PackedScene" uid="uid://bo77v3uohwvy1" path="res://mons/bitleon.tscn" id="5_a0vn4"]
 [ext_resource type="PackedScene" uid="uid://ds2pwty7e10tr" path="res://battle/monblock.tscn" id="5_fkqod"]
 [ext_resource type="Texture2D" uid="uid://6daimh3y1x0t" path="res://assets/ui/battle/escape/escape_unselected.png" id="13_wkbv7"]
@@ -107,6 +108,12 @@ color = Color(0.411765, 0.666667, 0.745098, 1)
 [node name="Terrain" type="Sprite2D" parent="Scene"]
 z_index = 20
 texture = ExtResource("2_cb4ye")
+centered = false
+
+[node name="Wireframe" type="Sprite2D" parent="Scene"]
+visible = false
+z_index = 20
+texture = ExtResource("3_d8nu3")
 centered = false
 
 [node name="Mons" type="Node2D" parent="."]
