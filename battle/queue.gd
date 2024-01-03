@@ -22,6 +22,9 @@ func _ready() -> void:
 	for team in Battle.Team.values():
 		assert(_team_to_color.has(team))
 
+func reset() -> void:
+	modulate.a = 1
+
 func update_queue(action_queue: Array, player_mons: Node2D, computer_mons: Node2D) -> void:
 	_update_queue_display(_get_next_six_mons(action_queue, player_mons, computer_mons))
 

@@ -28,6 +28,7 @@ func reset():
 	button.reset()
 	text_fade.fade_out()
 	text.modulate.a = 0
+	modulate.a = 1
 
 func toggle_escape():
 	button.emit_signal("pressed")

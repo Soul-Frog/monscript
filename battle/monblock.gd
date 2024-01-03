@@ -52,13 +52,14 @@ func assign_mon(mon: BattleMon) -> void:
 	action_bar.max_value = active_mon.ACTION_POINTS_PER_TURN
 	health_bar.max_value = active_mon.max_health
 	_on_mon_health_or_ap_changed()
-	show()
+	modulate.a = 1.0
 
 func remove_mon() -> void:
 	active_mon = null
-	hide()
+	modulate.a = 0.0
 
 func _on_mon_health_or_ap_changed() -> void:
+	assert(active_mon != null)
 	action_bar.value = active_mon.action_points
 	action_bar.tint_progress = _full_ap_color if action_bar.value == action_bar.max_value else Color.WHITE
 	health_bar.value = active_mon.current_health

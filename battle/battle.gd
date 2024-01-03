@@ -168,6 +168,7 @@ func setup_battle(player_team, computer_team):
 	is_inject_queued = false
 	trying_to_escape = false
 	
+	_mon_action_queue.reset()
 	_speed_controls.reset()
 	_escape_controls.reset()
 	_action_name_box.reset()
@@ -369,7 +370,7 @@ func _end_battle_and_show_results():
 	for bug in _bugs_dropped:
 		GameData.bug_inventory[bug] += 1
 	
-	_results.show_results(battle_result, xp_earned, bits_earned, _bugs_dropped, _player_mon_blocks.get_children())
+	_results.show_results(battle_result, xp_earned, bits_earned, _bugs_dropped, _player_mon_blocks.get_children(), _player_mons.get_children(), _computer_mons.get_children())
 
 func _on_results_exited():
 	Events.emit_signal("battle_ended", battle_result)

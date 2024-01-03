@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cklrslmbq7v88"]
+[gd_scene load_steps=13 format=3 uid="uid://cklrslmbq7v88"]
 
 [ext_resource type="Script" path="res://battle/results.gd" id="1_abqku"]
 [ext_resource type="Texture2D" uid="uid://b2r8psbjx6l0i" path="res://assets/ui/battle/result/result_continue.png" id="2_q258l"]
@@ -8,6 +8,10 @@
 [ext_resource type="Texture2D" uid="uid://r31n5rr7abrj" path="res://assets/ui/battle/result/result_bits.png" id="6_y7fa6"]
 [ext_resource type="Texture2D" uid="uid://1yset3u55dph" path="res://assets/ui/battle/result/result_bugs.png" id="7_uvtaj"]
 [ext_resource type="Texture2D" uid="uid://cheqyjiipksha" path="res://assets/ui/battle/result/result_decompilation.png" id="8_lyqbn"]
+[ext_resource type="Texture2D" uid="uid://bpjxvnpc4462k" path="res://assets/ui/battle/result/result_bug_frame.png" id="9_lckpf"]
+[ext_resource type="Texture2D" uid="uid://creavvrqogy1u" path="res://assets/ui/battle/result/result_headshot_frame.png" id="9_m6kye"]
+[ext_resource type="Texture2D" uid="uid://bgbbcuedrbpib" path="res://assets/ui/battle/result/result_decompilation_bar_under.png" id="9_p6fyw"]
+[ext_resource type="Texture2D" uid="uid://bigrmk3rken1p" path="res://assets/ui/battle/result/result_decompilation_bar_progress.png" id="10_46ulw"]
 
 [node name="Results" type="Node2D"]
 script = ExtResource("1_abqku")
@@ -32,6 +36,174 @@ centered = false
 [node name="Decompilation" type="Sprite2D" parent="BG"]
 position = Vector2(138, 60)
 texture = ExtResource("8_lyqbn")
+centered = false
+
+[node name="XP" type="Label" parent="."]
+offset_left = 165.0
+offset_top = 28.0
+offset_right = 198.0
+offset_bottom = 44.0
+theme_override_colors/font_color = Color(0.447059, 0.835294, 0.447059, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "+100"
+horizontal_alignment = 2
+
+[node name="Bits" type="Label" parent="."]
+offset_left = 165.0
+offset_top = 44.0
+offset_right = 198.0
+offset_bottom = 60.0
+theme_override_colors/font_color = Color(1, 0.960784, 0.615686, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "+1000"
+horizontal_alignment = 2
+
+[node name="Bugs" type="Node2D" parent="."]
+
+[node name="Bug1" type="Node2D" parent="Bugs"]
+
+[node name="Sprite" type="Sprite2D" parent="Bugs/Bug1"]
+z_index = 1
+position = Vector2(209, 45)
+centered = false
+
+[node name="Frame" type="Sprite2D" parent="Bugs/Bug1"]
+position = Vector2(207, 43)
+texture = ExtResource("9_lckpf")
+centered = false
+
+[node name="Bug2" type="Node2D" parent="Bugs"]
+position = Vector2(15, 0)
+
+[node name="Sprite" type="Sprite2D" parent="Bugs/Bug2"]
+z_index = 1
+position = Vector2(209, 45)
+centered = false
+
+[node name="Frame" type="Sprite2D" parent="Bugs/Bug2"]
+position = Vector2(207, 43)
+texture = ExtResource("9_lckpf")
+centered = false
+
+[node name="Bug3" type="Node2D" parent="Bugs"]
+position = Vector2(30, 0)
+
+[node name="Sprite" type="Sprite2D" parent="Bugs/Bug3"]
+z_index = 1
+position = Vector2(209, 45)
+centered = false
+
+[node name="Frame" type="Sprite2D" parent="Bugs/Bug3"]
+position = Vector2(207, 43)
+texture = ExtResource("9_lckpf")
+centered = false
+
+[node name="Bug4" type="Node2D" parent="Bugs"]
+position = Vector2(45, 0)
+
+[node name="Sprite" type="Sprite2D" parent="Bugs/Bug4"]
+z_index = 1
+position = Vector2(209, 45)
+centered = false
+
+[node name="Frame" type="Sprite2D" parent="Bugs/Bug4"]
+position = Vector2(207, 43)
+texture = ExtResource("9_lckpf")
+centered = false
+
+[node name="Decompilations" type="Node2D" parent="."]
+
+[node name="Decompilation1" type="Node2D" parent="Decompilations"]
+
+[node name="Bar" type="TextureProgressBar" parent="Decompilations/Decompilation1"]
+offset_left = 162.0
+offset_top = 77.0
+offset_right = 202.0
+offset_bottom = 93.0
+value = 50.0
+texture_under = ExtResource("9_p6fyw")
+texture_progress = ExtResource("10_46ulw")
+texture_progress_offset = Vector2(3, 3)
+
+[node name="Frame" type="Sprite2D" parent="Decompilations/Decompilation1"]
+position = Vector2(141, 75)
+texture = ExtResource("9_m6kye")
+centered = false
+
+[node name="HeadshotSprite" type="Sprite2D" parent="Decompilations/Decompilation1"]
+z_index = 1
+position = Vector2(143, 77)
+centered = false
+
+[node name="Decompilation2" type="Node2D" parent="Decompilations"]
+position = Vector2(64, 0)
+
+[node name="Bar" type="TextureProgressBar" parent="Decompilations/Decompilation2"]
+offset_left = 162.0
+offset_top = 77.0
+offset_right = 202.0
+offset_bottom = 93.0
+value = 50.0
+texture_under = ExtResource("9_p6fyw")
+texture_progress = ExtResource("10_46ulw")
+texture_progress_offset = Vector2(3, 3)
+
+[node name="Frame" type="Sprite2D" parent="Decompilations/Decompilation2"]
+position = Vector2(141, 75)
+texture = ExtResource("9_m6kye")
+centered = false
+
+[node name="HeadshotSprite" type="Sprite2D" parent="Decompilations/Decompilation2"]
+z_index = 1
+position = Vector2(143, 77)
+centered = false
+
+[node name="Decompilation3" type="Node2D" parent="Decompilations"]
+position = Vector2(0, 20)
+
+[node name="Bar" type="TextureProgressBar" parent="Decompilations/Decompilation3"]
+offset_left = 162.0
+offset_top = 77.0
+offset_right = 202.0
+offset_bottom = 93.0
+value = 50.0
+texture_under = ExtResource("9_p6fyw")
+texture_progress = ExtResource("10_46ulw")
+texture_progress_offset = Vector2(3, 3)
+
+[node name="Frame" type="Sprite2D" parent="Decompilations/Decompilation3"]
+position = Vector2(141, 76)
+texture = ExtResource("9_m6kye")
+centered = false
+
+[node name="HeadshotSprite" type="Sprite2D" parent="Decompilations/Decompilation3"]
+z_index = 1
+position = Vector2(143, 78)
+centered = false
+
+[node name="Decompilation4" type="Node2D" parent="Decompilations"]
+position = Vector2(64, 21)
+
+[node name="Bar" type="TextureProgressBar" parent="Decompilations/Decompilation4"]
+offset_left = 162.0
+offset_top = 77.0
+offset_right = 202.0
+offset_bottom = 93.0
+value = 50.0
+texture_under = ExtResource("9_p6fyw")
+texture_progress = ExtResource("10_46ulw")
+texture_progress_offset = Vector2(3, 3)
+
+[node name="Frame" type="Sprite2D" parent="Decompilations/Decompilation4"]
+position = Vector2(141, 75)
+texture = ExtResource("9_m6kye")
+centered = false
+
+[node name="HeadshotSprite" type="Sprite2D" parent="Decompilations/Decompilation4"]
+z_index = 1
+position = Vector2(143, 77)
 centered = false
 
 [node name="Exit" type="TextureButton" parent="."]

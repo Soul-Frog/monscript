@@ -33,6 +33,7 @@ func reset():
 	_on_run_button_pressed()
 	_pause_filter.modulate.a = 0
 	_speedup_filter.modulate.a = 0
+	modulate.a = 1
 
 func _on_run_button_pressed():
 	_on_button_pressed(_run_button)
