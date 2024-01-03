@@ -93,7 +93,7 @@ func _on_player_target_selected() -> void:
 func _create_do_blocks():
 	assert(_injected_mon)
 	
-	var doBlocks = _injected_mon.base_mon.get_possible_do_blocks() + [ScriptData.get_block_by_name("Escape")]
+	var doBlocks = _injected_mon.underlying_mon.get_possible_do_blocks() + [ScriptData.get_block_by_name("Escape")]
 	var top = _injected_mon.position.y - doBlocks.size() * 8
 	for i in doBlocks.size():
 		var doBlock = doBlocks[i]

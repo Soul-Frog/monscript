@@ -266,7 +266,7 @@ func _on_mon_try_to_escape(battle_mon):
 	
 	_log.add_text("%s is trying to escape..." % _log.MON_NAME_PLACEHOLDER, battle_mon)
 	
-	var mon = battle_mon.base_mon
+	var mon = battle_mon.underlying_mon
 	
 	# if a player's mon is trying to escape
 	if battle_mon in _player_mons.get_children():
@@ -274,7 +274,7 @@ func _on_mon_try_to_escape(battle_mon):
 		
 		var computer_avg_speed = 0
 		for computer_mon in _computer_mons.get_children():
-			computer_avg_speed += computer_mon.base_mon.get_speed()
+			computer_avg_speed += computer_mon.underlying_mon.get_speed()
 		computer_avg_speed /= _computer_mons.get_child_count()
 		
 		var escape_chance = clamp(50 + 3 * (my_speed - computer_avg_speed), 10, 100)
@@ -348,29 +348,13 @@ func _end_battle_and_show_results():
 	tween.parallel().tween_property(_escape_controls, "modulate:a", 0, 0.2)
 	tween.parallel().tween_property(_mon_action_queue, "modulate:a", 0, 0.2)
 	
-	# calculate experience and bits earned
-	var xp_earned = 0
-	var bits_earned = 0
-	
-	# increment xp earned from battle if this was a computer mon
-	# min exp earn is 1; so level 0 mons still provide 1 xp
+	#TODO - make this graphically drop during battle when mon is defeated! :D
 	for mon in _computer_mons.get_children():
-		xp_earned += max(mon.base_mon.get_level(), 1)
-		bits_earned += 1 #todo
+		var bug_drop = mon.underlying_mon.roll_bug_drop()
+		if bug_drop != null:
+			_bugs_dropped.append(bug_drop)
 	
-	# grant XP to mons
-	for mon in GameData.team: 
-		if mon != null:
-			mon.gain_XP(xp_earned)
-	
-	# give bits to the player
-	GameData.add_to_var(GameData.BITS, bits_earned)
-	
-	# give bug drops to player
-	for bug in _bugs_dropped:
-		GameData.bug_inventory[bug] += 1
-	
-	_results.show_results(battle_result, xp_earned, bits_earned, _bugs_dropped, _player_mon_blocks.get_children(), _player_mons.get_children(), _computer_mons.get_children())
+	_results.perform_results(battle_result, _bugs_dropped, _player_mon_blocks.get_children(), _player_mons.get_children(), _computer_mons.get_children())
 
 func _on_results_exited():
 	Events.emit_signal("battle_ended", battle_result)

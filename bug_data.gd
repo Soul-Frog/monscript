@@ -20,7 +20,7 @@ enum Type {
 }
 
 # dictionary of bugs
-@onready var _BUGS = {
+var _BUGS = {
 	Type.RED_ATK_BUG : Bug.new(load("res://assets/bugs/bug_red.png"), 0, 2, 0, 0),
 	Type.BLUE_DEF_BUG : Bug.new(load("res://assets/bugs/bug_blue.png"), 0, 0, 1, 0),
 	Type.GREEN_SPD_BUG : Bug.new(load("res://assets/bugs/bug_green.png"), 0, 0, 0, 1),

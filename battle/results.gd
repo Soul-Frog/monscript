@@ -29,30 +29,57 @@ func _ready():
 	modulate.a = 0
 	_exit_button.disabled = true
 
-func show_results(battle_results: Battle.BattleResult, xp_earned: int, bits_earned: int, bugs_earned: Array, mon_blocks: Array, player_team: Array, computer_team: Array):
-	# XP and BITS labels
+func perform_results(battle_results: Battle.BattleResult, bugs_earned: Array, mon_blocks: Array, player_team: Array, computer_team: Array):
+	# calculate XP/Bits earned and update labels
+	var xp_earned = 0
+	var bits_earned = 0
+	for battlemon in computer_team:
+		xp_earned += battlemon.underlying_mon.get_xp_for_defeating()
+		bits_earned +=  battlemon.underlying_mon.get_bits_for_defeating()
 	XP_LABEL.text = XP_BITS_FORMAT % xp_earned
 	BITS_LABEL.text = XP_BITS_FORMAT % bits_earned
+	
+	GameData.add_to_var(GameData.BITS, bits_earned) # give bits to the player
+	
 	
 	# Show bug drops (or hide excess frames)
 	for i in range(0, BUGS.get_children().size()):
 		var bug_slot = BUGS.get_child(i)
 		if bugs_earned.size() > i:
 			bug_slot.visible = true
-			bug_slot.find_child(BUGS_SPRITE_PATH).texture = bugs_earned[i].sprite
+			bug_slot.find_child(BUGS_SPRITE_PATH).texture = BugData.get_bug(bugs_earned[i]).sprite
 		else:
 			bug_slot.visible = false
 	
+	for bugtype in bugs_earned: # give bug drops to player
+		GameData.bug_inventory[bugtype] += 1
+	
+	# grant XP to mons
+	# TODO ANIMATE
+	for battlemon in player_team: 
+		if battlemon != null:
+			battlemon.underlying_mon.gain_XP(xp_earned)
+			# TODO
+			
 	# Show decompilation bars/headshots (or hide excess bars)
+	# TODO - duplicate enemy mons should provide double progress and only 1 bar entry
+	
+	# update decompilation progress (TODO ANIMATE)
+	for mon in computer_team:
+		GameData.compilation_progress_per_mon[mon.underlying_mon.get_mon_type()] = min(100, GameData.compilation_progress_per_mon[mon.underlying_mon.get_mon_type()] + 10) #TODO???
+		
+	
 	for i in range(0, DECOMPILATIONS.get_children().size()):
 		var decompilation_slot = DECOMPILATIONS.get_child(i)
 		if computer_team.size() > i:
-			var mon_type = computer_team[i].base_mon.get_mon_type()
+			var mon_type = computer_team[i].underlying_mon.get_mon_type()
 			decompilation_slot.visible = true
 			decompilation_slot.find_child(DECOMPILATION_SPRITE_PATH).texture = MonData.get_headshot_for(mon_type)
 			decompilation_slot.find_child(DECOMPILATION_BAR_PATH).value = GameData.compilation_progress_per_mon[mon_type] 
 		else:
 			decompilation_slot.visible = false
+		
+
 	
 	# Fade in the results
 	await create_tween().tween_property(self, "modulate:a", 1, 0.2).finished

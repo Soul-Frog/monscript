@@ -111,7 +111,7 @@ func _update_queue_display(mons: Array):
 		
 		# update headshot
 		var headshot = headshots.get_child(i)
-		headshot.texture = MonData.get_headshot_for(mon.base_mon.get_mon_type())
+		headshot.texture = MonData.get_headshot_for(mon.underlying_mon.get_mon_type())
 		
 		# update background color based on mon team
 		var bg = backgrounds.get_child(i)

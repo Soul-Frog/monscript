@@ -32,7 +32,7 @@ var _speed_scale = 1.0
 
 # The underlying Mon Object this battle mon scene represents
 # Set this with init_mon before doing anything else with this scene
-var base_mon: MonData.Mon = null
+var underlying_mon: MonData.Mon = null
 
 # The name and color used for this mon's entries into the battle log
 var log_name: String = ""
@@ -117,7 +117,7 @@ func _ready():
 
 # Initializes this battle_mon with an underlying mon object
 func init_mon(mon: MonData.Mon, monTeam: Battle.Team) -> void:
-	base_mon = mon
+	underlying_mon = mon
 	team = monTeam
 	current_health = mon.get_max_health()
 	max_health = mon.get_max_health()
@@ -145,7 +145,7 @@ func get_speed() -> int:
 # Called once for each mon by battle.gd at a regular time interval
 func battle_tick(unscaled_delta: float) -> void:
 	var delta = unscaled_delta * _speed_scale
-	assert(base_mon != null, "Didn't add a mon with init_mon!")
+	assert(underlying_mon != null, "Didn't add a mon with init_mon!")
 	assert(_base_attack != -1 and _base_speed != -1 and _base_defense != -1 and max_health != -1, "Stats were never initialized?")
 	if not is_defeated():
 		# update action points, clamp between 0-100
@@ -204,7 +204,7 @@ func cancel_action():
 
 func execute_script(friends: Array, foes: Array, animator: BattleAnimator, escaping: bool):
 	action_name_box.make_visible()
-	await base_mon.get_active_monscript().execute(self, friends, foes, battle_log, action_name_box, animator, escaping)
+	await underlying_mon.get_active_monscript().execute(self, friends, foes, battle_log, action_name_box, animator, escaping)
 	_on_turn_over()
 
 func set_action_points(points):
@@ -260,7 +260,7 @@ func apply_attack(attacker: BattleMon, multiplier: float, damage_type: MonData.D
 	damage_taken *= multiplier
 	
 	# now modify by resistances/weaknesses
-	damage_taken *= base_mon.get_damage_multiplier_for_type(damage_type)
+	damage_taken *= underlying_mon.get_damage_multiplier_for_type(damage_type)
 	
 	# if defending, reduce the damage taken by half
 	if is_defending:
@@ -272,9 +272,9 @@ func apply_attack(attacker: BattleMon, multiplier: float, damage_type: MonData.D
 	damage_taken += attacker.atk_buff_stage - def_buff_stage
 	
 	# apply a further flat bonus/deduction for hitting a weakness/resist
-	if base_mon.get_damage_multiplier_for_type(damage_type) > 1:
+	if underlying_mon.get_damage_multiplier_for_type(damage_type) > 1:
 		damage_taken += 1 # add a further flat bonus when striking a weakness
-	elif base_mon.get_damage_multiplier_for_type(damage_type) < 1:
+	elif underlying_mon.get_damage_multiplier_for_type(damage_type) < 1:
 		damage_taken -= 1 # add a further flat bonus when striking a weakness
 	
 	# deal a minimum of 1 damage
@@ -311,9 +311,9 @@ func take_damage(damage_taken: int, damage_type: MonData.DamageType) -> void:
 			flash_color = "purple"
 	
 	var log_message = "%s took %d %sdamage!"
-	if base_mon.get_damage_multiplier_for_type(damage_type) > 1:
+	if underlying_mon.get_damage_multiplier_for_type(damage_type) > 1:
 		log_message = "%s took %d %sdamage! Super effective!"
-	elif base_mon.get_damage_multiplier_for_type(damage_type) < 1:
+	elif underlying_mon.get_damage_multiplier_for_type(damage_type) < 1:
 		log_message = "%s took %d %sdamage! Not very effective!"
 	
 	battle_log.add_text(log_message % [battle_log.MON_NAME_PLACEHOLDER, damage_taken, type_str], self)

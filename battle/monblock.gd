@@ -35,9 +35,9 @@ func assign_mon(mon: BattleMon) -> void:
 	stat_arrows.reset()
 	
 	# recolor this block using the mon's three colors
-	material.set_shader_parameter("white_replace", mon.base_mon.get_colors()[0])
-	material.set_shader_parameter("lightgray_replace", mon.base_mon.get_colors()[1])
-	material.set_shader_parameter("darkgray_replace", mon.base_mon.get_colors()[2])
+	material.set_shader_parameter("white_replace", mon.underlying_mon.get_colors()[0])
+	material.set_shader_parameter("lightgray_replace", mon.underlying_mon.get_colors()[1])
+	material.set_shader_parameter("darkgray_replace", mon.underlying_mon.get_colors()[2])
 	
 	# connect the new mon
 	active_mon.connect("health_or_ap_changed", _on_mon_health_or_ap_changed)
@@ -45,8 +45,8 @@ func assign_mon(mon: BattleMon) -> void:
 	active_mon.connect("stats_changed", _on_mon_stats_changed)
 	
 	# update name and level label
-	name_label.text = active_mon.base_mon.get_name()
-	level_label.text = LEVEL_FORMAT % active_mon.base_mon.get_level()
+	name_label.text = active_mon.underlying_mon.get_name()
+	level_label.text = LEVEL_FORMAT % active_mon.underlying_mon.get_level()
 	
 	# update health/ap bars
 	action_bar.max_value = active_mon.ACTION_POINTS_PER_TURN
