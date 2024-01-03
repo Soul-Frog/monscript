@@ -228,11 +228,10 @@ class Mon:
 			_xp -= MonData.XP_for_level(_level + 1)
 			_level += 1
 			if _level == MonData.MAX_LEVEL: # if we hit MAX, done
-				_xp = 0
+				_xp = MonData.XP_for_level(_level)
 				return
 
 # List of MonBases, each is a static and constant representation of a Mon's essential characteristics
-
 # Bitleons
 var _BITLEON_BASE = MonBase.new(MonType.BITLEON, "Bitleon", "res://mons/bitleon.tscn", "res://monscripts/attack.txt",
 	256, 128, 64, 96,

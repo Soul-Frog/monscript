@@ -29,7 +29,7 @@ texture = ExtResource("6_y7fa6")
 centered = false
 
 [node name="Bugs" type="Sprite2D" parent="BG"]
-position = Vector2(203, 28)
+position = Vector2(204, 28)
 texture = ExtResource("7_uvtaj")
 centered = false
 
@@ -39,9 +39,9 @@ texture = ExtResource("8_lyqbn")
 centered = false
 
 [node name="XP" type="Label" parent="."]
-offset_left = 165.0
+offset_left = 166.0
 offset_top = 28.0
-offset_right = 198.0
+offset_right = 199.0
 offset_bottom = 44.0
 theme_override_colors/font_color = Color(0.447059, 0.835294, 0.447059, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -50,9 +50,9 @@ text = "+100"
 horizontal_alignment = 2
 
 [node name="Bits" type="Label" parent="."]
-offset_left = 165.0
+offset_left = 166.0
 offset_top = 44.0
-offset_right = 198.0
+offset_right = 199.0
 offset_bottom = 60.0
 theme_override_colors/font_color = Color(1, 0.960784, 0.615686, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -60,56 +60,73 @@ theme_override_constants/outline_size = 4
 text = "+1000"
 horizontal_alignment = 2
 
-[node name="Bugs" type="Node2D" parent="."]
+[node name="Bugs" type="HBoxContainer" parent="."]
+offset_left = 209.0
+offset_top = 43.0
+offset_right = 264.0
+offset_bottom = 56.0
+size_flags_horizontal = 3
+size_flags_vertical = 2
+theme_override_constants/separation = 1
+alignment = 1
 
-[node name="Bug1" type="Node2D" parent="Bugs"]
+[node name="Bug1" type="MarginContainer" parent="Bugs"]
+custom_minimum_size = Vector2(13, 13)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
 
 [node name="Sprite" type="Sprite2D" parent="Bugs/Bug1"]
 z_index = 1
-position = Vector2(209, 45)
+position = Vector2(2, 2)
 centered = false
 
 [node name="Frame" type="Sprite2D" parent="Bugs/Bug1"]
-position = Vector2(207, 43)
 texture = ExtResource("9_lckpf")
 centered = false
 
-[node name="Bug2" type="Node2D" parent="Bugs"]
-position = Vector2(15, 0)
+[node name="Bug2" type="MarginContainer" parent="Bugs"]
+custom_minimum_size = Vector2(13, 13)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
 
 [node name="Sprite" type="Sprite2D" parent="Bugs/Bug2"]
 z_index = 1
-position = Vector2(209, 45)
+position = Vector2(2, 2)
 centered = false
 
 [node name="Frame" type="Sprite2D" parent="Bugs/Bug2"]
-position = Vector2(207, 43)
 texture = ExtResource("9_lckpf")
 centered = false
 
-[node name="Bug3" type="Node2D" parent="Bugs"]
-position = Vector2(30, 0)
+[node name="Bug3" type="MarginContainer" parent="Bugs"]
+custom_minimum_size = Vector2(13, 13)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
 
 [node name="Sprite" type="Sprite2D" parent="Bugs/Bug3"]
 z_index = 1
-position = Vector2(209, 45)
+position = Vector2(2, 2)
 centered = false
 
 [node name="Frame" type="Sprite2D" parent="Bugs/Bug3"]
-position = Vector2(207, 43)
 texture = ExtResource("9_lckpf")
 centered = false
 
-[node name="Bug4" type="Node2D" parent="Bugs"]
-position = Vector2(45, 0)
+[node name="Bug4" type="MarginContainer" parent="Bugs"]
+custom_minimum_size = Vector2(13, 13)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
 
 [node name="Sprite" type="Sprite2D" parent="Bugs/Bug4"]
 z_index = 1
-position = Vector2(209, 45)
+position = Vector2(2, 2)
 centered = false
 
 [node name="Frame" type="Sprite2D" parent="Bugs/Bug4"]
-position = Vector2(207, 43)
 texture = ExtResource("9_lckpf")
 centered = false
 
