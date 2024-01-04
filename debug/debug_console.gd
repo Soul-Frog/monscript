@@ -100,6 +100,8 @@ func _on_text_submitted(txt):
 	elif cmd == "wipe" or cmd == "clear":
 		for child in overworld_encounters.get_children():
 			overworld_encounters.remove_child(child)
+	elif cmd == "save":
+		GameData.save_game()
 	# wins a battle instantly
 	elif cmd == "winbattle"  or cmd == "win" or cmd == "w":
 		if main_scene.active_scene != main_scene.BATTLE:
