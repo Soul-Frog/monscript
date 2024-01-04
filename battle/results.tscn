@@ -142,7 +142,7 @@ offset_bottom = 93.0
 value = 50.0
 texture_under = ExtResource("9_p6fyw")
 texture_progress = ExtResource("10_46ulw")
-texture_progress_offset = Vector2(3, 3)
+texture_progress_offset = Vector2(4, 3)
 
 [node name="Frame" type="Sprite2D" parent="Decompilations/Decompilation1"]
 position = Vector2(141, 75)
@@ -165,7 +165,7 @@ offset_bottom = 93.0
 value = 50.0
 texture_under = ExtResource("9_p6fyw")
 texture_progress = ExtResource("10_46ulw")
-texture_progress_offset = Vector2(3, 3)
+texture_progress_offset = Vector2(4, 3)
 
 [node name="Frame" type="Sprite2D" parent="Decompilations/Decompilation2"]
 position = Vector2(141, 75)
@@ -188,7 +188,7 @@ offset_bottom = 93.0
 value = 50.0
 texture_under = ExtResource("9_p6fyw")
 texture_progress = ExtResource("10_46ulw")
-texture_progress_offset = Vector2(3, 3)
+texture_progress_offset = Vector2(4, 3)
 
 [node name="Frame" type="Sprite2D" parent="Decompilations/Decompilation3"]
 position = Vector2(141, 76)
@@ -211,7 +211,7 @@ offset_bottom = 93.0
 value = 50.0
 texture_under = ExtResource("9_p6fyw")
 texture_progress = ExtResource("10_46ulw")
-texture_progress_offset = Vector2(3, 3)
+texture_progress_offset = Vector2(4, 3)
 
 [node name="Frame" type="Sprite2D" parent="Decompilations/Decompilation4"]
 position = Vector2(141, 75)

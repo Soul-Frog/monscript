@@ -7,7 +7,6 @@ enum Status {
 	SELECTED, UNSELECTED, DISABLED
 }
 
-
 var is_mouse_over := false
 var mon_type
 var _status = Status.DISABLED
@@ -84,7 +83,7 @@ func get_speed_bar_value():
 	return MonData.get_speed_percentile_for(mon_type)
 
 func is_compiled():
-	return $Free/ProgressBar.value == 100
+	return $Free/ProgressBar.value == $Free/ProgressBar.max_value
 
 func _input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT and is_mouse_over and is_compiled():
