@@ -223,10 +223,21 @@ class Mon:
 	
 	# adds XP and potentially applies level up
 	func gain_XP(xp_gained: float) -> void:
+		assert(xp_gained >= 0)
 		if _level == MonData.MAX_LEVEL: # don't try to level past MAX
 			return
 		
 		_xp += xp_gained
+		_check_level_up()
+	
+	func set_XP(xp_amt: int) -> void:
+		assert(xp_amt >= 0)
+		if _level == MonData.MAX_LEVEL: # don't try to level past MAX
+			return
+		_xp = xp_amt
+		_check_level_up()
+	
+	func _check_level_up() -> void:
 		while _xp >= MonData.XP_for_level(_level + 1):
 			_xp -= MonData.XP_for_level(_level + 1)
 			_level += 1

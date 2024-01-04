@@ -36,23 +36,25 @@ func _ready() -> void:
 	modulate.a = 0
 	_exit_button.disabled = true
 
-const XP_TIME = 2.0 #take 2 seconds to give XP
+const XP_TIME = 1.0 #take 2 seconds to give XP
 func _process(delta: float) -> void:
 	if _granting_xp:
 		assert(_mons_to_xp)
 		assert(_mon_blocks)
 		
 		var xp_to_give = _xp_earned / XP_TIME * delta
-		print(xp_to_give)
 		xp_to_give = min(_xp_remaining, xp_to_give)
 		_xp_remaining -= xp_to_give
 		if _xp_remaining == 0:
-			print("0 left")
 			_granting_xp = false
 		
 		for i in _mons_to_xp.size():
 			_mons_to_xp[i].gain_XP(xp_to_give) # give xp
-			_mon_blocks[i].on_mon_xp_changed()
+			
+			if _xp_remaining == 0: # do some extra handling on the last xp grant step to handle float rounding errors
+				_mons_to_xp[i].set_XP(int(_mons_to_xp[i].get_current_XP() + 0.1))
+			
+			_mon_blocks[i].on_mon_xp_changed() # update xp bars
 
 func perform_results(battle_results: Battle.BattleResult, bugs_earned: Array, mon_blocks: Array, player_team: Array, computer_team: Array) -> void:	
 	_mons_to_xp = []
@@ -120,7 +122,8 @@ func perform_results(battle_results: Battle.BattleResult, bugs_earned: Array, mo
 func _on_exit_pressed():
 	# immediately reward remaining XP
 	for mon in _mons_to_xp:
-		mon.gain_XP(_xp_earned)
+		mon.gain_XP(_xp_remaining)
+		mon.set_XP(int(mon.get_current_XP() + 0.1)) # then some safety rounding
 	_granting_xp = false
 	_mons_to_xp = null
 	_mon_blocks = null
