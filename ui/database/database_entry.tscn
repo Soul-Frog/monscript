@@ -65,5 +65,16 @@ offset_bottom = 33.0
 texture_under = ExtResource("2_kcf8x")
 texture_progress = ExtResource("3_p6m86")
 
+[node name="Percentage" type="Label" parent="Free"]
+offset_left = 41.0
+offset_top = 7.0
+offset_right = 153.0
+offset_bottom = 33.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

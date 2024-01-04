@@ -11,6 +11,7 @@ const XP_BITS_FORMAT = "+%d"
 @onready var DECOMPILATIONS = $Decompilations
 const DECOMPILATION_SPRITE_PATH = "HeadshotSprite"
 const DECOMPILATION_BAR_PATH = "Bar"
+const DECOMPILATION_PERCENTAGE_PATH = "Percentage"
 
 @onready var BUGS = $Bugs
 const BUGS_SPRITE_PATH = "Sprite"
@@ -76,8 +77,10 @@ func perform_results(battle_results: Battle.BattleResult, bugs_earned: Array, mo
 			var mon_type = computer_team[i].underlying_mon.get_mon_type()
 			decompilation_slot.visible = true
 			decompilation_slot.find_child(DECOMPILATION_SPRITE_PATH).texture = MonData.get_headshot_for(mon_type)
-			decompilation_slot.find_child(DECOMPILATION_BAR_PATH).value = GameData.decompilation_progress_per_mon[mon_type] 
-			decompilation_slot.find_child(DECOMPILATION_BAR_PATH).max_value = MonData.get_decompilation_progress_required_for(mon_type)
+			var bar = decompilation_slot.find_child(DECOMPILATION_BAR_PATH)
+			bar.value = GameData.decompilation_progress_per_mon[mon_type] 
+			bar.max_value = MonData.get_decompilation_progress_required_for(mon_type)
+			decompilation_slot.find_child(DECOMPILATION_PERCENTAGE_PATH).text = "%d%%" % int(100 * bar.value / bar.max_value)
 		else:
 			decompilation_slot.visible = false
 		

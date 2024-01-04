@@ -29,6 +29,7 @@ offset_top = 1.0
 offset_right = 184.0
 offset_bottom = 18.0
 theme_override_colors/default_color = Color(1, 0.647059, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 bbcode_enabled = true
 text = "[center]Completion: 1/50[/center]"
 scroll_active = false
