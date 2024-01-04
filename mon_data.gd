@@ -44,6 +44,7 @@ class MonBase:
 	var _passive_name: String
 	var _passive_description: String
 	var _colors: Array[Color]
+	var _decompilation_progress_required
 	var _damage_type_multipliers: Dictionary
 	var _xp_multiplier: float # affects the amount of XP this mon gives
 	var _bits_multiplier: float # affects the amount of bits this mon drops
@@ -51,6 +52,7 @@ class MonBase:
 	
 	func _init(monType: MonType, monSpecies: String, mon_scene: String, default_script_file_path: String,
 		healthAt64: int, attackAt64: int, defenseAt64: int, speedAt64: int,
+		decompilationRequired: int, 
 		normal_damage_mult: float, heat_damage_mult: float, chill_damage_mult: float, volt_damage_mult: float,
 		specialBlock: ScriptData.Block, passiveName: String, passiveDesc: String,
 		colors: Array[Color],
@@ -69,6 +71,7 @@ class MonBase:
 		self._passive_name = passiveName
 		self._passive_description = passiveDesc
 		self._colors = colors
+		self._decompilation_progress_required = decompilationRequired
 		self._damage_type_multipliers[DamageType.NORMAL] = normal_damage_mult
 		self._damage_type_multipliers[DamageType.HEAT] = heat_damage_mult
 		self._damage_type_multipliers[DamageType.CHILL] = chill_damage_mult
@@ -235,6 +238,7 @@ class Mon:
 # Bitleons
 var _BITLEON_BASE = MonBase.new(MonType.BITLEON, "Bitleon", "res://mons/bitleon.tscn", "res://monscripts/attack.txt",
 	256, 128, 64, 96,
+	1,
 	1.0, 1.0, 1.0, 1.0,
 	ScriptData.get_block_by_name("Repair"),
 	"Passive", "Bitleon passive",
@@ -244,6 +248,7 @@ var _BITLEON_BASE = MonBase.new(MonType.BITLEON, "Bitleon", "res://mons/bitleon.
 # Coolant Cave
 var _GELIF_BASE = MonBase.new(MonType.GELIF, "Gelif", "res://mons/gelif.tscn", "res://monscripts/attack.txt",
 	540, 98, 14, 74,
+	12,
 	1.0, 2.0, 0.25, 2.0,
 	ScriptData.get_block_by_name("Transfer"),
 	"Passive", "Gelif passive",
@@ -252,6 +257,7 @@ var _GELIF_BASE = MonBase.new(MonType.GELIF, "Gelif", "res://mons/gelif.tscn", "
 	
 var _CHORSE_BASE = MonBase.new(MonType.CHORSE, "C-horse", "res://mons/chorse.tscn", "res://monscripts/attack.txt",
 	220, 100, 42, 95,
+	10, 
 	1.0, 1.5, 0.5, 1.0,
 	ScriptData.get_block_by_name("C-gun"),
 	"Passive", "C-horse passive",
@@ -260,6 +266,7 @@ var _CHORSE_BASE = MonBase.new(MonType.CHORSE, "C-horse", "res://mons/chorse.tsc
 	
 var _PASCALICAN_BASE = MonBase.new(MonType.PASCALICAN, "Pascalican", "res://mons/pascalican.tscn", "res://monscripts/attack.txt",
 	210, 84, 56, 126,
+	8, 
 	1.0, 1.0, 0.5, 1.5,
 	ScriptData.get_block_by_name("Triangulate"),
 	"Passive", "Pascalican passive",
@@ -268,6 +275,7 @@ var _PASCALICAN_BASE = MonBase.new(MonType.PASCALICAN, "Pascalican", "res://mons
 	
 var _ORCHIN_BASE = MonBase.new(MonType.ORCHIN, "Orchin", "res://mons/orchin.tscn", "res://monscripts/attack.txt",
 	198, 115, 86, 65,
+	12, 
 	1.0, 1.5, 0.75, 0.75,
 	ScriptData.get_block_by_name("SpikOR"),
 	"Passive", "Orchin passive",
@@ -276,6 +284,7 @@ var _ORCHIN_BASE = MonBase.new(MonType.ORCHIN, "Orchin", "res://mons/orchin.tscn
 	
 var _TURTMINAL_BASE = MonBase.new(MonType.TURTMINAL, "Turtminal", "res://mons/turtminal.tscn", "res://monscripts/attack.txt",
 	328, 98, 88, 28,
+	5, 
 	1.0, 1.0, 1.3, 0.7,
 	ScriptData.get_block_by_name("ShellBash"),
 	"Passive", "Turtminal passive",
@@ -284,6 +293,7 @@ var _TURTMINAL_BASE = MonBase.new(MonType.TURTMINAL, "Turtminal", "res://mons/tu
 	
 var _STINGARRAY_BASE = MonBase.new(MonType.STINGARRAY, "Stringarray", "res://mons/stingarray.tscn", "res://monscripts/attack.txt",
 	212, 144, 58, 89,
+	5, 
 	1.0, 1.5, 1.5, 0.25,
 	ScriptData.get_block_by_name("Multitack"),
 	"Passive", "Stingarray passive",
@@ -292,6 +302,7 @@ var _STINGARRAY_BASE = MonBase.new(MonType.STINGARRAY, "Stringarray", "res://mon
 	
 var _ANGLERPHISH_BASE = MonBase.new(MonType.ANGLERPHISH, "Anglerphish", "res://mons/anglerphish.tscn", "res://monscripts/attack.txt",
 	328, 170, 44, 59,
+	5, 
 	1.0, 2.0, 0.5, 0.5,
 	ScriptData.get_block_by_name("Spearphishing"),
 	"Passive", "Anglerphish passive",
@@ -357,6 +368,10 @@ func get_passive_name_for(montype: MonType) -> String:
 func get_passive_description_for(montype: MonType) -> String:
 	assert(montype != MonType.NONE)
 	return _MON_MAP[montype]._passive_description
+
+func get_decompilation_progress_required_for(montype: MonType) -> int:
+	assert(montype != MonType.NONE)
+	return _MON_MAP[montype]._decompilation_progress_required
 
 #TODO - update these so that they calculate the number of mons better/worse and use that as percentile, not raw stats
 func get_health_percentile_for(montype: MonType) -> int:

@@ -34,10 +34,12 @@ func setup(type) -> void:
 	_update_background()
 
 func refresh() -> void:
-	assert(GameData.compilation_progress_per_mon[mon_type] >= 0 && GameData.compilation_progress_per_mon[mon_type] <= 100)
-	$Free/ProgressBar.value = GameData.compilation_progress_per_mon[mon_type]
-	$Free/SpriteContainer/MonSprite.modulate = Global.COLOR_BLACK if $Free/ProgressBar.value != 100 else Global.COLOR_WHITE
-	if $Free/ProgressBar.value == 100:
+	var maxProgress = MonData.get_decompilation_progress_required_for(mon_type)
+	assert(GameData.decompilation_progress_per_mon[mon_type] >= 0 && GameData.decompilation_progress_per_mon[mon_type] <= maxProgress)
+	$Free/ProgressBar.value = GameData.decompilation_progress_per_mon[mon_type]
+	$Free/ProgressBar.max_value = maxProgress
+	$Free/SpriteContainer/MonSprite.modulate = Global.COLOR_BLACK if $Free/ProgressBar.value != maxProgress else Global.COLOR_WHITE
+	if $Free/ProgressBar.value == maxProgress:
 		_status = Status.UNSELECTED
 		_update_background()
 

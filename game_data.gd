@@ -73,7 +73,7 @@ var _variables : Dictionary = {
 
 var team = [] # player's active team
 var storage = []  # player's mon storage
-var compilation_progress_per_mon := {} # MonType -> int; maps MonType to unlock progress
+var decompilation_progress_per_mon := {} # MonType -> int; maps MonType to unlock progress
 var _block_unlock_map := {} # tracks which blocks have been unlocked for use in the script editor
 var inject_points = 0
 var bug_inventory = {} # dictionary of owned bugs (BugData.Type -> int)
@@ -112,10 +112,10 @@ func _ready():
 		if montype == MonData.MonType.NONE:
 			continue
 		else:
-			compilation_progress_per_mon[montype] = 0
+			decompilation_progress_per_mon[montype] = 0
 	
-	# mark the initial mon as compiled
-	compilation_progress_per_mon[MonData.MonType.BITLEON] = 100
+	# mark Bitleon as compiled
+	decompilation_progress_per_mon[MonData.MonType.BITLEON] = MonData.get_decompilation_progress_required_for(MonData.MonType.BITLEON)
 	
 	# populate the bug inventory map
 	for bugtype in BugData.Type.values():
@@ -178,9 +178,9 @@ func save_game():
 	for i in storage.size():
 		save_dict["storage_mon_%d" % i] = storage[i].to_json() if storage[i] != null else "[STORAGENULL]"
 	
-	# save the compilation progress of each mon
-	for mon in compilation_progress_per_mon.keys():
-		save_dict["compilation_progress_for_%s" % mon] = compilation_progress_per_mon[mon]
+	# save the decompilation progress of each mon
+	for mon in decompilation_progress_per_mon.keys():
+		save_dict["decompilation_progress_for_%s" % mon] = decompilation_progress_per_mon[mon]
 	
 	for bug in bug_inventory.keys():
 		save_dict["bug_inventory_for_%s" % bug] = bug_inventory[bug]
@@ -222,11 +222,11 @@ func load_game():
 		var mon_str = save_dict["storage_mon_%d" % i]
 		storage[i] = MonData.mon_from_json(mon_str) if mon_str != "[STORAGENULL]" else null
 	
-	# read back the compilation progress of each mon
-	for mon in compilation_progress_per_mon:
-		var key = "compilation_progress_for_%s" % mon
+	# read back the decompilation progress of each mon
+	for mon in decompilation_progress_per_mon:
+		var key = "decompilation_progress_for_%s" % mon
 		if save_dict.has(key):
-			compilation_progress_per_mon[mon] = save_dict[key]
+			decompilation_progress_per_mon[mon] = save_dict[key]
 	
 	# read back the bug inventory
 	for bug in bug_inventory:

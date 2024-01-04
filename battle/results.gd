@@ -65,9 +65,10 @@ func perform_results(battle_results: Battle.BattleResult, bugs_earned: Array, mo
 	# TODO - duplicate enemy mons should provide double progress and only 1 bar entry
 	
 	# update decompilation progress (TODO ANIMATE)
-	for mon in computer_team:
-		GameData.compilation_progress_per_mon[mon.underlying_mon.get_mon_type()] = min(100, GameData.compilation_progress_per_mon[mon.underlying_mon.get_mon_type()] + 10) #TODO???
-		
+	for battlemon in computer_team:
+		var monType = battlemon.underlying_mon.get_mon_type()
+		var maxProgress = MonData.get_decompilation_progress_required_for(monType)
+		GameData.decompilation_progress_per_mon[monType] = min(maxProgress, GameData.decompilation_progress_per_mon[monType] + 1)
 	
 	for i in range(0, DECOMPILATIONS.get_children().size()):
 		var decompilation_slot = DECOMPILATIONS.get_child(i)
@@ -75,7 +76,8 @@ func perform_results(battle_results: Battle.BattleResult, bugs_earned: Array, mo
 			var mon_type = computer_team[i].underlying_mon.get_mon_type()
 			decompilation_slot.visible = true
 			decompilation_slot.find_child(DECOMPILATION_SPRITE_PATH).texture = MonData.get_headshot_for(mon_type)
-			decompilation_slot.find_child(DECOMPILATION_BAR_PATH).value = GameData.compilation_progress_per_mon[mon_type] 
+			decompilation_slot.find_child(DECOMPILATION_BAR_PATH).value = GameData.decompilation_progress_per_mon[mon_type] 
+			decompilation_slot.find_child(DECOMPILATION_BAR_PATH).max_value = MonData.get_decompilation_progress_required_for(mon_type)
 		else:
 			decompilation_slot.visible = false
 		

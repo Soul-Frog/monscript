@@ -84,7 +84,8 @@ func _randomize_wander_target():
 		success = true
 	
 	if not success:
-		print("couldn't find a valid path for %s" % name)
+		pass
+		# print("couldn't find a valid path for %s" % name)
 		#if Global.DEBUG_CONSOLE:
 		#	assert(success, "Couldn't find a valid path - check your maximum and minimum wander range")
 
