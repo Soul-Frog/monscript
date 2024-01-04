@@ -16,6 +16,8 @@ const DECOMPILATION_PERCENTAGE_PATH = "Percentage"
 @onready var BUGS = $Bugs
 const BUGS_SPRITE_PATH = "Sprite"
 
+const TIME = 2.0 #take 2 second to give XP/decompile
+
 var _granting_xp_and_decompile = false
 var _mon_blocks = []
 var _mons_to_xp = []
@@ -39,7 +41,6 @@ func _ready() -> void:
 	modulate.a = 0
 	_exit_button.disabled = true
 
-const TIME = 1.0 #take 1 second to give XP and decompile
 func _process(delta: float) -> void:
 	if _granting_xp_and_decompile:
 		if _xp_remaining != 0:
