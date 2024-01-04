@@ -112,7 +112,7 @@ func _ready():
 		if montype == MonData.MonType.NONE:
 			continue
 		else:
-			decompilation_progress_per_mon[montype] = 0
+			decompilation_progress_per_mon[montype] = 0.0
 	
 	# mark Bitleon as compiled
 	decompilation_progress_per_mon[MonData.MonType.BITLEON] = MonData.get_decompilation_progress_required_for(MonData.MonType.BITLEON)

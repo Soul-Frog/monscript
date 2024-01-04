@@ -331,7 +331,7 @@ var DO_BLOCK_LIST := [
 		target.apply_attack(mon, dmg_mult, MonData.DamageType.VOLT)
 		),
 	
-	Block.new(Block.Type.DO, "Multitack", Block.Type.NONE, "Four times, deal 25% damage to a random target.",
+	Block.new(Block.Type.DO, "Multitack", Block.Type.NONE, "Four times, deal 25% damage to a random foe.",
 	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, action_name_box: BattleActionNameBox, animator: BattleAnimator) -> void:
 		battle_log.add_text("%s used Multitack!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		for i in range(0, 4):
