@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ds2pwty7e10tr"]
+[gd_scene load_steps=13 format=3 uid="uid://ds2pwty7e10tr"]
 
 [ext_resource type="Shader" path="res://battle/monblock.gdshader" id="1_s8mve"]
 [ext_resource type="Texture2D" uid="uid://dks63puoqxj02" path="res://assets/ui/battle/monblock/moninfoblock9patch.png" id="2_q0wqa"]
@@ -7,8 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://bdamyne2wcrnj" path="res://assets/ui/battle/monblock/healthbarprogress9patch.png" id="5_to380"]
 [ext_resource type="Texture2D" uid="uid://cjh5fojlyuxsi" path="res://assets/ui/battle/monblock/actionbarunder9patch.png" id="6_trpmh"]
 [ext_resource type="Texture2D" uid="uid://nmbbcykfbpli" path="res://assets/ui/battle/monblock/actionbarprogress9patch.png" id="7_hy0u1"]
+[ext_resource type="Texture2D" uid="uid://uo8k4ifertr8" path="res://assets/ui/battle/monblock/xp_bar_empty.png" id="8_67n5q"]
 [ext_resource type="PackedScene" uid="uid://dufdijd12kum3" path="res://battle/status_icon.tscn" id="8_j5evr"]
 [ext_resource type="PackedScene" uid="uid://b8hka0ej3d1ws" path="res://battle/stats_arrows.tscn" id="9_oy8pe"]
+[ext_resource type="Texture2D" uid="uid://co0dtial8ujdc" path="res://assets/ui/battle/monblock/xp_bar_full.png" id="9_sm831"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bv2jl"]
 shader = ExtResource("1_s8mve")
@@ -79,6 +81,33 @@ theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 4
 text = "100/100"
 horizontal_alignment = 1
+
+[node name="XPBar" type="TextureProgressBar" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 3.0
+offset_top = 10.0
+offset_right = 43.0
+offset_bottom = 17.0
+value = 25.0
+stretch_margin_left = 1
+stretch_margin_top = 1
+stretch_margin_right = 1
+stretch_margin_bottom = 1
+texture_under = ExtResource("8_67n5q")
+texture_progress = ExtResource("9_sm831")
+texture_progress_offset = Vector2(1, 1)
+
+[node name="XPLabel" type="Label" parent="XPBar"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 8.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 6
+text = "1000/1000"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="NameLabel" type="Label" parent="."]
 layout_mode = 0

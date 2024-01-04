@@ -106,7 +106,7 @@ class Mon:
 	var _base: MonBase
 	var _level: int
 	var _nickname: String
-	var _xp: int
+	var _xp: float
 	var _monscripts: Array[ScriptData.MonScript]
 	var _active_monscript_index: int
 	
@@ -215,14 +215,14 @@ class Mon:
 			return Global.choose_one(_base._bug_drops)
 		return null
 	
-	func get_current_XP() -> int:
+	func get_current_XP() -> float:
 		return _xp
 	
 	func get_damage_multiplier_for_type(damageType: DamageType) -> float:
 		return _base._damage_type_multipliers[damageType]
 	
 	# adds XP and potentially applies level up
-	func gain_XP(xp_gained: int) -> void:
+	func gain_XP(xp_gained: float) -> void:
 		if _level == MonData.MAX_LEVEL: # don't try to level past MAX
 			return
 		
@@ -231,7 +231,7 @@ class Mon:
 			_xp -= MonData.XP_for_level(_level + 1)
 			_level += 1
 			if _level == MonData.MAX_LEVEL: # if we hit MAX, done
-				_xp = MonData.XP_for_level(_level)
+				_xp = MonData.XP_for_level(_level + 1)
 				return
 
 # List of MonBases, each is a static and constant representation of a Mon's essential characteristics

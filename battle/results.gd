@@ -16,7 +16,13 @@ const DECOMPILATION_PERCENTAGE_PATH = "Percentage"
 @onready var BUGS = $Bugs
 const BUGS_SPRITE_PATH = "Sprite"
 
-func _ready():
+var _granting_xp = false
+var _mon_blocks = []
+var _mons_to_xp = []
+var _xp_earned = 0.0
+var _xp_remaining = 0.0
+
+func _ready() -> void:
 	assert(XP_LABEL)
 	assert(BITS_LABEL)
 	assert(DECOMPILATIONS)
@@ -30,18 +36,43 @@ func _ready():
 	modulate.a = 0
 	_exit_button.disabled = true
 
-func perform_results(battle_results: Battle.BattleResult, bugs_earned: Array, mon_blocks: Array, player_team: Array, computer_team: Array):
+const XP_TIME = 2.0 #take 2 seconds to give XP
+func _process(delta: float) -> void:
+	if _granting_xp:
+		assert(_mons_to_xp)
+		assert(_mon_blocks)
+		
+		var xp_to_give = _xp_earned / XP_TIME * delta
+		print(xp_to_give)
+		xp_to_give = min(_xp_remaining, xp_to_give)
+		_xp_remaining -= xp_to_give
+		if _xp_remaining == 0:
+			print("0 left")
+			_granting_xp = false
+		
+		for i in _mons_to_xp.size():
+			_mons_to_xp[i].gain_XP(xp_to_give) # give xp
+			_mon_blocks[i].on_mon_xp_changed()
+
+func perform_results(battle_results: Battle.BattleResult, bugs_earned: Array, mon_blocks: Array, player_team: Array, computer_team: Array) -> void:	
+	_mons_to_xp = []
+	_mon_blocks = mon_blocks
+	
 	# calculate XP/Bits earned and update labels
-	var xp_earned = 0
+	_xp_earned = 0
 	var bits_earned = 0
 	for battlemon in computer_team:
-		xp_earned += battlemon.underlying_mon.get_xp_for_defeating()
+		_xp_earned += battlemon.underlying_mon.get_xp_for_defeating()
 		bits_earned +=  battlemon.underlying_mon.get_bits_for_defeating()
-	XP_LABEL.text = XP_BITS_FORMAT % xp_earned
+	XP_LABEL.text = XP_BITS_FORMAT % _xp_earned
 	BITS_LABEL.text = XP_BITS_FORMAT % bits_earned
 	
+	# set up mons to recieve xp
+	for battlemon in player_team: 
+		if battlemon != null:
+			_mons_to_xp.append(battlemon.underlying_mon)
+	_xp_remaining = _xp_earned
 	GameData.add_to_var(GameData.BITS, bits_earned) # give bits to the player
-	
 	
 	# Show bug drops (or hide excess frames)
 	for i in range(0, BUGS.get_children().size()):
@@ -55,13 +86,6 @@ func perform_results(battle_results: Battle.BattleResult, bugs_earned: Array, mo
 	for bugtype in bugs_earned: # give bug drops to player
 		GameData.bug_inventory[bugtype] += 1
 	
-	# grant XP to mons
-	# TODO ANIMATE
-	for battlemon in player_team: 
-		if battlemon != null:
-			battlemon.underlying_mon.gain_XP(xp_earned)
-			# TODO
-			
 	# Show decompilation bars/headshots (or hide excess bars)
 	# TODO - duplicate enemy mons should provide double progress and only 1 bar entry
 	
@@ -83,20 +107,25 @@ func perform_results(battle_results: Battle.BattleResult, bugs_earned: Array, mo
 			decompilation_slot.find_child(DECOMPILATION_PERCENTAGE_PATH).text = "%d%%" % int(100 * bar.value / bar.max_value)
 		else:
 			decompilation_slot.visible = false
-		
-
 	
 	# Fade in the results
 	await create_tween().tween_property(self, "modulate:a", 1, 0.2).finished
 	_exit_button.disabled = false
 	
 	# Switch monblocks to XP bars and animate increasing XP
-	# TODO - probably need to actually grant the XP here instead of outside
-	# we'll need a way to detect levels and stuff too, kind of a pain tbh
-	# probably have to do this in a _process instead of tweens
+	for monblock in mon_blocks:
+		monblock.switch_to_results_mode()
+	_granting_xp = true
 
 func _on_exit_pressed():
-	# todo - immediately reward remaining XP/compilation progress
+	# immediately reward remaining XP
+	for mon in _mons_to_xp:
+		mon.gain_XP(_xp_earned)
+	_granting_xp = false
+	_mons_to_xp = null
+	_mon_blocks = null
+	_xp_earned = 0
+	_xp_remaining = 0
 	
 	modulate.a = 0
 	_exit_button.disabled = true

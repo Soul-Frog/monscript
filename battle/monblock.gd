@@ -3,12 +3,19 @@ extends NinePatchRect
 @onready var name_label = $NameLabel
 @onready var level_label = $LevelLabel
 const LEVEL_FORMAT = "Lv%d"
+
 @onready var health_bar = $HealthBar
 @onready var health_label = $HealthBar/HealthLabel
 @onready var action_bar = $ActionBar
 const HEALTH_FORMAT = "%d/%d"
+
 @onready var action_label = $ActionBar/ActionLabel
 const ACTION_FORMAT = "%d/%d"
+
+@onready var xp_bar = $XPBar
+@onready var xp_label = $XPBar/XPLabel
+const XP_FORMAT = "%d/%d"
+
 @onready var status_icon = $StatusIcon
 @onready var stat_arrows = $StatsArrows
 
@@ -23,6 +30,9 @@ func _ready():
 	assert(action_bar)
 	assert(status_icon)
 	assert(stat_arrows)
+	assert(xp_bar)
+	assert(xp_label)
+	_switch_to_battle_mode()
 
 # assign a new mon for this block to track
 func assign_mon(mon: BattleMon) -> void:
@@ -53,13 +63,17 @@ func assign_mon(mon: BattleMon) -> void:
 	health_bar.max_value = active_mon.max_health
 	_on_mon_health_or_ap_changed()
 	modulate.a = 1.0
+	
+	on_mon_xp_changed()
+	
+	_switch_to_battle_mode()
 
 func remove_mon() -> void:
 	active_mon = null
 	modulate.a = 0.0
 
 func _on_mon_health_or_ap_changed() -> void:
-	assert(active_mon != null)
+	assert(active_mon)
 	action_bar.value = active_mon.action_points
 	action_bar.tint_progress = _full_ap_color if action_bar.value == action_bar.max_value else Color.WHITE
 	health_bar.value = active_mon.current_health
@@ -69,6 +83,31 @@ func _on_mon_health_or_ap_changed() -> void:
 	
 	if active_mon.is_defeated():
 		create_tween().tween_property(self, "modulate:a", 0.0, 0.2)
-	
+
 func _on_mon_stats_changed() -> void:
 	stat_arrows.on_stats_changed(active_mon)
+
+func _switch_to_battle_mode() -> void:
+	health_bar.show()
+	action_bar.show()
+	xp_bar.hide()
+
+func switch_to_results_mode() -> void:
+	health_bar.hide()
+	action_bar.hide()
+	xp_bar.show()
+
+func on_mon_xp_changed() -> void:
+	assert(active_mon)
+	
+	var mon := active_mon.underlying_mon as MonData.Mon
+	
+	var current_xp = mon.get_current_XP()
+	var next_level_xp = MonData.XP_for_level(mon.get_level() + 1)
+	
+	xp_label.text = XP_FORMAT % [current_xp, next_level_xp]
+	xp_bar.value = current_xp
+	xp_bar.max_value = next_level_xp
+	
+	# also update the level here in case it's changed
+	level_label.text = LEVEL_FORMAT % active_mon.underlying_mon.get_level()

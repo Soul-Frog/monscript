@@ -46,7 +46,7 @@ var team: Battle.Team
 
 # current action points - increases by speed each tick
 # when this reaches 100, signals to take a turn
-var action_points := 0.0
+var action_points := 50.0
 
 # how many turns this mon has taken this battle
 var turn_count := 0
