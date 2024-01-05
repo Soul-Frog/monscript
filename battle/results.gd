@@ -61,8 +61,6 @@ func _process(delta: float) -> void:
 			decompile_to_give = min(_decompile_remaining, decompile_to_give)
 			_decompile_remaining -= decompile_to_give
 			
-			print(decompile_to_give)
-			
 			for mon_type in _montypes_to_decompile:
 				# add progress
 				var maxProgress = MonData.get_decompilation_progress_required_for(mon_type)
@@ -75,8 +73,6 @@ func _process(delta: float) -> void:
 				var decompilation_slot = _decompile_mons_to_nodes[mon_type] 
 				var bar = decompilation_slot.find_child(DECOMPILATION_BAR_PATH)
 				bar.value = GameData.decompilation_progress_per_mon[mon_type] * 100
-				print(bar.value)
-				print(GameData.decompilation_progress_per_mon[mon_type] * 100)
 				decompilation_slot.find_child(DECOMPILATION_PERCENTAGE_PATH).text = "%d%%" % int(100 * bar.value / bar.max_value)
 
 func perform_results(battle_results: Battle.BattleResult, bugs_earned: Array, mon_blocks: Array, player_team: Array, computer_team: Array) -> void:	
