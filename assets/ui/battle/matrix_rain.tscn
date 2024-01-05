@@ -3,11 +3,10 @@
 [ext_resource type="Script" path="res://assets/ui/battle/matrix_rain.gd" id="1_q18ea"]
 [ext_resource type="FontFile" uid="uid://bv5q1sxhpuca3" path="res://assets/fonts/m5x7.ttf" id="2_qnd71"]
 
-[node name="Background" type="Node2D"]
+[node name="MatrixRain" type="Node2D"]
 script = ExtResource("1_q18ea")
 font = ExtResource("2_qnd71")
-width = 320
-height = 180
+charset_ordered = true
 
 [node name="StepTimer" type="Timer" parent="."]
 wait_time = 0.1
