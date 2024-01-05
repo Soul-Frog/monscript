@@ -142,17 +142,24 @@ func get_defense() -> int:
 func get_speed() -> int:
 	return _base_speed * _BUFF_STAGE_TO_MODIFIER[spd_buff_stage]
 
+func get_base_speed() -> int:
+	return _base_speed
+
 # Called once for each mon by battle.gd at a regular time interval
-func battle_tick(unscaled_delta: float) -> void:
+func battle_tick(unscaled_delta: float, highest_speed: int, seconds_per_turn: float) -> void:
 	var delta = unscaled_delta * _speed_scale
 	assert(underlying_mon != null, "Didn't add a mon with init_mon!")
 	assert(_base_attack != -1 and _base_speed != -1 and _base_defense != -1 and max_health != -1, "Stats were never initialized?")
 	if not is_defeated():
+		# amount of AP gained is (speed/highest_speed) * (AP_PER_TURN/seconds_per_turn) * delta
+		var speed_multiplier = float(max(get_speed(), 1.0)) / float(highest_speed)
+		var ap_per_second = ACTION_POINTS_PER_TURN/seconds_per_turn
+		var ap_gained = speed_multiplier * ap_per_second * delta
+		
 		# update action points, clamp between 0-100
-		set_action_points(clamp(action_points + max(get_speed(), 1) * delta, 0.0, ACTION_POINTS_PER_TURN))
+		set_action_points(clamp(action_points + ap_gained, 0.0, ACTION_POINTS_PER_TURN))
 		
 		if action_points >= ACTION_POINTS_PER_TURN:
-			# TODO $BattleComponents/ActionPointsBar.modulate = Global.COLOR_RED
 			turn_count += 1
 			emit_signal("ready_to_take_action", self) # signal that it's time for this mon to act
 

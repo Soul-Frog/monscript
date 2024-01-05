@@ -69,6 +69,12 @@ var trying_to_escape = false
 # bugs dropped by defeating opponent mons
 var _bugs_dropped = []
 
+# used when calculating how much AP to give each turn
+var _highest_mon_speed = 0
+# how many seconds it should take for the FASTEST mon in the battle to reach 100 AP from 0 AP
+# used to scale the speed of AP gain for all mons
+const SECONDS_PER_TURN_FOR_FASTEST = 5
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	assert(_player_mons)
@@ -119,6 +125,8 @@ func setup_battle(player_team, computer_team):
 	assert(player_team.size() == GameData.MONS_PER_TEAM, "Wrong num of mons in player team!")
 	assert(computer_team.size() == COMPUTER_MON_POSITIONS.size(), "Wrong num of mons in computer team!")
 	
+	_highest_mon_speed = -1
+	
 	# fancy lambda which makes the log_name of each mon unique
 	# if a mon has no shared name, does nothing
 	# otherwise changes it to "Bitleon1", "Bitleon2", "Bitleon3", etc
@@ -143,6 +151,8 @@ func setup_battle(player_team, computer_team):
 				name_map[mon_name].append(new_mon) 
 			else:
 				name_map[mon_name] = [new_mon]
+			
+			_highest_mon_speed = max(_highest_mon_speed, new_mon.get_base_speed())
 	
 	# handle any duplicate names
 	make_unique_log_names.call(name_map)
@@ -159,6 +169,8 @@ func setup_battle(player_team, computer_team):
 				name_map[mon_name].append(new_mon) 
 			else:
 				name_map[mon_name] = [new_mon]
+			
+			_highest_mon_speed = max(_highest_mon_speed, new_mon.get_base_speed())			
 
 	# handle any duplicate names
 	make_unique_log_names.call(name_map)
@@ -224,10 +236,10 @@ func _process(delta: float):
 		# don't need to recieve updates
 		for player_mon in _player_mons.get_children():
 			if not player_mon in action_queue:
-				player_mon.battle_tick(delta)
+				player_mon.battle_tick(delta, _highest_mon_speed, SECONDS_PER_TURN_FOR_FASTEST)
 		for computer_mon in _computer_mons.get_children():
 			if not computer_mon in action_queue:
-				computer_mon.battle_tick(delta)
+				computer_mon.battle_tick(delta, _highest_mon_speed, SECONDS_PER_TURN_FOR_FASTEST)
 	
 		# and if someone is ready to move, go ahead and let them take an action
 		if not action_queue.is_empty():
