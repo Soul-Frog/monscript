@@ -101,8 +101,8 @@ func _ready():
 	
 	# start with all controls out of view
 	_mon_action_queue.position.x -= 30
-	_speed_controls.position.y += 20
-	_escape_controls.position.y += 20
+	_speed_controls.position.y += 60
+	_escape_controls.position.y += 60
 	
 	for placeholder in _player_mons.get_children():
 		PLAYER_MON_POSITIONS.append(placeholder.position)
@@ -231,32 +231,29 @@ func setup_battle(player_team, computer_team):
 	await Global.delay(0.2)
 	_bannerLabel.display_text("INITIALIZING!")
 	await _bannerLabel.zoom_in()
-	await Global.delay(0.1)
-	
-	# TODO - fade in map?
 	
 	# fade in the mons
 	var fade_in_mon_tween = create_tween()
 	for mon in _computer_mons.get_children() + _player_mons.get_children():
 		mon.position.y -= 5
-		fade_in_mon_tween.parallel().tween_property(mon, "modulate:a", 1, 0.25)
-		fade_in_mon_tween.parallel().tween_property(mon, "position:y", mon.position.y + 5, 0.25)
+		fade_in_mon_tween.parallel().tween_property(mon, "modulate:a", 1, 0.4)
+		fade_in_mon_tween.parallel().tween_property(mon, "position:y", mon.position.y + 5, 0.4)
 	await fade_in_mon_tween.finished
 
 	# move in the monblocks
 	var move_in_monblocks = create_tween()
 	for player_block in _player_mon_blocks.get_children():
-		move_in_monblocks.parallel().tween_property(player_block, "position:x", player_block.position.x + 120, 0.3).set_trans(Tween.TRANS_CUBIC)
+		move_in_monblocks.parallel().tween_property(player_block, "position:x", player_block.position.x + 120, 0.6).set_trans(Tween.TRANS_CUBIC)
 	for computer_block in _computer_mon_blocks.get_children():
-		move_in_monblocks.parallel().tween_property(computer_block, "position:x", computer_block.position.x - 120, 0.3).set_trans(Tween.TRANS_CUBIC)
+		move_in_monblocks.parallel().tween_property(computer_block, "position:x", computer_block.position.x - 120, 0.6).set_trans(Tween.TRANS_CUBIC)
 	await move_in_monblocks.finished
 	
 	# move in the queue/battery/speed/log/escape
 	var move_in_ui = create_tween()
-	move_in_ui.parallel().tween_property(_mon_action_queue, "position:x", _mon_action_queue.position.x + 30, 0.3).set_trans(Tween.TRANS_CUBIC)
-	move_in_ui.parallel().tween_property(_inject_battery, "position:x", _inject_battery.position.x - 20, 0.3).set_trans(Tween.TRANS_CUBIC)
-	move_in_ui.parallel().tween_property(_speed_controls, "position:y", _speed_controls.position.y - 20, 0.3).set_trans(Tween.TRANS_CUBIC)
-	move_in_ui.parallel().tween_property(_escape_controls, "position:y", _escape_controls.position.y - 20, 0.3).set_trans(Tween.TRANS_CUBIC)
+	move_in_ui.parallel().tween_property(_mon_action_queue, "position:x", _mon_action_queue.position.x + 30, 0.6).set_trans(Tween.TRANS_CUBIC)
+	move_in_ui.parallel().tween_property(_inject_battery, "position:x", _inject_battery.position.x - 20, 0.6).set_trans(Tween.TRANS_CUBIC)
+	move_in_ui.parallel().tween_property(_speed_controls, "position:y", _speed_controls.position.y - 60, 0.6).set_trans(Tween.TRANS_CUBIC)
+	move_in_ui.parallel().tween_property(_escape_controls, "position:y", _escape_controls.position.y - 60, 0.6).set_trans(Tween.TRANS_CUBIC)
 	move_in_ui.parallel().tween_property(_log, "position:y", _log.position.y - 60, 0.3).set_trans(Tween.TRANS_CUBIC)
 	await move_in_ui.finished
 
@@ -265,12 +262,12 @@ func setup_battle(player_team, computer_team):
 	_log.add_text("Executing battle!")
 	_bannerLabel.display_text("EXECUTING!")
 	create_tween().tween_property(_matrix_rain, "modulate:a", 1, 3.0)
-	await _bannerLabel.zoom_in()
-	await Global.delay(0.4)
-	await _bannerLabel.zoom_out()
-	
+	_bannerLabel.zoom_in()
 	
 	state = BattleState.BATTLING
+	
+	await Global.delay(1.0)
+	_bannerLabel.zoom_out()
 
 # Should be called after a battle ends, before the next call to setup_battle
 func clear_battle():
@@ -428,29 +425,43 @@ func _end_battle_and_show_results():
 	state = BattleState.FINISHED
 	_log.add_text("Battle terminated.")
 	
+	# hide the action name box so it doesn't cover the TERMINATED text...
+	_action_name_box.hide()
+	
 	# hide escape, speed, and queue
 	var hide_tween = create_tween()
-	hide_tween.tween_property(_speed_controls, "position:y", _speed_controls.position.y + 20, 0.4).set_trans(Tween.TRANS_CUBIC)
-	hide_tween.parallel().tween_property(_escape_controls, "position:y", _escape_controls.position.y + 20, 0.4).set_trans(Tween.TRANS_CUBIC)
-	hide_tween.parallel().tween_property(_mon_action_queue, "position:x", _mon_action_queue.position.x - 30, 0.4).set_trans(Tween.TRANS_CUBIC)
-	hide_tween.parallel().tween_property(_matrix_rain, "modulate:a", 0, 0.5)
-	await hide_tween.finished
+	hide_tween.tween_property(_speed_controls, "position:y", _speed_controls.position.y + 60, 0.6).set_trans(Tween.TRANS_CUBIC)
+	hide_tween.parallel().tween_property(_escape_controls, "position:y", _escape_controls.position.y + 60, 0.6).set_trans(Tween.TRANS_CUBIC)
+	hide_tween.parallel().tween_property(_mon_action_queue, "position:x", _mon_action_queue.position.x - 30, 0.6).set_trans(Tween.TRANS_CUBIC)
+	hide_tween.parallel().tween_property(_matrix_rain, "modulate:a", 0, 3.0)
 	_speed_controls.fade_out_filters()
 	
 	_set_speed(Speed.NORMAL) # set speed to normal while matrix rain fades out
 	_log.make_scrollable_and_expandable() # make the log expandable
 	
 	#TODO - make this graphically drop during battle when mon is defeated! :D
-	for mon in _computer_mons.get_children():
-		var bug_drop = mon.underlying_mon.roll_bug_drop()
-		if bug_drop != null:
-			_bugs_dropped.append(bug_drop)
+	if not battle_result.end_condition == Global.BattleEndCondition.ESCAPE:
+		for mon in _computer_mons.get_children():
+			var bug_drop = mon.underlying_mon.roll_bug_drop()
+			if bug_drop != null:
+				_bugs_dropped.append(bug_drop)
 	
 	_results.perform_results(battle_result, _bugs_dropped, _player_mon_blocks.get_children(), _player_mons.get_children(), _computer_mons.get_children())
 	
 	_bannerLabel.display_text("TERMINATED!")
-	_bannerLabel.zoom_in()
-	await Global.delay(0.5)
+	await _bannerLabel.zoom_in()
+	await Global.delay(0.8)
+	await _bannerLabel.zoom_out()
+	match battle_result.end_condition:
+		Global.BattleEndCondition.WIN:
+			_bannerLabel.display_text("VICTORY!")
+		Global.BattleEndCondition.LOSE:
+			_bannerLabel.display_text("DEFEAT...")
+		Global.BattleEndCondition.ESCAPE:
+			_bannerLabel.display_text("ESCAPED.")
+	await _bannerLabel.zoom_in()
+	
+	_action_name_box.show()
 
 func _on_results_exited():
 	Events.emit_signal("battle_ended", battle_result)
@@ -483,7 +494,7 @@ func _can_inject() -> bool:
 	return GameData.inject_points >= GameData.POINTS_PER_INJECT
 
 func _input(event: InputEvent):
-	if not _inject_layer.is_injecting():
+	if not _inject_layer.is_injecting() and state == BattleState.BATTLING:
 		if Input.is_action_just_pressed("battle_run"):
 			_speed_controls.run()
 		elif Input.is_action_just_pressed("battle_speedup"):

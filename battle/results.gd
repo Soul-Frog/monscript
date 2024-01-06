@@ -17,7 +17,7 @@ const DECOMPILATION_PERCENTAGE_PATH = "Percentage"
 const BUGS_SPRITE_PATH = "Sprite"
 
 # time in seconds to spend increasing xp/decompile bars
-const DECOMPILE_TIME = 1.0 
+const DECOMPILE_TIME = 2.5 
 const XP_TIME = 2.0
 
 # how far off-screen the results should be placed
@@ -90,9 +90,11 @@ func perform_results(battle_results: Battle.BattleResult, bugs_earned: Array, mo
 	# calculate XP/Bits earned and update labels
 	_xp_earned = 0
 	var bits_earned = 0
-	for battlemon in computer_team:
-		_xp_earned += battlemon.underlying_mon.get_xp_for_defeating()
-		bits_earned +=  battlemon.underlying_mon.get_bits_for_defeating()
+	if battle_results.end_condition == Global.BattleEndCondition.WIN:
+		for battlemon in computer_team:
+			_xp_earned += battlemon.underlying_mon.get_xp_for_defeating()
+			bits_earned +=  battlemon.underlying_mon.get_bits_for_defeating()
+	
 	XP_LABEL.text = XP_BITS_FORMAT % _xp_earned
 	BITS_LABEL.text = XP_BITS_FORMAT % bits_earned
 	
@@ -144,10 +146,12 @@ func perform_results(battle_results: Battle.BattleResult, bugs_earned: Array, mo
 			_decompile_mons_to_nodes[mon_type] = decompilation_slot
 		else:
 			decompilation_slot.visible = false
-	_decompile_remaining = 1.0
+	
+	if battle_results.end_condition == Global.BattleEndCondition.WIN:
+		_decompile_remaining = 1.0
 	
 	# Bring ourselves in from the side
-	await create_tween().tween_property(self, "position:x", position.x - _SLIDE_IN_DISTANCE, 0.5).set_trans(Tween.TRANS_CUBIC).finished
+	await create_tween().tween_property(self, "position:x", position.x - _SLIDE_IN_DISTANCE, 0.6).set_trans(Tween.TRANS_CUBIC).finished
 	_exit_button.disabled = false
 	
 	# Switch monblocks to XP bars and animate increasing XP
