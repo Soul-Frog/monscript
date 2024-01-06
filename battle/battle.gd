@@ -10,7 +10,7 @@ class BattleResult:
 		end_condition = Global.BattleEndCondition.NONE
 
 enum BattleState {
-	EMPTY, # this battle scene has no mons; it's ready for a call to setup_battle
+	LOADING, # this battle scene has no mons; it's ready for a call to setup_battle
 	BATTLING, # this battle scene is ready to go (after setup_battle, before battle has ended)
 	FINISHED # this battle scene is over; it's ready for a call to clear_battle
 }
@@ -65,6 +65,7 @@ var trying_to_escape = false
 @onready var _player_mon_blocks = $UI/PlayerMonBlocks
 @onready var _computer_mon_blocks = $UI/ComputerMonBlocks
 @onready var _results = $UI/Results
+@onready var _bannerLabel = $UI/BannerLabel
 
 @onready var _background = $Scene/Background
 @onready var _matrix_rain = $Scene/MatrixRain
@@ -96,6 +97,7 @@ func _ready():
 	
 	assert(_background)
 	assert(_matrix_rain)
+	assert(_bannerLabel)
 	
 	for placeholder in _player_mons.get_children():
 		PLAYER_MON_POSITIONS.append(placeholder.position)
@@ -126,12 +128,24 @@ func _create_and_setup_mon(base_mon, teamNode, pos, monblock, team):
 
 # Sets up a new battle scene
 func setup_battle(player_team, computer_team):
-	assert(state == BattleState.EMPTY) # Make sure previous battle was cleaned up; this can also happen if 2 battle start at once (accidentally layered overworld mons)
+	assert(state == BattleState.LOADING) # Make sure previous battle was cleaned up; this can also happen if 2 battle start at once (accidentally layered overworld mons)
 	assert(_player_mons.get_child_count() == 0, "Shouldn't have any mons at start of setup! (forgot to clear_battle()?)")
 	assert(_computer_mons.get_child_count() == 0, "Shouldn't have any mons at start of setup! (forgot to clear_battle()?)")
 	assert(player_team.size() == GameData.MONS_PER_TEAM, "Wrong num of mons in player team!")
 	assert(computer_team.size() == COMPUTER_MON_POSITIONS.size(), "Wrong num of mons in computer team!")
 	
+	is_a_mon_taking_action = false
+	is_inject_queued = false
+	trying_to_escape = false
+	_bugs_dropped = []
+	
+	action_queue.clear()
+	_mon_action_queue.reset()
+	
+	_speed_controls.reset()
+	_escape_controls.reset()
+	_action_name_box.reset()
+	_inject_battery.update()
 	_highest_mon_speed = -1
 	
 	# fancy lambda which makes the log_name of each mon unique
@@ -182,30 +196,40 @@ func setup_battle(player_team, computer_team):
 	# handle any duplicate names
 	make_unique_log_names.call(name_map)
 	
-	action_queue.clear()
-	is_a_mon_taking_action = false
-	is_inject_queued = false
-	trying_to_escape = false
-	
-	_mon_action_queue.reset()
-	_speed_controls.reset()
-	_escape_controls.reset()
-	_action_name_box.reset()
-	_inject_battery.update()
-	
-	_matrix_rain.modulate.a = 1
-	
-	_bugs_dropped = []
-	
 	assert(_player_mons.get_child_count() != 0, "No valid player mons!")
 	assert(_computer_mons.get_child_count() != 0, "No valid computer mons!")
 	assert(action_queue.size() == 0)
 	assert(not is_a_mon_taking_action)
-	state = BattleState.BATTLING
 	
+	# set up the queue
 	_mon_action_queue.update_queue(action_queue, _player_mons, _computer_mons)
 	
+	# perform the graphical transitions for the battle intro
+	
+	# set position of UI elements
+	_matrix_rain.modulate.a = 0
+	# todo
+	
+	await Global.delay(0.2)
+	_bannerLabel.display_text("INITIALIZING", false)
+	await _bannerLabel.zoom_in()
+	
+	# TODO - fade in map
+	# TODO - fade in mons
+	# TODO - monblocks
+	# TODO - queue/battery/speed/log/escape
+	# TODO - EXECUTE + matrix rain
+	
+	await Global.delay(0.4)
+	
 	_log.add_text("Executing battle!")
+	_bannerLabel.display_text("EXECUTING", false)
+	create_tween().tween_property(_matrix_rain, "modulate:a", 1, 0.5)
+	await _bannerLabel.zoom_in()
+	await Global.delay(0.4)
+	_bannerLabel.zoom_out()
+	
+	state = BattleState.BATTLING
 
 # Should be called after a battle ends, before the next call to setup_battle
 func clear_battle():
@@ -219,7 +243,7 @@ func clear_battle():
 	for block in _computer_mon_blocks.get_children():
 		block.remove_mon()
 		
-	state = BattleState.EMPTY
+	state = BattleState.LOADING
 	battle_result = BattleResult.new()
 	_log.clear()
 
@@ -231,7 +255,7 @@ func _get_living_mons(mons: Array) -> Array:
 	return living
 
 func _process(delta: float):
-	if state == BattleState.FINISHED: #viewing results, so no need to update
+	if state != BattleState.BATTLING:
 		return
 	
 	if not is_a_mon_taking_action and is_inject_queued:
@@ -368,9 +392,9 @@ func _end_battle_and_show_results():
 	tween.tween_property(_speed_controls, "modulate:a", 0, 0.2)
 	tween.parallel().tween_property(_escape_controls, "modulate:a", 0, 0.2)
 	tween.parallel().tween_property(_mon_action_queue, "modulate:a", 0, 0.2)
-	tween.parallel().tween_property(_matrix_rain, "modulate:a", 0, 0.2)
+	tween.parallel().tween_property(_matrix_rain, "modulate:a", 0, 0.5)
 	
-	_set_speed(_speed_to_speed[Speed.NORMAL]) # return speed to normal while matrix rain fades out
+	_set_speed(Speed.NORMAL) # return speed to normal while matrix rain fades out
 	
 	#TODO - make this graphically drop during battle when mon is defeated! :D
 	for mon in _computer_mons.get_children():
@@ -387,7 +411,7 @@ func _on_speed_controls_changed():
 	if not _inject_layer.is_injecting() and not is_inject_queued: # can't update speed during inject
 		_set_speed(_speed_controls.speed)
 
-func _set_speed(speed):
+func _set_speed(speed: Speed):
 	if is_inside_tree():
 		var new_speed_multiplier = _speed_to_speed[speed]
 		

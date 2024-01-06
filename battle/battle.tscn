@@ -1,10 +1,11 @@
-[gd_scene load_steps=53 format=3 uid="uid://dtpehdp2rfsuh"]
+[gd_scene load_steps=54 format=3 uid="uid://dtpehdp2rfsuh"]
 
 [ext_resource type="Script" path="res://battle/battle.gd" id="1_85t5n"]
 [ext_resource type="Texture2D" uid="uid://3oirll1yg54k" path="res://assets/isometric/cave_temple_battle.png" id="2_cb4ye"]
 [ext_resource type="Script" path="res://decorators/fade_decorator.gd" id="2_cfdr2"]
 [ext_resource type="Texture2D" uid="uid://bvtsquwjsp5df" path="res://assets/isometric/wireframe.png" id="3_d8nu3"]
 [ext_resource type="PackedScene" uid="uid://6l3e2k77sdsj" path="res://assets/ui/battle/matrix_rain.tscn" id="4_kjqyu"]
+[ext_resource type="Script" path="res://battle/banner_label.gd" id="5_41hnr"]
 [ext_resource type="PackedScene" uid="uid://bo77v3uohwvy1" path="res://mons/bitleon.tscn" id="5_a0vn4"]
 [ext_resource type="PackedScene" uid="uid://ds2pwty7e10tr" path="res://battle/monblock.tscn" id="5_fkqod"]
 [ext_resource type="Texture2D" uid="uid://6daimh3y1x0t" path="res://assets/ui/battle/escape/escape_unselected.png" id="13_wkbv7"]
@@ -378,6 +379,20 @@ offset_left = 217.0
 offset_top = 101.0
 offset_right = 263.0
 offset_bottom = 122.0
+
+[node name="BannerLabel" type="RichTextLabel" parent="UI"]
+offset_left = -100.0
+offset_top = 4.0
+offset_right = 420.0
+offset_bottom = 119.0
+theme_override_colors/font_shadow_color = Color(0, 0.996078, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 2
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "[center]INITIALIZING...[/center]"
+script = ExtResource("5_41hnr")
 
 [connection signal="exit" from="UI/Results" to="." method="_on_results_exited"]
 [connection signal="inject_completed" from="UI/InjectLayer" to="." method="_on_inject_completed"]

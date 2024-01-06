@@ -1,0 +1,37 @@
+extends RichTextLabel
+
+const _FONT_SIZE = 16
+const _ZOOMOUT_SIZE = 64
+const _FORMAT = "[center]%s[/center]"
+
+func _ready() -> void:
+	modulate.a = 0
+	add_theme_font_size_override("normal_font_size", _ZOOMOUT_SIZE)
+	text = ""
+
+func display_text(new_text: String, animated: bool):
+	if animated and text.length() != 0: # remove the current text letter by letter
+		await create_tween().tween_property(self, "visible_characters", 0, 0.1).finished
+	
+	text = _FORMAT % new_text
+	
+	if animated: # display the next text letter by letter
+		await create_tween().tween_property(self, "visible_characters", text.length(), 0.1).finished
+
+func zoom_out():
+	modulate.a = 1
+	add_theme_font_size_override("normal_font_size", _FONT_SIZE)
+	
+	var tween = create_tween()
+	tween.tween_property(self, "modulate:a", 0, 0.08)
+	tween.parallel().tween_property(self, "theme_override_font_sizes/normal_font_size", _ZOOMOUT_SIZE, 0.12)
+	await tween.finished
+
+func zoom_in():
+	modulate.a = 0
+	add_theme_font_size_override("normal_font_size", _ZOOMOUT_SIZE)
+	
+	var tween = create_tween()
+	tween.tween_property(self, "modulate:a", 1, 0.08)
+	tween.parallel().tween_property(self, "theme_override_font_sizes/normal_font_size", _FONT_SIZE, 0.12)
+	await tween.finished

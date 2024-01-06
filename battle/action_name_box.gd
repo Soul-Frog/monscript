@@ -51,3 +51,4 @@ func set_speed_scale(speed_scale: float) -> void:
 	
 	for invalid_tween in invalid_tweens:
 		_active_tweens.erase(invalid_tween)
+ 
