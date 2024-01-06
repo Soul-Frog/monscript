@@ -23,7 +23,7 @@ func _on_area_2d_body_entered(overworld_encounter_collided_with):
 func activate_invincibility(battle_end_condition) -> void:
 	_is_invincible = true
 	
-	var length = _INVINCIBILITY_AFTER_ESCAPE_SECS if battle_end_condition == Global.BattleEndCondition.ESCAPE else _INVINCIBILITY_AFTER_WIN_SECS
+	var length = _INVINCIBILITY_AFTER_ESCAPE_SECS if battle_end_condition == BattleData.BattleEndCondition.ESCAPE else _INVINCIBILITY_AFTER_WIN_SECS
 	if Global.DEBUG_NO_INVINCIBLE:
 		length = 0
 	

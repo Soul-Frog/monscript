@@ -2,6 +2,7 @@ class_name Area
 extends Node2D
 
 @export var area_enum := GameData.Area.NONE
+@export var battle_background := BattleData.Background.UNDEFINED
 @export var camera_zoom := 1.0
 
 var _overworld_encounter_battling_with = null
@@ -14,6 +15,7 @@ var _overworld_encounter_battling_with = null
 
 func _ready():
 	assert(not area_enum == GameData.Area.NONE, "Did not assign area_enum in editor.")
+	assert(not battle_background == BattleData.Background.UNDEFINED, "Did not assign battle background in editor.")
 	assert(camera_zoom > 0 and camera_zoom <= 5, "Be sane with the camera zoom level. (ok 5 is NOT sane BUT..)")
 	assert(_PLAYER)
 	assert(_CAMERA)
@@ -31,12 +33,12 @@ func _on_overworld_encounter_collided_with_player(overworld_encounter_collided_w
 
 func handle_battle_results(battle_end_condition):
 	assert(_overworld_encounter_battling_with != null, "Must be battling against an overworld mon!")
-	assert(battle_end_condition != Global.BattleEndCondition.NONE, "Battle end condition was not set.")
-	if battle_end_condition == Global.BattleEndCondition.WIN:
+	assert(battle_end_condition != BattleData.BattleEndCondition.NONE, "Battle end condition was not set.")
+	if battle_end_condition == BattleData.BattleEndCondition.WIN:
 		_OVERWORLD_ENCOUNTERS.remove_child(_overworld_encounter_battling_with)
 		_overworld_encounter_battling_with.queue_free()
 	
-	if battle_end_condition == Global.BattleEndCondition.ESCAPE or battle_end_condition == Global.BattleEndCondition.WIN:
+	if battle_end_condition == BattleData.BattleEndCondition.ESCAPE or battle_end_condition == BattleData.BattleEndCondition.WIN:
 		_PLAYER.activate_invincibility(battle_end_condition)
 
 # new_spawn_point may be a String (a point in the new area) or a Vector2 (a position)

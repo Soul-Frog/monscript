@@ -13,6 +13,7 @@ size = Vector2(51, 7)
 [node name="Area" type="Node2D"]
 script = ExtResource("1_leamx")
 area_enum = 3
+battle_background = 1
 
 [node name="Base" type="Node2D" parent="."]
 

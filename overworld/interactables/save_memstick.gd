@@ -3,7 +3,7 @@ extends DialogueInteractable
 func _on_interact():
 	_SPRITE.play("saving")
 	
-	GameData.inject_points = GameData.get_var(GameData.MAX_INJECTS) * GameData.POINTS_PER_INJECT
+	GameData.inject_points = GameData.get_var(GameData.MAX_INJECTS) * BattleData.POINTS_PER_INJECT
 	
 	GameData.save_game()
 	

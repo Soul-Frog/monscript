@@ -60,6 +60,7 @@ func _process(delta: float) -> void:
 				if _xp_remaining == 0: # do some extra handling on the last xp grant step to handle float rounding errors
 					_mons_to_xp[i].set_XP(int(_mons_to_xp[i].get_current_XP() + 0.1))
 				
+				# TODO - this is broken if there are empty mons above...
 				_mon_blocks[i].on_mon_xp_changed() # update xp bars
 		
 		if _decompile_remaining != 0:
@@ -81,7 +82,7 @@ func _process(delta: float) -> void:
 				bar.value = GameData.decompilation_progress_per_mon[mon_type] * 100
 				decompilation_slot.find_child(DECOMPILATION_PERCENTAGE_PATH).text = "%d%%" % int(100 * bar.value / bar.max_value)
 
-func perform_results(battle_results: Battle.BattleResult, bugs_earned: Array, mon_blocks: Array, player_team: Array, computer_team: Array) -> void:	
+func perform_results(battle_results: BattleData.BattleResult, bugs_earned: Array, mon_blocks: Array, player_team: Array, computer_team: Array) -> void:	
 	_mons_to_xp = []
 	_montypes_to_decompile = []
 	_decompile_mons_to_nodes = {}
@@ -90,7 +91,7 @@ func perform_results(battle_results: Battle.BattleResult, bugs_earned: Array, mo
 	# calculate XP/Bits earned and update labels
 	_xp_earned = 0
 	var bits_earned = 0
-	if battle_results.end_condition == Global.BattleEndCondition.WIN:
+	if battle_results.end_condition == BattleData.BattleEndCondition.WIN:
 		for battlemon in computer_team:
 			_xp_earned += battlemon.underlying_mon.get_xp_for_defeating()
 			bits_earned +=  battlemon.underlying_mon.get_bits_for_defeating()
@@ -147,7 +148,7 @@ func perform_results(battle_results: Battle.BattleResult, bugs_earned: Array, mo
 		else:
 			decompilation_slot.visible = false
 	
-	if battle_results.end_condition == Global.BattleEndCondition.WIN:
+	if battle_results.end_condition == BattleData.BattleEndCondition.WIN:
 		_decompile_remaining = 1.0
 	
 	# Bring ourselves in from the side

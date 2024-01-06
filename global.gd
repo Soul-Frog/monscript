@@ -24,14 +24,6 @@ var DEBUG_NO_INVINCIBLE = false # Turn off invincibility after ending a battle
 var DEBUG_CONSOLE = true # Enables the debug console when typing `
 var DEBUG_FAST_START = true # Continue is available even with no save file; speeds up main menu->overworld transition
 
-# represents the result of a battle
-enum BattleEndCondition {
-	WIN, # the player won the battle
-	LOSE, # the player lost the battle
-	ESCAPE, # player escaped from battle
-	NONE # default/error condition; should be set before battle ends
-}
-
 func adjust_towards(current, goal, delta):
 	assert(delta > 0, "Delta should be provided as a nonzero positive value")
 	if current < goal:

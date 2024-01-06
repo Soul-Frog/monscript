@@ -56,7 +56,7 @@ class Rain:
 @export var charset: String = "0123456789ABCDEF"
 @export var charset_ordered: bool = false
 @export var time_between_updates: float = 0.1
-@export var text_color: Color = Color.GREEN
+@export var color: Color = Color.GREEN
 
 @onready var _TIMER = $StepTimer
 var _matrix = []
@@ -99,7 +99,7 @@ func _draw():
 		var x_pos = x * spacing
 		for y in _max_y:
 			var y_pos = spacing + (y * spacing)
-			draw_string(font, Vector2(x_pos, y_pos), str(_matrix[x][y].glyph), HORIZONTAL_ALIGNMENT_CENTER, spacing, font_size, text_color * _matrix[x][y].alpha)
+			draw_string(font, Vector2(x_pos, y_pos), str(_matrix[x][y].glyph), HORIZONTAL_ALIGNMENT_CENTER, spacing, font_size, color * _matrix[x][y].alpha)
 
 func _on_step_timer_timeout():
 	for rain in _rain:

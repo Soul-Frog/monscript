@@ -21,6 +21,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Global="*res://global.gd"
+BattleData="*res://battle_data.gd"
 ScriptData="*res://script_data.gd"
 GameData="*res://game_data.gd"
 BugData="*res://bug_data.gd"

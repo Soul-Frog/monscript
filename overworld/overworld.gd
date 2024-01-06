@@ -6,9 +6,9 @@ func _ready():
 	Events.area_changed.connect(_on_area_changed)
 
 func handle_battle_results(battle_end_condition) -> void:
-	assert(battle_end_condition != Global.BattleEndCondition.NONE, "Battle end condition was not set.")
+	assert(battle_end_condition != BattleData.BattleEndCondition.NONE, "Battle end condition was not set.")
 	
-	if battle_end_condition == Global.BattleEndCondition.LOSE:
+	if battle_end_condition == BattleData.BattleEndCondition.LOSE:
 		print("We lost the battle btw")
 	
 	current_area.handle_battle_results(battle_end_condition)

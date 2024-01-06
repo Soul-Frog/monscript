@@ -79,11 +79,11 @@ func _on_battle_started(computer_encounter_team: Array) -> void:
 	# this check is necessary to prevent bugs when
 	# multiple battle start on the same frame (stacked enemies)
 	if active_scene != BATTLE: 
-		BATTLE.setup_battle(GameData.team, computer_encounter_team)
+		BATTLE.setup_battle(GameData.team, computer_encounter_team, OVERWORLD.current_area.battle_background)
 		await _switch_to_scene(BATTLE, FADE)
 
-func _on_battle_ended(battle_result: Battle.BattleResult) -> void:
-	assert(battle_result.end_condition != Global.BattleEndCondition.NONE, "End condition was not set before battle ended.")
+func _on_battle_ended(battle_result: BattleData.BattleResult) -> void:
+	assert(battle_result.end_condition != BattleData.BattleEndCondition.NONE, "End condition was not set before battle ended.")
 	assert(active_scene == BATTLE)
 	
 	# delete overworld encounter if win; respawn player if lose; handle escaping

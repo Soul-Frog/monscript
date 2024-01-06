@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://bo77v3uohwvy1"]
 
 [ext_resource type="PackedScene" uid="uid://qd8gobfrvv8u" path="res://mons/mon.tscn" id="1_kkw55"]
-[ext_resource type="Texture2D" uid="uid://7f1xs6lh2wuf" path="res://assets/mons/bitleon.png" id="2_kygqj"]
+[ext_resource type="Texture2D" uid="uid://7f1xs6lh2wuf" path="res://assets/sprites/mons/bitleon.png" id="2_kygqj"]
 [ext_resource type="Shader" path="res://mons/mon.gdshader" id="2_ol340"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xh1wq"]

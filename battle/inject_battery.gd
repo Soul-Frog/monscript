@@ -14,7 +14,7 @@ const BATTERY_PARTIAL_COLOR = Color(255.0/255.0, 245.0/255.0, 157.0/255.0)
 func _ready() -> void:
 	assert(_bar)
 	assert(_top)
-	_top.max_value = GameData.POINTS_PER_INJECT
+	_top.max_value = BattleData.POINTS_PER_INJECT
 	assert(BATTERY_SEGMENT_UNDER)
 	assert(BATTERY_SEGMENT_PROGRESS)
 	update()
@@ -27,7 +27,7 @@ func _grow() -> void:
 	var new_segment := TextureProgressBar.new()
 	new_segment.texture_under = BATTERY_SEGMENT_UNDER
 	new_segment.texture_progress = BATTERY_SEGMENT_PROGRESS
-	new_segment.max_value = GameData.POINTS_PER_INJECT
+	new_segment.max_value = BattleData.POINTS_PER_INJECT
 	new_segment.fill_mode = new_segment.FILL_BOTTOM_TO_TOP
 	new_segment.texture_progress_offset = Vector2(3, 1)
 	
@@ -55,10 +55,10 @@ func _update_progress() -> void:
 	var segs_reversed = _bar.get_children()
 	segs_reversed.reverse()
 	for segment in segs_reversed:
-		var progress_for_bar = GameData.POINTS_PER_INJECT if progress_left > GameData.POINTS_PER_INJECT else progress_left
+		var progress_for_bar = BattleData.POINTS_PER_INJECT if progress_left > BattleData.POINTS_PER_INJECT else progress_left
 		progress_left -= progress_for_bar
 		segment.value = progress_for_bar
-		segment.tint_progress = BATTERY_FULL_COLOR if segment.value == GameData.POINTS_PER_INJECT else BATTERY_PARTIAL_COLOR
+		segment.tint_progress = BATTERY_FULL_COLOR if segment.value == BattleData.POINTS_PER_INJECT else BATTERY_PARTIAL_COLOR
 
 func _update_bar_size() -> void:
 	var segments = GameData.get_var(GameData.MAX_INJECTS)

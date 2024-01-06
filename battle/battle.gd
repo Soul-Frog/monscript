@@ -1,14 +1,6 @@
 class_name Battle
 extends Node2D
 
-const BATTLE_MON_SCRIPT := preload("res://battle/battle_mon.gd")
-
-class BattleResult:
-	var end_condition
-	
-	func _init():
-		end_condition = Global.BattleEndCondition.NONE
-
 enum BattleState {
 	LOADING, # this battle scene has no mons; it's ready for a call to setup_battle
 	BATTLING, # this battle scene is ready to go (after setup_battle, before battle has ended)
@@ -67,6 +59,7 @@ var trying_to_escape = false
 @onready var _results = $UI/Results
 @onready var _bannerLabel = $UI/BannerLabel
 
+@onready var _terrain = $Scene/Terrain
 @onready var _background = $Scene/Background
 @onready var _matrix_rain = $Scene/MatrixRain
 
@@ -110,7 +103,7 @@ func _ready():
 		COMPUTER_MON_POSITIONS.append(placeholder.position)
 	MON_Z = _player_mons.z_index
 	state = BattleState.FINISHED
-	battle_result = BattleResult.new()
+	battle_result = BattleData.BattleResult.new()
 	clear_battle();
 
 # Helper function which creates and connects signals for BattleMon
@@ -118,7 +111,7 @@ func _create_and_setup_mon(base_mon, teamNode, pos, monblock, team):
 	var new_mon = load(base_mon.get_scene_path()).instantiate()
 	new_mon.z_index = MON_Z
 	new_mon.add_to_group("battle_speed_scaled")
-	new_mon.set_script(BATTLE_MON_SCRIPT)
+	new_mon.set_script(BattleData.BATTLE_MON_SCRIPT)
 	new_mon.init_mon(base_mon, team)
 	monblock.assign_mon(new_mon)
 	teamNode.add_child(new_mon)
@@ -132,8 +125,9 @@ func _create_and_setup_mon(base_mon, teamNode, pos, monblock, team):
 	return new_mon
 
 # Sets up a new battle scene
-func setup_battle(player_team, computer_team):
+func setup_battle(player_team, computer_team, battle_background: BattleData.Background):
 	assert(state == BattleState.LOADING) # Make sure previous battle was cleaned up; this can also happen if 2 battle start at once (accidentally layered overworld mons)
+	assert(battle_background != BattleData.Background.UNDEFINED)
 	assert(_player_mons.get_child_count() == 0, "Shouldn't have any mons at start of setup! (forgot to clear_battle()?)")
 	assert(_computer_mons.get_child_count() == 0, "Shouldn't have any mons at start of setup! (forgot to clear_battle()?)")
 	assert(player_team.size() == GameData.MONS_PER_TEAM, "Wrong num of mons in player team!")
@@ -209,6 +203,12 @@ func setup_battle(player_team, computer_team):
 	# set up the queue
 	_mon_action_queue.update_queue(action_queue, _player_mons, _computer_mons)
 	
+	# set up the background/matrix rain
+	var background := BattleData.get_background(battle_background) as BattleData.BattleBackground
+	_terrain.texture = background.get_map_texture()
+	_matrix_rain.color = background.matrix_rain_color
+	_background.color = background.background_color
+	
 	# perform the battle intro
 	_log.add_text("Initializing battle...")
 	
@@ -282,7 +282,7 @@ func clear_battle():
 		block.remove_mon()
 		
 	state = BattleState.LOADING
-	battle_result = BattleResult.new()
+	battle_result = BattleData.BattleResult.new()
 	_log.clear()
 
 func _get_living_mons(mons: Array) -> Array:
@@ -364,7 +364,7 @@ func _on_mon_try_to_escape(battle_mon):
 		
 		if escape_chance >= Global.RNG.randi_range(1, 100):
 			_log.add_text("Escaped successfully!")
-			battle_result.end_condition = Global.BattleEndCondition.ESCAPE
+			battle_result.end_condition = BattleData.BattleEndCondition.ESCAPE
 			_end_battle_and_show_results()
 		else:
 			_log.add_text("Escape failed.")
@@ -381,7 +381,7 @@ func _on_mon_action_completed():
 	# if this action was performed by a player mon, make progress towards inject
 	if action_queue[0].team == Team.PLAYER:
 		# add 1 point, but not more than the maximum amount for the bars
-		GameData.inject_points = min(GameData.inject_points + 1, GameData.get_var(GameData.MAX_INJECTS) * GameData.POINTS_PER_INJECT)
+		GameData.inject_points = min(GameData.inject_points + 1, GameData.get_var(GameData.MAX_INJECTS) * BattleData.POINTS_PER_INJECT)
 		_inject_battery.update() # and update the graphic
 	
 	action_queue.remove_at(0)
@@ -410,18 +410,18 @@ func _check_battle_end_condition():
 	var computer_mons_alive = _are_any_computer_mons_alive()
 	
 	if player_mons_alive and not computer_mons_alive:
-		battle_result.end_condition = Global.BattleEndCondition.WIN
+		battle_result.end_condition = BattleData.BattleEndCondition.WIN
 		_end_battle_and_show_results()
 	elif not player_mons_alive and computer_mons_alive:
-		battle_result.end_condition = Global.BattleEndCondition.LOSE
+		battle_result.end_condition = BattleData.BattleEndCondition.LOSE
 		_end_battle_and_show_results()
 	elif not player_mons_alive and not computer_mons_alive:
-		battle_result.end_condition = Global.BattleEndCondition.WIN
+		battle_result.end_condition = BattleData.BattleEndCondition.WIN
 		_end_battle_and_show_results()
 
 func _end_battle_and_show_results():
 	assert(battle_result)
-	assert(battle_result.end_condition != Global.BattleEndCondition.NONE)
+	assert(battle_result.end_condition != BattleData.BattleEndCondition.NONE)
 	state = BattleState.FINISHED
 	_log.add_text("Battle terminated.")
 	
@@ -440,7 +440,7 @@ func _end_battle_and_show_results():
 	_log.make_scrollable_and_expandable() # make the log expandable
 	
 	#TODO - make this graphically drop during battle when mon is defeated! :D
-	if not battle_result.end_condition == Global.BattleEndCondition.ESCAPE:
+	if not battle_result.end_condition == BattleData.BattleEndCondition.ESCAPE:
 		for mon in _computer_mons.get_children():
 			var bug_drop = mon.underlying_mon.roll_bug_drop()
 			if bug_drop != null:
@@ -453,11 +453,11 @@ func _end_battle_and_show_results():
 	await Global.delay(0.8)
 	await _bannerLabel.zoom_out()
 	match battle_result.end_condition:
-		Global.BattleEndCondition.WIN:
+		BattleData.BattleEndCondition.WIN:
 			_bannerLabel.display_text("VICTORY!")
-		Global.BattleEndCondition.LOSE:
+		BattleData.BattleEndCondition.LOSE:
 			_bannerLabel.display_text("DEFEAT...")
-		Global.BattleEndCondition.ESCAPE:
+		BattleData.BattleEndCondition.ESCAPE:
 			_bannerLabel.display_text("ESCAPED.")
 	await _bannerLabel.zoom_in()
 	
@@ -491,7 +491,7 @@ func _on_escape_state_changed(is_escaping: bool):
 
 # returns whether an inject is possible
 func _can_inject() -> bool:
-	return GameData.inject_points >= GameData.POINTS_PER_INJECT
+	return GameData.inject_points >= BattleData.POINTS_PER_INJECT
 
 func _input(event: InputEvent):
 	if not _inject_layer.is_injecting() and state == BattleState.BATTLING:
@@ -523,8 +523,8 @@ func _start_inject():
 	is_inject_queued = false
 	
 	# reduce inject points and update bar
-	assert(GameData.inject_points >= GameData.POINTS_PER_INJECT)
-	GameData.inject_points -= GameData.POINTS_PER_INJECT
+	assert(GameData.inject_points >= BattleData.POINTS_PER_INJECT)
+	GameData.inject_points -= BattleData.POINTS_PER_INJECT
 	_inject_battery.update()
 	
 	# hide the speed and escape controls while we inject

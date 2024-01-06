@@ -27,6 +27,7 @@ size = Vector2(8, 96)
 [node name="Area" type="Node2D"]
 script = ExtResource("1_kc7wb")
 area_enum = 8
+battle_background = 2
 camera_zoom = 0.5
 
 [node name="Base" type="Node2D" parent="."]

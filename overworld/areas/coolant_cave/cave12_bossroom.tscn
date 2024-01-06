@@ -11,6 +11,7 @@ size = Vector2(46, 5)
 [node name="Area" type="Node2D"]
 script = ExtResource("1_lonuy")
 area_enum = 11
+battle_background = 2
 
 [node name="Base" type="Node2D" parent="."]
 

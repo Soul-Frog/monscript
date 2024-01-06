@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://3oirll1yg54k"
-path="res://.godot/imported/cave_temple_battle.png-198d51ae85df93a4a846f0923754a847.ctex"
+uid="uid://cu1dbv124n2kb"
+path="res://.godot/imported/coolant_cave.png-2ccb39832a1814e80ba702b1623e7c43.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/isometric/cave_temple_battle.png"
-dest_files=["res://.godot/imported/cave_temple_battle.png-198d51ae85df93a4a846f0923754a847.ctex"]
+source_file="res://assets/maps/battle/coolant_cave.png"
+dest_files=["res://.godot/imported/coolant_cave.png-2ccb39832a1814e80ba702b1623e7c43.ctex"]
 
 [params]
 

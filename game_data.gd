@@ -5,7 +5,6 @@ extends Node
 const MONS_PER_TEAM = 4 # how many mons in a team
 const MONS_PER_STORAGE_PAGE = 8 # how many mons are on a single page of pause menu storage
 const SAVE_FILE_NAME = "user://save.monsave" # path to the save file
-const POINTS_PER_INJECT = 10
 
 ## Areas ##
 enum Area
@@ -143,7 +142,7 @@ func _ready():
 	# create the mon storage
 	increase_storage_size(_variables[STORAGE_PAGES])
 	
-	inject_points = get_var(MAX_INJECTS) * POINTS_PER_INJECT
+	inject_points = get_var(MAX_INJECTS) * BattleData.POINTS_PER_INJECT
 	
 	# TODO - remove this debug code
 	storage[0] = MonData.create_mon(MonData.MonType.GELIF, 0)
@@ -242,7 +241,7 @@ func load_game():
 	get_tree().get_first_node_in_group("main").get_player().collision_layer = save_dict["player_collision_layer"]
 	
 	# start with full injects on game load
-	inject_points = get_var(MAX_INJECTS) * POINTS_PER_INJECT
+	inject_points = get_var(MAX_INJECTS) * BattleData.POINTS_PER_INJECT
 
 func increase_storage_size(new_size: int):
 	assert(_variables[STORAGE_PAGES] <= new_size, "Can't decrease storage size!")
