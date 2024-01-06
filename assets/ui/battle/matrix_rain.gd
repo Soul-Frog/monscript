@@ -107,9 +107,12 @@ func _on_step_timer_timeout():
 	
 	queue_redraw()
 
-
-
-
+func set_speed_scale(new_speed: float):
+	if new_speed == 0:
+		_TIMER.stop()
+	else:
+		_TIMER.wait_time = time_between_updates / new_speed
+		_TIMER.start()
 
 
 # randomizes the contents of the matrix

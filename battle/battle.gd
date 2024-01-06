@@ -66,6 +66,9 @@ var trying_to_escape = false
 @onready var _computer_mon_blocks = $UI/ComputerMonBlocks
 @onready var _results = $UI/Results
 
+@onready var _background = $Scene/Background
+@onready var _matrix_rain = $Scene/MatrixRain
+
 # bugs dropped by defeating opponent mons
 var _bugs_dropped = []
 
@@ -90,6 +93,10 @@ func _ready():
 	assert(_inject_layer)
 	assert(_player_mon_blocks)
 	assert(_computer_mon_blocks)
+	
+	assert(_background)
+	assert(_matrix_rain)
+	
 	for placeholder in _player_mons.get_children():
 		PLAYER_MON_POSITIONS.append(placeholder.position)
 	for placeholder in _computer_mons.get_children():
@@ -185,6 +192,8 @@ func setup_battle(player_team, computer_team):
 	_escape_controls.reset()
 	_action_name_box.reset()
 	_inject_battery.update()
+	
+	_matrix_rain.modulate.a = 1
 	
 	_bugs_dropped = []
 	
@@ -359,6 +368,9 @@ func _end_battle_and_show_results():
 	tween.tween_property(_speed_controls, "modulate:a", 0, 0.2)
 	tween.parallel().tween_property(_escape_controls, "modulate:a", 0, 0.2)
 	tween.parallel().tween_property(_mon_action_queue, "modulate:a", 0, 0.2)
+	tween.parallel().tween_property(_matrix_rain, "modulate:a", 0, 0.2)
+	
+	_set_speed(_speed_to_speed[Speed.NORMAL]) # return speed to normal while matrix rain fades out
 	
 	#TODO - make this graphically drop during battle when mon is defeated! :D
 	for mon in _computer_mons.get_children():
