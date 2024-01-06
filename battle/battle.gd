@@ -204,24 +204,39 @@ func setup_battle(player_team, computer_team):
 	# set up the queue
 	_mon_action_queue.update_queue(action_queue, _player_mons, _computer_mons)
 	
-	# perform the graphical transitions for the battle intro
+	# perform the battle intro
 	
 	# set position of UI elements
-	_matrix_rain.modulate.a = 0
-	# todo
+	
+
+	# hide mons
+	for mon in _computer_mons.get_children() + _player_mons.get_children():
+		mon.modulate.a = 0
+		
+	# hide rain
+	_matrix_rain.modulate.a = 0 
 	
 	await Global.delay(0.2)
-	_bannerLabel.display_text("INITIALIZING", false)
+	_bannerLabel.display_text("INITIALIZING", true)
 	await _bannerLabel.zoom_in()
+	await Global.delay(0.2)
 	
-	# TODO - fade in map
-	# TODO - fade in mons
+	# TODO - fade in map?
+	
+	# fade in the mons
+	var fade_in_mon_tween = create_tween()
+	for mon in _computer_mons.get_children() + _player_mons.get_children():
+		mon.position.y -= 5
+		fade_in_mon_tween.parallel().tween_property(mon, "modulate:a", 1, 0.25)
+		fade_in_mon_tween.parallel().tween_property(mon, "position:y", mon.position.y + 5, 0.25)
+	await fade_in_mon_tween.finished
+
 	# TODO - monblocks
+	
+	
 	# TODO - queue/battery/speed/log/escape
+	
 	# TODO - EXECUTE + matrix rain
-	
-	await Global.delay(0.4)
-	
 	_log.add_text("Executing battle!")
 	_bannerLabel.display_text("EXECUTING", false)
 	create_tween().tween_property(_matrix_rain, "modulate:a", 1, 0.5)
