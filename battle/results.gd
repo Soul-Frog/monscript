@@ -16,7 +16,12 @@ const DECOMPILATION_PERCENTAGE_PATH = "Percentage"
 @onready var BUGS = $Bugs
 const BUGS_SPRITE_PATH = "Sprite"
 
-const TIME = 2.0 #take 2 second to give XP/decompile
+# time in seconds to spend increasing xp/decompile bars
+const DECOMPILE_TIME = 1.0 
+const XP_TIME = 2.0
+
+# how far off-screen the results should be placed
+const _SLIDE_IN_DISTANCE = 200 
 
 var _granting_xp_and_decompile = false
 var _mon_blocks = []
@@ -38,13 +43,14 @@ func _ready() -> void:
 	for child in BUGS.get_children():
 		assert(child.has_node(BUGS_SPRITE_PATH))
 	
-	modulate.a = 0
+	position.x += _SLIDE_IN_DISTANCE
+	
 	_exit_button.disabled = true
 
 func _process(delta: float) -> void:
 	if _granting_xp_and_decompile:
 		if _xp_remaining != 0:
-			var xp_to_give = _xp_earned / TIME * delta
+			var xp_to_give = _xp_earned / XP_TIME * delta
 			xp_to_give = min(_xp_remaining, xp_to_give)
 			_xp_remaining -= xp_to_give
 			
@@ -57,7 +63,7 @@ func _process(delta: float) -> void:
 				_mon_blocks[i].on_mon_xp_changed() # update xp bars
 		
 		if _decompile_remaining != 0:
-			var decompile_to_give = 1.0 / TIME * delta
+			var decompile_to_give = 1.0 / DECOMPILE_TIME * delta
 			decompile_to_give = min(_decompile_remaining, decompile_to_give)
 			_decompile_remaining -= decompile_to_give
 			
@@ -140,8 +146,8 @@ func perform_results(battle_results: Battle.BattleResult, bugs_earned: Array, mo
 			decompilation_slot.visible = false
 	_decompile_remaining = 1.0
 	
-	# Fade in the results
-	await create_tween().tween_property(self, "modulate:a", 1, 0.2).finished
+	# Bring ourselves in from the side
+	await create_tween().tween_property(self, "position:x", position.x - _SLIDE_IN_DISTANCE, 0.5).set_trans(Tween.TRANS_CUBIC).finished
 	_exit_button.disabled = false
 	
 	# Switch monblocks to XP bars and animate increasing XP
@@ -163,6 +169,7 @@ func _on_exit_pressed():
 	_xp_earned = 0
 	_xp_remaining = 0
 	
-	modulate.a = 0
+	position.x += _SLIDE_IN_DISTANCE
+	
 	_exit_button.disabled = true
 	emit_signal("exit")
