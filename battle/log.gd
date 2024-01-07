@@ -33,12 +33,16 @@ func _ready():
 	clear()
 
 func make_scrollable_and_expandable():
+	_show_buffered_characters()
+	call_deferred("_scroll_to_bottom") # need to wait 1 frame for scroll bar to update BEFORE scrolling...
 	scroll_bar.modulate.a = 1
 	click_blocker.hide()
 	_scrollable = true
 	expand_button.show()
 
 func make_unscrollable_and_unexpandable():
+	call_deferred("_scroll_to_bottom") # need to wait 1 frame for scroll bar to update BEFORE scrolling...
+	
 	scroll_bar.modulate.a = 0
 	click_blocker.show()
 	_scrollable = false
@@ -46,9 +50,18 @@ func make_unscrollable_and_unexpandable():
 	if expand_button.selected: # if expanded, shrink back down to normal
 		expand_button.unselect()
 
+func _scroll_to_bottom():
+	scroll_bar.value = scroll_bar.max_value - scroll_bar.page
+	_scroll_value = scroll_bar.max_value - scroll_bar.page
+
+func _show_buffered_characters():
+	text.visible_characters = text.get_parsed_text().length()
+	_visible_characters = text.get_parsed_text().length()
+	print(text.get_parsed_text())
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(unscaled_delta):
-	var delta = unscaled_delta * _speed_scale
+	var delta = unscaled_delta * (_speed_scale if _speed_scale != 0 else 1.0)
 	
 	# new characters in log should appear gradually instead of immediately
 	if _visible_characters < text.get_parsed_text().length():
