@@ -57,7 +57,6 @@ func _scroll_to_bottom():
 func _show_buffered_characters():
 	text.visible_characters = text.get_parsed_text().length()
 	_visible_characters = text.get_parsed_text().length()
-	print(text.get_parsed_text())
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(unscaled_delta):
