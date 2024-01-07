@@ -64,8 +64,9 @@ func _process(delta: float) -> void:
 				if xp_by_now == _xp_earned: # do some extra handling on the last xp grant step to handle float rounding errors
 					_mons_to_xp[i].set_XP(int(_mons_to_xp[i].get_current_XP() + 0.1))
 				
-				# TODO - this is broken if there are empty mons above...
-				_mon_blocks[i].on_mon_xp_changed() # update xp bars
+				for monblock in _mon_blocks:
+					if monblock.active_mon and monblock.active_mon.underlying_mon == _mons_to_xp[i]:
+						monblock.on_mon_xp_changed() # update xp bars
 		
 		if _decompile_remaining != 0:
 			var decompile_to_give = 1.0 / DECOMPILE_TIME * delta
