@@ -181,8 +181,13 @@ func save_game():
 	for mon in decompilation_progress_per_mon.keys():
 		save_dict["decompilation_progress_for_%s" % mon] = decompilation_progress_per_mon[mon]
 	
+	#save bug inventory
 	for bug in bug_inventory.keys():
 		save_dict["bug_inventory_for_%s" % bug] = bug_inventory[bug]
+	
+	# save which blocks have been unlocked
+	for block in _block_unlock_map:
+		save_dict["block_unlocked_%s" % block.name] = _block_unlock_map[block]
 	
 	# convert to json
 	var json = JSON.stringify(save_dict)
@@ -232,6 +237,12 @@ func load_game():
 		var key = "bug_inventory_for_%s" % bug
 		if save_dict.has(key):
 			bug_inventory[bug] = save_dict[key]
+	
+	# unlock all unlocked blocks
+	for block in _block_unlock_map:
+		var key = "block_unlocked_%s" % block.name
+		if save_dict.has(key):
+			_block_unlock_map[ScriptData.get_block_by_name(block.name)] = save_dict[key]
 	
 	# set the player's position and area
 	Events.area_changed.emit(save_dict["current_area"], Vector2(save_dict["player_x"], save_dict["player_y"]), true)
