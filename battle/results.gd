@@ -165,6 +165,11 @@ func _on_exit_pressed():
 	for mon in _mons_to_xp:
 		mon.gain_XP(_xp_remaining)
 		mon.set_XP(int(mon.get_current_XP() + 0.1)) # then some safety rounding
+	# and remaining decompile
+	for mon_type in _montypes_to_decompile:
+		var maxProgress = MonData.get_decompilation_progress_required_for(mon_type)
+		GameData.decompilation_progress_per_mon[mon_type] = min(maxProgress, int(GameData.decompilation_progress_per_mon[mon_type] + _decompile_remaining + 0.1))
+	
 	_granting_xp_and_decompile = false
 	_mons_to_xp = null
 	_montypes_to_decompile = null

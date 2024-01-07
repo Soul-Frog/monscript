@@ -439,8 +439,7 @@ func _end_battle_and_show_results():
 	_set_speed(Speed.NORMAL) # set speed to normal while matrix rain fades out
 	_log.make_scrollable_and_expandable() # make the log expandable
 	
-	#TODO - make this graphically drop during battle when mon is defeated! :D
-	if not battle_result.end_condition == BattleData.BattleEndCondition.ESCAPE:
+	if battle_result.end_condition == BattleData.BattleEndCondition.WIN:
 		for mon in _computer_mons.get_children():
 			var bug_drop = mon.underlying_mon.roll_bug_drop()
 			if bug_drop != null:
