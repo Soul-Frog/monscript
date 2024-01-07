@@ -49,25 +49,25 @@ centered = false
 [node name="Backgrounds" type="Node2D" parent="."]
 
 [node name="BG1" type="Sprite2D" parent="Backgrounds"]
-position = Vector2(12, 23)
+position = Vector2(12, 22)
 texture = ExtResource("2_e2iaj")
 
 [node name="BG2" type="Sprite2D" parent="Backgrounds"]
-position = Vector2(12, 42)
+position = Vector2(12, 41)
 texture = ExtResource("2_e2iaj")
 
 [node name="BG3" type="Sprite2D" parent="Backgrounds"]
-position = Vector2(12, 61)
+position = Vector2(12, 60)
 texture = ExtResource("2_e2iaj")
 
 [node name="BG4" type="Sprite2D" parent="Backgrounds"]
-position = Vector2(12, 80)
+position = Vector2(12, 79)
 texture = ExtResource("2_e2iaj")
 
 [node name="BG5" type="Sprite2D" parent="Backgrounds"]
-position = Vector2(12, 99)
+position = Vector2(12, 98)
 texture = ExtResource("2_e2iaj")
 
 [node name="BG6" type="Sprite2D" parent="Backgrounds"]
-position = Vector2(12, 118)
+position = Vector2(12, 117)
 texture = ExtResource("2_e2iaj")

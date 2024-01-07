@@ -25,18 +25,20 @@ func zoom_out():
 	add_theme_font_size_override("normal_font_size", _FONT_SIZE)
 	
 	var tween = create_tween()
-	tween.tween_property(self, "modulate:a", 0, _ZOOM_FADE_TIME).set_trans(Tween.TRANS_CUBIC)
-	tween.parallel().tween_property(self, "theme_override_font_sizes/normal_font_size", _ZOOMOUT_SIZE, _ZOOM_SIZE_TIME).set_trans(Tween.TRANS_CUBIC)
-	await tween.finished
+	if tween:
+		tween.tween_property(self, "modulate:a", 0, _ZOOM_FADE_TIME).set_trans(Tween.TRANS_CUBIC)
+		tween.parallel().tween_property(self, "theme_override_font_sizes/normal_font_size", _ZOOMOUT_SIZE, _ZOOM_SIZE_TIME).set_trans(Tween.TRANS_CUBIC)
+		await tween.finished
 
 func zoom_in():
 	modulate.a = 0
 	add_theme_font_size_override("normal_font_size", _ZOOMOUT_SIZE)
 	
 	var tween = create_tween()
-	tween.tween_property(self, "modulate:a", 1, _ZOOM_FADE_TIME).set_trans(Tween.TRANS_CUBIC)
-	tween.parallel().tween_property(self, "theme_override_font_sizes/normal_font_size", _FONT_SIZE, _ZOOM_SIZE_TIME).set_trans(Tween.TRANS_CUBIC)
-	await tween.finished
+	if tween:
+		tween.tween_property(self, "modulate:a", 1, _ZOOM_FADE_TIME).set_trans(Tween.TRANS_CUBIC)
+		tween.parallel().tween_property(self, "theme_override_font_sizes/normal_font_size", _FONT_SIZE, _ZOOM_SIZE_TIME).set_trans(Tween.TRANS_CUBIC)
+		await tween.finished
 
 func zoom_out_instant():
 	modulate.a = 0

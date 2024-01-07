@@ -37,8 +37,8 @@ enum Background {
 }
 
 var _background_map = {
-	Background.COOLANT_CAVE : BattleBackground.new("res://assets/maps/battle/coolant_cave.png", Color.BLANCHED_ALMOND, Color.BLACK),
-	Background.COOLANT_RUINS : BattleBackground.new("res://assets/maps/battle/coolant_ruins.png", Color.PURPLE, Color.DARK_RED)
+	Background.COOLANT_CAVE : BattleBackground.new("res://assets/maps/battle/coolant_cave.png", Color(69.0/255.0, 90.0/255.0, 100.0/255.0), Color(7.0/255.0, 19.0/255.0, 32.0/255.0)),
+	Background.COOLANT_RUINS : BattleBackground.new("res://assets/maps/battle/coolant_ruins.png", Color("4a6c96"), Color("a0d2ff"))
 }
 
 func get_background(background: Background):
