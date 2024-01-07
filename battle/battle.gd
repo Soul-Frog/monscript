@@ -72,6 +72,9 @@ var _highest_mon_speed = 0
 # used to scale the speed of AP gain for all mons
 const SECONDS_PER_TURN_FOR_FASTEST = 5
 
+# tween used to fade in/out matrix rain
+var matrix_tween = null
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	assert(_player_mons)
@@ -226,6 +229,9 @@ func setup_battle(player_team, computer_team, battle_background: BattleData.Back
 		mon.modulate.a = 0
 		
 	# hide rain
+	if matrix_tween:
+		matrix_tween.kill()
+		matrix_tween = null
 	_matrix_rain.modulate.a = 0 
 	
 	await Global.delay(0.2)
@@ -236,37 +242,38 @@ func setup_battle(player_team, computer_team, battle_background: BattleData.Back
 	var fade_in_mon_tween = create_tween()
 	for mon in _computer_mons.get_children() + _player_mons.get_children():
 		mon.position.y -= 5
-		fade_in_mon_tween.parallel().tween_property(mon, "modulate:a", 1, 0.4)
-		fade_in_mon_tween.parallel().tween_property(mon, "position:y", mon.position.y + 5, 0.4)
+		fade_in_mon_tween.parallel().tween_property(mon, "modulate:a", 1, 0.3)
+		fade_in_mon_tween.parallel().tween_property(mon, "position:y", mon.position.y + 5, 0.3)
 	await fade_in_mon_tween.finished
 
 	# move in the monblocks
 	var move_in_monblocks = create_tween()
-	for player_block in _player_mon_blocks.get_children():
-		move_in_monblocks.parallel().tween_property(player_block, "position:x", player_block.position.x + 120, 0.6).set_trans(Tween.TRANS_CUBIC)
-	for computer_block in _computer_mon_blocks.get_children():
-		move_in_monblocks.parallel().tween_property(computer_block, "position:x", computer_block.position.x - 120, 0.6).set_trans(Tween.TRANS_CUBIC)
-	await move_in_monblocks.finished
+	for i in _player_mon_blocks.get_child_count():
+		var player_block = _player_mon_blocks.get_child(i)
+		move_in_monblocks.parallel().tween_property(player_block, "position:x", player_block.position.x + 120, 0.3 + (0.05 * i)).set_trans(Tween.TRANS_CUBIC)
+	for i in _computer_mon_blocks.get_child_count():
+		var computer_block = _computer_mon_blocks.get_child(i)
+		move_in_monblocks.parallel().tween_property(computer_block, "position:x", computer_block.position.x - 120, 0.3 + (0.05 * i)).set_trans(Tween.TRANS_CUBIC)
+	#await move_in_monblocks.finished
 	
 	# move in the queue/battery/speed/log/escape
 	var move_in_ui = create_tween()
-	move_in_ui.parallel().tween_property(_mon_action_queue, "position:x", _mon_action_queue.position.x + 30, 0.6).set_trans(Tween.TRANS_CUBIC)
-	move_in_ui.parallel().tween_property(_inject_battery, "position:x", _inject_battery.position.x - 20, 0.6).set_trans(Tween.TRANS_CUBIC)
-	move_in_ui.parallel().tween_property(_speed_controls, "position:y", _speed_controls.position.y - 60, 0.6).set_trans(Tween.TRANS_CUBIC)
-	move_in_ui.parallel().tween_property(_escape_controls, "position:y", _escape_controls.position.y - 60, 0.6).set_trans(Tween.TRANS_CUBIC)
+	move_in_ui.parallel().tween_property(_mon_action_queue, "position:x", _mon_action_queue.position.x + 30, 0.5).set_trans(Tween.TRANS_CUBIC)
+	move_in_ui.parallel().tween_property(_inject_battery, "position:x", _inject_battery.position.x - 20, 0.5).set_trans(Tween.TRANS_CUBIC)
+	move_in_ui.parallel().tween_property(_speed_controls, "position:y", _speed_controls.position.y - 60, 0.5).set_trans(Tween.TRANS_CUBIC)
+	move_in_ui.parallel().tween_property(_escape_controls, "position:y", _escape_controls.position.y - 60, 0.5).set_trans(Tween.TRANS_CUBIC)
 	move_in_ui.parallel().tween_property(_log, "position:y", _log.position.y - 60, 0.3).set_trans(Tween.TRANS_CUBIC)
 	await move_in_ui.finished
 
-	await _bannerLabel.zoom_out()
 	_log.clear()
 	_log.add_text("Executing battle!")
 	_bannerLabel.display_text("EXECUTING!")
-	create_tween().tween_property(_matrix_rain, "modulate:a", 1, 3.0)
 	_bannerLabel.zoom_in()
-	
+	create_tween().tween_property(_matrix_rain, "modulate:a", 1, 3.0)
+	await Global.delay(0.1)
 	state = BattleState.BATTLING
 	
-	await Global.delay(1.0)
+	await Global.delay(0.5)
 	_bannerLabel.zoom_out()
 
 # Should be called after a battle ends, before the next call to setup_battle
@@ -433,7 +440,8 @@ func _end_battle_and_show_results():
 	hide_tween.tween_property(_speed_controls, "position:y", _speed_controls.position.y + 60, 0.6).set_trans(Tween.TRANS_CUBIC)
 	hide_tween.parallel().tween_property(_escape_controls, "position:y", _escape_controls.position.y + 60, 0.6).set_trans(Tween.TRANS_CUBIC)
 	hide_tween.parallel().tween_property(_mon_action_queue, "position:x", _mon_action_queue.position.x - 30, 0.6).set_trans(Tween.TRANS_CUBIC)
-	hide_tween.parallel().tween_property(_matrix_rain, "modulate:a", 0, 3.0)
+	matrix_tween = create_tween()
+	matrix_tween.tween_property(_matrix_rain, "modulate:a", 0, 3.0)
 	_speed_controls.fade_out_filters()
 	
 	_set_speed(Speed.NORMAL) # set speed to normal while matrix rain fades out
@@ -449,8 +457,7 @@ func _end_battle_and_show_results():
 	
 	_bannerLabel.display_text("TERMINATED!")
 	await _bannerLabel.zoom_in()
-	await Global.delay(0.8)
-	await _bannerLabel.zoom_out()
+	await Global.delay(0.5)
 	match battle_result.end_condition:
 		BattleData.BattleEndCondition.WIN:
 			_bannerLabel.display_text("VICTORY!")

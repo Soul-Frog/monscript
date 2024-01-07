@@ -158,6 +158,8 @@ func perform_results(battle_results: BattleData.BattleResult, bugs_earned: Array
 	# Switch monblocks to XP bars and animate increasing XP
 	for monblock in mon_blocks:
 		monblock.switch_to_results_mode()
+	
+	await Global.delay(0.2)
 	_granting_xp_and_decompile = true
 
 func _on_exit_pressed():
