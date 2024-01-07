@@ -16,18 +16,18 @@ const DECOMPILATION_PERCENTAGE_PATH = "Percentage"
 @onready var BUGS = $Bugs
 const BUGS_SPRITE_PATH = "Sprite"
 
-# time in seconds to spend increasing xp/decompile bars
-const DECOMPILE_TIME = 2.5 
-const XP_TIME = 2.0
-
 # how far off-screen the results should be placed
 const _SLIDE_IN_DISTANCE = 200 
 
-var _granting_xp_and_decompile = false
+const XP_TIME = 2.0 # time in seconds to spend increasing xp
+var _xp_elapsed = 0.0
 var _mon_blocks = []
 var _mons_to_xp = []
 var _xp_earned = 0.0
-var _xp_remaining = 0.0
+var _xp_given = 0.0
+
+var _granting_xp_and_decompile = false
+const DECOMPILE_TIME = 2.0 # time in seconds to spend increasing decompile
 var _montypes_to_decompile = []
 var _decompile_mons_to_nodes = {}
 var _decompile_remaining = 0.0
@@ -49,15 +49,19 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if _granting_xp_and_decompile:
-		if _xp_remaining != 0:
-			var xp_to_give = _xp_earned / XP_TIME * delta
-			xp_to_give = min(_xp_remaining, xp_to_give)
-			_xp_remaining -= xp_to_give
+		if _xp_given != _xp_earned:
+			_xp_elapsed += delta
+			
+			var xp_by_now = min(_xp_earned, Tween.interpolate_value(0.0, _xp_earned, _xp_elapsed, XP_TIME, Tween.TRANS_SINE, Tween.EASE_IN_OUT))
+			assert(xp_by_now >= _xp_given)
+			assert( xp_by_now <= _xp_earned)
+			var xp_to_give = xp_by_now - _xp_given
+			_xp_given += xp_to_give
 			
 			for i in _mons_to_xp.size():
 				_mons_to_xp[i].gain_XP(xp_to_give) # give xp
 				
-				if _xp_remaining == 0: # do some extra handling on the last xp grant step to handle float rounding errors
+				if xp_by_now == _xp_earned: # do some extra handling on the last xp grant step to handle float rounding errors
 					_mons_to_xp[i].set_XP(int(_mons_to_xp[i].get_current_XP() + 0.1))
 				
 				# TODO - this is broken if there are empty mons above...
@@ -89,7 +93,7 @@ func perform_results(battle_results: BattleData.BattleResult, bugs_earned: Array
 	_mon_blocks = mon_blocks
 	
 	# calculate XP/Bits earned and update labels
-	_xp_earned = 0
+	_xp_earned = 0.0
 	var bits_earned = 0
 	if battle_results.end_condition == BattleData.BattleEndCondition.WIN:
 		for battlemon in computer_team:
@@ -103,7 +107,7 @@ func perform_results(battle_results: BattleData.BattleResult, bugs_earned: Array
 	for battlemon in player_team: 
 		if battlemon != null:
 			_mons_to_xp.append(battlemon.underlying_mon)
-	_xp_remaining = _xp_earned
+	_xp_given = 0
 	GameData.add_to_var(GameData.BITS, bits_earned) # give bits to the player
 	
 	# Show bug drops (or hide excess frames)
@@ -165,7 +169,7 @@ func perform_results(battle_results: BattleData.BattleResult, bugs_earned: Array
 func _on_exit_pressed():
 	# immediately reward remaining XP
 	for mon in _mons_to_xp:
-		mon.gain_XP(_xp_remaining)
+		mon.gain_XP(_xp_earned - _xp_given)
 		mon.set_XP(int(mon.get_current_XP() + 0.1)) # then some safety rounding
 	# and remaining decompile
 	for mon_type in _montypes_to_decompile:
@@ -179,7 +183,8 @@ func _on_exit_pressed():
 	_decompile_remaining = 0
 	_mon_blocks = null
 	_xp_earned = 0
-	_xp_remaining = 0
+	_xp_given = 0
+	_xp_elapsed = 0
 	
 	position.x += _SLIDE_IN_DISTANCE
 	
