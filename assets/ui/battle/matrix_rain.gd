@@ -57,8 +57,11 @@ class Rain:
 @export var charset_ordered: bool = false
 @export var time_between_updates: float = 0.1
 @export var color: Color = Color.GREEN
+@export var autostart: bool = true
 
 @onready var _TIMER = $StepTimer
+
+var _stopped = false
 var _matrix = []
 var _rain = []
 var _max_x = 0
@@ -93,6 +96,16 @@ func _ready():
 		
 		for i in tail_size:
 			new_rain.update(_matrix, charset, charset_ordered)
+	
+	start() if autostart else stop()
+
+func stop() -> void:
+	_stopped= true
+	_TIMER.stop()
+
+func start() -> void:
+	_stopped = false
+	_TIMER.start()
 
 func _draw():
 	for x in _max_x:
@@ -112,7 +125,8 @@ func set_speed_scale(new_speed: float):
 		_TIMER.stop()
 	else:
 		_TIMER.wait_time = time_between_updates / new_speed
-		_TIMER.start()
+		if not _stopped:
+			_TIMER.start()
 
 # immediately peform some number of steps
 func step(steps: int) -> void:

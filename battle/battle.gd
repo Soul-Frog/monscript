@@ -64,6 +64,8 @@ var trying_to_escape = false
 @onready var _background = $Scene/Background
 @onready var _wireframe_terrain = $Scene/Wireframe
 @onready var _matrix_rain = $Scene/MatrixRain
+@onready var _inject_rain = $Scene/InjectRain
+@onready var _INJECT_Z_INDEX = _inject_rain.z_index
 
 # bugs dropped by defeating opponent mons
 var _bugs_dropped = []
@@ -97,6 +99,7 @@ func _ready():
 	assert(_wireframe_terrain)
 	assert(_background)
 	assert(_matrix_rain)
+	assert(_inject_rain)
 	assert(_bannerLabel)
 	
 	# start with all controls out of view
@@ -556,6 +559,7 @@ func _start_inject():
 	_inject_battery.update()
 	
 	_set_speed(Speed.NORMAL)
+	_speed_controls.fade_out_filters() # hide the red/blue filters
 	
 	# hide the speed and escape controls while we inject
 	var tween = create_tween()
@@ -567,19 +571,29 @@ func _start_inject():
 	_bannerLabel.zoom_in()
 	
 	# switch to wireframe terrain
-	tween.parallel().tween_property(_terrain, "modulate:a", 0, 0.2)
-	tween.parallel().tween_property(_wireframe_terrain, "modulate:a", 1, 0.2)
+	tween.parallel().tween_property(_terrain, "modulate:a", 0.0, 0.2)
+	tween.parallel().tween_property(_wireframe_terrain, "modulate:a", 1.0, 0.2)
 	
+	# show the inject rain effect and fade out the normal rain
+	_inject_rain.start()
+	_inject_rain.z_index = _INJECT_Z_INDEX
 	if _matrix_tween:
 		_matrix_tween.kill()
 		_matrix_tween = null
 	tween.parallel().tween_property(_matrix_rain, "modulate:a", 0.0, 0.05)
-	tween.parallel().tween_property($Scene/InjectRain, "modulate:a", 1.0, 0.05)
+	tween.parallel().tween_property(_inject_rain, "modulate:a", 1.0, 0.05)
 	
 	# delay for sec to let this all play out
 	await Global.delay(0.5)
 	
-	create_tween().tween_property($Scene/InjectRain, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
+	# move inject rain to background and fade it slightly
+	var tween2 := create_tween()
+	tween2.tween_property(_inject_rain, "modulate:a", 0.4, 0.3)
+	tween2.tween_callback(_inject_rain.stop)
+	await tween2.finished
+	_inject_rain.z_index = _matrix_rain.z_index
+	
+	#create_tween().tween_property(_inject_rain, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
 	_bannerLabel.zoom_out()
 	
 	# remove matrix rain animation
@@ -588,21 +602,25 @@ func _start_inject():
 func _on_inject_completed():
 	assert(is_inject_active)
 	
+	# update the speed post-inject to match the buttons
+	_set_speed(_speed_controls.speed)
+	_speed_controls.update_filters() # bring back the speedup/pause filters if they were active before
+	
 	# show the controls
 	var tween = create_tween()
 	tween.tween_property(_speed_controls, "position:y", _speed_controls.position.y - 60, 0.2).set_trans(Tween.TRANS_CUBIC)
 	tween.parallel().tween_property(_escape_controls, "position:y", _escape_controls.position.y - 60, 0.2).set_trans(Tween.TRANS_CUBIC)
 	tween.parallel().tween_property(_wireframe_terrain, "modulate:a", 0, 0.2)
 	tween.parallel().tween_property(_terrain, "modulate:a", 1.0, 0.2)
+	await tween.finished
 	
-	# matrix rain animation
-	if _matrix_tween:
-		_matrix_tween.kill()
-		_matrix_tween = null
-	_matrix_tween = create_tween()
-	_matrix_tween.tween_property(_matrix_rain, "modulate:a", 1.0, 0.5)
+	create_tween().tween_property(_inject_rain, "modulate:a", 0.0, 0.3)
+	if not state == BattleState.FINISHED:
+		# fade in the matrix rain, fade out the inject rain
+		if _matrix_tween:
+			_matrix_tween.kill()
+			_matrix_tween = null
+		_matrix_tween = create_tween()
+		_matrix_tween.tween_property(_matrix_rain, "modulate:a", 1.0, 0.3)
 	
 	is_inject_active = false
-	
-	# update the speed post-inject to match the buttons
-	_set_speed(_speed_controls.speed)

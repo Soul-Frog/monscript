@@ -37,22 +37,30 @@ func reset():
 
 func _on_run_button_pressed():
 	_on_button_pressed(_run_button)
-	_pause_filter_fade.fade_out()
-	_speedup_filter_fade.fade_out()
+	update_filters()
 
 func _on_speedup_button_pressed():
 	_on_button_pressed(_speedup_button)
-	_pause_filter_fade.fade_out()
-	_speedup_filter_fade.fade_in()
+	update_filters()
 
 func _on_pause_button_pressed():
 	_on_button_pressed(_pause_button)
-	_pause_filter_fade.fade_in()
-	_speedup_filter_fade.fade_out()
+	update_filters()
 
 func fade_out_filters() -> void:
 	_pause_filter_fade.fade_out()
 	_speedup_filter_fade.fade_out()
+
+func update_filters() -> void:
+	if speed == Battle.Speed.NORMAL:
+		_pause_filter_fade.fade_out()
+		_speedup_filter_fade.fade_out()
+	elif speed == Battle.Speed.SPEEDUP:
+		_pause_filter_fade.fade_out()
+		_speedup_filter_fade.fade_in()
+	elif speed == Battle.Speed.PAUSE:
+		_pause_filter_fade.fade_in()
+		_speedup_filter_fade.fade_out()
 
 func run():
 	_run_button.emit_signal("pressed")
