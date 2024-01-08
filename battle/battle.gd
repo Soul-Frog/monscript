@@ -250,6 +250,7 @@ func setup_battle(player_team, computer_team, battle_background: BattleData.Back
 	var move_in_monblocks = create_tween()
 	for i in _player_mon_blocks.get_child_count():
 		var player_block = _player_mon_blocks.get_child(i)
+		player_block.show() #unhide; hidden if we escaped last battle
 		move_in_monblocks.parallel().tween_property(player_block, "position:x", player_block.position.x + 120, 0.3 + (0.05 * i)).set_trans(Tween.TRANS_CUBIC)
 	for i in _computer_mon_blocks.get_child_count():
 		var computer_block = _computer_mon_blocks.get_child(i)
@@ -373,6 +374,14 @@ func _on_mon_try_to_escape(battle_mon):
 			_log.add_text("Escaped successfully!")
 			battle_result.end_condition = BattleData.BattleEndCondition.ESCAPE
 			_end_battle_and_show_results()
+			
+			# escape animation
+			var escape_tween = create_tween()
+			for escaped_mon in _player_mons.get_children():
+				escape_tween.parallel().tween_property(escaped_mon, "modulate:a", 0.0, 0.3)
+			# hide the monblocks since there's no XP to give or anything
+			for block in _player_mon_blocks.get_children():
+				block.hide()
 		else:
 			_log.add_text("Escape failed.")
 	else:
