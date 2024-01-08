@@ -73,7 +73,7 @@ var _highest_mon_speed = 0
 const SECONDS_PER_TURN_FOR_FASTEST = 5
 
 # tween used to fade in/out matrix rain
-var matrix_tween = null
+var _matrix_tween = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -229,9 +229,9 @@ func setup_battle(player_team, computer_team, battle_background: BattleData.Back
 		mon.modulate.a = 0
 		
 	# hide rain
-	if matrix_tween:
-		matrix_tween.kill()
-		matrix_tween = null
+	if _matrix_tween:
+		_matrix_tween.kill()
+		_matrix_tween = null
 	_matrix_rain.modulate.a = 0 
 	
 	await Global.delay(0.2)
@@ -270,11 +270,13 @@ func setup_battle(player_team, computer_team, battle_background: BattleData.Back
 	_log.add_text("Executing battle!")
 	_bannerLabel.display_text("EXECUTING!")
 	_bannerLabel.zoom_in()
-	create_tween().tween_property(_matrix_rain, "modulate:a", 1, 3.0)
+	assert(not _matrix_tween)
+	_matrix_tween = create_tween()
+	_matrix_tween.tween_property(_matrix_rain, "modulate:a", 1, 3.0)
 	await Global.delay(0.1)
 	state = BattleState.BATTLING
 	
-	await Global.delay(0.5)
+	await Global.delay(0.7)
 	_bannerLabel.zoom_out()
 
 # Should be called after a battle ends, before the next call to setup_battle
@@ -310,6 +312,7 @@ func _process(delta: float):
 	# if nobody is moving and we aren't in an inject, update the mons
 	if not is_a_mon_taking_action and not _inject_layer.is_injecting():
 		assert(state == BattleState.BATTLING) 	# make sure battle was set up properly
+		
 		# let everyone update/action
 		# mons already in action queue are waiting to take a turn and 
 		# don't need to recieve updates
@@ -324,6 +327,9 @@ func _process(delta: float):
 		if not action_queue.is_empty():
 			var active_mon = action_queue.front()
 			is_a_mon_taking_action = true
+			
+			# hide the EXECUTING text if needed, since the action name box overlaps it
+			_bannerLabel.zoom_out_instant()
 			
 			# get living player mons
 			var player_mons = _get_living_mons(_player_mons.get_children())
@@ -449,8 +455,11 @@ func _end_battle_and_show_results():
 	hide_tween.tween_property(_speed_controls, "position:y", _speed_controls.position.y + 60, 0.6).set_trans(Tween.TRANS_CUBIC)
 	hide_tween.parallel().tween_property(_escape_controls, "position:y", _escape_controls.position.y + 60, 0.6).set_trans(Tween.TRANS_CUBIC)
 	hide_tween.parallel().tween_property(_mon_action_queue, "position:x", _mon_action_queue.position.x - 30, 0.6).set_trans(Tween.TRANS_CUBIC)
-	matrix_tween = create_tween()
-	matrix_tween.tween_property(_matrix_rain, "modulate:a", 0, 3.0)
+	if _matrix_tween:
+		_matrix_tween.kill()
+		_matrix_tween = null
+	_matrix_tween = create_tween()
+	_matrix_tween.tween_property(_matrix_rain, "modulate:a", 0, 3.0)
 	_speed_controls.fade_out_filters()
 	
 	_set_speed(Speed.NORMAL) # set speed to normal while matrix rain fades out
@@ -464,9 +473,7 @@ func _end_battle_and_show_results():
 	
 	_results.perform_results(battle_result, _bugs_dropped, _player_mon_blocks.get_children(), _player_mons.get_children(), _computer_mons.get_children())
 	
-	_bannerLabel.display_text("TERMINATED!")
-	await _bannerLabel.zoom_in()
-	await Global.delay(0.5)
+	await Global.delay(0.2)
 	match battle_result.end_condition:
 		BattleData.BattleEndCondition.WIN:
 			_bannerLabel.display_text("VICTORY!")
@@ -474,13 +481,12 @@ func _end_battle_and_show_results():
 			_bannerLabel.display_text("DEFEAT...")
 		BattleData.BattleEndCondition.ESCAPE:
 			_bannerLabel.display_text("ESCAPED.")
-	await _bannerLabel.zoom_in()
-	
-	_action_name_box.show()
+	_bannerLabel.zoom_in()
 
 func _on_results_exited():
 	Events.emit_signal("battle_ended", battle_result)
 	_bannerLabel.zoom_out_instant()
+	_action_name_box.show()
 
 func _on_speed_controls_changed():
 	if not _inject_layer.is_injecting() and not is_inject_queued: # can't update speed during inject

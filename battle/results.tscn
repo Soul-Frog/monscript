@@ -16,125 +16,122 @@
 [node name="Results" type="Node2D"]
 script = ExtResource("1_abqku")
 
-[node name="BG" type="Node2D" parent="."]
-
-[node name="XP" type="Sprite2D" parent="BG"]
+[node name="XPPanel" type="Sprite2D" parent="."]
 position = Vector2(138, 28)
 texture = ExtResource("5_eth31")
 centered = false
 
-[node name="Bits" type="Sprite2D" parent="BG"]
-position = Vector2(138, 44)
-texture = ExtResource("6_y7fa6")
-centered = false
-
-[node name="Bugs" type="Sprite2D" parent="BG"]
-position = Vector2(204, 28)
-texture = ExtResource("7_uvtaj")
-centered = false
-
-[node name="Decompilation" type="Sprite2D" parent="BG"]
-position = Vector2(138, 60)
-texture = ExtResource("8_lyqbn")
-centered = false
-
-[node name="XP" type="Label" parent="."]
-offset_left = 166.0
-offset_top = 28.0
-offset_right = 199.0
-offset_bottom = 44.0
+[node name="XP" type="Label" parent="XPPanel"]
+offset_left = 28.0
+offset_right = 61.0
+offset_bottom = 16.0
 theme_override_colors/font_color = Color(0.447059, 0.835294, 0.447059, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
 text = "+100"
 horizontal_alignment = 2
 
-[node name="Bits" type="Label" parent="."]
-offset_left = 166.0
-offset_top = 44.0
-offset_right = 199.0
-offset_bottom = 60.0
+[node name="BitsPanel" type="Sprite2D" parent="."]
+position = Vector2(138, 44)
+texture = ExtResource("6_y7fa6")
+centered = false
+
+[node name="Bits" type="Label" parent="BitsPanel"]
+offset_left = 28.0
+offset_right = 61.0
+offset_bottom = 16.0
 theme_override_colors/font_color = Color(1, 0.960784, 0.615686, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
 text = "+1000"
 horizontal_alignment = 2
 
-[node name="Bugs" type="HBoxContainer" parent="."]
-offset_left = 209.0
-offset_top = 43.0
-offset_right = 264.0
-offset_bottom = 56.0
+[node name="BugsPanel" type="Sprite2D" parent="."]
+position = Vector2(204, 28)
+texture = ExtResource("7_uvtaj")
+centered = false
+
+[node name="Bugs" type="HBoxContainer" parent="BugsPanel"]
+offset_left = 5.0
+offset_top = 15.0
+offset_right = 60.0
+offset_bottom = 28.0
 size_flags_horizontal = 3
 size_flags_vertical = 2
 theme_override_constants/separation = 1
 alignment = 1
 
-[node name="Bug1" type="MarginContainer" parent="Bugs"]
+[node name="Bug1" type="MarginContainer" parent="BugsPanel/Bugs"]
 custom_minimum_size = Vector2(13, 13)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
-[node name="Sprite" type="Sprite2D" parent="Bugs/Bug1"]
+[node name="Sprite" type="Sprite2D" parent="BugsPanel/Bugs/Bug1"]
 z_index = 1
 position = Vector2(2, 2)
 centered = false
 
-[node name="Frame" type="Sprite2D" parent="Bugs/Bug1"]
+[node name="Frame" type="Sprite2D" parent="BugsPanel/Bugs/Bug1"]
 texture = ExtResource("9_lckpf")
 centered = false
 
-[node name="Bug2" type="MarginContainer" parent="Bugs"]
+[node name="Bug2" type="MarginContainer" parent="BugsPanel/Bugs"]
 custom_minimum_size = Vector2(13, 13)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
-[node name="Sprite" type="Sprite2D" parent="Bugs/Bug2"]
+[node name="Sprite" type="Sprite2D" parent="BugsPanel/Bugs/Bug2"]
 z_index = 1
 position = Vector2(2, 2)
 centered = false
 
-[node name="Frame" type="Sprite2D" parent="Bugs/Bug2"]
+[node name="Frame" type="Sprite2D" parent="BugsPanel/Bugs/Bug2"]
 texture = ExtResource("9_lckpf")
 centered = false
 
-[node name="Bug3" type="MarginContainer" parent="Bugs"]
+[node name="Bug3" type="MarginContainer" parent="BugsPanel/Bugs"]
 custom_minimum_size = Vector2(13, 13)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
-[node name="Sprite" type="Sprite2D" parent="Bugs/Bug3"]
+[node name="Sprite" type="Sprite2D" parent="BugsPanel/Bugs/Bug3"]
 z_index = 1
 position = Vector2(2, 2)
 centered = false
 
-[node name="Frame" type="Sprite2D" parent="Bugs/Bug3"]
+[node name="Frame" type="Sprite2D" parent="BugsPanel/Bugs/Bug3"]
 texture = ExtResource("9_lckpf")
 centered = false
 
-[node name="Bug4" type="MarginContainer" parent="Bugs"]
+[node name="Bug4" type="MarginContainer" parent="BugsPanel/Bugs"]
 custom_minimum_size = Vector2(13, 13)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
-[node name="Sprite" type="Sprite2D" parent="Bugs/Bug4"]
+[node name="Sprite" type="Sprite2D" parent="BugsPanel/Bugs/Bug4"]
 z_index = 1
 position = Vector2(2, 2)
 centered = false
 
-[node name="Frame" type="Sprite2D" parent="Bugs/Bug4"]
+[node name="Frame" type="Sprite2D" parent="BugsPanel/Bugs/Bug4"]
 texture = ExtResource("9_lckpf")
 centered = false
 
-[node name="Decompilations" type="Node2D" parent="."]
+[node name="DecompilationPanel" type="Sprite2D" parent="."]
+position = Vector2(138, 60)
+texture = ExtResource("8_lyqbn")
+centered = false
 
-[node name="Decompilation1" type="Node2D" parent="Decompilations"]
+[node name="Decompilations" type="Node2D" parent="DecompilationPanel"]
+position = Vector2(-138, -60)
 
-[node name="Bar" type="TextureProgressBar" parent="Decompilations/Decompilation1"]
+[node name="Decompilation1" type="Node2D" parent="DecompilationPanel/Decompilations"]
+
+[node name="Bar" type="TextureProgressBar" parent="DecompilationPanel/Decompilations/Decompilation1"]
 offset_left = 162.0
 offset_top = 77.0
 offset_right = 202.0
@@ -144,7 +141,7 @@ texture_under = ExtResource("9_p6fyw")
 texture_progress = ExtResource("10_46ulw")
 texture_progress_offset = Vector2(4, 3)
 
-[node name="Percentage" type="Label" parent="Decompilations/Decompilation1"]
+[node name="Percentage" type="Label" parent="DecompilationPanel/Decompilations/Decompilation1"]
 offset_left = 162.0
 offset_top = 77.0
 offset_right = 205.0
@@ -156,20 +153,20 @@ text = "100%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Frame" type="Sprite2D" parent="Decompilations/Decompilation1"]
+[node name="Frame" type="Sprite2D" parent="DecompilationPanel/Decompilations/Decompilation1"]
 position = Vector2(141, 75)
 texture = ExtResource("9_m6kye")
 centered = false
 
-[node name="HeadshotSprite" type="Sprite2D" parent="Decompilations/Decompilation1"]
+[node name="HeadshotSprite" type="Sprite2D" parent="DecompilationPanel/Decompilations/Decompilation1"]
 z_index = 1
 position = Vector2(143, 77)
 centered = false
 
-[node name="Decompilation2" type="Node2D" parent="Decompilations"]
+[node name="Decompilation2" type="Node2D" parent="DecompilationPanel/Decompilations"]
 position = Vector2(64, 0)
 
-[node name="Bar" type="TextureProgressBar" parent="Decompilations/Decompilation2"]
+[node name="Bar" type="TextureProgressBar" parent="DecompilationPanel/Decompilations/Decompilation2"]
 offset_left = 162.0
 offset_top = 77.0
 offset_right = 202.0
@@ -179,7 +176,7 @@ texture_under = ExtResource("9_p6fyw")
 texture_progress = ExtResource("10_46ulw")
 texture_progress_offset = Vector2(4, 3)
 
-[node name="Percentage" type="Label" parent="Decompilations/Decompilation2"]
+[node name="Percentage" type="Label" parent="DecompilationPanel/Decompilations/Decompilation2"]
 offset_left = 162.0
 offset_top = 77.0
 offset_right = 205.0
@@ -191,20 +188,20 @@ text = "100%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Frame" type="Sprite2D" parent="Decompilations/Decompilation2"]
+[node name="Frame" type="Sprite2D" parent="DecompilationPanel/Decompilations/Decompilation2"]
 position = Vector2(141, 75)
 texture = ExtResource("9_m6kye")
 centered = false
 
-[node name="HeadshotSprite" type="Sprite2D" parent="Decompilations/Decompilation2"]
+[node name="HeadshotSprite" type="Sprite2D" parent="DecompilationPanel/Decompilations/Decompilation2"]
 z_index = 1
 position = Vector2(143, 77)
 centered = false
 
-[node name="Decompilation3" type="Node2D" parent="Decompilations"]
+[node name="Decompilation3" type="Node2D" parent="DecompilationPanel/Decompilations"]
 position = Vector2(0, 20)
 
-[node name="Bar" type="TextureProgressBar" parent="Decompilations/Decompilation3"]
+[node name="Bar" type="TextureProgressBar" parent="DecompilationPanel/Decompilations/Decompilation3"]
 offset_left = 162.0
 offset_top = 77.0
 offset_right = 202.0
@@ -214,7 +211,7 @@ texture_under = ExtResource("9_p6fyw")
 texture_progress = ExtResource("10_46ulw")
 texture_progress_offset = Vector2(4, 3)
 
-[node name="Percentage" type="Label" parent="Decompilations/Decompilation3"]
+[node name="Percentage" type="Label" parent="DecompilationPanel/Decompilations/Decompilation3"]
 offset_left = 162.0
 offset_top = 77.0
 offset_right = 205.0
@@ -226,20 +223,20 @@ text = "100%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Frame" type="Sprite2D" parent="Decompilations/Decompilation3"]
+[node name="Frame" type="Sprite2D" parent="DecompilationPanel/Decompilations/Decompilation3"]
 position = Vector2(141, 76)
 texture = ExtResource("9_m6kye")
 centered = false
 
-[node name="HeadshotSprite" type="Sprite2D" parent="Decompilations/Decompilation3"]
+[node name="HeadshotSprite" type="Sprite2D" parent="DecompilationPanel/Decompilations/Decompilation3"]
 z_index = 1
 position = Vector2(143, 78)
 centered = false
 
-[node name="Decompilation4" type="Node2D" parent="Decompilations"]
+[node name="Decompilation4" type="Node2D" parent="DecompilationPanel/Decompilations"]
 position = Vector2(64, 21)
 
-[node name="Bar" type="TextureProgressBar" parent="Decompilations/Decompilation4"]
+[node name="Bar" type="TextureProgressBar" parent="DecompilationPanel/Decompilations/Decompilation4"]
 offset_left = 162.0
 offset_top = 77.0
 offset_right = 202.0
@@ -249,7 +246,7 @@ texture_under = ExtResource("9_p6fyw")
 texture_progress = ExtResource("10_46ulw")
 texture_progress_offset = Vector2(4, 3)
 
-[node name="Percentage" type="Label" parent="Decompilations/Decompilation4"]
+[node name="Percentage" type="Label" parent="DecompilationPanel/Decompilations/Decompilation4"]
 offset_left = 162.0
 offset_top = 77.0
 offset_right = 205.0
@@ -261,23 +258,23 @@ text = "100%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Frame" type="Sprite2D" parent="Decompilations/Decompilation4"]
+[node name="Frame" type="Sprite2D" parent="DecompilationPanel/Decompilations/Decompilation4"]
 position = Vector2(141, 75)
 texture = ExtResource("9_m6kye")
 centered = false
 
-[node name="HeadshotSprite" type="Sprite2D" parent="Decompilations/Decompilation4"]
+[node name="HeadshotSprite" type="Sprite2D" parent="DecompilationPanel/Decompilations/Decompilation4"]
 z_index = 1
 position = Vector2(143, 77)
 centered = false
 
-[node name="Exit" type="TextureButton" parent="."]
-offset_left = 154.0
-offset_top = 116.0
-offset_right = 211.0
-offset_bottom = 133.0
+[node name="ExitButton" type="TextureButton" parent="DecompilationPanel"]
+offset_left = 16.0
+offset_top = 56.0
+offset_right = 73.0
+offset_bottom = 73.0
 texture_normal = ExtResource("2_q258l")
 texture_pressed = ExtResource("3_6js8l")
 texture_hover = ExtResource("4_vihk8")
 
-[connection signal="pressed" from="Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="DecompilationPanel/ExitButton" to="." method="_on_exit_pressed"]

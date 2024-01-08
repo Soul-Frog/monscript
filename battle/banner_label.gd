@@ -31,6 +31,7 @@ func zoom_out():
 		await tween.finished
 
 func zoom_in():
+	visible = true
 	modulate.a = 0
 	add_theme_font_size_override("normal_font_size", _ZOOMOUT_SIZE)
 	
@@ -41,5 +42,6 @@ func zoom_in():
 		await tween.finished
 
 func zoom_out_instant():
+	visible = false
 	modulate.a = 0
 	add_theme_font_size_override("normal_font_size", _ZOOMOUT_SIZE)

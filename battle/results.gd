@@ -2,19 +2,22 @@ extends Node2D
 
 signal exit
 
-@onready var _exit_button = $Exit
-
-@onready var XP_LABEL = $XP
-@onready var BITS_LABEL = $Bits
+@onready var XP_PANEL = $XPPanel
+@onready var XP_LABEL = $XPPanel/XP
+@onready var BITS_PANEL = $BitsPanel
+@onready var BITS_LABEL = $BitsPanel/Bits
 const XP_BITS_FORMAT = "+%d"
 
-@onready var DECOMPILATIONS = $Decompilations
+@onready var BUGS_PANEL = $BugsPanel
+@onready var BUGS = $BugsPanel/Bugs
+const BUGS_SPRITE_PATH = "Sprite"
+
+@onready var DECOMPILATION_PANEL = $DecompilationPanel
+@onready var DECOMPILATIONS = $DecompilationPanel/Decompilations
 const DECOMPILATION_SPRITE_PATH = "HeadshotSprite"
 const DECOMPILATION_BAR_PATH = "Bar"
 const DECOMPILATION_PERCENTAGE_PATH = "Percentage"
-
-@onready var BUGS = $Bugs
-const BUGS_SPRITE_PATH = "Sprite"
+@onready var _EXIT_BUTTON = $DecompilationPanel/ExitButton
 
 # how far off-screen the results should be placed
 const _SLIDE_IN_DISTANCE = 200 
@@ -33,19 +36,26 @@ var _decompile_mons_to_nodes = {}
 var _decompile_remaining = 0.0
 
 func _ready() -> void:
+	assert(XP_PANEL)
 	assert(XP_LABEL)
+	assert(BITS_PANEL)
 	assert(BITS_LABEL)
+	assert(BUGS_PANEL)
+	assert(BUGS)
+	for child in BUGS.get_children():
+		assert(child.has_node(BUGS_SPRITE_PATH))
+	assert(DECOMPILATION_PANEL)
 	assert(DECOMPILATIONS)
 	for child in DECOMPILATIONS.get_children():
 		assert(child.has_node(DECOMPILATION_SPRITE_PATH))
 		assert(child.has_node(DECOMPILATION_BAR_PATH))
-	assert(BUGS)
-	for child in BUGS.get_children():
-		assert(child.has_node(BUGS_SPRITE_PATH))
+		assert(child.has_node(DECOMPILATION_PERCENTAGE_PATH))
+	assert(_EXIT_BUTTON)
+
 	
 	position.x += _SLIDE_IN_DISTANCE
 	
-	_exit_button.disabled = true
+	_EXIT_BUTTON.disabled = true
 
 func _process(delta: float) -> void:
 	if _granting_xp_and_decompile:
@@ -156,9 +166,15 @@ func perform_results(battle_results: BattleData.BattleResult, bugs_earned: Array
 	if battle_results.end_condition == BattleData.BattleEndCondition.WIN:
 		_decompile_remaining = 1.0
 	
-	# Bring ourselves in from the side
-	await create_tween().tween_property(self, "position:x", position.x - _SLIDE_IN_DISTANCE, 0.6).set_trans(Tween.TRANS_CUBIC).finished
-	_exit_button.disabled = false
+	# Bring ourselves in from the side, piece by piece
+	var slide_in = create_tween()
+	slide_in.parallel().tween_property(XP_PANEL, "position:x", XP_PANEL.position.x - _SLIDE_IN_DISTANCE, 0.4).set_trans(Tween.TRANS_CUBIC)
+	slide_in.parallel().tween_property(BITS_PANEL, "position:x", BITS_PANEL.position.x - _SLIDE_IN_DISTANCE, 0.45).set_trans(Tween.TRANS_CUBIC)
+	slide_in.parallel().tween_property(BUGS_PANEL, "position:x", BUGS_PANEL.position.x - _SLIDE_IN_DISTANCE, 0.5).set_trans(Tween.TRANS_CUBIC)
+	slide_in.parallel().tween_property(DECOMPILATION_PANEL, "position:x", DECOMPILATION_PANEL.position.x - _SLIDE_IN_DISTANCE, 0.6).set_trans(Tween.TRANS_CUBIC)
+	await slide_in.finished
+	
+	_EXIT_BUTTON.disabled = false
 	
 	# Switch monblocks to XP bars and animate increasing XP
 	for monblock in mon_blocks:
@@ -167,7 +183,7 @@ func perform_results(battle_results: BattleData.BattleResult, bugs_earned: Array
 	await Global.delay(0.2)
 	_granting_xp_and_decompile = true
 
-func _on_exit_pressed():
+func _on_exit_pressed() -> void:
 	# immediately reward remaining XP
 	for mon in _mons_to_xp:
 		mon.gain_XP(_xp_earned - _xp_given)
@@ -189,5 +205,10 @@ func _on_exit_pressed():
 	
 	position.x += _SLIDE_IN_DISTANCE
 	
-	_exit_button.disabled = true
+	_EXIT_BUTTON.disabled = true
 	emit_signal("exit")
+
+func _input(event: InputEvent) -> void:
+	if not _EXIT_BUTTON.disabled:
+		if Input.is_action_just_pressed("exit_battle_results"):
+			_on_exit_pressed()
