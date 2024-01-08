@@ -39,6 +39,7 @@ var action_queue = []
 var is_a_mon_taking_action = false
 # If an inject has been inputted but not yet started
 var is_inject_queued = false
+var is_inject_active = false
 
 # If mons are being commanded to escape
 var trying_to_escape = false
@@ -61,6 +62,7 @@ var trying_to_escape = false
 
 @onready var _terrain = $Scene/Terrain
 @onready var _background = $Scene/Background
+@onready var _wireframe_terrain = $Scene/Wireframe
 @onready var _matrix_rain = $Scene/MatrixRain
 
 # bugs dropped by defeating opponent mons
@@ -91,6 +93,8 @@ func _ready():
 	assert(_player_mon_blocks)
 	assert(_computer_mon_blocks)
 	
+	assert(_terrain)
+	assert(_wireframe_terrain)
 	assert(_background)
 	assert(_matrix_rain)
 	assert(_bannerLabel)
@@ -138,6 +142,7 @@ func setup_battle(player_team, computer_team, battle_background: BattleData.Back
 	
 	is_a_mon_taking_action = false
 	is_inject_queued = false
+	is_inject_active = false
 	trying_to_escape = false
 	_bugs_dropped = []
 	
@@ -306,11 +311,11 @@ func _process(delta: float):
 	if state != BattleState.BATTLING:
 		return
 	
-	if not is_a_mon_taking_action and is_inject_queued:
+	if not is_a_mon_taking_action and is_inject_queued and not is_inject_active:
 		_start_inject()
 	
 	# if nobody is moving and we aren't in an inject, update the mons
-	if not is_a_mon_taking_action and not _inject_layer.is_injecting():
+	if not is_a_mon_taking_action and not is_inject_active:
 		assert(state == BattleState.BATTLING) 	# make sure battle was set up properly
 		
 		# let everyone update/action
@@ -489,7 +494,7 @@ func _on_results_exited():
 	_action_name_box.show()
 
 func _on_speed_controls_changed():
-	if not _inject_layer.is_injecting() and not is_inject_queued: # can't update speed during inject
+	if not is_inject_active and not is_inject_queued: # can't update speed during inject
 		_set_speed(_speed_controls.speed)
 
 func _set_speed(speed: Speed):
@@ -512,10 +517,10 @@ func _on_escape_state_changed(is_escaping: bool):
 
 # returns whether an inject is possible
 func _can_inject() -> bool:
-	return GameData.inject_points >= BattleData.POINTS_PER_INJECT
+	return GameData.inject_points >= BattleData.POINTS_PER_INJECT and not is_inject_queued
 
 func _input(event: InputEvent):
-	if not _inject_layer.is_injecting() and state == BattleState.BATTLING:
+	if not is_inject_active and state == BattleState.BATTLING:
 		if Input.is_action_just_pressed("battle_run"):
 			_speed_controls.run()
 		elif Input.is_action_just_pressed("battle_speedup"):
@@ -529,7 +534,7 @@ func _input(event: InputEvent):
 		if Input.is_action_just_pressed("battle_log_expand_or_shrink") and _log.can_expand():
 			_log.toggle_expand()
 		
-		if Input.is_action_just_pressed("battle_inject") and _can_inject() and not is_inject_queued:
+		if Input.is_action_just_pressed("battle_inject") and _can_inject():
 			is_inject_queued = true
 			# speed up any animation (such as a mon moving back into place)
 			_set_speed(Speed.INSTANT)
@@ -541,26 +546,63 @@ func _input(event: InputEvent):
 
 func _start_inject():
 	assert(is_inject_queued)
+	assert(not is_inject_active)
 	is_inject_queued = false
+	is_inject_active = true
 	
 	# reduce inject points and update bar
 	assert(GameData.inject_points >= BattleData.POINTS_PER_INJECT)
 	GameData.inject_points -= BattleData.POINTS_PER_INJECT
 	_inject_battery.update()
 	
+	_set_speed(Speed.NORMAL)
+	
 	# hide the speed and escape controls while we inject
 	var tween = create_tween()
-	tween.tween_property(_speed_controls, "modulate:a", 0, 0.2)
-	tween.parallel().tween_property(_escape_controls, "modulate:a", 0, 0.2)
+	tween.tween_property(_speed_controls, "position:y", _speed_controls.position.y + 60, 0.2).set_trans(Tween.TRANS_CUBIC)
+	tween.parallel().tween_property(_escape_controls, "position:y", _escape_controls.position.y + 60, 0.2).set_trans(Tween.TRANS_CUBIC)
 	
-	_set_speed(Speed.NORMAL)
+	# show the INJECT text!
+	_bannerLabel.display_text("INJECTION!")
+	_bannerLabel.zoom_in()
+	
+	# switch to wireframe terrain
+	tween.parallel().tween_property(_terrain, "modulate:a", 0, 0.2)
+	tween.parallel().tween_property(_wireframe_terrain, "modulate:a", 1, 0.2)
+	
+	if _matrix_tween:
+		_matrix_tween.kill()
+		_matrix_tween = null
+	tween.parallel().tween_property(_matrix_rain, "modulate:a", 0.0, 0.05)
+	tween.parallel().tween_property($Scene/InjectRain, "modulate:a", 1.0, 0.05)
+	
+	# delay for sec to let this all play out
+	await Global.delay(0.5)
+	
+	create_tween().tween_property($Scene/InjectRain, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
+	_bannerLabel.zoom_out()
+	
+	# remove matrix rain animation
 	_inject_layer.start_inject(_log, _animator, _get_living_mons(_player_mons.get_children()), _get_living_mons(_computer_mons.get_children()))
 
 func _on_inject_completed():
+	assert(is_inject_active)
+	
 	# show the controls
 	var tween = create_tween()
-	tween.tween_property(_speed_controls, "modulate:a", 1, 0.2)
-	tween.parallel().tween_property(_escape_controls, "modulate:a", 1, 0.2)
+	tween.tween_property(_speed_controls, "position:y", _speed_controls.position.y - 60, 0.2).set_trans(Tween.TRANS_CUBIC)
+	tween.parallel().tween_property(_escape_controls, "position:y", _escape_controls.position.y - 60, 0.2).set_trans(Tween.TRANS_CUBIC)
+	tween.parallel().tween_property(_wireframe_terrain, "modulate:a", 0, 0.2)
+	tween.parallel().tween_property(_terrain, "modulate:a", 1.0, 0.2)
+	
+	# matrix rain animation
+	if _matrix_tween:
+		_matrix_tween.kill()
+		_matrix_tween = null
+	_matrix_tween = create_tween()
+	_matrix_tween.tween_property(_matrix_rain, "modulate:a", 1.0, 0.5)
+	
+	is_inject_active = false
 	
 	# update the speed post-inject to match the buttons
 	_set_speed(_speed_controls.speed)

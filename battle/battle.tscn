@@ -113,13 +113,20 @@ tail_size = 8
 charset_ordered = false
 time_between_updates = 0.2
 
+[node name="InjectRain" parent="Scene" groups=["battle_speed_scaled"] instance=ExtResource("4_kjqyu")]
+modulate = Color(1, 1, 1, 0)
+z_index = 1500
+tail_size = 64
+charset = "CODE INJECTION "
+time_between_updates = 0.01
+
 [node name="Terrain" type="Sprite2D" parent="Scene"]
 z_index = 20
 texture = ExtResource("3_7n4c4")
 centered = false
 
 [node name="Wireframe" type="Sprite2D" parent="Scene"]
-visible = false
+modulate = Color(1, 1, 1, 0)
 z_index = 20
 texture = ExtResource("4_n8m12")
 centered = false
@@ -295,10 +302,10 @@ texture_unselected_pressed = ExtResource("39_ni8be")
 modulate = Color(0, 0, 1, 0)
 z_index = 25
 z_as_relative = false
-offset_left = -46.0
-offset_top = -49.0
-offset_right = 361.0
-offset_bottom = 214.0
+offset_left = -63.0
+offset_top = -92.0
+offset_right = 381.0
+offset_bottom = 238.0
 mouse_filter = 2
 
 [node name="Fade" type="Node" parent="UI/SpeedControls/PauseFilter"]

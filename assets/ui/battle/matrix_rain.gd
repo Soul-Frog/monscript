@@ -16,7 +16,7 @@ class Rain:
 		self._max_y = max_y
 		self._tail_size = tail_size
 	
-	func update(matrix, charset, ordered) -> void:
+	func update(matrix: Array, charset: String, ordered: bool) -> void:
 		# move down 1 space
 		_position.y += 1
 		if _position.y >= _max_y:
@@ -114,16 +114,7 @@ func set_speed_scale(new_speed: float):
 		_TIMER.wait_time = time_between_updates / new_speed
 		_TIMER.start()
 
-
-# randomizes the contents of the matrix
-#func _randomize():
-#	var prev = matrix.duplicate(true)
-#	matrix = []
-#	for x in _rows: 
-#		matrix.append([])
-#		for y in _cols:
-#			var newchar = Global.choose_char(legal_characters)
-#			if prev.size() != 0:
-#				while prev.size() != 0 and newchar == prev[x][y]:
-#					newchar = Global.choose_char(legal_characters)
-#			matrix[x].append(newchar)
+# immediately peform some number of steps
+func step(steps: int) -> void:
+	for s in steps:
+		_on_step_timer_timeout()
