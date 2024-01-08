@@ -7,10 +7,10 @@ extends Node2D
 @onready var click_blocker = $ClickBlocker
 @onready var expand_button = $ExpandButton
 
-const _TEXT_SPEED_DELTA := 130.0
+const _TEXT_SPEED_DELTA := 140.0
 var _visible_characters := 0.0
 
-const _AUTOSCROLL_SPEED := 50.0
+const _AUTOSCROLL_SPEED := 60.0
 var _scroll_value := 0.0
 
 const _GROWTH_AMOUNT = 120
@@ -22,6 +22,7 @@ const MON_NAME_PLACEHOLDER = "[MONNAME]"
 
 var _speed_scale = 1.0
 
+var _make_scrollable_queued = false
 var _scrollable = false
 
 # Called when the node enters the scene tree for the first time.
@@ -33,16 +34,20 @@ func _ready():
 	clear()
 
 func make_scrollable_and_expandable():
-	_show_buffered_characters()
-	call_deferred("_scroll_to_bottom") # need to wait 1 frame for scroll bar to update BEFORE scrolling...
+	_make_scrollable_queued = true
+
+func _make_scrollable_and_expandable():
+	assert(_make_scrollable_queued)
+	_make_scrollable_queued = false
 	scroll_bar.modulate.a = 1
 	click_blocker.hide()
 	_scrollable = true
 	expand_button.show()
 
 func make_unscrollable_and_unexpandable():
-	call_deferred("_scroll_to_bottom") # need to wait 1 frame for scroll bar to update BEFORE scrolling...
-	
+	if _scrollable: #if going from scrollable to unscrollable state; move to bottom
+		call_deferred("_scroll_to_bottom") # need to wait 1 frame for scroll bar to update BEFORE scrolling...
+	_make_scrollable_queued = false
 	scroll_bar.modulate.a = 0
 	click_blocker.show()
 	_scrollable = false
@@ -68,9 +73,12 @@ func _process(unscaled_delta):
 		text.visible_characters = int(_visible_characters)
 	
 	# smoothly scroll when new lines are added to bottom of log
-	if _scroll_value < scroll_bar.max_value - scroll_bar.page and not _scrollable:
+	if _scroll_value < scroll_bar.max_value - scroll_bar.page:
 		_scroll_value = min(_scroll_value + (delta * _AUTOSCROLL_SPEED), scroll_bar.max_value - scroll_bar.page)
 		scroll_bar.value = int(_scroll_value)
+	
+	if _make_scrollable_queued and _visible_characters == text.get_parsed_text().length() and _scroll_value == scroll_bar.max_value - scroll_bar.page:
+		_make_scrollable_and_expandable()
 
 # Add a new line of text to the log
 func add_text(line: String, mon: BattleMon = null) -> void:

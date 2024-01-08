@@ -553,6 +553,8 @@ func _start_inject():
 	is_inject_queued = false
 	is_inject_active = true
 	
+	_log.add_text("Launching code injection!")
+	
 	# reduce inject points and update bar
 	assert(GameData.inject_points >= BattleData.POINTS_PER_INJECT)
 	GameData.inject_points -= BattleData.POINTS_PER_INJECT

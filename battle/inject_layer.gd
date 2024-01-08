@@ -47,7 +47,6 @@ func start_inject(blog: BattleLog, animator: BattleAnimator, player_mons: Array,
 	assert(_foes)
 	assert(_animator)
 	assert(_log)
-	_log.add_text("Launching code injection!")
 	
 	_target_to_mon.clear()
 	_injected_mon = null
