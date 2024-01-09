@@ -163,6 +163,22 @@ z_index = 1
 position = Vector2(143, 77)
 centered = false
 
+[node name="TooltipArea" type="Control" parent="DecompilationPanel/Decompilations/Decompilation1"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 141.0
+offset_top = 75.0
+offset_right = 161.0
+offset_bottom = 95.0
+
+[node name="TooltipArea2" type="Control" parent="DecompilationPanel/Decompilations/Decompilation1"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 141.0
+offset_top = 75.0
+offset_right = 141.0
+offset_bottom = 88.0
+
 [node name="Decompilation2" type="Node2D" parent="DecompilationPanel/Decompilations"]
 position = Vector2(64, 0)
 
@@ -197,6 +213,14 @@ centered = false
 z_index = 1
 position = Vector2(143, 77)
 centered = false
+
+[node name="TooltipArea" type="Control" parent="DecompilationPanel/Decompilations/Decompilation2"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 77.0
+offset_top = 75.0
+offset_right = 97.0
+offset_bottom = 95.0
 
 [node name="Decompilation3" type="Node2D" parent="DecompilationPanel/Decompilations"]
 position = Vector2(0, 20)
@@ -233,6 +257,14 @@ z_index = 1
 position = Vector2(143, 78)
 centered = false
 
+[node name="TooltipArea" type="Control" parent="DecompilationPanel/Decompilations/Decompilation3"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 141.0
+offset_top = 55.0
+offset_right = 161.0
+offset_bottom = 75.0
+
 [node name="Decompilation4" type="Node2D" parent="DecompilationPanel/Decompilations"]
 position = Vector2(64, 21)
 
@@ -268,13 +300,23 @@ z_index = 1
 position = Vector2(143, 77)
 centered = false
 
+[node name="TooltipArea" type="Control" parent="DecompilationPanel/Decompilations/Decompilation4"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 77.0
+offset_top = 54.0
+offset_right = 97.0
+offset_bottom = 74.0
+
 [node name="ExitButton" type="TextureButton" parent="DecompilationPanel"]
 offset_left = 16.0
 offset_top = 56.0
 offset_right = 73.0
 offset_bottom = 73.0
+focus_mode = 0
 texture_normal = ExtResource("2_q258l")
 texture_pressed = ExtResource("3_6js8l")
 texture_hover = ExtResource("4_vihk8")
 
+[connection signal="mouse_entered" from="BugsPanel/Bugs/Bug1" to="." method="_on_bug_1_mouse_entered"]
 [connection signal="pressed" from="DecompilationPanel/ExitButton" to="." method="_on_exit_pressed"]

@@ -28,6 +28,7 @@ var _mon_blocks = []
 var _mons_to_xp = []
 var _xp_earned = 0.0
 var _xp_given = 0.0
+var _bugs_earned
 
 var _granting_xp_and_decompile = false
 const DECOMPILE_TIME = 2.0 # time in seconds to spend increasing decompile
@@ -52,7 +53,6 @@ func _ready() -> void:
 		assert(child.has_node(DECOMPILATION_PERCENTAGE_PATH))
 	assert(_EXIT_BUTTON)
 
-	
 	position.x += _SLIDE_IN_DISTANCE
 	
 	_EXIT_BUTTON.disabled = true
@@ -102,6 +102,7 @@ func perform_results(battle_results: BattleData.BattleResult, bugs_earned: Array
 	_montypes_to_decompile = []
 	_decompile_mons_to_nodes = {}
 	_mon_blocks = mon_blocks
+	_bugs_earned = bugs_earned
 	
 	# calculate XP/Bits earned and update labels
 	_xp_earned = 0.0
@@ -124,13 +125,13 @@ func perform_results(battle_results: BattleData.BattleResult, bugs_earned: Array
 	# Show bug drops (or hide excess frames)
 	for i in range(0, BUGS.get_children().size()):
 		var bug_slot = BUGS.get_child(i)
-		if bugs_earned.size() > i:
+		if _bugs_earned.size() > i:
 			bug_slot.visible = true
 			bug_slot.find_child(BUGS_SPRITE_PATH).texture = BugData.get_bug(bugs_earned[i]).sprite
 		else:
 			bug_slot.visible = false
 	
-	for bugtype in bugs_earned: # give bug drops to player
+	for bugtype in _bugs_earned: # give bug drops to player
 		GameData.bug_inventory[bugtype] += 1
 	
 	# Gather a list of all unique mons to decompile to make bars
@@ -202,6 +203,7 @@ func _on_exit_pressed() -> void:
 	_xp_earned = 0
 	_xp_given = 0
 	_xp_elapsed = 0
+	_bugs_earned = null
 	
 	position.x += _SLIDE_IN_DISTANCE
 	
@@ -212,3 +214,19 @@ func _input(event: InputEvent) -> void:
 	if not _EXIT_BUTTON.disabled:
 		if Input.is_action_just_pressed("exit_battle_results"):
 			_on_exit_pressed()
+
+func _on_bug_1_mouse_entered():
+	assert(_bugs_earned.size() >= 1)
+	UITooltip.create(BUGS.get_child(0), BugData.get_bug(_bugs_earned[0]).tooltip(), get_global_mouse_position(), get_tree().root)
+
+func _on_bug_2_mouse_entered():
+	assert(_bugs_earned.size() >= 2)
+	UITooltip.create(BUGS.get_child(1), BugData.get_bug(_bugs_earned[1]).tooltip(), get_global_mouse_position(), get_tree().root)
+
+func _on_bug_3_mouse_entered():
+	assert(_bugs_earned.size() >= 3)
+	UITooltip.create(BUGS.get_child(2), BugData.get_bug(_bugs_earned[2]).tooltip(), get_global_mouse_position(), get_tree().root)
+
+func _on_bug_4_mouse_entered():
+	assert(_bugs_earned.size() >= 4)
+	UITooltip.create(BUGS.get_child(3), BugData.get_bug(_bugs_earned[3]).tooltip(), get_global_mouse_position(), get_tree().root)
