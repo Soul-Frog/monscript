@@ -99,7 +99,6 @@ texture_progress = ExtResource("9_sm831")
 texture_progress_offset = Vector2(1, 1)
 
 [node name="XPLabel" type="Label" parent="XPBar"]
-visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 8.0
