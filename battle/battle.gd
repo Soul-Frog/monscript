@@ -582,8 +582,8 @@ func _start_inject():
 	if _matrix_tween:
 		_matrix_tween.kill()
 		_matrix_tween = null
-	tween.parallel().tween_property(_matrix_rain, "modulate:a", 0.0, 0.05)
-	tween.parallel().tween_property(_inject_rain, "modulate:a", 1.0, 0.05)
+	tween.parallel().tween_property(_matrix_rain, "modulate:a", 0.0, 0.1)
+	tween.parallel().tween_property(_inject_rain, "modulate:a", 1.0, 0.1)
 	
 	# delay for sec to let this all play out
 	await Global.delay(0.5)
@@ -604,10 +604,6 @@ func _start_inject():
 func _on_inject_completed():
 	assert(is_inject_active)
 	
-	# update the speed post-inject to match the buttons
-	_set_speed(_speed_controls.speed)
-	_speed_controls.update_filters() # bring back the speedup/pause filters if they were active before
-	
 	# show the controls
 	var tween = create_tween()
 	tween.tween_property(_speed_controls, "position:y", _speed_controls.position.y - 60, 0.2).set_trans(Tween.TRANS_CUBIC)
@@ -624,5 +620,9 @@ func _on_inject_completed():
 			_matrix_tween = null
 		_matrix_tween = create_tween()
 		_matrix_tween.tween_property(_matrix_rain, "modulate:a", 1.0, 0.3)
+		
+		# update the speed post-inject to match the buttons
+		_set_speed(_speed_controls.speed)
+		_speed_controls.update_filters() # bring back the speedup/pause filters if they were active before
 	
 	is_inject_active = false

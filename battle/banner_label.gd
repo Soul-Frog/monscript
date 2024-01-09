@@ -2,7 +2,7 @@ extends RichTextLabel
 
 const _ZOOM_FADE_TIME = 0.11
 const _ZOOM_SIZE_TIME = 0.14
-const _FONT_SIZE = 16
+const _FONT_SIZE = 20
 const _ZOOMOUT_SIZE = 64
 const _FORMAT = "[center]%s[/center]"
 
