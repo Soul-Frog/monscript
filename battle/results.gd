@@ -157,8 +157,8 @@ func perform_results(battle_results: BattleData.BattleResult, bugs_earned: Array
 			
 			# set max value and current value
 			var bar = decompilation_slot.find_child(DECOMPILATION_BAR_PATH)
+			bar.max_value = MonData.get_decompilation_progress_required_for(mon_type) * 100 #do max before value, otherwise value will cap the bar
 			bar.value = GameData.decompilation_progress_per_mon[mon_type] * 100
-			bar.max_value = MonData.get_decompilation_progress_required_for(mon_type) * 100
 			decompilation_slot.find_child(DECOMPILATION_PERCENTAGE_PATH).text = "%d%%" % int(100 * bar.value / bar.max_value)
 			
 			# store in map for later

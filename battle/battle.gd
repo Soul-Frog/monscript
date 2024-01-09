@@ -537,7 +537,7 @@ func _on_escape_state_changed(is_escaping: bool):
 
 # returns whether an inject is possible
 func _can_inject() -> bool:
-	return GameData.inject_points >= BattleData.POINTS_PER_INJECT and not is_inject_queued
+	return GameData.inject_points >= BattleData.POINTS_PER_INJECT and not is_inject_queued and not is_inject_active
 
 func _input(event: InputEvent):
 	if not is_inject_active and state == BattleState.BATTLING:
@@ -554,16 +554,23 @@ func _input(event: InputEvent):
 		if Input.is_action_just_pressed("battle_log_expand_or_shrink") and _log.can_expand():
 			_log.toggle_expand()
 		
-		if Input.is_action_just_pressed("battle_inject") and _can_inject():
-			is_inject_queued = true
-			# speed up any animation (such as a mon moving back into place)
-			_set_speed(Speed.INSTANT)
-			# tell the active mon their move is canceled
-			if action_queue.size() != 0:
-				action_queue.front().cancel_action()
-			# cancel any active animation
-			_animator.cancel_animation()
+		if Input.is_action_just_pressed("battle_inject"):
+			_attempt_inject()
 
+# attempts to queue an inject; called whenever the battery is clicked or the hotkey is pressed
+# does not always actually do an inject, just checks if the condition is possible and queues one if so
+func _attempt_inject():
+	if _can_inject():
+		is_inject_queued = true
+		# speed up any animation (such as a mon moving back into place)
+		_set_speed(Speed.INSTANT)
+		# tell the active mon their move is canceled
+		if action_queue.size() != 0:
+			action_queue.front().cancel_action()
+		# cancel any active animation
+		_animator.cancel_animation()
+
+# actually launch a queued inject
 func _start_inject():
 	assert(is_inject_queued)
 	assert(not is_inject_active)

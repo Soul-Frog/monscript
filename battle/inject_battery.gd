@@ -1,12 +1,17 @@
-extends Node2D
+extends Control
+
+signal clicked
 
 const BATTERY_SEGMENT_UNDER = preload("res://assets/ui/battle/inject/inject_battery_segment_under.png")
 const BATTERY_SEGMENT_PROGRESS = preload("res://assets/ui/battle/inject/inject_battery_segment_progress.png")
 
 # green color of a full bar
 const BATTERY_FULL_COLOR = Color(114.0/255.0, 213.0/255.0, 114.0/225.0)
+var BATTERY_FULL_HOVER_COLOR = Color(BATTERY_FULL_COLOR.r + 0.1, BATTERY_FULL_COLOR.g + 0.1, BATTERY_FULL_COLOR.b + 0.1)
 # yellow color of a filling bar
 const BATTERY_PARTIAL_COLOR = Color(255.0/255.0, 245.0/255.0, 157.0/255.0)
+var BATTERY_PARTIAL_HOVER_COLOR = Color(BATTERY_PARTIAL_COLOR.r + 0.15, BATTERY_PARTIAL_COLOR.g + 0.15, BATTERY_PARTIAL_COLOR.b + 0.15)
+
 
 @onready var _bar = $Bar
 @onready var _top = $Bar/Top
@@ -68,3 +73,22 @@ func _update_bar_size() -> void:
 		show()
 		while _bar.get_child_count() != segments:
 			_grow() if _bar.get_child_count() < segments else _shrink()
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT and $MouseoverWatcher.mouse_over() and visible:
+			emit_signal("clicked")
+
+func _on_mouse_entered():
+	# when mouse enters, we need to modify the sprite of the bar segments to enlargen
+	for segment in _bar.get_children():
+		var tween = create_tween()
+		var new_color = BATTERY_FULL_HOVER_COLOR if segment.value == BattleData.POINTS_PER_INJECT else BATTERY_PARTIAL_HOVER_COLOR
+		tween.tween_property(segment, "tint_progress", new_color, 0.1)
+
+func _on_mouse_exited():
+	# when mouse exits, we need to modify the sprite of the bar segments to shrink
+	for segment in _bar.get_children():
+		var tween = create_tween()
+		var new_color = BATTERY_FULL_COLOR if segment.value == BattleData.POINTS_PER_INJECT else BATTERY_PARTIAL_COLOR
+		tween.tween_property(segment, "tint_progress", new_color, 0.1)
