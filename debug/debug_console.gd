@@ -95,7 +95,13 @@ func _on_text_submitted(txt):
 		breakpoint
 	# print hello world :)
 	elif cmd == "helloworld" or cmd == "hello":
-		print("Hello World!")
+		print("Hello World!") 
+	elif cmd == "unlockallblocks":
+		for block in ScriptData.IF_BLOCK_LIST + ScriptData.TO_BLOCK_LIST:
+			GameData.unlock_block(block)
+	elif cmd == "unlockallallblocks": #also unlocks DO, which would not normally be possible
+		for block in ScriptData.IF_BLOCK_LIST + ScriptData.TO_BLOCK_LIST + ScriptData.DO_BLOCK_LIST:
+			GameData.unlock_block(block) 
 	# clears all overworld enemies
 	elif cmd == "wipe" or cmd == "clear":
 		for child in overworld_encounters.get_children():

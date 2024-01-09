@@ -265,3 +265,6 @@ func is_block_unlocked(block: ScriptData.Block) -> bool:
 	if not _block_unlock_map.has(block):
 		return false
 	return _block_unlock_map[block]
+
+func unlock_block(block: ScriptData.Block) -> void:
+	_block_unlock_map[block] = true
