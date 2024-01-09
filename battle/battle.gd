@@ -49,14 +49,31 @@ var trying_to_escape = false
 @onready var _animator = $Mons/Animator
 
 @onready var _speed_controls = $UI/SpeedControls
+@onready var _SPEED_POSITION = _speed_controls.position
+@onready var _SPEED_SLIDEOUT_POSITION = _SPEED_POSITION + Vector2(0, 60)
+
 @onready var _escape_controls = $UI/EscapeControls
-@onready var _action_name_box = $UI/ActionNameBox
-@onready var _mon_action_queue = $UI/Queue
-@onready var _inject_battery = $UI/InjectBattery
-@onready var _inject_layer = $UI/InjectLayer
+@onready var _ESCAPE_POSITION = _escape_controls.position
+@onready var _ESCAPE_SLIDEOUT_POSITION = _ESCAPE_POSITION + Vector2(0, 60)
+
 @onready var _log = $UI/Log
+@onready var _LOG_POSITION = _log.position
+@onready var _LOG_SLIDEOUT_POSITION = _log.position + Vector2(0, 60)
+
+@onready var _mon_action_queue = $UI/Queue
+@onready var _MON_ACTION_QUEUE_POSITION = _mon_action_queue.position
+@onready var _MON_ACTION_QUEUE_SLIDEOUT_POSITION = _MON_ACTION_QUEUE_POSITION + Vector2(-30, 0)
+
+@onready var _inject_battery = $UI/InjectBattery
+@onready var _INJECT_BATTERY_POSITION = _inject_battery.position
+@onready var _INJECT_BATTERY_SLIDEOUT_POSITION = _INJECT_BATTERY_POSITION + Vector2(30, 0)
+
 @onready var _player_mon_blocks = $UI/PlayerMonBlocks
 @onready var _computer_mon_blocks = $UI/ComputerMonBlocks
+const _MONBLOCK_SLIDEOUT_DELTA = 120
+
+@onready var _action_name_box = $UI/ActionNameBox
+@onready var _inject_layer = $UI/InjectLayer
 @onready var _results = $UI/Results
 @onready var _bannerLabel = $UI/BannerLabel
 
@@ -103,9 +120,9 @@ func _ready():
 	assert(_bannerLabel)
 	
 	# start with all controls out of view
-	_mon_action_queue.position.x -= 30
-	_speed_controls.position.y += 60
-	_escape_controls.position.y += 60
+	_mon_action_queue.position = _MON_ACTION_QUEUE_SLIDEOUT_POSITION
+	_speed_controls.position = _SPEED_SLIDEOUT_POSITION
+	_escape_controls.position = _ESCAPE_SLIDEOUT_POSITION
 	
 	for placeholder in _player_mons.get_children():
 		PLAYER_MON_POSITIONS.append(placeholder.position)
@@ -225,12 +242,12 @@ func setup_battle(player_team, computer_team, battle_background: BattleData.Back
 	
 	# move the monblocks out of view
 	for player_block in _player_mon_blocks.get_children():
-		player_block.position.x -= 120
+		player_block.position.x -= _MONBLOCK_SLIDEOUT_DELTA
 	for computer_block in _computer_mon_blocks.get_children():
-		computer_block.position.x += 120
+		computer_block.position.x += _MONBLOCK_SLIDEOUT_DELTA
 
-	_log.position.y += 60
-	_inject_battery.position.x += 20
+	_log.position = _LOG_SLIDEOUT_POSITION
+	_inject_battery.position = _INJECT_BATTERY_SLIDEOUT_POSITION
 
 	# hide mons
 	for mon in _computer_mons.get_children() + _player_mons.get_children():
@@ -259,19 +276,19 @@ func setup_battle(player_team, computer_team, battle_background: BattleData.Back
 	for i in _player_mon_blocks.get_child_count():
 		var player_block = _player_mon_blocks.get_child(i)
 		player_block.show() #unhide; hidden if we escaped last battle
-		move_in_monblocks.parallel().tween_property(player_block, "position:x", player_block.position.x + 120, 0.3 + (0.05 * i)).set_trans(Tween.TRANS_CUBIC)
+		move_in_monblocks.parallel().tween_property(player_block, "position:x", player_block.position.x + _MONBLOCK_SLIDEOUT_DELTA, 0.3 + (0.05 * i)).set_trans(Tween.TRANS_CUBIC)
 	for i in _computer_mon_blocks.get_child_count():
 		var computer_block = _computer_mon_blocks.get_child(i)
-		move_in_monblocks.parallel().tween_property(computer_block, "position:x", computer_block.position.x - 120, 0.3 + (0.05 * i)).set_trans(Tween.TRANS_CUBIC)
+		move_in_monblocks.parallel().tween_property(computer_block, "position:x", computer_block.position.x - _MONBLOCK_SLIDEOUT_DELTA, 0.3 + (0.05 * i)).set_trans(Tween.TRANS_CUBIC)
 	#await move_in_monblocks.finished
 	
 	# move in the queue/battery/speed/log/escape
 	var move_in_ui = create_tween()
-	move_in_ui.parallel().tween_property(_mon_action_queue, "position:x", _mon_action_queue.position.x + 30, 0.5).set_trans(Tween.TRANS_CUBIC)
-	move_in_ui.parallel().tween_property(_inject_battery, "position:x", _inject_battery.position.x - 20, 0.5).set_trans(Tween.TRANS_CUBIC)
-	move_in_ui.parallel().tween_property(_speed_controls, "position:y", _speed_controls.position.y - 60, 0.5).set_trans(Tween.TRANS_CUBIC)
-	move_in_ui.parallel().tween_property(_escape_controls, "position:y", _escape_controls.position.y - 60, 0.5).set_trans(Tween.TRANS_CUBIC)
-	move_in_ui.parallel().tween_property(_log, "position:y", _log.position.y - 60, 0.3).set_trans(Tween.TRANS_CUBIC)
+	move_in_ui.parallel().tween_property(_mon_action_queue, "position", _MON_ACTION_QUEUE_POSITION, 0.5).set_trans(Tween.TRANS_CUBIC)
+	move_in_ui.parallel().tween_property(_inject_battery, "position", _INJECT_BATTERY_POSITION, 0.5).set_trans(Tween.TRANS_CUBIC)
+	move_in_ui.parallel().tween_property(_speed_controls, "position", _SPEED_POSITION, 0.5).set_trans(Tween.TRANS_CUBIC)
+	move_in_ui.parallel().tween_property(_escape_controls, "position", _ESCAPE_POSITION, 0.5).set_trans(Tween.TRANS_CUBIC)
+	move_in_ui.parallel().tween_property(_log, "position", _LOG_POSITION, 0.3).set_trans(Tween.TRANS_CUBIC)
 	await move_in_ui.finished
 
 	_log.clear()
@@ -460,9 +477,9 @@ func _end_battle_and_show_results():
 	
 	# hide escape, speed, and queue
 	var hide_tween = create_tween()
-	hide_tween.tween_property(_speed_controls, "position:y", _speed_controls.position.y + 60, 0.6).set_trans(Tween.TRANS_CUBIC)
-	hide_tween.parallel().tween_property(_escape_controls, "position:y", _escape_controls.position.y + 60, 0.6).set_trans(Tween.TRANS_CUBIC)
-	hide_tween.parallel().tween_property(_mon_action_queue, "position:x", _mon_action_queue.position.x - 30, 0.6).set_trans(Tween.TRANS_CUBIC)
+	hide_tween.tween_property(_speed_controls, "position", _SPEED_SLIDEOUT_POSITION, 0.5).set_trans(Tween.TRANS_CUBIC)
+	hide_tween.parallel().tween_property(_escape_controls, "position", _ESCAPE_SLIDEOUT_POSITION, 0.5).set_trans(Tween.TRANS_CUBIC)
+	hide_tween.parallel().tween_property(_mon_action_queue, "position", _MON_ACTION_QUEUE_SLIDEOUT_POSITION, 0.5).set_trans(Tween.TRANS_CUBIC)
 	if _matrix_tween:
 		_matrix_tween.kill()
 		_matrix_tween = null
@@ -565,8 +582,8 @@ func _start_inject():
 	
 	# hide the speed and escape controls while we inject
 	var tween = create_tween()
-	tween.tween_property(_speed_controls, "position:y", _speed_controls.position.y + 60, 0.2).set_trans(Tween.TRANS_CUBIC)
-	tween.parallel().tween_property(_escape_controls, "position:y", _escape_controls.position.y + 60, 0.2).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(_speed_controls, "position", _SPEED_SLIDEOUT_POSITION, 0.2).set_trans(Tween.TRANS_CUBIC)
+	tween.parallel().tween_property(_escape_controls, "position", _ESCAPE_SLIDEOUT_POSITION, 0.2).set_trans(Tween.TRANS_CUBIC)
 	
 	# show the INJECT text!
 	_bannerLabel.display_text("INJECTION!")
@@ -606,20 +623,21 @@ func _on_inject_completed():
 	
 	# show the controls
 	var tween = create_tween()
-	tween.tween_property(_speed_controls, "position:y", _speed_controls.position.y - 60, 0.2).set_trans(Tween.TRANS_CUBIC)
-	tween.parallel().tween_property(_escape_controls, "position:y", _escape_controls.position.y - 60, 0.2).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(_speed_controls, "position", _SPEED_POSITION, 0.2).set_trans(Tween.TRANS_CUBIC)
+	tween.parallel().tween_property(_escape_controls, "position", _ESCAPE_POSITION, 0.2).set_trans(Tween.TRANS_CUBIC)
 	tween.parallel().tween_property(_wireframe_terrain, "modulate:a", 0, 0.2)
 	tween.parallel().tween_property(_terrain, "modulate:a", 1.0, 0.2)
 	await tween.finished
 	
-	create_tween().tween_property(_inject_rain, "modulate:a", 0.0, 0.3)
+	var rain_tween = create_tween()
+	rain_tween.parallel().tween_property(_inject_rain, "modulate:a", 0.0, 0.1)
 	if not state == BattleState.FINISHED:
 		# fade in the matrix rain, fade out the inject rain
 		if _matrix_tween:
 			_matrix_tween.kill()
 			_matrix_tween = null
 		_matrix_tween = create_tween()
-		_matrix_tween.tween_property(_matrix_rain, "modulate:a", 1.0, 0.3)
+		_matrix_tween.tween_property(_matrix_rain, "modulate:a", 1.0, 0.1)
 		
 		# update the speed post-inject to match the buttons
 		_set_speed(_speed_controls.speed)
