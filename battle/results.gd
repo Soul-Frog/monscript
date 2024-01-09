@@ -17,6 +17,7 @@ const BUGS_SPRITE_PATH = "Sprite"
 const DECOMPILATION_SPRITE_PATH = "HeadshotSprite"
 const DECOMPILATION_BAR_PATH = "Bar"
 const DECOMPILATION_PERCENTAGE_PATH = "Percentage"
+const DECOMPILATION_TOOLTIPAREA_PATH = "TooltipArea"
 @onready var _EXIT_BUTTON = $DecompilationPanel/ExitButton
 
 # how far off-screen the results should be placed
@@ -51,6 +52,7 @@ func _ready() -> void:
 		assert(child.has_node(DECOMPILATION_SPRITE_PATH))
 		assert(child.has_node(DECOMPILATION_BAR_PATH))
 		assert(child.has_node(DECOMPILATION_PERCENTAGE_PATH))
+		assert(child.has_node(DECOMPILATION_TOOLTIPAREA_PATH))
 	assert(_EXIT_BUTTON)
 
 	position.x += _SLIDE_IN_DISTANCE
@@ -228,5 +230,29 @@ func _on_bug_3_mouse_entered():
 	UITooltip.create(BUGS.get_child(2), BugData.get_bug(_bugs_earned[2]).tooltip(), get_global_mouse_position(), get_tree().root)
 
 func _on_bug_4_mouse_entered():
-	assert(_bugs_earned.size() >= 4)
+	assert(_bugs_earned.size() == 4)
 	UITooltip.create(BUGS.get_child(3), BugData.get_bug(_bugs_earned[3]).tooltip(), get_global_mouse_position(), get_tree().root)
+
+func _on_decompilation1_mouse_entered():
+	assert(_montypes_to_decompile.size() >= 1)
+	var control = DECOMPILATIONS.get_child(0).find_child(DECOMPILATION_TOOLTIPAREA_PATH)
+	var tooltip = MonData.get_name_for(_montypes_to_decompile[0])
+	UITooltip.create(control, tooltip, get_global_mouse_position(), get_tree().root)
+
+func _on_decompilation2_mouse_entered():
+	assert(_montypes_to_decompile.size() >= 2)
+	var control = DECOMPILATIONS.get_child(1).find_child(DECOMPILATION_TOOLTIPAREA_PATH)
+	var tooltip = MonData.get_name_for(_montypes_to_decompile[1])
+	UITooltip.create(control, tooltip, get_global_mouse_position(), get_tree().root)
+	
+func _on_decompilation3_mouse_entered():
+	assert(_montypes_to_decompile.size() >= 3)
+	var control = DECOMPILATIONS.get_child(2).find_child(DECOMPILATION_TOOLTIPAREA_PATH)
+	var tooltip = MonData.get_name_for(_montypes_to_decompile[2])
+	UITooltip.create(control, tooltip, get_global_mouse_position(), get_tree().root)
+	
+func _on_decompilation4_mouse_entered():
+	assert(_montypes_to_decompile.size() == 4)
+	var control = DECOMPILATIONS.get_child(3).find_child(DECOMPILATION_TOOLTIPAREA_PATH)
+	var tooltip = MonData.get_name_for(_montypes_to_decompile[3])
+	UITooltip.create(control, tooltip, get_global_mouse_position(), get_tree().root)
