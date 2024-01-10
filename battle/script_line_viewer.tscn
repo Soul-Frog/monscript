@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cstjg5guo0m61"]
+
+[ext_resource type="Script" path="res://battle/script_line_viewer.gd" id="1_hqox7"]
+
+[node name="ScriptLineViewer" type="HBoxContainer"]
+custom_minimum_size = Vector2(320, 0)
+offset_right = 320.0
+alignment = 1
+script = ExtResource("1_hqox7")

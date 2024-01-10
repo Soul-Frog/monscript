@@ -39,8 +39,8 @@ var log_name: String = ""
 var log_color: Color = Color.BLACK
 # Reference to the battle log
 var battle_log: BattleLog
-# Reference to the box showing action name
-var action_name_box: BattleActionNameBox
+# Reference to the viewer used to display the running script line
+var script_line_viewer: BattleScriptLineViewer
 
 var team: Battle.Team
 
@@ -173,15 +173,12 @@ func take_inject_action(friends: Array, foes: Array, animator: BattleAnimator, d
 	await tween.finished
 	
 	# perform the do
-	action_name_box.make_visible()
-	action_name_box.set_action_text(do_block.name)
-	await do_block.function.call(self, friends, foes, target, battle_log, action_name_box, animator)
+	await do_block.function.call(self, friends, foes, target, battle_log, script_line_viewer, animator)
 	
 	# move backwards
 	tween = create_tween()
 	tween.tween_property(self, "position:x", position.x - (25 if team == Battle.Team.PLAYER else -25), 0.4).set_trans(Tween.TRANS_CUBIC)
 	await tween.finished
-	action_name_box.make_invisible()
 
 # Take a single turn in battle
 func take_action(friends: Array, foes: Array, animator: BattleAnimator, escaping: bool) -> void:
@@ -210,8 +207,7 @@ func cancel_action():
 	is_action_canceled = true
 
 func execute_script(friends: Array, foes: Array, animator: BattleAnimator, escaping: bool):
-	action_name_box.make_visible()
-	await underlying_mon.get_active_monscript().execute(self, friends, foes, battle_log, action_name_box, animator, escaping)
+	await underlying_mon.get_active_monscript().execute(self, friends, foes, battle_log, script_line_viewer, animator, escaping)
 	_on_turn_over()
 
 func set_action_points(points):
@@ -226,7 +222,7 @@ func _on_turn_over():
 	
 	await _move_backward()
 	
-	action_name_box.make_invisible()
+	script_line_viewer.hide_line()
 	
 	# after taking an action, if inflicted with leak, take 5% health as damage
 	if statuses[Status.LEAK]:

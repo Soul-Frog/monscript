@@ -21,6 +21,12 @@ const NUM_SIZE = 2
 
 @onready var DEFAULT_SIZE = DROPZONE.size.x
 
+# if this line cannot be edited
+var _edit_disabled = false
+
+# currently held blocks in the script editor
+var held_blocks: Array = []
+
 func _ready():
 	assert(NUMBER_LABEL != null)
 	assert(DROPZONE != null)
@@ -43,6 +49,9 @@ func _set_dropzone_size(dropzone_size: int) -> void:
 	DROPZONE.size.x = dropzone_size
 
 func add_block(block: UIScriptBlock) -> void:
+	if _edit_disabled:
+		return
+	
 	BLOCK_CONTAINER.visible = true
 	assert(next_block_types().has(block.block_type))
 	block.deleted.connect(_on_block_deleted)
@@ -59,7 +68,6 @@ func next_block_types() -> Array[ScriptData.Block.Type]:
 	# otherwise, it's based on the final block
 	return [BLOCKS.get_children()[-1].to_block().next_block_type]
 
-var held_blocks: Array = []
 func notify_held_blocks(blocks: Array) -> void:
 	held_blocks = blocks
 	if held_blocks.size() == 0 or not held_blocks[0] is UIScriptBlock:
@@ -95,6 +103,9 @@ func _update_dropzone_indicators_and_validity() -> void:
 func is_line_valid():
 	return next_block_types().has(ScriptData.Block.Type.NONE)
 
+func disable_editing() -> void:
+	_edit_disabled = true
+
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and $MouseoverWatcher.mouse_over():
 		# check for right click on starter
@@ -109,6 +120,9 @@ func _input(event: InputEvent) -> void:
 			emit_signal("clicked_dropzone", self)
 
 func _on_block_deleted(block: UIScriptBlock) -> void:
+	if _edit_disabled:
+		return
+	
 	if held_blocks.size() == 0: #don't delete if we're holding a block, since this right click should just delete that block
 		# get all blocks connected (on the right) to this deleted block
 		var to_delete = [block]
@@ -123,6 +137,9 @@ func _on_block_deleted(block: UIScriptBlock) -> void:
 		emit_signal("modified")
 
 func _on_block_clicked(block: UIScriptBlock) -> void:
+	if _edit_disabled:
+		return
+	
 	# don't emit if a block is currently being held
 	if held_blocks.size() == 0:
 		# grab the position of the first block
@@ -139,6 +156,9 @@ func _on_block_clicked(block: UIScriptBlock) -> void:
 		emit_signal("modified")
 
 func _on_starter_clicked() -> void:
+	if _edit_disabled:
+		return
+	
 	# don't emit if anything is currently beind held
 	if held_blocks.size() == 0:
 		var starter_position = STARTER.global_position
@@ -178,3 +198,4 @@ func export() -> String:
 		var block: UIScriptBlock = BLOCKS.get_child(i)
 		s += block.block_name
 	return s
+

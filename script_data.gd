@@ -16,25 +16,25 @@ class MonScript:
 	func _init(string: String) -> void:
 		_from_string(string.strip_edges())
 	
-	func execute(mon: BattleMon, friends: Array, foes: Array, battle_log: BattleLog, action_name_box: BattleActionNameBox, animator: BattleAnimator, escaping: bool) -> void:
+	func execute(mon: BattleMon, friends: Array, foes: Array, battle_log: BattleLog, script_line_viewer: BattleScriptLineViewer, animator: BattleAnimator, escaping: bool) -> void:
 		assert(not mon.is_defeated())
 		assert(not friends.is_empty())
 		assert(not foes.is_empty())
 		if escaping:
-			action_name_box.set_action_text(ScriptData.get_block_by_name("Escape").name)
-			await ScriptData.get_block_by_name("Escape").function.call(mon, friends, foes, null, battle_log, action_name_box, animator)
+			script_line_viewer.show_block(ScriptData.get_block_by_name("Escape"))
+			await ScriptData.get_block_by_name("Escape").function.call(mon, friends, foes, null, battle_log, animator)
 			return
 		if lines.size() == 0: #empty script, just run error
-			action_name_box.set_action_text(ScriptData._ERROR_DO.name)
-			await ScriptData._ERROR_DO.function.call(mon, friends, foes, null, battle_log, action_name_box, animator)
+			script_line_viewer.show_block(ScriptData._ERROR_DO)
+			await ScriptData._ERROR_DO.function.call(mon, friends, foes, null, battle_log, animator)
 		for line in lines:
-			if await line.try_execute(mon, friends, foes, battle_log, action_name_box, animator):
+			if await line.try_execute(mon, friends, foes, battle_log, script_line_viewer, animator):
 				return
 		
 		# if we reached this point, we did not perform anything at all, so error
 		battle_log.add_text("No conditions were met! %s did nothing." % battle_log.MON_NAME_PLACEHOLDER, mon)
-		action_name_box.set_action_text(ScriptData._ERROR_DO.name)
-		await ScriptData._ERROR_DO.function.call(mon, friends, foes, null, battle_log, action_name_box, animator)
+		script_line_viewer.show_block(ScriptData._ERROR_DO)
+		await ScriptData._ERROR_DO.function.call(mon, friends, foes, null, battle_log, animator)
 	
 	func is_valid() -> bool:
 		if lines.size() == 0: #if there are no lines, it's invalid
@@ -111,11 +111,11 @@ class Line:
 			return false
 		return true
 
-	func try_execute(mon: BattleMon, friends: Array, foes: Array, battle_log: BattleLog, action_name_box: BattleActionNameBox, animator: BattleAnimator) -> bool:
+	func try_execute(mon: BattleMon, friends: Array, foes: Array, battle_log: BattleLog, script_line_viewer: BattleScriptLineViewer, animator: BattleAnimator) -> bool:
 		# if this line is invalid, terminate with error
 		if not is_valid(): 
-			action_name_box.set_action_text(ScriptData._ERROR_DO.name)
-			await ScriptData._ERROR_DO.function.call(mon, friends, foes, null, battle_log, action_name_box, animator)
+			script_line_viewer.show_block(ScriptData._ERROR_DO)
+			await ScriptData._ERROR_DO.function.call(mon, friends, foes, null, battle_log, animator)
 			return true #we 'executed' this line, so return false to stop execution
 		
 		# this line is valid, so do normal processing
@@ -127,8 +127,8 @@ class Line:
 			# if there is no TO block, this must be a DO which does not require one
 			var targets = null if toBlock == null else toBlock.function.call(mon, friends, foes)
 			# perform the battle action
-			action_name_box.set_action_text(doBlock.name)
-			await doBlock.function.call(mon, friends, foes, targets, battle_log, action_name_box, animator)
+			script_line_viewer.show_line(1, ifBlock, doBlock, toBlock)
+			await doBlock.function.call(mon, friends, foes, targets, battle_log, animator)
 		
 		# return if this line was executed, so script knows not to 
 		# attempt to execute other lines if this one took an action
@@ -218,14 +218,14 @@ var IF_BLOCK_LIST := [
 # func(BattleMon, [BattleMon], [BattleMon], BattleMon	battle_log		Animator]) -> void
 var DO_BLOCK_LIST := [
 	Block.new(Block.Type.DO, "Pass", Block.Type.NONE, "Do nothing, but conserve half of your AP.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, action_name_box: BattleActionNameBox, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
 		battle_log.add_text("%s passed." % battle_log.MON_NAME_PLACEHOLDER, mon)
 		mon.set_action_points(mon.action_points / 2.0)
 		mon.reset_AP_after_action = false # don't reset to 0 after this action
 		),
 		
 	Block.new(Block.Type.DO, "Attack", Block.Type.TO, "Attack a mon for 100% damage.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, action_name_box: BattleActionNameBox, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
 		assert(not target.is_defeated())
 		battle_log.add_text("%s attacked!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		
@@ -240,18 +240,18 @@ var DO_BLOCK_LIST := [
 		),
 	
 	Block.new(Block.Type.DO, "Defend", Block.Type.NONE, "Do nothing, but reduce damage taken by 50% until your next turn.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, action_name_box: BattleActionNameBox, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
 		battle_log.add_text("%s is defending!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		mon.is_defending = true
 		),
 	
 	Block.new(Block.Type.DO, "Escape", Block.Type.NONE, "Attempt to escape the battle. Chance of success depends on SPEED.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, action_name_box: BattleActionNameBox, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
 		mon.emit_signal("try_to_escape", mon)
 		),
 		
 	Block.new(Block.Type.DO, "ShellBash", Block.Type.TO, "Attack a mon for 70% damage, and defend until your next turn.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, action_name_box: BattleActionNameBox, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
 		battle_log.add_text("%s used ShellBash!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		animator.slash(target)
 		await animator.animation_finished
@@ -263,14 +263,14 @@ var DO_BLOCK_LIST := [
 		),
 		
 	Block.new(Block.Type.DO, "Repair", Block.Type.NONE, "Heal 40% of your own HP and clear status conditions.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, action_name_box: BattleActionNameBox, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
 		battle_log.add_text("%s used Repair!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		mon.heal_damage(int(mon.max_health * 0.4))
 		mon.heal_all_statuses()
 		),
 		
 	Block.new(Block.Type.DO, "C-gun", Block.Type.TO, "Attack a mon for 80% Chill damage. (140% Chill damage instead if this is your 5th turn or later).",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, action_name_box: BattleActionNameBox, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
 		battle_log.add_text("%s used C-Gun!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		
 		#todo - animation
@@ -287,7 +287,7 @@ var DO_BLOCK_LIST := [
 		),
 	
 	Block.new(Block.Type.DO, "Triangulate", Block.Type.TO, "Attack a mon for 50% damage. Increases by +10%/20%/30%/60%/100% each use in the same battle.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, action_name_box: BattleActionNameBox, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
 		battle_log.add_text("%s used Triangulate!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		
 		#todo - animation
@@ -345,7 +345,7 @@ var DO_BLOCK_LIST := [
 		),
 	
 	Block.new(Block.Type.DO, "Multitack", Block.Type.NONE, "Four times, attack a random foe for 25% damage.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, action_name_box: BattleActionNameBox, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
 		battle_log.add_text("%s used Multitack!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		for i in range(0, 4):
 			var rand_target = Global.choose_one(foes)
@@ -364,7 +364,7 @@ var DO_BLOCK_LIST := [
 		),
 		
 	Block.new(Block.Type.DO, "Spearphishing", Block.Type.TO, "Inflict leak on a mon.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, action_name_box: BattleActionNameBox, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
 		battle_log.add_text("%s used Spearphishing!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		animator.slash(target) #todo - animation
 		await animator.animation_finished
@@ -374,7 +374,7 @@ var DO_BLOCK_LIST := [
 		),
 		
 	Block.new(Block.Type.DO, "Transfer", Block.Type.TO, "Heal by transfering up to 50% of the user's HP to a mon.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, action_name_box: BattleActionNameBox, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
 		battle_log.add_text("%s used Transfer!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		
 		# heal amount is up to 50% of user's health; if not enough health, use all but 1
@@ -432,7 +432,9 @@ var TO_BLOCK_LIST := [
 # Godot warns here but it's wrong, this is being used by an internal class.
 @warning_ignore("unused_private_class_variable")
 var _ERROR_DO := Block.new(Block.Type.DO, "ERROR!!", Block.Type.NONE, "ERROR - do nothing.",
-	func (mon: BattleMon, friends:Array, foes: Array, target: BattleMon, battle_log: BattleLog, action_name_box: BattleActionNameBox, animator: BattleAnimator):
+	func (mon: BattleMon, friends:Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator):
 		battle_log.add_text("%s has an script [color=red]ERROR[/color]!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		battle_log.add_text("%s could not move!" % battle_log.MON_NAME_PLACEHOLDER, mon)
+		#todo - animation
+		await Global.delay(0.2) # small delay when erroring
 )

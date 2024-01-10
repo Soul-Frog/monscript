@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://dtpehdp2rfsuh"]
+[gd_scene load_steps=53 format=3 uid="uid://dtpehdp2rfsuh"]
 
 [ext_resource type="Script" path="res://battle/battle.gd" id="1_85t5n"]
 [ext_resource type="Script" path="res://decorators/fade_decorator.gd" id="2_cfdr2"]
@@ -38,10 +38,8 @@
 [ext_resource type="Texture2D" uid="uid://dnr0dbvcp8353" path="res://assets/ui/battle/speed/pause_unselected_hover.png" id="38_mi7fj"]
 [ext_resource type="Texture2D" uid="uid://dyq5ntyl5ibnp" path="res://assets/ui/battle/speed/pause_unselected_pressed.png" id="39_ni8be"]
 [ext_resource type="Script" path="res://battle/escape_controls.gd" id="40_migwn"]
+[ext_resource type="PackedScene" uid="uid://cstjg5guo0m61" path="res://battle/script_line_viewer.tscn" id="42_24nlh"]
 [ext_resource type="Script" path="res://overworld/camera.gd" id="46_xof1k"]
-[ext_resource type="Texture2D" uid="uid://bowg27ny7ev06" path="res://assets/ui/battle/console9patch.png" id="47_me3k7"]
-[ext_resource type="Script" path="res://battle/action_name_box.gd" id="47_yq6eb"]
-[ext_resource type="Theme" uid="uid://612i0h3ltb6t" path="res://monscript_theme.tres" id="49_cid02"]
 [ext_resource type="PackedScene" uid="uid://c8wcyjwqiawd8" path="res://battle/queue.tscn" id="50_q1kk0"]
 [ext_resource type="PackedScene" uid="uid://fsp55qrvdmua" path="res://battle/inject_battery.tscn" id="52_bd5mg"]
 [ext_resource type="PackedScene" uid="uid://dgaokh63peqxr" path="res://battle/inject_layer.tscn" id="53_4ccvo"]
@@ -186,35 +184,6 @@ offset_bottom = 2.0
 
 [node name="Queue" parent="UI" instance=ExtResource("50_q1kk0")]
 position = Vector2(1, 1)
-
-[node name="ActionNameBox" type="Node2D" parent="UI" groups=["battle_speed_scaled"]]
-modulate = Color(1, 1, 1, 0)
-position = Vector2(0, 1)
-script = ExtResource("47_yq6eb")
-
-[node name="Background" type="NinePatchRect" parent="UI/ActionNameBox"]
-offset_top = 4.0
-offset_right = 50.0
-offset_bottom = 21.0
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("47_me3k7")
-patch_margin_left = 3
-patch_margin_top = 3
-patch_margin_right = 3
-patch_margin_bottom = 3
-
-[node name="ActionLabel" type="RichTextLabel" parent="UI/ActionNameBox"]
-offset_left = 4.0
-offset_top = 5.0
-offset_right = 45.0
-offset_bottom = 18.0
-size_flags_vertical = 4
-theme = ExtResource("49_cid02")
-text = "> Attack"
-fit_content = true
-scroll_active = false
-autowrap_mode = 0
 
 [node name="EscapeControls" type="Node2D" parent="UI"]
 script = ExtResource("40_migwn")
@@ -402,6 +371,10 @@ offset_left = 217.0
 offset_top = 101.0
 offset_right = 263.0
 offset_bottom = 122.0
+
+[node name="ScriptLineViewer" parent="UI" instance=ExtResource("42_24nlh")]
+offset_top = 7.0
+offset_bottom = 22.0
 
 [node name="BannerLabel" type="RichTextLabel" parent="UI"]
 offset_left = -100.0

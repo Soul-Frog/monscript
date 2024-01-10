@@ -72,10 +72,10 @@ var trying_to_escape = false
 @onready var _computer_mon_blocks = $UI/ComputerMonBlocks
 const _MONBLOCK_SLIDEOUT_DELTA = 120
 
-@onready var _action_name_box = $UI/ActionNameBox
 @onready var _inject_layer = $UI/InjectLayer
 @onready var _results = $UI/Results
-@onready var _bannerLabel = $UI/BannerLabel
+@onready var _banner_label = $UI/BannerLabel
+@onready var _script_line_viewer = $UI/ScriptLineViewer
 
 @onready var _terrain = $Scene/Terrain
 @onready var _background = $Scene/Background
@@ -105,7 +105,7 @@ func _ready():
 	assert(_computer_mons.get_children().size() == GameData.MONS_PER_TEAM, "Wrong number of computer placeholder positions!")
 	
 	assert(_speed_controls)
-	assert(_action_name_box)
+	assert(_script_line_viewer)
 	assert(_mon_action_queue)
 	assert(_inject_battery)
 	assert(_inject_layer)
@@ -117,7 +117,7 @@ func _ready():
 	assert(_background)
 	assert(_matrix_rain)
 	assert(_inject_rain)
-	assert(_bannerLabel)
+	assert(_banner_label)
 	
 	# start with all controls out of view
 	_mon_action_queue.position = _MON_ACTION_QUEUE_SLIDEOUT_POSITION
@@ -148,7 +148,7 @@ func _create_and_setup_mon(base_mon, teamNode, pos, monblock, team):
 	new_mon.action_completed.connect(self._on_mon_action_completed)
 	new_mon.position = pos
 	new_mon.battle_log = _log
-	new_mon.action_name_box = _action_name_box
+	new_mon.script_line_viewer = _script_line_viewer
 	return new_mon
 
 # Sets up a new battle scene
@@ -171,7 +171,6 @@ func setup_battle(player_team, computer_team, battle_background: BattleData.Back
 	
 	_speed_controls.reset()
 	_escape_controls.reset()
-	_action_name_box.reset()
 	_inject_battery.update()
 	_highest_mon_speed = -1
 	
@@ -260,8 +259,8 @@ func setup_battle(player_team, computer_team, battle_background: BattleData.Back
 	_matrix_rain.modulate.a = 0 
 	
 	await Global.delay(0.2)
-	_bannerLabel.display_text("INITIALIZING!")
-	await _bannerLabel.zoom_in()
+	_banner_label.display_text("INITIALIZING!")
+	await _banner_label.zoom_in()
 	
 	# fade in the mons
 	var fade_in_mon_tween = create_tween()
@@ -293,8 +292,8 @@ func setup_battle(player_team, computer_team, battle_background: BattleData.Back
 
 	_log.clear()
 	_log.add_text("Executing battle!")
-	_bannerLabel.display_text("EXECUTING!")
-	_bannerLabel.zoom_in()
+	_banner_label.display_text("EXECUTING!")
+	_banner_label.zoom_in()
 	assert(not _matrix_tween)
 	_matrix_tween = create_tween()
 	_matrix_tween.tween_property(_matrix_rain, "modulate:a", 1, 3.0)
@@ -302,7 +301,7 @@ func setup_battle(player_team, computer_team, battle_background: BattleData.Back
 	state = BattleState.BATTLING
 	
 	await Global.delay(0.7)
-	_bannerLabel.zoom_out()
+	_banner_label.zoom_out()
 
 # Should be called after a battle ends, before the next call to setup_battle
 func clear_battle():
@@ -354,7 +353,7 @@ func _process(delta: float):
 			is_a_mon_taking_action = true
 			
 			# hide the EXECUTING text if needed, since the action name box overlaps it
-			_bannerLabel.zoom_out_instant()
+			_banner_label.zoom_out_instant()
 			
 			# get living player mons
 			var player_mons = _get_living_mons(_player_mons.get_children())
@@ -472,8 +471,8 @@ func _end_battle_and_show_results():
 	state = BattleState.FINISHED
 	_log.add_text("Battle terminated.")
 	
-	# hide the action name box so it doesn't cover the TERMINATED text...
-	_action_name_box.hide()
+	# hide the script line viewer so it doesn't cover the TERMINATED text...
+	_script_line_viewer.reset()
 	
 	# hide escape, speed, and queue
 	var hide_tween = create_tween()
@@ -501,17 +500,16 @@ func _end_battle_and_show_results():
 	await Global.delay(0.2)
 	match battle_result.end_condition:
 		BattleData.BattleEndCondition.WIN:
-			_bannerLabel.display_text("VICTORY!")
+			_banner_label.display_text("VICTORY!")
 		BattleData.BattleEndCondition.LOSE:
-			_bannerLabel.display_text("DEFEAT...")
+			_banner_label.display_text("DEFEAT...")
 		BattleData.BattleEndCondition.ESCAPE:
-			_bannerLabel.display_text("ESCAPED.")
-	_bannerLabel.zoom_in()
+			_banner_label.display_text("ESCAPED.")
+	_banner_label.zoom_in()
 
 func _on_results_exited():
 	Events.emit_signal("battle_ended", battle_result)
-	_bannerLabel.zoom_out_instant()
-	_action_name_box.show()
+	_banner_label.zoom_out_instant()
 
 func _on_speed_controls_changed():
 	if not is_inject_active and not is_inject_queued: # can't update speed during inject
@@ -577,6 +575,10 @@ func _start_inject():
 	is_inject_queued = false
 	is_inject_active = true
 	
+	$UI/ScriptLineViewer.show_line(ScriptData.get_block_by_name("Always"), ScriptData.get_block_by_name("Attack"), ScriptData.get_block_by_name("RandomFoe"))
+	await Global.delay(5)
+	$UI/ScriptLineViewer.hide_line()
+	
 	_log.add_text("Launching code injection!")
 	
 	# reduce inject points and update bar
@@ -593,8 +595,8 @@ func _start_inject():
 	tween.parallel().tween_property(_escape_controls, "position", _ESCAPE_SLIDEOUT_POSITION, 0.2).set_trans(Tween.TRANS_CUBIC)
 	
 	# show the INJECT text!
-	_bannerLabel.display_text("INJECTION!")
-	_bannerLabel.zoom_in()
+	_banner_label.display_text("INJECTION!")
+	_banner_label.zoom_in()
 	
 	# switch to wireframe terrain
 	tween.parallel().tween_property(_terrain, "modulate:a", 0.0, 0.2)
@@ -620,7 +622,7 @@ func _start_inject():
 	_inject_rain.z_index = _matrix_rain.z_index
 	
 	#create_tween().tween_property(_inject_rain, "modulate:a", 0.0, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
-	_bannerLabel.zoom_out()
+	_banner_label.zoom_out()
 	
 	# remove matrix rain animation
 	_inject_layer.start_inject(_log, _animator, _get_living_mons(_player_mons.get_children()), _get_living_mons(_computer_mons.get_children()))
