@@ -93,6 +93,9 @@ func _on_text_submitted(txt):
 	# cause an immediate breakpoint
 	elif cmd == "break" or cmd == "breakpoint" or cmd == "b" or cmd == "brk":
 		breakpoint
+	# recharge the inject battery
+	elif cmd == "recharge":
+		GameData.inject_points = GameData.get_var(GameData.MAX_INJECTS) * BattleData.POINTS_PER_INJECT
 	# print hello world :)
 	elif cmd == "helloworld" or cmd == "hello":
 		print("Hello World!") 

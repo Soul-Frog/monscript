@@ -72,15 +72,16 @@ func hide_line() -> void:
 	
 	var to_delete = _line
 	
-	await Global.delay(DELAY_AFTER_SHOWING)
+	if _speed_scale != 0:
+		await Global.delay(DELAY_AFTER_SHOWING / _speed_scale)
 	
-	if not _line:
+	if not to_delete:
 		return # might have been deleted by now
 	
 	# fade out the line
 	var tween = create_tween()
 	tween.set_speed_scale(_speed_scale)
-	tween.tween_property(_line, "modulate:a", 0.0, 0.1)
+	tween.tween_property(to_delete, "modulate:a", 0.0, 0.1)
 	_active_tweens.append(tween)
 	
 	# delete after fading out
