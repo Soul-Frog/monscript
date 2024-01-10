@@ -60,19 +60,23 @@ class MonScript:
 		assert(line_strings[len(line_strings)-1] == SCRIPT_END, "Invalid script end")
 		
 		# parse each line
-		for line_string in line_strings:
+		for i in line_strings.size():
+			var line_string = line_strings[i]
 			line_string = line_string.strip_edges() #be a little lenient with whitespace
 			if line_string == SCRIPT_START or line_string == SCRIPT_END:
 				continue
-			lines.append(Line.new(line_string))
+			lines.append(Line.new(i, line_string))
 
 class Line:
 	var blocks := []
+	var lineNumber: int = -1
 	var ifBlock: Block = null
 	var doBlock: Block = null
 	var toBlock: Block = null
 	
-	func _init(string: String) -> void:
+	func _init(number: int, string: String) -> void:
+		lineNumber = number
+		
 		# break into blocks
 		var block_strings = string.split(BLOCK_DELIMITER, false)
 		
@@ -127,7 +131,7 @@ class Line:
 			# if there is no TO block, this must be a DO which does not require one
 			var targets = null if toBlock == null else toBlock.function.call(mon, friends, foes)
 			# perform the battle action
-			script_line_viewer.show_line(1, ifBlock, doBlock, toBlock)
+			script_line_viewer.show_line(lineNumber, ifBlock, doBlock, toBlock)
 			await doBlock.function.call(mon, friends, foes, targets, battle_log, animator)
 		
 		# return if this line was executed, so script knows not to 
@@ -163,6 +167,8 @@ class Block:
 
 # utility function used to search a list of blocks for a given block by name
 func get_block_by_name(block_name: String) -> Block:
+	if block_name == _ERROR_DO.name:
+		return _ERROR_DO
 	for block_list in [IF_BLOCK_LIST, DO_BLOCK_LIST, TO_BLOCK_LIST]:
 		for block in block_list:
 			if block.name == block_name:
@@ -286,7 +292,7 @@ var DO_BLOCK_LIST := [
 		target.apply_attack(mon, dmg_mult, MonData.DamageType.CHILL)
 		),
 	
-	Block.new(Block.Type.DO, "Triangulate", Block.Type.TO, "Attack a mon for 50% damage. Increases by +10%/20%/30%/60%/100% each use in the same battle.",
+	Block.new(Block.Type.DO, "Triangulate", Block.Type.TO, "Attack a mon for 50% damage. Increases by +10%/20%/30%/60%/100% on repeated uses.",
 	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
 		battle_log.add_text("%s used Triangulate!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		

@@ -173,7 +173,7 @@ func take_inject_action(friends: Array, foes: Array, animator: BattleAnimator, d
 	await tween.finished
 	
 	# perform the do
-	await do_block.function.call(self, friends, foes, target, battle_log, script_line_viewer, animator)
+	await do_block.function.call(self, friends, foes, target, battle_log, animator)
 	
 	# move backwards
 	tween = create_tween()

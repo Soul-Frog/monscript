@@ -372,15 +372,16 @@ offset_top = 101.0
 offset_right = 263.0
 offset_bottom = 122.0
 
-[node name="ScriptLineViewer" parent="UI" instance=ExtResource("42_24nlh")]
-offset_top = 7.0
-offset_bottom = 22.0
+[node name="ScriptLineViewer" parent="UI" groups=["battle_speed_scaled"] instance=ExtResource("42_24nlh")]
+offset_top = 6.0
+offset_bottom = 21.0
+mouse_filter = 2
 
 [node name="BannerLabel" type="RichTextLabel" parent="UI"]
 offset_left = -100.0
-offset_top = 8.0
+offset_top = 7.0
 offset_right = 420.0
-offset_bottom = 119.0
+offset_bottom = 118.0
 mouse_filter = 2
 theme_override_colors/font_shadow_color = Color(0, 0.996078, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)

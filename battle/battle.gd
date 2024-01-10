@@ -575,10 +575,6 @@ func _start_inject():
 	is_inject_queued = false
 	is_inject_active = true
 	
-	$UI/ScriptLineViewer.show_line(ScriptData.get_block_by_name("Always"), ScriptData.get_block_by_name("Attack"), ScriptData.get_block_by_name("RandomFoe"))
-	await Global.delay(5)
-	$UI/ScriptLineViewer.hide_line()
-	
 	_log.add_text("Launching code injection!")
 	
 	# reduce inject points and update bar
@@ -630,13 +626,18 @@ func _start_inject():
 func _on_inject_completed():
 	assert(is_inject_active)
 	
-	# show the controls
-	var tween = create_tween()
-	tween.tween_property(_speed_controls, "position", _SPEED_POSITION, 0.2).set_trans(Tween.TRANS_CUBIC)
-	tween.parallel().tween_property(_escape_controls, "position", _ESCAPE_POSITION, 0.2).set_trans(Tween.TRANS_CUBIC)
-	tween.parallel().tween_property(_wireframe_terrain, "modulate:a", 0, 0.2)
-	tween.parallel().tween_property(_terrain, "modulate:a", 1.0, 0.2)
-	await tween.finished
+	# show the controls, unless the battle is over
+	# if the battle is over, the inject ended the battle - leave them slid out
+	if not state == BattleState.FINISHED:
+		var controls_tween = create_tween()
+		controls_tween.tween_property(_speed_controls, "position", _SPEED_POSITION, 0.2).set_trans(Tween.TRANS_CUBIC)
+		controls_tween.parallel().tween_property(_escape_controls, "position", _ESCAPE_POSITION, 0.2).set_trans(Tween.TRANS_CUBIC)
+	
+	# regardless, swap the terrain back
+	var terrain_tween = create_tween()
+	terrain_tween.parallel().tween_property(_wireframe_terrain, "modulate:a", 0, 0.2)
+	terrain_tween.parallel().tween_property(_terrain, "modulate:a", 1.0, 0.2)
+	await terrain_tween.finished
 	
 	var rain_tween = create_tween()
 	rain_tween.parallel().tween_property(_inject_rain, "modulate:a", 0.0, 0.1)
