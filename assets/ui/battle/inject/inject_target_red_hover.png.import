@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dw54oahcvtq22"
-path="res://.godot/imported/inject_computer_target_hover.png-54ffd0b0724f5c3efd24218b849f7ede.ctex"
+path="res://.godot/imported/inject_target_red_hover.png-dd148a9c6467e8a311153c46db72e671.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/battle/inject/inject_computer_target_hover.png"
-dest_files=["res://.godot/imported/inject_computer_target_hover.png-54ffd0b0724f5c3efd24218b849f7ede.ctex"]
+source_file="res://assets/ui/battle/inject/inject_target_red_hover.png"
+dest_files=["res://.godot/imported/inject_target_red_hover.png-dd148a9c6467e8a311153c46db72e671.ctex"]
 
 [params]
 

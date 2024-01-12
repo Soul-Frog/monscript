@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://cxp0qtg8h0r51"]
+
+[ext_resource type="Texture2D" uid="uid://dqbq2cq2xkrhf" path="res://assets/ui/battle/inject/inject_target_blue.png" id="1_rncvm"]
+[ext_resource type="Script" path="res://battle/selectable_button.gd" id="2_e2ed4"]
+[ext_resource type="Texture2D" uid="uid://bcxg3qbc8wwev" path="res://assets/ui/battle/inject/inject_target_blue_hover.png" id="3_h3cex"]
+
+[node name="Target" type="TextureButton"]
+offset_right = 22.0
+offset_bottom = 22.0
+texture_normal = ExtResource("1_rncvm")
+script = ExtResource("2_e2ed4")
+texture_selected = ExtResource("3_h3cex")
+texture_selected_hover = ExtResource("3_h3cex")
+texture_selected_pressed = ExtResource("3_h3cex")
+texture_unselected = ExtResource("1_rncvm")
+texture_unselected_hover = ExtResource("3_h3cex")
+texture_unselected_pressed = ExtResource("3_h3cex")

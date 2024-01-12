@@ -7,12 +7,12 @@ enum InjectState {
 }
 
 const SELECTED_DO_POSITION = Vector2(160, 5)
-const PLAYER_INJECT_SCENE = preload("res://battle/player_inject_target.tscn")
-const COMPUTER_INJECT_SCENE = preload("res://battle/computer_inject_target.tscn")
+const BLUE_INJECT_SCENE = preload("res://battle/inject_target_blue.tscn")
+const RED_INJECT_SCENE = preload("res://battle/inject_target_red.tscn")
 const BLOCK_SCENE = preload("res://ui/script/script_block.tscn")
-@onready var _player_targets = $PlayerTargets
+@onready var _injecter_targets = $PlayerTargets
 @onready var _do_blocks = $DoBlocks
-@onready var _computer_targets = $ComputerTargets
+@onready var _injected_targets = $ComputerTargets
 var _target_to_mon = {}
 
 var _inject_state = InjectState.INACTIVE
@@ -28,9 +28,9 @@ var _friends
 var _foes
 
 func _ready():
-	assert(_player_targets)
+	assert(_injecter_targets)
 	assert(_do_blocks)
-	assert(_computer_targets)
+	assert(_injected_targets)
 
 func is_injecting() -> bool:
 	return _inject_state != InjectState.INACTIVE
@@ -79,20 +79,23 @@ func start_inject(blog: BattleLog, animator: BattleAnimator, player_mons: Array,
 				target.modulate.a = 0
 				add_to.add_child(target)
 	
-	create_targets.call(player_mons, PLAYER_INJECT_SCENE, _player_targets, _on_player_target_selected)
-	create_targets.call(computer_mons, COMPUTER_INJECT_SCENE, _computer_targets, _on_computer_target_selected)
-	create_targets.call(player_mons, COMPUTER_INJECT_SCENE, _computer_targets, _on_computer_target_selected)
+	# create targets for choosing pal to inject with
+	create_targets.call(player_mons, BLUE_INJECT_SCENE, _injecter_targets, _on_player_target_selected)
 	
-	_enable_targets(_player_targets)
-	_disable_targets(_computer_targets)
+	# create targets for choosing any mon to target with DO
+	create_targets.call(computer_mons, RED_INJECT_SCENE, _injected_targets, _on_computer_target_selected)
+	create_targets.call(player_mons, RED_INJECT_SCENE, _injected_targets, _on_computer_target_selected)
+	
+	_enable_targets(_injecter_targets)
+	_disable_targets(_injected_targets)
 
 func _on_player_target_selected() -> void:
 	if _inject_state != InjectState.SELECT_MON:
 		return #ignore clicks on target while we should be selecting do/target
 	
 	# hide each other player select target
-	for i in _player_targets.get_child_count():
-		var target = _player_targets.get_child(i)
+	for i in _injecter_targets.get_child_count():
+		var target = _injecter_targets.get_child(i)
 		if target.selected:
 			_injected_mon = _target_to_mon[target]
 		else:
@@ -142,8 +145,8 @@ func _on_do_block_selected(selected_block) -> void:
 	
 	# if this block needs a target, initiate that
 	if selected_block.to_block().next_block_type == ScriptData.Block.Type.TO:
-		_enable_targets(_computer_targets)
-		_disable_targets(_player_targets)
+		_enable_targets(_injected_targets)
+		_disable_targets(_injecter_targets)
 		_update_inject_state(InjectState.SELECT_TARGET)
 	else: # otherwise, wait for the block to reach the top for visual effect, then perform the inject
 		await tween.finished
@@ -154,8 +157,8 @@ func _on_computer_target_selected() -> void:
 		return #ignore clicks on target while we should be executing
 	
 	# hide all other computer targets
-	for i in _computer_targets.get_child_count():
-		var target = _computer_targets.get_child(i)
+	for i in _injected_targets.get_child_count():
+		var target = _injected_targets.get_child(i)
 		if target.selected:
 			_target = _target_to_mon[target]
 		else:
@@ -172,7 +175,7 @@ func _perform_inject() -> void:
 	_update_inject_state(InjectState.EXECUTING)
 	
 	# fade out the block and delete
-	var to_fade_out = _do_blocks.get_children() + _player_targets.get_children() + _computer_targets.get_children()
+	var to_fade_out = _do_blocks.get_children() + _injecter_targets.get_children() + _injected_targets.get_children()
 	for node in to_fade_out:
 		var tween = create_tween()
 		tween.tween_property(node, "modulate:a", 0, 0.125)
@@ -206,7 +209,7 @@ func _update_inject_state(new_state: InjectState):
 
 func _undo() -> void:
 	if _inject_state == InjectState.SELECT_DO:
-		for target in _player_targets.get_children():
+		for target in _injecter_targets.get_children():
 			_enable_target(target)
 			target.unselect()
 		for block in _do_blocks.get_children():
@@ -214,9 +217,9 @@ func _undo() -> void:
 		_injected_mon = null
 		_update_inject_state(InjectState.SELECT_MON)
 	elif _inject_state == InjectState.SELECT_TARGET:
-		_disable_targets(_computer_targets)
-		for i in _player_targets.get_child_count():
-			var target = _player_targets.get_child(i)
+		_disable_targets(_injected_targets)
+		for i in _injecter_targets.get_child_count():
+			var target = _injecter_targets.get_child(i)
 			if target.selected:
 				assert(_target_to_mon[target] == _injected_mon)
 				_enable_target(target)

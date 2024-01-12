@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bcxg3qbc8wwev"
-path="res://.godot/imported/inject_player_target_hover.png-af478fae49ae10c70820f0840f9801b3.ctex"
+uid="uid://dqbq2cq2xkrhf"
+path="res://.godot/imported/inject_target_blue.png-6cfc5025ee7a0766b1ddcae7f84a3b37.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/battle/inject/inject_player_target_hover.png"
-dest_files=["res://.godot/imported/inject_player_target_hover.png-af478fae49ae10c70820f0840f9801b3.ctex"]
+source_file="res://assets/ui/battle/inject/inject_target_blue.png"
+dest_files=["res://.godot/imported/inject_target_blue.png-6cfc5025ee7a0766b1ddcae7f84a3b37.ctex"]
 
 [params]
 
