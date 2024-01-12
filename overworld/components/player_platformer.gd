@@ -57,7 +57,13 @@ func _physics_process(delta):
 		# Get the input direction and handle the movement/deceleration.
 		var direction = Input.get_axis("left", "right")
 		if _forced_movement and _forced_direction_vector.x != 0:
-			direction.x = _forced_direction_vector.x
+			direction = _forced_direction_vector.x
+		
+		if direction != 0:
+			_SPRITE.play("walk")
+			_SPRITE.flip_h = direction < 0
+		else:
+			_SPRITE.play("stand")
 		
 		if direction:
 			velocity.x = direction * speed

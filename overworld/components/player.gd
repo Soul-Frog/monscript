@@ -2,6 +2,7 @@ class_name Player
 extends CharacterBody2D
 
 @onready var _BATTLE_COLLISION = $BattleCollision
+@onready var _SPRITE = $Sprite
 
 const _INVINCIBILITY_AFTER_ESCAPE_SECS := 2
 const _INVINCIBILITY_AFTER_WIN_SECS := 1
@@ -13,6 +14,10 @@ var _forced_movement := false # if a certain direction should be forced (ie, whi
 var _forced_direction_vector := Vector2(0, 0) # the direction that is forced if _forced_movement is true
 
 func _ready():
+	assert(_SPRITE)
+	assert(_SPRITE.sprite_frames)
+	assert(_SPRITE.sprite_frames.has_animation("walk"))
+	assert(_SPRITE.sprite_frames.has_animation("stand"))
 	assert(_BATTLE_COLLISION)
 
 func _on_area_2d_body_entered(overworld_encounter_collided_with):
