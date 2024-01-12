@@ -31,12 +31,25 @@ func _ready():
 	assert(_player_targets)
 	assert(_do_blocks)
 	assert(_computer_targets)
-	#self.modulate.a = 0
-	_player_targets.hide()
-	_computer_targets.hide()
 
 func is_injecting() -> bool:
 	return _inject_state != InjectState.INACTIVE
+
+func _enable_targets(targets: Node):
+	for target in targets.get_children():
+		_enable_target(target)
+
+func _enable_target(target: SelectableButton):
+	create_tween().tween_property(target, "modulate:a", 1, 0.2)
+	target.mouse_filter = Control.MOUSE_FILTER_STOP
+
+func _disable_targets(targets: Node):
+	for target in targets.get_children():
+		_disable_target(target)
+
+func _disable_target(target: SelectableButton):
+	create_tween().tween_property(target, "modulate:a", 0, 0.2)
+	target.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 func start_inject(blog: BattleLog, animator: BattleAnimator, player_mons: Array, computer_mons: Array) -> void:
 	_friends = player_mons
@@ -55,8 +68,6 @@ func start_inject(blog: BattleLog, animator: BattleAnimator, player_mons: Array,
 	
 	# show only the player targets
 	_update_inject_state(InjectState.SELECT_MON)
-	_computer_targets.hide()
-	_player_targets.show()
 	
 	var create_targets := func(mons, target_scene, add_to, callback):
 		for mon in mons:
@@ -66,11 +77,14 @@ func start_inject(blog: BattleLog, animator: BattleAnimator, player_mons: Array,
 				_target_to_mon[target] = mon
 				target.button_selected.connect(callback)
 				target.modulate.a = 0
-				create_tween().tween_property(target, "modulate:a", 1, 0.2)
 				add_to.add_child(target)
 	
 	create_targets.call(player_mons, PLAYER_INJECT_SCENE, _player_targets, _on_player_target_selected)
 	create_targets.call(computer_mons, COMPUTER_INJECT_SCENE, _computer_targets, _on_computer_target_selected)
+	create_targets.call(player_mons, COMPUTER_INJECT_SCENE, _computer_targets, _on_computer_target_selected)
+	
+	_enable_targets(_player_targets)
+	_disable_targets(_computer_targets)
 
 func _on_player_target_selected() -> void:
 	if _inject_state != InjectState.SELECT_MON:
@@ -82,7 +96,7 @@ func _on_player_target_selected() -> void:
 		if target.selected:
 			_injected_mon = _target_to_mon[target]
 		else:
-			target.hide()
+			_disable_target(target)
 	assert(_injected_mon)
 	
 	_create_do_blocks()
@@ -128,7 +142,8 @@ func _on_do_block_selected(selected_block) -> void:
 	
 	# if this block needs a target, initiate that
 	if selected_block.to_block().next_block_type == ScriptData.Block.Type.TO:
-		_computer_targets.show()
+		_enable_targets(_computer_targets)
+		_disable_targets(_player_targets)
 		_update_inject_state(InjectState.SELECT_TARGET)
 	else: # otherwise, wait for the block to reach the top for visual effect, then perform the inject
 		await tween.finished
@@ -144,7 +159,7 @@ func _on_computer_target_selected() -> void:
 		if target.selected:
 			_target = _target_to_mon[target]
 		else:
-			target.hide()
+			_disable_target(target)
 	assert(_target)
 	
 	_perform_inject()
@@ -156,7 +171,7 @@ func _perform_inject() -> void:
 	
 	_update_inject_state(InjectState.EXECUTING)
 	
-	# fade out the block
+	# fade out the block and delete
 	var to_fade_out = _do_blocks.get_children() + _player_targets.get_children() + _computer_targets.get_children()
 	for node in to_fade_out:
 		var tween = create_tween()
@@ -192,14 +207,19 @@ func _update_inject_state(new_state: InjectState):
 func _undo() -> void:
 	if _inject_state == InjectState.SELECT_DO:
 		for target in _player_targets.get_children():
-			target.show()
+			_enable_target(target)
 			target.unselect()
 		for block in _do_blocks.get_children():
 			block.queue_free()
 		_injected_mon = null
 		_update_inject_state(InjectState.SELECT_MON)
 	elif _inject_state == InjectState.SELECT_TARGET:
-		_computer_targets.hide()
+		_disable_targets(_computer_targets)
+		for i in _player_targets.get_child_count():
+			var target = _player_targets.get_child(i)
+			if target.selected:
+				assert(_target_to_mon[target] == _injected_mon)
+				_enable_target(target)
 		for block in _do_blocks.get_children():
 			block.queue_free()
 		_do_block = null
@@ -207,5 +227,5 @@ func _undo() -> void:
 		_update_inject_state(InjectState.SELECT_DO)
 
 func _input(event) -> void:
-	if Input.is_action_just_pressed("inject_undo") and is_injecting():
+	if Input.is_action_just_released("inject_undo") and is_injecting():
 		_undo()
