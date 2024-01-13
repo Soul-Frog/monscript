@@ -2,8 +2,16 @@ extends GutTest
 
 var mons := []
 var fakemon: MonData.Mon
-var FAKE_BASE = MonData.MonBase.new(MonData.MonType.BITLEON, "FAKEMON", "res://mons/bitleon.tscn", "res://monscripts/attack.txt", 
-	256, 128, 64, 96, 1, 1, 1, 1, ScriptData.get_block_by_name("Attack"), "passive", "passivedesc", [Color.WHITE, Color.WHITE, Color.WHITE])
+
+var FAKE_BASE = MonData.MonBase.new(
+	MonData.MonType.BITLEON, "FAKEMON", "res://mons/bitleon.tscn", "res://monscripts/attack.txt", 
+	256, 128, 64, 96, 
+	0, 
+	1, 1, 1, 1,
+	ScriptData.get_block_by_name("Attack"), 
+	MonData.Passive.NONE, 
+	[Color.WHITE, Color.WHITE, Color.WHITE],
+	1.0, 1.0, [BugData.Type.BLUE_DEF_BUG])
 
 func before_each():
 	mons.clear()

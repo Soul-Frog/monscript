@@ -90,19 +90,29 @@ func _on_text_submitted(txt):
 	# close the application immediately
 	if cmd == "exit" or cmd == "quit" or cmd == "q":
 		get_tree().quit()
+	# print hello world :)
+	elif cmd == "helloworld" or cmd == "hello":
+		print("Hello World!") 
 	# cause an immediate breakpoint
 	elif cmd == "break" or cmd == "breakpoint" or cmd == "b" or cmd == "brk":
 		breakpoint
 	# recharge the inject battery
-	elif cmd == "recharge":
+	elif cmd == "recharge" or cmd == "rechargebattery" or cmd == "battery" or cmd == "inject" or cmd == "rechargeinject":
 		GameData.inject_points = GameData.get_var(GameData.MAX_INJECTS) * BattleData.POINTS_PER_INJECT
-	# print hello world :)
-	elif cmd == "helloworld" or cmd == "hello":
-		print("Hello World!") 
+	# unlock all the stuff
+	elif cmd == "unlock":
+		_on_text_submitted("unlockcompilation")
+		_on_text_submitted("unlockallblocks")
+	# unlock all compilation progress
+	elif cmd == "unlockcompilation":
+		for mon_type in GameData.decompilation_progress_per_mon.keys():
+			GameData.decompilation_progress_per_mon[mon_type] = MonData.get_decompilation_progress_required_for(mon_type)
+	# unlocks all IF/TO blocks
 	elif cmd == "unlockallblocks":
 		for block in ScriptData.IF_BLOCK_LIST + ScriptData.TO_BLOCK_LIST:
 			GameData.unlock_block(block)
-	elif cmd == "unlockallallblocks": #also unlocks DO, which would not normally be possible
+	#also unlocks DO, which would not normally be possible
+	elif cmd == "unlockallallblocks":
 		for block in ScriptData.IF_BLOCK_LIST + ScriptData.TO_BLOCK_LIST + ScriptData.DO_BLOCK_LIST:
 			GameData.unlock_block(block) 
 	# clears all overworld enemies

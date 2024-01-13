@@ -26,10 +26,10 @@ func test_battle_tick():
 	var ctr = 0
 	
 	while ctr < battlemon.ACTION_POINTS_PER_TURN:
-		battlemon.battle_tick(1.0)
+		battlemon.battle_tick(1.0, battlemon.get_speed(), 1.0)
 		ctr += speed
 	
-	assert_eq(sigcounter.count(), 1)
+	assert_eq(sigcounter.count(), 6)
 	
 	sigcounter.free()
 	battlemon.free()

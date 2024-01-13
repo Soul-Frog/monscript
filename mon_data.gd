@@ -3,6 +3,39 @@
 
 extends Node
 
+enum Passive {
+	NONE, 
+	COURAGE, REGENERATE, MODERNIZE, BOURNE_AGAIN, PIERCER, THORNS, EXPLOIT, PASCALICAN_PASSIVE
+}
+
+class PassiveInfo:
+	var passive: Passive
+	var name: String
+	var description: String
+	
+	func _init(passiveEnum: Passive, passiveName: String, passiveDescription: String):
+		self.passive = passiveEnum
+		self.name = passiveName
+		self.description = passiveDescription
+
+# dictionary of Passive -> PassiveInfo
+var _PASSIVE_INFO = {
+	Passive.NONE : PassiveInfo.new(Passive.NONE, "None", "This passive ability does nothing."),
+	Passive.COURAGE : PassiveInfo.new(Passive.COURAGE, "Courage", "Increases damage dealt and reduces damage taken by 30% when fighting alone or against strong foes."),
+	Passive.REGENERATE : PassiveInfo.new(Passive.REGENERATE, "Regenerate", "Heal 5% of your maximum health after taking an action."),
+	Passive.MODERNIZE : PassiveInfo.new(Passive.MODERNIZE, "Modernize", "After 5 turns, increase your speed and damage dealt by 50% for the rest of the battle."),
+	Passive.BOURNE_AGAIN : PassiveInfo.new(Passive.BOURNE_AGAIN, "Bourne-Again", "The first time you would be defeated, endure and heal 10% of your maximum HP instead."),
+	Passive.PIERCER : PassiveInfo.new(Passive.PIERCER, "Piercer", "Your attacks have a 25% to inflict DEF DOWN."),
+	Passive.THORNS : PassiveInfo.new(Passive.THORNS, "Thorns", "When attacked, reflect 5% of the damage dealt with a 35% chance to inflict LEAK."),
+	Passive.EXPLOIT : PassiveInfo.new(Passive.EXPLOIT, "Exploit", "Your attacks deal 30% increased damage against mons with LEAK."),
+	Passive.PASCALICAN_PASSIVE : PassiveInfo.new(Passive.PASCALICAN_PASSIVE, "IDK", "We don't know what this does yet.")
+}
+
+func _ready() -> void:
+	# make sure the _PASSIVE_INFO is fully populated
+	for passive in Passive.values():
+		assert(_PASSIVE_INFO.has(passive))
+
 enum DamageType {
 	NORMAL, 
 	HEAT, CHILL, VOLT, 
@@ -40,9 +73,8 @@ class MonBase:
 	var _attack64: int
 	var _defense64: int
 	var _speed64: int
-	var _special_block: ScriptData.Block
-	var _passive_name: String
-	var _passive_description: String
+	var _innate_block: ScriptData.Block
+	var _innate_passive: Passive
 	var _colors: Array[Color]
 	var _decompilation_progress_required
 	var _damage_type_multipliers: Dictionary
@@ -54,7 +86,7 @@ class MonBase:
 		healthAt64: int, attackAt64: int, defenseAt64: int, speedAt64: int,
 		decompilationRequired: int, 
 		normal_damage_mult: float, heat_damage_mult: float, chill_damage_mult: float, volt_damage_mult: float,
-		specialBlock: ScriptData.Block, passiveName: String, passiveDesc: String,
+		innateBlock: ScriptData.Block, innatePassive: Passive,
 		colors: Array[Color],
 		xpMult: float, bitsMult: float, bugDrops: Array[BugData.Type]) -> void:
 		self._mon_type = monType
@@ -67,9 +99,8 @@ class MonBase:
 		self._attack64 = attackAt64
 		self._defense64 = defenseAt64
 		self._speed64 = speedAt64
-		self._special_block = specialBlock
-		self._passive_name = passiveName
-		self._passive_description = passiveDesc
+		self._innate_block = innateBlock
+		self._innate_passive = innatePassive
 		self._colors = colors
 		self._decompilation_progress_required = decompilationRequired
 		self._damage_type_multipliers[DamageType.NORMAL] = normal_damage_mult
@@ -168,11 +199,16 @@ class Mon:
 		_active_monscript_index = index
 		
 	func get_possible_do_blocks() -> Array:
+		# in the future, return customized DOs
 		var possible_dos = []
 		for doBlock in ScriptData.DO_BLOCK_LIST:
-			if GameData.is_block_unlocked(doBlock) or _base._special_block == doBlock:
+			if GameData.is_block_unlocked(doBlock) or _base._innate_block == doBlock:
 				possible_dos.append(doBlock)
 		return possible_dos
+	
+	func get_passives() -> Array:
+		# in the future, return customized passives
+		return [_base._innate_passive]
 	
 	func get_mon_type() -> MonType:
 		return _base._mon_type
@@ -252,7 +288,7 @@ var _BITLEON_BASE = MonBase.new(MonType.BITLEON, "Bitleon", "res://mons/bitleon.
 	1,
 	1.0, 1.0, 1.0, 1.0,
 	ScriptData.get_block_by_name("Repair"),
-	"Passive", "Bitleon passive",
+	Passive.COURAGE,
 	[Color.WHITE, Color.WHITE_SMOKE, Color.LIGHT_GRAY],
 	2.0, 0.0, [BugData.Type.YELLOW_HP_BUG, BugData.Type.RED_ATK_BUG, BugData.Type.BLUE_DEF_BUG, BugData.Type.GREEN_SPD_BUG])
 
@@ -262,7 +298,7 @@ var _GELIF_BASE = MonBase.new(MonType.GELIF, "Gelif", "res://mons/gelif.tscn", "
 	12,
 	1.0, 2.0, 0.25, 2.0,
 	ScriptData.get_block_by_name("Transfer"),
-	"Passive", "Gelif passive",
+	Passive.REGENERATE,
 	[Color("#26a69a"), Color("#009688"), Color("#00796b")],
 	1.0, 0.5, [BugData.Type.YELLOW_HP_BUG])
 	
@@ -271,7 +307,7 @@ var _CHORSE_BASE = MonBase.new(MonType.CHORSE, "C-horse", "res://mons/chorse.tsc
 	10, 
 	1.0, 1.5, 0.5, 1.0,
 	ScriptData.get_block_by_name("C-gun"),
-	"Passive", "C-horse passive",
+	Passive.MODERNIZE, 
 	[Color("#ff7043"), Color("#f4511e"), Color("#d84315")],
 	1.0, 1.0, [BugData.Type.GREEN_SPD_BUG])
 	
@@ -280,7 +316,7 @@ var _PASCALICAN_BASE = MonBase.new(MonType.PASCALICAN, "Pascalican", "res://mons
 	8, 
 	1.0, 1.0, 0.5, 1.5,
 	ScriptData.get_block_by_name("Triangulate"),
-	"Passive", "Pascalican passive",
+	Passive.PASCALICAN_PASSIVE,
 	[Color("#ffffff"), Color("#eeeeee"), Color("#bdbdbd")],
 	1.0, 1.5, [BugData.Type.GREEN_SPD_BUG, BugData.Type.RED_ATK_BUG])
 	
@@ -289,7 +325,7 @@ var _ORCHIN_BASE = MonBase.new(MonType.ORCHIN, "Orchin", "res://mons/orchin.tscn
 	12, 
 	1.0, 1.5, 0.75, 0.75,
 	ScriptData.get_block_by_name("SpikOR"),
-	"Passive", "Orchin passive",
+	Passive.THORNS,
 	[Color("#4a5462"), Color("#333941"), Color("#242234")],
 	1.0, 0.75, [BugData.Type.BLUE_DEF_BUG])
 	
@@ -298,7 +334,7 @@ var _TURTMINAL_BASE = MonBase.new(MonType.TURTMINAL, "Turtminal", "res://mons/tu
 	5, 
 	1.0, 1.0, 1.3, 0.7,
 	ScriptData.get_block_by_name("ShellBash"),
-	"Passive", "Turtminal passive",
+	Passive.BOURNE_AGAIN,
 	[Color("#2baf2b"), Color("#0a8f08"), Color("#0d5302")],
 	1.5, 0.75, [BugData.Type.BLUE_DEF_BUG, BugData.Type.YELLOW_HP_BUG])
 	
@@ -307,7 +343,7 @@ var _STINGARRAY_BASE = MonBase.new(MonType.STINGARRAY, "Stringarray", "res://mon
 	5, 
 	1.0, 1.5, 1.5, 0.25,
 	ScriptData.get_block_by_name("Multitack"),
-	"Passive", "Stingarray passive",
+	Passive.PIERCER,
 	[Color("#795548"), Color("#5d4037"), Color("#3e2723")],
 	1.5, 0.5, [BugData.Type.RED_ATK_BUG])
 	
@@ -316,7 +352,7 @@ var _ANGLERPHISH_BASE = MonBase.new(MonType.ANGLERPHISH, "Anglerphish", "res://m
 	5, 
 	1.0, 2.0, 0.5, 0.5,
 	ScriptData.get_block_by_name("Spearphishing"),
-	"Passive", "Anglerphish passive",
+	Passive.EXPLOIT,
 	[Color("#5677fc"), Color("#455ede"), Color("#2a36b1")],
 	1.5, 1.0, [BugData.Type.RED_ATK_BUG, BugData.Type.YELLOW_HP_BUG])
 
@@ -366,19 +402,25 @@ func get_name_for(montype: MonType) -> String:
 
 func get_special_name_for(montype: MonType) -> String:
 	assert(montype != MonType.NONE)
-	return _MON_MAP[montype]._special_block.name
+	return _MON_MAP[montype]._innate_block.name
 
 func get_special_description_for(montype: MonType) -> String:
 	assert(montype != MonType.NONE)
-	return _MON_MAP[montype]._special_block.description
+	return _MON_MAP[montype]._innate_block.description
 
 func get_passive_name_for(montype: MonType) -> String:
 	assert(montype != MonType.NONE)
-	return _MON_MAP[montype]._passive_name
+	return get_passive_name(_MON_MAP[montype]._innate_passive)
 
 func get_passive_description_for(montype: MonType) -> String:
 	assert(montype != MonType.NONE)
-	return _MON_MAP[montype]._passive_description
+	return get_passive_description(_MON_MAP[montype]._innate_passive)
+
+func get_passive_name(passive: Passive):
+	return _PASSIVE_INFO[passive].name
+
+func get_passive_description(passive: Passive):
+	return _PASSIVE_INFO[passive].description
 
 func get_decompilation_progress_required_for(montype: MonType) -> int:
 	assert(montype != MonType.NONE)
