@@ -171,7 +171,7 @@ z_index = 100
 z_index = 2000
 
 [node name="Results" parent="UI" instance=ExtResource("54_5vxty")]
-z_index = 1
+z_index = 500
 
 [node name="InjectLayer" parent="UI" instance=ExtResource("53_4ccvo")]
 z_index = 1
@@ -373,15 +373,15 @@ offset_right = 263.0
 offset_bottom = 122.0
 
 [node name="ScriptLineViewer" parent="UI" groups=["battle_speed_scaled"] instance=ExtResource("42_24nlh")]
-offset_top = 6.0
-offset_bottom = 21.0
+offset_top = 3.0
+offset_bottom = 18.0
 mouse_filter = 2
 
 [node name="BannerLabel" type="RichTextLabel" parent="UI"]
 offset_left = -100.0
-offset_top = 7.0
+offset_top = 2.0
 offset_right = 420.0
-offset_bottom = 118.0
+offset_bottom = 113.0
 mouse_filter = 2
 theme_override_colors/font_shadow_color = Color(0, 0.996078, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)

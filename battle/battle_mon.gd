@@ -324,7 +324,7 @@ func take_damage(damage_taken: int, damage_type: MonData.DamageType) -> void:
 	# make text effect
 	self.add_child(
 		MOVING_TEXT_SCENE.instantiate()
-		.tx(damage_taken).direction_up().speed(15, _speed_scale).time(0.7).color(damage_color))
+		.offset(Vector2(0, 0)).tx(damage_taken).direction_up().speed(12, _speed_scale).time(0.7).color(damage_color))
 		
 	shake() # make the damaged mon shake a bit
 	flash(flash_color) # flash color based on the type of damage taken
@@ -333,6 +333,11 @@ func take_damage(damage_taken: int, damage_type: MonData.DamageType) -> void:
 		set_action_points(0)
 		create_tween().tween_property(self, "modulate:a", 0.0, 0.25)
 		emit_signal("zero_health", self)
+
+func show_ability_text(text: String) -> void:
+	self.add_child(
+		MOVING_TEXT_SCENE.instantiate()
+		.offset(Vector2(0, -9)).tx(text).direction_up().speed(12, _speed_scale).time(0.7))
 
 func shake() -> void:
 	shake_animation_player.seek(0) #restart shake
@@ -355,7 +360,7 @@ func heal_damage(heal: int) -> void:
 	# make text effect
 	self.add_child(
 		MOVING_TEXT_SCENE.instantiate()
-		.tx(heal_amt).direction_up().speed(15, _speed_scale).time(0.7).color(Global.COLOR_GREEN))
+		.tx(heal_amt).direction_up().speed(12, _speed_scale).time(0.7).color(Global.COLOR_GREEN))
 	
 	# make self glow green for a sec
 	flash_animation_player.seek(0)
