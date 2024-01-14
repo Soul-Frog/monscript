@@ -130,6 +130,12 @@ func init_mon(mon: MonData.Mon, monTeam: Battle.Team) -> void:
 	log_name = mon.get_name()
 	emit_signal("health_or_ap_changed")
 
+func on_battle_start(pals: Array, foes: Array) -> void:
+	if underlying_mon.has_passive(MonData.Passive.COURAGE):
+		queue_ability_text("Courage!")
+		battle_log.add_text("%s is Courageous!" % battle_log.MON_NAME_PLACEHOLDER, self)
+		metadata["Courage"] = true
+
 # returns attack modified by buffs/debuffs
 func get_attack() -> int:
 	return _base_attack * _BUFF_STAGE_TO_MODIFIER[atk_buff_stage]
@@ -255,20 +261,40 @@ func is_defeated() -> bool:
 
 # apply an attack against this mon with a given attack value and damage multiplier
 # this function factors in defense and defending
-func apply_attack(attacker: BattleMon, multiplier: float, damage_type: MonData.DamageType) -> void:
+func apply_attack(attacker: BattleMon, ability_multiplier: float, damage_type: MonData.DamageType) -> void:
 	# damage taken is ATK-DEF, to a minimum of 1
 	var damage_taken = max(attacker.get_attack() - get_defense(), 1)
 	
+	## APPLY ABILITY MULTIPLIER ##
 	# increase damage taken by attack multiplier
-	damage_taken *= multiplier
+	damage_taken *= ability_multiplier
 	
+	## APPLY ELEMENTAL WEAKNESS/RESIST ##
 	# now modify by resistances/weaknesses
 	damage_taken *= underlying_mon.get_damage_multiplier_for_type(damage_type)
+		
+	## APPLY PASSIVES ##
+	var passive_multiplier = 1.0
+	if metadata.has("Courage"):
+		assert(metadata["Courage"])
+		# courage makes this mon take 50% less damage
+		passive_multiplier += 0.5
+		queue_ability_text("Courage!")
 	
+	if attacker.metadata.has("Courage"):
+		assert(attacker.metadata["Courage"])
+		# courage on attacker makes this mon take 50% more damage
+		passive_multiplier -= 0.5
+		attacker.queue_ability_text("Courage!")
+	
+	damage_taken *= max(0, passive_multiplier)
+	
+	## APPLY DEFENDING MULTIPLIER ##
 	# if defending, reduce the damage taken by half
 	if is_defending:
 		damage_taken /= 2.0
-		
+	
+	## ADDITIONAL CONSTANT MODIFIERS ##
 	# apply an additional constant modifier based on defense buff stage and attacker attack stage;
 	# example: if our def stage is -1 and attacker's attack stage is 4, we take an additional flat 3 damage
 	# example2: if our def stage is 4 and attacker's attack stage if -3, we reduce damage taken by a flat 7
@@ -324,7 +350,7 @@ func take_damage(damage_taken: int, damage_type: MonData.DamageType) -> void:
 	# make text effect
 	self.add_child(
 		MOVING_TEXT_SCENE.instantiate()
-		.offset(Vector2(0, 0)).tx(damage_taken).direction_up().speed(12, _speed_scale).time(0.7).color(damage_color))
+		.offset(Vector2(0, 0)).tx(damage_taken).direction_up().speed(13, _speed_scale).time(0.6).color(damage_color))
 		
 	shake() # make the damaged mon shake a bit
 	flash(flash_color) # flash color based on the type of damage taken
@@ -334,10 +360,24 @@ func take_damage(damage_taken: int, damage_type: MonData.DamageType) -> void:
 		create_tween().tween_property(self, "modulate:a", 0.0, 0.25)
 		emit_signal("zero_health", self)
 
-func show_ability_text(text: String) -> void:
-	self.add_child(
-		MOVING_TEXT_SCENE.instantiate()
-		.offset(Vector2(0, -9)).tx(text).direction_up().speed(12, _speed_scale).time(0.7))
+var _ability_text_queue = []
+var _ability_text = null
+
+func _on_ability_text_finished():
+	_ability_text = null
+	if _ability_text_queue.size() != 0:
+		_show_ability_text(_ability_text_queue.pop_front())
+
+func _show_ability_text(text: String):
+	_ability_text = MOVING_TEXT_SCENE.instantiate().offset(Vector2(0, -9)).tx(text).direction_up().speed(13, _speed_scale).time(0.6)
+	_ability_text.deleted.connect(_on_ability_text_finished)
+	self.add_child(_ability_text)
+	
+func queue_ability_text(text: String) -> void:
+	if _ability_text == null:
+		_show_ability_text(text)
+	else:
+		_ability_text_queue.append(text)
 
 func shake() -> void:
 	shake_animation_player.seek(0) #restart shake
@@ -360,7 +400,7 @@ func heal_damage(heal: int) -> void:
 	# make text effect
 	self.add_child(
 		MOVING_TEXT_SCENE.instantiate()
-		.tx(heal_amt).direction_up().speed(12, _speed_scale).time(0.7).color(Global.COLOR_GREEN))
+		.tx(heal_amt).direction_up().speed(13, _speed_scale).time(0.6).color(Global.COLOR_GREEN))
 	
 	# make self glow green for a sec
 	flash_animation_player.seek(0)

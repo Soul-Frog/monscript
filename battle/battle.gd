@@ -300,6 +300,11 @@ func setup_battle(player_team, computer_team, battle_background: BattleData.Back
 	await Global.delay(0.1)
 	state = BattleState.BATTLING
 	
+	for mon in _player_mons.get_children():
+		mon.on_battle_start(_player_mons.get_children(), _computer_mons.get_children())
+	for mon in _computer_mons.get_children():
+		mon.on_battle_start(_computer_mons.get_children(), _player_mons.get_children())
+	
 	await Global.delay(0.7)
 	_banner_label.zoom_out()
 

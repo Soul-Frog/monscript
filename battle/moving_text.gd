@@ -4,6 +4,8 @@ enum Direction {
 	UP, DOWN
 }
 
+signal deleted
+
 var _speed_scale = 1.0
 
 var ofset = Vector2.ZERO
@@ -64,7 +66,11 @@ func _process(delta):
 	if display_time <= 0:
 		var tween = create_tween()
 		tween.tween_property(self, "modulate:a", 0.0, 0.05 if _speed_scale == 0 else 0.05 / _speed_scale)
-		tween.tween_callback(self.queue_free)
+		tween.tween_callback(_delete)
+
+func _delete():
+	emit_signal("deleted")
+	self.queue_free()
 
 func set_speed_scale(speed_scale: float):
 	_speed_scale = speed_scale

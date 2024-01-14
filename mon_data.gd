@@ -21,7 +21,7 @@ class PassiveInfo:
 # dictionary of Passive -> PassiveInfo
 var _PASSIVE_INFO = {
 	Passive.NONE : PassiveInfo.new(Passive.NONE, "None", "This passive ability does nothing."),
-	Passive.COURAGE : PassiveInfo.new(Passive.COURAGE, "Courage", "Increases damage dealt and reduces damage taken by 30% when fighting alone or against strong foes."),
+	Passive.COURAGE : PassiveInfo.new(Passive.COURAGE, "Courage", "Increases damage dealt and reduces damage taken by 50% when fighting alone or against strong foes."),
 	Passive.REGENERATE : PassiveInfo.new(Passive.REGENERATE, "Regenerate", "Heal 5% of your maximum health after taking an action."),
 	Passive.MODERNIZE : PassiveInfo.new(Passive.MODERNIZE, "Modernize", "After 5 turns, increase your speed and damage dealt by 50% for the rest of the battle."),
 	Passive.BOURNE_AGAIN : PassiveInfo.new(Passive.BOURNE_AGAIN, "Bourne-Again", "The first time you would be defeated, endure and heal 10% of your maximum HP instead."),
@@ -209,6 +209,9 @@ class Mon:
 	func get_passives() -> Array:
 		# in the future, return customized passives
 		return [_base._innate_passive]
+	
+	func has_passive(passive: Passive) -> bool:
+		return get_passives().has(passive)
 	
 	func get_mon_type() -> MonType:
 		return _base._mon_type
