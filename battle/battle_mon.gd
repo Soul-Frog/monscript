@@ -328,6 +328,12 @@ func apply_attack(attacker: BattleMon, ability_multiplier: float, damage_type: M
 	damage_taken = max(damage_taken, 1)
 	
 	take_damage(damage_taken, damage_type)
+	
+	## PASSIVES AFTER ATTACK ##
+	if attacker.underlying_mon.has_passive(MonData.Passive.PIERCER) and Global.RNG.randi_range(0, 3) == 0:
+		# 25% chance to lower defense
+		attacker.queue_passive_text(MonData.Passive.PIERCER)
+		apply_stat_change(BattleMon.BuffableStat.DEF, -1)
 
 # deals damage to a mon
 # ignores defense and defending
@@ -481,13 +487,32 @@ func heal_all_statuses() -> void:
 
 # apply a buff/debuff
 func apply_stat_change(stat: BuffableStat, mod: int):
+	assert(mod != 0)
+	assert(mod <= 4 and mod >= -4)
+	
+	var stat_str = ""
+	var show_log_text = false
 	match stat:
 		BuffableStat.ATK:
+			var prev_atk = atk_buff_stage
 			atk_buff_stage = clamp(atk_buff_stage + mod, MIN_DEBUFF_STAGE, MAX_BUFF_STAGE)
+			if atk_buff_stage != prev_atk:
+				show_log_text = true
+				stat_str = "ATK"
 		BuffableStat.DEF:
+			var prev_def = def_buff_stage
 			def_buff_stage = clamp(def_buff_stage + mod, MIN_DEBUFF_STAGE, MAX_BUFF_STAGE)
+			if def_buff_stage != prev_def:
+				show_log_text = true
+				stat_str = "DEF"
 		BuffableStat.SPD:
+			var prev_spd = spd_buff_stage
 			spd_buff_stage = clamp(spd_buff_stage + mod, MIN_DEBUFF_STAGE, MAX_BUFF_STAGE)
+			if spd_buff_stage != prev_spd:
+				show_log_text = true
+				stat_str = "SPD"
+	
+	battle_log.add_text("%s's %s was %s!" % [battle_log.MON_NAME_PLACEHOLDER, stat_str, "increased" if mod > 0 else "decreased"], self)
 	
 	# TODO - EFFECT
 	
