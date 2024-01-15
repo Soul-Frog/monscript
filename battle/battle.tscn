@@ -308,6 +308,12 @@ autostart_effect_type = 2
 max_alpha = 0.4
 fade_speed = 1.5
 
+[node name="ScriptLineViewer" parent="UI" groups=["battle_speed_scaled"] instance=ExtResource("42_24nlh")]
+offset_top = 1.0
+offset_bottom = 16.0
+mouse_filter = 2
+mouse_force_pass_scroll_events = false
+
 [node name="Log" parent="UI" groups=["battle_speed_scaled"] instance=ExtResource("16_ugd8u")]
 z_index = 100
 position = Vector2(67, 135)
@@ -371,11 +377,6 @@ offset_left = 217.0
 offset_top = 101.0
 offset_right = 263.0
 offset_bottom = 122.0
-
-[node name="ScriptLineViewer" parent="UI" groups=["battle_speed_scaled"] instance=ExtResource("42_24nlh")]
-offset_top = 3.0
-offset_bottom = 18.0
-mouse_filter = 2
 
 [node name="BannerLabel" type="RichTextLabel" parent="UI"]
 offset_left = -100.0
