@@ -309,8 +309,8 @@ max_alpha = 0.4
 fade_speed = 1.5
 
 [node name="ScriptLineViewer" parent="UI" groups=["battle_speed_scaled"] instance=ExtResource("42_24nlh")]
-offset_top = 1.0
-offset_bottom = 16.0
+offset_top = 3.0
+offset_bottom = 18.0
 mouse_filter = 2
 mouse_force_pass_scroll_events = false
 
@@ -380,9 +380,9 @@ offset_bottom = 122.0
 
 [node name="BannerLabel" type="RichTextLabel" parent="UI"]
 offset_left = -100.0
-offset_top = 2.0
+offset_top = 3.0
 offset_right = 420.0
-offset_bottom = 113.0
+offset_bottom = 114.0
 mouse_filter = 2
 theme_override_colors/font_shadow_color = Color(0, 0.996078, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)

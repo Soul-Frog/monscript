@@ -132,8 +132,8 @@ func init_mon(mon: MonData.Mon, monTeam: Battle.Team) -> void:
 
 func on_battle_start(pals: Array, foes: Array) -> void:
 	if underlying_mon.has_passive(MonData.Passive.COURAGE):
-		queue_ability_text("Courage!")
-		battle_log.add_text("%s is Courageous!" % battle_log.MON_NAME_PLACEHOLDER, self)
+		queue_passive_text(MonData.Passive.COURAGE)
+		battle_log.add_text("%s feels Courageous!" % battle_log.MON_NAME_PLACEHOLDER, self)
 		metadata["Courage"] = true
 
 # returns attack modified by buffs/debuffs
@@ -238,7 +238,14 @@ func _on_turn_over():
 	finish_action()
 
 func finish_action():
+	if is_action_canceled:
+		queue_text("[color=#%s]Cancel![/color]" % Color.INDIAN_RED.to_html()) # display Cancel!
+	if not is_action_canceled:
+		if underlying_mon.has_passive(MonData.Passive.REGENERATE):
+			queue_passive_text(MonData.Passive.REGENERATE)
+			heal_damage(int(max_health * 0.05))
 	is_action_canceled = false
+	
 	emit_signal("action_completed")
 
 func _move_forward():
@@ -279,13 +286,11 @@ func apply_attack(attacker: BattleMon, ability_multiplier: float, damage_type: M
 		assert(metadata["Courage"])
 		# courage makes this mon take 50% less damage
 		passive_multiplier += 0.5
-		queue_ability_text("Courage!")
 	
 	if attacker.metadata.has("Courage"):
 		assert(attacker.metadata["Courage"])
 		# courage on attacker makes this mon take 50% more damage
 		passive_multiplier -= 0.5
-		attacker.queue_ability_text("Courage!")
 	
 	damage_taken *= max(0, passive_multiplier)
 	
@@ -372,8 +377,11 @@ func _show_ability_text(text: String):
 	_ability_text = MOVING_TEXT_SCENE.instantiate().offset(Vector2(0, -9)).tx(text).direction_up().speed(13, _speed_scale).time(0.6)
 	_ability_text.deleted.connect(_on_ability_text_finished)
 	self.add_child(_ability_text)
-	
-func queue_ability_text(text: String) -> void:
+
+func queue_passive_text(passive: MonData.Passive) -> void:
+	queue_text(MonData.get_passive_name(passive) + "!")
+
+func queue_text(text: String) -> void:
 	if _ability_text == null:
 		_show_ability_text(text)
 	else:
@@ -442,11 +450,15 @@ func heal_status(status: Status) -> void:
 	
 	statuses[status] = false
 	
-	# todo - play some effect here
+	# make self glow green for a sec
+	flash_animation_player.seek(0)
+	flash_animation_player.play("flash_green")
 
 func heal_all_statuses() -> void:
 	for status in statuses.keys():
 		statuses[status] = false
+	flash_animation_player.seek(0)
+	flash_animation_player.play("flash_green")
 
 # apply a buff/debuff
 func apply_stat_change(stat: BuffableStat, mod: int):
@@ -457,6 +469,9 @@ func apply_stat_change(stat: BuffableStat, mod: int):
 			def_buff_stage = clamp(def_buff_stage + mod, MIN_DEBUFF_STAGE, MAX_BUFF_STAGE)
 		BuffableStat.SPD:
 			spd_buff_stage = clamp(spd_buff_stage + mod, MIN_DEBUFF_STAGE, MAX_BUFF_STAGE)
+	
+	# TODO - EFFECT
+	
 	emit_signal("stats_changed")
 
 func set_speed_scale(speed_scale: float) -> void:

@@ -64,7 +64,7 @@ func _fade_in():
 	_line.modulate.a = 0
 	var tween = create_tween()
 	tween.set_speed_scale(_speed_scale)
-	tween.tween_property(_line, "modulate:a", 1.0, 0.075)
+	tween.tween_property(_line, "modulate:a", 1.0, 0.1)
 	_active_tweens.append(tween)
 
 func hide_line() -> void:
@@ -81,7 +81,7 @@ func hide_line() -> void:
 	# fade out the line
 	var tween = create_tween()
 	tween.set_speed_scale(_speed_scale)
-	tween.tween_property(to_delete, "modulate:a", 0.0, 0.075)
+	tween.tween_property(to_delete, "modulate:a", 0.0, 0.1)
 	_active_tweens.append(tween)
 	
 	# delete after fading out
