@@ -10,8 +10,10 @@ extends Node2D
 const _TEXT_SPEED_DELTA := 140.0
 var _visible_characters := 0.0
 
-const _AUTOSCROLL_SPEED := 60.0
+const _AUTOSCROLL_SPEED := 80.0
 var _scroll_value := 0.0
+
+const _TEXT_SPEEDUP_BUFFER = 40
 
 const _GROWTH_AMOUNT = 120
 
@@ -67,9 +69,15 @@ func _show_buffered_characters():
 func _process(unscaled_delta):
 	var delta = unscaled_delta * (_speed_scale if _speed_scale != 0 else 1.0)
 	
+	# if log is falling too far behind, make it a bit quicker
+	var behind_multiplier = 1.0
+	var text_unshown = text.get_parsed_text().length() - _visible_characters
+	if text_unshown >= _TEXT_SPEEDUP_BUFFER:
+		behind_multiplier = float(text_unshown) / float(_TEXT_SPEEDUP_BUFFER)
+	
 	# new characters in log should appear gradually instead of immediately
 	if _visible_characters < text.get_parsed_text().length():
-		_visible_characters = min(_visible_characters + (delta * _TEXT_SPEED_DELTA), text.get_parsed_text().length())
+		_visible_characters = min(_visible_characters + (delta * _TEXT_SPEED_DELTA * behind_multiplier), text.get_parsed_text().length())
 		text.visible_characters = int(_visible_characters)
 	
 	# smoothly scroll when new lines are added to bottom of log
