@@ -134,7 +134,7 @@ func on_battle_start(pals: Array, foes: Array) -> void:
 	if underlying_mon.has_passive(MonData.Passive.COURAGE):
 		queue_passive_text(MonData.Passive.COURAGE)
 		battle_log.add_text("%s feels Courageous!" % battle_log.MON_NAME_PLACEHOLDER, self)
-		metadata["Courage"] = true
+		metadata[MonData.Passive.COURAGE] = true
 
 # returns attack modified by buffs/debuffs
 func get_attack() -> int:
@@ -166,7 +166,6 @@ func battle_tick(unscaled_delta: float, highest_speed: int, seconds_per_turn: fl
 		set_action_points(clamp(action_points + ap_gained, 0.0, ACTION_POINTS_PER_TURN))
 		
 		if action_points >= ACTION_POINTS_PER_TURN:
-			turn_count += 1
 			emit_signal("ready_to_take_action", self) # signal that it's time for this mon to act
 
 func take_inject_action(friends: Array, foes: Array, animator: BattleAnimator, do_block: ScriptData.Block, target: BattleMon) -> void:
@@ -185,6 +184,8 @@ func take_inject_action(friends: Array, foes: Array, animator: BattleAnimator, d
 	tween = create_tween()
 	tween.tween_property(self, "position:x", position.x - (25 if team == Battle.Team.PLAYER else -25), 0.4).set_trans(Tween.TRANS_CUBIC)
 	await tween.finished
+	
+	finish_action()
 
 # Take a single turn in battle
 func take_action(friends: Array, foes: Array, animator: BattleAnimator, escaping: bool) -> void:
@@ -241,9 +242,17 @@ func finish_action():
 	if is_action_canceled:
 		queue_text("[color=#%s]Cancel![/color]" % Color.INDIAN_RED.to_html()) # display Cancel!
 	if not is_action_canceled:
+		turn_count += 1
+		
 		if underlying_mon.has_passive(MonData.Passive.REGENERATE):
 			queue_passive_text(MonData.Passive.REGENERATE)
 			heal_damage(int(max_health * 0.05))
+	
+		if underlying_mon.has_passive(MonData.Passive.MODERNIZE) and turn_count == 5:
+			queue_passive_text(MonData.Passive.MODERNIZE)
+			metadata[MonData.Passive.MODERNIZE] = true 
+			# TODO - MODERNIZE C++HORSE
+	
 	is_action_canceled = false
 	
 	emit_signal("action_completed")
@@ -282,15 +291,19 @@ func apply_attack(attacker: BattleMon, ability_multiplier: float, damage_type: M
 		
 	## APPLY PASSIVES ##
 	var passive_multiplier = 1.0
-	if metadata.has("Courage"):
-		assert(metadata["Courage"])
-		# courage makes this mon take 50% less damage
-		passive_multiplier += 0.5
 	
-	if attacker.metadata.has("Courage"):
-		assert(attacker.metadata["Courage"])
-		# courage on attacker makes this mon take 50% more damage
-		passive_multiplier -= 0.5
+	# check for passives on this mon
+	if metadata.has(MonData.Passive.COURAGE):
+		assert(metadata[MonData.Passive.COURAGE])
+		passive_multiplier -= 0.5 # courage makes this mon take 50% less damage
+
+	# check for passives on the attacking mon
+	if attacker.metadata.has(MonData.Passive.COURAGE):
+		assert(attacker.metadata[MonData.Passive.COURAGE])
+		passive_multiplier += 0.5 # courage on attacker makes attack deal 50% more
+	if attacker.metadata.has(MonData.Passive.MODERNIZE):
+		assert(attacker.metadata[MonData.Passive.MODERNIZE])
+		passive_multiplier += 0.5 # modernize on attacker makes attack deal 50% more
 	
 	damage_taken *= max(0, passive_multiplier)
 	
@@ -321,8 +334,7 @@ func apply_attack(attacker: BattleMon, ability_multiplier: float, damage_type: M
 # generally, don't call this directly in attack blocks, call apply_attack instead
 func take_damage(damage_taken: int, damage_type: MonData.DamageType) -> void:
 	current_health -= damage_taken
-	current_health = max(current_health, 0);
-	emit_signal("health_or_ap_changed")
+	current_health = max(current_health, 0)
 	
 	var type_str = ""
 	var damage_color = Global.COLOR_WHITE
@@ -343,27 +355,34 @@ func take_damage(damage_taken: int, damage_type: MonData.DamageType) -> void:
 		MonData.DamageType.LEAK:
 			damage_color = Global.COLOR_PURPLE
 			flash_color = "purple"
+	flash(flash_color) # flash color based on the type of damage taken
+	shake() # make the damaged mon shake a bit
 	
 	var log_message = "%s took %d %sdamage!"
 	if underlying_mon.get_damage_multiplier_for_type(damage_type) > 1:
 		log_message = "%s took %d %sdamage! Super effective!"
 	elif underlying_mon.get_damage_multiplier_for_type(damage_type) < 1:
 		log_message = "%s took %d %sdamage! Not very effective!"
-	
 	battle_log.add_text(log_message % [battle_log.MON_NAME_PLACEHOLDER, damage_taken, type_str], self)
 	
 	# make text effect
 	self.add_child(
 		MOVING_TEXT_SCENE.instantiate()
 		.offset(Vector2(0, 0)).tx(damage_taken).direction_up().speed(13, _speed_scale).time(0.6).color(damage_color))
-		
-	shake() # make the damaged mon shake a bit
-	flash(flash_color) # flash color based on the type of damage taken
 	
 	if current_health == 0:
-		set_action_points(0)
-		create_tween().tween_property(self, "modulate:a", 0.0, 0.25)
-		emit_signal("zero_health", self)
+		# check for passive endure effects
+		if underlying_mon.has_passive(MonData.Passive.BOURNE_AGAIN) and not metadata.has(MonData.Passive.BOURNE_AGAIN):
+			current_health = int(max_health * 0.1)
+			queue_passive_text(MonData.Passive.BOURNE_AGAIN)
+			metadata[MonData.Passive.BOURNE_AGAIN] = true #mark that we've done this so it doesn't happen again
+			battle_log.add_text("%s endured the attack!" % battle_log.MON_NAME_PLACEHOLDER, self)
+		else:
+			set_action_points(0)
+			create_tween().tween_property(self, "modulate:a", 0.0, 0.25)
+			emit_signal("zero_health", self)
+	
+	emit_signal("health_or_ap_changed")
 
 var _ability_text_queue = []
 var _ability_text = null

@@ -189,10 +189,6 @@ func _perform_inject() -> void:
 func end_inject() -> void:
 	_log.add_text("Code injection complete!")
 	_update_inject_state(InjectState.INACTIVE)
-	
-	#var tween = create_tween() # fade out
-	#tween.tween_property(self, "modulate:a", 0, 0.1)
-	
 	emit_signal("inject_completed")
 
 func _update_inject_state(new_state: InjectState):

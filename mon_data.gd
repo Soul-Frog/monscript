@@ -23,9 +23,9 @@ var _PASSIVE_INFO = {
 	Passive.NONE : PassiveInfo.new(Passive.NONE, "None", "This passive ability does nothing."),
 	Passive.COURAGE : PassiveInfo.new(Passive.COURAGE, "Courage", "Increases damage dealt and reduces damage taken by 50% when fighting alone or against strong foes."),
 	Passive.REGENERATE : PassiveInfo.new(Passive.REGENERATE, "Regenerate", "Heal 5% of your maximum health after taking an action."),
-	Passive.MODERNIZE : PassiveInfo.new(Passive.MODERNIZE, "Modernize", "After 5 turns, increase your speed and damage dealt by 50% for the rest of the battle."),
-	Passive.BOURNE_AGAIN : PassiveInfo.new(Passive.BOURNE_AGAIN, "Bourne-Again", "The first time you would be defeated, endure and heal 10% of your maximum HP instead."),
-	Passive.PIERCER : PassiveInfo.new(Passive.PIERCER, "Piercer", "Your attacks have a 25% to inflict DEF DOWN."),
+	Passive.MODERNIZE : PassiveInfo.new(Passive.MODERNIZE, "Modernize", "After 5 turns, increase your SPD and damage dealt by 50% for the rest of the battle."),
+	Passive.BOURNE_AGAIN : PassiveInfo.new(Passive.BOURNE_AGAIN, "Bourne-Again", "The first time you would be defeated, endure and heal to 10% of your HP instead."),
+	Passive.PIERCER : PassiveInfo.new(Passive.PIERCER, "Piercer", "Your attacks have a 25% to decrease DEF by 1 stage."),
 	Passive.THORNS : PassiveInfo.new(Passive.THORNS, "Thorns", "When attacked, reflect 5% of the damage dealt with a 35% chance to inflict LEAK."),
 	Passive.EXPLOIT : PassiveInfo.new(Passive.EXPLOIT, "Exploit", "Your attacks deal 30% increased damage against mons with LEAK."),
 	Passive.PASCALICAN_PASSIVE : PassiveInfo.new(Passive.PASCALICAN_PASSIVE, "IDK", "We don't know what this does yet.")

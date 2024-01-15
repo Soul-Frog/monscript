@@ -427,7 +427,11 @@ func _on_mon_try_to_escape(battle_mon):
 		_check_battle_end_condition()
 
 func _on_mon_action_completed():
-	assert(is_a_mon_taking_action)
+	assert(is_a_mon_taking_action or is_inject_active)
+	
+	# no need to update queue/give inject points if this was during an inject
+	if is_inject_active: 
+		return
 	
 	# if this action was performed by a player mon, make progress towards inject
 	if action_queue[0].team == Team.PLAYER:
