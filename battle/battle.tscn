@@ -171,7 +171,7 @@ z_index = 100
 z_index = 2000
 
 [node name="Results" parent="UI" instance=ExtResource("54_5vxty")]
-z_index = 500
+z_index = 50
 
 [node name="InjectLayer" parent="UI" instance=ExtResource("53_4ccvo")]
 z_index = 1
