@@ -304,6 +304,9 @@ func apply_attack(attacker: BattleMon, ability_multiplier: float, damage_type: M
 	if attacker.metadata.has(MonData.Passive.MODERNIZE):
 		assert(attacker.metadata[MonData.Passive.MODERNIZE])
 		passive_multiplier += 0.5 # modernize on attacker makes attack deal 50% more
+	if attacker.underlying_mon.has_passive(MonData.Passive.EXPLOIT) and statuses[BattleMon.Status.LEAK]:
+		passive_multiplier += 0.3 # exploit on attacker against LEAK target makes attack deal 30% more
+		attacker.queue_passive_text(MonData.Passive.EXPLOIT)
 	
 	damage_taken *= max(0, passive_multiplier)
 	
@@ -334,6 +337,15 @@ func apply_attack(attacker: BattleMon, ability_multiplier: float, damage_type: M
 		# 25% chance to lower defense
 		attacker.queue_passive_text(MonData.Passive.PIERCER)
 		apply_stat_change(BattleMon.BuffableStat.DEF, -1)
+	
+	if current_health != 0:
+		if underlying_mon.has_passive(MonData.Passive.THORNS):
+			#reflect some damage back to attacker and maybe LEAK
+			attacker.take_damage(max(1, int(damage_taken * 0.05)), MonData.DamageType.TYPELESS)
+			if Global.RNG.randi_range(0, 2) == 0:
+				attacker.inflict_status(BattleMon.Status.LEAK)
+			queue_passive_text(MonData.Passive.THORNS)
+		
 
 # deals damage to a mon
 # ignores defense and defending
@@ -371,10 +383,10 @@ func take_damage(damage_taken: int, damage_type: MonData.DamageType) -> void:
 		log_message = "%s took %d %sdamage! Not very effective!"
 	battle_log.add_text(log_message % [battle_log.MON_NAME_PLACEHOLDER, damage_taken, type_str], self)
 	
-	# make text effect
+	# make damage numbers
 	self.add_child(
 		MOVING_TEXT_SCENE.instantiate()
-		.offset(Vector2(0, 0)).tx(damage_taken).direction_up().speed(13, _speed_scale).time(0.6).color(damage_color))
+		.offset(Vector2(0, 0)).tx(damage_taken).direction_up().speed(20, _speed_scale).time(0.4).color(damage_color))
 	
 	if current_health == 0:
 		# check for passive endure effects
@@ -399,7 +411,7 @@ func _on_ability_text_finished():
 		_show_ability_text(_ability_text_queue.pop_front())
 
 func _show_ability_text(text: String):
-	_ability_text = MOVING_TEXT_SCENE.instantiate().offset(Vector2(0, -9)).tx(text).direction_up().speed(13, _speed_scale).time(0.6)
+	_ability_text = MOVING_TEXT_SCENE.instantiate().offset(Vector2(0, -9)).tx(text).direction_up().speed(20, _speed_scale).time(0.22)
 	_ability_text.deleted.connect(_on_ability_text_finished)
 	self.add_child(_ability_text)
 
@@ -433,7 +445,7 @@ func heal_damage(heal: int) -> void:
 	# make text effect
 	self.add_child(
 		MOVING_TEXT_SCENE.instantiate()
-		.tx(heal_amt).direction_up().speed(13, _speed_scale).time(0.6).color(Global.COLOR_GREEN))
+		.tx(heal_amt).direction_up().speed(20, _speed_scale).time(0.4).color(Global.COLOR_GREEN))
 	
 	# make self glow green for a sec
 	flash_animation_player.seek(0)
@@ -444,17 +456,19 @@ func inflict_status(status: Status) -> void:
 	match status:
 		Status.LEAK:
 			if not statuses[status]:
-				battle_log.add_text("%s is suffering from a memory leak!" % battle_log.MON_NAME_PLACEHOLDER, self)
+				battle_log.add_text("%s has a memory leak!" % battle_log.MON_NAME_PLACEHOLDER, self)
 				flash("purple")
 				emit_signal("status_changed", status, true)
 			else:
-				battle_log.add_text("%s is already leaking memory!" % battle_log.MON_NAME_PLACEHOLDER, self)
+				pass
+				#battle_log.add_text("%s is already leaking memory!" % battle_log.MON_NAME_PLACEHOLDER, self)
 		Status.SLEEP:
 			if not statuses[status]:
 				battle_log.add_text("%s has been put to sleep!" % battle_log.MON_NAME_PLACEHOLDER, self)
 				emit_signal("status_changed", status, true)
 			else:
-				battle_log.add_text("%s is already asleep!" % battle_log.MON_NAME_PLACEHOLDER, self)
+				pass
+				#battle_log.add_text("%s is already asleep!" % battle_log.MON_NAME_PLACEHOLDER, self)
 		_:
 			assert(false, "No message for status!")
 			
@@ -512,7 +526,8 @@ func apply_stat_change(stat: BuffableStat, mod: int):
 				show_log_text = true
 				stat_str = "SPD"
 	
-	battle_log.add_text("%s's %s was %s!" % [battle_log.MON_NAME_PLACEHOLDER, stat_str, "increased" if mod > 0 else "decreased"], self)
+	if show_log_text:
+		battle_log.add_text("%s's %s was %s!" % [battle_log.MON_NAME_PLACEHOLDER, stat_str, "increased" if mod > 0 else "decreased"], self)
 	
 	# TODO - EFFECT
 	
