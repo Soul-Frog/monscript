@@ -71,6 +71,8 @@ func _process(delta: float) -> void:
 			_xp_given += xp_to_give
 			
 			for i in _mons_to_xp.size():
+				var prev_level = _mons_to_xp[i].get_level()
+				
 				_mons_to_xp[i].gain_XP(xp_to_give) # give xp
 				
 				if xp_by_now == _xp_earned: # do some extra handling on the last xp grant step to handle float rounding errors
@@ -79,6 +81,8 @@ func _process(delta: float) -> void:
 				for monblock in _mon_blocks:
 					if monblock.active_mon and monblock.active_mon.underlying_mon == _mons_to_xp[i]:
 						monblock.on_mon_xp_changed() # update xp bars
+						if _mons_to_xp[i].get_level() != prev_level: # play level up effect if leveled up
+							monblock.active_mon.play_level_up_effect()
 		
 		if _decompile_remaining != 0:
 			var decompile_to_give = 1.0 / DECOMPILE_TIME * delta

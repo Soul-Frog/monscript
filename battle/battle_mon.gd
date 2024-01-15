@@ -74,6 +74,7 @@ var spd_buff_stage := 0
 
 @onready var shake_animation_player = $ShakeAnimationPlayer
 @onready var flash_animation_player = $FlashAnimationPlayer
+@onready var level_up_effect = $LevelUpEffect
 
 # a dictionary that anything can be stored in that needs to be tracked
 # for example, some moves will store information in here to use later
@@ -114,6 +115,7 @@ var statuses = {
 func _ready():
 	assert(shake_animation_player)
 	assert(flash_animation_player)
+	assert(level_up_effect)
 
 # Initializes this battle_mon with an underlying mon object
 func init_mon(mon: MonData.Mon, monTeam: Battle.Team) -> void:
@@ -423,6 +425,9 @@ func queue_text(text: String) -> void:
 		_show_ability_text(text)
 	else:
 		_ability_text_queue.append(text)
+
+func play_level_up_effect() -> void:
+	level_up_effect.emitting = true
 
 func shake() -> void:
 	shake_animation_player.seek(0) #restart shake
