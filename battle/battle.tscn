@@ -138,31 +138,31 @@ z_index = 1000
 z_index = 30
 
 [node name="MONPLACEHOLDER1" parent="Mons/PlayerMons" instance=ExtResource("5_a0vn4")]
-position = Vector2(120, 40)
+position = Vector2(120, 48)
 
 [node name="MONPLACEHOLDER2" parent="Mons/PlayerMons" instance=ExtResource("5_a0vn4")]
-position = Vector2(120, 64)
+position = Vector2(120, 72)
 
 [node name="MONPLACEHOLDER3" parent="Mons/PlayerMons" instance=ExtResource("5_a0vn4")]
-position = Vector2(120, 88)
+position = Vector2(120, 96)
 
 [node name="MONPLACEHOLDER4" parent="Mons/PlayerMons" instance=ExtResource("5_a0vn4")]
-position = Vector2(120, 112)
+position = Vector2(120, 120)
 
 [node name="ComputerMons" type="Node2D" parent="Mons"]
 z_index = 30
 
 [node name="MONPLACEHOLDER1" parent="Mons/ComputerMons" instance=ExtResource("5_a0vn4")]
-position = Vector2(200, 40)
+position = Vector2(200, 48)
 
 [node name="MONPLACEHOLDER2" parent="Mons/ComputerMons" instance=ExtResource("5_a0vn4")]
-position = Vector2(200, 64)
+position = Vector2(200, 72)
 
 [node name="MONPLACEHOLDER3" parent="Mons/ComputerMons" instance=ExtResource("5_a0vn4")]
-position = Vector2(200, 88)
+position = Vector2(200, 96)
 
 [node name="MONPLACEHOLDER4" parent="Mons/ComputerMons" instance=ExtResource("5_a0vn4")]
-position = Vector2(200, 112)
+position = Vector2(200, 120)
 
 [node name="Animator" parent="Mons" groups=["battle_speed_scaled"] instance=ExtResource("15_dus4q")]
 z_index = 100
@@ -171,6 +171,7 @@ z_index = 100
 z_index = 2000
 
 [node name="Results" parent="UI" instance=ExtResource("54_5vxty")]
+visible = false
 z_index = 50
 
 [node name="InjectLayer" parent="UI" instance=ExtResource("53_4ccvo")]
@@ -323,60 +324,60 @@ position = Vector2(67, 135)
 [node name="Player1" parent="UI/PlayerMonBlocks" instance=ExtResource("5_fkqod")]
 material = SubResource("ShaderMaterial_on0ph")
 offset_left = 57.0
-offset_top = 28.0
+offset_top = 36.0
 offset_right = 103.0
-offset_bottom = 49.0
+offset_bottom = 57.0
 
 [node name="Player2" parent="UI/PlayerMonBlocks" instance=ExtResource("5_fkqod")]
 material = SubResource("ShaderMaterial_k4e6h")
 offset_left = 57.0
-offset_top = 53.0
+offset_top = 61.0
 offset_right = 103.0
-offset_bottom = 74.0
+offset_bottom = 82.0
 
 [node name="Player3" parent="UI/PlayerMonBlocks" instance=ExtResource("5_fkqod")]
 material = SubResource("ShaderMaterial_wi5ma")
 offset_left = 57.0
-offset_top = 77.0
+offset_top = 85.0
 offset_right = 103.0
-offset_bottom = 98.0
+offset_bottom = 106.0
 
 [node name="Player4" parent="UI/PlayerMonBlocks" instance=ExtResource("5_fkqod")]
 material = SubResource("ShaderMaterial_f23en")
 offset_left = 57.0
-offset_top = 101.0
+offset_top = 109.0
 offset_right = 103.0
-offset_bottom = 122.0
+offset_bottom = 130.0
 
 [node name="ComputerMonBlocks" type="Node2D" parent="UI"]
 
 [node name="Computer1" parent="UI/ComputerMonBlocks" instance=ExtResource("5_fkqod")]
 material = SubResource("ShaderMaterial_rdcfl")
 offset_left = 217.0
-offset_top = 29.0
+offset_top = 37.0
 offset_right = 263.0
-offset_bottom = 50.0
+offset_bottom = 58.0
 
 [node name="Computer2" parent="UI/ComputerMonBlocks" instance=ExtResource("5_fkqod")]
 material = SubResource("ShaderMaterial_deh2h")
 offset_left = 217.0
-offset_top = 53.0
+offset_top = 61.0
 offset_right = 263.0
-offset_bottom = 74.0
+offset_bottom = 82.0
 
 [node name="Computer3" parent="UI/ComputerMonBlocks" instance=ExtResource("5_fkqod")]
 material = SubResource("ShaderMaterial_iher2")
 offset_left = 217.0
-offset_top = 77.0
+offset_top = 85.0
 offset_right = 263.0
-offset_bottom = 98.0
+offset_bottom = 106.0
 
 [node name="Computer4" parent="UI/ComputerMonBlocks" instance=ExtResource("5_fkqod")]
 material = SubResource("ShaderMaterial_837it")
 offset_left = 217.0
-offset_top = 101.0
+offset_top = 109.0
 offset_right = 263.0
-offset_bottom = 122.0
+offset_bottom = 130.0
 
 [node name="BannerLabel" type="RichTextLabel" parent="UI"]
 offset_left = -100.0

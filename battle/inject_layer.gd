@@ -124,6 +124,8 @@ func _create_do_blocks():
 		tween.tween_property(block, "position", ending_position, 0.3).set_trans(Tween.TRANS_CUBIC)
 		tween.parallel().tween_property(block, "modulate:a", 1, 0.15)
 		
+		block.z_index = 500
+		
 		_do_blocks.add_child(block)
 
 func _on_do_block_selected(selected_block) -> void:

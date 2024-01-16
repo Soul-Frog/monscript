@@ -58,6 +58,8 @@ func _ready() -> void:
 	position.x += _SLIDE_IN_DISTANCE
 	
 	_EXIT_BUTTON.disabled = true
+	
+	show()
 
 func _process(delta: float) -> void:
 	if _granting_xp_and_decompile:
