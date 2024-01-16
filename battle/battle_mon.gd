@@ -75,6 +75,12 @@ var spd_buff_stage := 0
 @onready var shake_animation_player = $ShakeAnimationPlayer
 @onready var flash_animation_player = $FlashAnimationPlayer
 @onready var level_up_effect = $LevelUpEffect
+@onready var debuff_effect = $DebuffEffect
+@onready var buff_effect = $BuffEffect
+const SPD_CHANGE_COLOR = Color.GREEN_YELLOW
+const DEF_CHANGE_COLOR = Color.SKY_BLUE 
+const ATK_CHANGE_COLOR = Color.RED
+
 
 # a dictionary that anything can be stored in that needs to be tracked
 # for example, some moves will store information in here to use later
@@ -116,6 +122,8 @@ func _ready():
 	assert(shake_animation_player)
 	assert(flash_animation_player)
 	assert(level_up_effect)
+	assert(debuff_effect)
+	assert(buff_effect)
 
 # Initializes this battle_mon with an underlying mon object
 func init_mon(mon: MonData.Mon, monTeam: Battle.Team) -> void:
@@ -429,6 +437,14 @@ func queue_text(text: String) -> void:
 func play_level_up_effect() -> void:
 	level_up_effect.emitting = true
 
+func play_debuff_effect(color: Color) -> void:
+	debuff_effect.process_material.color = color
+	debuff_effect.emitting = true
+
+func play_buff_effect(color: Color) -> void:
+	buff_effect.process_material.color = color
+	buff_effect.emitting = true
+
 func shake() -> void:
 	shake_animation_player.seek(0) #restart shake
 	shake_animation_player.play("shake")
@@ -510,31 +526,38 @@ func apply_stat_change(stat: BuffableStat, mod: int):
 	assert(mod <= 4 and mod >= -4)
 	
 	var stat_str = ""
-	var show_log_text = false
+	var stat_changed = false
+	var stat_color = null
+	
 	match stat:
 		BuffableStat.ATK:
 			var prev_atk = atk_buff_stage
 			atk_buff_stage = clamp(atk_buff_stage + mod, MIN_DEBUFF_STAGE, MAX_BUFF_STAGE)
 			if atk_buff_stage != prev_atk:
-				show_log_text = true
+				stat_changed = true
 				stat_str = "ATK"
+				stat_color = ATK_CHANGE_COLOR
 		BuffableStat.DEF:
 			var prev_def = def_buff_stage
 			def_buff_stage = clamp(def_buff_stage + mod, MIN_DEBUFF_STAGE, MAX_BUFF_STAGE)
 			if def_buff_stage != prev_def:
-				show_log_text = true
+				stat_changed = true
 				stat_str = "DEF"
+				stat_color = DEF_CHANGE_COLOR
 		BuffableStat.SPD:
 			var prev_spd = spd_buff_stage
 			spd_buff_stage = clamp(spd_buff_stage + mod, MIN_DEBUFF_STAGE, MAX_BUFF_STAGE)
 			if spd_buff_stage != prev_spd:
-				show_log_text = true
+				stat_changed = true
 				stat_str = "SPD"
+				stat_color = SPD_CHANGE_COLOR
 	
-	if show_log_text:
+	if stat_changed:
+		assert(stat_str != "")
+		assert(stat_color)
 		battle_log.add_text("%s's %s was %s!" % [battle_log.MON_NAME_PLACEHOLDER, stat_str, "increased" if mod > 0 else "decreased"], self)
+		play_buff_effect(stat_color) if mod > 0 else play_debuff_effect(stat_color)
 	
-	# TODO - EFFECT
 	
 	emit_signal("stats_changed")
 
