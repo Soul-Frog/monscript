@@ -310,8 +310,8 @@ max_alpha = 0.4
 fade_speed = 1.5
 
 [node name="ScriptLineViewer" parent="UI" groups=["battle_speed_scaled"] instance=ExtResource("42_24nlh")]
-offset_top = 3.0
-offset_bottom = 18.0
+offset_top = 6.0
+offset_bottom = 21.0
 mouse_filter = 2
 mouse_force_pass_scroll_events = false
 

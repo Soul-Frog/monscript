@@ -2,7 +2,7 @@ class_name BattleScriptLineViewer
 extends HBoxContainer
 
 # extra delay added after showing a line before the line fades out
-const DELAY_AFTER_SHOWING = 0.7
+const DELAY_AFTER_SHOWING = 1.0
 
 var _BLOCK_SCENE = preload("res://ui/script/script_block.tscn")
 var _LINE_SCENE = preload("res://ui/script/script_line.tscn")
