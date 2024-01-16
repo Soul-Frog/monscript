@@ -341,7 +341,7 @@ var _TURTMINAL_BASE = MonBase.new(MonType.TURTMINAL, "Turtminal", "res://mons/tu
 	[Color("#2baf2b"), Color("#0a8f08"), Color("#0d5302")],
 	1.5, 0.75, [BugData.Type.BLUE_DEF_BUG, BugData.Type.YELLOW_HP_BUG])
 	
-var _STINGARRAY_BASE = MonBase.new(MonType.STINGARRAY, "Stringarray", "res://mons/stingarray.tscn", "res://monscripts/attack.txt",
+var _STINGARRAY_BASE = MonBase.new(MonType.STINGARRAY, "Stingarray", "res://mons/stingarray.tscn", "res://monscripts/attack.txt",
 	212, 144, 58, 89,
 	5, 
 	1.0, 1.5, 1.5, 0.25,

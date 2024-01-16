@@ -254,6 +254,7 @@ func load_game():
 	# start with full injects on game load
 	inject_points = get_var(MAX_INJECTS) * BattleData.POINTS_PER_INJECT
 	
+	# TODO - this isn't working?
 	respawn_player()
 
 # place the player at their spawn point; 

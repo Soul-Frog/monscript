@@ -8,13 +8,11 @@ func _ready():
 func handle_battle_results(battle_end_condition) -> void:
 	assert(battle_end_condition != BattleData.BattleEndCondition.NONE, "Battle end condition was not set.")
 	
-	if battle_end_condition == BattleData.BattleEndCondition.LOSE:
-		print("We lost the battle btw")
-	
 	current_area.handle_battle_results(battle_end_condition)
 	
-	# move to last save area/point
-	GameData.respawn_player()
+	# if we lost the battle, respawn at last save point
+	if battle_end_condition == BattleData.BattleEndCondition.LOSE:
+		GameData.respawn_player()
 
 # Loads a new area and move the player to their spawn point.
 # new_spawn_point may be a String (a point in the new area) or a Vector2 (a position)

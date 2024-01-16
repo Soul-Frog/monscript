@@ -87,6 +87,15 @@ const ATK_CHANGE_COLOR = Color.RED
 const LEAK_COLOR = Color("#dbc3f6")
 const SLEEP_COLOR = Color("#b3e6fe")
 
+# speed of damage/heal/ability text
+const MOVING_TEXT_SPEED = 12
+# how long damage/heal/ability text is active for
+const MOVING_TEXT_TIME = 0.75
+# list of text to be displayed
+var _text_queue = []
+# currently displayed text
+var _active_text = null
+
 # a dictionary that anything can be stored in that needs to be tracked
 # for example, some moves will store information in here to use later
 var metadata = {}
@@ -148,7 +157,7 @@ func init_mon(mon: MonData.Mon, monTeam: Battle.Team) -> void:
 
 func on_battle_start(pals: Array, foes: Array) -> void:
 	if underlying_mon.has_passive(MonData.Passive.COURAGE):
-		queue_passive_text(MonData.Passive.COURAGE)
+		show_passive_text(MonData.Passive.COURAGE)
 		battle_log.add_text("%s feels Courageous!" % battle_log.MON_NAME_PLACEHOLDER, self)
 		metadata[MonData.Passive.COURAGE] = true
 
@@ -256,16 +265,16 @@ func _on_turn_over():
 
 func finish_action():
 	if is_action_canceled:
-		queue_text("[color=#%s]Cancel![/color]" % Color.INDIAN_RED.to_html()) # display Cancel!
+		show_text("[color=#%s]Cancel![/color]" % Color.INDIAN_RED.to_html()) # display Cancel!
 	if not is_action_canceled:
 		turn_count += 1
 		
 		if underlying_mon.has_passive(MonData.Passive.REGENERATE):
-			queue_passive_text(MonData.Passive.REGENERATE)
+			show_passive_text(MonData.Passive.REGENERATE)
 			heal_damage(int(max_health * 0.05))
 	
 		if underlying_mon.has_passive(MonData.Passive.MODERNIZE) and turn_count == 5:
-			queue_passive_text(MonData.Passive.MODERNIZE)
+			show_passive_text(MonData.Passive.MODERNIZE)
 			metadata[MonData.Passive.MODERNIZE] = true 
 			# TODO - MODERNIZE C++HORSE
 	
@@ -322,7 +331,7 @@ func apply_attack(attacker: BattleMon, ability_multiplier: float, damage_type: M
 		passive_multiplier += 0.5 # modernize on attacker makes attack deal 50% more
 	if attacker.underlying_mon.has_passive(MonData.Passive.EXPLOIT) and statuses[BattleMon.Status.LEAK]:
 		passive_multiplier += 0.3 # exploit on attacker against LEAK target makes attack deal 30% more
-		attacker.queue_passive_text(MonData.Passive.EXPLOIT)
+		attacker.show_passive_text(MonData.Passive.EXPLOIT)
 	
 	damage_taken *= max(0, passive_multiplier)
 	
@@ -351,7 +360,7 @@ func apply_attack(attacker: BattleMon, ability_multiplier: float, damage_type: M
 	## PASSIVES AFTER ATTACK ##
 	if attacker.underlying_mon.has_passive(MonData.Passive.PIERCER) and Global.RNG.randi_range(0, 3) == 0:
 		# 25% chance to lower defense
-		attacker.queue_passive_text(MonData.Passive.PIERCER)
+		attacker.show_passive_text(MonData.Passive.PIERCER)
 		apply_stat_change(BattleMon.BuffableStat.DEF, -1)
 	
 	if current_health != 0:
@@ -360,7 +369,7 @@ func apply_attack(attacker: BattleMon, ability_multiplier: float, damage_type: M
 			attacker.take_damage(max(1, int(damage_taken * 0.05)), MonData.DamageType.TYPELESS)
 			if Global.RNG.randi_range(0, 2) == 0:
 				attacker.inflict_status(BattleMon.Status.LEAK)
-			queue_passive_text(MonData.Passive.THORNS)
+			show_passive_text(MonData.Passive.THORNS)
 		
 
 # deals damage to a mon
@@ -400,15 +409,13 @@ func take_damage(damage_taken: int, damage_type: MonData.DamageType) -> void:
 	battle_log.add_text(log_message % [battle_log.MON_NAME_PLACEHOLDER, damage_taken, type_str], self)
 	
 	# make damage numbers
-	self.add_child(
-		MOVING_TEXT_SCENE.instantiate()
-		.offset(Vector2(0, 0)).tx(damage_taken).direction_up().speed(20, _speed_scale).time(0.4).color(damage_color))
-	
+	show_damage_number(damage_taken, damage_color)
+
 	if current_health == 0:
 		# check for passive endure effects
 		if underlying_mon.has_passive(MonData.Passive.BOURNE_AGAIN) and not metadata.has(MonData.Passive.BOURNE_AGAIN):
 			current_health = int(max_health * 0.1)
-			queue_passive_text(MonData.Passive.BOURNE_AGAIN)
+			show_passive_text(MonData.Passive.BOURNE_AGAIN)
 			metadata[MonData.Passive.BOURNE_AGAIN] = true #mark that we've done this so it doesn't happen again
 			battle_log.add_text("%s endured the attack!" % battle_log.MON_NAME_PLACEHOLDER, self)
 		else:
@@ -418,27 +425,35 @@ func take_damage(damage_taken: int, damage_type: MonData.DamageType) -> void:
 	
 	emit_signal("health_or_ap_changed")
 
-var _ability_text_queue = []
-var _ability_text = null
+func _display_next_text():
+	_active_text = null
+	if _text_queue.size() != 0:
+		_show_queued_text(_text_queue.pop_front())
 
-func _on_ability_text_finished():
-	_ability_text = null
-	if _ability_text_queue.size() != 0:
-		_show_ability_text(_ability_text_queue.pop_front())
+func show_damage_number(damage_amount: int, damage_color: Color):
+	self.add_child(MOVING_TEXT_SCENE.instantiate().offset(Vector2(0, 0)).tx(damage_amount)
+		.direction_up().speed(MOVING_TEXT_SPEED, _speed_scale).time(MOVING_TEXT_TIME).color(damage_color))
 
-func _show_ability_text(text: String):
-	_ability_text = MOVING_TEXT_SCENE.instantiate().offset(Vector2(0, -9)).tx(text).direction_up().speed(20, _speed_scale).time(0.22)
-	_ability_text.deleted.connect(_on_ability_text_finished)
-	self.add_child(_ability_text)
+func show_heal_number(heal_amount: int):
+	self.add_child(MOVING_TEXT_SCENE.instantiate().tx(heal_amount).direction_up().speed(MOVING_TEXT_SPEED, _speed_scale).time(MOVING_TEXT_TIME).color(Global.COLOR_GREEN))
 
-func queue_passive_text(passive: MonData.Passive) -> void:
-	queue_text(MonData.get_passive_name(passive) + "!")
+var MOVING_TEXT_BUFFER_TIME = 0.2
 
-func queue_text(text: String) -> void:
-	if _ability_text == null:
-		_show_ability_text(text)
+func _show_queued_text(text: String):
+	_active_text = (MOVING_TEXT_SCENE.instantiate().offset(Vector2(0, -9)).tx(text).direction_up()
+		.speed(MOVING_TEXT_SPEED, _speed_scale).time(MOVING_TEXT_TIME)
+		.setup_callback(MOVING_TEXT_BUFFER_TIME))
+	_active_text.callback.connect(_display_next_text)
+	self.add_child(_active_text)
+
+func show_passive_text(passive: MonData.Passive) -> void:
+	show_text(MonData.get_passive_name(passive) + "!")
+
+func show_text(text: String) -> void:
+	if _active_text == null:
+		_show_queued_text(text)
 	else:
-		_ability_text_queue.append(text)
+		_text_queue.append(text)
 
 func play_level_up_effect() -> void:
 	level_up_effect.emitting = true
@@ -477,10 +492,8 @@ func heal_damage(heal: int) -> void:
 	emit_signal("health_or_ap_changed")
 	
 	# make text effect
-	self.add_child(
-		MOVING_TEXT_SCENE.instantiate()
-		.tx(heal_amt).direction_up().speed(20, _speed_scale).time(0.4).color(Global.COLOR_GREEN))
-	
+	show_heal_number(heal_amt)
+
 	# make self glow green for a sec
 	flash_animation_player.seek(0)
 	flash_animation_player.play("flash_green")
