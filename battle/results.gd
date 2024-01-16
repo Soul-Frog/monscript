@@ -174,6 +174,13 @@ func perform_results(battle_results: BattleData.BattleResult, bugs_earned: Array
 	
 	if battle_results.end_condition == BattleData.BattleEndCondition.WIN:
 		_decompile_remaining = 1.0
+		
+		# fade back in any defeated mons and their monblock
+		for block in mon_blocks:
+			if block.active_mon != null:
+				create_tween().tween_property(block, "modulate:a", 1.0, 0.4)
+		for battlemon in player_team:
+			create_tween().tween_property(battlemon, "modulate:a", 1.0, 0.4)
 	
 	# Bring ourselves in from the side, piece by piece
 	var slide_in = create_tween()

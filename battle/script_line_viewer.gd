@@ -86,8 +86,9 @@ func hide_line() -> void:
 	
 	# delete after fading out
 	await tween.finished
-	remove_child(to_delete)
-	to_delete.queue_free()
+	if to_delete != null:
+		remove_child(to_delete)
+		to_delete.queue_free()
 
 func set_speed_scale(speed_scale: float) -> void:
 	_speed_scale = speed_scale
