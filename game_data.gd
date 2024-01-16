@@ -68,9 +68,10 @@ var _variables : Dictionary = {
 	STORAGE_PAGES : 2, #default number of storage pages is 2 (16 mons storage)
 	MAX_INJECTS : 3, #default injects is 0
 	
+	# starting area/position
 	RESPAWN_AREA : GameData.Area.COOLANT_CAVE1_BEACH,
-	RESPAWN_X : 100,
-	RESPAWN_Y : 100,
+	RESPAWN_X : 8,
+	RESPAWN_Y : 87,
 	
 	INTRO_EXAMINED_COMPUTER_ONCE : false,
 	INTRO_READY_TO_SLEEP : false,
@@ -158,14 +159,15 @@ func save_game():
 	# store everything we care about in a big dictionary
 	var save_dict := {}
 	
-	# save each variable as str->Variant
-	for var_key in _variables.keys():
-		save_dict[var_key] = _variables[var_key]
-		
 	# save the player's current position, area, mask, and layer
 	set_var(RESPAWN_AREA, get_tree().get_first_node_in_group("main").get_current_area())
 	set_var(RESPAWN_X, get_tree().get_first_node_in_group("main").get_player().position.x)
 	set_var(RESPAWN_Y, get_tree().get_first_node_in_group("main").get_player().position.y)
+	
+	# save each variable as str->Variant
+	for var_key in _variables.keys():
+		save_dict[var_key] = _variables[var_key]
+	
 	save_dict["player_collision_mask"] = get_tree().get_first_node_in_group("main").get_player().collision_mask
 	save_dict["player_collision_layer"] = get_tree().get_first_node_in_group("main").get_player().collision_layer
 	
@@ -247,15 +249,13 @@ func load_game():
 	# set the player's position and area
 	#Events.area_changed.emit(save_dict["current_area"], Vector2(save_dict["player_x"], save_dict["player_y"]), true)
 	
-	# set the player's mask
+	# set the player's position and mask
+	respawn_player()
 	get_tree().get_first_node_in_group("main").get_player().collision_mask = save_dict["player_collision_mask"]
 	get_tree().get_first_node_in_group("main").get_player().collision_layer = save_dict["player_collision_layer"]
 	
 	# start with full injects on game load
 	inject_points = get_var(MAX_INJECTS) * BattleData.POINTS_PER_INJECT
-	
-	# TODO - this isn't working?
-	respawn_player()
 
 # place the player at their spawn point; 
 # for example when loading the game or
