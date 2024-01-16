@@ -13,7 +13,8 @@ func handle_battle_results(battle_end_condition) -> void:
 	
 	current_area.handle_battle_results(battle_end_condition)
 	
-	print("TODO - HANDLE BATTLE LOSS")
+	# move to last save area/point
+	GameData.respawn_player()
 
 # Loads a new area and move the player to their spawn point.
 # new_spawn_point may be a String (a point in the new area) or a Vector2 (a position)

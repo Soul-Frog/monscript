@@ -46,6 +46,10 @@ const LINE_LIMIT = "LINE_LIMIT"
 const STORAGE_PAGES = "STORAGE_PAGES"
 # Number of segments of the inject bar
 const MAX_INJECTS = "MAX_INJECTS"
+# Save area and position
+const RESPAWN_AREA = "RESPAWN_AREA"
+const RESPAWN_X = "RESPAWN_X"
+const RESPAWN_Y = "RESPAWN_Y"
 # During the intro, the computer needs to be examined twice to progress. This tracks if the first examine has occurred.
 const INTRO_EXAMINED_COMPUTER_ONCE = "INTRO_EXAMINED_COMPUTER_ONCE"
 # During the intro, after examining the computer twice and playing the game, this is enabled so we can sleep at the bed.
@@ -63,6 +67,10 @@ var _variables : Dictionary = {
 	LINE_LIMIT : 3, #default number of lines in a script is 3
 	STORAGE_PAGES : 2, #default number of storage pages is 2 (16 mons storage)
 	MAX_INJECTS : 3, #default injects is 0
+	
+	RESPAWN_AREA : GameData.Area.COOLANT_CAVE1_BEACH,
+	RESPAWN_X : 100,
+	RESPAWN_Y : 100,
 	
 	INTRO_EXAMINED_COMPUTER_ONCE : false,
 	INTRO_READY_TO_SLEEP : false,
@@ -143,15 +151,7 @@ func _ready():
 	increase_storage_size(_variables[STORAGE_PAGES])
 	
 	inject_points = get_var(MAX_INJECTS) * BattleData.POINTS_PER_INJECT
-	
-	# TODO - remove this debug code
-	storage[0] = MonData.create_mon(MonData.MonType.GELIF, 0)
-	storage[1] = MonData.create_mon(MonData.MonType.CHORSE, 0)
-	storage[2] = MonData.create_mon(MonData.MonType.PASCALICAN, 0)
-	storage[3] = MonData.create_mon(MonData.MonType.ORCHIN, 0)
-	storage[4] = MonData.create_mon(MonData.MonType.TURTMINAL, 0)
-	storage[5] = MonData.create_mon(MonData.MonType.STINGARRAY, 0)
-	storage[6] = MonData.create_mon(MonData.MonType.ANGLERPHISH, 0)
+
 
 # saves the game state to file
 func save_game():
@@ -163,9 +163,9 @@ func save_game():
 		save_dict[var_key] = _variables[var_key]
 		
 	# save the player's current position, area, mask, and layer
-	save_dict["current_area"] = get_tree().get_first_node_in_group("main").get_current_area()
-	save_dict["player_x"] = get_tree().get_first_node_in_group("main").get_player().position.x
-	save_dict["player_y"] = get_tree().get_first_node_in_group("main").get_player().position.y
+	set_var(RESPAWN_AREA, get_tree().get_first_node_in_group("main").get_current_area())
+	set_var(RESPAWN_X, get_tree().get_first_node_in_group("main").get_player().position.x)
+	set_var(RESPAWN_Y, get_tree().get_first_node_in_group("main").get_player().position.y)
 	save_dict["player_collision_mask"] = get_tree().get_first_node_in_group("main").get_player().collision_mask
 	save_dict["player_collision_layer"] = get_tree().get_first_node_in_group("main").get_player().collision_layer
 	
@@ -245,7 +245,7 @@ func load_game():
 			_block_unlock_map[ScriptData.get_block_by_name(block.name)] = save_dict[key]
 	
 	# set the player's position and area
-	Events.area_changed.emit(save_dict["current_area"], Vector2(save_dict["player_x"], save_dict["player_y"]), true)
+	#Events.area_changed.emit(save_dict["current_area"], Vector2(save_dict["player_x"], save_dict["player_y"]), true)
 	
 	# set the player's mask
 	get_tree().get_first_node_in_group("main").get_player().collision_mask = save_dict["player_collision_mask"]
@@ -253,6 +253,26 @@ func load_game():
 	
 	# start with full injects on game load
 	inject_points = get_var(MAX_INJECTS) * BattleData.POINTS_PER_INJECT
+	
+	respawn_player()
+
+# place the player at their spawn point; 
+# for example when loading the game or
+# when defeated in battle
+func respawn_player() -> void:
+	var area = get_var(RESPAWN_AREA)
+	var pos = Vector2(get_var(RESPAWN_X), get_var(RESPAWN_Y))
+	
+	# $HACK$ if the player saves deep in coolant cave, goes to the entrance, then raises the water and dies...
+	# they respawn deeper, but the water is up, when it should be drained.
+	# lets just make sure the water is down when that happens...
+	var hack_areas = [Area.COOLANT_CAVE5_2DRUINS, Area.COOLANT_CAVE6_TEMPLE, Area.COOLANT_CAVE7_WHIRLCAVERN, Area.COOLANT_CAVE8_SEAFLOOR,
+		Area.COOLANT_CAVE9_TIDALCHAMBER, Area.COOLANT_CAVE10_RIVER, Area.COOLANT_CAVE11_2DWATERFALL, Area.COOLANT_CAVE12_BOSSROOM]
+	if hack_areas.has(area) and GameData.get_var(GameData.COOLANT_CAVE_WATER_RAISED):
+		GameData.set_var(GameData.COOLANT_CAVE_WATER_RAISED, false)
+		Events.emit_signal("coolant_cave_water_level_changed")
+	
+	Events.area_changed.emit(area, pos, true)
 
 func increase_storage_size(new_size: int):
 	assert(_variables[STORAGE_PAGES] <= new_size, "Can't decrease storage size!")

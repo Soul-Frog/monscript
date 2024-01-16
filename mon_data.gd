@@ -399,6 +399,12 @@ func get_headshot_for(montype: MonType) -> Texture2D:
 	mon_scene.free()
 	return tex
 
+func get_type_for(monname: String) -> MonType:
+	for montype in _MON_MAP.keys():
+		if _MON_MAP[montype]._species_name == monname:
+			return montype
+	return MonType.NONE
+
 func get_name_for(montype: MonType) -> String:
 	assert(montype != MonType.NONE)
 	return _MON_MAP[montype]._species_name

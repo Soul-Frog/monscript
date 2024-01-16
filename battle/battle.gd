@@ -44,6 +44,9 @@ var is_inject_active = false
 # If mons are being commanded to escape
 var trying_to_escape = false
 
+# If a mon has escaped or been defeated, so we should check if the battle is over at the next opportunity
+var check_battle_end_condition = false
+
 @onready var _player_mons = $Mons/PlayerMons
 @onready var _computer_mons = $Mons/ComputerMons
 @onready var _animator = $Mons/Animator
@@ -334,7 +337,13 @@ func _get_living_mons(mons: Array) -> Array:
 func _process(delta: float):
 	if state != BattleState.BATTLING:
 		return
-	
+		
+	# a mon was defeated or escaped, so is the battle now over?
+	if check_battle_end_condition:
+		_check_battle_end_condition()
+		if state == BattleState.FINISHED:
+			return # if the battle is over, don't do anything else
+		
 	if not is_a_mon_taking_action and is_inject_queued and not is_inject_active:
 		_start_inject()
 	
@@ -424,7 +433,7 @@ func _on_mon_try_to_escape(battle_mon):
 		_log.add_text("%s ran away!" % _log.MON_NAME_PLACEHOLDER, battle_mon)
 		_computer_mons.remove_child(battle_mon)
 		battle_mon.queue_free()
-		_check_battle_end_condition()
+		check_battle_end_condition = true
 
 func _on_mon_action_completed():
 	assert(is_a_mon_taking_action or is_inject_active)
@@ -456,11 +465,12 @@ func _on_mon_zero_health(mon):
 			action_queue.remove_at(i)
 			break
 	
-	# a mon was defeated, so is the battle now over?
-	_check_battle_end_condition()
+	check_battle_end_condition = true
 	
 # Checks if the battle is over and signals if that is the case
 func _check_battle_end_condition():
+	assert(check_battle_end_condition)
+	
 	var player_mons_alive = _are_any_player_mons_alive()
 	var computer_mons_alive = _are_any_computer_mons_alive()
 	
@@ -473,6 +483,8 @@ func _check_battle_end_condition():
 	elif not player_mons_alive and not computer_mons_alive:
 		battle_result.end_condition = BattleData.BattleEndCondition.WIN
 		_end_battle_and_show_results()
+	
+	check_battle_end_condition = false
 
 func _end_battle_and_show_results():
 	assert(battle_result)

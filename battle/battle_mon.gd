@@ -74,13 +74,18 @@ var spd_buff_stage := 0
 
 @onready var shake_animation_player = $ShakeAnimationPlayer
 @onready var flash_animation_player = $FlashAnimationPlayer
+
 @onready var level_up_effect = $LevelUpEffect
+
 @onready var debuff_effect = $DebuffEffect
 @onready var buff_effect = $BuffEffect
 const SPD_CHANGE_COLOR = Color.GREEN_YELLOW
 const DEF_CHANGE_COLOR = Color.SKY_BLUE 
 const ATK_CHANGE_COLOR = Color.RED
 
+@onready var status_effect = $StatusEffect
+const LEAK_COLOR = Color("#dbc3f6")
+const SLEEP_COLOR = Color("#b3e6fe")
 
 # a dictionary that anything can be stored in that needs to be tracked
 # for example, some moves will store information in here to use later
@@ -124,6 +129,7 @@ func _ready():
 	assert(level_up_effect)
 	assert(debuff_effect)
 	assert(buff_effect)
+	assert(status_effect)
 
 # Initializes this battle_mon with an underlying mon object
 func init_mon(mon: MonData.Mon, monTeam: Battle.Team) -> void:
@@ -445,11 +451,18 @@ func play_buff_effect(color: Color) -> void:
 	buff_effect.process_material.color = color
 	buff_effect.emitting = true
 
+func play_status_effect(color: Color) -> void:
+	status_effect.process_material.color = color
+	status_effect.emitting = true
+
 func shake() -> void:
 	shake_animation_player.seek(0) #restart shake
 	shake_animation_player.play("shake")
 
 func flash(color: String) -> void:
+	assert(flash_animation_player.has_animation("flash_%s" % color))
+	if not flash_animation_player.has_animation("flash_%s" % color):
+		return #error
 	flash_animation_player.seek(0)
 	flash_animation_player.play("flash_%s" % color)
 
@@ -479,13 +492,17 @@ func inflict_status(status: Status) -> void:
 			if not statuses[status]:
 				battle_log.add_text("%s has a memory leak!" % battle_log.MON_NAME_PLACEHOLDER, self)
 				flash("purple")
+				play_status_effect(LEAK_COLOR)
 				emit_signal("status_changed", status, true)
+				
 			else:
 				pass
 				#battle_log.add_text("%s is already leaking memory!" % battle_log.MON_NAME_PLACEHOLDER, self)
 		Status.SLEEP:
 			if not statuses[status]:
 				battle_log.add_text("%s has been put to sleep!" % battle_log.MON_NAME_PLACEHOLDER, self)
+				play_status_effect(SLEEP_COLOR)
+				flash("blue")
 				emit_signal("status_changed", status, true)
 			else:
 				pass
@@ -557,7 +574,6 @@ func apply_stat_change(stat: BuffableStat, mod: int):
 		assert(stat_color)
 		battle_log.add_text("%s's %s was %s!" % [battle_log.MON_NAME_PLACEHOLDER, stat_str, "increased" if mod > 0 else "decreased"], self)
 		play_buff_effect(stat_color) if mod > 0 else play_debuff_effect(stat_color)
-	
 	
 	emit_signal("stats_changed")
 

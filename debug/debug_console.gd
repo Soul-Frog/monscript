@@ -96,6 +96,9 @@ func _on_text_submitted(txt):
 	# cause an immediate breakpoint
 	elif cmd == "break" or cmd == "breakpoint" or cmd == "b" or cmd == "brk":
 		breakpoint
+	# immedately respawn at last save point
+	elif cmd == "respawn":
+		GameData.respawn_player()
 	# recharge the inject battery
 	elif cmd == "recharge" or cmd == "rechargebattery" or cmd == "battery" or cmd == "inject" or cmd == "rechargeinject":
 		GameData.inject_points = GameData.get_var(GameData.MAX_INJECTS) * BattleData.POINTS_PER_INJECT
@@ -162,7 +165,42 @@ func _on_text_submitted(txt):
 		var pair = _WARP_MAP[args[1]]
 		Events.area_changed.emit(pair[0], pair[1], true)
 		_toggle() # close the debug console
-
+	# give myself some mons to work with
+	elif cmd == "mons":
+		GameData.storage[0] = MonData.create_mon(MonData.MonType.GELIF, 0)
+		GameData.storage[1] = MonData.create_mon(MonData.MonType.CHORSE, 0)
+		GameData.storage[2] = MonData.create_mon(MonData.MonType.PASCALICAN, 0)
+		GameData.storage[3] = MonData.create_mon(MonData.MonType.ORCHIN, 0)
+		GameData.storage[4] = MonData.create_mon(MonData.MonType.TURTMINAL, 0)
+		GameData.storage[5] = MonData.create_mon(MonData.MonType.STINGARRAY, 0)
+		GameData.storage[6] = MonData.create_mon(MonData.MonType.ANGLERPHISH, 0)
+	elif cmd == "mon":
+		if not args.size() >= 2:
+			print("Need to provide a mon name to create.")
+			return
+			
+		var type = MonData.get_type_for(args[1].capitalize())
+		
+		if type == MonData.MonType.NONE:
+			print("Invalid name!")	
+			return
+		
+		# make the mon
+		var new_mon = MonData.create_mon(type, 0 if args.size() != 3 else int(args[2]))
+		
+		# try to put it into empty storage slot
+		var inserted = false
+		for i in GameData.storage.size():
+			if GameData.storage[i] == null:
+				GameData.storage[i] = new_mon
+				inserted = true
+				break
+		# if none empty, overwrite the first slot
+		if not inserted: 
+			GameData.storage[0] = new_mon
+	elif cmd == "wipestorage" or cmd == "clearstorage":
+		for i in GameData.storage.size():
+			GameData.storage[i] = null
 
 	# repeat the previous command
 	elif last_command != null and (cmd == "r" or cmd == "repeat"):
