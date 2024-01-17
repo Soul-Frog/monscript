@@ -119,6 +119,7 @@ offset_right = 66.0
 offset_bottom = 61.0
 texture_under = ExtResource("3_3akm2")
 texture_progress = ExtResource("4_fhq70")
+texture_progress_offset = Vector2(1, 1)
 
 [connection signal="clicked" from="Slot" to="." method="_on_slot_clicked"]
 [connection signal="mon_changed" from="Slot" to="." method="_on_slot_mon_changed"]
