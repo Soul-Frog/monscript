@@ -212,6 +212,8 @@ func take_inject_action(friends: Array, foes: Array, animator: BattleAnimator, d
 	
 	finish_action()
 
+var did_script_execute = false
+
 # Take a single turn in battle
 func take_action(friends: Array, foes: Array, animator: BattleAnimator, escaping: bool) -> void:
 	assert(friends.size() != 0, "No friends?")
@@ -231,6 +233,7 @@ func take_action(friends: Array, foes: Array, animator: BattleAnimator, escaping
 	if is_action_canceled:
 		set_action_points(0)
 		await _move_backward() # move back to normal position
+		did_script_execute = false
 		finish_action()
 	else:
 		execute_script(friends, foes, animator, escaping)
@@ -240,6 +243,7 @@ func cancel_action():
 
 func execute_script(friends: Array, foes: Array, animator: BattleAnimator, escaping: bool):
 	await underlying_mon.get_active_monscript().execute(self, friends, foes, battle_log, script_line_viewer, animator, escaping)
+	did_script_execute = true
 	_on_turn_over()
 
 func set_action_points(points):
@@ -264,7 +268,7 @@ func _on_turn_over():
 	finish_action()
 
 func finish_action():
-	if is_action_canceled:
+	if is_action_canceled and (underlying_mon.get_active_monscript().was_last_action_canceled() or not did_script_execute):
 		show_text("[color=#%s]Cancel![/color]" % Color.INDIAN_RED.to_html()) # display Cancel!
 	if not is_action_canceled:
 		turn_count += 1

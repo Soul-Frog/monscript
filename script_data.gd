@@ -11,6 +11,7 @@ const LINE_DELIMITER := "\n"	# all lines are separated by
 const BLOCK_DELIMITER := " "	# the 3 blocks on a line are separated by
 
 class MonScript:
+	var wasLastActionCanceled = false
 	var lines: Array[Line] = []
 	
 	func _init(string: String) -> void:
@@ -29,12 +30,16 @@ class MonScript:
 			await ScriptData._ERROR_DO.function.call(mon, friends, foes, null, battle_log, animator)
 		for line in lines:
 			if await line.try_execute(mon, friends, foes, battle_log, script_line_viewer, animator):
+				wasLastActionCanceled = line.wasLineCanceled
 				return
 		
 		# if we reached this point, we did not perform anything at all, so error
 		battle_log.add_text("No conditions were met! %s did nothing." % battle_log.MON_NAME_PLACEHOLDER, mon)
 		script_line_viewer.show_block(ScriptData._ERROR_DO)
 		await ScriptData._ERROR_DO.function.call(mon, friends, foes, null, battle_log, animator)
+	
+	func was_last_action_canceled() -> bool:
+		return wasLastActionCanceled
 	
 	func is_valid() -> bool:
 		if lines.size() == 0: #if there are no lines, it's invalid
@@ -73,6 +78,7 @@ class Line:
 	var ifBlock: Block = null
 	var doBlock: Block = null
 	var toBlock: Block = null
+	var wasLineCanceled = false
 	
 	func _init(number: int, string: String) -> void:
 		lineNumber = number
@@ -132,7 +138,7 @@ class Line:
 			var targets = null if toBlock == null else toBlock.function.call(mon, friends, foes)
 			# perform the battle action
 			script_line_viewer.show_line(lineNumber, ifBlock, doBlock, toBlock)
-			await doBlock.function.call(mon, friends, foes, targets, battle_log, animator)
+			wasLineCanceled = not await doBlock.function.call(mon, friends, foes, targets, battle_log, animator)
 		
 		# return if this line was executed, so script knows not to 
 		# attempt to execute other lines if this one took an action
@@ -229,18 +235,19 @@ var IF_BLOCK_LIST := [
 
 # DO FUNCTIONS
 # Perform a battle action 
-#      self       friends      foes         target		battle_log		animation helper      function should perform a battle action
-# func(BattleMon, [BattleMon], [BattleMon], BattleMon	battle_log		Animator]) -> void
+#      self       friends      foes         target		battle_log		animation helper      function should perform a battle action; return if the action was canceled
+# func(BattleMon, [BattleMon], [BattleMon], BattleMon	battle_log		Animator]) -> 		  bool
 var DO_BLOCK_LIST := [
 	Block.new(Block.Type.DO, "Pass", Block.Type.NONE, "Do nothing, but conserve half of your AP.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> bool:
 		battle_log.add_text("%s passed." % battle_log.MON_NAME_PLACEHOLDER, mon)
 		mon.set_action_points(mon.action_points / 2.0)
 		mon.reset_AP_after_action = false # don't reset to 0 after this action
+		return true
 		),
 		
 	Block.new(Block.Type.DO, "Attack", Block.Type.TO, "Attack a mon for 100% damage.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> bool:
 		assert(not target.is_defeated())
 		battle_log.add_text("%s attacked!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		
@@ -248,68 +255,76 @@ var DO_BLOCK_LIST := [
 		animator.slash(target)
 		await animator.animation_finished
 		if animator.was_animation_canceled:
-			return
+			return false
 		
 		# then apply the actual damage from this attack
 		target.apply_attack(mon, 1, MonData.DamageType.NORMAL)
+		
+		return true
 		),
 	
 	Block.new(Block.Type.DO, "Defend", Block.Type.NONE, "Do nothing, but reduce damage taken by 50% until your next turn.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> bool:
 		battle_log.add_text("%s is defending!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		mon.is_defending = true
+		return true
 		),
 	
 	Block.new(Block.Type.DO, "Escape", Block.Type.NONE, "Attempt to escape the battle. Chance of success depends on SPEED.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> bool:
 		mon.emit_signal("try_to_escape", mon)
+		return true
 		),
 		
 	Block.new(Block.Type.DO, "ShellBash", Block.Type.TO, "Attack a mon for 70% damage, and defend until your next turn.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> bool:
 		battle_log.add_text("%s used ShellBash!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		animator.slash(target)
 		await animator.animation_finished
 		if animator.was_animation_canceled:
-			return
+			return false
 		
 		target.apply_attack(mon, 0.7, MonData.DamageType.NORMAL)
 		mon.is_defending = true
+		return true
 		),
 		
 	Block.new(Block.Type.DO, "Repair", Block.Type.NONE, "Heal 40% of your own HP and clear status conditions.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> bool:
 		battle_log.add_text("%s used Repair!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		mon.heal_damage(int(mon.max_health * 0.4))
 		mon.heal_all_statuses()
+		return true
 		),
 		
 	Block.new(Block.Type.DO, "C-gun", Block.Type.TO, "Attack a mon for 80% Chill damage. (140% Chill damage instead if this is your 5th turn or later).",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> bool:
 		battle_log.add_text("%s used C-Gun!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		
 		#todo - animation
 		animator.slash(target)
 		await animator.animation_finished
 		if animator.was_animation_canceled:
-			return
+			return false
 		
 		var dmg_mult = 0.8
 		if mon.turn_count >= 5:
 			dmg_mult = 1.4
 		
 		target.apply_attack(mon, dmg_mult, MonData.DamageType.CHILL)
+		
+		return true
 		),
 	
 	Block.new(Block.Type.DO, "Triangulate", Block.Type.TO, "Attack a mon for 50% damage. Increases by +10%/20%/30%/60%/100% on repeated uses.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> bool:
 		battle_log.add_text("%s used Triangulate!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		
 		#todo - animation
 		animator.slash(target)
 		await animator.animation_finished
 		if animator.was_animation_canceled:
-			return
+			return false
 		
 		const metadata_key = "TRIANGULATE_USES"
 		
@@ -332,10 +347,12 @@ var DO_BLOCK_LIST := [
 			mon.metadata[metadata_key] = 1
 		
 		target.apply_attack(mon, dmg_mult, MonData.DamageType.NORMAL)
+		
+		return true
 		),
 	
 	Block.new(Block.Type.DO, "SpikOR", Block.Type.TO, "Attack a mon for 60% damage (125% damage instead if that mon has LEAK or above 80% HP.)",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, action_name_box: BattleActionNameBox, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, action_name_box: BattleActionNameBox, animator: BattleAnimator) -> bool:
 		var leak_condition = target.statuses[BattleMon.Status.LEAK]
 		var health_condition = float(target.current_health) / target.max_health >= 0.8
 		
@@ -350,24 +367,26 @@ var DO_BLOCK_LIST := [
 		animator.slash(target)
 		await animator.animation_finished
 		if animator.was_animation_canceled:
-			return
+			return false
 		
 		var dmg_mult = 0.6
 		if leak_condition or health_condition:
 			dmg_mult = 1.25
 		
 		target.apply_attack(mon, dmg_mult, MonData.DamageType.VOLT)
+		
+		return true
 		),
 	
 	Block.new(Block.Type.DO, "Multitack", Block.Type.NONE, "Four times, attack a random foe for 25% damage.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> bool:
 		battle_log.add_text("%s used Multitack!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		for i in range(0, 4):
 			var rand_target = Global.choose_one(foes)
 			animator.slash(rand_target) #todo - animation
 			await animator.animation_finished
 			if animator.was_animation_canceled:
-				return
+				return false
 			
 			rand_target.apply_attack(mon, 0.25, MonData.DamageType.NORMAL)
 			
@@ -376,20 +395,24 @@ var DO_BLOCK_LIST := [
 				foes.erase(rand_target)
 				if foes.size() == 0: # if everyone is dead, don't keep attacking
 					break
+		
+		return true
 		),
 		
 	Block.new(Block.Type.DO, "Spearphishing", Block.Type.TO, "Inflict LEAK on a mon.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> bool:
 		battle_log.add_text("%s used Spearphishing!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		animator.slash(target) #todo - animation
 		await animator.animation_finished
 		if animator.was_animation_canceled:
-			return
+			return false
 		target.inflict_status(BattleMon.Status.LEAK)
+		
+		return true
 		),
 		
 	Block.new(Block.Type.DO, "Transfer", Block.Type.TO, "Heal by transfering up to 50% of the user's HP to a mon.",
-	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> void:
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> bool:
 		battle_log.add_text("%s used Transfer!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		
 		# heal amount is up to 50% of user's health; if not enough health, use all but 1
@@ -404,6 +427,8 @@ var DO_BLOCK_LIST := [
 		target.heal_damage(heal_used)
 		# and damage ourself
 		mon.take_damage(heal_used, MonData.DamageType.TYPELESS)
+		
+		return true
 		),
 ]
 
