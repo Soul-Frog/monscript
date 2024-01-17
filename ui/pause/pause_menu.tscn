@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://wvcujwhuslip"]
+[gd_scene load_steps=16 format=3 uid="uid://wvcujwhuslip"]
 
 [ext_resource type="Script" path="res://ui/pause/pause_menu.gd" id="1_2voed"]
 [ext_resource type="Texture2D" uid="uid://dnu8i8xfacd0m" path="res://assets/ui/pause_menu/pause_base.png" id="2_6t5wk"]
 [ext_resource type="PackedScene" uid="uid://cj636lm4kwto2" path="res://ui/pause/team_mon.tscn" id="3_efgjc"]
 [ext_resource type="PackedScene" uid="uid://embxye03wh4t" path="res://ui/pause/mon_slot.tscn" id="3_kshv5"]
+[ext_resource type="Texture2D" uid="uid://bpr8i5s6adoqb" path="res://assets/ui/pause_menu/bug_icon.png" id="3_v4q8o"]
 [ext_resource type="Texture2D" uid="uid://cr8ps4hg8di0r" path="res://assets/ui/pause_menu/left_arrow.png" id="9_yybf0"]
 [ext_resource type="Texture2D" uid="uid://bno0ms2rh0xpm" path="res://assets/ui/pause_menu/left_arrow_pressed.png" id="10_vsw02"]
 [ext_resource type="Texture2D" uid="uid://e68t3b8x6bme" path="res://assets/ui/pause_menu/left_arrow_hover.png" id="11_wlcmt"]
@@ -35,6 +36,14 @@ offset_top = 97.0
 offset_right = 46.0
 offset_bottom = 112.0
 text = "Storage"
+
+[node name="Bits" type="Label" parent="Background"]
+modulate = Color(1, 0.756863, 0.239216, 1)
+offset_left = 270.0
+offset_top = -1.0
+offset_right = 291.0
+offset_bottom = 15.0
+text = "Bits"
 
 [node name="TeamMons" type="Node2D" parent="."]
 
@@ -290,6 +299,26 @@ offset_bottom = 15.0
 text = "Whoops!"
 horizontal_alignment = 1
 
+[node name="BitsAmount" type="Label" parent="."]
+offset_left = 229.0
+offset_top = -1.0
+offset_right = 266.0
+offset_bottom = 15.0
+text = "999999"
+
+[node name="Bugs" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 295.0
+offset_top = 2.0
+offset_right = 306.0
+offset_bottom = 11.0
+
+[node name="BugIcon" type="Sprite2D" parent="Bugs"]
+position = Vector2(1, 1)
+texture = ExtResource("3_v4q8o")
+centered = false
+
 [connection signal="edit_script" from="TeamMons/Mon1" to="." method="_on_edit_script_button_pressed"]
 [connection signal="slot_clicked" from="TeamMons/Mon1" to="." method="_on_slot_clicked"]
 [connection signal="edit_script" from="TeamMons/Mon2" to="." method="_on_edit_script_button_pressed"]
@@ -318,3 +347,4 @@ horizontal_alignment = 1
 [connection signal="pressed" from="SavePopup/QuitButton" to="SavePopup" method="_on_no_button_pressed"]
 [connection signal="pressed" from="SavePopup/QuitButton" to="SavePopup" method="_on_yes_button_pressed"]
 [connection signal="pressed" from="NoMonPopup/WhoopsButton" to="NoMonPopup" method="_on_yes_button_pressed"]
+[connection signal="mouse_entered" from="Bugs" to="." method="_on_bugs_mouse_entered"]

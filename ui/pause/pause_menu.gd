@@ -15,13 +15,15 @@ signal closed
 @onready var X_BUTTON = $XButton
 @onready var NO_MON_POPUP = $NoMonPopup
 @onready var SAVE_POPUP = $SavePopup
+@onready var BITS_AMOUNT_LABEL = $BitsAmount
+@onready var BUGS = $Bugs
 
 @onready var HELD = $Held
 const _HELD_OFFSET = Vector2(16, 16)
 var _held_mon = null
 
 var _storage_page = 0 #the current page of storage open
-var _STORAGE_PAGE_LABEL_FORMAT = "%d/%d"
+const _STORAGE_PAGE_LABEL_FORMAT = "%d/%d"
 
 var _is_saving = false # if the game is currently saving (used to prevent the menu from closing while save is in progress)
 
@@ -39,11 +41,11 @@ func _ready() -> void:
 	assert(not SAVE_POPUP.visible)
 	assert(HELD)
 	assert(STORAGE_PAGE_SLOTS.get_child_count() == GameData.MONS_PER_STORAGE_PAGE, "Not enough slots per page.")
+	assert(BUGS)
+	assert(BITS_AMOUNT_LABEL)
 	
 	assert(TEAM_MONS.get_children().size() == GameData.MONS_PER_TEAM, "Wrong number of team slots!")
 	_change_storage_page(0) # set the initial storage page
-	
-	setup() #todo - remove this
 
 func setup() -> void:
 	# put the player's mons into the team slots
@@ -52,6 +54,9 @@ func setup() -> void:
 	
 	# update the storage page
 	_change_storage_page(_storage_page)
+	
+	# update the amount of bits
+	BITS_AMOUNT_LABEL.text = Global.int_to_str_zero_padded(GameData.get_var(GameData.BITS), 6)
 
 # changes to a new storage page, updates mons, updates label
 func _change_storage_page(new_page: int):
@@ -177,3 +182,14 @@ func _is_team_valid():
 # (false if the team is invalid [empty])
 func is_closable():
 	return (not _is_saving) and HELD.get_child_count() == 0 and _is_team_valid()
+
+func _on_bugs_mouse_entered():
+	var line_format = "[img]%s[/img] %d"
+	var tooltip = ""
+	for i in BugData.Type.size():
+		var bugType = BugData.Type.values()[i]
+		var bug = BugData.get_bug(bugType)
+		var texture_path = bug.sprite.resource_path
+		tooltip += line_format % [texture_path, GameData.bug_inventory[bugType]]
+		tooltip += "\n"
+	UITooltip.create(BUGS, tooltip, get_global_mouse_position(), get_tree().root)

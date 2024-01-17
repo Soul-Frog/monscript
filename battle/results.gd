@@ -128,7 +128,7 @@ func perform_results(battle_results: BattleData.BattleResult, bugs_earned: Array
 		if battlemon != null:
 			_mons_to_xp.append(battlemon.underlying_mon)
 	_xp_given = 0
-	GameData.add_to_var(GameData.BITS, bits_earned) # give bits to the player
+	GameData.gain_bits(bits_earned)
 	
 	# Show bug drops (or hide excess frames)
 	for i in range(0, BUGS.get_children().size()):

@@ -170,10 +170,6 @@ z_index = 100
 [node name="UI" type="Node2D" parent="."]
 z_index = 2000
 
-[node name="Results" parent="UI" instance=ExtResource("54_5vxty")]
-visible = false
-z_index = 50
-
 [node name="InjectLayer" parent="UI" instance=ExtResource("53_4ccvo")]
 z_index = 1
 
@@ -315,10 +311,6 @@ offset_bottom = 21.0
 mouse_filter = 2
 mouse_force_pass_scroll_events = false
 
-[node name="Log" parent="UI" groups=["battle_speed_scaled"] instance=ExtResource("16_ugd8u")]
-z_index = 100
-position = Vector2(67, 135)
-
 [node name="PlayerMonBlocks" type="Node2D" parent="UI"]
 
 [node name="Player1" parent="UI/PlayerMonBlocks" instance=ExtResource("5_fkqod")]
@@ -379,6 +371,14 @@ offset_top = 109.0
 offset_right = 263.0
 offset_bottom = 130.0
 
+[node name="Results" parent="UI" instance=ExtResource("54_5vxty")]
+visible = false
+z_index = 50
+
+[node name="Log" parent="UI" groups=["battle_speed_scaled"] instance=ExtResource("16_ugd8u")]
+z_index = 100
+position = Vector2(67, 135)
+
 [node name="BannerLabel" type="RichTextLabel" parent="UI"]
 offset_left = -100.0
 offset_top = 3.0
@@ -398,10 +398,10 @@ script = ExtResource("5_41hnr")
 anchor_mode = 0
 script = ExtResource("46_xof1k")
 
-[connection signal="exit" from="UI/Results" to="." method="_on_results_exited"]
 [connection signal="inject_completed" from="UI/InjectLayer" to="." method="_on_inject_completed"]
 [connection signal="clicked" from="UI/InjectBattery" to="." method="_attempt_inject"]
 [connection signal="escape_state_changed" from="UI/EscapeControls" to="." method="_on_escape_state_changed"]
 [connection signal="state_changed" from="UI/EscapeControls/Button" to="UI/EscapeControls" method="_on_escape_state_changed"]
 [connection signal="timeout" from="UI/EscapeControls/DotTimer" to="UI/EscapeControls" method="_on_dot_timer_timeout"]
 [connection signal="speed_changed" from="UI/SpeedControls" to="." method="_on_speed_controls_changed"]
+[connection signal="exit" from="UI/Results" to="." method="_on_results_exited"]

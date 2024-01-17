@@ -5,6 +5,7 @@ extends Node
 const MONS_PER_TEAM = 4 # how many mons in a team
 const MONS_PER_STORAGE_PAGE = 8 # how many mons are on a single page of pause menu storage
 const SAVE_FILE_NAME = "user://save.monsave" # path to the save file
+const MAX_BITS = 65536
 
 ## Areas ##
 enum Area
@@ -289,3 +290,8 @@ func is_block_unlocked(block: ScriptData.Block) -> bool:
 
 func unlock_block(block: ScriptData.Block) -> void:
 	_block_unlock_map[block] = true
+
+func gain_bits(bit_amount: int) -> void:
+	GameData.add_to_var(GameData.BITS, bit_amount) # give bits to the player
+	if GameData.get_var(GameData.BITS) > MAX_BITS:
+		GameData.set_var(GameData.BITS, MAX_BITS)

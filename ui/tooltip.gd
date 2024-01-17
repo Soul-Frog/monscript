@@ -36,7 +36,6 @@ var source_control: Control
 # NOTE - Tooltips created by this function are automatically destroyed.
 static func create(source: Control, text: String, global_mouse_position: Vector2, scene_root: Node) -> void:
 	var tooltip: UITooltip = create_manual(source, text, global_mouse_position, scene_root)
-	tooltip.source_control = source
 	tooltip.source_control.mouse_exited.connect(tooltip.destroy_tooltip) # add a connect destroying this when mouse exits parent
 	tooltip.source_control.tree_exiting.connect(tooltip.destroy_tooltip) # destroy tooltip when parent exits tree (ie parent is deleted)
 
@@ -46,14 +45,28 @@ static func create_manual(source: Control, text: String, global_mouse_position: 
 	var tooltip: UITooltip = _TOOLTIP_SCENE.instantiate()
 	assert(tooltip.get_child_count())
 	
+	tooltip.source_control = source
+	
 	var label: RichTextLabel = tooltip.find_child("TextMargin").find_child("TooltipText")
 	
+	# replace img tags with a single letter to help space them 
+	# (for now, only works with small images)
+	var text_no_tags = text
+	while text_no_tags.find("[img]") != -1:
+		var img_start = text_no_tags.find("[img]")
+		var img_end = text_no_tags.find("[/img]")
+		text_no_tags = text_no_tags.erase(text_no_tags.find("[img]"), img_end - img_start + 6)
+		text_no_tags = text_no_tags.insert(img_start, "XX")
+	
+	# note - tags like bold will not work yet; need smarter handling RIGHT HERE if desired
+	# see https://github.com/godotengine/godot-proposals/issues/5056 comments for a handler
+	
 	# the text does not contain \n, automatically break the text and format a nice tooltip.
-	if not text.contains("\n"):
+	if not text_no_tags.contains("\n"):
 		# calculate a reasonable tooltip size
 		# basically, add words one at a time until we exceed the threshold. that's the length we want.
 		# this fanciness guarantees that the first line in the tooltip is the longest, which looks nice
-		var words = text.split(" ", false)
+		var words = text_no_tags.split(" ", false)
 		var first_line = ""
 		for word in words:
 			var text_length := tooltip.get_theme().get_default_font().get_string_size(first_line).x
@@ -65,7 +78,7 @@ static func create_manual(source: Control, text: String, global_mouse_position: 
 	# otherwise set the tooltip size based on the longest line
 	else:
 		var longest_line_size = -1
-		for line in text.split("\n"):
+		for line in text_no_tags.split("\n"):
 			var line_size = tooltip.get_theme().get_default_font().get_string_size(line).x
 			if line_size > longest_line_size:
 				longest_line_size = line_size
