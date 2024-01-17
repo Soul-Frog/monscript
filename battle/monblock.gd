@@ -107,8 +107,8 @@ func on_mon_xp_changed() -> void:
 	
 	xp_label.text = XP_FORMAT % [current_xp, next_level_xp]
 	# multiply by 100 here to create a more gradually filling bar
+	xp_bar.max_value = next_level_xp * 100 #do max before value
 	xp_bar.value = current_xp * 100
-	xp_bar.max_value = next_level_xp * 100
 	
 	# also update the level here in case it's changed
 	level_label.text = LEVEL_FORMAT % active_mon.underlying_mon.get_level()
