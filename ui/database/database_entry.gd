@@ -102,6 +102,8 @@ func _input(event):
 func _on_mouse_entered():
 	is_mouse_over = true
 	_update_background()
+	if _status != Status.DISABLED:
+		UITooltip.create(self, get_mon_name(), get_global_mouse_position(), get_tree().root)
 
 func _on_mouse_exited():
 	is_mouse_over = false
