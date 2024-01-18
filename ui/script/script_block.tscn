@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://djhn0flf60xvu" path="res://decorators/mouseover_watcher.tscn" id="4_84670"]
 
 [node name="Block" type="MarginContainer"]
+offset_right = 48.0
+offset_bottom = 15.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 0
@@ -14,7 +16,7 @@ theme_override_constants/margin_bottom = 1
 script = ExtResource("1_5w5ou")
 
 [node name="BlockClickable" type="Control" parent="."]
-custom_minimum_size = Vector2(48, 13)
+custom_minimum_size = Vector2(0, 13)
 layout_mode = 2
 mouse_filter = 2
 
@@ -32,9 +34,8 @@ patch_margin_bottom = 5
 layout_mode = 2
 offset_left = 14.0
 offset_top = -1.0
-offset_right = 46.0
-offset_bottom = 13.0
-text = "Attack"
+offset_right = 15.0
+offset_bottom = 12.0
 
 [node name="Type" type="Sprite2D" parent="BlockClickable"]
 texture = ExtResource("3_044cn")
