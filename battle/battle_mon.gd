@@ -87,10 +87,15 @@ const ATK_CHANGE_COLOR = Color.RED
 const LEAK_COLOR = Color("#dbc3f6")
 const SLEEP_COLOR = Color("#b3e6fe")
 
+const WEAK_COLOR = Color.LIGHT_CORAL
+const RESIST_COLOR = Color.LIGHT_BLUE
+
 # speed of damage/heal/ability text
 const MOVING_TEXT_SPEED = 12
 # how long damage/heal/ability text is active for
 const MOVING_TEXT_TIME = 0.75
+# how long between each new moving text instance (for example, multiple abilities triggering
+const MOVING_TEXT_BUFFER_TIME = 0.22
 # list of text to be displayed
 var _text_queue = []
 # currently displayed text
@@ -134,7 +139,15 @@ var statuses = {
 
 func _ready():
 	assert(shake_animation_player)
+	assert(shake_animation_player.has_animation("shake"))
+	assert(shake_animation_player.has_animation("shake_violently"))
+	assert(shake_animation_player.has_animation("shake_weakly"))
 	assert(flash_animation_player)
+	assert(flash_animation_player.has_animation("flash_white"))
+	assert(flash_animation_player.has_animation("flash_green"))
+	assert(flash_animation_player.has_animation("flash_blue"))
+	assert(flash_animation_player.has_animation("flash_red"))
+	assert(flash_animation_player.has_animation("flash_purple"))
 	assert(level_up_effect)
 	assert(debuff_effect)
 	assert(buff_effect)
@@ -403,13 +416,18 @@ func take_damage(damage_taken: int, damage_type: MonData.DamageType) -> void:
 			damage_color = Global.COLOR_PURPLE
 			flash_color = "purple"
 	flash(flash_color) # flash color based on the type of damage taken
-	shake() # make the damaged mon shake a bit
 	
 	var log_message = "%s took %d %sdamage!"
 	if underlying_mon.get_damage_multiplier_for_type(damage_type) > 1:
+		show_text("[color=%s]Weak![/color]" % WEAK_COLOR.to_html())
 		log_message = "%s took %d %sdamage! Super effective!"
+		shake_violently()
 	elif underlying_mon.get_damage_multiplier_for_type(damage_type) < 1:
 		log_message = "%s took %d %sdamage! Not very effective!"
+		show_text("[color=%s]Resist![/color]" % RESIST_COLOR.to_html())
+		shake_weakly()
+	else:
+		shake() # make the damaged mon shake a bit
 	battle_log.add_text(log_message % [battle_log.MON_NAME_PLACEHOLDER, damage_taken, type_str], self)
 	
 	# make damage numbers
@@ -440,8 +458,6 @@ func show_damage_number(damage_amount: int, damage_color: Color):
 
 func show_heal_number(heal_amount: int):
 	self.add_child(MOVING_TEXT_SCENE.instantiate().tx(heal_amount).direction_up().speed(MOVING_TEXT_SPEED, _speed_scale).time(MOVING_TEXT_TIME).color(Global.COLOR_GREEN))
-
-var MOVING_TEXT_BUFFER_TIME = 0.2
 
 func _show_queued_text(text: String):
 	_active_text = (MOVING_TEXT_SCENE.instantiate().offset(Vector2(0, -9)).tx(text).direction_up()
@@ -477,6 +493,14 @@ func play_status_effect(color: Color) -> void:
 func shake() -> void:
 	shake_animation_player.seek(0) #restart shake
 	shake_animation_player.play("shake")
+
+func shake_violently() -> void:
+	shake_animation_player.seek(0) #restart shake
+	shake_animation_player.play("shake_violently")
+
+func shake_weakly() -> void:
+	shake_animation_player.seek(0) #restart shake
+	shake_animation_player.play("shake_weakly")
 
 func flash(color: String) -> void:
 	assert(flash_animation_player.has_animation("flash_%s" % color))
