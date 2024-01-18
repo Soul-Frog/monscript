@@ -435,7 +435,7 @@ func get_decompilation_progress_required_for(montype: MonType) -> int:
 	assert(montype != MonType.NONE)
 	return _MON_MAP[montype]._decompilation_progress_required
 
-func get_health_percentile_for(montype: MonType) -> int:
+func get_health_percentile_for(montype: MonType) -> float:
 	assert(montype != MonType.NONE)
 	
 	var mon_health = _MON_MAP[montype].health_for_level(MAX_LEVEL)
@@ -447,7 +447,7 @@ func get_health_percentile_for(montype: MonType) -> int:
 	
 	return float(mons_better_than) / _MON_MAP.size() * 100.0
 
-func get_attack_percentile_for(montype: MonType) -> int:
+func get_attack_percentile_for(montype: MonType) -> float:
 	assert(montype != MonType.NONE)
 	
 	var mon_attack = _MON_MAP[montype].attack_for_level(MAX_LEVEL)
@@ -459,7 +459,7 @@ func get_attack_percentile_for(montype: MonType) -> int:
 	
 	return float(mons_better_than) / _MON_MAP.size() * 100.0
 
-func get_defense_percentile_for(montype: MonType) -> int:
+func get_defense_percentile_for(montype: MonType) -> float:
 	assert(montype != MonType.NONE)
 	
 	var mon_defense = _MON_MAP[montype].defense_for_level(MAX_LEVEL)
@@ -471,7 +471,7 @@ func get_defense_percentile_for(montype: MonType) -> int:
 	
 	return float(mons_better_than) / _MON_MAP.size() * 100.0
 
-func get_speed_percentile_for(montype: MonType) -> int:
+func get_speed_percentile_for(montype: MonType) -> float:
 	assert(montype != MonType.NONE)
 	
 	var mon_speed = _MON_MAP[montype].speed_for_level(MAX_LEVEL)
