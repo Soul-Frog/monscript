@@ -46,6 +46,8 @@ func setup() -> void:
 	#	child.visible = false
 	for entry in $DatabaseScroll/Database.get_children():
 		entry.refresh() # update progress values of each entry
+		if entry == active_entry:
+			active_entry.select()
 	_update_completion()
 
 func _update_completion():
@@ -72,6 +74,14 @@ func _on_entry_clicked(entry: DatabaseEntry) -> void:
 	$MonInfo/AttackBar.value = active_entry.get_attack_bar_value() + BAR_BUFFER
 	$MonInfo/DefenseBar.value = active_entry.get_defense_bar_value() + BAR_BUFFER
 	$MonInfo/SpeedBar.value = active_entry.get_speed_bar_value() + BAR_BUFFER
+	
+	var update_multiplier = func(multiplier_value: float, label: Label):
+		label.modulate = Color.WHITE if multiplier_value == 1.0 else (Color.LIGHT_SKY_BLUE if multiplier_value <= 1.0 else Color.LIGHT_CORAL)	
+		label.text = "%1.1fx" % multiplier_value
+	update_multiplier.call(active_entry.get_heat_multiplier(), $MonInfo/HeatMultiplier)
+	update_multiplier.call(active_entry.get_chill_multiplier(), $MonInfo/ChillMultiplier)
+	update_multiplier.call(active_entry.get_heat_multiplier(), $MonInfo/VoltMultiplier)
+	
 	$DatabaseMonFileDefault.visible = false
 	for child in $MonInfo.get_children():
 		child.visible = true

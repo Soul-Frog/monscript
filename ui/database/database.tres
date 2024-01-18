@@ -28,8 +28,8 @@ border_color = Color(0.8, 0.8, 0.8, 0)
 corner_detail = 1
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jmuu4"]
-content_margin_left = 9.0
-content_margin_right = 9.0
+content_margin_left = 8.0
+content_margin_right = 8.0
 bg_color = Color(0.6, 0.6, 0.6, 0)
 border_width_left = 1
 border_width_top = 1

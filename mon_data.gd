@@ -299,7 +299,7 @@ var _BITLEON_BASE = MonBase.new(MonType.BITLEON, "Bitleon", "res://mons/bitleon.
 var _GELIF_BASE = MonBase.new(MonType.GELIF, "Gelif", "res://mons/gelif.tscn", "res://monscripts/attack.txt",
 	540, 98, 14, 74,
 	12,
-	1.0, 2.0, 0.25, 2.0,
+	1.0, 2.0, 0.2, 2.0,
 	ScriptData.get_block_by_name("Transfer"),
 	Passive.REGENERATE,
 	[Color("#26a69a"), Color("#009688"), Color("#00796b")],
@@ -326,7 +326,7 @@ var _PASCALICAN_BASE = MonBase.new(MonType.PASCALICAN, "Pascalican", "res://mons
 var _ORCHIN_BASE = MonBase.new(MonType.ORCHIN, "Orchin", "res://mons/orchin.tscn", "res://monscripts/attack.txt",
 	198, 115, 86, 65,
 	12, 
-	1.0, 1.5, 0.75, 0.75,
+	1.0, 1.5, 0.7, 0.7,
 	ScriptData.get_block_by_name("SpikOR"),
 	Passive.THORNS,
 	[Color("#4a5462"), Color("#333941"), Color("#242234")],
@@ -344,7 +344,7 @@ var _TURTMINAL_BASE = MonBase.new(MonType.TURTMINAL, "Turtminal", "res://mons/tu
 var _STINGARRAY_BASE = MonBase.new(MonType.STINGARRAY, "Stingarray", "res://mons/stingarray.tscn", "res://monscripts/attack.txt",
 	212, 144, 58, 89,
 	5, 
-	1.0, 1.5, 1.5, 0.25,
+	1.0, 1.5, 1.5, 0.3,
 	ScriptData.get_block_by_name("Multitack"),
 	Passive.PIERCER,
 	[Color("#795548"), Color("#5d4037"), Color("#3e2723")],
@@ -435,54 +435,57 @@ func get_decompilation_progress_required_for(montype: MonType) -> int:
 	assert(montype != MonType.NONE)
 	return _MON_MAP[montype]._decompilation_progress_required
 
-#TODO - update these so that they calculate the number of mons better/worse and use that as percentile, not raw stats
 func get_health_percentile_for(montype: MonType) -> int:
 	assert(montype != MonType.NONE)
 	
-	var lowest_health = Global.INT_MAX
-	var highest_health = Global.INT_MIN
-	for monbase in _MON_MAP.values():
-		var health = monbase.health_for_level(MAX_LEVEL)
-		lowest_health = min(health, lowest_health)
-		highest_health = max(health, highest_health)
+	var mon_health = _MON_MAP[montype].health_for_level(MAX_LEVEL)
+	var mons_better_than = 0
 	
-	return float(_MON_MAP[montype].health_for_level(MAX_LEVEL) - lowest_health) / (highest_health- lowest_health) * 100
+	for monbase in _MON_MAP.values():
+		if mon_health >= monbase.health_for_level(MAX_LEVEL):
+			mons_better_than += 1
+	
+	return float(mons_better_than) / _MON_MAP.size() * 100.0
 
 func get_attack_percentile_for(montype: MonType) -> int:
 	assert(montype != MonType.NONE)
 	
-	var lowest_attack = Global.INT_MAX
-	var highest_attack = Global.INT_MIN
-	for monbase in _MON_MAP.values():
-		var attack = monbase.attack_for_level(MAX_LEVEL)
-		lowest_attack = min(attack, lowest_attack)
-		highest_attack = max(attack, highest_attack)
+	var mon_attack = _MON_MAP[montype].attack_for_level(MAX_LEVEL)
+	var mons_better_than = 0
 	
-	return float(_MON_MAP[montype].attack_for_level(MAX_LEVEL) - lowest_attack) / (highest_attack- lowest_attack) * 100
+	for monbase in _MON_MAP.values():
+		if mon_attack >= monbase.attack_for_level(MAX_LEVEL):
+			mons_better_than += 1
+	
+	return float(mons_better_than) / _MON_MAP.size() * 100.0
 
 func get_defense_percentile_for(montype: MonType) -> int:
 	assert(montype != MonType.NONE)
 	
-	var lowest_defense = Global.INT_MAX
-	var highest_defense = Global.INT_MIN
-	for monbase in _MON_MAP.values():
-		var defense = monbase.defense_for_level(MAX_LEVEL)
-		lowest_defense = min(defense, lowest_defense)
-		highest_defense = max(defense, highest_defense)
+	var mon_defense = _MON_MAP[montype].defense_for_level(MAX_LEVEL)
+	var mons_better_than = 0
 	
-	return float(_MON_MAP[montype].defense_for_level(MAX_LEVEL) - lowest_defense) / (highest_defense- lowest_defense) * 100
+	for monbase in _MON_MAP.values():
+		if mon_defense >= monbase.defense_for_level(MAX_LEVEL):
+			mons_better_than += 1
+	
+	return float(mons_better_than) / _MON_MAP.size() * 100.0
 
 func get_speed_percentile_for(montype: MonType) -> int:
 	assert(montype != MonType.NONE)
 	
-	var lowest_speed = Global.INT_MAX
-	var highest_speed = Global.INT_MIN
-	for monbase in _MON_MAP.values():
-		var speed = monbase.speed_for_level(MAX_LEVEL)
-		lowest_speed = min(speed, lowest_speed)
-		highest_speed = max(speed, highest_speed)
+	var mon_speed = _MON_MAP[montype].speed_for_level(MAX_LEVEL)
+	var mons_better_than = 0
 	
-	return float(_MON_MAP[montype].speed_for_level(MAX_LEVEL) - lowest_speed) / (highest_speed- lowest_speed) * 100
+	for monbase in _MON_MAP.values():
+		if mon_speed >= monbase.speed_for_level(MAX_LEVEL):
+			mons_better_than += 1
+	
+	return float(mons_better_than) / _MON_MAP.size() * 100.0
+
+func get_damage_multiplier_for(montype: MonType, damagetype: DamageType) -> float:
+	assert(montype != MonType.NONE)
+	return _MON_MAP[montype]._damage_type_multipliers[damagetype]
 
 # used in mon_from_json - convert the name of a species into the monbase
 func _species_str_to_montype(species_str: String) -> MonType:

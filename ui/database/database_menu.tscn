@@ -24,7 +24,7 @@ offset_bottom = 16.0
 text = "Database"
 
 [node name="DatabaseMonFileDefault" type="Sprite2D" parent="."]
-position = Vector2(186, 5)
+position = Vector2(183, 5)
 texture = ExtResource("8_dgrnb")
 centered = false
 
@@ -43,7 +43,7 @@ autowrap_mode = 0
 [node name="DatabaseScroll" type="ScrollContainer" parent="."]
 offset_left = 7.0
 offset_top = 15.0
-offset_right = 184.0
+offset_right = 181.0
 offset_bottom = 175.0
 size_flags_horizontal = 3
 theme = ExtResource("7_d3l6e")
@@ -72,6 +72,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="MonInfo" type="Node2D" parent="."]
+position = Vector2(-3, 0)
 
 [node name="DatabaseMonFile" type="Sprite2D" parent="MonInfo"]
 position = Vector2(186, 5)
@@ -91,7 +92,7 @@ autowrap_mode = 0
 [node name="SpecialDescriptionLabel" type="RichTextLabel" parent="MonInfo"]
 offset_left = 192.0
 offset_top = 73.0
-offset_right = 307.0
+offset_right = 311.0
 offset_bottom = 113.0
 theme_override_font_sizes/normal_font_size = 12
 text = "This is the description for the mon's special attack!"
@@ -99,7 +100,7 @@ text = "This is the description for the mon's special attack!"
 [node name="PassiveDescriptionLabel" type="RichTextLabel" parent="MonInfo"]
 offset_left = 192.0
 offset_top = 130.0
-offset_right = 307.0
+offset_right = 311.0
 offset_bottom = 170.0
 theme_override_font_sizes/normal_font_size = 12
 text = "This is the description for the mon's passive ability! It also scrolls!"
@@ -107,7 +108,7 @@ text = "This is the description for the mon's passive ability! It also scrolls!"
 [node name="SpecialNameLabel" type="RichTextLabel" parent="MonInfo"]
 offset_left = 234.0
 offset_top = 58.0
-offset_right = 307.0
+offset_right = 312.0
 offset_bottom = 71.0
 bbcode_enabled = true
 text = "[center]Special Name[/center]"
@@ -117,7 +118,7 @@ autowrap_mode = 0
 [node name="PassiveNameLabel" type="RichTextLabel" parent="MonInfo"]
 offset_left = 234.0
 offset_top = 115.0
-offset_right = 307.0
+offset_right = 312.0
 offset_bottom = 128.0
 bbcode_enabled = true
 text = "[center]Passive Name[/center]"
@@ -139,9 +140,9 @@ texture = ExtResource("8_rdcdi")
 stretch_mode = 2
 
 [node name="HealthBar" type="TextureProgressBar" parent="MonInfo"]
-offset_left = 274.0
+offset_left = 248.0
 offset_top = 20.0
-offset_right = 307.0
+offset_right = 275.0
 offset_bottom = 25.0
 max_value = 110.0
 value = 50.0
@@ -150,9 +151,9 @@ texture_progress = ExtResource("9_s3meg")
 tint_progress = Color(0.34902, 0.756863, 0.207843, 1)
 
 [node name="AttackBar" type="TextureProgressBar" parent="MonInfo"]
-offset_left = 274.0
+offset_left = 248.0
 offset_top = 30.0
-offset_right = 307.0
+offset_right = 275.0
 offset_bottom = 35.0
 max_value = 110.0
 value = 50.0
@@ -161,9 +162,9 @@ texture_progress = ExtResource("9_s3meg")
 tint_progress = Color(0.34902, 0.756863, 0.207843, 1)
 
 [node name="SpeedBar" type="TextureProgressBar" parent="MonInfo"]
-offset_left = 274.0
+offset_left = 248.0
 offset_top = 50.0
-offset_right = 307.0
+offset_right = 275.0
 offset_bottom = 55.0
 max_value = 110.0
 value = 50.0
@@ -172,14 +173,35 @@ texture_progress = ExtResource("9_s3meg")
 tint_progress = Color(0.34902, 0.756863, 0.207843, 1)
 
 [node name="DefenseBar" type="TextureProgressBar" parent="MonInfo"]
-offset_left = 274.0
+offset_left = 248.0
 offset_top = 40.0
-offset_right = 307.0
+offset_right = 275.0
 offset_bottom = 45.0
 max_value = 110.0
 value = 50.0
 nine_patch_stretch = true
 texture_progress = ExtResource("9_s3meg")
 tint_progress = Color(0.34902, 0.756863, 0.207843, 1)
+
+[node name="HeatMultiplier" type="Label" parent="MonInfo"]
+offset_left = 293.0
+offset_top = 17.0
+offset_right = 314.0
+offset_bottom = 33.0
+text = "1.0x"
+
+[node name="ChillMultiplier" type="Label" parent="MonInfo"]
+offset_left = 293.0
+offset_top = 30.0
+offset_right = 314.0
+offset_bottom = 46.0
+text = "1.0x"
+
+[node name="VoltMultiplier" type="Label" parent="MonInfo"]
+offset_left = 293.0
+offset_top = 43.0
+offset_right = 314.0
+offset_bottom = 59.0
+text = "1.0x"
 
 [connection signal="pressed" from="XButton" to="." method="_on_exit_pressed"]

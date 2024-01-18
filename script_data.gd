@@ -308,7 +308,7 @@ var DO_BLOCK_LIST := [
 			return false
 		
 		var dmg_mult = 0.8
-		if mon.turn_count >= 5:
+		if mon.turn_count >= 4:
 			dmg_mult = 1.4
 		
 		target.apply_attack(mon, dmg_mult, MonData.DamageType.CHILL)
@@ -351,7 +351,7 @@ var DO_BLOCK_LIST := [
 		return true
 		),
 	
-	Block.new(Block.Type.DO, "SpikOR", Block.Type.TO, "Attack a mon for 60% damage (125% damage instead if that mon has LEAK or above 80% HP.)",
+	Block.new(Block.Type.DO, "SpikOR", Block.Type.TO, "Attack a mon for 60% damage (125% damage instead if that mon has LEAK or is above 80% HP.)",
 	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, action_name_box: BattleActionNameBox, animator: BattleAnimator) -> bool:
 		var leak_condition = target.statuses[BattleMon.Status.LEAK]
 		var health_condition = float(target.current_health) / target.max_health >= 0.8

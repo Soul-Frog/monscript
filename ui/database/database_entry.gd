@@ -83,6 +83,15 @@ func get_defense_bar_value():
 func get_speed_bar_value():
 	return MonData.get_speed_percentile_for(mon_type)
 
+func get_heat_multiplier():
+	return MonData.get_damage_multiplier_for(mon_type, MonData.DamageType.HEAT)
+
+func get_chill_multiplier():
+	return MonData.get_damage_multiplier_for(mon_type, MonData.DamageType.CHILL)
+
+func get_volt_multiplier():
+	return MonData.get_damage_multiplier_for(mon_type, MonData.DamageType.VOLT)
+
 func is_compiled():
 	return $Free/ProgressBar.value == $Free/ProgressBar.max_value
 
