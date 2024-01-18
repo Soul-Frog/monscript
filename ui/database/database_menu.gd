@@ -20,6 +20,10 @@ const PASSIVE_DESCRIPTION_FORMAT = "%s"
 const BAR_BUFFER = 10
 
 func _ready() -> void:
+	for placeholder in $DatabaseScroll/Database.get_children():
+		$DatabaseScroll/Database.remove_child(placeholder)
+		placeholder.queue_free()
+	
 	# create the database entries, one for each mon type
 	for montype in MonData.MonType.values():
 			if montype == MonData.MonType.NONE:
@@ -37,9 +41,9 @@ func _input(_event) -> void:
 		_on_exit_pressed()
 
 func setup() -> void:
-	active_entry = null
-	for child in $MonInfo.get_children():
-		child.visible = false
+	#active_entry = null
+	#for child in $MonInfo.get_children():
+	#	child.visible = false
 	for entry in $DatabaseScroll/Database.get_children():
 		entry.refresh() # update progress values of each entry
 	_update_completion()

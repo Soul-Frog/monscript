@@ -107,7 +107,7 @@ func _on_text_submitted(txt):
 		_on_text_submitted("unlockcompilation")
 		_on_text_submitted("unlockallblocks")
 	# unlock all compilation progress
-	elif cmd == "unlockcompilation":
+	elif cmd == "unlockcompilation" or cmd == "unlockallmons" or cmd == "unlockmons":
 		for mon_type in GameData.decompilation_progress_per_mon.keys():
 			GameData.decompilation_progress_per_mon[mon_type] = MonData.get_decompilation_progress_required_for(mon_type)
 	# unlocks all IF/TO blocks

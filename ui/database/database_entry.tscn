@@ -64,6 +64,7 @@ offset_right = 153.0
 offset_bottom = 33.0
 texture_under = ExtResource("2_kcf8x")
 texture_progress = ExtResource("3_p6m86")
+texture_progress_offset = Vector2(2, 2)
 
 [node name="Percentage" type="Label" parent="Free"]
 offset_left = 41.0

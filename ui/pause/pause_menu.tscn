@@ -72,46 +72,21 @@ theme_override_constants/separation = 0
 [node name="DatabaseButton" type="Button" parent="Buttons"]
 layout_mode = 2
 size_flags_horizontal = 3
-script = ExtResource("12_ya3ju")
-
-[node name="Label" type="Label" parent="Buttons/DatabaseButton"]
-layout_mode = 0
-offset_left = 1.0
-offset_top = 1.0
-offset_right = 102.0
-offset_bottom = 23.0
 text = "Database"
-horizontal_alignment = 1
-vertical_alignment = 1
+script = ExtResource("12_ya3ju")
 
 [node name="SaveButton" type="Button" parent="Buttons"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
-script = ExtResource("12_ya3ju")
-
-[node name="Label" type="Label" parent="Buttons/SaveButton"]
-layout_mode = 0
-offset_top = 1.0
-offset_right = 102.0
-offset_bottom = 23.0
 text = "Save"
-horizontal_alignment = 1
-vertical_alignment = 1
+script = ExtResource("12_ya3ju")
 
 [node name="SettingsButton" type="Button" parent="Buttons"]
 layout_mode = 2
 size_flags_horizontal = 3
-script = ExtResource("12_ya3ju")
-
-[node name="Label" type="Label" parent="Buttons/SettingsButton"]
-layout_mode = 0
-offset_left = 1.0
-offset_top = 1.0
-offset_right = 103.0
-offset_bottom = 23.0
 text = "Settings"
-horizontal_alignment = 1
-vertical_alignment = 1
+script = ExtResource("12_ya3ju")
 
 [node name="Storage" type="Node2D" parent="."]
 position = Vector2(49, 97)
