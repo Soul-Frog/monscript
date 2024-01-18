@@ -137,7 +137,7 @@ func _ready():
 	clear_battle();
 
 # Helper function which creates and connects signals for BattleMon
-func _create_and_setup_mon(base_mon, teamNode, pos, monblock, team):
+func _create_and_setup_mon(base_mon: MonData.Mon, teamNode, pos, monblock, team: Team):
 	var new_mon = load(base_mon.get_scene_path()).instantiate()
 	new_mon.z_index = MON_Z
 	new_mon.add_to_group("battle_speed_scaled")
