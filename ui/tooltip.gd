@@ -61,6 +61,9 @@ static func create_manual(source: Control, text: String, global_mouse_position: 
 	# note - tags like bold will not work yet; need smarter handling RIGHT HERE if desired
 	# see https://github.com/godotengine/godot-proposals/issues/5056 comments for a handler
 	
+	var font = tooltip.get_theme().get_default_font()
+	var font_size = tooltip.get_theme().get_default_font_size()
+	
 	# the text does not contain \n, automatically break the text and format a nice tooltip.
 	if not text_no_tags.contains("\n"):
 		# calculate a reasonable tooltip size
@@ -69,12 +72,12 @@ static func create_manual(source: Control, text: String, global_mouse_position: 
 		var words = text_no_tags.split(" ", false)
 		var first_line = ""
 		for word in words:
-			var text_length := tooltip.get_theme().get_default_font().get_string_size(first_line).x
+			var text_length := font.get_string_size(first_line, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
 			if text_length > _MAX_WIDTH_THRESHOLD:
 				break
 			first_line += word + " "
 		
-		label.custom_minimum_size.x = tooltip.get_theme().get_default_font().get_string_size(first_line).x
+		label.custom_minimum_size.x = font.get_string_size(first_line, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
 	# otherwise set the tooltip size based on the longest line
 	else:
 		var longest_line_size = -1

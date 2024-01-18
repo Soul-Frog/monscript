@@ -320,6 +320,6 @@ horizontal_alignment = 1
 [connection signal="pressed" from="XButton" to="." method="_on_x_button_pressed"]
 [connection signal="mouse_entered" from="Bugs" to="." method="_on_bugs_mouse_entered"]
 [connection signal="pressed" from="SavePopup/ContinueButton" to="SavePopup" method="_on_yes_button_pressed"]
-[connection signal="pressed" from="SavePopup/QuitButton" to="SavePopup" method="_on_no_button_pressed"]
 [connection signal="pressed" from="SavePopup/QuitButton" to="SavePopup" method="_on_yes_button_pressed"]
+[connection signal="pressed" from="SavePopup/QuitButton" to="SavePopup" method="_on_no_button_pressed"]
 [connection signal="pressed" from="NoMonPopup/WhoopsButton" to="NoMonPopup" method="_on_yes_button_pressed"]
