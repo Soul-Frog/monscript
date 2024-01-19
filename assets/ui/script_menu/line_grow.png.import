@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cgxn7p7mrrvoc"
-path="res://.godot/imported/line_starter_hover.png-a96127abed4f25201abda014953c1e27.ctex"
+uid="uid://bfd0th4tvqih4"
+path="res://.godot/imported/line_grow.png-4a12f08fb1d81576e3db1044fbc82ef5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/script_menu/line_starter_hover.png"
-dest_files=["res://.godot/imported/line_starter_hover.png-a96127abed4f25201abda014953c1e27.ctex"]
+source_file="res://assets/ui/script_menu/line_grow.png"
+dest_files=["res://.godot/imported/line_grow.png-4a12f08fb1d81576e3db1044fbc82ef5.ctex"]
 
 [params]
 

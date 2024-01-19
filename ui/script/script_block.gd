@@ -51,8 +51,9 @@ func _set_block_name() -> void:
 func _update_size() -> void:
 	# change both size (for visuals) and custom minimum size (so container
 	# can't resize this to a smaller size)
-	$BlockClickable.custom_minimum_size.x = BASE_SIZE + $BlockClickable/Name.size.x
-	$BlockClickable.size.x = BASE_SIZE + $BlockClickable/Name.size.x
+	# +1 is for the border
+	$BlockClickable.custom_minimum_size.x = BASE_SIZE + $BlockClickable/Name.size.x + 3
+	$BlockClickable.size.x = BASE_SIZE + $BlockClickable/Name.size.x + 3
 	$BlockClickable/Background.custom_minimum_size.x = $BlockClickable.size.x
 	$BlockClickable/Background.size.x = $BlockClickable.size.x
 

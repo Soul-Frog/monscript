@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dwlmwmx4tf75k"
-path="res://.godot/imported/line_starter_pressed.png-10be556eefdc7e4e83d43fc8e85e269d.ctex"
+path="res://.godot/imported/line_grow_pressed.png-10e975e272dceaf95b9a0aec2938ff3e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ui/script_menu/line_starter_pressed.png"
-dest_files=["res://.godot/imported/line_starter_pressed.png-10be556eefdc7e4e83d43fc8e85e269d.ctex"]
+source_file="res://assets/ui/script_menu/line_grow_pressed.png"
+dest_files=["res://.godot/imported/line_grow_pressed.png-10e975e272dceaf95b9a0aec2938ff3e.ctex"]
 
 [params]
 

@@ -68,6 +68,9 @@ func setup(editing_mon: MonData.Mon) -> void:
 	_active_file_tab = 0
 	_active_drawer_tab = 0
 	
+	# update the name
+	$Title.text = "%s's Script" % mon.get_name()
+	
 	# cleanup the last time this menu was opened
 	# remove all existing blocks
 	Global.free_children(IF_DRAWER)

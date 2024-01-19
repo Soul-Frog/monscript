@@ -96,7 +96,7 @@ func _update_dropzone_indicators_and_validity() -> void:
 	else:
 		NUMBER_LABEL.add_theme_color_override("font_color", Global.COLOR_RED)
 	
-	# small visual fix; hides 1 pixel of spacing
+	# small visual fix; hides 2 pixels of spacing between line starter & dropzone
 	if BLOCKS.get_child_count() == 0:
 		BLOCK_CONTAINER.visible = false
 

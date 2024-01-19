@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://fgdwcdg1tdkg"]
 
-[ext_resource type="Texture2D" uid="uid://bfd0th4tvqih4" path="res://assets/ui/script_menu/line_starter.png" id="1_i48si"]
+[ext_resource type="Texture2D" uid="uid://b5jptw7ce81jl" path="res://assets/ui/script_menu/line_starter.png" id="1_i48si"]
 [ext_resource type="Script" path="res://ui/script/script_line.gd" id="1_okkuo"]
 [ext_resource type="Texture2D" uid="uid://b3ibygh8fax53" path="res://assets/outline9patch.png" id="3_igbdb"]
 [ext_resource type="PackedScene" uid="uid://bgw7lgyhxr3ep" path="res://decorators/global_fade_decorator.tscn" id="4_simq8"]
@@ -20,6 +20,7 @@ theme_override_constants/separation = 0
 [node name="StarterMargin" type="MarginContainer" parent="HBox"]
 layout_mode = 2
 mouse_filter = 2
+theme_override_constants/margin_left = 1
 theme_override_constants/margin_top = 1
 theme_override_constants/margin_right = 1
 theme_override_constants/margin_bottom = 1
@@ -42,7 +43,7 @@ horizontal_alignment = 1
 [node name="BlockMargin" type="MarginContainer" parent="HBox"]
 visible = false
 layout_mode = 2
-theme_override_constants/margin_right = 1
+theme_override_constants/margin_right = 2
 
 [node name="Blocks" type="HBoxContainer" parent="HBox/BlockMargin"]
 layout_mode = 2
@@ -50,8 +51,8 @@ theme_override_constants/separation = 1
 
 [node name="DropzoneMargin" type="MarginContainer" parent="HBox"]
 layout_mode = 2
-theme_override_constants/margin_top = 2
-theme_override_constants/margin_bottom = 2
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_bottom = 1
 
 [node name="Dropzone" type="VBoxContainer" parent="HBox/DropzoneMargin"]
 layout_mode = 2
