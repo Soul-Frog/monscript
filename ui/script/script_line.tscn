@@ -21,6 +21,7 @@ theme_override_constants/separation = 0
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
 theme_override_constants/margin_bottom = 1
 
 [node name="Starter" type="TextureRect" parent="HBox/StarterMargin"]
@@ -34,7 +35,7 @@ layout_mode = 0
 offset_left = 3.0
 offset_top = -1.0
 offset_right = 15.0
-offset_bottom = 13.0
+offset_bottom = 15.0
 text = "NN"
 horizontal_alignment = 1
 

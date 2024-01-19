@@ -5,6 +5,7 @@ var _mouse_over := false
 func _ready():
 	get_parent().mouse_entered.connect(_on_mouse_entered)
 	get_parent().mouse_exited.connect(_on_mouse_exited)
+	get_parent().hidden.connect(_on_mouse_exited)
 
 func _on_mouse_entered() -> void:
 	_mouse_over = true

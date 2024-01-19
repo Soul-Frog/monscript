@@ -159,7 +159,7 @@ func _on_starter_clicked() -> void:
 	if _edit_disabled:
 		return
 	
-	# don't emit if anything is currently beind held
+	# don't emit if anything is currently being held
 	if held_blocks.size() == 0:
 		var starter_position = STARTER.global_position
 		
