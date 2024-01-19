@@ -59,9 +59,12 @@ func _physics_process(delta):
 		if _forced_movement and _forced_direction_vector.x != 0:
 			direction = _forced_direction_vector.x
 		
+		
 		if direction != 0:
-			_SPRITE.play("walk")
 			_SPRITE.flip_h = direction < 0
+		
+		if direction != 0 and not is_swimming:
+			_SPRITE.play("walk")
 		else:
 			_SPRITE.play("stand")
 		

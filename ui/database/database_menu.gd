@@ -16,9 +16,6 @@ const PASSIVE_NAME_FORMAT = "[center]%s[/center]"
 const SPECIAL_DESCRIPTION_FORMAT = "%s"
 const PASSIVE_DESCRIPTION_FORMAT = "%s"
 
-# a little bit extra added to each bar; makes it so it always shows at least a little green
-const BAR_BUFFER = 10
-
 func _ready() -> void:
 	for placeholder in $DatabaseScroll/Database.get_children():
 		$DatabaseScroll/Database.remove_child(placeholder)
@@ -70,10 +67,10 @@ func _on_entry_clicked(entry: DatabaseEntry) -> void:
 	$MonInfo/PassiveNameLabel.text = PASSIVE_NAME_FORMAT % active_entry.get_passive_name()
 	$MonInfo/PassiveDescriptionLabel.text = PASSIVE_DESCRIPTION_FORMAT % active_entry.get_passive_description()
 	$MonInfo/SpriteContainer/MonSprite.texture = active_entry.get_sprite()
-	$MonInfo/HealthBar.value = active_entry.get_health_bar_value() + BAR_BUFFER
-	$MonInfo/AttackBar.value = active_entry.get_attack_bar_value() + BAR_BUFFER
-	$MonInfo/DefenseBar.value = active_entry.get_defense_bar_value() + BAR_BUFFER
-	$MonInfo/SpeedBar.value = active_entry.get_speed_bar_value() + BAR_BUFFER
+	$MonInfo/HealthBar.value = active_entry.get_health_bar_value()
+	$MonInfo/AttackBar.value = active_entry.get_attack_bar_value()
+	$MonInfo/DefenseBar.value = active_entry.get_defense_bar_value()
+	$MonInfo/SpeedBar.value = active_entry.get_speed_bar_value()
 	
 	var update_multiplier = func(multiplier_value: float, label: Label):
 		label.modulate = Color.WHITE if multiplier_value == 1.0 else (Color.LIGHT_SKY_BLUE if multiplier_value <= 1.0 else Color.LIGHT_CORAL)	
