@@ -53,16 +53,17 @@ centered = false
 
 [node name="Title" type="Label" parent="."]
 offset_left = 5.0
-offset_right = 113.0
-offset_bottom = 14.0
+offset_right = 114.0
+offset_bottom = 16.0
 theme_override_font_sizes/font_size = 16
 text = "Magnetfrog's Script"
+horizontal_alignment = 1
 
 [node name="ScriptScroll" type="ScrollContainer" parent="."]
 offset_left = 5.0
 offset_top = 16.0
 offset_right = 315.0
-offset_bottom = 117.0
+offset_bottom = 121.0
 size_flags_horizontal = 3
 theme = ExtResource("3_vu3o2")
 horizontal_scroll_mode = 3
@@ -167,6 +168,7 @@ text = "File 3"
 horizontal_alignment = 1
 
 [node name="BlockDrawer" type="Node2D" parent="."]
+position = Vector2(0, 3)
 
 [node name="Drawers" type="Node2D" parent="BlockDrawer"]
 
@@ -332,9 +334,9 @@ texture_hover = ExtResource("34_0512m")
 
 [node name="LineLimitLabel" type="Label" parent="."]
 offset_left = 191.0
-offset_top = 102.0
+offset_top = 106.0
 offset_right = 293.0
-offset_bottom = 116.0
+offset_bottom = 122.0
 text = "Line Limit Text"
 horizontal_alignment = 2
 script = ExtResource("39_5ys6j")
