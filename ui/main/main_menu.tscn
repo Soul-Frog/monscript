@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://bqh1k7h8c6yi2"]
+[gd_scene load_steps=4 format=3 uid="uid://bqh1k7h8c6yi2"]
 
 [ext_resource type="Script" path="res://ui/main/main_menu.gd" id="1_ehsb3"]
 [ext_resource type="Texture2D" uid="uid://daec1lljd8gfy" path="res://assets/ui/main_menu/main_menu.png" id="1_ox4se"]
-[ext_resource type="PackedScene" uid="uid://ct27r3y3ao3um" path="res://decorators/fade_decorator.tscn" id="2_6xhxi"]
 [ext_resource type="Script" path="res://ui/main/menu_text_option.gd" id="2_fe8mi"]
 
 [node name="MainMenu" type="Node2D"]
@@ -94,11 +93,6 @@ offset_right = 316.0
 offset_bottom = 181.0
 text = "v0.0.0"
 horizontal_alignment = 2
-
-[node name="Fade" parent="." instance=ExtResource("2_6xhxi")]
-autostart = true
-autostart_effect_type = 2
-fade_speed = 1.6
 
 [connection signal="clicked" from="Options/Continue" to="." method="_on_continue_clicked"]
 [connection signal="clicked" from="Options/NewGame" to="." method="_on_new_game_clicked"]
