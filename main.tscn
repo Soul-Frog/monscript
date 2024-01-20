@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bjs0uf6g07yax"]
+[gd_scene load_steps=10 format=3 uid="uid://bjs0uf6g07yax"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_sv5wa"]
 [ext_resource type="PackedScene" uid="uid://ca2l5wqdhsgdf" path="res://overworld/overworld.tscn" id="2_kjijl"]
@@ -8,11 +8,17 @@
 [ext_resource type="PackedScene" uid="uid://bm5tklk7abl5" path="res://ui/database/database_menu.tscn" id="6_yfjpu"]
 [ext_resource type="PackedScene" uid="uid://d00rb06jyy6qd" path="res://ui/intro/visual_novel.tscn" id="7_s1av8"]
 [ext_resource type="PackedScene" uid="uid://bqh1k7h8c6yi2" path="res://ui/main/main_menu.tscn" id="8_02s72"]
-[ext_resource type="PackedScene" uid="uid://ct27r3y3ao3um" path="res://decorators/fade_decorator.tscn" id="8_h4geq"]
 [ext_resource type="PackedScene" uid="uid://cwa8fi3cy5vut" path="res://debug/debug_console.tscn" id="9_4qxol"]
 
 [node name="Main" type="Node2D" groups=["main"]]
 script = ExtResource("1_sv5wa")
+
+[node name="BG" type="ColorRect" parent="."]
+offset_left = -67.0
+offset_top = -18.0
+offset_right = 364.0
+offset_bottom = 219.0
+color = Color(0, 0, 0, 1)
 
 [node name="Scene" type="Node2D" parent="."]
 
@@ -31,13 +37,6 @@ script = ExtResource("1_sv5wa")
 [node name="VisualNovel" parent="Scene/Scenes" instance=ExtResource("7_s1av8")]
 
 [node name="MainMenu" parent="Scene/Scenes" instance=ExtResource("8_02s72")]
-
-[node name="StandardFade" parent="Scene" instance=ExtResource("8_h4geq")]
-fade_speed = 20.0
-
-[node name="MainMenuFade" parent="Scene" instance=ExtResource("8_h4geq")]
-fade_speed = 1.5
-fade_out_hangtime = 2.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

@@ -40,6 +40,7 @@ const FILE_LABEL_INVALID_COLOR_UNSELECTED = Global.COLOR_DARK_RED
 @onready var HELD = $Held
 @onready var CLEAR_POPUP = $ClearPopup
 @onready var EXIT_POPUP = $ExitPopup
+@onready var TITLE = $Title
 
 func _ready() -> void:
 	assert(SCRIPT_SCROLL != null)
@@ -69,7 +70,7 @@ func setup(editing_mon: MonData.Mon) -> void:
 	_active_drawer_tab = 0
 	
 	# update the name
-	$Title.text = "%s's Script" % mon.get_name()
+	TITLE.text = "%s's Script" % mon.get_name()
 	
 	# cleanup the last time this menu was opened
 	# remove all existing blocks
