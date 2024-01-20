@@ -20,21 +20,19 @@ func _ready():
 	_FADE.modulate.a = 0.0
 
 # play a transition effect
-func play(screen_position: Vector2, effect: Effect) -> void:
+func play(effect: Effect) -> void:
 	_is_playing = true
-	
-	position = screen_position
 	
 	match effect:
 		Effect.QUICK_FADE_OUT:
 			await _fade_out(0.06, 0.0)
 		Effect.FADE_OUT:
-			await _fade_out(0.3, 0.0)
+			await _fade_out(0.15, 0.0)
 		Effect.SLOW_FADE_OUT_AND_WAIT:
 			await _fade_out(2.0, 5.0)
 		
 		Effect.FADE_IN:
-			await _fade_in(0.3)
+			await _fade_in(0.15)
 		Effect.QUICK_FADE_IN:
 			await _fade_in(0.06)
 	

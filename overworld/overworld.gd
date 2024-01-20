@@ -20,8 +20,7 @@ func _on_area_changed(new_area: GameData.Area, new_spawn_point: Variant, skip_fa
 	current_area.get_player().disable_movement()
 	
 	if not skip_fade:
-		$FadeDecorator.fade_out()
-		await $FadeDecorator.fade_out_done
+		await TransitionPlayer.play(TransitionPlayer.Effect.FADE_OUT)
 	
 	# if new area is the different from current area...
 	if current_area.scene_file_path != GameData.path_for_area(new_area):
@@ -38,7 +37,7 @@ func _on_area_changed(new_area: GameData.Area, new_spawn_point: Variant, skip_fa
 	current_area.get_player().disable_movement() #this line is necessary to prevent some weird physics bug
 	current_area.move_player_to(new_spawn_point)
 	
-	$FadeDecorator.fade_in()
-	await $FadeDecorator.fade_in_done
+	if not skip_fade:
+		await TransitionPlayer.play(TransitionPlayer.Effect.FADE_IN)
 	
 	current_area.get_player().enable_movement()

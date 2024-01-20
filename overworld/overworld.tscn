@@ -1,18 +1,20 @@
-[gd_scene load_steps=5 format=3 uid="uid://ca2l5wqdhsgdf"]
+[gd_scene load_steps=4 format=3 uid="uid://ca2l5wqdhsgdf"]
 
 [ext_resource type="PackedScene" uid="uid://clrokgdo0bo4a" path="res://overworld/areas/coolant_cave/cave1_beach.tscn" id="1_wwtbh"]
 [ext_resource type="Script" path="res://overworld/overworld.gd" id="1_xol28"]
 [ext_resource type="PackedScene" uid="uid://diodlu0baosyk" path="res://debug/debug_tool.tscn" id="3_4wxtj"]
-[ext_resource type="Script" path="res://decorators/fade_decorator.gd" id="4_i0iam"]
 
 [node name="Overworld" type="Node2D"]
 script = ExtResource("1_xol28")
 
+[node name="BG" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(320, 180)
+offset_left = -300000.0
+offset_top = -300000.0
+offset_right = 300000.0
+offset_bottom = 300000.0
+color = Color(0, 0, 0, 1)
+
 [node name="Area" parent="." instance=ExtResource("1_wwtbh")]
 
 [node name="DebugTool" parent="." instance=ExtResource("3_4wxtj")]
-
-[node name="FadeDecorator" type="Node" parent="."]
-script = ExtResource("4_i0iam")
-fade_speed = 6.0
-fade_out_hangtime = 0.25

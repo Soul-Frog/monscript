@@ -40,6 +40,8 @@ func enable_movement() -> void:
 	
 func disable_movement() -> void:
 	_can_move = false
+	if _SPRITE:
+		_SPRITE.play("stand") #make sprite stand still while disabled
 
 func enable_battle_collision() -> void:
 	_BATTLE_COLLISION.monitoring = true

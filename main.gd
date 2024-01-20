@@ -46,7 +46,7 @@ func _switch_to_scene(new_scene: Node, fade_out_effect, fade_in_effect) -> void:
 	Global.recursive_set_processes(old_scene, false)
 	
 	# fade out and wait for that to complete
-	await TransitionPlayer.play(global_position, fade_out_effect)
+	await TransitionPlayer.play(fade_out_effect)
 	
 	$Scene/Scenes.call_deferred("remove_child", active_scene)
 	$Scene/Scenes.call_deferred("add_child", new_scene)
@@ -56,7 +56,7 @@ func _switch_to_scene(new_scene: Node, fade_out_effect, fade_in_effect) -> void:
 	Global.recursive_set_processes(old_scene, true)
 	
 	# fade back in
-	TransitionPlayer.play(global_position, fade_in_effect)
+	TransitionPlayer.play(fade_in_effect)
 
 func _on_debug_console_debug_console_opened() -> void:
 	assert(get_tree().paused == false)
@@ -70,8 +70,10 @@ func _on_battle_started(computer_encounter_team: Array) -> void:
 	# this check is necessary to prevent bugs when
 	# multiple battle start on the same frame (stacked enemies)
 	if active_scene != BATTLE: 
-		BATTLE.setup_battle(GameData.team, computer_encounter_team, OVERWORLD.current_area.battle_background)
 		await _switch_to_scene(BATTLE, TransitionPlayer.Effect.FADE_OUT, TransitionPlayer.Effect.FADE_IN)
+		
+		# not quite sure why this needs to be behind _switch_to_scene, sorta a $HACK$ tbh
+		BATTLE.setup_battle(GameData.team, computer_encounter_team, OVERWORLD.current_area.battle_background)
 
 func _on_battle_ended(battle_result: BattleData.BattleResult) -> void:
 	assert(battle_result.end_condition != BattleData.BattleEndCondition.NONE, "End condition was not set before battle ended.")
