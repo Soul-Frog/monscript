@@ -86,6 +86,7 @@ var decompilation_progress_per_mon := {} # MonType -> int; maps MonType to unloc
 var _block_unlock_map := {} # tracks which blocks have been unlocked for use in the script editor
 var inject_points = 0
 var bug_inventory = {} # dictionary of owned bugs (BugData.Type -> int)
+var cutscenes_played = [] # array of cutscene IDs that have already been played
 
 # returns a variable, or null if that variable is not set
 func get_var(variable_name: String):
@@ -192,6 +193,10 @@ func save_game():
 	for block in _block_unlock_map:
 		save_dict["block_unlocked_%s" % block.name] = _block_unlock_map[block]
 	
+	# save the cutscenes that have been played
+	for scene_name in CutscenePlayer.CutsceneID.keys():
+		save_dict["played_cutscene_%s" % scene_name] = cutscenes_played.has(CutscenePlayer.CutsceneID[scene_name])
+	
 	# convert to json
 	var json = JSON.stringify(save_dict)
 	
@@ -246,6 +251,11 @@ func load_game():
 		var key = "block_unlocked_%s" % block.name
 		if save_dict.has(key):
 			_block_unlock_map[ScriptData.get_block_by_name(block.name)] = save_dict[key]
+	
+	# mark cutscenes which have already been played
+	for scene_name in CutscenePlayer.CutsceneID.keys():
+		if save_dict["played_cutscene_%s" % scene_name] != false:
+			cutscenes_played.append(CutscenePlayer.CutsceneID[scene_name])
 	
 	# set the player's position and area
 	#Events.area_changed.emit(save_dict["current_area"], Vector2(save_dict["player_x"], save_dict["player_y"]), true)

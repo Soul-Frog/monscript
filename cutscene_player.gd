@@ -1,11 +1,12 @@
 extends Node
 
 enum CutsceneID {
-	INTRO
+	UNSET, INTRO_OLD, TEST
 }
 
 var _ID_TO_CUTSCENE_MAP := {
-	CutsceneID.INTRO : _CUTSCENE_INTRODUCTION
+	CutsceneID.INTRO_OLD : _CUTSCENE_INTRODUCTION_OLD,
+	CutsceneID.TEST : _CUTSCENE_TEST
 }
 
 # plays a cutscene with the given id in the given node 
@@ -13,11 +14,21 @@ var _ID_TO_CUTSCENE_MAP := {
 # note that for most cutscenes, this must be the correct area/scene.
 func play_cutscene(id: CutsceneID, node: Node):
 	assert(_ID_TO_CUTSCENE_MAP.has(id))
+	assert(not GameData.cutscenes_played.has(id))
+	
 	await _ID_TO_CUTSCENE_MAP[id].call(node)
+	
+	# mark that this cutscene has been played
+	# for now, treat all cutscenes as oneshot; may need to add more flexability later
+	GameData.cutscenes_played.append(id)
+
+func _CUTSCENE_TEST(area: Node) -> void:
+	assert(area is Area)
+	print("Hello!")
 
 #the introductory cutscnee in the visual novel node
 #plays at the start of the game
-func _CUTSCENE_INTRODUCTION(vn: Node):
+func _CUTSCENE_INTRODUCTION_OLD(vn: Node):
 	assert(vn is VisualNovel)
 
 	# open the initial dialogue in classroom

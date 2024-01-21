@@ -7,26 +7,30 @@ extends Node2D
 
 var _overworld_encounter_battling_with = null
 
-@onready var _PLAYER = $Entities/Player
-@onready var _CAMERA = $Entities/Player/Camera2D
+@onready var PLAYER = $Entities/Player
+@onready var CAMERA = $Entities/Player/Camera2D
 @onready var _MAP = $Base/Map
-@onready var _OVERWORLD_ENCOUNTERS = $Entities/OverworldEncounters
-@onready var _POINTS = $Data/Points
+@onready var OVERWORLD_ENCOUNTERS = $Entities/OverworldEncounters
+@onready var POINTS = $Data/Points
 
 func _ready():
 	assert(not area_enum == GameData.Area.NONE, "Did not assign area_enum in editor.")
 	assert(not battle_background == BattleData.Background.UNDEFINED, "Did not assign battle background in editor.")
 	assert(camera_zoom > 0 and camera_zoom <= 5, "Be sane with the camera zoom level. (ok 5 is NOT sane BUT..)")
-	assert(_PLAYER)
-	assert(_CAMERA)
+	assert(PLAYER)
+	assert(CAMERA)
 	assert(_MAP)
-	assert(_OVERWORLD_ENCOUNTERS)
-	assert(_POINTS)
+	assert(OVERWORLD_ENCOUNTERS)
+	assert(POINTS)
 	
-	_CAMERA.set_limits(_MAP)
-	_CAMERA.zoom.x = camera_zoom
-	_CAMERA.zoom.y = camera_zoom
+	CAMERA.set_limits(_MAP)
+	CAMERA.zoom.x = camera_zoom
+	CAMERA.zoom.y = camera_zoom
 	Events.collided_with_overworld_encounter.connect(_on_overworld_encounter_collided_with_player)
+	
+	if find_child("Data") and find_child("Data").find_child("CutsceneTriggers"):
+		for child in $Data/CutsceneTriggers.get_children():
+			child.play_cutscene.connect(_on_play_cutscene)
 
 func _on_overworld_encounter_collided_with_player(overworld_encounter_collided_with):
 	_overworld_encounter_battling_with = overworld_encounter_collided_with
@@ -35,11 +39,11 @@ func handle_battle_results(battle_end_condition):
 	assert(_overworld_encounter_battling_with != null, "Must be battling against an overworld mon!")
 	assert(battle_end_condition != BattleData.BattleEndCondition.NONE, "Battle end condition was not set.")
 	if battle_end_condition == BattleData.BattleEndCondition.WIN:
-		_OVERWORLD_ENCOUNTERS.remove_child(_overworld_encounter_battling_with)
+		OVERWORLD_ENCOUNTERS.remove_child(_overworld_encounter_battling_with)
 		_overworld_encounter_battling_with.queue_free()
 	
 	if battle_end_condition == BattleData.BattleEndCondition.ESCAPE or battle_end_condition == BattleData.BattleEndCondition.WIN:
-		_PLAYER.activate_invincibility(battle_end_condition)
+		PLAYER.activate_invincibility(battle_end_condition)
 
 # new_spawn_point may be a String (a point in the new area) or a Vector2 (a position)
 func move_player_to(destination_point: Variant) -> void:
@@ -59,3 +63,6 @@ func move_player_to(destination_point: Variant) -> void:
 func get_player():
 	# needs to be hardcoded to work during area transitions
 	return $Entities/Player
+
+func _on_play_cutscene(id: CutscenePlayer.CutsceneID) -> void:
+	CutscenePlayer.play_cutscene(id, self)
