@@ -1,6 +1,6 @@
 #base class for all overworld mons
-extends CharacterBody2D
 class_name OverworldMon
+extends MonScene
 
 # the mons in this battle composition
 @export_group("Mons")

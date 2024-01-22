@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://conqj70b6ouir"]
+[gd_scene load_steps=24 format=3 uid="uid://conqj70b6ouir"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_1crr8"]
 [ext_resource type="Texture2D" uid="uid://drfvc5n36jass" path="res://assets/maps/coolant_cave/cave2_entrance/cave2.png" id="2_l834j"]
@@ -20,6 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://dm1epg70fkia2" path="res://mons/orchin.tscn" id="15_c7tfi"]
 [ext_resource type="Texture2D" uid="uid://bb7yokb2yw0dv" path="res://assets/sprites/objects/gateway.png" id="18_b6w6p"]
 [ext_resource type="PackedScene" uid="uid://cooanm8l6tpwi" path="res://overworld/interactables/save_memstick.tscn" id="20_hok6v"]
+[ext_resource type="Script" path="res://overworld/areas/cutscene_trigger_zone.gd" id="20_nk0ya"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mkqcf"]
 size = Vector2(88, 11)
@@ -220,6 +221,7 @@ mon4Type = 0
 mon4Level = 0
 
 [node name="Data" type="Node2D" parent="."]
+z_index = 300
 
 [node name="Collision" type="StaticBody2D" parent="Data"]
 visible = false
@@ -386,6 +388,15 @@ position = Vector2(68, 127)
 [node name="Cave2Bottom" type="Node2D" parent="Data/Points"]
 position = Vector2(292, 748)
 
+[node name="CutsceneFirstBattlePlayer" type="Node2D" parent="Data/Points"]
+position = Vector2(272, 448)
+
+[node name="CutsceneFirstBattleBitleon" type="Node2D" parent="Data/Points"]
+position = Vector2(296, 432)
+
+[node name="CutsceneFirstBattleEncounter" type="Node2D" parent="Data/Points"]
+position = Vector2(288, 369)
+
 [node name="TransitionUp" type="Area2D" parent="Data"]
 visible = false
 collision_layer = 0
@@ -417,10 +428,22 @@ polygon = PackedVector2Array(33, 505.158, 99, 505.158, 99, 518.011, 33, 518.505)
 position = Vector2(5, -3)
 polygon = PackedVector2Array(482, 489, 512, 488, 510, 552, 476, 553)
 
+[node name="CutsceneTriggers" type="Node2D" parent="Data"]
+
+[node name="TestCutscene" type="Area2D" parent="Data/CutsceneTriggers"]
+collision_layer = 0
+script = ExtResource("20_nk0ya")
+id = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Data/CutsceneTriggers/TestCutscene"]
+position = Vector2(165, 385)
+polygon = PackedVector2Array(107, 95, 110, 104, 142, 104, 147, 95)
+
 [node name="SaveMemstick" parent="." instance=ExtResource("20_hok6v")]
-position = Vector2(276, 325)
+position = Vector2(76, 402)
 
 [connection signal="body_entered" from="Data/TransitionUp" to="Data/TransitionUp" method="_on_body_entered"]
 [connection signal="body_entered" from="Data/TransitionDown" to="Data/TransitionDown" method="_on_body_entered"]
+[connection signal="body_entered" from="Data/CutsceneTriggers/TestCutscene" to="Data/CutsceneTriggers/TestCutscene" method="_on_body_entered"]
 
 [editable path="Base/ForegroundElements/ForegroundElem"]

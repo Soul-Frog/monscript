@@ -1,0 +1,12 @@
+~ ERROR
+do Dialogue.ERROR("No corresponding tilde in dialogue file!")
+=> END
+
+~ cave2_first_battle_before_battle
+Bitleon: Wait... there's something up ahead.
+=> END
+
+~ cave2_first_battle_after_battle
+{{GameData.get_var(GameData.PLAYER_NAME)}}: What's that?
+Bitleon: f
+=> END

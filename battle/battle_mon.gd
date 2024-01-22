@@ -1,5 +1,5 @@
 class_name BattleMon
-extends CharacterBody2D
+extends MonScene
 
 # emitted when this mon's ap has been increased to max
 signal ready_to_take_action

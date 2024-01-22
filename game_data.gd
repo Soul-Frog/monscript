@@ -254,7 +254,8 @@ func load_game():
 	
 	# mark cutscenes which have already been played
 	for scene_name in CutscenePlayer.CutsceneID.keys():
-		if save_dict["played_cutscene_%s" % scene_name] != false:
+		var key = "played_cutscene_%s" % scene_name
+		if save_dict.has(key) and save_dict[key] != false:
 			cutscenes_played.append(CutscenePlayer.CutsceneID[scene_name])
 	
 	# set the player's position and area

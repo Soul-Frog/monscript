@@ -1,6 +1,8 @@
 class_name Player
 extends CharacterBody2D
 
+signal cutscene_reached_point
+
 @onready var _BATTLE_COLLISION = $BattleCollision
 @onready var _SPRITE = $Sprite
 
@@ -8,6 +10,9 @@ const _INVINCIBILITY_AFTER_ESCAPE_SECS := 2
 const _INVINCIBILITY_AFTER_WIN_SECS := 1
 var _is_invincible := false
 var _can_move := true # if the player can move
+
+var _in_cutscene := false
+var _cutscene_movement_point = null
 
 var _external_velocity := Vector2.ZERO # external forces acting upon the player (ie water currents/whirlpool)
 var _forced_movement := false # if a certain direction should be forced (ie, while sliding on ice, you can't stop holding a direction)
@@ -61,3 +66,20 @@ func apply_forced_movement(forced_direction: Vector2):
 func disable_forced_movement():
 	_forced_movement = false
 	_forced_direction_vector = Vector2(0, 0)
+
+func enable_cutscene_mode():
+	_in_cutscene = true
+
+func disable_cutscene_mode():
+	_in_cutscene = false
+
+func cutscene_move_towards_point(point: Node2D):
+	assert(_in_cutscene)
+	_cutscene_movement_point = point.position
+
+func face_left() -> void:
+	_SPRITE.flip_h = true
+
+func face_right() -> void:
+	_SPRITE.flip_h = false
+	

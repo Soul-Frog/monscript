@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://clrokgdo0bo4a"]
+[gd_scene load_steps=9 format=3 uid="uid://clrokgdo0bo4a"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_4sj54"]
 [ext_resource type="Texture2D" uid="uid://cknrucl6hnncy" path="res://assets/maps/coolant_cave/cave1_beach/fence.png" id="2_r844y"]
@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://b6va77lju8lb7" path="res://assets/maps/coolant_cave/cave1_beach/waves.png" id="4_hsrq7"]
 [ext_resource type="PackedScene" uid="uid://dfrab43qku35w" path="res://decorators/move_decorator.tscn" id="5_46txx"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/components/player_overhead.tscn" id="6_nx2l3"]
-[ext_resource type="Script" path="res://overworld/areas/cutscene_trigger_zone.gd" id="8_r56tj"]
 [ext_resource type="Script" path="res://overworld/components/warp.gd" id="9_a8npn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_80ub1"]
@@ -91,16 +90,3 @@ metadata/_edit_group_ = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Data/Warps/Warp"]
 position = Vector2(0.5, -1)
 shape = SubResource("RectangleShape2D_80ub1")
-
-[node name="CutsceneTriggers" type="Node2D" parent="Data"]
-
-[node name="TestCutscene" type="Area2D" parent="Data/CutsceneTriggers"]
-collision_layer = 0
-script = ExtResource("8_r56tj")
-id = 2
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Data/CutsceneTriggers/TestCutscene"]
-position = Vector2(6, 2)
-polygon = PackedVector2Array(109, 68, 110, 104, 148, 106, 145, 69)
-
-[connection signal="body_entered" from="Data/CutsceneTriggers/TestCutscene" to="Data/CutsceneTriggers/TestCutscene" method="_on_body_entered"]

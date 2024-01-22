@@ -107,7 +107,6 @@ func _physics_process(_delta):
 		if position.distance_to(target) < speed/75.0 or collided:
 			_start_idling()
 
-
 func _on_movement_timer_timeout():
 	assert(state == IDLE)
 	state = MOVING_SOON

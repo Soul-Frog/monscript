@@ -1,13 +1,15 @@
 extends Node
 
 enum CutsceneID {
-	UNSET, INTRO_OLD, TEST
+	UNSET, INTRO_OLD, CAVE2_FIRST_BATTLE
 }
 
 var _ID_TO_CUTSCENE_MAP := {
 	CutsceneID.INTRO_OLD : _CUTSCENE_INTRODUCTION_OLD,
-	CutsceneID.TEST : _CUTSCENE_TEST
+	CutsceneID.CAVE2_FIRST_BATTLE : _CUTSCENE_CAVE2_FIRST_BATTLE
 }
+
+const _DIALOGUE_FILE = preload("res://dialogue/cutscene.dialogue")
 
 # plays a cutscene with the given id in the given node 
 # (usually an area, but can be the visual novel scene)
@@ -16,15 +18,43 @@ func play_cutscene(id: CutsceneID, node: Node):
 	assert(_ID_TO_CUTSCENE_MAP.has(id))
 	assert(not GameData.cutscenes_played.has(id))
 	
-	await _ID_TO_CUTSCENE_MAP[id].call(node)
+	if node is Area:
+		node.PLAYER.enable_cutscene_mode()
 	
+	await _ID_TO_CUTSCENE_MAP[id].call(node)
+
 	# mark that this cutscene has been played
 	# for now, treat all cutscenes as oneshot; may need to add more flexability later
 	GameData.cutscenes_played.append(id)
 
-func _CUTSCENE_TEST(area: Node) -> void:
-	assert(area is Area)
-	print("Hello!")
+	if node is Area:
+		node.PLAYER.disable_cutscene_mode()
+
+func _CUTSCENE_CAVE2_FIRST_BATTLE(area: Node) -> void:
+	assert(area is Area and area.area_enum == GameData.Area.COOLANT_CAVE2_ENTRANCE)
+	
+	area.PLAYER.cutscene_move_towards_point(area.POINTS.find_child("CutsceneFirstBattlePlayer"))
+	await area.PLAYER.cutscene_reached_point
+	area.PLAYER.face_right()
+	#bitleon
+	
+	await Dialogue.play(_DIALOGUE_FILE, "cave2_first_battle_before_battle") # play the dialogue
+	
+	var camera_tween = create_tween()
+	camera_tween.tween_property(area.CAMERA, "position", area.CAMERA.position + Vector2(50, 50), 1.0)
+	camera_tween.tween_property(area.CAMERA, "position", area.CAMERA.position, 1.0)
+	await camera_tween.finished
+	
+	await Dialogue.play(_DIALOGUE_FILE, "cave2_first_battle_after_battle") # play the dialogue
+	
+	
+	
+	
+	#await Events.battle_ended
+	
+	print("woo!")
+	
+	
 
 #the introductory cutscnee in the visual novel node
 #plays at the start of the game
