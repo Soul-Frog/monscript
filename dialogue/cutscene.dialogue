@@ -6,7 +6,13 @@ do Dialogue.ERROR("No corresponding tilde in dialogue file!")
 Bitleon: Wait... there's something up ahead.
 => END
 
+~ cave2_first_battle_corrupted_mon
+Bitleon: That mon up there. Do you see it?
+Bitleon: That's what we called a 'corrupt' mon. 
+Bitleon: But don't worry, I'll handle this. Just watch!
+=> END
+
 ~ cave2_first_battle_after_battle
-{{GameData.get_var(GameData.PLAYER_NAME)}}: What's that?
-Bitleon: f
+Bitleon: Phew! Looks like I was more than a match for that one!
+{{GameData.get_var(GameData.PLAYER_NAME)}}: Good job Bitleon!
 => END

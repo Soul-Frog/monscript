@@ -66,7 +66,7 @@ func _on_debug_console_debug_console_closed() -> void:
 	assert(get_tree().paused == true)
 	get_tree().paused = false
 
-func _on_battle_started(computer_encounter_team: Array) -> void:
+func _on_battle_started(_overworld_encounter, computer_encounter_team: Array) -> void:
 	# this check is necessary to prevent bugs when
 	# multiple battle start on the same frame (stacked enemies)
 	if active_scene != BATTLE: 

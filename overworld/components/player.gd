@@ -1,7 +1,7 @@
 class_name Player
 extends CharacterBody2D
 
-signal cutscene_reached_point
+signal reached_point
 
 @onready var _BATTLE_COLLISION = $BattleCollision
 @onready var _SPRITE = $Sprite
@@ -26,9 +26,11 @@ func _ready():
 	assert(_BATTLE_COLLISION)
 
 func _on_area_2d_body_entered(overworld_encounter_collided_with):
+	if not overworld_encounter_collided_with is OverworldMon:
+		return
+	
 	if not _is_invincible: 
-		Events.emit_signal("collided_with_overworld_encounter", overworld_encounter_collided_with)
-		Events.emit_signal("battle_started", overworld_encounter_collided_with.mons)
+		Events.emit_signal("battle_started", overworld_encounter_collided_with, overworld_encounter_collided_with.mons)
 
 func activate_invincibility(battle_end_condition) -> void:
 	_is_invincible = true
@@ -73,7 +75,7 @@ func enable_cutscene_mode():
 func disable_cutscene_mode():
 	_in_cutscene = false
 
-func cutscene_move_towards_point(point: Node2D):
+func move_to_point(point: Node2D):
 	assert(_in_cutscene)
 	_cutscene_movement_point = point.position
 

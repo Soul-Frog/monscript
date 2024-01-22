@@ -7,8 +7,6 @@ enum {
 }
 
 @export_group("Overworld Movement")
-# mon's speed while moving
-@export var speed = 100
 # how far the mon is allowed to wander when moving
 @export var min_wander_range = 50
 @export var max_wander_range = 150
@@ -78,7 +76,7 @@ func _randomize_wander_target():
 		
 		# get direction vector and set velocity
 		var direction = (target - position).normalized()
-		velocity = speed * direction
+		velocity = SPEED * direction
 		state = MOVING
 		
 		success = true
@@ -104,7 +102,7 @@ func _physics_process(_delta):
 		_randomize_wander_target()
 	elif state == MOVING:
 		var collided = move_and_slide()
-		if position.distance_to(target) < speed/75.0 or collided:
+		if position.distance_to(target) < SPEED/75.0 or collided:
 			_start_idling()
 
 func _on_movement_timer_timeout():

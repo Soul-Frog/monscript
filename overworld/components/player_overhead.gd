@@ -36,7 +36,7 @@ func update_velocity():
 			
 			if at_correct_x and at_correct_y: # if we reached it, emit and set target to null
 				_cutscene_movement_point = null
-				emit_signal("cutscene_reached_point")
+				emit_signal("reached_point")
 			else: #otherwise move towards
 				if not at_correct_x:
 					if position.x < _cutscene_movement_point.x:

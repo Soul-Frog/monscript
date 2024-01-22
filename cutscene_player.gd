@@ -30,30 +30,53 @@ func play_cutscene(id: CutsceneID, node: Node):
 	if node is Area:
 		node.PLAYER.disable_cutscene_mode()
 
-func _CUTSCENE_CAVE2_FIRST_BATTLE(area: Node) -> void:
+func move_camera(camera: Camera2D, offset: Vector2, time: float) -> void:
+	var cam_tween = create_tween()
+	cam_tween.tween_property(camera, "position", camera.position + offset, time)
+	await cam_tween.finished
+
+func move_actor(actor, position) -> void:
+	actor.move_to_point(position)
+	await actor.reached_point
+
+func _CUTSCENE_CAVE2_FIRST_BATTLE(area: Area) -> void:
 	assert(area is Area and area.area_enum == GameData.Area.COOLANT_CAVE2_ENTRANCE)
 	
-	area.PLAYER.cutscene_move_towards_point(area.POINTS.find_child("CutsceneFirstBattlePlayer"))
-	await area.PLAYER.cutscene_reached_point
+	# add the overworld encounter
+	var gelif = load("res://mons/gelif.tscn").instantiate()
+	gelif.set_script(load("res://overworld/components/overworld_mons/overworld_mon.gd"))
+	gelif.mon1Type = MonData.MonType.GELIF
+	gelif.mon1Level = 0
+	gelif.position = area.POINTS.find_child("CutsceneFirstBattleGelif").position
+	area.OVERWORLD_ENCOUNTERS.call_deferred("add_child", gelif)
+	
+	await move_actor(area.PLAYER, area.POINTS.find_child("CutsceneFirstBattlePlayerBeforeBattle"))
 	area.PLAYER.face_right()
-	#bitleon
 	
-	await Dialogue.play(_DIALOGUE_FILE, "cave2_first_battle_before_battle") # play the dialogue
+	# create a bitleon and move him...
+	var bitleon = load("res://mons/bitleon.tscn").instantiate()
+	bitleon.position = area.PLAYER.position
+	area.add_child(bitleon)
+	await move_actor(bitleon, area.POINTS.find_child("CutsceneFirstBattleBitleon").position)
+	bitleon.face_left()
 	
-	var camera_tween = create_tween()
-	camera_tween.tween_property(area.CAMERA, "position", area.CAMERA.position + Vector2(50, 50), 1.0)
-	camera_tween.tween_property(area.CAMERA, "position", area.CAMERA.position, 1.0)
-	await camera_tween.finished
+	await Dialogue.play(_DIALOGUE_FILE, "cave2_first_battle_before_battle")
 	
-	await Dialogue.play(_DIALOGUE_FILE, "cave2_first_battle_after_battle") # play the dialogue
+	await move_camera(area.CAMERA, Vector2(0, -50), 1.0)
+	await Dialogue.play(_DIALOGUE_FILE, "cave2_first_battle_corrupted_mon")
+	
+	await move_actor(bitleon, area.POINTS.find_child("CutsceneFirstBattleGelif").position)
+	Events.emit_signal("battle_started", gelif, gelif.mons)
+	await Events.battle_ended
+	await Global.delay(0.5)
+	
+	await Dialogue.play(_DIALOGUE_FILE, "cave2_first_battle_after_battle")
 	
 	
+	move_camera(area.CAMERA, Vector2(0, 50), 1.0)
+	await move_actor(bitleon, area.PLAYER.position)
 	
-	
-	#await Events.battle_ended
-	
-	print("woo!")
-	
+	bitleon.queue_free()
 	
 
 #the introductory cutscnee in the visual novel node

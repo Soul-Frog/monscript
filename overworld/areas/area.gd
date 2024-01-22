@@ -26,21 +26,22 @@ func _ready():
 	CAMERA.set_limits(_MAP)
 	CAMERA.zoom.x = camera_zoom
 	CAMERA.zoom.y = camera_zoom
-	Events.collided_with_overworld_encounter.connect(_on_overworld_encounter_collided_with_player)
+	Events.battle_started.connect(_on_battle_started)
 	
 	if find_child("Data") and find_child("Data").find_child("CutsceneTriggers"):
 		for child in $Data/CutsceneTriggers.get_children():
 			child.play_cutscene.connect(_on_play_cutscene)
 
-func _on_overworld_encounter_collided_with_player(overworld_encounter_collided_with):
+func _on_battle_started(overworld_encounter_collided_with, battle_mons):
 	_overworld_encounter_battling_with = overworld_encounter_collided_with
 
 func handle_battle_results(battle_end_condition):
 	assert(_overworld_encounter_battling_with != null, "Must be battling against an overworld mon!")
 	assert(battle_end_condition != BattleData.BattleEndCondition.NONE, "Battle end condition was not set.")
 	if battle_end_condition == BattleData.BattleEndCondition.WIN:
-		OVERWORLD_ENCOUNTERS.remove_child(_overworld_encounter_battling_with)
-		_overworld_encounter_battling_with.queue_free()
+		if OVERWORLD_ENCOUNTERS.get_children().has(_overworld_encounter_battling_with):
+			OVERWORLD_ENCOUNTERS.remove_child(_overworld_encounter_battling_with)
+			_overworld_encounter_battling_with.queue_free()
 	
 	if battle_end_condition == BattleData.BattleEndCondition.ESCAPE or battle_end_condition == BattleData.BattleEndCondition.WIN:
 		PLAYER.activate_invincibility(battle_end_condition)

@@ -132,7 +132,6 @@ centered = false
 position = Vector2(65, 238)
 collision_mask = 532
 script = ExtResource("13_5rf1m")
-speed = 30
 min_wander_range = 30
 max_wander_range = 60
 min_time_between_movement = 3
@@ -150,7 +149,6 @@ mon4Level = 0
 position = Vector2(600, 490)
 collision_mask = 532
 script = ExtResource("13_5rf1m")
-speed = 30
 min_wander_range = 30
 max_wander_range = 80
 min_time_between_movement = 3
@@ -388,14 +386,17 @@ position = Vector2(68, 127)
 [node name="Cave2Bottom" type="Node2D" parent="Data/Points"]
 position = Vector2(292, 748)
 
-[node name="CutsceneFirstBattlePlayer" type="Node2D" parent="Data/Points"]
-position = Vector2(272, 448)
+[node name="CutsceneFirstBattlePlayerBeforeBattle" type="Node2D" parent="Data/Points"]
+position = Vector2(280, 448)
+
+[node name="CutsceneFirstBattlePlayerAfterBattle" type="Node2D" parent="Data/Points"]
+position = Vector2(280, 368)
 
 [node name="CutsceneFirstBattleBitleon" type="Node2D" parent="Data/Points"]
-position = Vector2(296, 432)
+position = Vector2(304, 424)
 
-[node name="CutsceneFirstBattleEncounter" type="Node2D" parent="Data/Points"]
-position = Vector2(288, 369)
+[node name="CutsceneFirstBattleGelif" type="Node2D" parent="Data/Points"]
+position = Vector2(296, 344)
 
 [node name="TransitionUp" type="Area2D" parent="Data"]
 visible = false
