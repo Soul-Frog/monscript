@@ -1,3 +1,4 @@
+class_name MovingText
 extends RichTextLabel
 
 enum Direction {

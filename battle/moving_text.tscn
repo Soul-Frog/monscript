@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://battle/moving_text.gd" id="1_m5bes"]
 
-[node name="MovingText" type="RichTextLabel" groups=["battle_speed_scaled"]]
+[node name="MovingText" type="RichTextLabel" groups=["battle_speed_scaled_label"]]
 z_index = 2250
 offset_left = -216.0
 offset_top = -8.0

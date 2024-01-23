@@ -1,5 +1,6 @@
 extends Node2D
 
+signal shown
 signal exit
 
 @onready var XP_PANEL = $XPPanel
@@ -189,6 +190,7 @@ func perform_results(battle_results: BattleData.BattleResult, bugs_earned: Array
 	slide_in.parallel().tween_property(BUGS_PANEL, "position:x", BUGS_PANEL.position.x - _SLIDE_IN_DISTANCE, 0.5).set_trans(Tween.TRANS_CUBIC)
 	slide_in.parallel().tween_property(DECOMPILATION_PANEL, "position:x", DECOMPILATION_PANEL.position.x - _SLIDE_IN_DISTANCE, 0.6).set_trans(Tween.TRANS_CUBIC)
 	await slide_in.finished
+	emit_signal("shown")
 	
 	_EXIT_BUTTON.disabled = false
 	

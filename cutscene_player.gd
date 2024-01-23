@@ -24,7 +24,7 @@ func play_cutscene(id: CutsceneID, node: Node):
 	await _ID_TO_CUTSCENE_MAP[id].call(node)
 
 	# mark that this cutscene has been played
-	# for now, treat all cutscenes as oneshot; may need to add more flexability later
+	# for now, treat all cutscenes as oneshot; may need to add more flexibility later
 	GameData.cutscenes_played.append(id)
 
 	if node is Area:
@@ -38,6 +38,21 @@ func move_camera(camera: Camera2D, offset: Vector2, time: float) -> void:
 func move_actor(actor, position) -> void:
 	actor.move_to_point(position)
 	await actor.reached_point
+
+func create_bitleon(area: Area) -> MonScene:
+	var bitleon = load("res://mons/bitleon.tscn").instantiate()
+	bitleon.position = area.PLAYER.position
+	area.add_child(bitleon)
+	bitleon.modulate.a = 0.0
+	bitleon.z_index = area.PLAYER.z_index - 1
+	create_tween().tween_property(bitleon, "modulate:a", 1.0, 0.1)
+	return bitleon
+
+func delete_bitleon(bitleon: MonScene) -> void:
+	var tween = create_tween()
+	tween.tween_property(bitleon, "modulate:a", 0.0, 0.1)
+	tween.tween_callback(bitleon.queue_free)
+	await tween.finished
 
 func _CUTSCENE_CAVE2_FIRST_BATTLE(area: Area) -> void:
 	assert(area is Area and area.area_enum == GameData.Area.COOLANT_CAVE2_ENTRANCE)
@@ -54,9 +69,7 @@ func _CUTSCENE_CAVE2_FIRST_BATTLE(area: Area) -> void:
 	area.PLAYER.face_right()
 	
 	# create a bitleon and move him...
-	var bitleon = load("res://mons/bitleon.tscn").instantiate()
-	bitleon.position = area.PLAYER.position
-	area.add_child(bitleon)
+	var bitleon = create_bitleon(area)
 	await move_actor(bitleon, area.POINTS.find_child("CutsceneFirstBattleBitleon").position)
 	bitleon.face_left()
 	
@@ -66,6 +79,7 @@ func _CUTSCENE_CAVE2_FIRST_BATTLE(area: Area) -> void:
 	await Dialogue.play(_DIALOGUE_FILE, "cave2_first_battle_corrupted_mon")
 	
 	await move_actor(bitleon, area.POINTS.find_child("CutsceneFirstBattleGelif").position)
+	GameData.queue_battle_cutscene(Battle.Cutscene.TUTORIAL_INTRO)
 	Events.emit_signal("battle_started", gelif, gelif.mons)
 	await Events.battle_ended
 	await Global.delay(0.5)
@@ -75,8 +89,7 @@ func _CUTSCENE_CAVE2_FIRST_BATTLE(area: Area) -> void:
 	
 	move_camera(area.CAMERA, Vector2(0, 50), 1.0)
 	await move_actor(bitleon, area.PLAYER.position)
-	
-	bitleon.queue_free()
+	await delete_bitleon(bitleon)
 	
 
 #the introductory cutscnee in the visual novel node

@@ -45,12 +45,18 @@ const PLAYER_NAME = "PlAYER_NAME"
 const LINE_LIMIT = "LINE_LIMIT"
 # Number of pages of mon storage in pause menu
 const STORAGE_PAGES = "STORAGE_PAGES"
-# Number of segments of the inject bar
-const MAX_INJECTS = "MAX_INJECTS"
 # Save area and position
 const RESPAWN_AREA = "RESPAWN_AREA"
 const RESPAWN_X = "RESPAWN_X"
 const RESPAWN_Y = "RESPAWN_Y"
+# if the player has unlocked various battle features
+const BATTLE_COUNT = "BATTLE_COUNT" #number of battles the player has done
+const BATTLES_TO_UNLOCK_QUEUE_AND_SPEED = 3 #on the third battle; show the queue and speed
+const BATTLE_SHOW_QUEUE = "BATTLE_SHOW_QUEUE"
+const BATTLE_SHOW_SPEED = "BATTLE_SHOW_SPEED"
+const BATTLE_SHOW_ESCAPE = "BATTLE_SHOW_ESCAPE"
+# Number of segments of the inject bar
+const MAX_INJECTS = "MAX_INJECTS"
 # During the intro, the computer needs to be examined twice to progress. This tracks if the first examine has occurred.
 const INTRO_EXAMINED_COMPUTER_ONCE = "INTRO_EXAMINED_COMPUTER_ONCE"
 # During the intro, after examining the computer twice and playing the game, this is enabled so we can sleep at the bed.
@@ -67,7 +73,12 @@ var _variables : Dictionary = {
 	PLAYER_NAME : "???", #default name is displayed in intro dialogue before the player enters the real name
 	LINE_LIMIT : 3, #default number of lines in a script is 3
 	STORAGE_PAGES : 2, #default number of storage pages is 2 (16 mons storage)
-	MAX_INJECTS : 3, #default injects is 0
+	
+	BATTLE_COUNT : 0,
+	MAX_INJECTS : 0, #default injects is 0; this also hide inject battery
+	BATTLE_SHOW_QUEUE : false, 
+	BATTLE_SHOW_SPEED : false,
+	BATTLE_SHOW_ESCAPE : false,
 	
 	# starting area/position
 	RESPAWN_AREA : GameData.Area.COOLANT_CAVE1_BEACH,
@@ -87,6 +98,11 @@ var _block_unlock_map := {} # tracks which blocks have been unlocked for use in 
 var inject_points = 0
 var bug_inventory = {} # dictionary of owned bugs (BugData.Type -> int)
 var cutscenes_played = [] # array of cutscene IDs that have already been played
+var queued_battle_cutscene = Battle.Cutscene.NONE
+
+func queue_battle_cutscene(cutscene: Battle.Cutscene) -> void:
+	assert(queued_battle_cutscene == Battle.Cutscene.NONE)
+	queued_battle_cutscene = cutscene
 
 # returns a variable, or null if that variable is not set
 func get_var(variable_name: String):

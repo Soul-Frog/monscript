@@ -1,5 +1,8 @@
 extends Node2D
 
+signal inject_started
+signal mon_selected
+signal do_selected
 signal inject_completed
 
 enum InjectState {
@@ -88,6 +91,8 @@ func start_inject(blog: BattleLog, animator: BattleAnimator, player_mons: Array,
 	
 	_enable_targets(_injecter_targets)
 	_disable_targets(_injected_targets)
+	
+	emit_signal("inject_started")
 
 func _on_player_target_selected() -> void:
 	if _inject_state != InjectState.SELECT_MON:
@@ -105,6 +110,8 @@ func _on_player_target_selected() -> void:
 	_create_do_blocks()
 	
 	_update_inject_state(InjectState.SELECT_DO)
+	
+	emit_signal("mon_selected")
 
 func _create_do_blocks():
 	assert(_injected_mon)
@@ -150,6 +157,7 @@ func _on_do_block_selected(selected_block) -> void:
 		_enable_targets(_injected_targets)
 		_disable_targets(_injecter_targets)
 		_update_inject_state(InjectState.SELECT_TARGET)
+		emit_signal("do_selected")
 	else: # otherwise, wait for the block to reach the top for visual effect, then perform the inject
 		await tween.finished
 		_perform_inject()

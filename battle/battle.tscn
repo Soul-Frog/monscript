@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://dtpehdp2rfsuh"]
+[gd_scene load_steps=54 format=3 uid="uid://dtpehdp2rfsuh"]
 
 [ext_resource type="Script" path="res://battle/battle.gd" id="1_85t5n"]
 [ext_resource type="Script" path="res://decorators/fade_decorator.gd" id="2_cfdr2"]
@@ -39,6 +39,7 @@
 [ext_resource type="Texture2D" uid="uid://dyq5ntyl5ibnp" path="res://assets/ui/battle/speed/pause_unselected_pressed.png" id="39_ni8be"]
 [ext_resource type="Script" path="res://battle/escape_controls.gd" id="40_migwn"]
 [ext_resource type="PackedScene" uid="uid://cstjg5guo0m61" path="res://battle/script_line_viewer.tscn" id="42_24nlh"]
+[ext_resource type="Script" path="res://battle/tutorial.gd" id="44_2exjj"]
 [ext_resource type="Script" path="res://overworld/camera.gd" id="46_xof1k"]
 [ext_resource type="PackedScene" uid="uid://c8wcyjwqiawd8" path="res://battle/queue.tscn" id="50_q1kk0"]
 [ext_resource type="PackedScene" uid="uid://fsp55qrvdmua" path="res://battle/inject_battery.tscn" id="52_bd5mg"]
@@ -104,7 +105,7 @@ z_index = 2
 offset_right = 320.0
 offset_bottom = 180.0
 mouse_filter = 2
-color = Color(0, 0, 0, 1)
+color = Color(0, 0.317647, 0.729412, 1)
 
 [node name="MatrixRain" parent="Scene" groups=["battle_speed_scaled"] instance=ExtResource("4_kjqyu")]
 z_index = 3
@@ -372,7 +373,6 @@ offset_right = 263.0
 offset_bottom = 130.0
 
 [node name="Results" parent="UI" instance=ExtResource("54_5vxty")]
-visible = false
 z_index = 50
 
 [node name="Log" parent="UI" groups=["battle_speed_scaled"] instance=ExtResource("16_ugd8u")]
@@ -393,6 +393,120 @@ theme_override_font_sizes/normal_font_size = 16
 bbcode_enabled = true
 text = "[center]INITIALIZING...[/center]"
 script = ExtResource("5_41hnr")
+
+[node name="TutorialLayer" type="Node2D" parent="UI"]
+z_index = 4000
+z_as_relative = false
+script = ExtResource("44_2exjj")
+
+[node name="Blocker" type="Control" parent="UI/TutorialLayer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(320, 180)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 320.0
+offset_bottom = 180.0
+
+[node name="Blocker" type="Polygon2D" parent="UI/TutorialLayer/Blocker"]
+position = Vector2(-25, 0)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(25, 0, 25, 180, 345, 180, 345, 0)
+
+[node name="Popup" type="Node2D" parent="UI/TutorialLayer"]
+z_index = 100
+
+[node name="Top" type="Node2D" parent="UI/TutorialLayer/Popup"]
+visible = false
+
+[node name="Speaker" parent="UI/TutorialLayer/Popup/Top" instance=ExtResource("5_a0vn4")]
+position = Vector2(44, 19)
+
+[node name="Text" type="RichTextLabel" parent="UI/TutorialLayer/Popup/Top"]
+offset_left = 53.0
+offset_top = 8.0
+offset_right = 285.0
+offset_bottom = 39.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+bbcode_enabled = true
+text = "[center]This is your first battle, right? I'll teach you the basics.[/center]"
+fit_content = true
+scroll_active = false
+
+[node name="Midtop" type="Node2D" parent="UI/TutorialLayer/Popup"]
+visible = false
+position = Vector2(0, 25)
+
+[node name="Speaker" parent="UI/TutorialLayer/Popup/Midtop" instance=ExtResource("5_a0vn4")]
+position = Vector2(30, 13)
+
+[node name="Text" type="RichTextLabel" parent="UI/TutorialLayer/Popup/Midtop"]
+offset_left = 42.0
+offset_top = -3.0
+offset_right = 280.0
+offset_bottom = 28.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+bbcode_enabled = true
+text = "[center]This is your first battle, right? I'll teach you the basics.[/center]"
+fit_content = true
+scroll_active = false
+
+[node name="Middle" type="Node2D" parent="UI/TutorialLayer/Popup"]
+visible = false
+position = Vector2(8, 72)
+
+[node name="Speaker" parent="UI/TutorialLayer/Popup/Middle" instance=ExtResource("5_a0vn4")]
+position = Vector2(30, 13)
+
+[node name="Text" type="RichTextLabel" parent="UI/TutorialLayer/Popup/Middle"]
+offset_left = 42.0
+offset_top = -3.0
+offset_right = 280.0
+offset_bottom = 28.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+bbcode_enabled = true
+text = "[center]This is your first battle, right? I'll teach you the basics.[/center]"
+fit_content = true
+scroll_active = false
+
+[node name="Results" type="Node2D" parent="UI/TutorialLayer/Popup"]
+visible = false
+position = Vector2(3, 66)
+
+[node name="Speaker" parent="UI/TutorialLayer/Popup/Results" instance=ExtResource("5_a0vn4")]
+position = Vector2(7, 23)
+
+[node name="Text" type="RichTextLabel" parent="UI/TutorialLayer/Popup/Results"]
+offset_left = 21.0
+offset_top = -6.0
+offset_right = 131.0
+offset_bottom = 67.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+bbcode_enabled = true
+text = "[center]This is your first battle, right? I'll teach you the basics.[/center]"
+fit_content = true
+scroll_active = false
+
+[node name="Monblock" type="Node2D" parent="UI/TutorialLayer/Popup"]
+position = Vector2(4, -3)
+
+[node name="Speaker" parent="UI/TutorialLayer/Popup/Monblock" instance=ExtResource("5_a0vn4")]
+position = Vector2(8, 82)
+
+[node name="Text" type="RichTextLabel" parent="UI/TutorialLayer/Popup/Monblock"]
+offset_left = 21.0
+offset_top = 62.0
+offset_right = 162.0
+offset_bottom = 125.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+bbcode_enabled = true
+text = "[center]This green bar is my health points, or HP.[/center]"
+fit_content = true
+scroll_active = false
 
 [node name="Camera" type="Camera2D" parent="."]
 anchor_mode = 0

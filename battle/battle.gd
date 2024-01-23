@@ -1,6 +1,17 @@
 class_name Battle
 extends Node2D
 
+signal turn_ended
+signal results_shown
+
+enum Cutscene {
+	NONE, # this is a normal battle
+	TUTORIAL_INTRO,
+	TUTORIAL_QUEUE_SPEED,
+	#TUTORIAL_ESCAPE_LEVIATHAN,
+	#TUTORIAL_INJECT_LEVIATHAN
+}
+
 enum BattleState {
 	LOADING, # this battle scene has no mons; it's ready for a call to setup_battle
 	BATTLING, # this battle scene is ready to go (after setup_battle, before battle has ended)
@@ -87,6 +98,8 @@ const _MONBLOCK_SLIDEOUT_DELTA = 120
 @onready var _inject_rain = $Scene/InjectRain
 @onready var _INJECT_Z_INDEX = _inject_rain.z_index
 
+@onready var _tutorial_layer = $UI/TutorialLayer
+
 # bugs dropped by defeating opponent mons
 var _bugs_dropped = []
 
@@ -121,6 +134,8 @@ func _ready():
 	assert(_matrix_rain)
 	assert(_inject_rain)
 	assert(_banner_label)
+	
+	assert(_tutorial_layer)
 	
 	# start with all controls out of view
 	_mon_action_queue.position = _MON_ACTION_QUEUE_SLIDEOUT_POSITION
@@ -308,6 +323,10 @@ func setup_battle(player_team, computer_team, battle_background: BattleData.Back
 	for mon in _computer_mons.get_children():
 		mon.on_battle_start(_computer_mons.get_children(), _player_mons.get_children())
 	
+	if GameData.queued_battle_cutscene != Cutscene.NONE:
+		_tutorial_layer.play_tutorial_for(GameData.queued_battle_cutscene, self)
+		GameData.queued_battle_cutscene = Cutscene.NONE
+	
 	await Global.delay(0.7)
 	_banner_label.zoom_out()
 
@@ -451,6 +470,8 @@ func _on_mon_action_completed():
 	action_queue.remove_at(0)
 	is_a_mon_taking_action = false
 	_mon_action_queue.update_queue(action_queue, _player_mons, _computer_mons)
+	
+	emit_signal("turn_ended")
 
 func _on_mon_zero_health(mon):
 	assert(state == BattleState.BATTLING)
@@ -536,7 +557,13 @@ func _on_speed_controls_changed():
 	if not is_inject_active and not is_inject_queued: # can't update speed during inject
 		_set_speed(_speed_controls.speed)
 
+# set the speed of everything
 func _set_speed(speed: Speed):
+	_set_mon_speed(speed)
+	_set_label_speed(speed)
+
+# set the speeds of mons and everything else except labels
+func _set_mon_speed(speed: Speed):
 	if is_inside_tree():
 		var new_speed_multiplier = _speed_to_speed[speed]
 		
@@ -548,6 +575,13 @@ func _set_speed(speed: Speed):
 			_log.make_scrollable_and_expandable()
 		else:
 			_log.make_unscrollable_and_unexpandable()
+
+# set the speeds of the numbers/text that pops up above mons in scene
+func _set_label_speed(speed: Speed) -> void:
+	if is_inside_tree():
+		var new_speed_multiplier = _speed_to_speed[speed]
+		for node in get_tree().get_nodes_in_group("battle_speed_scaled_label"):
+			node.set_speed_scale(new_speed_multiplier)
 
 func _on_escape_state_changed(is_escaping: bool):
 	trying_to_escape = is_escaping
@@ -643,6 +677,8 @@ func _start_inject():
 	
 	# remove matrix rain animation
 	_inject_layer.start_inject(_log, _animator, _get_living_mons(_player_mons.get_children()), _get_living_mons(_computer_mons.get_children()))
+	
+	emit_signal("injected")
 
 func _on_inject_completed():
 	assert(is_inject_active)
