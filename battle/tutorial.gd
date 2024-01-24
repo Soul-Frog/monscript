@@ -3,7 +3,7 @@ extends Node2D
 signal _continue_tutorial
 
 @onready var BLOCKER = $Blocker
-const FADED_ALPHA = 0.7
+const FADED_ALPHA = 0.6
 
 @onready var POPUPS = $Popup
 @onready var TOP_POPUP = $Popup/Top
@@ -124,24 +124,33 @@ func play_tutorial_for(tutorial: Battle.Cutscene, battle: Battle) -> void:
 			battle._set_mon_speed(Battle.Speed.PAUSE)
 			await fade_blocker_in()
 			await popup_and_wait(MIDDLE_POPUP, "Ouch! That wasn't very nice...\nAre you getting the hang of this now?")
-			await popup_and_wait(MIDDLE_POPUP, "Well, it should be pretty simple, since you don't need to do anything at all!")
-			await popup_and_wait(MIDDLE_POPUP, "So just sit back, and I'll finish off this Gelif! Here I go!")
+			await popup_and_wait(MIDDLE_POPUP, "Well, it should be pretty simple; you don't need to do anything at all!")
+			await popup_and_wait(MIDDLE_POPUP, "So sit back, and I'll finish off this Gelif! Here I go!")
 			await fade_blocker_out()
 			
 			# wait for the battle to end...
 			battle._set_mon_speed(Battle.Speed.NORMAL)
 			await results.shown
+			results._granting_xp = false
+			results._granting_decompile = false
 			var results_reset_z = results.z_index
 			results.z_index = z_index + 1
 			await fade_blocker_in()
 			await popup_and_wait(RESULTS_POPUP, "Did you see that? I won!")
 			await popup_and_wait(RESULTS_POPUP, "After winning a battle, you'll get a few types of rewards!")
-			await popup_and_wait(RESULTS_POPUP, "First off, experience points, or XP! XP makes me stronger!")
-			await popup_and_wait(RESULTS_POPUP, "You also get Bits! Bits are the local currency! But you already knew that.")
+			await popup_and_wait(RESULTS_POPUP, "First off, Bits! Bits are our local currency!")
 			await popup_and_wait(RESULTS_POPUP, "...you do use Bits back where you came from, right?")
-			await popup_and_wait(RESULTS_POPUP, "Anyway, over here is decompilation progress. It's basically a measure of how much you know about this type of mon.")
-			await popup_and_wait(RESULTS_POPUP, "Once this bar is full, you can view detailed information about this mon from your Database! I'll explain that part later.")
-			await popup_and_wait(RESULTS_POPUP, "And lastly, bugs! I'm not quite sure what these are for yet either...")
+			await popup_and_wait(RESULTS_POPUP, "Next, experience points, or XP! XP makes me stronger!")
+			await fade_blocker_out()
+			results._granting_xp = true
+			await results.done_granting_xp
+			await fade_blocker_in()
+			await popup_and_wait(RESULTS_POPUP, "Anyway, over here is decompilation progress.")
+			await popup_and_wait(RESULTS_POPUP, "It's basically a measure of how much you know about this type of mon.") 
+			await popup_and_wait(RESULTS_POPUP, "Once this bar is full, you can view  information about this mon in the Database!")
+			results._granting_decompile = true
+			await results.done_granting_decompile
+			await popup_and_wait(RESULTS_POPUP, "And lastly, bugs! I'm not quite sure what these are good for yet...")
 			await popup_and_wait(RESULTS_POPUP, "But it can't hurt to collect them, right?")
 			await popup_and_wait(RESULTS_POPUP, "And that's everything! Go ahead and press continue whenever you're ready.")
 			await fade_blocker_out()

@@ -1,6 +1,8 @@
 extends Node2D
 
 signal shown
+signal done_granting_xp
+signal done_granting_decompile
 signal exit
 
 @onready var XP_PANEL = $XPPanel
@@ -32,7 +34,8 @@ var _xp_earned = 0.0
 var _xp_given = 0.0
 var _bugs_earned
 
-var _granting_xp_and_decompile = false
+var _granting_xp = false
+var _granting_decompile = false
 const DECOMPILE_TIME = 2.0 # time in seconds to spend increasing decompile
 var _montypes_to_decompile = []
 var _decompile_mons_to_nodes = {}
@@ -63,7 +66,7 @@ func _ready() -> void:
 	show()
 
 func _process(delta: float) -> void:
-	if _granting_xp_and_decompile:
+	if _granting_xp:
 		if _xp_given != _xp_earned:
 			_xp_elapsed += delta
 			
@@ -86,7 +89,11 @@ func _process(delta: float) -> void:
 						monblock.on_mon_xp_changed() # update xp bars
 						if _mons_to_xp[i].get_level() != prev_level: # play level up effect if leveled up
 							monblock.active_mon.play_level_up_effect()
-		
+		else:
+			_granting_xp = false
+			emit_signal("done_granting_xp")
+			
+	if _granting_decompile:
 		if _decompile_remaining != 0:
 			var decompile_to_give = 1.0 / DECOMPILE_TIME * delta
 			decompile_to_give = min(_decompile_remaining, decompile_to_give)
@@ -105,6 +112,9 @@ func _process(delta: float) -> void:
 				var bar = decompilation_slot.find_child(DECOMPILATION_BAR_PATH)
 				bar.value = GameData.decompilation_progress_per_mon[mon_type] * 100
 				decompilation_slot.find_child(DECOMPILATION_PERCENTAGE_PATH).text = "%d%%" % int(100 * bar.value / bar.max_value)
+		else:
+			_granting_decompile = false
+			emit_signal("done_granting_decompile")
 
 func perform_results(battle_results: BattleData.BattleResult, bugs_earned: Array, mon_blocks: Array, player_team: Array, computer_team: Array) -> void:	
 	_mons_to_xp = []
@@ -190,7 +200,6 @@ func perform_results(battle_results: BattleData.BattleResult, bugs_earned: Array
 	slide_in.parallel().tween_property(BUGS_PANEL, "position:x", BUGS_PANEL.position.x - _SLIDE_IN_DISTANCE, 0.5).set_trans(Tween.TRANS_CUBIC)
 	slide_in.parallel().tween_property(DECOMPILATION_PANEL, "position:x", DECOMPILATION_PANEL.position.x - _SLIDE_IN_DISTANCE, 0.6).set_trans(Tween.TRANS_CUBIC)
 	await slide_in.finished
-	emit_signal("shown")
 	
 	_EXIT_BUTTON.disabled = false
 	
@@ -199,7 +208,10 @@ func perform_results(battle_results: BattleData.BattleResult, bugs_earned: Array
 		monblock.switch_to_results_mode()
 	
 	await Global.delay(0.2)
-	_granting_xp_and_decompile = true
+	_granting_xp = true
+	_granting_decompile = true
+	
+	emit_signal("shown")
 
 func _on_exit_pressed() -> void:
 	# immediately reward remaining XP
@@ -211,7 +223,12 @@ func _on_exit_pressed() -> void:
 		var maxProgress = MonData.get_decompilation_progress_required_for(mon_type)
 		GameData.decompilation_progress_per_mon[mon_type] = min(maxProgress, int(GameData.decompilation_progress_per_mon[mon_type] + _decompile_remaining + 0.1))
 	
-	_granting_xp_and_decompile = false
+	if _granting_xp:
+		emit_signal("done_granting_xp")
+	_granting_xp = false
+	if _granting_decompile:
+		emit_signal("done_granting_decompile")
+	_granting_decompile = false
 	_mons_to_xp = null
 	_montypes_to_decompile = null
 	_decompile_mons_to_nodes = null
