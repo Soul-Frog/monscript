@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://dtpehdp2rfsuh"]
+[gd_scene load_steps=58 format=3 uid="uid://dtpehdp2rfsuh"]
 
 [ext_resource type="Script" path="res://battle/battle.gd" id="1_85t5n"]
 [ext_resource type="Script" path="res://decorators/fade_decorator.gd" id="2_cfdr2"]
@@ -44,6 +44,7 @@
 [ext_resource type="PackedScene" uid="uid://cstjg5guo0m61" path="res://battle/script_line_viewer.tscn" id="42_24nlh"]
 [ext_resource type="Script" path="res://battle/tutorial.gd" id="44_2exjj"]
 [ext_resource type="Script" path="res://overworld/camera.gd" id="46_xof1k"]
+[ext_resource type="Texture2D" uid="uid://bn7y2n1uwq3ap" path="res://assets/sprites/mons/bitleon_portrait.png" id="48_k6wdn"]
 [ext_resource type="PackedScene" uid="uid://c8wcyjwqiawd8" path="res://battle/queue.tscn" id="50_q1kk0"]
 [ext_resource type="PackedScene" uid="uid://fsp55qrvdmua" path="res://battle/inject_battery.tscn" id="52_bd5mg"]
 [ext_resource type="PackedScene" uid="uid://dgaokh63peqxr" path="res://battle/inject_layer.tscn" id="53_4ccvo"]
@@ -421,17 +422,26 @@ polygon = PackedVector2Array(25, 0, 25, 180, 345, 180, 345, 0)
 [node name="Popup" type="Node2D" parent="UI/TutorialLayer"]
 z_index = 100
 
-[node name="Top" type="Node2D" parent="UI/TutorialLayer/Popup"]
+[node name="Top" type="HBoxContainer" parent="UI/TutorialLayer/Popup"]
 visible = false
+offset_left = 47.0
+offset_top = 5.0
+offset_right = 273.0
+offset_bottom = 37.0
+theme_override_constants/separation = -5
 
-[node name="Speaker" parent="UI/TutorialLayer/Popup/Top" instance=ExtResource("5_a0vn4")]
-position = Vector2(44, 19)
+[node name="Speaker" type="TextureRect" parent="UI/TutorialLayer/Popup/Top"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = ExtResource("48_k6wdn")
+stretch_mode = 2
 
 [node name="Text" type="RichTextLabel" parent="UI/TutorialLayer/Popup/Top"]
-offset_left = 53.0
-offset_top = 8.0
-offset_right = 285.0
-offset_bottom = 39.0
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 bbcode_enabled = true
@@ -439,37 +449,25 @@ text = "[center]This is your first battle, right? I'll teach you the basics.[/ce
 fit_content = true
 scroll_active = false
 
-[node name="Midtop" type="Node2D" parent="UI/TutorialLayer/Popup"]
+[node name="Middle" type="HBoxContainer" parent="UI/TutorialLayer/Popup"]
 visible = false
-position = Vector2(0, 25)
+offset_left = 45.0
+offset_top = 65.0
+offset_right = 271.0
+offset_bottom = 97.0
+theme_override_constants/separation = -5
 
-[node name="Speaker" parent="UI/TutorialLayer/Popup/Midtop" instance=ExtResource("5_a0vn4")]
-position = Vector2(30, 13)
-
-[node name="Text" type="RichTextLabel" parent="UI/TutorialLayer/Popup/Midtop"]
-offset_left = 42.0
-offset_top = -3.0
-offset_right = 280.0
-offset_bottom = 28.0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 3
-bbcode_enabled = true
-text = "[center]This is your first battle, right? I'll teach you the basics.[/center]"
-fit_content = true
-scroll_active = false
-
-[node name="Middle" type="Node2D" parent="UI/TutorialLayer/Popup"]
-visible = false
-position = Vector2(8, 72)
-
-[node name="Speaker" parent="UI/TutorialLayer/Popup/Middle" instance=ExtResource("5_a0vn4")]
-position = Vector2(30, 13)
+[node name="Speaker" type="TextureRect" parent="UI/TutorialLayer/Popup/Middle"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = ExtResource("48_k6wdn")
+stretch_mode = 2
 
 [node name="Text" type="RichTextLabel" parent="UI/TutorialLayer/Popup/Middle"]
-offset_left = 42.0
-offset_top = -3.0
-offset_right = 280.0
-offset_bottom = 28.0
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 bbcode_enabled = true
@@ -477,18 +475,26 @@ text = "[center]This is your first battle, right? I'll teach you the basics.[/ce
 fit_content = true
 scroll_active = false
 
-[node name="Results" type="Node2D" parent="UI/TutorialLayer/Popup"]
+[node name="Results" type="HBoxContainer" parent="UI/TutorialLayer/Popup"]
 visible = false
-position = Vector2(3, 66)
+offset_left = -2.0
+offset_top = 62.0
+offset_right = 136.0
+offset_bottom = 114.0
+size_flags_horizontal = 2
+theme_override_constants/separation = -5
 
-[node name="Speaker" parent="UI/TutorialLayer/Popup/Results" instance=ExtResource("5_a0vn4")]
-position = Vector2(7, 23)
+[node name="Speaker" type="TextureRect" parent="UI/TutorialLayer/Popup/Results"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = ExtResource("48_k6wdn")
+stretch_mode = 2
 
 [node name="Text" type="RichTextLabel" parent="UI/TutorialLayer/Popup/Results"]
-offset_left = 21.0
-offset_top = -6.0
-offset_right = 131.0
-offset_bottom = 67.0
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 bbcode_enabled = true
@@ -496,17 +502,25 @@ text = "[center]This is your first battle, right? I'll teach you the basics.[/ce
 fit_content = true
 scroll_active = false
 
-[node name="Monblock" type="Node2D" parent="UI/TutorialLayer/Popup"]
-position = Vector2(4, -3)
+[node name="Monblock" type="HBoxContainer" parent="UI/TutorialLayer/Popup"]
+visible = false
+offset_left = -2.0
+offset_top = 59.0
+offset_right = 137.0
+offset_bottom = 98.0
+theme_override_constants/separation = -5
 
-[node name="Speaker" parent="UI/TutorialLayer/Popup/Monblock" instance=ExtResource("5_a0vn4")]
-position = Vector2(8, 82)
+[node name="Speaker" type="TextureRect" parent="UI/TutorialLayer/Popup/Monblock"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+texture = ExtResource("48_k6wdn")
+stretch_mode = 2
 
 [node name="Text" type="RichTextLabel" parent="UI/TutorialLayer/Popup/Monblock"]
-offset_left = 21.0
-offset_top = 62.0
-offset_right = 162.0
-offset_bottom = 125.0
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 bbcode_enabled = true

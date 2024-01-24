@@ -7,7 +7,6 @@ const FADED_ALPHA = 0.7
 
 @onready var POPUPS = $Popup
 @onready var TOP_POPUP = $Popup/Top
-@onready var MIDTOP_POPUP = $Popup/Midtop
 @onready var MIDDLE_POPUP = $Popup/Middle
 @onready var MONBLOCK_POPUP = $Popup/Monblock
 @onready var RESULTS_POPUP = $Popup/Results
@@ -17,7 +16,6 @@ var accepting_click = false
 func _ready():
 	assert(BLOCKER)
 	assert(TOP_POPUP)
-	assert(MIDTOP_POPUP)
 	assert(MIDDLE_POPUP)
 	assert(MONBLOCK_POPUP)
 	assert(RESULTS_POPUP)
@@ -40,15 +38,20 @@ func fade_blocker_out() -> void:
 	await tween.finished
 	BLOCKER.hide()
 
-func show_popup(popup: Node2D, text: String) -> void:
+func show_popup(popup: HBoxContainer, text: String) -> void:
 	popup.show()
 	popup.modulate.a = 0
-	popup.find_child("Text").text = "[center]%s[/center]" % text
+	
+	var label = popup.find_child("Text")
+	label.text = ""
+	label.custom_minimum_size = Vector2.ZERO
+	label.text = "[center]%s[/center]" % text
+	
 	var tween = create_tween()
 	tween.tween_property(popup, "modulate:a", 1.0, 0.3)
 	await tween.finished
 
-func hide_popup(popup: Node2D) -> void:
+func hide_popup(popup: HBoxContainer) -> void:
 	var tween = create_tween()
 	tween.tween_property(popup, "modulate:a", 0.0, 0.3)
 	await tween.finished
@@ -59,7 +62,7 @@ func wait_for_click() -> void:
 	await _continue_tutorial
 	accepting_click = false
 
-func popup_and_wait(popup: Node2D, text: String) -> void:
+func popup_and_wait(popup: HBoxContainer, text: String) -> void:
 	await show_popup(popup, text)
 	await wait_for_click()
 	await hide_popup(popup)
@@ -120,8 +123,7 @@ func play_tutorial_for(tutorial: Battle.Cutscene, battle: Battle) -> void:
 			await battle.turn_ended
 			battle._set_mon_speed(Battle.Speed.PAUSE)
 			await fade_blocker_in()
-			await popup_and_wait(MIDDLE_POPUP, "Ouch! That wasn't very nice...")
-			await popup_and_wait(MIDDLE_POPUP, "Are you getting the hang of this now?")
+			await popup_and_wait(MIDDLE_POPUP, "Ouch! That wasn't very nice...\nAre you getting the hang of this now?")
 			await popup_and_wait(MIDDLE_POPUP, "Well, it should be pretty simple, since you don't need to do anything at all!")
 			await popup_and_wait(MIDDLE_POPUP, "So just sit back, and I'll finish off this Gelif! Here I go!")
 			await fade_blocker_out()
