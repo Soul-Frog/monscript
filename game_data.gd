@@ -77,7 +77,7 @@ var _variables : Dictionary = {
 	BATTLE_COUNT : 0,
 	MAX_INJECTS : 0, #default injects is 0; this also hide inject battery
 	BATTLE_SHOW_QUEUE : false, 
-	BATTLE_SPEED_UNLOCKED : true,
+	BATTLE_SPEED_UNLOCKED : false,
 	BATTLE_ESCAPE_UNLOCKED : false,
 	
 	# starting area/position

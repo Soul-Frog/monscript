@@ -23,12 +23,13 @@ enum Team {
 }
 
 enum Speed {
-	NORMAL, SPEEDUP, PAUSE, INSTANT
+	NORMAL, SPEEDUP, PAUSE, PAUSE_CUTSCENE, INSTANT
 }
 var _speed_to_speed = {
 	Speed.NORMAL : 1.0,
 	Speed.SPEEDUP : 5.0,
 	Speed.PAUSE : 0.0,
+	Speed.PAUSE_CUTSCENE : 0.0,
 	Speed.INSTANT: 10000.0
 }
 
@@ -576,7 +577,7 @@ func _set_mon_speed(speed: Speed):
 			node.set_speed_scale(new_speed_multiplier)
 		
 		# if we paused, make the log scrollable, otherwise make it unscrollable again
-		if new_speed_multiplier == 0:
+		if new_speed_multiplier == 0.0 and speed != Speed.PAUSE_CUTSCENE:
 			_log.make_scrollable_and_expandable()
 		else:
 			_log.make_unscrollable_and_unexpandable()
