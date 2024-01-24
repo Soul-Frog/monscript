@@ -17,6 +17,7 @@ signal speed_changed
 	_pause_button : Battle.Speed.PAUSE
 }
 
+var disabled = false
 var speed = Battle.Speed.NORMAL
 
 func _ready():
@@ -28,6 +29,18 @@ func _ready():
 	_run_button.pressed.connect(_on_run_button_pressed)
 	_speedup_button.pressed.connect(_on_speedup_button_pressed)
 	_pause_button.pressed.connect(_on_pause_button_pressed)
+
+func disable() -> void:
+	disabled = true
+	_run_button.disabled = true
+	_speedup_button.disabled = true
+	_pause_button.disabled = true
+
+func enable() -> void:
+	disabled = false
+	_run_button.disabled = false
+	_speedup_button.disabled = false
+	_pause_button.disabled = false
 
 func reset():
 	_on_run_button_pressed()
@@ -63,13 +76,16 @@ func update_filters() -> void:
 		_speedup_filter_fade.fade_out()
 
 func run():
-	_run_button.emit_signal("pressed")
+	if not disabled:
+		_run_button.emit_signal("pressed")
 
 func speedup():
-	_speedup_button.emit_signal("pressed")
+	if not disabled:
+		_speedup_button.emit_signal("pressed")
 
 func pause(): 
-	_pause_button.emit_signal("pressed")
+	if not disabled:
+		_pause_button.emit_signal("pressed")
 
 func _on_button_pressed(button: SelectableButton):
 	# update the speed

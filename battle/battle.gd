@@ -188,6 +188,8 @@ func setup_battle(player_team, computer_team, battle_background: BattleData.Back
 	_mon_action_queue.reset()
 	
 	_speed_controls.reset()
+	_speed_controls.enable() if GameData.get_var(GameData.BATTLE_SPEED_UNLOCKED) else _speed_controls.disable()
+	
 	_escape_controls.reset()
 	_inject_battery.update()
 	_highest_mon_speed = -1
@@ -301,10 +303,13 @@ func setup_battle(player_team, computer_team, battle_background: BattleData.Back
 	
 	# move in the queue/battery/speed/log/escape
 	var move_in_ui = create_tween()
-	move_in_ui.parallel().tween_property(_mon_action_queue, "position", _MON_ACTION_QUEUE_POSITION, 0.5).set_trans(Tween.TRANS_CUBIC)
+	if GameData.get_var(GameData.BATTLE_SHOW_QUEUE):
+		move_in_ui.parallel().tween_property(_mon_action_queue, "position", _MON_ACTION_QUEUE_POSITION, 0.5).set_trans(Tween.TRANS_CUBIC)
+	if GameData.get_var(GameData.BATTLE_SPEED_UNLOCKED):
+		move_in_ui.parallel().tween_property(_speed_controls, "position", _SPEED_POSITION, 0.5).set_trans(Tween.TRANS_CUBIC)
+	if GameData.get_var(GameData.BATTLE_ESCAPE_UNLOCKED):
+		move_in_ui.parallel().tween_property(_escape_controls, "position", _ESCAPE_POSITION, 0.5).set_trans(Tween.TRANS_CUBIC)
 	move_in_ui.parallel().tween_property(_inject_battery, "position", _INJECT_BATTERY_POSITION, 0.5).set_trans(Tween.TRANS_CUBIC)
-	move_in_ui.parallel().tween_property(_speed_controls, "position", _SPEED_POSITION, 0.5).set_trans(Tween.TRANS_CUBIC)
-	move_in_ui.parallel().tween_property(_escape_controls, "position", _ESCAPE_POSITION, 0.5).set_trans(Tween.TRANS_CUBIC)
 	move_in_ui.parallel().tween_property(_log, "position", _LOG_POSITION, 0.3).set_trans(Tween.TRANS_CUBIC)
 	await move_in_ui.finished
 

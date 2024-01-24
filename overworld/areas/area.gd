@@ -32,7 +32,7 @@ func _ready():
 		for child in $Data/CutsceneTriggers.get_children():
 			child.play_cutscene.connect(_on_play_cutscene)
 
-func _on_battle_started(overworld_encounter_collided_with, battle_mons, _battle_condition):
+func _on_battle_started(overworld_encounter_collided_with, battle_mons):
 	_overworld_encounter_battling_with = overworld_encounter_collided_with
 
 func handle_battle_results(battle_end_condition):

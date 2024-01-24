@@ -53,8 +53,8 @@ const RESPAWN_Y = "RESPAWN_Y"
 const BATTLE_COUNT = "BATTLE_COUNT" #number of battles the player has done
 const BATTLES_TO_UNLOCK_QUEUE_AND_SPEED = 3 #on the third battle; show the queue and speed
 const BATTLE_SHOW_QUEUE = "BATTLE_SHOW_QUEUE"
-const BATTLE_SHOW_SPEED = "BATTLE_SHOW_SPEED"
-const BATTLE_SHOW_ESCAPE = "BATTLE_SHOW_ESCAPE"
+const BATTLE_SPEED_UNLOCKED = "BATTLE_SPEED_UNLOCKED"
+const BATTLE_ESCAPE_UNLOCKED = "BATTLE_ESCAPE_UNLOCKED"
 # Number of segments of the inject bar
 const MAX_INJECTS = "MAX_INJECTS"
 # During the intro, the computer needs to be examined twice to progress. This tracks if the first examine has occurred.
@@ -77,8 +77,8 @@ var _variables : Dictionary = {
 	BATTLE_COUNT : 0,
 	MAX_INJECTS : 0, #default injects is 0; this also hide inject battery
 	BATTLE_SHOW_QUEUE : false, 
-	BATTLE_SHOW_SPEED : false,
-	BATTLE_SHOW_ESCAPE : false,
+	BATTLE_SPEED_UNLOCKED : true,
+	BATTLE_ESCAPE_UNLOCKED : false,
 	
 	# starting area/position
 	RESPAWN_AREA : GameData.Area.COOLANT_CAVE1_BEACH,
@@ -100,10 +100,6 @@ var bug_inventory = {} # dictionary of owned bugs (BugData.Type -> int)
 var cutscenes_played = [] # array of cutscene IDs that have already been played
 var queued_battle_cutscene = Battle.Cutscene.NONE
 
-func queue_battle_cutscene(cutscene: Battle.Cutscene) -> void:
-	assert(queued_battle_cutscene == Battle.Cutscene.NONE)
-	queued_battle_cutscene = cutscene
-
 # returns a variable, or null if that variable is not set
 func get_var(variable_name: String):
 	if not _variables.has(variable_name):
@@ -122,6 +118,10 @@ func add_to_var(variable_name: String, value) -> void:
 
 func has_var(variable_name: String) -> void:
 	return _variables.has(variable_name)
+	
+func queue_battle_cutscene(cutscene: Battle.Cutscene) -> void:
+	assert(queued_battle_cutscene == Battle.Cutscene.NONE)
+	queued_battle_cutscene = cutscene
 
 # Set up the initial gamestate (for a new game)
 func _ready():

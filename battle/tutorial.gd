@@ -3,7 +3,7 @@ extends Node2D
 signal _continue_tutorial
 
 @onready var BLOCKER = $Blocker
-const FADED_ALPHA = 0.8
+const FADED_ALPHA = 0.7
 
 @onready var POPUPS = $Popup
 @onready var TOP_POPUP = $Popup/Top
@@ -22,6 +22,7 @@ func _ready():
 	assert(MONBLOCK_POPUP)
 	assert(RESULTS_POPUP)
 	BLOCKER.modulate.a = 0.0
+	BLOCKER.hide()
 	
 	assert(POPUPS)
 	for popup in POPUPS.get_children():
@@ -75,10 +76,9 @@ func play_tutorial_for(tutorial: Battle.Cutscene, battle: Battle) -> void:
 	# set the speed for the tutorial scene
 	battle._set_mon_speed(Battle.Speed.PAUSE)
 	battle._set_label_speed(Battle.Speed.NORMAL)
-	#todo - disable speed controls
+	_speed_controls.disable()
 	
 	await fade_blocker_in()
-	print(BLOCKER.modulate.a)
 	
 	match tutorial:
 		Battle.Cutscene.TUTORIAL_INTRO:
@@ -108,9 +108,9 @@ func play_tutorial_for(tutorial: Battle.Cutscene, battle: Battle) -> void:
 			var script_line_viewer_reset_z = script_line_viewer.z_index
 			script_line_viewer.z_index = z_index + 1
 			await popup_and_wait(MIDDLE_POPUP, "You can see the script line I just executed, too.")
-			await popup_and_wait(MIDDLE_POPUP, "What's a script? Uh... I'm not really sure, to be honest!")
+			await popup_and_wait(MIDDLE_POPUP, "What's a script? Uh...  don't worry about that.")
 			await popup_and_wait(MIDDLE_POPUP, "You'll just have to wait for that part of the game to be explained later!")
-			await popup_and_wait(MIDDLE_POPUP, "In the meanwhile... let's get back to the battling!")
+			await popup_and_wait(MIDDLE_POPUP, "In the meantime... let's get back to the battling!")
 			await fade_blocker_out()
 			script_line_viewer.z_index = script_line_viewer_reset_z
 			computer_mon_blocks.z_index = computer_mon_block_reset_z
@@ -152,6 +152,7 @@ func play_tutorial_for(tutorial: Battle.Cutscene, battle: Battle) -> void:
 	
 	await fade_blocker_out()
 	battle._set_speed(Battle.Speed.NORMAL)
+	_speed_controls.enable()
 
 func _input(event) -> void: 
 	if event is InputEventMouseButton and event.is_pressed() and accepting_click:

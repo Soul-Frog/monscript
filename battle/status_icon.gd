@@ -20,6 +20,7 @@ func on_status_changed(status: BattleMon.Status, has_status: bool) -> void:
 	var icon = _status_to_icon[status]
 	
 	if has_status:
+		# TODO - strange crash 
 		assert(_icon_rotation.find(icon) == -1)
 		_icon_rotation.append(icon) 
 		_make_active_icon(icon) # make the newly added status the active icon
