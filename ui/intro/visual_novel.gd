@@ -44,7 +44,7 @@ func _ready():
 
 func play_intro_cutscene():
 	# start the intro cutscene
-	await CutscenePlayer.play_cutscene(CutscenePlayer.CutsceneID.INTRO_OLD, self)
+	await CutscenePlayer.play_cutscene(Cutscene.ID.INTRO_OLD, self)
 	emit_signal("completed")
 
 func display_name_input():

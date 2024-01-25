@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://dtpehdp2rfsuh"]
+[gd_scene load_steps=57 format=3 uid="uid://dtpehdp2rfsuh"]
 
 [ext_resource type="Script" path="res://battle/battle.gd" id="1_85t5n"]
 [ext_resource type="Script" path="res://decorators/fade_decorator.gd" id="2_cfdr2"]
@@ -42,9 +42,8 @@
 [ext_resource type="Texture2D" uid="uid://dyq5ntyl5ibnp" path="res://assets/ui/battle/speed/pause_unselected_pressed.png" id="39_ni8be"]
 [ext_resource type="Script" path="res://battle/escape_controls.gd" id="40_migwn"]
 [ext_resource type="PackedScene" uid="uid://cstjg5guo0m61" path="res://battle/script_line_viewer.tscn" id="42_24nlh"]
-[ext_resource type="Script" path="res://battle/tutorial.gd" id="44_2exjj"]
 [ext_resource type="Script" path="res://overworld/camera.gd" id="46_xof1k"]
-[ext_resource type="Texture2D" uid="uid://bn7y2n1uwq3ap" path="res://assets/sprites/mons/bitleon_portrait.png" id="48_k6wdn"]
+[ext_resource type="PackedScene" uid="uid://dfiurkovxiwgd" path="res://cutscene_player.tscn" id="47_lhdxf"]
 [ext_resource type="PackedScene" uid="uid://c8wcyjwqiawd8" path="res://battle/queue.tscn" id="50_q1kk0"]
 [ext_resource type="PackedScene" uid="uid://fsp55qrvdmua" path="res://battle/inject_battery.tscn" id="52_bd5mg"]
 [ext_resource type="PackedScene" uid="uid://dgaokh63peqxr" path="res://battle/inject_layer.tscn" id="53_4ccvo"]
@@ -401,132 +400,7 @@ bbcode_enabled = true
 text = "[center]INITIALIZING...[/center]"
 script = ExtResource("5_41hnr")
 
-[node name="TutorialLayer" type="Node2D" parent="UI"]
-z_index = 4000
-z_as_relative = false
-script = ExtResource("44_2exjj")
-
-[node name="Blocker" type="Control" parent="UI/TutorialLayer"]
-modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(320, 180)
-layout_mode = 3
-anchors_preset = 0
-offset_right = 320.0
-offset_bottom = 180.0
-
-[node name="Blocker" type="Polygon2D" parent="UI/TutorialLayer/Blocker"]
-position = Vector2(-25, 0)
-color = Color(0, 0, 0, 1)
-polygon = PackedVector2Array(25, 0, 25, 180, 345, 180, 345, 0)
-
-[node name="Popup" type="Node2D" parent="UI/TutorialLayer"]
-z_index = 100
-
-[node name="Top" type="HBoxContainer" parent="UI/TutorialLayer/Popup"]
-visible = false
-offset_left = 47.0
-offset_top = 5.0
-offset_right = 273.0
-offset_bottom = 37.0
-theme_override_constants/separation = -5
-
-[node name="Speaker" type="TextureRect" parent="UI/TutorialLayer/Popup/Top"]
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = ExtResource("48_k6wdn")
-stretch_mode = 2
-
-[node name="Text" type="RichTextLabel" parent="UI/TutorialLayer/Popup/Top"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 3
-bbcode_enabled = true
-text = "[center]This is your first battle, right? I'll teach you the basics.[/center]"
-fit_content = true
-scroll_active = false
-
-[node name="Middle" type="HBoxContainer" parent="UI/TutorialLayer/Popup"]
-visible = false
-offset_left = 45.0
-offset_top = 65.0
-offset_right = 271.0
-offset_bottom = 97.0
-theme_override_constants/separation = -5
-
-[node name="Speaker" type="TextureRect" parent="UI/TutorialLayer/Popup/Middle"]
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = ExtResource("48_k6wdn")
-stretch_mode = 2
-
-[node name="Text" type="RichTextLabel" parent="UI/TutorialLayer/Popup/Middle"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 3
-bbcode_enabled = true
-text = "[center]This is your first battle, right? I'll teach you the basics.[/center]"
-fit_content = true
-scroll_active = false
-
-[node name="Results" type="HBoxContainer" parent="UI/TutorialLayer/Popup"]
-visible = false
-offset_left = -2.0
-offset_top = 62.0
-offset_right = 136.0
-offset_bottom = 114.0
-size_flags_horizontal = 2
-theme_override_constants/separation = -5
-
-[node name="Speaker" type="TextureRect" parent="UI/TutorialLayer/Popup/Results"]
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = ExtResource("48_k6wdn")
-stretch_mode = 2
-
-[node name="Text" type="RichTextLabel" parent="UI/TutorialLayer/Popup/Results"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 3
-bbcode_enabled = true
-text = "[center]This is your first battle, right? I'll teach you the basics.[/center]"
-fit_content = true
-scroll_active = false
-
-[node name="Monblock" type="HBoxContainer" parent="UI/TutorialLayer/Popup"]
-visible = false
-offset_left = -2.0
-offset_top = 59.0
-offset_right = 137.0
-offset_bottom = 98.0
-theme_override_constants/separation = -5
-
-[node name="Speaker" type="TextureRect" parent="UI/TutorialLayer/Popup/Monblock"]
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = ExtResource("48_k6wdn")
-stretch_mode = 2
-
-[node name="Text" type="RichTextLabel" parent="UI/TutorialLayer/Popup/Monblock"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 3
-bbcode_enabled = true
-text = "[center]This green bar is my health points, or HP.[/center]"
-fit_content = true
-scroll_active = false
+[node name="CutscenePlayer" parent="UI" instance=ExtResource("47_lhdxf")]
 
 [node name="Camera" type="Camera2D" parent="."]
 anchor_mode = 0

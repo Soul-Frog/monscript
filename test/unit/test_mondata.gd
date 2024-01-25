@@ -4,7 +4,7 @@ var mons := []
 var fakemon: MonData.Mon
 
 var FAKE_BASE = MonData.MonBase.new(
-	MonData.MonType.BITLEON, "FAKEMON", "res://mons/bitleon.tscn", "res://monscripts/attack.txt", 
+	MonData.MonType.BITLEON, "FAKEMON", "res://mons/bitleon.tscn", "res://mons/monscripts/attack.txt", 
 	256, 128, 64, 96, 
 	0, 
 	1, 1, 1, 1,

@@ -98,7 +98,7 @@ var _block_unlock_map := {} # tracks which blocks have been unlocked for use in 
 var inject_points = 0
 var bug_inventory = {} # dictionary of owned bugs (BugData.Type -> int)
 var cutscenes_played = [] # array of cutscene IDs that have already been played
-var queued_battle_cutscene = Battle.Cutscene.NONE
+var queued_battle_cutscene = Cutscene.ID.UNSET
 
 # returns a variable, or null if that variable is not set
 func get_var(variable_name: String):
@@ -119,8 +119,8 @@ func add_to_var(variable_name: String, value) -> void:
 func has_var(variable_name: String) -> void:
 	return _variables.has(variable_name)
 	
-func queue_battle_cutscene(cutscene: Battle.Cutscene) -> void:
-	assert(queued_battle_cutscene == Battle.Cutscene.NONE)
+func queue_battle_cutscene(cutscene) -> void:
+	assert(queued_battle_cutscene == Cutscene.ID.UNSET)
 	queued_battle_cutscene = cutscene
 
 # Set up the initial gamestate (for a new game)
@@ -210,8 +210,8 @@ func save_game():
 		save_dict["block_unlocked_%s" % block.name] = _block_unlock_map[block]
 	
 	# save the cutscenes that have been played
-	for scene_name in CutscenePlayer.CutsceneID.keys():
-		save_dict["played_cutscene_%s" % scene_name] = cutscenes_played.has(CutscenePlayer.CutsceneID[scene_name])
+	for scene_name in Cutscene.ID.keys():
+		save_dict["played_cutscene_%s" % scene_name] = cutscenes_played.has(Cutscene.ID[scene_name])
 	
 	# convert to json
 	var json = JSON.stringify(save_dict)
@@ -269,10 +269,10 @@ func load_game():
 			_block_unlock_map[ScriptData.get_block_by_name(block.name)] = save_dict[key]
 	
 	# mark cutscenes which have already been played
-	for scene_name in CutscenePlayer.CutsceneID.keys():
+	for scene_name in Cutscene.ID.keys():
 		var key = "played_cutscene_%s" % scene_name
 		if save_dict.has(key) and save_dict[key] != false:
-			cutscenes_played.append(CutscenePlayer.CutsceneID[scene_name])
+			cutscenes_played.append(Cutscene.ID[scene_name])
 	
 	# set the player's position and area
 	#Events.area_changed.emit(save_dict["current_area"], Vector2(save_dict["player_x"], save_dict["player_y"]), true)

@@ -4,14 +4,6 @@ extends Node2D
 signal turn_ended
 signal results_shown
 
-enum Cutscene {
-	NONE, # this is a normal battle
-	TUTORIAL_INTRO,
-	TUTORIAL_QUEUE_SPEED,
-	#TUTORIAL_ESCAPE_LEVIATHAN,
-	#TUTORIAL_INJECT_LEVIATHAN
-}
-
 enum BattleState {
 	LOADING, # this battle scene has no mons; it's ready for a call to setup_battle
 	BATTLING, # this battle scene is ready to go (after setup_battle, before battle has ended)
@@ -99,8 +91,6 @@ const _MONBLOCK_SLIDEOUT_DELTA = 120
 @onready var _inject_rain = $Scene/InjectRain
 @onready var _INJECT_Z_INDEX = _inject_rain.z_index
 
-@onready var _tutorial_layer = $UI/TutorialLayer
-
 # bugs dropped by defeating opponent mons
 var _bugs_dropped = []
 
@@ -135,8 +125,6 @@ func _ready():
 	assert(_matrix_rain)
 	assert(_inject_rain)
 	assert(_banner_label)
-	
-	assert(_tutorial_layer)
 	
 	# start with all controls out of view
 	_mon_action_queue.position = _MON_ACTION_QUEUE_SLIDEOUT_POSITION
@@ -329,9 +317,9 @@ func setup_battle(player_team, computer_team, battle_background: BattleData.Back
 	for mon in _computer_mons.get_children():
 		mon.on_battle_start(_computer_mons.get_children(), _player_mons.get_children())
 	
-	if GameData.queued_battle_cutscene != Cutscene.NONE:
-		_tutorial_layer.play_tutorial_for(GameData.queued_battle_cutscene, self)
-		GameData.queued_battle_cutscene = Cutscene.NONE
+	if GameData.queued_battle_cutscene != Cutscene.ID.UNSET:
+		CutscenePlayer.play_cutscene(GameData.queued_battle_cutscene, self)
+		GameData.queued_battle_cutscene = Cutscene.ID.UNSET
 	
 	await Global.delay(0.7)
 	_banner_label.zoom_out()

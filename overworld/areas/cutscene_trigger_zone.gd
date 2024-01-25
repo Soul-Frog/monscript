@@ -6,11 +6,11 @@ enum Condition {
 	NONE
 }
 
-@export var id: CutscenePlayer.CutsceneID = CutscenePlayer.CutsceneID.UNSET
+@export var id: Cutscene.ID = Cutscene.ID.UNSET
 @export var triggerCondition: Condition = Condition.NONE
 
 func _ready() -> void:
-	assert(id != CutscenePlayer.CutsceneID.UNSET)
+	assert(id != Cutscene.ID.UNSET)
 
 func _check_trigger_condition() -> bool:
 	match triggerCondition:

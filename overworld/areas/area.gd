@@ -65,5 +65,5 @@ func get_player():
 	# needs to be hardcoded to work during area transitions
 	return $Entities/Player
 
-func _on_play_cutscene(id: CutscenePlayer.CutsceneID) -> void:
+func _on_play_cutscene(id) -> void:
 	CutscenePlayer.play_cutscene(id, self)

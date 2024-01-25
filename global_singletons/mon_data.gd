@@ -286,7 +286,7 @@ class Mon:
 
 # List of MonBases, each is a static and constant representation of a Mon's essential characteristics
 # Bitleons
-var _BITLEON_BASE = MonBase.new(MonType.BITLEON, "Bitleon", "res://mons/bitleon.tscn", "res://monscripts/attack.txt",
+var _BITLEON_BASE = MonBase.new(MonType.BITLEON, "Bitleon", "res://mons/bitleon.tscn", "res://mons/monscripts/attack.txt",
 	256, 128, 64, 96,
 	1,
 	1.0, 1.0, 1.0, 1.0,
@@ -296,7 +296,7 @@ var _BITLEON_BASE = MonBase.new(MonType.BITLEON, "Bitleon", "res://mons/bitleon.
 	2.0, 0.0, [BugData.Type.YELLOW_HP_BUG, BugData.Type.RED_ATK_BUG, BugData.Type.BLUE_DEF_BUG, BugData.Type.GREEN_SPD_BUG])
 
 # Coolant Cave
-var _GELIF_BASE = MonBase.new(MonType.GELIF, "Gelif", "res://mons/gelif.tscn", "res://monscripts/attack.txt",
+var _GELIF_BASE = MonBase.new(MonType.GELIF, "Gelif", "res://mons/gelif.tscn", "res://mons/monscripts/attack.txt",
 	540, 98, 14, 74,
 	12,
 	1.0, 2.0, 0.2, 2.0,
@@ -305,7 +305,7 @@ var _GELIF_BASE = MonBase.new(MonType.GELIF, "Gelif", "res://mons/gelif.tscn", "
 	[Color("#26a69a"), Color("#009688"), Color("#00796b")],
 	1.0, 0.5, [BugData.Type.YELLOW_HP_BUG])
 	
-var _CHORSE_BASE = MonBase.new(MonType.CHORSE, "C-horse", "res://mons/chorse.tscn", "res://monscripts/attack.txt",
+var _CHORSE_BASE = MonBase.new(MonType.CHORSE, "C-horse", "res://mons/chorse.tscn", "res://mons/monscripts/attack.txt",
 	220, 100, 42, 95,
 	10, 
 	1.0, 1.5, 0.5, 1.0,
@@ -314,7 +314,7 @@ var _CHORSE_BASE = MonBase.new(MonType.CHORSE, "C-horse", "res://mons/chorse.tsc
 	[Color("#ff7043"), Color("#f4511e"), Color("#d84315")],
 	1.0, 1.0, [BugData.Type.GREEN_SPD_BUG])
 	
-var _PASCALICAN_BASE = MonBase.new(MonType.PASCALICAN, "Pascalican", "res://mons/pascalican.tscn", "res://monscripts/attack.txt",
+var _PASCALICAN_BASE = MonBase.new(MonType.PASCALICAN, "Pascalican", "res://mons/pascalican.tscn", "res://mons/monscripts/attack.txt",
 	210, 84, 56, 126,
 	8, 
 	1.0, 1.0, 0.5, 1.5,
@@ -323,7 +323,7 @@ var _PASCALICAN_BASE = MonBase.new(MonType.PASCALICAN, "Pascalican", "res://mons
 	[Color("#ffffff"), Color("#eeeeee"), Color("#bdbdbd")],
 	1.0, 1.5, [BugData.Type.GREEN_SPD_BUG, BugData.Type.RED_ATK_BUG])
 	
-var _ORCHIN_BASE = MonBase.new(MonType.ORCHIN, "Orchin", "res://mons/orchin.tscn", "res://monscripts/attack.txt",
+var _ORCHIN_BASE = MonBase.new(MonType.ORCHIN, "Orchin", "res://mons/orchin.tscn", "res://mons/monscripts/attack.txt",
 	198, 115, 86, 65,
 	12, 
 	1.0, 1.5, 0.7, 0.7,
@@ -332,7 +332,7 @@ var _ORCHIN_BASE = MonBase.new(MonType.ORCHIN, "Orchin", "res://mons/orchin.tscn
 	[Color("#4a5462"), Color("#333941"), Color("#242234")],
 	1.0, 0.75, [BugData.Type.BLUE_DEF_BUG])
 	
-var _TURTMINAL_BASE = MonBase.new(MonType.TURTMINAL, "Turtminal", "res://mons/turtminal.tscn", "res://monscripts/attack.txt",
+var _TURTMINAL_BASE = MonBase.new(MonType.TURTMINAL, "Turtminal", "res://mons/turtminal.tscn", "res://mons/monscripts/attack.txt",
 	328, 98, 88, 28,
 	5, 
 	1.0, 1.0, 1.3, 0.7,
@@ -341,7 +341,7 @@ var _TURTMINAL_BASE = MonBase.new(MonType.TURTMINAL, "Turtminal", "res://mons/tu
 	[Color("#2baf2b"), Color("#0a8f08"), Color("#0d5302")],
 	1.5, 0.75, [BugData.Type.BLUE_DEF_BUG, BugData.Type.YELLOW_HP_BUG])
 	
-var _STINGARRAY_BASE = MonBase.new(MonType.STINGARRAY, "Stingarray", "res://mons/stingarray.tscn", "res://monscripts/attack.txt",
+var _STINGARRAY_BASE = MonBase.new(MonType.STINGARRAY, "Stingarray", "res://mons/stingarray.tscn", "res://mons/monscripts/attack.txt",
 	212, 144, 58, 89,
 	5, 
 	1.0, 1.5, 1.5, 0.3,
@@ -350,7 +350,7 @@ var _STINGARRAY_BASE = MonBase.new(MonType.STINGARRAY, "Stingarray", "res://mons
 	[Color("#795548"), Color("#5d4037"), Color("#3e2723")],
 	1.5, 0.5, [BugData.Type.RED_ATK_BUG])
 	
-var _ANGLERPHISH_BASE = MonBase.new(MonType.ANGLERPHISH, "Anglerphish", "res://mons/anglerphish.tscn", "res://monscripts/attack.txt",
+var _ANGLERPHISH_BASE = MonBase.new(MonType.ANGLERPHISH, "Anglerphish", "res://mons/anglerphish.tscn", "res://mons/monscripts/attack.txt",
 	328, 170, 44, 59,
 	5, 
 	1.0, 2.0, 0.5, 0.5,

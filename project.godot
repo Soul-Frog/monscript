@@ -20,17 +20,18 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Global="*res://global.gd"
-BattleData="*res://battle_data.gd"
-ScriptData="*res://script_data.gd"
-GameData="*res://game_data.gd"
-BugData="*res://bug_data.gd"
-MonData="*res://mon_data.gd"
-Events="*res://events.gd"
+Global="*res://global_singletons/global.gd"
+Cutscene="*res://cutscenes/cutscene.gd"
+CutscenePlayer="*res://cutscenes/cutscene_player.tscn"
+BattleData="*res://global_singletons/battle_data.gd"
+ScriptData="*res://global_singletons/script_data.gd"
+GameData="*res://global_singletons/game_data.gd"
+BugData="*res://global_singletons/bug_data.gd"
+MonData="*res://global_singletons/mon_data.gd"
+Events="*res://global_singletons/events.gd"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
-Dialogue="*res://dialogue.gd"
-CutscenePlayer="*res://cutscene_player.gd"
-TransitionPlayer="*res://transition_player.tscn"
+Dialogue="*res://global_singletons/dialogue.gd"
+TransitionPlayer="*res://global_singletons/transition_player.tscn"
 
 [debug]
 
