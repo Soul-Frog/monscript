@@ -434,7 +434,7 @@ polygon = PackedVector2Array(482, 489, 512, 488, 510, 552, 476, 553)
 [node name="TestCutscene" type="Area2D" parent="Data/CutsceneTriggers"]
 collision_layer = 0
 script = ExtResource("20_nk0ya")
-id = 2
+id = 3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Data/CutsceneTriggers/TestCutscene"]
 position = Vector2(165, 385)

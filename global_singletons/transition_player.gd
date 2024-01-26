@@ -1,12 +1,15 @@
 extends Node2D
 
 enum Effect {
+	NONE, 						# doesn't do anything
+	
 	QUICK_FADE_OUT, 			# a very fast fade out
 	FADE_OUT, 					# a normal, reasonable fade out
 	SLOW_FADE_OUT_AND_WAIT,		# a fade out with a delay after fading fully to black
 	
 	FADE_IN,					# fading in
-	QUICK_FADE_IN				# fade in faster
+	QUICK_FADE_IN,				# fade in faster
+	SLOW_FADE_IN				# fade in slowly
 }
 
 @onready var _FADE = $Fade
@@ -21,6 +24,9 @@ func _ready():
 
 # play a transition effect
 func play(effect: Effect) -> void:
+	if effect == Effect.NONE:
+		return
+	
 	_is_playing = true
 	
 	match effect:
@@ -29,12 +35,14 @@ func play(effect: Effect) -> void:
 		Effect.FADE_OUT:
 			await _fade_out(0.15, 0.0)
 		Effect.SLOW_FADE_OUT_AND_WAIT:
-			await _fade_out(2.0, 5.0)
+			await _fade_out(2.0, 4.0)
 		
 		Effect.FADE_IN:
 			await _fade_in(0.15)
 		Effect.QUICK_FADE_IN:
 			await _fade_in(0.06)
+		Effect.SLOW_FADE_IN:
+			await _fade_in(2.0)
 	
 	_is_playing = false
 	

@@ -4,6 +4,7 @@ signal _continue_tutorial
 
 var _ID_TO_CUTSCENE_MAP := {
 	Cutscene.ID.INTRO_OLD : _CUTSCENE_INTRODUCTION_OLD,
+	Cutscene.ID.CAVE1_INTRO : _CUTSCENE_CAVE1_INTRO,
 	Cutscene.ID.CAVE2_FIRST_BATTLE : _CUTSCENE_CAVE2_FIRST_BATTLE,
 	Cutscene.ID.BATTLE_TUTORIAL_FIRST_BATTLE : _CUTSCENE_BATTLE_TUTORIAL_FIRST_BATTLE
 }
@@ -135,6 +136,30 @@ func play_cutscene(id: Cutscene.ID, node: Node):
 		node.PLAYER.disable_cutscene_mode()
 
 ### CUTSCENES ###
+
+func _CUTSCENE_CAVE1_INTRO(area: Area) -> void:
+	assert(area is Area and area.area_enum == GameData.Area.COOLANT_CAVE1_BEACH)
+	
+	# create bitleon and place it
+	var bitleon = _create_overworld_bitleon(area)
+	bitleon.position = area.POINTS.find_child("CutsceneIntroBitleon").position
+	bitleon.face_left()
+	
+	# put the player at spawn
+	area.PLAYER.position = area.POINTS.find_child("PlayerSpawn").position
+	area.PLAYER.face_right()
+	
+	await Dialogue.play(_DIALOGUE_FILE, "cave1_intro_start")
+	
+	# todo - await customization
+	
+	await TransitionPlayer.play(TransitionPlayer.Effect.SLOW_FADE_IN)
+	
+	await Dialogue.play(_DIALOGUE_FILE, "cave1_intro_meet_bitleon")
+	
+	# move bitleon to cave entrance as it talks
+	await _move_actor(bitleon, area.PLAYER.position)
+	await _delete_bitleon(bitleon)
 
 func _CUTSCENE_CAVE2_FIRST_BATTLE(area: Area) -> void:
 	assert(area is Area and area.area_enum == GameData.Area.COOLANT_CAVE2_ENTRANCE)

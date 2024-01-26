@@ -45,6 +45,7 @@ func _make_scrollable_and_expandable():
 	click_blocker.hide()
 	_scrollable = true
 	expand_button.show()
+	expand_button.disabled = false
 
 func make_unscrollable_and_unexpandable():
 	if _scrollable: #if going from scrollable to unscrollable state; move to bottom
@@ -54,6 +55,7 @@ func make_unscrollable_and_unexpandable():
 	click_blocker.show()
 	_scrollable = false
 	expand_button.hide()
+	expand_button.disabled = true
 	if expand_button.selected: # if expanded, shrink back down to normal
 		expand_button.unselect()
 

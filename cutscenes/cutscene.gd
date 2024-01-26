@@ -5,7 +5,8 @@ extends Node2D
 # because CutscenePlayer is a scene and not a script
 # :( :( :(
 enum ID {
-	UNSET, INTRO_OLD, 
+	UNSET, INTRO_OLD,
+	CAVE1_INTRO, 
 	CAVE2_FIRST_BATTLE,
 	BATTLE_TUTORIAL_FIRST_BATTLE
 }

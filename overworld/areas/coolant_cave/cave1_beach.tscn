@@ -44,7 +44,7 @@ down = 1
 [node name="Entities" type="Node2D" parent="."]
 
 [node name="Player" parent="Entities" instance=ExtResource("6_nx2l3")]
-position = Vector2(8, 87)
+position = Vector2(32, 80)
 
 [node name="OverworldEncounters" type="Node2D" parent="Entities"]
 
@@ -55,6 +55,12 @@ z_index = 300
 
 [node name="Cave1Entrance" type="Node2D" parent="Data/Points"]
 position = Vector2(72, 58)
+
+[node name="PlayerSpawn" type="Node2D" parent="Data/Points"]
+position = Vector2(32, 80)
+
+[node name="CutsceneIntroBitleon" type="Node2D" parent="Data/Points"]
+position = Vector2(56, 86)
 
 [node name="Collisions" type="StaticBody2D" parent="Data"]
 position = Vector2(55, 83)

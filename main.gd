@@ -104,8 +104,8 @@ func _on_visual_novel_completed() -> void:
 	await _switch_to_scene(OVERWORLD, TransitionPlayer.Effect.SLOW_FADE_OUT_AND_WAIT, TransitionPlayer.Effect.FADE_IN)
 
 func _on_main_menu_clicked_new_game():
-	await _switch_to_scene(VISUAL_NOVEL, TransitionPlayer.Effect.SLOW_FADE_OUT_AND_WAIT, TransitionPlayer.Effect.FADE_IN)
-	VISUAL_NOVEL.play_intro_cutscene()
+	await _switch_to_scene(OVERWORLD, TransitionPlayer.Effect.SLOW_FADE_OUT_AND_WAIT, TransitionPlayer.Effect.NONE)
+	CutscenePlayer.play_cutscene(Cutscene.ID.CAVE1_INTRO, OVERWORLD.current_area)
 
 func _on_main_menu_clicked_continue():
 	if Global.DEBUG_FAST_START:

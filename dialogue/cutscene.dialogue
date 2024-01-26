@@ -2,12 +2,46 @@
 do Dialogue.ERROR("No corresponding tilde in dialogue file!")
 => END
 
+~ cave1_intro_start
+???: Hey... are you there?
+???: Can you hear me?
+???: If you can hear me... say something. 
+You: ...
+You: (Where... am I?)
+You: (Who am I?)
+You: (What am I... doing here...?)
+You: (That's right... I'm...)
+=> END
+
+~ cave1_intro_meet_bitleon
+???: Oh! You opened your eyes!
+???: Are you ok? 
+{{GameData.get_var(GameData.PLAYER_NAME)}}: Yeah... I think I'm ok. But I feel sort of... dizzy. 
+{{GameData.get_var(GameData.PLAYER_NAME)}}: Where am I? What's going on here...?
+???: You're at Coolant Cave. I didn't know other people knew about this spot though.
+Bitleon: My name is Bitleon, by the way. What's yours?
+{{GameData.get_var(GameData.PLAYER_NAME)}}: {{GameData.get_var(GameData.PLAYER_NAME)}}, I think.
+Bitleon: You think? You're acting kind of weird...
+Bitleon: Are you sure you're alright? 
+{{GameData.get_var(GameData.PLAYER_NAME)}}: My head still feels kind of foggy...
+Bitleon: That doesn't sound good. Listen, I think you should come with me. The wire to Core City is only a few screens away.
+Bitleon: Maybe one of the defraggers in the city can help you out.
+{{GameData.get_var(GameData.PLAYER_NAME)}}: Defragger?
+Bitleon: Yeah, a defragger. You said you have memory problems, right?
+{{GameData.get_var(GameData.PLAYER_NAME)}}: I... I'm not sure I quite understand...
+Bitleon: Uh, well, anyway... this area has been swarming with corrupted mons lately. It isn't safe to be sleeping around here.
+Bitleon: I think your best course of action would be to come with me to Core City.
+Bitleon: Sound good?
+{{GameData.get_var(GameData.PLAYER_NAME)}}: Yeah... yeah, sure. I'll come with you.
+Bitleon: Great! The way to the wire is pretty linear, just head up. I'll be right behind you. Let's go!
+=> END
+
 ~ cave2_first_battle_before_battle
-Bitleon: Wait... there's something up ahead.
+Bitleon: Wait... there's something up ahead...
 => END
 
 ~ cave2_first_battle_corrupted_mon
-Bitleon: That mon up there. Do you see it?
+Bitleon: Do you see that mon up there?
 Bitleon: That's what we called a 'corrupt' mon. 
 Bitleon: But don't worry, I'll handle this. Just watch!
 => END
