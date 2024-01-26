@@ -167,6 +167,8 @@ func setup_battle(player_team, computer_team, battle_background: BattleData.Back
 	assert(player_team.size() == GameData.MONS_PER_TEAM, "Wrong num of mons in player team!")
 	assert(computer_team.size() == COMPUTER_MON_POSITIONS.size(), "Wrong num of mons in computer team!")
 	
+	GameData.add_to_var(GameData.BATTLE_COUNT, 1)
+	
 	is_a_mon_taking_action = false
 	is_inject_queued = false
 	is_inject_active = false
@@ -293,11 +295,11 @@ func setup_battle(player_team, computer_team, battle_background: BattleData.Back
 	# move in the queue/battery/speed/log/escape
 	var move_in_ui = create_tween()
 	if GameData.get_var(GameData.BATTLE_SHOW_QUEUE):
-		move_in_ui.parallel().tween_property(_mon_action_queue, "position", _MON_ACTION_QUEUE_POSITION, 0.5).set_trans(Tween.TRANS_CUBIC)
+		slide_in_queue(move_in_ui)
 	if GameData.get_var(GameData.BATTLE_SPEED_UNLOCKED):
-		move_in_ui.parallel().tween_property(_speed_controls, "position", _SPEED_POSITION, 0.5).set_trans(Tween.TRANS_CUBIC)
+		slide_in_speed(move_in_ui)
 	if GameData.get_var(GameData.BATTLE_ESCAPE_UNLOCKED):
-		move_in_ui.parallel().tween_property(_escape_controls, "position", _ESCAPE_POSITION, 0.5).set_trans(Tween.TRANS_CUBIC)
+		slide_in_escape(move_in_ui)
 	move_in_ui.parallel().tween_property(_inject_battery, "position", _INJECT_BATTERY_POSITION, 0.5).set_trans(Tween.TRANS_CUBIC)
 	move_in_ui.parallel().tween_property(_log, "position", _LOG_POSITION, 0.3).set_trans(Tween.TRANS_CUBIC)
 	await move_in_ui.finished
@@ -320,9 +322,27 @@ func setup_battle(player_team, computer_team, battle_background: BattleData.Back
 	if GameData.queued_battle_cutscene != Cutscene.ID.UNSET:
 		CutscenePlayer.play_cutscene(GameData.queued_battle_cutscene, self)
 		GameData.queued_battle_cutscene = Cutscene.ID.UNSET
+	elif GameData.get_var(GameData.BATTLE_COUNT) >= 3 and not GameData.cutscenes_played.has(Cutscene.ID.BATTLE_TUTORIAL_SPEED_AND_QUEUE):
+		CutscenePlayer.play_cutscene(Cutscene.ID.BATTLE_TUTORIAL_SPEED_AND_QUEUE, self)
 	
 	await Global.delay(0.7)
 	_banner_label.zoom_out()
+
+func slide_in_speed(tween = null) -> void:
+	if not tween:
+		tween = create_tween()
+	tween.parallel().tween_property(_speed_controls, "position", _SPEED_POSITION, 0.5).set_trans(Tween.TRANS_CUBIC)
+
+func slide_in_queue(tween = null) -> void:
+	if not tween:
+		tween = create_tween()
+	_mon_action_queue.update_queue(action_queue, _player_mons, _computer_mons)
+	tween.parallel().tween_property(_mon_action_queue, "position", _MON_ACTION_QUEUE_POSITION, 0.5).set_trans(Tween.TRANS_CUBIC)
+
+func slide_in_escape(tween = null) -> void:
+	if not tween:
+		tween = create_tween()
+	tween.parallel().tween_property(_escape_controls, "position", _ESCAPE_POSITION, 0.5).set_trans(Tween.TRANS_CUBIC)
 
 # Should be called after a battle ends, before the next call to setup_battle
 func clear_battle():

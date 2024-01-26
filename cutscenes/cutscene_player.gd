@@ -6,7 +6,8 @@ var _ID_TO_CUTSCENE_MAP := {
 	Cutscene.ID.INTRO_OLD : _CUTSCENE_INTRODUCTION_OLD,
 	Cutscene.ID.CAVE1_INTRO : _CUTSCENE_CAVE1_INTRO,
 	Cutscene.ID.CAVE2_FIRST_BATTLE : _CUTSCENE_CAVE2_FIRST_BATTLE,
-	Cutscene.ID.BATTLE_TUTORIAL_FIRST_BATTLE : _CUTSCENE_BATTLE_TUTORIAL_FIRST_BATTLE
+	Cutscene.ID.BATTLE_TUTORIAL_FIRST_BATTLE : _CUTSCENE_BATTLE_TUTORIAL_FIRST_BATTLE,
+	Cutscene.ID.BATTLE_TUTORIAL_SPEED_AND_QUEUE : _CUTSCENE_BATTLE_TUTORIAL_SPEED_AND_QUEUE
 }
 
 const _DIALOGUE_FILE = preload("res://dialogue/cutscene.dialogue")
@@ -18,6 +19,8 @@ const _FADED_ALPHA = 0.6
 @onready var _MIDDLE_POPUP = $Popup/Middle
 @onready var _MONBLOCK_POPUP = $Popup/Monblock
 @onready var _RESULTS_POPUP = $Popup/Results
+@onready var _SPEED_POPUP = $Popup/Speed
+@onready var _QUEUE_POPUP = $Popup/Queue
 
 var _accepting_click = false
 var _reset_z_map = {} # used by bring_to_front_z and reset_to_back_z
@@ -56,7 +59,7 @@ func _fade_blocker_out() -> void:
 	await tween.finished
 	_BLOCKER.hide()
 
-func _show_popup(popup: HBoxContainer, text: String) -> void:
+func _show_popup(popup: Container, text: String) -> void:
 	popup.show()
 	popup.modulate.a = 0
 	
@@ -69,13 +72,13 @@ func _show_popup(popup: HBoxContainer, text: String) -> void:
 	tween.tween_property(popup, "modulate:a", 1.0, 0.3)
 	await tween.finished
 
-func _hide_popup(popup: HBoxContainer) -> void:
+func _hide_popup(popup: Container) -> void:
 	var tween = create_tween()
 	tween.tween_property(popup, "modulate:a", 0.0, 0.3)
 	await tween.finished
 	popup.hide()
 
-func _popup_and_wait(popup: HBoxContainer, text: String) -> void:
+func _popup_and_wait(popup: Container, text: String) -> void:
 	await _show_popup(popup, text)
 	await _wait_for_click()
 	await _hide_popup(popup)
@@ -196,7 +199,7 @@ func _CUTSCENE_CAVE2_FIRST_BATTLE(area: Area) -> void:
 	_move_camera(area.CAMERA, Vector2(0, 50), 1.0)
 	await _move_actor(bitleon, area.PLAYER.position)
 	await _delete_bitleon(bitleon)
-	
+
 func _CUTSCENE_BATTLE_TUTORIAL_FIRST_BATTLE(battle: Battle) -> void:
 	# grab some necessary variables
 	var results = battle._results
@@ -311,6 +314,53 @@ func _CUTSCENE_BATTLE_TUTORIAL_FIRST_BATTLE(battle: Battle) -> void:
 	assert(_reset_z_map.size() == 0)
 	await _fade_blocker_out()
 	speed_controls.enable()
+
+func _CUTSCENE_BATTLE_TUTORIAL_SPEED_AND_QUEUE(battle: Battle):
+	var speed_controls = battle._speed_controls
+	var queue = battle._mon_action_queue
+
+	battle._set_mon_speed(Battle.Speed.PAUSE_CUTSCENE)
+	battle._set_label_speed(Battle.Speed.NORMAL)
+	speed_controls.disable()
+	
+	GameData.set_var(GameData.BATTLE_SPEED_UNLOCKED, true)
+	GameData.set_var(GameData.BATTLE_SHOW_QUEUE, true)
+	
+	await _fade_blocker_in()
+	
+	await _popup_and_wait(_TOP_POPUP, "Listen... I can tell you're thinking these fights are taking a bit too long.")
+	
+	# show the speed controls
+	_bring_to_front_z(speed_controls)
+	battle.slide_in_speed()
+	# just for visuals, remove the disabled texture so it looks normal
+	var run_disabled_tex = speed_controls._run_button.texture_disabled
+	var pause_disabled_tex = speed_controls._pause_button.texture_disabled
+	var speedup_disabled_tex = speed_controls._speedup_button.texture_disabled
+	speed_controls._run_button.texture_disabled = null
+	speed_controls._pause_button.texture_disabled = null
+	speed_controls._speedup_button.texture_disabled = null
+	await _popup_and_wait(_SPEED_POPUP, "If so, here you go! Speed controls!")
+	
+	# show the queue
+	_bring_to_front_z(queue)
+	battle.slide_in_queue()
+	await _popup_and_wait(_QUEUE_POPUP, "And, while we're at it, here's an turn queue too!")
+	await _popup_and_wait(_TOP_POPUP, "I'm pretty considerate, right?")
+	await _popup_and_wait(_TOP_POPUP, "Try giving those speed buttons a press sometime!")
+	
+	await _fade_blocker_out()
+	_reset_to_normal_z(speed_controls)
+	_reset_to_normal_z(queue)
+	
+	# enable speed controlsadd back the disabled textures too
+	speed_controls.enable()
+	speed_controls._run_button.texture_disabled = run_disabled_tex
+	speed_controls._pause_button.texture_disabled = pause_disabled_tex
+	speed_controls._speedup_button.texture_disabled = speedup_disabled_tex
+	
+	assert(_reset_z_map.size() == 0)
+	battle._set_speed(Battle.Speed.NORMAL)
 
 #the introductory cutscnee in the visual novel node
 #plays at the start of the game

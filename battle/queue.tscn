@@ -8,13 +8,33 @@
 [node name="Queue" type="Node2D"]
 script = ExtResource("1_o5w2p")
 
-[node name="Frame" type="Sprite2D" parent="."]
-z_index = 2
-texture = ExtResource("1_u3d8c")
-centered = false
+[node name="Backgrounds" type="Node2D" parent="."]
+
+[node name="BG1" type="Sprite2D" parent="Backgrounds"]
+position = Vector2(12, 22)
+texture = ExtResource("2_e2iaj")
+
+[node name="BG2" type="Sprite2D" parent="Backgrounds"]
+position = Vector2(12, 41)
+texture = ExtResource("2_e2iaj")
+
+[node name="BG3" type="Sprite2D" parent="Backgrounds"]
+position = Vector2(12, 60)
+texture = ExtResource("2_e2iaj")
+
+[node name="BG4" type="Sprite2D" parent="Backgrounds"]
+position = Vector2(12, 79)
+texture = ExtResource("2_e2iaj")
+
+[node name="BG5" type="Sprite2D" parent="Backgrounds"]
+position = Vector2(12, 98)
+texture = ExtResource("2_e2iaj")
+
+[node name="BG6" type="Sprite2D" parent="Backgrounds"]
+position = Vector2(12, 117)
+texture = ExtResource("2_e2iaj")
 
 [node name="Headshots" type="Node2D" parent="."]
-z_index = 1
 
 [node name="Headshot1" type="Sprite2D" parent="Headshots"]
 position = Vector2(4, 14)
@@ -46,28 +66,6 @@ position = Vector2(4, 109)
 texture = ExtResource("3_013gf")
 centered = false
 
-[node name="Backgrounds" type="Node2D" parent="."]
-
-[node name="BG1" type="Sprite2D" parent="Backgrounds"]
-position = Vector2(12, 22)
-texture = ExtResource("2_e2iaj")
-
-[node name="BG2" type="Sprite2D" parent="Backgrounds"]
-position = Vector2(12, 41)
-texture = ExtResource("2_e2iaj")
-
-[node name="BG3" type="Sprite2D" parent="Backgrounds"]
-position = Vector2(12, 60)
-texture = ExtResource("2_e2iaj")
-
-[node name="BG4" type="Sprite2D" parent="Backgrounds"]
-position = Vector2(12, 79)
-texture = ExtResource("2_e2iaj")
-
-[node name="BG5" type="Sprite2D" parent="Backgrounds"]
-position = Vector2(12, 98)
-texture = ExtResource("2_e2iaj")
-
-[node name="BG6" type="Sprite2D" parent="Backgrounds"]
-position = Vector2(12, 117)
-texture = ExtResource("2_e2iaj")
+[node name="Frame" type="Sprite2D" parent="."]
+texture = ExtResource("1_u3d8c")
+centered = false
