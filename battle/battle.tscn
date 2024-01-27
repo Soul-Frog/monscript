@@ -167,6 +167,9 @@ position = Vector2(200, 96)
 [node name="MONPLACEHOLDER4" parent="Mons/ComputerMons" instance=ExtResource("5_a0vn4")]
 position = Vector2(200, 120)
 
+[node name="VIRUSMONPLACEHOLDER" parent="Mons" instance=ExtResource("5_a0vn4")]
+position = Vector2(200, 84)
+
 [node name="Animator" parent="Mons" groups=["battle_speed_scaled"] instance=ExtResource("15_dus4q")]
 z_index = 100
 
@@ -377,7 +380,15 @@ offset_top = 109.0
 offset_right = 263.0
 offset_bottom = 130.0
 
+[node name="Virus" parent="UI/ComputerMonBlocks" instance=ExtResource("5_fkqod")]
+material = SubResource("ShaderMaterial_837it")
+offset_left = 224.0
+offset_top = 72.0
+offset_right = 270.0
+offset_bottom = 93.0
+
 [node name="Results" parent="UI" instance=ExtResource("54_5vxty")]
+visible = false
 z_index = 50
 
 [node name="Log" parent="UI" groups=["battle_speed_scaled"] instance=ExtResource("16_ugd8u")]

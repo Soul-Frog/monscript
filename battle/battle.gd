@@ -29,6 +29,7 @@ var _speed_to_speed = {
 var MON_Z
 var PLAYER_MON_POSITIONS = []
 var COMPUTER_MON_POSITIONS = []
+var VIRUS_POSITION
 
 var state = BattleState.FINISHED
 
@@ -53,6 +54,7 @@ var check_battle_end_condition = false
 
 @onready var _player_mons = $Mons/PlayerMons
 @onready var _computer_mons = $Mons/ComputerMons
+@onready var _virus_mon = $Mons/VIRUSMONPLACEHOLDER
 @onready var _animator = $Mons/Animator
 
 @onready var _speed_controls = $UI/SpeedControls
@@ -77,6 +79,7 @@ var check_battle_end_condition = false
 
 @onready var _player_mon_blocks = $UI/PlayerMonBlocks
 @onready var _computer_mon_blocks = $UI/ComputerMonBlocks
+@onready var _virus_mon_block = $UI/ComputerMonBlocks/Virus
 const _MONBLOCK_SLIDEOUT_DELTA = 120
 
 @onready var _inject_layer = $UI/InjectLayer
@@ -135,6 +138,9 @@ func _ready():
 		PLAYER_MON_POSITIONS.append(placeholder.position)
 	for placeholder in _computer_mons.get_children():
 		COMPUTER_MON_POSITIONS.append(placeholder.position)
+	VIRUS_POSITION = _virus_mon.position
+	_virus_mon.queue_free()
+	
 	MON_Z = _player_mons.z_index
 	state = BattleState.FINISHED
 	battle_result = BattleData.BattleResult.new()
@@ -216,9 +222,16 @@ func setup_battle(player_team, computer_team, battle_background: BattleData.Back
 	make_unique_log_names.call(name_map)
 	name_map.clear()
 	
+	_virus_mon_block.visible = false
+	
 	for i in GameData.MONS_PER_TEAM:
 		if computer_team[i] != null:
-			var new_mon = _create_and_setup_mon(computer_team[i], _computer_mons, COMPUTER_MON_POSITIONS[i], _computer_mon_blocks.get_child(i), Team.COMPUTER)
+			var is_virus = computer_team[i]._base._is_virus
+			if is_virus:
+				_virus_mon_block.visible = true
+			var pos = COMPUTER_MON_POSITIONS[i] if not is_virus else VIRUS_POSITION
+			var mon_block = _computer_mon_blocks.get_child(i) if not is_virus else _virus_mon_block
+			var new_mon = _create_and_setup_mon(computer_team[i], _computer_mons, pos, mon_block, Team.COMPUTER)
 			
 			# set up log name and color for this mon
 			new_mon.log_color = _log.ENEMY_TEAM_COLOR
