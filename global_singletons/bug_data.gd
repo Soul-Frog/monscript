@@ -33,7 +33,10 @@ class Bug:
 		return _TOOLTIP_FORMAT % [name, stats_info]
 
 enum Type {
-	RED_ATK_BUG, BLUE_DEF_BUG, GREEN_SPD_BUG, YELLOW_HP_BUG
+	RED_ATK_BUG = 1, 
+	BLUE_DEF_BUG = 2, 
+	GREEN_SPD_BUG = 3, 
+	YELLOW_HP_BUG = 4
 }
 
 # dictionary of bugs

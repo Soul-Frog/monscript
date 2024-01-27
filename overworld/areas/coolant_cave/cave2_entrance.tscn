@@ -431,12 +431,12 @@ polygon = PackedVector2Array(482, 489, 512, 488, 510, 552, 476, 553)
 
 [node name="CutsceneTriggers" type="Node2D" parent="Data"]
 
-[node name="TestCutscene" type="Area2D" parent="Data/CutsceneTriggers"]
+[node name="IntroBattleCutscene" type="Area2D" parent="Data/CutsceneTriggers"]
 collision_layer = 0
 script = ExtResource("20_nk0ya")
-id = 3
+id = 2
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Data/CutsceneTriggers/TestCutscene"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Data/CutsceneTriggers/IntroBattleCutscene"]
 position = Vector2(165, 385)
 polygon = PackedVector2Array(107, 95, 110, 104, 142, 104, 147, 95)
 
@@ -445,6 +445,6 @@ position = Vector2(76, 402)
 
 [connection signal="body_entered" from="Data/TransitionUp" to="Data/TransitionUp" method="_on_body_entered"]
 [connection signal="body_entered" from="Data/TransitionDown" to="Data/TransitionDown" method="_on_body_entered"]
-[connection signal="body_entered" from="Data/CutsceneTriggers/TestCutscene" to="Data/CutsceneTriggers/TestCutscene" method="_on_body_entered"]
+[connection signal="body_entered" from="Data/CutsceneTriggers/IntroBattleCutscene" to="Data/CutsceneTriggers/IntroBattleCutscene" method="_on_body_entered"]
 
 [editable path="Base/ForegroundElements/ForegroundElem"]

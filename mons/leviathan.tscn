@@ -1,0 +1,73 @@
+[gd_scene load_steps=10 format=3 uid="uid://ba18qoo4vpw3x"]
+
+[ext_resource type="PackedScene" uid="uid://qd8gobfrvv8u" path="res://mons/mon.tscn" id="1_wmug5"]
+[ext_resource type="Texture2D" uid="uid://cs4uf7eqmtm1w" path="res://assets/sprites/mons/magnetfrog_blue.png" id="2_ghnmi"]
+[ext_resource type="Texture2D" uid="uid://dos1wnic6bcd7" path="res://assets/sprites/mons/magnetfrog.png" id="3_fa0fw"]
+[ext_resource type="Texture2D" uid="uid://7f1xs6lh2wuf" path="res://assets/sprites/mons/bitleon.png" id="3_jpydt"]
+
+[sub_resource type="Shader" id="Shader_pqap8"]
+code = "shader_type canvas_item;
+
+uniform vec4 flash_color : source_color = vec4(1.0);
+uniform float flash_modifier : hint_range(0.0, 1.0);
+
+void fragment() {
+	vec4 color = texture(TEXTURE, UV);
+	color.rgb = mix(color.rgb, flash_color.rgb, flash_modifier);
+	// I have no idea why I need to do this to make alpha work correctly
+	COLOR.r = color.r;
+	COLOR.g = color.g;
+	COLOR.b = color.b;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p1q46"]
+resource_local_to_scene = true
+shader = SubResource("Shader_pqap8")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_modifier = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6p1em"]
+atlas = ExtResource("3_jpydt")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ia3mv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ghnmi")
+}],
+"loop": true,
+"name": &"database_override",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_fa0fw")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6p1em")
+}],
+"loop": true,
+"name": &"headshot",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wsujs"]
+size = Vector2(32, 32)
+
+[node name="Mon" instance=ExtResource("1_wmug5")]
+
+[node name="Sprite" parent="." index="0"]
+material = SubResource("ShaderMaterial_p1q46")
+sprite_frames = SubResource("SpriteFrames_ia3mv")
+animation = &"database_override"
+
+[node name="CollisionHitbox" parent="." index="1"]
+position = Vector2(0, 0)
+shape = SubResource("RectangleShape2D_wsujs")

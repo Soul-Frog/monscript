@@ -28,7 +28,7 @@ func ready() -> void:
 
 func setup(type) -> void:
 	self.mon_type = type
-	$Free/SpriteContainer/MonSprite.texture = MonData.get_texture_for(mon_type)
+	$Free/SpriteContainer/MonSprite.texture = get_sprite()
 	refresh()
 	_update_background()
 
@@ -69,7 +69,7 @@ func get_passive_description():
 	return MonData.get_passive_description_for(mon_type)
 
 func get_sprite():
-	return MonData.get_texture_for(mon_type)
+	return MonData.get_database_texture_for(mon_type)
 
 func get_health_bar_value():
 	return MonData.get_health_percentile_for(mon_type)

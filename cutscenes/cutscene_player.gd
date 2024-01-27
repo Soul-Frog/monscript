@@ -6,6 +6,7 @@ var _ID_TO_CUTSCENE_MAP := {
 	Cutscene.ID.INTRO_OLD : _CUTSCENE_INTRODUCTION_OLD,
 	Cutscene.ID.CAVE1_INTRO : _CUTSCENE_CAVE1_INTRO,
 	Cutscene.ID.CAVE2_FIRST_BATTLE : _CUTSCENE_CAVE2_FIRST_BATTLE,
+	Cutscene.ID.CAVE4_LEVIATHAN_MEETING : _CUTSCENE_CAVE4_LEVIATHAN_MEETING,
 	Cutscene.ID.BATTLE_TUTORIAL_FIRST_BATTLE : _CUTSCENE_BATTLE_TUTORIAL_FIRST_BATTLE,
 	Cutscene.ID.BATTLE_TUTORIAL_SPEED_AND_QUEUE : _CUTSCENE_BATTLE_TUTORIAL_SPEED_AND_QUEUE
 }
@@ -141,7 +142,7 @@ func play_cutscene(id: Cutscene.ID, node: Node):
 ### CUTSCENES ###
 
 func _CUTSCENE_CAVE1_INTRO(area: Area) -> void:
-	assert(area is Area and area.area_enum == GameData.Area.COOLANT_CAVE1_BEACH)
+	assert(area.area_enum == GameData.Area.COOLANT_CAVE1_BEACH)
 	
 	# create bitleon and place it
 	var bitleon = _create_overworld_bitleon(area)
@@ -165,7 +166,7 @@ func _CUTSCENE_CAVE1_INTRO(area: Area) -> void:
 	await _delete_bitleon(bitleon)
 
 func _CUTSCENE_CAVE2_FIRST_BATTLE(area: Area) -> void:
-	assert(area is Area and area.area_enum == GameData.Area.COOLANT_CAVE2_ENTRANCE)
+	assert(area.area_enum == GameData.Area.COOLANT_CAVE2_ENTRANCE)
 	
 	# add the overworld encounter
 	var gelif = load("res://mons/gelif.tscn").instantiate()
@@ -197,6 +198,38 @@ func _CUTSCENE_CAVE2_FIRST_BATTLE(area: Area) -> void:
 	await Dialogue.play(_DIALOGUE_FILE, "cave2_first_battle_after_battle")
 	
 	_move_camera(area.CAMERA, Vector2(0, 50), 1.0)
+	await _move_actor(bitleon, area.PLAYER.position)
+	await _delete_bitleon(bitleon)
+
+func _CUTSCENE_CAVE4_LEVIATHAN_MEETING(area: Area) -> void:
+	assert(area.area_enum == GameData.Area.COOLANT_CAVE4_PLAZA)
+	
+	# add leviathan to the scene
+	var leviathan = load("res://mons/leviathan.tscn").instantiate()
+	leviathan.set_script(load("res://overworld/components/overworld_mons/overworld_mon.gd"))
+	leviathan.mon1Type = MonData.MonType.LEVIATHAN
+	leviathan.mon1Level = 5
+	leviathan.position = area.POINTS.find_child("CutsceneLeviathan").position
+	area.call_deferred("add_child", leviathan)
+	
+	await _move_actor(area.PLAYER, area.POINTS.find_child("CutscenePlayer"))
+	area.PLAYER.face_left()
+	
+	# create a bitleon and move him...
+	var bitleon = _create_overworld_bitleon(area)
+	await _move_actor(bitleon, area.POINTS.find_child("CutsceneBitleon").position)
+	bitleon.face_left()
+	
+	await _move_camera(area.CAMERA, Vector2(-80, 0), 0.5)
+	
+	#GameData.queue_battle_cutscene(Cutscene.ID.BATTLE_TUTORIAL_ESCAPE)
+	Events.emit_signal("battle_started", leviathan, leviathan.mons)
+	await Events.battle_ended
+	await Global.delay(0.5)
+	
+	leviathan.queue_free()
+	
+	_move_camera(area.CAMERA, Vector2(80, 0), 0.5)
 	await _move_actor(bitleon, area.PLAYER.position)
 	await _delete_bitleon(bitleon)
 

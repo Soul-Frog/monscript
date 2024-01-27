@@ -430,6 +430,38 @@ var DO_BLOCK_LIST := [
 		
 		return true
 		),
+	
+	Block.new(Block.Type.DO, "HYDR0", Block.Type.NONE, "Attack all foes for 500% Chill damage.",
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> bool:
+		battle_log.add_text("%s US3D HYDR0!" % battle_log.MON_NAME_PLACEHOLDER, mon)
+		
+		#todo - animation
+		animator.slash(target)
+		await animator.animation_finished
+		if animator.was_animation_canceled:
+			return false
+		
+		for foe in foes:
+			foe.apply_attack(mon, 5.0, MonData.DamageType.CHILL)
+		
+		return true
+		),
+	
+	Block.new(Block.Type.DO, "B1T3", Block.Type.TO, "Attack a mon for 95% damage and inflict LEAK.",
+	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> bool:
+		battle_log.add_text("%s US3D B1T3!" % battle_log.MON_NAME_PLACEHOLDER, mon)
+		
+		#todo - animation
+		animator.slash(target)
+		await animator.animation_finished
+		if animator.was_animation_canceled:
+			return false
+		
+		target.apply_attack(mon, 0.95, MonData.DamageType.NORMAL)
+		target.inflict_status(BattleMon.Status.LEAK)
+		
+		return true
+		),
 ]
 
 # TO FUNCTIONS

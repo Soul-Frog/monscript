@@ -81,10 +81,11 @@ class MonBase:
 	var _xp_multiplier: float # affects the amount of XP this mon gives
 	var _bits_multiplier: float # affects the amount of bits this mon drops
 	var _bug_drops: Array[BugData.Type] # list of all possible bug drops for this mon
+	var _is_virus: bool # if this mon is a virus (boss) type monster
 	
 	func _init(monType: MonType, monSpecies: String, mon_scene: String, default_script_file_path: String,
 		healthAt64: int, attackAt64: int, defenseAt64: int, speedAt64: int,
-		decompilationRequired: int, 
+		decompilationRequired: int, isVirus: bool,
 		normal_damage_mult: float, heat_damage_mult: float, chill_damage_mult: float, volt_damage_mult: float,
 		innateBlock: ScriptData.Block, innatePassive: Passive,
 		colors: Array[Color],
@@ -99,6 +100,7 @@ class MonBase:
 		self._attack64 = attackAt64
 		self._defense64 = defenseAt64
 		self._speed64 = speedAt64
+		self._is_virus = isVirus
 		self._innate_block = innateBlock
 		self._innate_passive = innatePassive
 		self._colors = colors
@@ -288,7 +290,7 @@ class Mon:
 # Bitleons
 var _BITLEON_BASE = MonBase.new(MonType.BITLEON, "Bitleon", "res://mons/bitleon.tscn", "res://mons/monscripts/attack.txt",
 	256, 128, 64, 96,
-	1,
+	1, false,
 	1.0, 1.0, 1.0, 1.0,
 	ScriptData.get_block_by_name("Repair"),
 	Passive.COURAGE,
@@ -298,7 +300,7 @@ var _BITLEON_BASE = MonBase.new(MonType.BITLEON, "Bitleon", "res://mons/bitleon.
 # Coolant Cave
 var _GELIF_BASE = MonBase.new(MonType.GELIF, "Gelif", "res://mons/gelif.tscn", "res://mons/monscripts/attack.txt",
 	540, 98, 14, 74,
-	12,
+	12, false,
 	1.0, 2.0, 0.2, 2.0,
 	ScriptData.get_block_by_name("Transfer"),
 	Passive.REGENERATE,
@@ -307,7 +309,7 @@ var _GELIF_BASE = MonBase.new(MonType.GELIF, "Gelif", "res://mons/gelif.tscn", "
 	
 var _CHORSE_BASE = MonBase.new(MonType.CHORSE, "C-horse", "res://mons/chorse.tscn", "res://mons/monscripts/attack.txt",
 	220, 100, 42, 95,
-	10, 
+	10, false,
 	1.0, 1.5, 0.5, 1.0,
 	ScriptData.get_block_by_name("C-gun"),
 	Passive.MODERNIZE, 
@@ -316,7 +318,7 @@ var _CHORSE_BASE = MonBase.new(MonType.CHORSE, "C-horse", "res://mons/chorse.tsc
 	
 var _PASCALICAN_BASE = MonBase.new(MonType.PASCALICAN, "Pascalican", "res://mons/pascalican.tscn", "res://mons/monscripts/attack.txt",
 	210, 84, 56, 126,
-	8, 
+	8, false,
 	1.0, 1.0, 0.5, 1.5,
 	ScriptData.get_block_by_name("Triangulate"),
 	Passive.PASCALICAN_PASSIVE,
@@ -325,7 +327,7 @@ var _PASCALICAN_BASE = MonBase.new(MonType.PASCALICAN, "Pascalican", "res://mons
 	
 var _ORCHIN_BASE = MonBase.new(MonType.ORCHIN, "Orchin", "res://mons/orchin.tscn", "res://mons/monscripts/attack.txt",
 	198, 115, 86, 65,
-	12, 
+	12, false,
 	1.0, 1.5, 0.7, 0.7,
 	ScriptData.get_block_by_name("SpikOR"),
 	Passive.THORNS,
@@ -334,7 +336,7 @@ var _ORCHIN_BASE = MonBase.new(MonType.ORCHIN, "Orchin", "res://mons/orchin.tscn
 	
 var _TURTMINAL_BASE = MonBase.new(MonType.TURTMINAL, "Turtminal", "res://mons/turtminal.tscn", "res://mons/monscripts/attack.txt",
 	328, 98, 88, 28,
-	5, 
+	5, false,
 	1.0, 1.0, 1.3, 0.7,
 	ScriptData.get_block_by_name("ShellBash"),
 	Passive.BOURNE_AGAIN,
@@ -343,7 +345,7 @@ var _TURTMINAL_BASE = MonBase.new(MonType.TURTMINAL, "Turtminal", "res://mons/tu
 	
 var _STINGARRAY_BASE = MonBase.new(MonType.STINGARRAY, "Stingarray", "res://mons/stingarray.tscn", "res://mons/monscripts/attack.txt",
 	212, 144, 58, 89,
-	5, 
+	5, false,
 	1.0, 1.5, 1.5, 0.3,
 	ScriptData.get_block_by_name("Multitack"),
 	Passive.PIERCER,
@@ -352,12 +354,27 @@ var _STINGARRAY_BASE = MonBase.new(MonType.STINGARRAY, "Stingarray", "res://mons
 	
 var _ANGLERPHISH_BASE = MonBase.new(MonType.ANGLERPHISH, "Anglerphish", "res://mons/anglerphish.tscn", "res://mons/monscripts/attack.txt",
 	328, 170, 44, 59,
-	5, 
+	5, false,
 	1.0, 2.0, 0.5, 0.5,
 	ScriptData.get_block_by_name("Spearphishing"),
 	Passive.EXPLOIT,
 	[Color("#5677fc"), Color("#455ede"), Color("#2a36b1")],
 	1.5, 1.0, [BugData.Type.RED_ATK_BUG, BugData.Type.YELLOW_HP_BUG])
+
+# health attack def spd
+# decompilation_required is_virus
+# normal_dmg heat chill volt
+# innateBlock innatePassive
+# colors
+# xpMult bitsMult [bugDrops]
+var _LEVIATHAN_BASE = MonBase.new(MonType.LEVIATHAN, "L3V14TH4N", "res://mons/leviathan.tscn", "res://mons/monscripts/leviathan.txt",
+	720, 250, 90, 65,
+	1, true,
+	1.0, 1.5, 0.1, 1.5,
+	ScriptData.get_block_by_name("HYDR0"),
+	Passive.NONE,
+	[Color("#5677fc"), Color("#455ede"), Color("#2a36b1")],
+	1.5, 1.0, [BugData.Type.RED_ATK_BUG, BugData.Type.BLUE_DEF_BUG])
 
 # dictionary mapping MonTypes -> MonBases
 var _MON_MAP := {
@@ -370,12 +387,23 @@ var _MON_MAP := {
 	MonType.TURTMINAL : _TURTMINAL_BASE,
 	MonType.STINGARRAY : _STINGARRAY_BASE,
 	MonType.ANGLERPHISH : _ANGLERPHISH_BASE,
+	
+	MonType.LEVIATHAN : _LEVIATHAN_BASE
 }
 
 # This enum is used by the overworld_encounter.tscn, so don't delete it
 enum MonType
 {
-	NONE, BITLEON, GELIF, CHORSE, PASCALICAN, ORCHIN, TURTMINAL, STINGARRAY, ANGLERPHISH,
+	NONE = 0, 
+	BITLEON = 1, 
+	GELIF = 2, 
+	CHORSE = 3, 
+	PASCALICAN = 4, 
+	ORCHIN = 5, 
+	TURTMINAL = 6, 
+	STINGARRAY = 7, 
+	ANGLERPHISH = 8,
+	LEVIATHAN = 1000
 }
 
 
@@ -385,6 +413,16 @@ func get_texture_for(montype: MonType) -> Texture2D:
 	var mon_scene = load(_MON_MAP[montype]._scene_path).instantiate()
 	# get texture from scene
 	var tex = mon_scene.get_texture()
+	# free the scene
+	mon_scene.free()
+	return tex
+
+func get_database_texture_for(montype: MonType) -> Texture2D:
+	assert(montype != MonType.NONE)
+	# make an instance of the mon's scene
+	var mon_scene = load(_MON_MAP[montype]._scene_path).instantiate()
+	# get texture from scene
+	var tex = mon_scene.get_database_texture()
 	# free the scene
 	mon_scene.free()
 	return tex

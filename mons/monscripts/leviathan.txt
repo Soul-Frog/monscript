@@ -1,0 +1,4 @@
+START
+SelfLowHP HYDR0
+B1T3 RandomFoe
+END

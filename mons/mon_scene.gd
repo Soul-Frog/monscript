@@ -15,6 +15,11 @@ func get_texture() -> Texture2D:
 	assert($Sprite.sprite_frames.has_animation("default"))
 	return $Sprite.sprite_frames.get_frame_texture("default", 0)
 
+func get_database_texture() -> Texture2D:
+	if $Sprite.sprite_frames.has_animation("database_override"):
+		return $Sprite.sprite_frames.get_frame_texture("database_override", 0)
+	return get_texture()
+
 func _physics_process(delta):
 	var input_direction = Vector2.ZERO
 	

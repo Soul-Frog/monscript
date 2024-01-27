@@ -211,7 +211,8 @@ func save_game():
 	
 	# save the cutscenes that have been played
 	for scene_name in Cutscene.ID.keys():
-		save_dict["played_cutscene_%s" % scene_name] = cutscenes_played.has(Cutscene.ID[scene_name])
+		var key = "played_cutscene_%s" % Cutscene.ID[scene_name]
+		save_dict[key] = cutscenes_played.has(Cutscene.ID[scene_name])
 	
 	# convert to json
 	var json = JSON.stringify(save_dict)
@@ -270,7 +271,7 @@ func load_game():
 	
 	# mark cutscenes which have already been played
 	for scene_name in Cutscene.ID.keys():
-		var key = "played_cutscene_%s" % scene_name
+		var key = "played_cutscene_%s" % Cutscene.ID[scene_name]
 		if save_dict.has(key) and save_dict[key] != false:
 			cutscenes_played.append(Cutscene.ID[scene_name])
 	

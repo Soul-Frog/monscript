@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c8sccmm8akfmv"]
+[gd_scene load_steps=9 format=3 uid="uid://c8sccmm8akfmv"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_leamx"]
 [ext_resource type="Texture2D" uid="uid://tjinhumapyr" path="res://assets/maps/coolant_cave/cave4_plaza/cave4.png" id="2_a7nkp"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://overworld/components/warp.gd" id="4_7evqn"]
 [ext_resource type="PackedScene" uid="uid://b5sx3ehv6u6ks" path="res://mons/pascalican.tscn" id="4_vbraw"]
 [ext_resource type="Script" path="res://overworld/components/overworld_mons/overworld_mon.gd" id="5_xlunq"]
+[ext_resource type="Script" path="res://overworld/areas/cutscene_trigger_zone.gd" id="7_ikrqd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_80ub1"]
 size = Vector2(51, 7)
@@ -118,3 +119,26 @@ position = Vector2(608, 443)
 
 [node name="Cave4BottomLeft" type="Node2D" parent="Data/Points"]
 position = Vector2(344, 443)
+
+[node name="CutsceneLeviathan" type="Node2D" parent="Data/Points"]
+position = Vector2(244, 358)
+
+[node name="CutscenePlayer" type="Node2D" parent="Data/Points"]
+position = Vector2(341, 336)
+
+[node name="CutsceneBitleon" type="Node2D" parent="Data/Points"]
+position = Vector2(354, 317)
+
+[node name="CutsceneTriggers" type="Node2D" parent="Data"]
+
+[node name="LeviathanIntroCutscene" type="Area2D" parent="Data/CutsceneTriggers"]
+position = Vector2(134, -86)
+collision_layer = 0
+script = ExtResource("7_ikrqd")
+id = 5
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Data/CutsceneTriggers/LeviathanIntroCutscene"]
+position = Vector2(165, 385)
+polygon = PackedVector2Array(116, 26, 110, 104, 125, 104, 124, 26)
+
+[connection signal="body_entered" from="Data/CutsceneTriggers/LeviathanIntroCutscene" to="Data/CutsceneTriggers/LeviathanIntroCutscene" method="_on_body_entered"]
