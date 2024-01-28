@@ -18,6 +18,10 @@ const SWIM_TOPWATER_JUMP_VELOCITY = JUMP_VELOCITY/1.2 # jump velocity while exit
 var is_swimming = false # if the player is in water
 var is_topwater = false # if the player is swimming but near the top of the water
 
+func _ready():
+	assert(SPEED > 0)
+	super._ready()
+
 func _physics_process(delta): 
 	if _can_move:
 		# set the values to use depending on our current state

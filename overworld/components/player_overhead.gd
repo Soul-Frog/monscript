@@ -19,6 +19,7 @@ func _input(event):
 
 func _ready():
 	assert(SPEED > 0)
+	super._ready()
 
 func update_velocity():
 	var input_direction = Input.get_vector("left", "right", "up", "down")

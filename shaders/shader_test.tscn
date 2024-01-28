@@ -94,10 +94,10 @@ shader_parameter/SKIN_RECOLOR_DARK = Vector3(0.1, 0.8, 0.6)
 [node name="ShaderTest" type="Node2D"]
 
 [node name="ColorPicker" type="ColorPicker" parent="."]
-offset_left = 90.0
-offset_top = -51.0
-offset_right = 380.0
-offset_bottom = 443.0
+offset_left = 98.0
+offset_top = -47.0
+offset_right = 384.0
+offset_bottom = 447.0
 scale = Vector2(0.2, 0.2)
 color = Color(0.960938, 0.597656, 0.53125, 1)
 color_mode = 2
