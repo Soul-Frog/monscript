@@ -1,10 +1,11 @@
-[gd_scene load_steps=18 format=3 uid="uid://ulh6yd4gj6gc"]
+[gd_scene load_steps=20 format=3 uid="uid://ulh6yd4gj6gc"]
 
 [ext_resource type="Shader" path="res://shaders/generic/sway.gdshader" id="1_lqa81"]
 [ext_resource type="Shader" path="res://shaders/generic/squish.gdshader" id="3_1tng0"]
 [ext_resource type="Shader" path="res://shaders/generic/color_replace.gdshader" id="4_ymh7m"]
 [ext_resource type="Texture2D" uid="uid://jlp56bvf1dsg" path="res://assets/sprites/mc.png" id="5_5bo0u"]
 [ext_resource type="Shader" path="res://shaders/generic/corrupt.gdshader" id="5_6g0j4"]
+[ext_resource type="Shader" path="res://overworld/components/player.gdshader" id="6_yvfs2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vn8th"]
 shader = ExtResource("1_lqa81")
@@ -80,15 +81,25 @@ shader = ExtResource("4_ymh7m")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jjknp"]
 shader = ExtResource("5_6g0j4")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w010w"]
+shader = ExtResource("6_yvfs2")
+shader_parameter/HAIR_RECOLOR_LIGHT = Vector3(1, 0.5, 0.5)
+shader_parameter/HAIR_RECOLOR_DARK = Vector3(1, 0.1, 0.1)
+shader_parameter/EYE_RECOLOR = Vector3(0.1, 1, 1)
+shader_parameter/SHIRT_RECOLOR_LIGHT = Vector3(0.91, 0.3, 0.25)
+shader_parameter/SHIRT_RECOLOR_DARK = Vector3(0.5, 0.5, 0.5)
+shader_parameter/SKIN_RECOLOR_LIGHT = Vector3(0.25, 0.25, 1)
+shader_parameter/SKIN_RECOLOR_DARK = Vector3(0.1, 0.8, 0.6)
+
 [node name="ShaderTest" type="Node2D"]
 
 [node name="ColorPicker" type="ColorPicker" parent="."]
-offset_left = 42.0
-offset_top = -79.0
-offset_right = 332.0
-offset_bottom = 415.0
+offset_left = 90.0
+offset_top = -51.0
+offset_right = 380.0
+offset_bottom = 443.0
 scale = Vector2(0.2, 0.2)
-color = Color(0.90625, 0.304688, 0.25, 1)
+color = Color(0.960938, 0.597656, 0.53125, 1)
 color_mode = 2
 
 [node name="Sway" type="AnimatedSprite2D" parent="."]
@@ -115,6 +126,13 @@ autoplay = "stand"
 [node name="Corrupt" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_jjknp")
 position = Vector2(97, 17)
+sprite_frames = SubResource("SpriteFrames_tdurj")
+animation = &"stand"
+autoplay = "stand"
+
+[node name="Player" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_w010w")
+position = Vector2(156, 18)
 sprite_frames = SubResource("SpriteFrames_tdurj")
 animation = &"stand"
 autoplay = "stand"

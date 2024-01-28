@@ -1,8 +1,12 @@
-[gd_scene load_steps=15 format=3 uid="uid://i0tisfi5mas0"]
+[gd_scene load_steps=17 format=3 uid="uid://i0tisfi5mas0"]
 
 [ext_resource type="Script" path="res://overworld/components/player_overhead.gd" id="1_kvdei"]
 [ext_resource type="Script" path="res://overworld/camera.gd" id="2_djux3"]
+[ext_resource type="Shader" path="res://overworld/components/player.gdshader" id="3_7i01p"]
 [ext_resource type="Texture2D" uid="uid://jlp56bvf1dsg" path="res://assets/sprites/mc.png" id="3_wuw0g"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uhyww"]
+shader = ExtResource("3_7i01p")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7eath"]
 atlas = ExtResource("3_wuw0g")
@@ -87,6 +91,7 @@ zoom = Vector2(0.5, 0.5)
 script = ExtResource("2_djux3")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_uhyww")
 position = Vector2(0, -3)
 sprite_frames = SubResource("SpriteFrames_3mqe6")
 animation = &"stand"
@@ -94,11 +99,13 @@ autoplay = "stand"
 frame_progress = 0.0594639
 
 [node name="Collider" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 11.5)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_0gcyb")
 
 [node name="BattleCollision" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 2
 
@@ -106,6 +113,7 @@ collision_mask = 2
 shape = SubResource("CapsuleShape2D_6eq6j")
 
 [node name="InteractableCollision" type="Area2D" parent="."]
+visible = false
 collision_layer = 8
 collision_mask = 0
 
