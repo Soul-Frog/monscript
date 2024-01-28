@@ -32,6 +32,51 @@ var _area_enum_to_path: Dictionary = {
 	Area.COOLANT_CAVE12_BOSSROOM : "res://overworld/areas/coolant_cave/cave12_bossroom.tscn",
 }
 
+## Customization Colors ##
+enum CustomizationColor {
+	BLUE,
+	BROWN,
+	DARK,
+	ORANGE,
+	BLONDE,
+	LIGHTGREEN,
+	GREEN,
+	TEAL,
+	LIGHTBLUE,
+	PURPLE,
+	PINK,
+	RED,
+	SKINONE,
+	SKINTWO,
+	SKINTHREE,
+	SKINFOUR,
+	SKINFIVE,
+	SKINSIX,
+	SKINSEVEN
+}
+
+var customization_colors = {
+	CustomizationColor.BROWN : [Color("#5d4037"), Color("#3e2723")],
+	CustomizationColor.DARK : [Color("#424242"), Color("#212121")],
+	CustomizationColor.ORANGE : [Color("#ff5722"), Color("#d84315")],
+	CustomizationColor.BLONDE : [Color("#ffb74d"), Color("#ffa726")],
+	CustomizationColor.LIGHTGREEN : [Color("#9ccc65"), Color("#7cb342")],
+	CustomizationColor.GREEN : [Color("#056f00"), Color("#0d5302")],
+	CustomizationColor.TEAL : [Color("#00897b"), Color("#00695c")],
+	CustomizationColor.LIGHTBLUE : [Color("#03a9f4"), Color("#0288d1")],
+	CustomizationColor.BLUE : [Color("#5677fc"), Color("#455ede")],
+	CustomizationColor.PURPLE : [Color("#7e57c2"), Color("#673ab7")],
+	CustomizationColor.PINK : [Color("#f48fb1"), Color("#f06292")],
+	CustomizationColor.RED : [Color("#e84e40"), Color("#d01716")],
+	CustomizationColor.SKINONE : [Color("#ffab91"), Color("#f69988")],
+	CustomizationColor.SKINTWO : [Color("#f9d5ba"), Color("#e4a47c")],
+	CustomizationColor.SKINTHREE : [Color("#e4a47c"), Color("#d38b59")],
+	CustomizationColor.SKINFOUR : [Color("#d38b59"), Color("#ae6b3f")],
+	CustomizationColor.SKINFIVE : [Color("#ae6b3f"), Color("#7f4c31")],
+	CustomizationColor.SKINSIX : [Color("#7f4c31"), Color("#603429")],
+	CustomizationColor.SKINSEVEN : [Color("#603429"), Color("#442725")]
+}
+
 func path_for_area(area_enum: GameData.Area) -> String: # function to get script for enum
 	assert(area_enum != Area.NONE, "Area enum is none!")
 	return _area_enum_to_path[area_enum]
@@ -63,6 +108,11 @@ const INTRO_EXAMINED_COMPUTER_ONCE = "INTRO_EXAMINED_COMPUTER_ONCE"
 const INTRO_READY_TO_SLEEP = "INTRO_READY_TO_SLEEP"
 # Whether the water in coolant cave is up or down. This persists across saves (since player may save in an area with lowered water)
 const COOLANT_CAVE_WATER_RAISED = "COOLANT_CAVE_WATER_RAISED"
+# Character customization related
+const HAIR_CUSTOMIZATION_COLOR = "HAIR_CUSTOMIZATION_COLOR"
+const EYE_CUSTOMIZATION_COLOR = "EYE_CUSTOMIZATION_COLOR"
+const SHIRT_CUSTOMIZATION_COLOR = "SHIRT_CUSTOMIZATION_COLOR"
+const SKIN_CUSTOMIZATION_COLOR = "SKIN_CUSTOMIZATION_COLOR"
 
 # Variables which are persisted.
 # Anything in this dictionary will automatically be saved/loaded when the game is saved/loaded.
@@ -88,7 +138,13 @@ var _variables : Dictionary = {
 	INTRO_EXAMINED_COMPUTER_ONCE : false,
 	INTRO_READY_TO_SLEEP : false,
 	
-	COOLANT_CAVE_WATER_RAISED : true #default: water is up
+	COOLANT_CAVE_WATER_RAISED : true, #default: water is up
+	
+	# character customization related
+	HAIR_CUSTOMIZATION_COLOR: CustomizationColor.BROWN,
+	EYE_CUSTOMIZATION_COLOR: CustomizationColor.BLUE,
+	SHIRT_CUSTOMIZATION_COLOR: CustomizationColor.RED,
+	SKIN_CUSTOMIZATION_COLOR: CustomizationColor.SKINONE
 }
 
 var team = [] # player's active team
