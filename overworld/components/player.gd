@@ -24,6 +24,10 @@ func _ready():
 	assert(_SPRITE.sprite_frames.has_animation("walk"))
 	assert(_SPRITE.sprite_frames.has_animation("stand"))
 	assert(_BATTLE_COLLISION)
+	recolor_sprite()
+	Events.recolor_player_sprite.connect(recolor_sprite)
+
+func recolor_sprite():
 	_SPRITE.material.set_shader_parameter("HAIR_RECOLOR_LIGHT", GameData.customization_colors[GameData.get_var(GameData.HAIR_CUSTOMIZATION_COLOR)][0])
 	_SPRITE.material.set_shader_parameter("HAIR_RECOLOR_DARK", GameData.customization_colors[GameData.get_var(GameData.HAIR_CUSTOMIZATION_COLOR)][1])
 	_SPRITE.material.set_shader_parameter("EYE_RECOLOR", GameData.customization_colors[GameData.get_var(GameData.EYE_CUSTOMIZATION_COLOR)][0])

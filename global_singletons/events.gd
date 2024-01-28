@@ -12,3 +12,6 @@ signal area_changed
 
 # called when the water level changes in coolant cave
 signal coolant_cave_water_level_changed
+
+# called when customization color is changed by clicking on customization button
+signal recolor_player_sprite

@@ -4,6 +4,15 @@ extends Node2D
 # - One can be active at a time and show it visually, and report which color has been selected (getter)
 # - Detect what button was clicked and print to console
 
+enum CustomizationPart {
+	HAIR,
+	EYES,
+	SHIRT,
+	SKIN
+}
+
+@export var customization_part : CustomizationPart
+
 @onready var active_button:TextureButton
 
 # Called when the node enters the scene tree for the first time.
@@ -22,7 +31,7 @@ func _on_button_mouse_entered(child:TextureButton) -> void:
 	if child != active_button:
 		child.z_index = 1
 
-func _on_button_pressed(child:TextureButton) -> void:
+func _on_button_pressed(child: TextureButton) -> void:
 	active_button.disabled = false
 	active_button = child
 	active_button.z_index = 0
@@ -30,5 +39,17 @@ func _on_button_pressed(child:TextureButton) -> void:
 	$Indicator.position = active_button.position
 	$Indicator.visible = true
 	active_button.disabled = true
+	if (customization_part == CustomizationPart.HAIR):
+		GameData.set_var(GameData.HAIR_CUSTOMIZATION_COLOR, child.customization_color)
+		Events.emit_signal("recolor_player_sprite")
+	elif (customization_part == CustomizationPart.EYES):
+		GameData.set_var(GameData.EYE_CUSTOMIZATION_COLOR, child.customization_color)
+		Events.emit_signal("recolor_player_sprite")
+	elif (customization_part == CustomizationPart.SHIRT):
+		GameData.set_var(GameData.SHIRT_CUSTOMIZATION_COLOR, child.customization_color)
+		Events.emit_signal("recolor_player_sprite")
+	elif (customization_part == CustomizationPart.SKIN):
+		GameData.set_var(GameData.SKIN_CUSTOMIZATION_COLOR, child.customization_color)
+		Events.emit_signal("recolor_player_sprite")
 	
 	
