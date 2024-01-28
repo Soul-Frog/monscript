@@ -29,10 +29,10 @@ func _ready():
 	assert(_BUN_SPRITE.sprite_frames.has_animation("walk"))
 	assert(_BUN_SPRITE.sprite_frames.has_animation("stand"))
 	assert(_BATTLE_COLLISION)
-	recolor_sprite()
-	Events.recolor_player_sprite.connect(recolor_sprite)
+	update_sprite()
+	Events.update_player_sprite.connect(update_sprite)
 
-func recolor_sprite():
+func update_sprite():
 	for mat in [_SPRITE.material, _BUN_SPRITE.material]:
 		mat.set_shader_parameter("HAIR_RECOLOR_LIGHT", GameData.customization_colors[GameData.get_var(GameData.HAIR_CUSTOMIZATION_COLOR)][0])
 		mat.set_shader_parameter("HAIR_RECOLOR_DARK", GameData.customization_colors[GameData.get_var(GameData.HAIR_CUSTOMIZATION_COLOR)][1])
@@ -41,6 +41,10 @@ func recolor_sprite():
 		mat.set_shader_parameter("SHIRT_RECOLOR_DARK", GameData.customization_colors[GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR)][1])
 		mat.set_shader_parameter("SKIN_RECOLOR_LIGHT", GameData.customization_colors[GameData.get_var(GameData.SKIN_CUSTOMIZATION_COLOR)][0])
 		mat.set_shader_parameter("SKIN_RECOLOR_DARK", GameData.customization_colors[GameData.get_var(GameData.SKIN_CUSTOMIZATION_COLOR)][1])
+	if GameData.get_var(GameData.BUN_CUSTOMIZATION) == true:
+		_BUN_SPRITE.show()
+	elif GameData.get_var(GameData.BUN_CUSTOMIZATION) == false:
+		_BUN_SPRITE.hide()
 
 func _on_area_2d_body_entered(overworld_encounter_collided_with):
 	if not overworld_encounter_collided_with is OverworldMon:

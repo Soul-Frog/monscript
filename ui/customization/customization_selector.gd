@@ -41,15 +41,15 @@ func _on_button_pressed(child: TextureButton) -> void:
 	active_button.disabled = true
 	if (customization_part == CustomizationPart.HAIR):
 		GameData.set_var(GameData.HAIR_CUSTOMIZATION_COLOR, child.customization_color)
-		Events.emit_signal("recolor_player_sprite")
+		Events.emit_signal("update_player_sprite")
 	elif (customization_part == CustomizationPart.EYES):
 		GameData.set_var(GameData.EYE_CUSTOMIZATION_COLOR, child.customization_color)
-		Events.emit_signal("recolor_player_sprite")
+		Events.emit_signal("update_player_sprite")
 	elif (customization_part == CustomizationPart.SHIRT):
 		GameData.set_var(GameData.SHIRT_CUSTOMIZATION_COLOR, child.customization_color)
-		Events.emit_signal("recolor_player_sprite")
+		Events.emit_signal("update_player_sprite")
 	elif (customization_part == CustomizationPart.SKIN):
 		GameData.set_var(GameData.SKIN_CUSTOMIZATION_COLOR, child.customization_color)
-		Events.emit_signal("recolor_player_sprite")
+		Events.emit_signal("update_player_sprite")
 	
 	

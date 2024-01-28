@@ -113,6 +113,7 @@ const HAIR_CUSTOMIZATION_COLOR = "HAIR_CUSTOMIZATION_COLOR"
 const EYE_CUSTOMIZATION_COLOR = "EYE_CUSTOMIZATION_COLOR"
 const SHIRT_CUSTOMIZATION_COLOR = "SHIRT_CUSTOMIZATION_COLOR"
 const SKIN_CUSTOMIZATION_COLOR = "SKIN_CUSTOMIZATION_COLOR"
+const BUN_CUSTOMIZATION = "BUN_CUSTOMIZATION"
 
 # Variables which are persisted.
 # Anything in this dictionary will automatically be saved/loaded when the game is saved/loaded.
@@ -144,7 +145,8 @@ var _variables : Dictionary = {
 	HAIR_CUSTOMIZATION_COLOR: CustomizationColor.BROWN,
 	EYE_CUSTOMIZATION_COLOR: CustomizationColor.BLUE,
 	SHIRT_CUSTOMIZATION_COLOR: CustomizationColor.RED,
-	SKIN_CUSTOMIZATION_COLOR: CustomizationColor.SKINONE
+	SKIN_CUSTOMIZATION_COLOR: CustomizationColor.SKINONE,
+	BUN_CUSTOMIZATION: false # Off by default
 }
 
 var team = [] # player's active team
