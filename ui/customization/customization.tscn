@@ -1,5 +1,6 @@
-[gd_scene load_steps=25 format=3 uid="uid://ye7f58p8i3ms"]
+[gd_scene load_steps=28 format=3 uid="uid://ye7f58p8i3ms"]
 
+[ext_resource type="Script" path="res://ui/customization/customization.gd" id="1_bxejm"]
 [ext_resource type="Texture2D" uid="uid://bi64m2n3yi6c1" path="res://assets/ui/customization/character_customization_screen.png" id="1_nihu6"]
 [ext_resource type="Texture2D" uid="uid://daaxm1anlxq6g" path="res://assets/ui/customization/submit.png" id="2_73ks0"]
 [ext_resource type="Texture2D" uid="uid://bbae43kbsytgh" path="res://assets/ui/customization/submit_pressed.png" id="3_xfta2"]
@@ -19,7 +20,9 @@
 [ext_resource type="Texture2D" uid="uid://bdlslns74fwwv" path="res://assets/ui/customization/skin_pressed.png" id="16_0ebvu"]
 [ext_resource type="Texture2D" uid="uid://8l07qnrdi5ur" path="res://assets/ui/customization/eyes-hair-shirt_indicator.png" id="16_i7jon"]
 [ext_resource type="Texture2D" uid="uid://djtc2xormky3u" path="res://assets/ui/customization/skin_hover.png" id="17_3mutg"]
+[ext_resource type="Script" path="res://ui/customization/customization_color_button.gd" id="17_gvy2w"]
 [ext_resource type="Texture2D" uid="uid://bikml4kkq2urs" path="res://assets/ui/customization/skin_indicator.png" id="20_8sskv"]
+[ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/components/player_overhead.tscn" id="21_okk3y"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wvu8m"]
 
@@ -34,6 +37,7 @@ LineEdit/styles/normal = SubResource("StyleBoxEmpty_3i64s")
 LineEdit/styles/read_only = SubResource("StyleBoxEmpty_w5734")
 
 [node name="Customization" type="Node2D"]
+script = ExtResource("1_bxejm")
 
 [node name="CharacterCustomizationScreen" type="Sprite2D" parent="."]
 position = Vector2(64, 34)
@@ -81,6 +85,18 @@ script = ExtResource("12_uoboa")
 
 [node name="Colors" type="Node2D" parent="CharacterCustomizationScreen/Eyes"]
 
+[node name="Blue" type="TextureButton" parent="CharacterCustomizationScreen/Eyes/Colors"]
+modulate = Color(0.337255, 0.466667, 0.988235, 1)
+offset_left = 180.0
+offset_top = 48.0
+offset_right = 186.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+metadata/_edit_use_anchors_ = true
+
 [node name="Brown" type="TextureButton" parent="CharacterCustomizationScreen/Eyes/Colors"]
 modulate = Color(0.364706, 0.25098, 0.215686, 1)
 offset_left = 140.0
@@ -90,6 +106,8 @@ offset_bottom = 56.0
 texture_normal = ExtResource("12_mdrkh")
 texture_pressed = ExtResource("13_bab10")
 texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Dark" type="TextureButton" parent="CharacterCustomizationScreen/Eyes/Colors"]
@@ -101,6 +119,8 @@ offset_bottom = 56.0
 texture_normal = ExtResource("12_mdrkh")
 texture_pressed = ExtResource("13_bab10")
 texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="Orange" type="TextureButton" parent="CharacterCustomizationScreen/Eyes/Colors"]
@@ -112,6 +132,8 @@ offset_bottom = 56.0
 texture_normal = ExtResource("12_mdrkh")
 texture_pressed = ExtResource("13_bab10")
 texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 3
 metadata/_edit_use_anchors_ = true
 
 [node name="Blonde" type="TextureButton" parent="CharacterCustomizationScreen/Eyes/Colors"]
@@ -123,6 +145,8 @@ offset_bottom = 56.0
 texture_normal = ExtResource("12_mdrkh")
 texture_pressed = ExtResource("13_bab10")
 texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 4
 metadata/_edit_use_anchors_ = true
 
 [node name="LightGreen" type="TextureButton" parent="CharacterCustomizationScreen/Eyes/Colors"]
@@ -134,6 +158,8 @@ offset_bottom = 56.0
 texture_normal = ExtResource("12_mdrkh")
 texture_pressed = ExtResource("13_bab10")
 texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 5
 metadata/_edit_use_anchors_ = true
 
 [node name="Green" type="TextureButton" parent="CharacterCustomizationScreen/Eyes/Colors"]
@@ -145,6 +171,8 @@ offset_bottom = 56.0
 texture_normal = ExtResource("12_mdrkh")
 texture_pressed = ExtResource("13_bab10")
 texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 6
 metadata/_edit_use_anchors_ = true
 
 [node name="Teal" type="TextureButton" parent="CharacterCustomizationScreen/Eyes/Colors"]
@@ -156,6 +184,8 @@ offset_bottom = 56.0
 texture_normal = ExtResource("12_mdrkh")
 texture_pressed = ExtResource("13_bab10")
 texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 7
 metadata/_edit_use_anchors_ = true
 
 [node name="LightBlue" type="TextureButton" parent="CharacterCustomizationScreen/Eyes/Colors"]
@@ -167,17 +197,8 @@ offset_bottom = 56.0
 texture_normal = ExtResource("12_mdrkh")
 texture_pressed = ExtResource("13_bab10")
 texture_hover = ExtResource("14_7tyrj")
-metadata/_edit_use_anchors_ = true
-
-[node name="Blue" type="TextureButton" parent="CharacterCustomizationScreen/Eyes/Colors"]
-modulate = Color(0.337255, 0.466667, 0.988235, 1)
-offset_left = 180.0
-offset_top = 48.0
-offset_right = 186.0
-offset_bottom = 56.0
-texture_normal = ExtResource("12_mdrkh")
-texture_pressed = ExtResource("13_bab10")
-texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 8
 metadata/_edit_use_anchors_ = true
 
 [node name="Purple" type="TextureButton" parent="CharacterCustomizationScreen/Eyes/Colors"]
@@ -189,6 +210,8 @@ offset_bottom = 56.0
 texture_normal = ExtResource("12_mdrkh")
 texture_pressed = ExtResource("13_bab10")
 texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 9
 metadata/_edit_use_anchors_ = true
 
 [node name="Pink" type="TextureButton" parent="CharacterCustomizationScreen/Eyes/Colors"]
@@ -200,6 +223,8 @@ offset_bottom = 56.0
 texture_normal = ExtResource("12_mdrkh")
 texture_pressed = ExtResource("13_bab10")
 texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 10
 metadata/_edit_use_anchors_ = true
 
 [node name="Red" type="TextureButton" parent="CharacterCustomizationScreen/Eyes/Colors"]
@@ -211,6 +236,8 @@ offset_bottom = 56.0
 texture_normal = ExtResource("12_mdrkh")
 texture_pressed = ExtResource("13_bab10")
 texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 11
 metadata/_edit_use_anchors_ = true
 
 [node name="Indicator" type="Sprite2D" parent="CharacterCustomizationScreen/Eyes"]
@@ -378,6 +405,8 @@ offset_bottom = 56.0
 texture_normal = ExtResource("12_mdrkh")
 texture_pressed = ExtResource("13_bab10")
 texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 11
 metadata/_edit_use_anchors_ = true
 
 [node name="Brown" type="TextureButton" parent="CharacterCustomizationScreen/Shirt/Colors"]
@@ -389,6 +418,8 @@ offset_bottom = 56.0
 texture_normal = ExtResource("12_mdrkh")
 texture_pressed = ExtResource("13_bab10")
 texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Dark" type="TextureButton" parent="CharacterCustomizationScreen/Shirt/Colors"]
@@ -400,6 +431,8 @@ offset_bottom = 56.0
 texture_normal = ExtResource("12_mdrkh")
 texture_pressed = ExtResource("13_bab10")
 texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="Orange" type="TextureButton" parent="CharacterCustomizationScreen/Shirt/Colors"]
@@ -411,6 +444,8 @@ offset_bottom = 56.0
 texture_normal = ExtResource("12_mdrkh")
 texture_pressed = ExtResource("13_bab10")
 texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 3
 metadata/_edit_use_anchors_ = true
 
 [node name="Blonde" type="TextureButton" parent="CharacterCustomizationScreen/Shirt/Colors"]
@@ -422,6 +457,8 @@ offset_bottom = 56.0
 texture_normal = ExtResource("12_mdrkh")
 texture_pressed = ExtResource("13_bab10")
 texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 4
 metadata/_edit_use_anchors_ = true
 
 [node name="LightGreen" type="TextureButton" parent="CharacterCustomizationScreen/Shirt/Colors"]
@@ -433,6 +470,8 @@ offset_bottom = 56.0
 texture_normal = ExtResource("12_mdrkh")
 texture_pressed = ExtResource("13_bab10")
 texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 5
 metadata/_edit_use_anchors_ = true
 
 [node name="Green" type="TextureButton" parent="CharacterCustomizationScreen/Shirt/Colors"]
@@ -444,6 +483,8 @@ offset_bottom = 56.0
 texture_normal = ExtResource("12_mdrkh")
 texture_pressed = ExtResource("13_bab10")
 texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 6
 metadata/_edit_use_anchors_ = true
 
 [node name="Teal" type="TextureButton" parent="CharacterCustomizationScreen/Shirt/Colors"]
@@ -455,6 +496,8 @@ offset_bottom = 56.0
 texture_normal = ExtResource("12_mdrkh")
 texture_pressed = ExtResource("13_bab10")
 texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 7
 metadata/_edit_use_anchors_ = true
 
 [node name="LightBlue" type="TextureButton" parent="CharacterCustomizationScreen/Shirt/Colors"]
@@ -466,6 +509,8 @@ offset_bottom = 56.0
 texture_normal = ExtResource("12_mdrkh")
 texture_pressed = ExtResource("13_bab10")
 texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 8
 metadata/_edit_use_anchors_ = true
 
 [node name="Blue" type="TextureButton" parent="CharacterCustomizationScreen/Shirt/Colors"]
@@ -477,6 +522,7 @@ offset_bottom = 56.0
 texture_normal = ExtResource("12_mdrkh")
 texture_pressed = ExtResource("13_bab10")
 texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
 metadata/_edit_use_anchors_ = true
 
 [node name="Purple" type="TextureButton" parent="CharacterCustomizationScreen/Shirt/Colors"]
@@ -488,6 +534,8 @@ offset_bottom = 56.0
 texture_normal = ExtResource("12_mdrkh")
 texture_pressed = ExtResource("13_bab10")
 texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 9
 metadata/_edit_use_anchors_ = true
 
 [node name="Pink" type="TextureButton" parent="CharacterCustomizationScreen/Shirt/Colors"]
@@ -499,6 +547,8 @@ offset_bottom = 56.0
 texture_normal = ExtResource("12_mdrkh")
 texture_pressed = ExtResource("13_bab10")
 texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 10
 metadata/_edit_use_anchors_ = true
 
 [node name="Indicator" type="Sprite2D" parent="CharacterCustomizationScreen/Shirt"]
@@ -522,6 +572,8 @@ offset_bottom = 107.0
 texture_normal = ExtResource("15_nq6m6")
 texture_pressed = ExtResource("16_0ebvu")
 texture_hover = ExtResource("17_3mutg")
+script = ExtResource("17_gvy2w")
+customization_color = 12
 
 [node name="Two" type="TextureButton" parent="CharacterCustomizationScreen/Skin/Colors"]
 modulate = Color(0.976471, 0.835294, 0.729412, 1)
@@ -532,6 +584,8 @@ offset_bottom = 107.0
 texture_normal = ExtResource("15_nq6m6")
 texture_pressed = ExtResource("16_0ebvu")
 texture_hover = ExtResource("17_3mutg")
+script = ExtResource("17_gvy2w")
+customization_color = 13
 
 [node name="Three" type="TextureButton" parent="CharacterCustomizationScreen/Skin/Colors"]
 modulate = Color(0.894118, 0.643137, 0.486275, 1)
@@ -542,6 +596,8 @@ offset_bottom = 107.0
 texture_normal = ExtResource("15_nq6m6")
 texture_pressed = ExtResource("16_0ebvu")
 texture_hover = ExtResource("17_3mutg")
+script = ExtResource("17_gvy2w")
+customization_color = 14
 
 [node name="Four" type="TextureButton" parent="CharacterCustomizationScreen/Skin/Colors"]
 modulate = Color(0.827451, 0.545098, 0.34902, 1)
@@ -552,6 +608,8 @@ offset_bottom = 107.0
 texture_normal = ExtResource("15_nq6m6")
 texture_pressed = ExtResource("16_0ebvu")
 texture_hover = ExtResource("17_3mutg")
+script = ExtResource("17_gvy2w")
+customization_color = 15
 
 [node name="Five" type="TextureButton" parent="CharacterCustomizationScreen/Skin/Colors"]
 modulate = Color(0.682353, 0.419608, 0.247059, 1)
@@ -562,6 +620,8 @@ offset_bottom = 107.0
 texture_normal = ExtResource("15_nq6m6")
 texture_pressed = ExtResource("16_0ebvu")
 texture_hover = ExtResource("17_3mutg")
+script = ExtResource("17_gvy2w")
+customization_color = 16
 
 [node name="Six" type="TextureButton" parent="CharacterCustomizationScreen/Skin/Colors"]
 modulate = Color(0.498039, 0.298039, 0.192157, 1)
@@ -572,6 +632,8 @@ offset_bottom = 107.0
 texture_normal = ExtResource("15_nq6m6")
 texture_pressed = ExtResource("16_0ebvu")
 texture_hover = ExtResource("17_3mutg")
+script = ExtResource("17_gvy2w")
+customization_color = 17
 
 [node name="Seven" type="TextureButton" parent="CharacterCustomizationScreen/Skin/Colors"]
 modulate = Color(0.376471, 0.203922, 0.160784, 1)
@@ -582,9 +644,19 @@ offset_bottom = 107.0
 texture_normal = ExtResource("15_nq6m6")
 texture_pressed = ExtResource("16_0ebvu")
 texture_hover = ExtResource("17_3mutg")
+script = ExtResource("17_gvy2w")
+customization_color = 18
 
 [node name="Indicator" type="Sprite2D" parent="CharacterCustomizationScreen/Skin"]
 visible = false
 position = Vector2(143, 52)
 texture = ExtResource("20_8sskv")
 centered = false
+
+[node name="PlayerOverhead" parent="CharacterCustomizationScreen" instance=ExtResource("21_okk3y")]
+position = Vector2(45, 37)
+
+[node name="Camera2D" parent="CharacterCustomizationScreen/PlayerOverhead" index="0"]
+enabled = false
+
+[editable path="CharacterCustomizationScreen/PlayerOverhead"]
