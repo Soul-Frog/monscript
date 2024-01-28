@@ -1,9 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://cpro10oe50dhk"]
+[gd_scene load_steps=27 format=3 uid="uid://cpro10oe50dhk"]
 
 [ext_resource type="Script" path="res://overworld/components/player_platformer.gd" id="1_wbnhs"]
 [ext_resource type="Script" path="res://overworld/camera.gd" id="2_68i22"]
 [ext_resource type="Shader" path="res://overworld/components/player.gdshader" id="3_cyg7e"]
 [ext_resource type="Texture2D" uid="uid://jlp56bvf1dsg" path="res://assets/sprites/mc.png" id="3_s3gtb"]
+[ext_resource type="Texture2D" uid="uid://cukw5nl3dfs1w" path="res://assets/sprites/mc_bun.png" id="5_puenc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xu3s0"]
 shader = ExtResource("3_cyg7e")
@@ -77,6 +78,78 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_66uwx"]
+shader = ExtResource("3_cyg7e")
+shader_parameter/HAIR_RECOLOR_LIGHT = Vector3(1, 0.5, 0.5)
+shader_parameter/HAIR_RECOLOR_DARK = Vector3(1, 0.1, 0.1)
+shader_parameter/EYE_RECOLOR = Vector3(0.1, 1, 1)
+shader_parameter/SHIRT_RECOLOR_LIGHT = Vector3(0.06, 0.7, 0.35)
+shader_parameter/SHIRT_RECOLOR_DARK = Vector3(0.5, 0.5, 0.5)
+shader_parameter/SKIN_RECOLOR_LIGHT = Vector3(0.25, 0.25, 1)
+shader_parameter/SKIN_RECOLOR_DARK = Vector3(0.1, 0.8, 0.6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ebetm"]
+atlas = ExtResource("5_puenc")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cvb0q"]
+atlas = ExtResource("5_puenc")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wg1lh"]
+atlas = ExtResource("5_puenc")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ixpan"]
+atlas = ExtResource("5_puenc")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fpm8c"]
+atlas = ExtResource("5_puenc")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_886y6"]
+atlas = ExtResource("5_puenc")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xmce8"]
+atlas = ExtResource("5_puenc")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hlhf8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ebetm")
+}],
+"loop": true,
+"name": &"stand",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cvb0q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wg1lh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ixpan")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fpm8c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_886y6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xmce8")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 10.0
+}]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w5nlt"]
 size = Vector2(14.003, 22.7906)
 
@@ -103,6 +176,13 @@ sprite_frames = SubResource("SpriteFrames_02vai")
 animation = &"stand"
 autoplay = "stand"
 centered = false
+
+[node name="BunSprite" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_66uwx")
+position = Vector2(0, -3)
+sprite_frames = SubResource("SpriteFrames_hlhf8")
+animation = &"walk"
+autoplay = "stand"
 
 [node name="Collider" type="CollisionShape2D" parent="."]
 visible = false

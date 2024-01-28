@@ -59,12 +59,12 @@ func update_velocity():
 	
 	if input_direction != Vector2.ZERO:
 		velocity = lerp(velocity, SPEED * input_direction, ACCELERATION)
-		_SPRITE.play("walk")
+		set_animation("walk")
 		if input_direction.x != 0:
-			_SPRITE.flip_h = input_direction.x < 0
+			face_left() if input_direction.x < 0 else face_right()
 	else:
 		velocity = lerp(velocity, Vector2.ZERO, FRICTION)
-		_SPRITE.play("stand")
+		set_animation("stand")
 	
 	# apply external velocity
 	velocity.x += _external_velocity.x

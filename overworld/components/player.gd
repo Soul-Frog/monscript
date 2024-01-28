@@ -5,6 +5,7 @@ signal reached_point
 
 @onready var _BATTLE_COLLISION = $BattleCollision
 @onready var _SPRITE = $Sprite
+@onready var _BUN_SPRITE = $BunSprite
 
 const _INVINCIBILITY_AFTER_ESCAPE_SECS := 2
 const _INVINCIBILITY_AFTER_WIN_SECS := 1
@@ -23,18 +24,23 @@ func _ready():
 	assert(_SPRITE.sprite_frames)
 	assert(_SPRITE.sprite_frames.has_animation("walk"))
 	assert(_SPRITE.sprite_frames.has_animation("stand"))
+	assert(_BUN_SPRITE)
+	assert(_BUN_SPRITE.sprite_frames)
+	assert(_BUN_SPRITE.sprite_frames.has_animation("walk"))
+	assert(_BUN_SPRITE.sprite_frames.has_animation("stand"))
 	assert(_BATTLE_COLLISION)
 	recolor_sprite()
 	Events.recolor_player_sprite.connect(recolor_sprite)
 
 func recolor_sprite():
-	_SPRITE.material.set_shader_parameter("HAIR_RECOLOR_LIGHT", GameData.customization_colors[GameData.get_var(GameData.HAIR_CUSTOMIZATION_COLOR)][0])
-	_SPRITE.material.set_shader_parameter("HAIR_RECOLOR_DARK", GameData.customization_colors[GameData.get_var(GameData.HAIR_CUSTOMIZATION_COLOR)][1])
-	_SPRITE.material.set_shader_parameter("EYE_RECOLOR", GameData.customization_colors[GameData.get_var(GameData.EYE_CUSTOMIZATION_COLOR)][0])
-	_SPRITE.material.set_shader_parameter("SHIRT_RECOLOR_LIGHT", GameData.customization_colors[GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR)][0])
-	_SPRITE.material.set_shader_parameter("SHIRT_RECOLOR_DARK", GameData.customization_colors[GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR)][1])
-	_SPRITE.material.set_shader_parameter("SKIN_RECOLOR_LIGHT", GameData.customization_colors[GameData.get_var(GameData.SKIN_CUSTOMIZATION_COLOR)][0])
-	_SPRITE.material.set_shader_parameter("SKIN_RECOLOR_DARK", GameData.customization_colors[GameData.get_var(GameData.SKIN_CUSTOMIZATION_COLOR)][1])
+	for mat in [_SPRITE.material, _BUN_SPRITE.material]:
+		mat.set_shader_parameter("HAIR_RECOLOR_LIGHT", GameData.customization_colors[GameData.get_var(GameData.HAIR_CUSTOMIZATION_COLOR)][0])
+		mat.set_shader_parameter("HAIR_RECOLOR_DARK", GameData.customization_colors[GameData.get_var(GameData.HAIR_CUSTOMIZATION_COLOR)][1])
+		mat.set_shader_parameter("EYE_RECOLOR", GameData.customization_colors[GameData.get_var(GameData.EYE_CUSTOMIZATION_COLOR)][0])
+		mat.set_shader_parameter("SHIRT_RECOLOR_LIGHT", GameData.customization_colors[GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR)][0])
+		mat.set_shader_parameter("SHIRT_RECOLOR_DARK", GameData.customization_colors[GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR)][1])
+		mat.set_shader_parameter("SKIN_RECOLOR_LIGHT", GameData.customization_colors[GameData.get_var(GameData.SKIN_CUSTOMIZATION_COLOR)][0])
+		mat.set_shader_parameter("SKIN_RECOLOR_DARK", GameData.customization_colors[GameData.get_var(GameData.SKIN_CUSTOMIZATION_COLOR)][1])
 
 func _on_area_2d_body_entered(overworld_encounter_collided_with):
 	if not overworld_encounter_collided_with is OverworldMon:
@@ -59,7 +65,11 @@ func enable_movement() -> void:
 func disable_movement() -> void:
 	_can_move = false
 	if _SPRITE:
-		_SPRITE.play("stand") #make sprite stand still while disabled
+		set_animation("stand") #make sprite stand still while disabled
+
+func set_animation(animation: String) -> void:
+	_SPRITE.play(animation)
+	_BUN_SPRITE.play(animation)
 
 func enable_battle_collision() -> void:
 	_BATTLE_COLLISION.monitoring = true
@@ -92,7 +102,8 @@ func move_to_point(point: Node2D):
 
 func face_left() -> void:
 	_SPRITE.flip_h = true
+	_BUN_SPRITE.flip_h = true
 
 func face_right() -> void:
 	_SPRITE.flip_h = false
-	
+	_BUN_SPRITE.flip_h = false
