@@ -22,24 +22,22 @@ void fragment() {
 	if(vec3eq(COLOR.rgb, HAIR_COLOR_LIGHT)) {
 		COLOR.rgb = HAIR_RECOLOR_LIGHT;
 	}
-	if(vec3eq(COLOR.rgb, HAIR_COLOR_DARK)) {
+	else if(vec3eq(COLOR.rgb, HAIR_COLOR_DARK)) {
 		COLOR.rgb = HAIR_RECOLOR_DARK;
 	}
-	if(vec3eq(COLOR.rgb, EYE_COLOR)) {
+	else if(vec3eq(COLOR.rgb, EYE_COLOR)) {
 		COLOR.rgb = EYE_RECOLOR;
 	}
-	
-	if(vec3eq(COLOR.rgb, SHIRT_COLOR_LIGHT)) {
+	else if(vec3eq(COLOR.rgb, SHIRT_COLOR_LIGHT)) {
 		COLOR.rgb = SHIRT_RECOLOR_LIGHT;
 	}
-	if(vec3eq(COLOR.rgb, SHIRT_COLOR_DARK)) {
+	else if(vec3eq(COLOR.rgb, SHIRT_COLOR_DARK)) {
 		COLOR.rgb = SHIRT_RECOLOR_DARK;
 	}
-	
-	if(vec3eq(COLOR.rgb, SKIN_COLOR_LIGHT)) {
+	else if(vec3eq(COLOR.rgb, SKIN_COLOR_LIGHT)) {
 		COLOR.rgb = SKIN_RECOLOR_LIGHT;
 	}
-	if(vec3eq(COLOR.rgb, SKIN_COLOR_DARK)) {
+	else if(vec3eq(COLOR.rgb, SKIN_COLOR_DARK)) {
 		COLOR.rgb = SKIN_RECOLOR_DARK;
 	}
 }

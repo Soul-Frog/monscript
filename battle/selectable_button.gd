@@ -21,8 +21,6 @@ func _ready():
 	assert(texture_unselected)
 	assert(texture_selected)
 	
-	disabled = true
-	
 	self.pressed.connect(_on_pressed)
 	_default_state = selected
 	_update_textures()
