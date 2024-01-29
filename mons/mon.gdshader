@@ -18,9 +18,6 @@ uniform vec3 BITLEON_RECOLOR4 = vec3(0.5, 0.5, 0.0);
 uniform vec3 BITLEON_RECOLOR5 = vec3(0.75, 0.0, 0.75);
 
 void fragment() {
-	vec3 flash = mix(COLOR.rgb, flash_color.rgb, flash_modifier);
-	COLOR.rgb = flash;
-	
 	if (apply_recolor)
 	{
 		if (vec3eq(COLOR.rgb, BITLEON_COLOR1))
@@ -44,4 +41,7 @@ void fragment() {
 			COLOR.rgb = BITLEON_RECOLOR5;
 		}
 	}
+	
+	vec3 flash = mix(COLOR.rgb, flash_color.rgb, flash_modifier);
+	COLOR.rgb = flash;
 }
