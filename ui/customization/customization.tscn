@@ -76,7 +76,6 @@ texture_selected_pressed = ExtResource("8_exlj5")
 texture_unselected = ExtResource("9_pvpht")
 texture_unselected_hover = ExtResource("10_yiuaq")
 texture_unselected_pressed = ExtResource("11_5q1lc")
-selected = true
 toggleable = true
 
 [node name="Eyes" type="Node2D" parent="CharacterCustomizationScreen"]
@@ -684,5 +683,8 @@ position = Vector2(45, 37)
 
 [node name="Camera2D" parent="CharacterCustomizationScreen/PlayerOverhead" index="0"]
 enabled = false
+
+[connection signal="pressed" from="CharacterCustomizationScreen/SubmitButton" to="." method="_on_submit_button_pressed"]
+[connection signal="state_changed" from="CharacterCustomizationScreen/Bunton" to="." method="_on_bunton_state_changed"]
 
 [editable path="CharacterCustomizationScreen/PlayerOverhead"]
