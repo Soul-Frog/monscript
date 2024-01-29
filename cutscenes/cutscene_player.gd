@@ -203,7 +203,8 @@ func _CUTSCENE_CAVE2_FIRST_BATTLE(area: Area) -> void:
 	await _move_camera(area.CAMERA, Vector2(0, -50), 1.0)
 	await Dialogue.play(_DIALOGUE_FILE, "cave2_first_battle_corrupted_mon")
 	
-	await _move_actor(bitleon, area.POINTS.find_child("CutsceneFirstBattleGelif").position)
+	_move_camera(area.CAMERA, Vector2(0, 50), 1.0)
+	await _move_actor(gelif, bitleon.position)
 	GameData.queue_battle_cutscene(Cutscene.ID.BATTLE_TUTORIAL_FIRST_BATTLE)
 	Events.emit_signal("battle_started", gelif, gelif.mons)
 	await Events.battle_ended
@@ -211,7 +212,6 @@ func _CUTSCENE_CAVE2_FIRST_BATTLE(area: Area) -> void:
 	
 	await Dialogue.play(_DIALOGUE_FILE, "cave2_first_battle_after_battle")
 	
-	_move_camera(area.CAMERA, Vector2(0, 50), 1.0)
 	await _move_actor(bitleon, area.PLAYER.position)
 	await _delete_bitleon(bitleon)
 

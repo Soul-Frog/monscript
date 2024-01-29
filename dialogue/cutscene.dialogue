@@ -28,7 +28,7 @@ Bitleon: One of the defraggers in the city can help you out!
 {{GameData.get_var(GameData.PLAYER_NAME)}}: Defragger?
 Bitleon: Yeah, a defragger. You have memory problems, right?
 {{GameData.get_var(GameData.PLAYER_NAME)}}: I... I'm not sure I quite understand...
-Bitleon: This area has been swarming with corrupt mons lately. We should get out of here!
+Bitleon: Some of the mons nearby have been acting weird. We should get out of here!
 Bitleon: Let's head back to Core City!
 Bitleon: Sound good?
 => branch
@@ -56,16 +56,22 @@ Bitleon: Let's get going!
 => END
 
 ~ cave2_first_battle_before_battle
-Bitleon: Wait... there's something up ahead...
+Bitleon: Wait! There's something up ahead!
 => END
 
 ~ cave2_first_battle_corrupted_mon
-Bitleon: Do you see that mon up there?
-Bitleon: That's what we called a 'corrupt' mon. 
-Bitleon: But don't worry, I'll handle this. Just watch!
+Bitleon: That Gelif looks a little off...
+- Gelif?
+	Bitleon: Yeah, a Gelif! It's coming this way! I'll handle this!
+- What looks off about it?
+	Bitleon: Just look at it! It's coming this way! I'll handle this!
+- What's a defragger again?
+	Bitleon: Not now! It's coming this way! I'll handle this!
 => END
 
 ~ cave2_first_battle_after_battle
-Bitleon: Phew! Looks like I was more than a match for that one!
-{{GameData.get_var(GameData.PLAYER_NAME)}}: Good job Bitleon!
+Bitleon: Hooray! Bitleon wins! Told you there was nothing to be afraid of!
+{{GameData.get_var(GameData.PLAYER_NAME)}}: What was up with that Gelif though? It didn't seem very friendly...
+Bitleon: Yeah, I dunno. Lots of weird things have been happening lately.
+Bitleon: Anyway, let's keep heading towards Core City!
 => END

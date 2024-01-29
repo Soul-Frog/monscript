@@ -79,7 +79,7 @@ func _on_entry_clicked(entry: DatabaseEntry) -> void:
 		label.text = "%1.1fx" % multiplier_value
 	update_multiplier.call(active_entry.get_heat_multiplier(), $MonInfo/HeatMultiplier)
 	update_multiplier.call(active_entry.get_chill_multiplier(), $MonInfo/ChillMultiplier)
-	update_multiplier.call(active_entry.get_heat_multiplier(), $MonInfo/VoltMultiplier)
+	update_multiplier.call(active_entry.get_volt_multiplier(), $MonInfo/VoltMultiplier)
 	
 	$DatabaseMonFileDefault.visible = false
 	for child in $MonInfo.get_children():
