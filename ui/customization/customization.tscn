@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://ye7f58p8i3ms"]
+[gd_scene load_steps=29 format=3 uid="uid://ye7f58p8i3ms"]
 
 [ext_resource type="Script" path="res://ui/customization/customization.gd" id="1_bxejm"]
 [ext_resource type="Texture2D" uid="uid://bi64m2n3yi6c1" path="res://assets/ui/customization/character_customization_screen.png" id="1_nihu6"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://ct6f3nt7sjihp" path="res://assets/ui/customization/submit_hover.png" id="4_upgeb"]
 [ext_resource type="Script" path="res://battle/selectable_button.gd" id="5_f4qv6"]
 [ext_resource type="Texture2D" uid="uid://bysjh7p06hw55" path="res://assets/ui/customization/bunton_on.png" id="6_2p6qh"]
+[ext_resource type="Texture2D" uid="uid://dnpiskwlenx5l" path="res://assets/ui/customization/submit_disabled.png" id="6_vxlxp"]
 [ext_resource type="Texture2D" uid="uid://dbxufnp5jekvk" path="res://assets/ui/customization/bunton_on_hover.png" id="7_eunp2"]
 [ext_resource type="Texture2D" uid="uid://b6h1h8sl8sqvx" path="res://assets/ui/customization/bunton_on_pressed.png" id="8_exlj5"]
 [ext_resource type="Texture2D" uid="uid://can2jtnrmnkd1" path="res://assets/ui/customization/bunton_off.png" id="9_pvpht"]
@@ -63,6 +64,7 @@ offset_bottom = 96.0
 texture_normal = ExtResource("2_73ks0")
 texture_pressed = ExtResource("3_xfta2")
 texture_hover = ExtResource("4_upgeb")
+texture_disabled = ExtResource("6_vxlxp")
 
 [node name="Bunton" type="TextureButton" parent="CharacterCustomizationPanel"]
 offset_left = 121.0
