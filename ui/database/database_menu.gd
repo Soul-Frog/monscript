@@ -66,7 +66,9 @@ func _on_entry_clicked(entry: DatabaseEntry) -> void:
 	$MonInfo/SpecialDescriptionLabel.text = SPECIAL_DESCRIPTION_FORMAT % active_entry.get_special_description()
 	$MonInfo/PassiveNameLabel.text = PASSIVE_NAME_FORMAT % active_entry.get_passive_name()
 	$MonInfo/PassiveDescriptionLabel.text = PASSIVE_DESCRIPTION_FORMAT % active_entry.get_passive_description()
-	$MonInfo/SpriteContainer/MonSprite.texture = active_entry.get_sprite()
+	if $MonInfo/MonAnchor.get_child_count() != 0: # delete any older mon scenes
+		$MonInfo/MonAnchor.get_child(0).queue_free()
+	$MonInfo/MonAnchor.add_child(active_entry.get_mon_scene())
 	$MonInfo/HealthBar.value = active_entry.get_health_bar_value()
 	$MonInfo/AttackBar.value = active_entry.get_attack_bar_value()
 	$MonInfo/DefenseBar.value = active_entry.get_defense_bar_value()

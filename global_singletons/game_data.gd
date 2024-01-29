@@ -340,6 +340,9 @@ func load_game():
 	
 	# start with full injects on game load
 	inject_points = get_var(MAX_INJECTS) * BattleData.POINTS_PER_INJECT
+	
+	# now that we've loaded the colors, notify anything that was already loaded
+	Events.emit_signal("update_player_sprite")
 
 # place the player at their spawn point; 
 # for example when loading the game or

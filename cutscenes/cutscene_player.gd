@@ -69,6 +69,9 @@ func _show_popup(popup: Container, text: String) -> void:
 	label.custom_minimum_size = Vector2.ZERO
 	label.text = "[center]%s[/center]" % text
 	
+	var speaker = popup.find_child("Speaker")
+	speaker.find_child("Mon").position = speaker.position + (speaker.size/2)
+	
 	var tween = create_tween()
 	tween.tween_property(popup, "modulate:a", 1.0, 0.3)
 	await tween.finished

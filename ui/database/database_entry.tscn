@@ -45,7 +45,7 @@ texture = ExtResource("5_lwron")
 position = Vector2(78, 19)
 texture = ExtResource("4_aarq6")
 
-[node name="SpriteAnchor" type="Node2D" parent="Free"]
+[node name="MonAnchor" type="Node2D" parent="Free"]
 position = Vector2(20, 20)
 
 [node name="ProgressBar" type="TextureProgressBar" parent="Free"]

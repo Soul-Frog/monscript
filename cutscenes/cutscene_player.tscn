@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dfiurkovxiwgd"]
 
 [ext_resource type="Script" path="res://cutscenes/cutscene_player.gd" id="1_jsikj"]
-[ext_resource type="Texture2D" uid="uid://bn7y2n1uwq3ap" path="res://assets/sprites/mons/bitleon_portrait.png" id="2_848wk"]
+[ext_resource type="PackedScene" uid="uid://bo77v3uohwvy1" path="res://mons/bitleon.tscn" id="2_qi4fp"]
 
 [node name="CutscenePlayer" type="Node2D"]
 z_index = 4000
@@ -25,19 +25,21 @@ polygon = PackedVector2Array(25, 0, 25, 180, 345, 180, 345, 0)
 z_index = 100
 
 [node name="Top" type="HBoxContainer" parent="Popup"]
+visible = false
 offset_left = 47.0
 offset_top = 5.0
 offset_right = 273.0
 offset_bottom = 37.0
 theme_override_constants/separation = -5
 
-[node name="Speaker" type="TextureRect" parent="Popup/Top"]
-custom_minimum_size = Vector2(24, 24)
+[node name="Speaker" type="BoxContainer" parent="Popup/Top"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
-texture = ExtResource("2_848wk")
-stretch_mode = 2
+
+[node name="Mon" parent="Popup/Top/Speaker" instance=ExtResource("2_qi4fp")]
+position = Vector2(16, 16)
 
 [node name="Text" type="RichTextLabel" parent="Popup/Top"]
 layout_mode = 2
@@ -58,13 +60,12 @@ offset_right = 271.0
 offset_bottom = 97.0
 theme_override_constants/separation = -5
 
-[node name="Speaker" type="TextureRect" parent="Popup/Middle"]
-custom_minimum_size = Vector2(24, 24)
+[node name="Speaker" type="BoxContainer" parent="Popup/Middle"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = ExtResource("2_848wk")
-stretch_mode = 2
+
+[node name="Mon" parent="Popup/Middle/Speaker" instance=ExtResource("2_qi4fp")]
+position = Vector2(16, 16)
 
 [node name="Text" type="RichTextLabel" parent="Popup/Middle"]
 layout_mode = 2
@@ -85,13 +86,12 @@ offset_bottom = 114.0
 size_flags_horizontal = 2
 theme_override_constants/separation = -5
 
-[node name="Speaker" type="TextureRect" parent="Popup/Results"]
-custom_minimum_size = Vector2(24, 24)
+[node name="Speaker" type="BoxContainer" parent="Popup/Results"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = ExtResource("2_848wk")
-stretch_mode = 2
+
+[node name="Mon" parent="Popup/Results/Speaker" instance=ExtResource("2_qi4fp")]
+position = Vector2(18, 26)
 
 [node name="Text" type="RichTextLabel" parent="Popup/Results"]
 layout_mode = 2
@@ -111,13 +111,12 @@ offset_right = 137.0
 offset_bottom = 98.0
 theme_override_constants/separation = -5
 
-[node name="Speaker" type="TextureRect" parent="Popup/Monblock"]
-custom_minimum_size = Vector2(24, 24)
+[node name="Speaker" type="BoxContainer" parent="Popup/Monblock"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-texture = ExtResource("2_848wk")
-stretch_mode = 2
+
+[node name="Mon" parent="Popup/Monblock/Speaker" instance=ExtResource("2_qi4fp")]
+position = Vector2(18, 21)
 
 [node name="Text" type="RichTextLabel" parent="Popup/Monblock"]
 layout_mode = 2
@@ -130,20 +129,18 @@ fit_content = true
 scroll_active = false
 
 [node name="Speed" type="VBoxContainer" parent="Popup"]
-visible = false
 offset_left = 1.0
 offset_top = 108.0
 offset_right = 110.0
 offset_bottom = 161.0
 theme_override_constants/separation = -5
 
-[node name="Speaker" type="TextureRect" parent="Popup/Speed"]
-custom_minimum_size = Vector2(24, 24)
+[node name="Speaker" type="BoxContainer" parent="Popup/Speed"]
+custom_minimum_size = Vector2(109, 32)
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("2_848wk")
-stretch_mode = 2
+
+[node name="Mon" parent="Popup/Speed/Speaker" instance=ExtResource("2_qi4fp")]
+position = Vector2(54, 11)
 
 [node name="Text" type="RichTextLabel" parent="Popup/Speed"]
 layout_mode = 2
@@ -156,20 +153,18 @@ fit_content = true
 scroll_active = false
 
 [node name="Queue" type="VBoxContainer" parent="Popup"]
-visible = false
 offset_left = 19.0
 offset_top = 52.0
 offset_right = 117.0
 offset_bottom = 144.0
 theme_override_constants/separation = -5
 
-[node name="Speaker" type="TextureRect" parent="Popup/Queue"]
-custom_minimum_size = Vector2(24, 24)
+[node name="Speaker" type="BoxContainer" parent="Popup/Queue"]
+custom_minimum_size = Vector2(98, 32)
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-texture = ExtResource("2_848wk")
-stretch_mode = 2
+
+[node name="Mon" parent="Popup/Queue/Speaker" instance=ExtResource("2_qi4fp")]
+position = Vector2(49, 11)
 
 [node name="Text" type="RichTextLabel" parent="Popup/Queue"]
 layout_mode = 2

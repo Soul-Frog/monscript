@@ -28,8 +28,7 @@ func ready() -> void:
 
 func setup(type) -> void:
 	self.mon_type = type
-	var mon = load(MonData.get_mon_scene_path(mon_type)).instantiate()
-	$Free/SpriteAnchor.add_child(mon)
+	$Free/MonAnchor.add_child(get_mon_scene())
 	refresh()
 	_update_background()
 
@@ -38,7 +37,7 @@ func refresh() -> void:
 	assert(GameData.decompilation_progress_per_mon[mon_type] >= 0 && GameData.decompilation_progress_per_mon[mon_type] <= maxProgress)
 	$Free/ProgressBar.value = GameData.decompilation_progress_per_mon[mon_type]
 	$Free/ProgressBar.max_value = maxProgress
-	$Free/SpriteAnchor.get_child(0).modulate = Global.COLOR_BLACK if $Free/ProgressBar.value != maxProgress else Global.COLOR_WHITE
+	$Free/MonAnchor.get_child(0).modulate = Global.COLOR_BLACK if $Free/ProgressBar.value != maxProgress else Global.COLOR_WHITE
 	$Free/Percentage.text = "%d%%" % int(100 * $Free/ProgressBar.value / $Free/ProgressBar.max_value)
 	if $Free/ProgressBar.value == maxProgress:
 		_status = Status.UNSELECTED
@@ -69,8 +68,8 @@ func get_special_description():
 func get_passive_description():
 	return MonData.get_passive_description_for(mon_type)
 
-func get_sprite():
-	return MonData.get_database_texture_for(mon_type)
+func get_mon_scene():
+	return load(MonData.get_mon_scene_path(mon_type)).instantiate()
 
 func get_health_bar_value():
 	return MonData.get_health_percentile_for(mon_type)
