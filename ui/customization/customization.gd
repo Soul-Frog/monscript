@@ -15,7 +15,6 @@ func _ready():
 	assert(NAME_INPUT)
 	assert(PANEL)
 	assert(SUBMIT_BUTTON)
-	SUBMIT_BUTTON.disabled = true
 	PLAYER_PREVIEW.disable_movement()
 
 func _input(event: InputEvent):
