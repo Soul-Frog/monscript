@@ -333,9 +333,6 @@ func load_game():
 		if save_dict.has(key) and save_dict[key] != false:
 			cutscenes_played.append(Cutscene.ID[scene_name])
 	
-	# set the player's position and area
-	#Events.area_changed.emit(save_dict["current_area"], Vector2(save_dict["player_x"], save_dict["player_y"]), true)
-	
 	# set the player's position and mask
 	respawn_player()
 	get_tree().get_first_node_in_group("main").get_player().collision_mask = save_dict["player_collision_mask"]

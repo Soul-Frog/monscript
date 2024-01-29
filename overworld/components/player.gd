@@ -34,13 +34,13 @@ func _ready():
 
 func update_sprite():
 	for mat in [_SPRITE.material, _BUN_SPRITE.material]:
-		mat.set_shader_parameter("HAIR_RECOLOR_LIGHT", GameData.customization_colors[GameData.get_var(GameData.HAIR_CUSTOMIZATION_COLOR)][0])
-		mat.set_shader_parameter("HAIR_RECOLOR_DARK", GameData.customization_colors[GameData.get_var(GameData.HAIR_CUSTOMIZATION_COLOR)][1])
-		mat.set_shader_parameter("EYE_RECOLOR", GameData.customization_colors[GameData.get_var(GameData.EYE_CUSTOMIZATION_COLOR)][0])
-		mat.set_shader_parameter("SHIRT_RECOLOR_LIGHT", GameData.customization_colors[GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR)][0])
-		mat.set_shader_parameter("SHIRT_RECOLOR_DARK", GameData.customization_colors[GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR)][1])
-		mat.set_shader_parameter("SKIN_RECOLOR_LIGHT", GameData.customization_colors[GameData.get_var(GameData.SKIN_CUSTOMIZATION_COLOR)][0])
-		mat.set_shader_parameter("SKIN_RECOLOR_DARK", GameData.customization_colors[GameData.get_var(GameData.SKIN_CUSTOMIZATION_COLOR)][1])
+		mat.set_shader_parameter("HAIR_RECOLOR_LIGHT", GameData.customization_colors[int(GameData.get_var(GameData.HAIR_CUSTOMIZATION_COLOR))][0])
+		mat.set_shader_parameter("HAIR_RECOLOR_DARK", GameData.customization_colors[int(GameData.get_var(GameData.HAIR_CUSTOMIZATION_COLOR))][1])
+		mat.set_shader_parameter("EYE_RECOLOR", GameData.customization_colors[int(GameData.get_var(GameData.EYE_CUSTOMIZATION_COLOR))][0])
+		mat.set_shader_parameter("SHIRT_RECOLOR_LIGHT", GameData.customization_colors[int(GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR))][0])
+		mat.set_shader_parameter("SHIRT_RECOLOR_DARK", GameData.customization_colors[int(GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR))][1])
+		mat.set_shader_parameter("SKIN_RECOLOR_LIGHT", GameData.customization_colors[int(GameData.get_var(GameData.SKIN_CUSTOMIZATION_COLOR))][0])
+		mat.set_shader_parameter("SKIN_RECOLOR_DARK", GameData.customization_colors[int(GameData.get_var(GameData.SKIN_CUSTOMIZATION_COLOR))][1])
 	if GameData.get_var(GameData.BUN_CUSTOMIZATION) == true:
 		_BUN_SPRITE.show()
 	elif GameData.get_var(GameData.BUN_CUSTOMIZATION) == false:

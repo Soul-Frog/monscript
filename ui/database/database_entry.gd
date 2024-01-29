@@ -28,7 +28,8 @@ func ready() -> void:
 
 func setup(type) -> void:
 	self.mon_type = type
-	$Free/SpriteContainer/MonSprite.texture = get_sprite()
+	var mon = load(MonData.get_mon_scene_path(mon_type)).instantiate()
+	$Free/SpriteAnchor.add_child(mon)
 	refresh()
 	_update_background()
 
@@ -37,7 +38,7 @@ func refresh() -> void:
 	assert(GameData.decompilation_progress_per_mon[mon_type] >= 0 && GameData.decompilation_progress_per_mon[mon_type] <= maxProgress)
 	$Free/ProgressBar.value = GameData.decompilation_progress_per_mon[mon_type]
 	$Free/ProgressBar.max_value = maxProgress
-	$Free/SpriteContainer/MonSprite.modulate = Global.COLOR_BLACK if $Free/ProgressBar.value != maxProgress else Global.COLOR_WHITE
+	$Free/SpriteAnchor.get_child(0).modulate = Global.COLOR_BLACK if $Free/ProgressBar.value != maxProgress else Global.COLOR_WHITE
 	$Free/Percentage.text = "%d%%" % int(100 * $Free/ProgressBar.value / $Free/ProgressBar.max_value)
 	if $Free/ProgressBar.value == maxProgress:
 		_status = Status.UNSELECTED

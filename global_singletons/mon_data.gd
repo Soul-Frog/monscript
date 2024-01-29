@@ -533,6 +533,10 @@ func _species_str_to_montype(species_str: String) -> MonType:
 	assert(false, "No base found for %s." % species_str)
 	return MonType.BITLEON #error case
 
+func get_mon_scene_path(montype: MonType) -> String:
+	assert(montype != MonType.NONE)
+	return _MON_MAP[montype]._scene_path
+
 func create_mon(montype: MonType, level: int) -> Mon:
 	assert(montype != MonType.NONE)
 	return Mon.new(_MON_MAP[montype], level)
