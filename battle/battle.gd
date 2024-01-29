@@ -1,6 +1,7 @@
 class_name Battle
 extends Node2D
 
+signal injected
 signal turn_ended
 signal results_shown
 

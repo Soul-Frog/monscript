@@ -3,9 +3,9 @@ do Dialogue.ERROR("No corresponding tilde in dialogue file!")
 => END
 
 ~ cave1_intro_start
-???: Hey... are you there?
+???: Hey, are you there?
 ???: Can you hear me?
-???: If you can hear me... say something. 
+???: If you can hear me, say something! Anything!
 You: ...
 You: (Where... am I?)
 You: (Who am I?)
@@ -17,23 +17,42 @@ You: (That's right... I'm...)
 ???: Oh! You opened your eyes!
 ???: Are you ok? 
 {{GameData.get_var(GameData.PLAYER_NAME)}}: Yeah... I think I'm ok. But I feel sort of... dizzy. 
-{{GameData.get_var(GameData.PLAYER_NAME)}}: Where am I? What's going on here...?
-???: You're at Coolant Cave. I didn't know other people knew about this spot though.
-Bitleon: My name is Bitleon, by the way. What's yours?
+{{GameData.get_var(GameData.PLAYER_NAME)}}: Where am I? What am I doing here?
+???: You're at Coolant Cave. I didn't know anyone else knew about this spot!
+Bitleon: My name is Bitleon! What's yours?
 {{GameData.get_var(GameData.PLAYER_NAME)}}: {{GameData.get_var(GameData.PLAYER_NAME)}}, I think.
-Bitleon: You think? You're acting kind of weird...
-Bitleon: Are you sure you're alright? 
-{{GameData.get_var(GameData.PLAYER_NAME)}}: My head still feels kind of foggy...
-Bitleon: That doesn't sound good. Listen, I think you should come with me. The wire to Core City is only a few screens away.
-Bitleon: Maybe one of the defraggers in the city can help you out.
+Bitleon: You think? You're acting kind of weird.
+{{GameData.get_var(GameData.PLAYER_NAME)}}: My head still feels kind of foggy... like there's something important I've forgotten.
+Bitleon: That doesn't sound good. You should come with me! The wire to Core City is just a few screens away!
+Bitleon: One of the defraggers in the city can help you out!
 {{GameData.get_var(GameData.PLAYER_NAME)}}: Defragger?
-Bitleon: Yeah, a defragger. You said you have memory problems, right?
+Bitleon: Yeah, a defragger. You have memory problems, right?
 {{GameData.get_var(GameData.PLAYER_NAME)}}: I... I'm not sure I quite understand...
-Bitleon: Uh, well, anyway... this area has been swarming with corrupted mons lately. It isn't safe to be sleeping around here.
-Bitleon: I think your best course of action would be to come with me to Core City.
+Bitleon: This area has been swarming with corrupt mons lately. We should get out of here!
+Bitleon: Let's head back to Core City!
 Bitleon: Sound good?
-{{GameData.get_var(GameData.PLAYER_NAME)}}: Yeah... yeah, sure. I'll come with you.
-Bitleon: Great! The way to the wire is pretty linear, just head up. I'll be right behind you. Let's go!
+=> branch
+
+~ branch
+Bitleon: Let's get going!
+- What are you?
+	Bitleon: I'm Bitleon!
+	{{GameData.get_var(GameData.PLAYER_NAME)}}: But what ARE you?
+	Bitleon: I'm Bitleon?
+	{{GameData.get_var(GameData.PLAYER_NAME)}}: No, I mean... like... WHAT is a Bitleon?
+	Bitleon: Weird question, but ok. I'm a mon! My home is Core City, but I like exploring more!
+	Bitleon: That's what I was doing when I found you here! It's a major discovery!
+	=> branch
+- Core City?
+	Bitleon: Yeah! It's where all the cool mons live! Everything else is connected to it.
+	Bitleon: So why are we still standing here? 
+	=> branch
+- Defragger?
+	Bitleon: Yeah, a defragger! We talked about this already.
+	Bitleon: Your head must really hurt...
+	=> branch
+- Yeah... yeah, sure. I'll come with you.
+	Bitleon: Great! The way to the wire right through that cave. I'll be right behind you!
 => END
 
 ~ cave2_first_battle_before_battle
