@@ -248,6 +248,9 @@ func _CUTSCENE_CAVE4_LEVIATHAN_MEETING(area: Area) -> void:
 	await _delete_bitleon(bitleon)
 
 func _CUTSCENE_BATTLE_TUTORIAL_FIRST_BATTLE(battle: Battle) -> void:
+	# disable tooltips for this battle
+	UITooltip.disable_tooltips()
+	
 	# grab some necessary variables
 	var results = battle._results
 	var speed_controls = battle._speed_controls
@@ -359,8 +362,9 @@ func _CUTSCENE_BATTLE_TUTORIAL_FIRST_BATTLE(battle: Battle) -> void:
 	_reset_to_normal_z(results)
 	
 	assert(_reset_z_map.size() == 0)
-	await _fade_blocker_out()
 	speed_controls.enable()
+	
+	UITooltip.enable_tooltips()
 
 func _CUTSCENE_BATTLE_TUTORIAL_SPEED_AND_QUEUE(battle: Battle):
 	var speed_controls = battle._speed_controls
