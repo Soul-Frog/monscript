@@ -151,14 +151,25 @@ func _CUTSCENE_CAVE1_INTRO(area: Area) -> void:
 	
 	# put the player at spawn
 	area.PLAYER.position = area.POINTS.find_child("PlayerSpawn").position
+	#area.PLAYER.CAMERA.enabled = false
 	area.PLAYER.face_right()
 	
 	await Dialogue.play(_DIALOGUE_FILE, "cave1_intro_start")
 	
-	# todo - await customization
+	# create the customization panel
+	var customization = load("res://ui/customization/customization.tscn").instantiate()
+	add_child(customization)
+	customization.PANEL.modulate.a = 0.0
+	create_tween().tween_property(customization.PANEL, "modulate:a", 1.0, 1.0)
+	
+	# wait for customization to be done
+	await customization.customization_complete
+	
+	await create_tween().tween_property(customization.PANEL, "modulate:a", 0.0, 1.0).finished
+	customization.queue_free()
 	
 	await TransitionPlayer.play(TransitionPlayer.Effect.SLOW_FADE_IN)
-	
+	await Global.delay(0.5)
 	await Dialogue.play(_DIALOGUE_FILE, "cave1_intro_meet_bitleon")
 	
 	# move bitleon to cave entrance as it talks

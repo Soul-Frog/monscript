@@ -4,9 +4,22 @@ extends CharacterBody2D
 # mon's speed while moving
 @export var SPEED = 70
 
+@onready var SPRITE = $Sprite
+
 signal reached_point
 var target_point = null
 
+func _ready() -> void:
+	update_sprite()
+	Events.update_player_sprite.connect(update_sprite)
+
+func update_sprite():
+	SPRITE.material.set_shader_parameter("BITLEON_RECOLOR1", GameData.customization_colors[GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR)][0])
+	SPRITE.material.set_shader_parameter("BITLEON_RECOLOR2", GameData.customization_colors[GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR)][0])
+	SPRITE.material.set_shader_parameter("BITLEON_RECOLOR3", GameData.customization_colors[GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR)][0])
+	SPRITE.material.set_shader_parameter("BITLEON_RECOLOR4", GameData.customization_colors[GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR)][1])
+	SPRITE.material.set_shader_parameter("BITLEON_RECOLOR5", GameData.customization_colors[GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR)][1])
+	
 func get_headshot() -> Texture2D:
 	assert($Sprite.sprite_frames.has_animation("headshot"))
 	return $Sprite.sprite_frames.get_frame_texture("headshot", 0)

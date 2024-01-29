@@ -10,6 +10,12 @@ resource_local_to_scene = true
 shader = ExtResource("1_lg85r")
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 shader_parameter/flash_modifier = 0.0
+shader_parameter/apply_recolor = false
+shader_parameter/BITLEON_RECOLOR1 = Vector3(1, 0, 0)
+shader_parameter/BITLEON_RECOLOR2 = Vector3(0, 1, 0)
+shader_parameter/BITLEON_RECOLOR3 = Vector3(0, 0, 1)
+shader_parameter/BITLEON_RECOLOR4 = Vector3(0.5, 0.5, 0)
+shader_parameter/BITLEON_RECOLOR5 = Vector3(0.75, 0, 0.75)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c442s"]
 atlas = ExtResource("3_wyq5t")

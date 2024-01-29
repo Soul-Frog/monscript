@@ -1,14 +1,13 @@
 class_name Customization
-
-extends Node2D
+extends CanvasLayer
 
 signal customization_complete
 
-@onready var BUNTON = $CharacterCustomizationScreen/Bunton
-@onready var PLAYER_PREVIEW = $CharacterCustomizationScreen/PlayerOverhead
-@onready var NAME_INPUT = $CharacterCustomizationScreen/NameInput
+@onready var PANEL = $CharacterCustomizationPanel
+@onready var BUNTON = $CharacterCustomizationPanel/Bunton
+@onready var PLAYER_PREVIEW = $CharacterCustomizationPanel/PlayerOverhead
+@onready var NAME_INPUT = $CharacterCustomizationPanel/NameInput
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	assert(BUNTON)
 	assert(PLAYER_PREVIEW)
@@ -23,6 +22,6 @@ func _on_bunton_state_changed():
 	GameData.set_var(GameData.BUN_CUSTOMIZATION, BUNTON.selected)
 	Events.emit_signal("update_player_sprite")
 
-
 func _on_submit_button_pressed():
+	GameData.set_var(GameData.PLAYER_NAME, NAME_INPUT.text.strip_edges())
 	emit_signal("customization_complete")

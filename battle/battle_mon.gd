@@ -33,7 +33,6 @@ var _speed_scale = 1.0
 # The underlying Mon Object this battle mon scene represents
 # Set this with init_mon before doing anything else with this scene
 var underlying_mon: MonData.Mon = null
-@onready var SPRITE: AnimatedSprite2D = $Sprite
 
 # The name and color used for this mon's entries into the battle log
 var log_name: String = ""
@@ -156,6 +155,7 @@ func _ready():
 	assert(status_effect)
 	if team == Battle.Team.COMPUTER:
 		SPRITE.flip_h = true
+	super._ready()
 
 # Initializes this battle_mon with an underlying mon object
 func init_mon(mon: MonData.Mon, monTeam: Battle.Team) -> void:

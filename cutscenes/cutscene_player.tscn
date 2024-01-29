@@ -25,7 +25,6 @@ polygon = PackedVector2Array(25, 0, 25, 180, 345, 180, 345, 0)
 z_index = 100
 
 [node name="Top" type="HBoxContainer" parent="Popup"]
-visible = false
 offset_left = 47.0
 offset_top = 5.0
 offset_right = 273.0

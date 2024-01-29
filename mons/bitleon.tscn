@@ -9,6 +9,12 @@ resource_local_to_scene = true
 shader = ExtResource("2_ol340")
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 shader_parameter/flash_modifier = 0.0
+shader_parameter/apply_recolor = true
+shader_parameter/BITLEON_RECOLOR1 = Vector3(0, 0, 0)
+shader_parameter/BITLEON_RECOLOR2 = Vector3(0, 0, 0)
+shader_parameter/BITLEON_RECOLOR3 = Vector3(0, 0, 0)
+shader_parameter/BITLEON_RECOLOR4 = Vector3(0, 0, 0)
+shader_parameter/BITLEON_RECOLOR5 = Vector3(0, 0, 0)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rj1by"]
 atlas = ExtResource("2_kygqj")
@@ -47,5 +53,6 @@ material = SubResource("ShaderMaterial_xh1wq")
 sprite_frames = SubResource("SpriteFrames_4uhoi")
 
 [node name="CollisionHitbox" parent="." index="1"]
+visible = false
 position = Vector2(0, 0)
 shape = SubResource("RectangleShape2D_wsujs")

@@ -18,6 +18,7 @@ offset_left = -67.0
 offset_top = -18.0
 offset_right = 364.0
 offset_bottom = 219.0
+mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [node name="Scene" type="Node2D" parent="."]
