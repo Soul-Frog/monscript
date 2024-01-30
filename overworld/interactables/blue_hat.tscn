@@ -30,19 +30,13 @@ position = Vector2(-8, -8)
 sprite_frames = SubResource("SpriteFrames_uf0hs")
 centered = false
 
-[node name="Collision" parent="." index="1"]
-position = Vector2(0, 4)
-
-[node name="CollisionPolygon2D" parent="Collision" index="0"]
-polygon = PackedVector2Array(-57.6001, -21.9025, 9.91645, -21.9025, 9.91645, 31.879, -57.6001, 31.879)
-
 [node name="CollisionShape2D" parent="InteractionArea" index="0"]
 position = Vector2(0, 3)
 shape = SubResource("CircleShape2D_qry7x")
 
-[node name="Label" parent="." index="3"]
+[node name="Label" parent="." index="2"]
 offset_top = -33.0
 offset_bottom = -10.0
 
-[node name="ColPoly" parent="." index="4"]
+[node name="ColPoly" parent="." index="3"]
 polygon = PackedVector2Array(-8, -9, -8, 16, 8, 16, 8, -9)

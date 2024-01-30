@@ -74,18 +74,15 @@ frame = 2
 frame_progress = 1.0
 centered = false
 
-[node name="CollisionPolygon2D" parent="Collision" index="0"]
-polygon = PackedVector2Array(-57.6001, 21.1227, 18.356, 21.1227, 18.356, -11.1462, -57.6001, -11.1462)
-
 [node name="CollisionShape2D" parent="InteractionArea" index="0"]
 shape = SubResource("CircleShape2D_80gjf")
 
-[node name="Label" parent="." index="3"]
+[node name="Label" parent="." index="2"]
 offset_left = -61.0
 offset_top = -29.0
 offset_right = 62.0
 offset_bottom = -6.0
 text = "[center][E] Flip[/center]"
 
-[node name="ColPoly" parent="." index="4"]
+[node name="ColPoly" parent="." index="3"]
 polygon = PackedVector2Array(-8, -8, -8, 7, 10, 7, 10, -8)

@@ -36,6 +36,7 @@ texture = ExtResource("2_eo2i5")
 centered = false
 
 [node name="CanvasModulate" type="CanvasModulate" parent="Base/Map"]
+visible = false
 color = Color(0, 0, 0, 1)
 
 [node name="Entities" type="Node2D" parent="."]
@@ -173,22 +174,19 @@ LABEL_TEXT = "Climb"
 [node name="Sprite" parent="Entities/WarpInteractable" index="0"]
 visible = false
 
-[node name="Collision" parent="Entities/WarpInteractable" index="1"]
-position = Vector2(-3, -18)
-
-[node name="CollisionPolygon2D" parent="Entities/WarpInteractable/Collision" index="0"]
-polygon = PackedVector2Array(-57.6001, 21.1227, 1.47681, 21.1227, 1.47681, 6.06386, -57.6001, 6.06386)
-
 [node name="CollisionShape2D" parent="Entities/WarpInteractable/InteractionArea" index="0"]
 position = Vector2(-4, -18)
 shape = SubResource("RectangleShape2D_87r1p")
 
-[node name="Label" parent="Entities/WarpInteractable" index="3"]
+[node name="Label" parent="Entities/WarpInteractable" index="2"]
 offset_left = -64.0
 offset_top = 6.0
 offset_right = 59.0
 offset_bottom = 29.0
 text = "[center][E] Climb[/center]"
+
+[node name="ColPoly" parent="Entities/WarpInteractable" index="3"]
+polygon = PackedVector2Array(-11, -18, -11, -12, 3, -12, 3, -18)
 
 [node name="Data" type="Node2D" parent="."]
 
