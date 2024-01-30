@@ -43,3 +43,6 @@ shape = SubResource("CircleShape2D_qry7x")
 [node name="Label" parent="." index="3"]
 offset_top = -33.0
 offset_bottom = -10.0
+
+[node name="ColPoly" parent="." index="4"]
+polygon = PackedVector2Array(-8, -9, -8, 16, 8, 16, 8, -9)

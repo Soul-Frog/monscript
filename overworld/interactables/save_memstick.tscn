@@ -388,3 +388,6 @@ offset_top = -26.0
 offset_right = 87.0
 offset_bottom = -3.0
 text = "[center][E] Save[/center]"
+
+[node name="ColPoly" parent="." index="4"]
+polygon = PackedVector2Array(1, -8, -2, -5, -2, 11, -8, 12, -8, 16, 53, 16, 53, 12, 47, 11, 47, -5, 44, -8)

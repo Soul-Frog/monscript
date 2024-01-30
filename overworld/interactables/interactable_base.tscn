@@ -6,6 +6,8 @@
 [node name="Interactable" type="CharacterBody2D"]
 z_index = 200
 position = Vector2(8, 8)
+collision_layer = 4
+collision_mask = 5
 script = ExtResource("1_uakwy")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]

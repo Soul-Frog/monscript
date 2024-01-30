@@ -86,3 +86,6 @@ offset_top = -29.0
 offset_right = 62.0
 offset_bottom = -6.0
 text = "[center][E] Flip[/center]"
+
+[node name="ColPoly" parent="." index="4"]
+polygon = PackedVector2Array(-8, -8, -8, 7, 10, 7, 10, -8)
