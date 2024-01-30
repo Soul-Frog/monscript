@@ -373,7 +373,7 @@ var _LEVIATHAN_BASE = MonBase.new(MonType.LEVIATHAN, "L3V14TH4N", "res://mons/le
 	1.0, 1.5, 0.1, 1.5,
 	ScriptData.get_block_by_name("HYDR0"),
 	Passive.NONE,
-	[Color("#5677fc"), Color("#455ede"), Color("#2a36b1")],
+	[Color("#91a7ff"), Color("#738ffe"), Color("#4e6cef")],
 	1.5, 1.0, [BugData.Type.RED_ATK_BUG, BugData.Type.BLUE_DEF_BUG])
 
 # dictionary mapping MonTypes -> MonBases
