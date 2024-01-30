@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://3nwfn8vi6s2" path="res://assets/maps/coolant_cave/cave8_seafloor/cave8.png" id="2_eo2i5"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/components/player_overhead.tscn" id="3_x756a"]
 [ext_resource type="PackedScene" uid="uid://wu6230b30hb2" path="res://mons/anglerphish.tscn" id="4_cloe7"]
-[ext_resource type="PackedScene" uid="uid://ce42geant7kmk" path="res://overworld/interactables/warp_interactable.tscn" id="4_dowlu"]
+[ext_resource type="PackedScene" uid="uid://crnlyyw1er0j2" path="res://overworld/interactables/warp_interactable.tscn" id="4_dowlu"]
 [ext_resource type="Script" path="res://overworld/components/overworld_mons/wanderer.gd" id="5_pcifn"]
 [ext_resource type="PackedScene" uid="uid://b1udhcbvv01om" path="res://mons/stingarray.tscn" id="6_pq7c8"]
 [ext_resource type="Script" path="res://overworld/components/overworld_mons/overworld_mon.gd" id="7_nhyxu"]
@@ -53,7 +53,6 @@ texture = SubResource("GradientTexture2D_sn4if")
 [node name="Anglerphish" parent="Entities/OverworldEncounters" instance=ExtResource("4_cloe7")]
 position = Vector2(642, 177)
 script = ExtResource("5_pcifn")
-speed = 25
 min_wander_range = 20
 max_wander_range = 60
 min_time_between_movement = 4
@@ -76,7 +75,6 @@ texture = SubResource("GradientTexture2D_sn4if")
 [node name="Anglerphish2" parent="Entities/OverworldEncounters" instance=ExtResource("4_cloe7")]
 position = Vector2(440, 303)
 script = ExtResource("5_pcifn")
-speed = 25
 min_wander_range = 20
 max_wander_range = 60
 min_time_between_movement = 4
@@ -99,7 +97,6 @@ texture = SubResource("GradientTexture2D_sn4if")
 [node name="Mon3" parent="Entities/OverworldEncounters" instance=ExtResource("4_cloe7")]
 position = Vector2(250, 225)
 script = ExtResource("5_pcifn")
-speed = 25
 min_wander_range = 20
 max_wander_range = 60
 min_time_between_movement = 4

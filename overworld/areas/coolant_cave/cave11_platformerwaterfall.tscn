@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cshh1a3j2a1jp" path="res://assets/maps/coolant_cave/cave11_platformerwaterfall/cave11_fg1.png" id="5_gaf47"]
 [ext_resource type="Script" path="res://overworld/areas/coolant_cave/platformer_water.gd" id="7_0ue4f"]
 [ext_resource type="PackedScene" uid="uid://dn47fjifusgh1" path="res://mons/turtminal.tscn" id="7_c76l7"]
-[ext_resource type="PackedScene" uid="uid://ce42geant7kmk" path="res://overworld/interactables/warp_interactable.tscn" id="8_30lcs"]
+[ext_resource type="PackedScene" uid="uid://crnlyyw1er0j2" path="res://overworld/interactables/warp_interactable.tscn" id="8_30lcs"]
 [ext_resource type="PackedScene" uid="uid://dm1epg70fkia2" path="res://mons/orchin.tscn" id="8_hk1nc"]
 [ext_resource type="PackedScene" uid="uid://du83qsxxw4lqn" path="res://mons/chorse.tscn" id="9_1a8f2"]
 [ext_resource type="PackedScene" uid="uid://b5sx3ehv6u6ks" path="res://mons/pascalican.tscn" id="9_500nt"]
@@ -141,7 +141,6 @@ position = Vector2(694, 909)
 collision_layer = 34
 collision_mask = 532
 script = ExtResource("10_6drvj")
-speed = 100
 min_wander_range = 30
 max_wander_range = 100
 min_time_between_movement = 2
@@ -160,7 +159,6 @@ position = Vector2(269, 891)
 collision_layer = 34
 collision_mask = 532
 script = ExtResource("10_6drvj")
-speed = 100
 min_wander_range = 30
 max_wander_range = 100
 min_time_between_movement = 2
@@ -179,9 +177,6 @@ position = Vector2(490, 788)
 area = 9
 spawn_point = "Cave10Ladder"
 LABEL_TEXT = "Climb"
-
-[node name="CollisionPolygon2D" parent="Entities/WarpInteractable/Collision" index="0"]
-polygon = PackedVector2Array()
 
 [node name="CollisionShape2D" parent="Entities/WarpInteractable/InteractionArea" index="0"]
 position = Vector2(1, 0)

@@ -36,5 +36,7 @@ text = "[center]Label[/center]"
 [node name="FadeDecorator" parent="Label" instance=ExtResource("2_0rgp8")]
 fade_speed = 5.0
 
+[node name="ColPoly" type="CollisionPolygon2D" parent="."]
+
 [connection signal="area_entered" from="InteractionArea" to="." method="_on_player_interaction_area_entered"]
 [connection signal="area_exited" from="InteractionArea" to="." method="_on_player_interaction_area_exited"]

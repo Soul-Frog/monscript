@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b5sx3ehv6u6ks" path="res://mons/pascalican.tscn" id="4_xct11"]
 [ext_resource type="Script" path="res://overworld/components/overworld_mons/overworld_mon.gd" id="5_67v3a"]
 [ext_resource type="Script" path="res://overworld/areas/coolant_cave/ice.gd" id="5_t63x7"]
-[ext_resource type="PackedScene" uid="uid://ce42geant7kmk" path="res://overworld/interactables/warp_interactable.tscn" id="6_ucxxx"]
+[ext_resource type="PackedScene" uid="uid://crnlyyw1er0j2" path="res://overworld/interactables/warp_interactable.tscn" id="6_ucxxx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ipd0d"]
 size = Vector2(11, 97)
