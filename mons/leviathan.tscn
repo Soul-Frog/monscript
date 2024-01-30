@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://ba18qoo4vpw3x"]
+[gd_scene load_steps=10 format=3 uid="uid://ba18qoo4vpw3x"]
 
 [ext_resource type="PackedScene" uid="uid://qd8gobfrvv8u" path="res://mons/mon.tscn" id="1_wmug5"]
-[ext_resource type="Texture2D" uid="uid://dos1wnic6bcd7" path="res://assets/sprites/mons/magnetfrog.png" id="3_fa0fw"]
-[ext_resource type="Texture2D" uid="uid://7f1xs6lh2wuf" path="res://assets/sprites/mons/bitleon.png" id="3_jpydt"]
+[ext_resource type="Texture2D" uid="uid://cpf1fjuyc1f7j" path="res://assets/sprites/mons/leviathan.png" id="2_2g0lh"]
 
 [sub_resource type="Shader" id="Shader_pqap8"]
 code = "shader_type canvas_item;
@@ -26,15 +25,23 @@ shader = SubResource("Shader_pqap8")
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 shader_parameter/flash_modifier = 0.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6p1em"]
-atlas = ExtResource("3_jpydt")
-region = Rect2(0, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_ghojq"]
+atlas = ExtResource("2_2g0lh")
+region = Rect2(68, 0, 68, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nb5fj"]
+atlas = ExtResource("2_2g0lh")
+region = Rect2(0, 0, 68, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uwodi"]
+atlas = ExtResource("2_2g0lh")
+region = Rect2(136, 0, 68, 68)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ia3mv"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_fa0fw")
+"texture": SubResource("AtlasTexture_ghojq")
 }],
 "loop": true,
 "name": &"default",
@@ -42,15 +49,23 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6p1em")
+"texture": SubResource("AtlasTexture_nb5fj")
 }],
 "loop": true,
 "name": &"headshot",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uwodi")
+}],
+"loop": true,
+"name": &"submerged",
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wsujs"]
-size = Vector2(32, 32)
+size = Vector2(46.5, 58)
 
 [node name="Mon" instance=ExtResource("1_wmug5")]
 
@@ -59,5 +74,5 @@ material = SubResource("ShaderMaterial_p1q46")
 sprite_frames = SubResource("SpriteFrames_ia3mv")
 
 [node name="CollisionHitbox" parent="." index="1"]
-position = Vector2(0, 0)
+position = Vector2(1.25, 5)
 shape = SubResource("RectangleShape2D_wsujs")

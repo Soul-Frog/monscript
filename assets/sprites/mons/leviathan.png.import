@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ldp8jp2472f3"
-path="res://.godot/imported/blue-hat.png-7f0912e3e4470a31a115a150eff0a832.ctex"
+uid="uid://cpf1fjuyc1f7j"
+path="res://.godot/imported/leviathan.png-8ea04e3e614d552502639e404d6f8263.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/npcs/blue-hat.png"
-dest_files=["res://.godot/imported/blue-hat.png-7f0912e3e4470a31a115a150eff0a832.ctex"]
+source_file="res://assets/sprites/mons/leviathan.png"
+dest_files=["res://.godot/imported/leviathan.png-8ea04e3e614d552502639e404d6f8263.ctex"]
 
 [params]
 

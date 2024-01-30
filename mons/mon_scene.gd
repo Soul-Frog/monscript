@@ -60,7 +60,7 @@ func move_to_point(point: Vector2) -> void:
 	target_point = point
 
 func face_left() -> void:
-	$Sprite.flip_h = true
+	SPRITE.flip_h = true
 
 func face_right() -> void:
-	$Sprite.flip_h = false
+	SPRITE.flip_h = false
