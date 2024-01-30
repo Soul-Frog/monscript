@@ -23,7 +23,7 @@ func _ready() -> void:
 	
 	# create the database entries, one for each mon type
 	for montype in MonData.MonType.values():
-			if montype == MonData.MonType.NONE:
+			if montype == MonData.MonType.NONE or MonData.is_virus(montype):
 				continue
 			var entry: DatabaseEntry = DATABASE_ENTRY_SCENE.instantiate()
 			entry.setup(montype)

@@ -417,16 +417,6 @@ func get_texture_for(montype: MonType) -> Texture2D:
 	mon_scene.free()
 	return tex
 
-func get_database_texture_for(montype: MonType) -> Texture2D:
-	assert(montype != MonType.NONE)
-	# make an instance of the mon's scene
-	var mon_scene = load(_MON_MAP[montype]._scene_path).instantiate()
-	# get texture from scene
-	var tex = mon_scene.get_database_texture()
-	# free the scene
-	mon_scene.free()
-	return tex
-
 func get_headshot_for(montype: MonType) -> Texture2D:
 	assert(montype != MonType.NONE)
 	# make an instance of the mon's scene
@@ -442,6 +432,10 @@ func get_type_for(monname: String) -> MonType:
 		if _MON_MAP[montype]._species_name == monname:
 			return montype
 	return MonType.NONE
+
+func is_virus(montype: MonType) -> bool:
+	assert(montype != MonType.NONE)
+	return _MON_MAP[montype]._is_virus
 
 func get_name_for(montype: MonType) -> String:
 	assert(montype != MonType.NONE)
