@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cd6pj5homenki" path="res://overworld/interactables/interactable_base.tscn" id="1_8j4l1"]
 [ext_resource type="Script" path="res://overworld/interactables/chest.gd" id="2_anro5"]
-[ext_resource type="Texture2D" uid="uid://cxg76f1ffb4ri" path="res://assets/objects/chest.png" id="4_vw2bn"]
+[ext_resource type="Texture2D" uid="uid://cxg76f1ffb4ri" path="res://assets/sprites/objects/chest.png" id="4_vw2bn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ncslg"]
 atlas = ExtResource("4_vw2bn")
@@ -35,7 +35,6 @@ animations = [{
 radius = 14.0
 
 [node name="Chest" instance=ExtResource("1_8j4l1")]
-z_index = 200
 script = ExtResource("2_anro5")
 chest_id = "NULL"
 dialogue_resource = null

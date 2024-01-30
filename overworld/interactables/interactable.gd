@@ -5,7 +5,7 @@
 # 3) override the _on_interact function.
 
 class_name Interactable
-extends Node2D
+extends CharacterBody2D
 
 @export var LABEL_TEXT = "Interact"
 

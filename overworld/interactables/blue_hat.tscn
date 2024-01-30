@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cd6pj5homenki" path="res://overworld/interactables/interactable_base.tscn" id="1_c66em"]
 [ext_resource type="Script" path="res://overworld/interactables/dialogue_interactable.gd" id="2_7r8lo"]
-[ext_resource type="Texture2D" uid="uid://ldp8jp2472f3" path="res://assets/characters/npcs/blue-hat.png" id="2_t17by"]
+[ext_resource type="Texture2D" uid="uid://ldp8jp2472f3" path="res://assets/sprites/npcs/blue_hat.png" id="2_t17by"]
 [ext_resource type="Resource" uid="uid://defy52ihj1vmu" path="res://dialogue/test.dialogue" id="3_1orfb"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_uf0hs"]
@@ -20,7 +20,6 @@ animations = [{
 radius = 24.0
 
 [node name="BlueHat" instance=ExtResource("1_c66em")]
-z_index = 200
 script = ExtResource("2_7r8lo")
 dialogue_resource = ExtResource("3_1orfb")
 dialogue_start = "test"
