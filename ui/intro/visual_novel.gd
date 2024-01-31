@@ -10,7 +10,7 @@ signal dialogue_completed
 # emitted after a name is submitted into the name input field
 signal name_inputted
 
-const _DIALOGUE_FILE = preload("res://dialogue/intro.dialogue")
+const _DIALOGUE_FILE = preload("res://dialogue/oldintro.dialogue")
 
 @onready var CLASSROOM_SCENE = $Subscenes/Classroom
 @onready var BUS_SCENE = $Subscenes/Bus

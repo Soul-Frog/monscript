@@ -1,6 +1,6 @@
 extends Node2D
 
-signal _continue_tutorial
+signal _clicked
 
 var _ID_TO_CUTSCENE_MAP := {
 	Cutscene.ID.INTRO_OLD : _CUTSCENE_INTRODUCTION_OLD,
@@ -41,11 +41,11 @@ func _ready():
 
 func _input(event) -> void: 
 	if event is InputEventMouseButton and event.is_pressed() and _accepting_click:
-		emit_signal("_continue_tutorial")
+		emit_signal("_clicked")
 
 func _wait_for_click() -> void:
 	_accepting_click = true
-	await _continue_tutorial
+	await _clicked
 	_accepting_click = false
 
 func _fade_blocker_in() -> void:
@@ -102,15 +102,15 @@ func _move_camera(camera: Camera2D, offset: Vector2, time: float) -> void:
 	cam_tween.tween_property(camera, "position", camera.position + offset, time)
 	await cam_tween.finished
 
-func _move_actor(actor, point) -> void:
-	assert(actor is PlayerOverhead or actor is MonScene)
+func _move_actor(actor, point: Vector2) -> void:
+	assert(actor is PlayerOverhead or actor is MonScene or actor is NPC)
 	actor.move_to_point(point)
 	await actor.reached_point
 
 func _create_overworld_bitleon(area: Area) -> MonScene:
 	var bitleon = load("res://mons/bitleon.tscn").instantiate()
 	bitleon.position = area.PLAYER.position
-	area.add_child(bitleon)
+	area.call_deferred("add_child", bitleon)
 	bitleon.modulate.a = 0.0
 	bitleon.z_index = area.PLAYER.z_index - 1
 	create_tween().tween_property(bitleon, "modulate:a", 1.0, 0.1)
@@ -143,7 +143,6 @@ func play_cutscene(id: Cutscene.ID, node: Node):
 		node.PLAYER.disable_cutscene_mode()
 
 ### CUTSCENES ###
-
 func _CUTSCENE_CAVE1_INTRO(area: Area) -> void:
 	assert(area.area_enum == GameData.Area.COOLANT_CAVE1_BEACH)
 	
@@ -190,7 +189,7 @@ func _CUTSCENE_CAVE2_FIRST_BATTLE(area: Area) -> void:
 	gelif.position = area.POINTS.find_child("CutsceneFirstBattleGelif").position
 	area.OVERWORLD_ENCOUNTERS.call_deferred("add_child", gelif)
 	
-	await _move_actor(area.PLAYER, area.POINTS.find_child("CutsceneFirstBattlePlayerBeforeBattle"))
+	await _move_actor(area.PLAYER, area.POINTS.find_child("CutsceneFirstBattlePlayerBeforeBattle").position)
 	area.PLAYER.face_right()
 	
 	# create a bitleon and move him...
@@ -224,26 +223,44 @@ func _CUTSCENE_CAVE4_LEVIATHAN_MEETING(area: Area) -> void:
 	leviathan.mon1Type = MonData.MonType.LEVIATHAN
 	leviathan.mon1Level = 5
 	leviathan.position = area.POINTS.find_child("CutsceneLeviathan").position
+	leviathan.set_animation("submerged")
+	leviathan.modulate.a = 0.0
+	leviathan.disable_collisions()
 	area.call_deferred("add_child", leviathan)
 	
-	await _move_actor(area.PLAYER, area.POINTS.find_child("CutscenePlayer"))
-	area.PLAYER.face_left()
-	
-	# create a bitleon and move him...
+	# fetch the red hat, create a bitleon
+	var red_hat = area.get_entity("RedHat")
 	var bitleon = _create_overworld_bitleon(area)
-	await _move_actor(bitleon, area.POINTS.find_child("CutsceneBitleon").position)
-	bitleon.face_left()
+
+	# move player and bitleon towards corruption, then talk
+	_move_actor(area.PLAYER, area.POINTS.find_child("CutscenePlayerCorruption").position)
+	await _move_actor(bitleon, area.POINTS.find_child("CutsceneBitleonCorruption").position)
+	await Dialogue.play(_DIALOGUE_FILE, "cave4_bitleon_sees_corruption")
 	
-	await _move_camera(area.CAMERA, Vector2(-80, 0), 0.5)
+	# leviathan emerges! move everyone towards leviathan and talk
+	await create_tween().tween_property(leviathan, "modulate:a", 1.0, 0.5).finished
+	_move_actor(area.PLAYER, area.POINTS.find_child("CutscenePlayerLeviathan").position)
+	_move_actor(red_hat, area.POINTS.find_child("CutsceneRedHatLeviathan").position)
+	await _move_actor(bitleon, area.POINTS.find_child("CutsceneBitleonLeviathan").position)
+	await Dialogue.play(_DIALOGUE_FILE, "cave4_leviathan_pre_fight")
+	await _move_actor(bitleon, area.POINTS.find_child("CutsceneBitleonAttack").position)
 	
+	# fight!
 	#GameData.queue_battle_cutscene(Cutscene.ID.BATTLE_TUTORIAL_ESCAPE)
 	Events.emit_signal("battle_started", leviathan, leviathan.mons)
 	await Events.battle_ended
 	await Global.delay(0.5)
 	
-	leviathan.queue_free()
+	# todo - actually make everyone back off a bit
 	
-	_move_camera(area.CAMERA, Vector2(80, 0), 0.5)
+	Dialogue.play(_DIALOGUE_FILE, "cave4_leviathan_post_fight")
+	await Dialogue.dialogue_signal # fade leviathan mid dialogue
+	var tween = create_tween()
+	tween.tween_property(leviathan, "modulate:a", 0.0, 0.5)
+	tween.tween_callback(leviathan.queue_free)
+	await Dialogue.dialogue_ended
+	
+	# remove bitleon
 	await _move_actor(bitleon, area.PLAYER.position)
 	await _delete_bitleon(bitleon)
 

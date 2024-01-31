@@ -100,9 +100,9 @@ func enable_cutscene_mode():
 func disable_cutscene_mode():
 	_in_cutscene = false
 
-func move_to_point(point: Node2D):
+func move_to_point(point: Vector2):
 	assert(_in_cutscene)
-	_cutscene_movement_point = point.position
+	_cutscene_movement_point = point
 
 func face_left() -> void:
 	_SPRITE.flip_h = true

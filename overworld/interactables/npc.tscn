@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://dmhm3mwxxspu"]
 
 [ext_resource type="PackedScene" uid="uid://cd6pj5homenki" path="res://overworld/interactables/interactable_base.tscn" id="1_ckc8t"]
-[ext_resource type="Script" path="res://overworld/interactables/dialogue_interactable.gd" id="2_2j7nl"]
-[ext_resource type="Resource" uid="uid://defy52ihj1vmu" path="res://dialogue/test.dialogue" id="3_a3ecf"]
+[ext_resource type="Script" path="res://overworld/interactables/npc.gd" id="2_me403"]
+[ext_resource type="Resource" uid="uid://da3t8m2rxl1ud" path="res://dialogue/npc.dialogue" id="3_p7tos"]
 [ext_resource type="Texture2D" uid="uid://ldp8jp2472f3" path="res://assets/sprites/npcs/blue_hat.png" id="4_bsy8m"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_uf0hs"]
@@ -21,10 +21,10 @@ radius = 18.0278
 
 [node name="NPC" instance=ExtResource("1_ckc8t")]
 position = Vector2(0, 0)
-script = ExtResource("2_2j7nl")
-dialogue_resource = ExtResource("3_a3ecf")
-dialogue_start = "test"
-LABEL_TEXT = "Talk"
+script = ExtResource("2_me403")
+SPEED = 70
+dialogue_resource = ExtResource("3_p7tos")
+dialogue_start = "NULL"
 
 [node name="Sprite" parent="." index="0"]
 position = Vector2(-8, -11)

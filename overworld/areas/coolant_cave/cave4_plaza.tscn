@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c8sccmm8akfmv"]
+[gd_scene load_steps=12 format=3 uid="uid://c8sccmm8akfmv"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_leamx"]
 [ext_resource type="Texture2D" uid="uid://tjinhumapyr" path="res://assets/maps/coolant_cave/cave4_plaza/cave4.png" id="2_a7nkp"]
@@ -6,7 +6,20 @@
 [ext_resource type="Script" path="res://overworld/components/warp.gd" id="4_7evqn"]
 [ext_resource type="PackedScene" uid="uid://b5sx3ehv6u6ks" path="res://mons/pascalican.tscn" id="4_vbraw"]
 [ext_resource type="Script" path="res://overworld/components/overworld_mons/overworld_mon.gd" id="5_xlunq"]
+[ext_resource type="PackedScene" uid="uid://dmhm3mwxxspu" path="res://overworld/interactables/npc.tscn" id="6_7gmro"]
 [ext_resource type="Script" path="res://overworld/areas/cutscene_trigger_zone.gd" id="7_ikrqd"]
+[ext_resource type="Texture2D" uid="uid://d1hcbj2nsn2w5" path="res://assets/sprites/npcs/red_hat.png" id="7_smgqx"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vbsc3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_smgqx")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_80ub1"]
 size = Vector2(51, 7)
@@ -25,7 +38,7 @@ centered = false
 [node name="Entities" type="Node2D" parent="."]
 
 [node name="Player" parent="Entities" instance=ExtResource("3_bhctv")]
-position = Vector2(344, 443)
+position = Vector2(380, 320)
 
 [node name="OverworldEncounters" type="Node2D" parent="Entities"]
 
@@ -54,6 +67,13 @@ mon3Type = 0
 mon3Level = 0
 mon4Type = 0
 mon4Level = 0
+
+[node name="RedHat" parent="Entities" instance=ExtResource("6_7gmro")]
+position = Vector2(345, 315)
+dialogue_start = "cave4_red_hat"
+
+[node name="Sprite" parent="Entities/RedHat" index="0"]
+sprite_frames = SubResource("SpriteFrames_vbsc3")
 
 [node name="Data" type="Node2D" parent="."]
 
@@ -120,14 +140,31 @@ position = Vector2(608, 443)
 [node name="Cave4BottomLeft" type="Node2D" parent="Data/Points"]
 position = Vector2(344, 443)
 
-[node name="CutsceneLeviathan" type="Node2D" parent="Data/Points"]
-position = Vector2(244, 358)
+[node name="MeetLeviathanCutscene" type="Node2D" parent="Data/Points"]
 
-[node name="CutscenePlayer" type="Node2D" parent="Data/Points"]
-position = Vector2(341, 336)
+[node name="CutsceneLeviathan" type="Node2D" parent="Data/Points/MeetLeviathanCutscene"]
+position = Vector2(224, 358)
 
-[node name="CutsceneBitleon" type="Node2D" parent="Data/Points"]
-position = Vector2(354, 317)
+[node name="CutsceneRedHatCorruption" type="Node2D" parent="Data/Points/MeetLeviathanCutscene"]
+position = Vector2(345, 315)
+
+[node name="CutscenePlayerCorruption" type="Node2D" parent="Data/Points/MeetLeviathanCutscene"]
+position = Vector2(368, 353)
+
+[node name="CutsceneBitleonCorruption" type="Node2D" parent="Data/Points/MeetLeviathanCutscene"]
+position = Vector2(380, 320)
+
+[node name="CutsceneRedHatLeviathan" type="Node2D" parent="Data/Points/MeetLeviathanCutscene"]
+position = Vector2(300, 325)
+
+[node name="CutscenePlayerLeviathan" type="Node2D" parent="Data/Points/MeetLeviathanCutscene"]
+position = Vector2(333, 355)
+
+[node name="CutsceneBitleonLeviathan" type="Node2D" parent="Data/Points/MeetLeviathanCutscene"]
+position = Vector2(308, 360)
+
+[node name="CutsceneBitleonAttack" type="Node2D" parent="Data/Points/MeetLeviathanCutscene"]
+position = Vector2(291, 360)
 
 [node name="CutsceneTriggers" type="Node2D" parent="Data"]
 
@@ -142,3 +179,5 @@ position = Vector2(165, 385)
 polygon = PackedVector2Array(116, 26, 110, 104, 125, 104, 124, 26)
 
 [connection signal="body_entered" from="Data/CutsceneTriggers/LeviathanIntroCutscene" to="Data/CutsceneTriggers/LeviathanIntroCutscene" method="_on_body_entered"]
+
+[editable path="Entities/RedHat"]

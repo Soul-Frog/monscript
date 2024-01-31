@@ -19,7 +19,11 @@ func update_sprite():
 	SPRITE.material.set_shader_parameter("BITLEON_RECOLOR3", GameData.customization_colors[int(GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR))][0])
 	SPRITE.material.set_shader_parameter("BITLEON_RECOLOR4", GameData.customization_colors[int(GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR))][1])
 	SPRITE.material.set_shader_parameter("BITLEON_RECOLOR5", GameData.customization_colors[int(GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR))][1])
-	
+
+func set_animation(animation: String) -> void:
+	assert($Sprite.sprite_frames.has_animation(animation))
+	$Sprite.play(animation)
+
 func get_headshot() -> Texture2D:
 	assert($Sprite.sprite_frames.has_animation("headshot"))
 	return $Sprite.sprite_frames.get_frame_texture("headshot", 0)
@@ -58,6 +62,12 @@ func _physics_process(delta):
 		face_left() if velocity.x < 0 else face_right()
 	
 	move_and_slide()
+
+func disable_collisions() -> void:
+	$CollisionHitbox.disabled = true
+
+func enable_collisions() -> void:
+	$CollisionHitbox.disabled = false
 
 func move_to_point(point: Vector2) -> void:
 	target_point = point

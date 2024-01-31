@@ -141,3 +141,17 @@ func key_for_action(action: String) -> String:
 	# get the first key mapped to this action; split to remove anything but the key itself
 	# for example the E key as_text is "E (Physical)"; split to remove the (Physical)
 	return InputMap.action_get_events(action)[0].as_text().split(" ")[0]
+
+func to_leetspeak(string: String) -> String:
+	const _leetspeak_map = {
+		"A" : "4",
+		"E" : "3",
+		"I" : "1",
+		"O" : "0",
+		"S" : "$"
+	}
+	var leeted = ""
+	string = string.to_upper()
+	for c in string:
+		leeted += _leetspeak_map[c] if _leetspeak_map.has(c) else c
+	return leeted

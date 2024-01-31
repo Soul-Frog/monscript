@@ -65,5 +65,9 @@ func get_player():
 	# needs to be hardcoded to work during area transitions
 	return $Entities/Player
 
+func get_entity(entity_name: String) -> Interactable:
+	assert($Entities.find_child(entity_name))
+	return $Entities.find_child(entity_name)
+
 func _on_play_cutscene(id) -> void:
 	CutscenePlayer.play_cutscene(id, self)
