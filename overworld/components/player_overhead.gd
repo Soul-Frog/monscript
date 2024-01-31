@@ -1,7 +1,7 @@
 class_name PlayerOverhead
 extends Player
 
-const SPEED = 150 # Movement speed
+const SPEED = 110 # Movement speed
 const FRICTION = 0.4
 const ACCELERATION = 0.4
 

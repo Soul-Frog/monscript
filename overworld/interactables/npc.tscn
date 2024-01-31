@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://dmhm3mwxxspu"]
+
+[ext_resource type="PackedScene" uid="uid://cd6pj5homenki" path="res://overworld/interactables/interactable_base.tscn" id="1_ckc8t"]
+[ext_resource type="Script" path="res://overworld/interactables/dialogue_interactable.gd" id="2_2j7nl"]
+[ext_resource type="Resource" uid="uid://defy52ihj1vmu" path="res://dialogue/test.dialogue" id="3_a3ecf"]
+[ext_resource type="Texture2D" uid="uid://ldp8jp2472f3" path="res://assets/sprites/npcs/blue_hat.png" id="4_bsy8m"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uf0hs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_bsy8m")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qry7x"]
+radius = 18.0278
+
+[node name="NPC" instance=ExtResource("1_ckc8t")]
+position = Vector2(0, 0)
+script = ExtResource("2_2j7nl")
+dialogue_resource = ExtResource("3_a3ecf")
+dialogue_start = "test"
+LABEL_TEXT = "Talk"
+
+[node name="Sprite" parent="." index="0"]
+position = Vector2(-8, -11)
+sprite_frames = SubResource("SpriteFrames_uf0hs")
+centered = false
+
+[node name="CollisionShape2D" parent="InteractionArea" index="0"]
+shape = SubResource("CircleShape2D_qry7x")
+
+[node name="Label" parent="." index="2"]
+offset_top = -26.0
+offset_bottom = -3.0
+
+[node name="ColPoly" parent="." index="3"]
+position = Vector2(0, -3)
+polygon = PackedVector2Array(-8, 12, -8, 15, 8, 15, 8, 12)

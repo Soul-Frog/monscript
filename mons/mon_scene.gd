@@ -33,7 +33,7 @@ func _physics_process(delta):
 	
 	if target_point != null:
 		# see if we've gotten 'close enough' to the target point
-		const THRESHOLD = 3.0
+		const THRESHOLD = 2.0
 		var at_correct_x = abs(position.x - target_point.x) <= THRESHOLD
 		var at_correct_y = abs(position.y - target_point.y) <= THRESHOLD
 		
@@ -53,6 +53,9 @@ func _physics_process(delta):
 					input_direction.y = -1
 	
 	velocity = SPEED * input_direction
+	
+	if velocity.x != 0:
+		face_left() if velocity.x < 0 else face_right()
 	
 	move_and_slide()
 
