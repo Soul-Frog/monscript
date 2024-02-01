@@ -149,7 +149,7 @@ position = Vector2(224, 358)
 position = Vector2(345, 315)
 
 [node name="CutscenePlayerCorruption" type="Node2D" parent="Data/Points/MeetLeviathanCutscene"]
-position = Vector2(368, 353)
+position = Vector2(368, 345)
 
 [node name="CutsceneBitleonCorruption" type="Node2D" parent="Data/Points/MeetLeviathanCutscene"]
 position = Vector2(380, 320)

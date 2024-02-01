@@ -29,12 +29,11 @@ func update_velocity():
 	if _in_cutscene:
 		input_direction = Vector2.ZERO
 		
-		if _cutscene_movement_point != null:
-			input_direction = Global.direction_towards_point(position, _cutscene_movement_point)
+		if _target_point != null:
+			input_direction = Global.direction_towards_point(position, _target_point)
 			
 			if input_direction == Vector2.ZERO:
-				_cutscene_movement_point = null
-				emit_signal("reached_point")
+				_on_reached_point()
 	
 	# if any movement is forced, overwrite these inputs
 	if _forced_movement:
@@ -65,4 +64,15 @@ func update_velocity():
 func _physics_process(delta):
 	if _can_move:
 		update_velocity()
+		
+		var previous_position = position
 		move_and_slide()
+	
+		# if we're trying to move to a point but get stuck, give up after some time
+		if _target_point != null and previous_position == position:
+			_time_blocked += delta
+			if _time_blocked >= _TIME_BLOCKED_BEFORE_GIVE_UP:
+				_time_blocked = 0.0
+				_on_reached_point()
+			else:
+				_time_blocked = 0.0
