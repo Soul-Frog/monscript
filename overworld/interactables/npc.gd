@@ -11,25 +11,11 @@ func _physics_process(delta):
 	var input_direction = Vector2.ZERO
 	
 	if target_point != null:
-		# see if we've gotten 'close enough' to the target point
-		const THRESHOLD = 2.0
-		var at_correct_x = abs(position.x - target_point.x) <= THRESHOLD
-		var at_correct_y = abs(position.y - target_point.y) <= THRESHOLD
+		input_direction = Global.direction_towards_point(position, target_point)
 		
-		if at_correct_x and at_correct_y: # if we reached it, emit and set target to null
+		if input_direction == Vector2.ZERO:
 			target_point = null
 			emit_signal("reached_point")
-		else: #otherwise move towards
-			if not at_correct_x:
-				if position.x < target_point.x:
-					input_direction.x = 1
-				else:
-					input_direction.x = -1
-			if not at_correct_y:
-				if position.y < target_point.y:
-					input_direction.y = 1
-				else:
-					input_direction.y = -1
 	
 	velocity = SPEED * input_direction
 	
