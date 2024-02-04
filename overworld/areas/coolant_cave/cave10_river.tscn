@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b5sx3ehv6u6ks" path="res://mons/pascalican.tscn" id="4_xct11"]
 [ext_resource type="Script" path="res://overworld/components/overworld_mons/overworld_mon.gd" id="5_67v3a"]
 [ext_resource type="Script" path="res://overworld/areas/coolant_cave/ice.gd" id="5_t63x7"]
-[ext_resource type="PackedScene" uid="uid://ce42geant7kmk" path="res://overworld/interactables/warp_interactable.tscn" id="6_ucxxx"]
+[ext_resource type="PackedScene" uid="uid://crnlyyw1er0j2" path="res://overworld/interactables/warp_interactable.tscn" id="6_ucxxx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ipd0d"]
 size = Vector2(11, 97)
@@ -64,8 +64,8 @@ area = 10
 spawn_point = "Cave11Ladder"
 LABEL_TEXT = "Climb"
 
-[node name="CollisionPolygon2D" parent="Entities/Ladder/Collision" index="0"]
-polygon = PackedVector2Array(-74.4792, 23.2739, 26.7955, 23.2739, 43.6747, 16.8203, 43.6747, 3.9126, 26.7955, -2.54102, -74.4792, -2.54102, -91.3584, 3.9126, -91.3584, 16.8203)
+[node name="ColPoly" parent="Entities/Ladder" index="3"]
+polygon = PackedVector2Array(-12, -3, -15, -1, -15, 5, -12, 7, 12, 7, 15, 5, 15, -1, 12, -3, 7, -3, 7, -10, -7, -10, -7, -3)
 
 [node name="Data" type="Node2D" parent="."]
 

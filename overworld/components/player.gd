@@ -13,7 +13,9 @@ var _is_invincible := false
 var _can_move := true # if the player can move
 
 var _in_cutscene := false
-var _cutscene_movement_point = null
+var _target_point = null
+var _time_blocked = 0.0
+const _TIME_BLOCKED_BEFORE_GIVE_UP = 0.5
 
 var _external_velocity := Vector2.ZERO # external forces acting upon the player (ie water currents/whirlpool)
 var _forced_movement := false # if a certain direction should be forced (ie, while sliding on ice, you can't stop holding a direction)
@@ -100,9 +102,10 @@ func enable_cutscene_mode():
 func disable_cutscene_mode():
 	_in_cutscene = false
 
-func move_to_point(point: Node2D):
+func move_to_point(point: Vector2):
 	assert(_in_cutscene)
-	_cutscene_movement_point = point.position
+	_target_point = point
+	_time_blocked = 0.0
 
 func face_left() -> void:
 	_SPRITE.flip_h = true
@@ -111,3 +114,7 @@ func face_left() -> void:
 func face_right() -> void:
 	_SPRITE.flip_h = false
 	_BUN_SPRITE.flip_h = false
+
+func _on_reached_point() -> void:
+	_target_point = null
+	emit_signal("reached_point")

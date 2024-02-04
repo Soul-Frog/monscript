@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://overworld/interactables/save_memstick.gd" id="1_2u0cb"]
 [ext_resource type="PackedScene" uid="uid://cd6pj5homenki" path="res://overworld/interactables/interactable_base.tscn" id="1_sret2"]
-[ext_resource type="Resource" uid="uid://c3v1m5f3j7tx0" path="res://dialogue/save.dialogue" id="2_b6087"]
+[ext_resource type="Resource" uid="uid://c3v1m5f3j7tx0" path="res://dialogue/system.dialogue" id="2_b6087"]
 [ext_resource type="Texture2D" uid="uid://cx7wo2v5axv5i" path="res://assets/sprites/objects/save_memstick.png" id="3_w77c4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lou66"]
@@ -368,23 +368,19 @@ animation = &"rise"
 autoplay = "idle"
 centered = false
 
-[node name="Collision" parent="." index="1"]
-position = Vector2(0, 4)
-
-[node name="CollisionPolygon2D" parent="Collision" index="0"]
-position = Vector2(5, 3)
-polygon = PackedVector2Array(-54.8572, 10.7563, -29.5385, 8.60504, -29.5385, -25.8151, -16.8791, -32.2689, 164.572, -32.2689, 177.231, -25.8151, 177.231, 8.60504, 202.55, 10.7563, 202.55, 19.3613, -54.8572, 19.3613)
-
-[node name="InteractionArea" parent="." index="2"]
+[node name="InteractionArea" parent="." index="1"]
 position = Vector2(10, 40)
 
 [node name="CollisionShape2D" parent="InteractionArea" index="0"]
 position = Vector2(12.5, -35.5)
 shape = SubResource("RectangleShape2D_082ld")
 
-[node name="Label" parent="." index="3"]
+[node name="Label" parent="." index="2"]
 offset_left = -36.0
 offset_top = -26.0
 offset_right = 87.0
 offset_bottom = -3.0
 text = "[center][E] Save[/center]"
+
+[node name="ColPoly" parent="." index="3"]
+polygon = PackedVector2Array(1, -8, -2, -5, -2, 11, -8, 12, -8, 16, 53, 16, 53, 12, 47, 11, 47, -5, 44, -8)

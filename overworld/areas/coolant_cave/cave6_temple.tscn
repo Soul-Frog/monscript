@@ -17,7 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://b5sx3ehv6u6ks" path="res://mons/pascalican.tscn" id="9_jnuf3"]
 [ext_resource type="Script" path="res://overworld/components/overworld_mons/overworld_mon.gd" id="10_i4e28"]
 [ext_resource type="PackedScene" uid="uid://5vxxc0i44umo" path="res://overworld/areas/coolant_cave/water_flow.tscn" id="10_j85m8"]
-[ext_resource type="PackedScene" uid="uid://ce42geant7kmk" path="res://overworld/interactables/warp_interactable.tscn" id="13_612sg"]
+[ext_resource type="PackedScene" uid="uid://crnlyyw1er0j2" path="res://overworld/interactables/warp_interactable.tscn" id="13_612sg"]
 [ext_resource type="PackedScene" uid="uid://cty2bys7mmd6k" path="res://overworld/interactables/chest.tscn" id="14_h5edw"]
 [ext_resource type="Resource" uid="uid://defy52ihj1vmu" path="res://dialogue/test.dialogue" id="15_vrvhg"]
 
@@ -177,7 +177,6 @@ position = Vector2(463, 280)
 position = Vector2(471, 714)
 collision_mask = 532
 script = ExtResource("7_um4l4")
-speed = 30
 min_wander_range = 10
 max_wander_range = 40
 min_time_between_movement = 3
@@ -195,7 +194,6 @@ mon4Level = 0
 position = Vector2(405, 510)
 collision_mask = 532
 script = ExtResource("7_um4l4")
-speed = 30
 min_wander_range = 10
 max_wander_range = 40
 min_time_between_movement = 3
@@ -213,7 +211,6 @@ mon4Level = 0
 position = Vector2(260, 677)
 collision_mask = 532
 script = ExtResource("7_um4l4")
-speed = 30
 min_wander_range = 10
 max_wander_range = 40
 min_time_between_movement = 3
@@ -232,7 +229,6 @@ position = Vector2(1370, 229)
 collision_layer = 34
 collision_mask = 532
 script = ExtResource("7_um4l4")
-speed = 100
 min_wander_range = 30
 max_wander_range = 100
 min_time_between_movement = 2
@@ -251,7 +247,6 @@ position = Vector2(1213, 745)
 collision_layer = 34
 collision_mask = 532
 script = ExtResource("7_um4l4")
-speed = 100
 min_wander_range = 30
 max_wander_range = 100
 min_time_between_movement = 2
@@ -270,7 +265,6 @@ position = Vector2(1058, 384)
 collision_layer = 34
 collision_mask = 532
 script = ExtResource("7_um4l4")
-speed = 100
 min_wander_range = 30
 max_wander_range = 100
 min_time_between_movement = 2
@@ -289,7 +283,6 @@ position = Vector2(918, 85)
 collision_layer = 34
 collision_mask = 532
 script = ExtResource("7_um4l4")
-speed = 100
 min_wander_range = 10
 max_wander_range = 30
 min_time_between_movement = 2
@@ -308,7 +301,6 @@ position = Vector2(1220, 526)
 collision_layer = 34
 collision_mask = 532
 script = ExtResource("7_um4l4")
-speed = 100
 min_wander_range = 30
 max_wander_range = 100
 min_time_between_movement = 2
@@ -352,19 +344,19 @@ area = 7
 spawn_point = "Cave8Ladder"
 LABEL_TEXT = "Climb"
 
-[node name="CollisionPolygon2D" parent="Entities/Ladder/Collision" index="0"]
-polygon = PackedVector2Array(-70.2594, 18.9714, 31.0154, 18.9714, 47.8945, 12.5176, 47.8945, -0.389893, 31.0154, -6.84369, -70.2594, -6.84369, -87.1385, -0.389893, -87.1385, 12.5176)
-
 [node name="CollisionShape2D" parent="Entities/Ladder/InteractionArea" index="0"]
 position = Vector2(1, 0)
 shape = SubResource("RectangleShape2D_gpmta")
 
-[node name="Label" parent="Entities/Ladder" index="3"]
+[node name="Label" parent="Entities/Ladder" index="2"]
 offset_left = -59.0
 offset_top = -27.0
 offset_right = 64.0
 offset_bottom = -4.0
 text = "[center][E] Climb[/center]"
+
+[node name="ColPoly" parent="Entities/Ladder" index="3"]
+polygon = PackedVector2Array(-14, -3, -11, -5, -6, -5, -6, -12, 8, -12, 8, -5, 13, -5, 16, -3, 16, 3, 13, 5, -11, 5, -14, 3)
 
 [node name="Chest" parent="Entities" instance=ExtResource("14_h5edw")]
 position = Vector2(283, 276)

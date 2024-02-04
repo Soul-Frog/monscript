@@ -33,6 +33,7 @@ class Bug:
 		return _TOOLTIP_FORMAT % [name, stats_info]
 
 enum Type {
+	NONE = 0,
 	RED_ATK_BUG = 1, 
 	BLUE_DEF_BUG = 2, 
 	GREEN_SPD_BUG = 3, 
@@ -49,8 +50,10 @@ var _BUGS = {
 
 func _ready():
 	# make sure the dictionary has all types of bugs...
-	assert(_BUGS.size() == Type.size())
+	assert(_BUGS.size() == Type.size()-1)
 	for type in Type.values():
+		if type == Type.NONE:
+			continue
 		assert(_BUGS.has(type))
 
 func get_bug(type: Type) -> Bug:

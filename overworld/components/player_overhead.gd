@@ -1,7 +1,7 @@
 class_name PlayerOverhead
 extends Player
 
-const SPEED = 150 # Movement speed
+const SPEED = 110 # Movement speed
 const FRICTION = 0.4
 const ACCELERATION = 0.4
 
@@ -29,26 +29,11 @@ func update_velocity():
 	if _in_cutscene:
 		input_direction = Vector2.ZERO
 		
-		if _cutscene_movement_point != null:
-			# see if we've gotten 'close enough' to the target point
-			const THRESHOLD = 3.0
-			var at_correct_x = abs(position.x - _cutscene_movement_point.x) <= THRESHOLD
-			var at_correct_y = abs(position.y - _cutscene_movement_point.y) <= THRESHOLD
+		if _target_point != null:
+			input_direction = Global.direction_towards_point(position, _target_point)
 			
-			if at_correct_x and at_correct_y: # if we reached it, emit and set target to null
-				_cutscene_movement_point = null
-				emit_signal("reached_point")
-			else: #otherwise move towards
-				if not at_correct_x:
-					if position.x < _cutscene_movement_point.x:
-						input_direction.x = 1
-					else:
-						input_direction.x = -1
-				if not at_correct_y:
-					if position.y < _cutscene_movement_point.y:
-						input_direction.y = 1
-					else:
-						input_direction.y = -1
+			if input_direction == Vector2.ZERO:
+				_on_reached_point()
 	
 	# if any movement is forced, overwrite these inputs
 	if _forced_movement:
@@ -79,4 +64,15 @@ func update_velocity():
 func _physics_process(delta):
 	if _can_move:
 		update_velocity()
+		
+		var previous_position = position
 		move_and_slide()
+	
+		# if we're trying to move to a point but get stuck, give up after some time
+		if _target_point != null and previous_position == position:
+			_time_blocked += delta
+			if _time_blocked >= _TIME_BLOCKED_BEFORE_GIVE_UP:
+				_time_blocked = 0.0
+				_on_reached_point()
+			else:
+				_time_blocked = 0.0
