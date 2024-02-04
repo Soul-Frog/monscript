@@ -852,6 +852,25 @@ position = Vector2(1503, 685)
 y_sort_enabled = true
 position = Vector2(1759, 343)
 
+[node name="Chest1" parent="Entities" instance=ExtResource("30_l4lun")]
+position = Vector2(1193, 474)
+chest_id = 302
+chest_type = 2
+bits = 10
+
+[node name="Chest2" parent="Entities" instance=ExtResource("30_l4lun")]
+position = Vector2(1363, 322)
+chest_id = 301
+chest_type = 2
+bits = 10
+
+[node name="ChestLowesetHPFoe" parent="Entities" instance=ExtResource("30_l4lun")]
+z_index = 125
+position = Vector2(439, 460)
+chest_id = 300
+chest_type = 1
+block = "LowestHPFoe"
+
 [node name="Data" type="Node2D" parent="."]
 
 [node name="Collision" type="StaticBody2D" parent="Data"]
@@ -1502,13 +1521,6 @@ scale = Vector2(1.00241, 1)
 
 [node name="Cave3Left" type="Node2D" parent="Data/Points"]
 position = Vector2(15, 517)
-
-[node name="Chest2" parent="." instance=ExtResource("30_l4lun")]
-z_index = 125
-position = Vector2(438, 461)
-chest_id = "chest_LowestHPFoe"
-chest_type = 0
-block = "LowestHPFoe"
 
 [connection signal="body_entered" from="Data/TransitionUp" to="Data/TransitionUp" method="_on_body_entered"]
 [connection signal="body_entered" from="Data/TransitionDown" to="Data/TransitionDown" method="_on_body_entered"]

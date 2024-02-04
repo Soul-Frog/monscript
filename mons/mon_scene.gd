@@ -13,6 +13,7 @@ const _TIME_BLOCKED_BEFORE_GIVE_UP = 0.5
 
 func _ready() -> void:
 	update_sprite()
+	Events.save_loaded.connect(update_sprite)
 	Events.update_player_sprite.connect(update_sprite)
 
 func update_sprite():

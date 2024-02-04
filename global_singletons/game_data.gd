@@ -186,6 +186,7 @@ var decompilation_progress_per_mon := {} # MonType -> int; maps MonType to unloc
 var _block_unlock_map := {} # tracks which blocks have been unlocked for use in the script editor
 var inject_points = 0
 var bug_inventory = {} # dictionary of owned bugs (BugData.Type -> int)
+var chest_to_opened = {} # dictionary of chest ids to their opened status (Chest.ID -> bool)
 var cutscenes_played = [] # array of cutscene IDs that have already been played
 var queued_battle_cutscene = Cutscene.ID.UNSET
 
@@ -236,6 +237,11 @@ func _ready():
 	for bugtype in BugData.Type.values():
 		if bugtype != BugData.Type.NONE:
 			bug_inventory[bugtype] = 0
+	
+	# populate the chest map
+	for chest_id in Chest.ID.values():
+		if chest_id != Chest.ID.NONE:
+			chest_to_opened[chest_id] = false
 	
 	# populate the block unlock map
 	for block in ScriptData.IF_BLOCK_LIST:
@@ -291,9 +297,13 @@ func save_game():
 	for mon in decompilation_progress_per_mon.keys():
 		save_dict["decompilation_progress_for_%s" % mon] = decompilation_progress_per_mon[mon]
 	
-	#save bug inventory
+	# save bug inventory
 	for bug in bug_inventory.keys():
 		save_dict["bug_inventory_for_%s" % bug] = bug_inventory[bug]
+	
+	# save chest map
+	for chest_id in chest_to_opened.keys():
+		save_dict["chest_opened_%s" % chest_id] = chest_to_opened[chest_id]
 	
 	# save which blocks have been unlocked
 	for block in _block_unlock_map:
@@ -353,6 +363,12 @@ func load_game():
 		if save_dict.has(key):
 			bug_inventory[bug] = save_dict[key]
 	
+	# read back unlocked chests
+	for chest_id in chest_to_opened:
+		var key = "chest_opened_%s" % chest_id
+		if save_dict.has(key):
+			chest_to_opened[chest_id] = save_dict[key]
+	
 	# unlock all unlocked blocks
 	for block in _block_unlock_map:
 		var key = "block_unlocked_%s" % block.name
@@ -375,6 +391,7 @@ func load_game():
 	
 	# now that we've loaded the colors, notify anything that was already loaded
 	Events.emit_signal("update_player_sprite")
+	Events.emit_signal("save_loaded")
 
 # place the player at their spawn point; 
 # for example when loading the game or
@@ -416,3 +433,12 @@ func gain_bits(bit_amount: int) -> void:
 
 func gain_bugs(bug_type: BugData.Type, bug_amount: int) -> void:
 	bug_inventory[bug_type] += bug_amount
+
+func mark_chest_opened(chest_id: Chest.ID) -> void:
+	assert(chest_id != Chest.ID.NONE)
+	assert(not chest_to_opened[chest_id])
+	chest_to_opened[chest_id] = true
+
+func is_chest_opened(chest_id: Chest.ID) -> bool:
+	assert(chest_id != Chest.ID.NONE)
+	return chest_to_opened[chest_id]

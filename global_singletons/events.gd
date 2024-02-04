@@ -15,3 +15,6 @@ signal coolant_cave_water_level_changed
 
 # called when customization is updates by clicking on customization buttons
 signal update_player_sprite
+
+# called when the save file is loaded
+signal save_loaded

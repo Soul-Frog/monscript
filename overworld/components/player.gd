@@ -32,6 +32,7 @@ func _ready():
 	assert(_BUN_SPRITE.sprite_frames.has_animation("stand"))
 	assert(_BATTLE_COLLISION)
 	update_sprite()
+	Events.save_loaded.connect(update_sprite)
 	Events.update_player_sprite.connect(update_sprite)
 
 func update_sprite():

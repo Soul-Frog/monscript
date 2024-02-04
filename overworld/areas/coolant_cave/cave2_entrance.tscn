@@ -19,7 +19,7 @@
 [ext_resource type="Script" path="res://overworld/components/overworld_mons/wanderer.gd" id="13_5rf1m"]
 [ext_resource type="PackedScene" uid="uid://dm1epg70fkia2" path="res://mons/orchin.tscn" id="15_c7tfi"]
 [ext_resource type="Texture2D" uid="uid://bb7yokb2yw0dv" path="res://assets/sprites/objects/gateway.png" id="18_b6w6p"]
-[ext_resource type="PackedScene" uid="uid://cooanm8l6tpwi" path="res://overworld/interactables/save_memstick.tscn" id="20_hok6v"]
+[ext_resource type="PackedScene" uid="uid://cty2bys7mmd6k" path="res://overworld/interactables/chest.tscn" id="18_nf2lw"]
 [ext_resource type="Script" path="res://overworld/areas/cutscene_trigger_zone.gd" id="20_nk0ya"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mkqcf"]
@@ -217,6 +217,12 @@ mon3Type = 6
 mon3Level = 4
 mon4Type = 0
 mon4Level = 0
+
+[node name="Chest" parent="Entities" instance=ExtResource("18_nf2lw")]
+position = Vector2(495, 134)
+chest_id = 200
+chest_type = 2
+bits = 10
 
 [node name="Data" type="Node2D" parent="."]
 z_index = 300
@@ -439,9 +445,6 @@ id = 2
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Data/CutsceneTriggers/IntroBattleCutscene"]
 position = Vector2(165, 385)
 polygon = PackedVector2Array(107, 95, 110, 104, 142, 104, 147, 95)
-
-[node name="SaveMemstick" parent="." instance=ExtResource("20_hok6v")]
-position = Vector2(76, 402)
 
 [connection signal="body_entered" from="Data/TransitionUp" to="Data/TransitionUp" method="_on_body_entered"]
 [connection signal="body_entered" from="Data/TransitionDown" to="Data/TransitionDown" method="_on_body_entered"]

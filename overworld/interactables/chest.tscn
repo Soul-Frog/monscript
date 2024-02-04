@@ -37,12 +37,12 @@ radius = 14.0
 
 [node name="Chest" instance=ExtResource("1_8j4l1")]
 script = ExtResource("2_anro5")
-chest_id = null
-chest_type = null
-block = null
-bits = null
-bug_type = null
-bug_number = null
+chest_id = 0
+chest_type = 0
+block = "NONE"
+bits = -1
+bug_type = 0
+bug_number = -1
 dialogue_resource = ExtResource("3_3ehoq")
 dialogue_start = "chest"
 LABEL_TEXT = "Open"

@@ -73,7 +73,6 @@ func _on_text_submitted(txt):
 	var BATTLE = main_scene.BATTLE
 	var animator = BATTLE.get_node("Mons/Animator")
 	
-	
 	assert(OVERWORLD)
 	assert(current_area)
 	assert(player)
