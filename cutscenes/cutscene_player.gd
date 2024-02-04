@@ -318,7 +318,7 @@ func _CUTSCENE_BATTLE_TUTORIAL_FIRST_BATTLE(battle: Battle) -> void:
 	await _fade_blocker_in()
 	
 	# introduction at start of battle
-	await _popup_and_wait(_TOP_POPUP, "This is your first battle, right?\n[color=%s](click to continue)[/color]" % Color.LIGHT_YELLOW.to_html())
+	await _popup_and_wait(_TOP_POPUP, "This is your first battle, right?\n[color=%s](click to continue)[/color]" % Color.GOLD.to_html())
 	await _popup_and_wait(_TOP_POPUP, "Don't worry, I can teach you the basics!")
 	_bring_to_front_z(player_mon_blocks)
 	await _popup_and_wait(_MONBLOCK_POPUP, "The green bar here is my health points, or HP for short.")
