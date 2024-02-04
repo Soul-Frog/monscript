@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bfry8d2ofnfac"]
+[gd_scene load_steps=21 format=3 uid="uid://bfry8d2ofnfac"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_kc7wb"]
 [ext_resource type="Texture2D" uid="uid://lqwkx40f2lfp" path="res://assets/maps/coolant_cave/cave9_tidalchamber/cave9.png" id="2_ufui5"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" path="res://overworld/components/overworld_mons/overworld_mon.gd" id="10_qtigf"]
 [ext_resource type="PackedScene" uid="uid://du83qsxxw4lqn" path="res://mons/chorse.tscn" id="11_q65fi"]
 [ext_resource type="Script" path="res://overworld/components/overworld_mons/wanderer.gd" id="12_745ro"]
+[ext_resource type="PackedScene" uid="uid://cty2bys7mmd6k" path="res://overworld/interactables/chest.tscn" id="15_daryx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0yocw"]
 size = Vector2(77, 16)
@@ -209,7 +210,6 @@ position = Vector2(501, 207)
 collision_layer = 34
 collision_mask = 532
 script = ExtResource("12_745ro")
-speed = 100
 min_wander_range = 10
 max_wander_range = 40
 min_time_between_movement = 2
@@ -228,7 +228,6 @@ position = Vector2(108, 380)
 collision_layer = 34
 collision_mask = 532
 script = ExtResource("12_745ro")
-speed = 100
 min_wander_range = 30
 max_wander_range = 100
 min_time_between_movement = 2
@@ -247,7 +246,6 @@ position = Vector2(234, 1061)
 collision_layer = 34
 collision_mask = 532
 script = ExtResource("12_745ro")
-speed = 100
 min_wander_range = 30
 max_wander_range = 100
 min_time_between_movement = 2
@@ -266,7 +264,6 @@ position = Vector2(157, 694)
 collision_layer = 34
 collision_mask = 532
 script = ExtResource("12_745ro")
-speed = 100
 min_wander_range = 30
 max_wander_range = 100
 min_time_between_movement = 2
@@ -279,6 +276,12 @@ mon3Type = 0
 mon3Level = 0
 mon4Type = 0
 mon4Level = 0
+
+[node name="Chest1" parent="Entities" instance=ExtResource("15_daryx")]
+position = Vector2(545, 137)
+chest_id = 900
+chest_type = 2
+bits = 10
 
 [node name="Data" type="Node2D" parent="."]
 

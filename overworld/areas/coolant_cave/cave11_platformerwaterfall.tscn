@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bimj6b5rlyog4"]
+[gd_scene load_steps=17 format=3 uid="uid://bimj6b5rlyog4"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_k8mby"]
 [ext_resource type="Texture2D" uid="uid://bsbqw2a0ycaaa" path="res://assets/maps/coolant_cave/cave11_platformerwaterfall/cave11.png" id="2_ghj08"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://b5sx3ehv6u6ks" path="res://mons/pascalican.tscn" id="9_500nt"]
 [ext_resource type="Script" path="res://overworld/components/overworld_mons/overworld_mon.gd" id="10_2dvum"]
 [ext_resource type="Script" path="res://overworld/components/overworld_mons/wanderer.gd" id="10_6drvj"]
+[ext_resource type="PackedScene" uid="uid://cty2bys7mmd6k" path="res://overworld/interactables/chest.tscn" id="14_5xpxu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tqmcg"]
 size = Vector2(14, 14)
@@ -182,12 +183,37 @@ LABEL_TEXT = "Climb"
 position = Vector2(1, 0)
 shape = SubResource("RectangleShape2D_tqmcg")
 
-[node name="Label" parent="Entities/WarpInteractable" index="3"]
+[node name="Label" parent="Entities/WarpInteractable" index="2"]
 offset_left = -59.0
 offset_top = -53.0
 offset_right = 64.0
 offset_bottom = -30.0
 text = "[center][E] Climb[/center]"
+
+[node name="ChestFloor" parent="Entities" instance=ExtResource("14_5xpxu")]
+z_index = 125
+position = Vector2(488, 975)
+chest_id = 1000
+chest_type = 2
+bits = 10
+
+[node name="ChestLeft" parent="Entities" instance=ExtResource("14_5xpxu")]
+position = Vector2(146, 243)
+chest_id = 1001
+chest_type = 2
+bits = 10
+
+[node name="ChestRight" parent="Entities" instance=ExtResource("14_5xpxu")]
+position = Vector2(1020, 406)
+chest_id = 1002
+chest_type = 2
+bits = 10
+
+[node name="ChestCave" parent="Entities" instance=ExtResource("14_5xpxu")]
+position = Vector2(84, 784)
+chest_id = 1003
+chest_type = 2
+bits = 10
 
 [node name="Data" type="Node2D" parent="."]
 

@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://dsa5kiilc237u"]
+[gd_scene load_steps=8 format=3 uid="uid://dsa5kiilc237u"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_lonuy"]
 [ext_resource type="Texture2D" uid="uid://cwoyuouehbn25" path="res://assets/maps/coolant_cave/cave12_bossroom/cave12.png" id="2_wxx4f"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/components/player_overhead.tscn" id="3_4vle2"]
 [ext_resource type="Script" path="res://overworld/components/warp.gd" id="4_wixns"]
 [ext_resource type="Script" path="res://overworld/areas/cutscene_trigger_zone.gd" id="5_7bhu3"]
+[ext_resource type="PackedScene" uid="uid://cty2bys7mmd6k" path="res://overworld/interactables/chest.tscn" id="6_itmuu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_80ub1"]
 size = Vector2(46, 5)
@@ -30,6 +31,7 @@ position = Vector2(439, 589)
 [node name="Data" type="Node2D" parent="."]
 
 [node name="Collision" type="StaticBody2D" parent="Data"]
+visible = false
 modulate = Color(0, 1, 0, 1)
 position = Vector2(0, 1)
 collision_layer = 4
@@ -72,5 +74,17 @@ id = 8
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Data/CutsceneTriggers/LeviathanIntroCutscene"]
 position = Vector2(172, 407)
 polygon = PackedVector2Array(110, 95, 110, 104, 156, 104, 156, 95)
+
+[node name="Chest2" parent="Data" instance=ExtResource("6_itmuu")]
+position = Vector2(481, 168)
+chest_id = 302
+chest_type = 2
+bits = 10
+
+[node name="Chest1" parent="Data" instance=ExtResource("6_itmuu")]
+position = Vector2(394, 168)
+chest_id = 302
+chest_type = 2
+bits = 10
 
 [connection signal="body_entered" from="Data/CutsceneTriggers/LeviathanIntroCutscene" to="Data/CutsceneTriggers/LeviathanIntroCutscene" method="_on_body_entered"]

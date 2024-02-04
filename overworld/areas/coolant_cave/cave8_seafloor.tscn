@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cxcuo37uxvkig"]
+[gd_scene load_steps=13 format=3 uid="uid://cxcuo37uxvkig"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_c21qo"]
 [ext_resource type="Texture2D" uid="uid://3nwfn8vi6s2" path="res://assets/maps/coolant_cave/cave8_seafloor/cave8.png" id="2_eo2i5"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://overworld/components/overworld_mons/wanderer.gd" id="5_pcifn"]
 [ext_resource type="PackedScene" uid="uid://b1udhcbvv01om" path="res://mons/stingarray.tscn" id="6_pq7c8"]
 [ext_resource type="Script" path="res://overworld/components/overworld_mons/overworld_mon.gd" id="7_nhyxu"]
+[ext_resource type="PackedScene" uid="uid://cty2bys7mmd6k" path="res://overworld/interactables/chest.tscn" id="9_qb7bn"]
 
 [sub_resource type="Gradient" id="Gradient_ocroy"]
 offsets = PackedFloat32Array(0, 0.6, 1)
@@ -187,6 +188,18 @@ text = "[center][E] Climb[/center]"
 
 [node name="ColPoly" parent="Entities/WarpInteractable" index="3"]
 polygon = PackedVector2Array(-11, -18, -11, -12, 3, -12, 3, -18)
+
+[node name="Chest1" parent="Entities" instance=ExtResource("9_qb7bn")]
+position = Vector2(566, 112)
+chest_id = 800
+chest_type = 2
+bits = 10
+
+[node name="Chest2" parent="Entities" instance=ExtResource("9_qb7bn")]
+position = Vector2(193, 543)
+chest_id = 801
+chest_type = 2
+bits = 10
 
 [node name="Data" type="Node2D" parent="."]
 

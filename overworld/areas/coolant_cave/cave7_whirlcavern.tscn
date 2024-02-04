@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://b7tq8iefta43j"]
+[gd_scene load_steps=19 format=3 uid="uid://b7tq8iefta43j"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_6nc0c"]
 [ext_resource type="Texture2D" uid="uid://cds4e7g3n1rdo" path="res://assets/maps/coolant_cave/cave7_whirlcavern/cave7.png" id="2_jra30"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://c2b0hj2h2p83" path="res://assets/maps/coolant_cave/cave7_whirlcavern/cave7_fg5.png" id="9_sxt7u"]
 [ext_resource type="PackedScene" uid="uid://cafxffxq81di" path="res://overworld/components/push_zone.tscn" id="12_dtqlw"]
 [ext_resource type="PackedScene" uid="uid://dyhdug5srtv2g" path="res://overworld/areas/coolant_cave/whirlpool.tscn" id="13_i1p7n"]
+[ext_resource type="PackedScene" uid="uid://cty2bys7mmd6k" path="res://overworld/interactables/chest.tscn" id="16_fo8kf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_41i08"]
 
@@ -114,6 +115,18 @@ mon3Type = 0
 mon3Level = 0
 mon4Type = 0
 mon4Level = 0
+
+[node name="Chest1" parent="Entities" instance=ExtResource("16_fo8kf")]
+position = Vector2(282, 439)
+chest_id = 700
+chest_type = 2
+bits = 10
+
+[node name="Chest2" parent="Entities" instance=ExtResource("16_fo8kf")]
+position = Vector2(545, 414)
+chest_id = 701
+chest_type = 2
+bits = 10
 
 [node name="Data" type="Node2D" parent="."]
 

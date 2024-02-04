@@ -219,6 +219,7 @@ mon4Type = 0
 mon4Level = 0
 
 [node name="Chest" parent="Entities" instance=ExtResource("18_nf2lw")]
+z_index = 125
 position = Vector2(495, 134)
 chest_id = 200
 chest_type = 2

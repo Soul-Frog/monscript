@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://wn6keuc21ls8"]
+[gd_scene load_steps=25 format=3 uid="uid://wn6keuc21ls8"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_jvkfo"]
 [ext_resource type="Texture2D" uid="uid://be4c4syodtuwg" path="res://assets/maps/coolant_cave/cave6_temple/cave6.png" id="2_v2f4j"]
@@ -18,6 +18,7 @@
 [ext_resource type="Script" path="res://overworld/components/overworld_mons/overworld_mon.gd" id="10_i4e28"]
 [ext_resource type="PackedScene" uid="uid://5vxxc0i44umo" path="res://overworld/areas/coolant_cave/water_flow.tscn" id="10_j85m8"]
 [ext_resource type="PackedScene" uid="uid://crnlyyw1er0j2" path="res://overworld/interactables/warp_interactable.tscn" id="13_612sg"]
+[ext_resource type="PackedScene" uid="uid://cty2bys7mmd6k" path="res://overworld/interactables/chest.tscn" id="16_4oqih"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gpmta"]
 size = Vector2(32, 16)
@@ -34,7 +35,7 @@ size = Vector2(79, 8)
 [sub_resource type="CircleShape2D" id="CircleShape2D_pim6k"]
 radius = 188.003
 
-[node name="Area" type="Node2D"]
+[node name="Area2" type="Node2D"]
 script = ExtResource("1_jvkfo")
 area_enum = 5
 battle_background = 2
@@ -355,6 +356,18 @@ text = "[center][E] Climb[/center]"
 
 [node name="ColPoly" parent="Entities/Ladder" index="3"]
 polygon = PackedVector2Array(-14, -3, -11, -5, -6, -5, -6, -12, 8, -12, 8, -5, 13, -5, 16, -3, 16, 3, 13, 5, -11, 5, -14, 3)
+
+[node name="Chest1" parent="Entities" instance=ExtResource("16_4oqih")]
+position = Vector2(1066, 755)
+chest_id = 302
+chest_type = 2
+bits = 10
+
+[node name="Chest2" parent="Entities" instance=ExtResource("16_4oqih")]
+position = Vector2(131, 542)
+chest_id = 600
+chest_type = 2
+bits = 10
 
 [node name="Data" type="Node2D" parent="."]
 

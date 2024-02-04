@@ -54,7 +54,7 @@ position = Vector2(32, 80)
 position = Vector2(292, 36)
 chest_id = 100
 chest_type = 2
-bits = 10
+bits = 8
 
 [node name="SaveMemstick" parent="Entities" instance=ExtResource("8_4wctm")]
 position = Vector2(-24, 55)

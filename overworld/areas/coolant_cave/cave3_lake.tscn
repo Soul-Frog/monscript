@@ -862,9 +862,16 @@ bits = 10
 position = Vector2(1363, 322)
 chest_id = 301
 chest_type = 2
+bits = 16
+
+[node name="Chest3" parent="Entities" instance=ExtResource("30_l4lun")]
+z_index = 125
+position = Vector2(1756, 129)
+chest_id = 302
+chest_type = 2
 bits = 10
 
-[node name="ChestLowesetHPFoe" parent="Entities" instance=ExtResource("30_l4lun")]
+[node name="ChestLowestHPFoe" parent="Entities" instance=ExtResource("30_l4lun")]
 z_index = 125
 position = Vector2(439, 460)
 chest_id = 300

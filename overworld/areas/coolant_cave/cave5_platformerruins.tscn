@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bocqniv5n4bn6"]
+[gd_scene load_steps=13 format=3 uid="uid://bocqniv5n4bn6"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_cah05"]
 [ext_resource type="Texture2D" uid="uid://dovicv5nojqhs" path="res://assets/maps/coolant_cave/cave5_platformerruins/cave5.png" id="2_l3y27"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cojsfqslplo7l" path="res://assets/maps/coolant_cave/cave5_platformerruins/cave5_fg.png" id="5_7sbg0"]
 [ext_resource type="PackedScene" uid="uid://dn47fjifusgh1" path="res://mons/turtminal.tscn" id="5_m7ob8"]
 [ext_resource type="Script" path="res://overworld/components/overworld_mons/overworld_mon.gd" id="6_6vtvi"]
+[ext_resource type="PackedScene" uid="uid://cty2bys7mmd6k" path="res://overworld/interactables/chest.tscn" id="9_txfy8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4wb6b"]
 size = Vector2(12, 125)
@@ -37,6 +38,7 @@ texture = ExtResource("4_g2yta")
 centered = false
 
 [node name="ForegroundElements" type="Node2D" parent="Base"]
+visible = false
 z_index = 210
 
 [node name="ForegroundElement" parent="Base/ForegroundElements" instance=ExtResource("4_rw0m6")]
@@ -105,6 +107,18 @@ mon3Type = 0
 mon3Level = 0
 mon4Type = 0
 mon4Level = 0
+
+[node name="Chest2" parent="Entities" instance=ExtResource("9_txfy8")]
+position = Vector2(638, 277)
+chest_id = 500
+chest_type = 2
+bits = 10
+
+[node name="Chest1" parent="Entities" instance=ExtResource("9_txfy8")]
+position = Vector2(1149, 101)
+chest_id = 500
+chest_type = 2
+bits = 10
 
 [node name="Data" type="Node2D" parent="."]
 
