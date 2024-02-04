@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://dsa5kiilc237u"]
+[gd_scene load_steps=7 format=3 uid="uid://dsa5kiilc237u"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_lonuy"]
 [ext_resource type="Texture2D" uid="uid://cwoyuouehbn25" path="res://assets/maps/coolant_cave/cave12_bossroom/cave12.png" id="2_wxx4f"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/components/player_overhead.tscn" id="3_4vle2"]
 [ext_resource type="Script" path="res://overworld/components/warp.gd" id="4_wixns"]
+[ext_resource type="Script" path="res://overworld/areas/cutscene_trigger_zone.gd" id="5_7bhu3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_80ub1"]
 size = Vector2(46, 5)
@@ -59,3 +60,17 @@ shape = SubResource("RectangleShape2D_80ub1")
 
 [node name="Cave12Bottom" type="Node2D" parent="Data/Points"]
 position = Vector2(439, 589)
+
+[node name="CutsceneTriggers" type="Node2D" parent="Data"]
+
+[node name="LeviathanIntroCutscene" type="Area2D" parent="Data/CutsceneTriggers"]
+position = Vector2(134, -86)
+collision_layer = 0
+script = ExtResource("5_7bhu3")
+id = 8
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Data/CutsceneTriggers/LeviathanIntroCutscene"]
+position = Vector2(172, 407)
+polygon = PackedVector2Array(110, 95, 110, 104, 156, 104, 156, 95)
+
+[connection signal="body_entered" from="Data/CutsceneTriggers/LeviathanIntroCutscene" to="Data/CutsceneTriggers/LeviathanIntroCutscene" method="_on_body_entered"]

@@ -74,7 +74,7 @@ func move_to_point(point: Vector2) -> void:
 	_time_blocked = 0.0
 
 func face_left() -> void:
-	SPRITE.flip_h = true
+	$Sprite.flip_h = true
 
 func face_right() -> void:
-	SPRITE.flip_h = false
+	$Sprite.flip_h = false

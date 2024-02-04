@@ -8,7 +8,13 @@ var _ID_TO_CUTSCENE_MAP := {
 	Cutscene.ID.CAVE2_FIRST_BATTLE : _CUTSCENE_CAVE2_FIRST_BATTLE,
 	Cutscene.ID.CAVE4_LEVIATHAN_MEETING : _CUTSCENE_CAVE4_LEVIATHAN_MEETING,
 	Cutscene.ID.BATTLE_TUTORIAL_FIRST_BATTLE : _CUTSCENE_BATTLE_TUTORIAL_FIRST_BATTLE,
-	Cutscene.ID.BATTLE_TUTORIAL_SPEED_AND_QUEUE : _CUTSCENE_BATTLE_TUTORIAL_SPEED_AND_QUEUE
+	Cutscene.ID.BATTLE_TUTORIAL_SPEED_AND_QUEUE : _CUTSCENE_BATTLE_TUTORIAL_SPEED_AND_QUEUE,
+	Cutscene.ID.BATTLE_TUTORIAL_ESCAPE : _CUTSCENE_BATTLE_TUTORIAL_ESCAPE,
+	Cutscene.ID.SCRIPT_TUTORIAL : _CUTSCENE_SCRIPT_TUTORIAL,
+	Cutscene.ID.CAVE12_LEVIATHAN_BOSS : _CUTSCENE_CAVE12_LEVIATHAN_BOSS,
+	Cutscene.ID.BATTLE_LEVIATHAN_BOSS_INJECT : _CUTSCENE_BATTLE_LEVIATHAN_BOSS_INJECT,
+	Cutscene.ID.CAVE4_POSTBOSS_DEBRIEF : _CUTSCENE_CAVE4_POSTBOSS_DEBRIEF,
+	Cutscene.ID.CAVE4_WIRE_TO_THE_CITY : _CUTSCENE_CAVE4_WIRE_TO_THE_CITY
 }
 
 const _DIALOGUE_FILE = preload("res://dialogue/cutscene.dialogue")
@@ -264,6 +270,34 @@ func _CUTSCENE_CAVE4_LEVIATHAN_MEETING(area: Area) -> void:
 	await _move_actor(bitleon, area.PLAYER.position)
 	await _delete_bitleon(bitleon)
 
+func _CUTSCENE_CAVE12_LEVIATHAN_BOSS(area: Area) -> void:
+	assert(area.area_enum == GameData.Area.COOLANT_CAVE12_BOSSROOM)
+	# todo - add leviathan to the scene
+	# todo - create a bitleon
+	# todo - move player and bitleon towards leviathan
+	await Dialogue.play(_DIALOGUE_FILE, "cave12_leviathan_pre_fight")
+	# todo - fight leviathan!
+	# todo - leviathan defeated animation
+	await Dialogue.play(_DIALOGUE_FILE, "cave12_leviathan_post_fight")
+	# todo - remove bitleon
+
+func _CUTSCENE_CAVE4_POSTBOSS_DEBRIEF(area: Area) -> void:
+	assert(area.area_enum == GameData.Area.COOLANT_CAVE4_PLAZA)
+	await Dialogue.play(_DIALOGUE_FILE, "cave4_debrief")
+
+func _CUTSCENE_CAVE4_WIRE_TO_THE_CITY(area: Area) -> void:
+	assert(area.area_enum == GameData.Area.COOLANT_CAVE4_PLAZA)
+	await Dialogue.play(_DIALOGUE_FILE, "cave4_wire_to_the_city")
+
+func _CUTSCENE_SCRIPT_TUTORIAL(script: UIScriptMenu) -> void:
+	pass
+
+func _CUTSCENE_BATTLE_TUTORIAL_ESCAPE(battle: Battle) -> void:
+	pass
+
+func _CUTSCENE_BATTLE_LEVIATHAN_BOSS_INJECT(battle: Battle) -> void:
+	pass
+
 func _CUTSCENE_BATTLE_TUTORIAL_FIRST_BATTLE(battle: Battle) -> void:
 	# disable tooltips for this battle
 	UITooltip.disable_tooltips()
@@ -383,7 +417,7 @@ func _CUTSCENE_BATTLE_TUTORIAL_FIRST_BATTLE(battle: Battle) -> void:
 	
 	UITooltip.enable_tooltips()
 
-func _CUTSCENE_BATTLE_TUTORIAL_SPEED_AND_QUEUE(battle: Battle):
+func _CUTSCENE_BATTLE_TUTORIAL_SPEED_AND_QUEUE(battle: Battle) -> void:
 	var speed_controls = battle._speed_controls
 	var queue = battle._mon_action_queue
 

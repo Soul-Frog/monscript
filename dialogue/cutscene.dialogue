@@ -2,6 +2,7 @@
 do Dialogue.ERROR("No corresponding tilde in dialogue file!")
 => END
 
+# TODO
 ~ cave4_bitleon_sees_corruption
 Bitleon: Huh!? The way to the wire is competely blocked!
 {{GameData.get_var(GameData.PLAYER_NAME)}}: Woah. This spot looks... completely messed up.
@@ -53,6 +54,23 @@ Red Hat: Go ahead and open your COMP by pressing Q.
 => END
 
 
+~ cave12_leviathan_pre_fight
+Nobody: cave12_leviathan_pre_fight
+=> END
+
+~ cave12_leviathan_post_fight
+Nobody: cave12_leviathan_pre_fight
+=> END
+
+~ cave4_debrief
+Nobody: cave4_debrief
+=> END
+
+~ cave4_wire_to_the_city
+Nobody: cave4_wire_to_the_city
+=> END
+
+# DONE
 ~ cave1_intro_start
 ???: Hey, are you there?
 ???: Can you hear me?
@@ -82,9 +100,7 @@ Bitleon: Yeah, a defragger. You have memory problems, right?
 Bitleon: Some of the mons nearby have been acting weird. We should get out of here!
 Bitleon: Let's head back to Core City!
 Bitleon: Sound good?
-=> branch
-
-~ branch
+~ cave1_intro_branch
 Bitleon: Let's get going!
 - What are you?
 	Bitleon: I'm Bitleon!
@@ -93,16 +109,16 @@ Bitleon: Let's get going!
 	{{GameData.get_var(GameData.PLAYER_NAME)}}: No, I mean... like... WHAT is a Bitleon?
 	Bitleon: Weird question, but ok. I'm a mon! My home is Core City, but I like exploring more!
 	Bitleon: That's what I was doing when I found you here! It's a major discovery!
-	=> branch
+	=> cave1_intro_branch
 - Core City?
 	Bitleon: Yeah! It's where all the cool mons live, like me! Everything else is connected to it.
 	Bitleon: There's loads of fun things to do there. It's an awesome place!
 	Bitleon: So why are we still standing here? 
-	=> branch
+	=> cave1_intro_branch
 - Defragger?
 	Bitleon: Yeah, a defragger! We talked about this already.
 	Bitleon: Your head must really hurt...
-	=> branch
+	=> cave1_intro_branch
 - Yeah... yeah, sure. I'll come with you.
 	Bitleon: Great! The way to the wire is just through that cave. I'll be right behind you!
 => END

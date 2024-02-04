@@ -4,21 +4,31 @@ do Dialogue.ERROR("No corresponding tilde in dialogue file!")
 
 ~ cave4_red_hat
 Red Hat: What is it? You still need more help, kiddo?
-~ cave4_red_hat_branch
 - Where do I go?
 	Red Hat: Well, it looked like L3V14TH4N was heading down into the depths of Coolant Cave.
 	Red Hat: I'd say you should try heading down and to the left. 
 	Red Hat: If you just keep heading that way, you're bound to reach the end eventually, right?
-	=> cave4_red_hat_branch
+	=> cave4_red_hat
 - This is really hard...
 	Red Hat: Hmm, I'd say to try rethinking your script if you're having a tough time. 
 	Red Hat: You could also try gaining more levels by fighting mons you can handle.
 	Red Hat: Lastly, if you just run from every battle, you'll never grow.
 	Red Hat: So be tough and don't shy away from a fight!
-	=> cave4_red_hat_branch
+	=> cave4_red_hat
 - Nope, I can handle this.
 	Red Hat: Then what are you waiting for? Go take care of L3V14TH4N so we can get back to the city. We don't have all night, you know.
 => END
+
+
+
+
+
+
+
+
+
+
+
 
 
 
