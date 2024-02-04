@@ -251,10 +251,8 @@ func _ready():
 	for block in ScriptData.TO_BLOCK_LIST:
 		_block_unlock_map[block] = false
 	# mark the initial blocks as unlocked
-	assert(ScriptData.get_block_by_name("Always"))
 	assert(ScriptData.get_block_by_name("Attack"))
 	assert(ScriptData.get_block_by_name("RandomFoe"))
-	_block_unlock_map[ScriptData.get_block_by_name("Always")] = true
 	_block_unlock_map[ScriptData.get_block_by_name("Attack")] = true
 	_block_unlock_map[ScriptData.get_block_by_name("RandomFoe")] = true
 	

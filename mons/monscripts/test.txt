@@ -1,5 +1,0 @@
-START
-Always Shellbash RandomFoe
-Always Attack RandomFoe
-Always Defend
-END

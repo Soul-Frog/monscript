@@ -352,17 +352,12 @@ func _move_scroll_to_bottom() -> void:
 	_max_scroll = SCRIPT_SCROLL.get_v_scroll_bar().max_value
 
 func _adjust_scroll_after_line_pickup(deleted_position: int) -> void:
-	print(SCRIPT_LINES.get_child(deleted_position * 2 - 1))
-	
 	# wait a frame, then move the scroll so that the line directly above selected line is at top
 	await get_tree().process_frame
 	if deleted_position == 0: #special case
 		SCRIPT_SCROLL.scroll_vertical = 0
 	else:
 		SCRIPT_SCROLL.ensure_control_visible(SCRIPT_LINES.get_child(deleted_position * 2 - 1))
-	
-	print(get_global_mouse_position())
-	print(SCRIPT_SCROLL.position)
 
 func _on_line_deleted(deleted_line: UIScriptLine) -> void:
 	deleted_line.get_parent().remove_child(deleted_line)

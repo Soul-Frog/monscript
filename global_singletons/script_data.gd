@@ -187,11 +187,6 @@ func get_block_by_name(block_name: String) -> Block:
 #      self       friends      foes            whether to execute line or not
 # func(BattleMon, [BattleMon], [BattleMon]) -> bool
 var IF_BLOCK_LIST := [
-	Block.new(Block.Type.IF, "Always", Block.Type.DO, "This condition always triggers.",
-	func(mon: BattleMon, friends: Array, foes: Array) -> bool: 
-		return true
-		),
-	
 	Block.new(Block.Type.IF, "SelfDamaged", Block.Type.DO, "Triggers if this mon is damaged.",
 	func(mon: BattleMon, friends: Array, foes: Array) -> bool: 
 		if mon.current_health != mon.max_health:
@@ -207,7 +202,7 @@ var IF_BLOCK_LIST := [
 		return false
 		),
 	
-	Block.new(Block.Type.IF, "PalLowHP", Block.Type.DO, "Triggers if a pal (not including this mon) has <30% health remaining.",
+	Block.new(Block.Type.IF, "PalLowHP", Block.Type.DO, "Triggers if any pal (not including this mon) has <30% health remaining.",
 	func(mon, friends, foes): 
 		for friend in friends:
 			if friend == mon:
@@ -224,7 +219,7 @@ var IF_BLOCK_LIST := [
 		return false
 		),
 	
-	Block.new(Block.Type.IF, "FoeLowHP", Block.Type.DO,  "Triggers if a foe has <30% health remaining.",
+	Block.new(Block.Type.IF, "FoeLowHP", Block.Type.DO,  "Triggers if any foe has <30% health remaining.",
 	func(mon: BattleMon, friends: Array, foes: Array) -> bool: 
 		for foe in foes:
 			if float(foe.current_health)/float(foe.max_health) <= 0.25:
