@@ -6,9 +6,9 @@ uniform vec4 flash_color : source_color = vec4(1.0);
 uniform float flash_modifier : hint_range(0.0, 1.0);
 
 uniform bool apply_recolor = false;
-const vec3 BITLEON_COLOR1 = vec3(0.96, 0.60, 0.53);
+const vec3 BITLEON_COLOR1 = vec3(0.91, 0.30, 0.25);
 const vec3 BITLEON_COLOR2 = vec3(0.95, 0.42, 0.38);
-const vec3 BITLEON_COLOR3 = vec3(0.91, 0.30, 0.25);
+const vec3 BITLEON_COLOR3 = vec3(0.96, 0.60, 0.53);
 const vec3 BITLEON_COLOR4 = vec3(0.89, 0.11, 0.14);
 const vec3 BITLEON_COLOR5 = vec3(0.69, 0.07, 0.04);
 uniform vec3 BITLEON_RECOLOR1 = vec3(1.0, 0.0, 0.0);

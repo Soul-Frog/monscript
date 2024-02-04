@@ -55,6 +55,22 @@ enum CustomizationColor {
 	SKINSEVEN
 }
 
+## Bitleon Customization Colors ##
+enum BitleonCustomizationColor {
+	BLUE,
+	BROWN,
+	DARK,
+	ORANGE,
+	BLONDE,
+	LIGHTGREEN,
+	GREEN,
+	TEAL,
+	LIGHTBLUE,
+	PURPLE,
+	PINK,
+	RED
+}
+
 var customization_colors = {
 	CustomizationColor.BROWN : [Color("#5d4037"), Color("#3e2723")],
 	CustomizationColor.DARK : [Color("#424242"), Color("#212121")],
@@ -75,6 +91,21 @@ var customization_colors = {
 	CustomizationColor.SKINFIVE : [Color("#ae6b3f"), Color("#7f4c31")],
 	CustomizationColor.SKINSIX : [Color("#7f4c31"), Color("#603429")],
 	CustomizationColor.SKINSEVEN : [Color("#603429"), Color("#442725")]
+}
+
+var bitleon_colors = {
+	BitleonCustomizationColor.BROWN : [Color("#6d4c41"), Color("#795548"), Color("#8d6e63"), Color("#4e342e"), Color("#3e2723")],
+	BitleonCustomizationColor.DARK : [Color("#424242"), Color("#616161"), Color("#757575"), Color("#212121"), Color("#151515")],
+	BitleonCustomizationColor.ORANGE : [Color("#ff5722"), Color("#ff7043"), Color("#ff8a65"), Color("#d84315"), Color("#bf360c")],
+	BitleonCustomizationColor.BLONDE : [Color("#ffb74d"), Color("#ffcc80"), Color("#ffdeac"), Color("#ffa726"), Color("#f57c00")],
+	BitleonCustomizationColor.LIGHTGREEN : [Color("#9ccc65"), Color("#aed581"), Color("#c5e1a5"), Color("#7cb342"), Color("#558b2f")],
+	BitleonCustomizationColor.GREEN : [Color("#0a8f08"), Color("#2baf2b"), Color("#42bd41"), Color("#056f00"), Color("#0d5302")],
+	BitleonCustomizationColor.TEAL : [Color("#00897b"), Color("#26a69a"), Color("#4db6ac"), Color("#00695c"), Color("#004d40")],
+	BitleonCustomizationColor.LIGHTBLUE : [Color("#03a9f4"), Color("#4fc3f7"), Color("#81d4fa"), Color("#0288d1"), Color("#01579b")],
+	BitleonCustomizationColor.BLUE : [Color("#4e6cef"), Color("#4e6cef"), Color("#738ffe"), Color("#3b50ce"), Color("#2a36b1")],
+	BitleonCustomizationColor.PURPLE : [Color("#7e57c2"), Color("#9575cd"), Color("#b39ddb"), Color("#673ab7"), Color("#512da8")],
+	BitleonCustomizationColor.PINK : [Color("#f06292"), Color("#f48fb1"), Color("#f4a4bf"), Color("#ec407a"), Color("#d81b60")],
+	BitleonCustomizationColor.RED : [Color("#e84e40"), Color("#f36c60"), Color("#f69988"), Color("#e51c23"), Color("#b0120a")]
 }
 
 func path_for_area(area_enum: GameData.Area) -> String: # function to get script for enum

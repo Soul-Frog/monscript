@@ -1,0 +1,694 @@
+[gd_scene load_steps=29 format=3 uid="uid://ye7f58p8i3ms"]
+
+[ext_resource type="Script" path="res://ui/customization/customization.gd" id="1_bxejm"]
+[ext_resource type="Texture2D" uid="uid://bi64m2n3yi6c1" path="res://assets/ui/customization/character_customization_screen.png" id="1_nihu6"]
+[ext_resource type="Texture2D" uid="uid://daaxm1anlxq6g" path="res://assets/ui/customization/submit.png" id="2_73ks0"]
+[ext_resource type="Texture2D" uid="uid://bbae43kbsytgh" path="res://assets/ui/customization/submit_pressed.png" id="3_xfta2"]
+[ext_resource type="Texture2D" uid="uid://ct6f3nt7sjihp" path="res://assets/ui/customization/submit_hover.png" id="4_upgeb"]
+[ext_resource type="Script" path="res://battle/selectable_button.gd" id="5_f4qv6"]
+[ext_resource type="Texture2D" uid="uid://bysjh7p06hw55" path="res://assets/ui/customization/bunton_on.png" id="6_2p6qh"]
+[ext_resource type="Texture2D" uid="uid://dnpiskwlenx5l" path="res://assets/ui/customization/submit_disabled.png" id="6_vxlxp"]
+[ext_resource type="Texture2D" uid="uid://dbxufnp5jekvk" path="res://assets/ui/customization/bunton_on_hover.png" id="7_eunp2"]
+[ext_resource type="Texture2D" uid="uid://b6h1h8sl8sqvx" path="res://assets/ui/customization/bunton_on_pressed.png" id="8_exlj5"]
+[ext_resource type="Texture2D" uid="uid://can2jtnrmnkd1" path="res://assets/ui/customization/bunton_off.png" id="9_pvpht"]
+[ext_resource type="Texture2D" uid="uid://db3yjwsv5slc3" path="res://assets/ui/customization/bunton_off_hover.png" id="10_yiuaq"]
+[ext_resource type="Texture2D" uid="uid://dt6itifc0j7hu" path="res://assets/ui/customization/bunton_off_pressed.png" id="11_5q1lc"]
+[ext_resource type="Texture2D" uid="uid://cca225vy1lf5v" path="res://assets/ui/customization/eyes-hair-shirt_button.png" id="12_mdrkh"]
+[ext_resource type="Script" path="res://ui/customization/customization_selector.gd" id="12_uoboa"]
+[ext_resource type="Texture2D" uid="uid://bj4mjqnmn77kj" path="res://assets/ui/customization/eyes-hair-shirt_pressed.png" id="13_bab10"]
+[ext_resource type="Texture2D" uid="uid://closcfm6rlkdy" path="res://assets/ui/customization/eyes-hair-shirt_hover.png" id="14_7tyrj"]
+[ext_resource type="Texture2D" uid="uid://bcxxxjkria6yj" path="res://assets/ui/customization/skin_button.png" id="15_nq6m6"]
+[ext_resource type="Texture2D" uid="uid://bdlslns74fwwv" path="res://assets/ui/customization/skin_pressed.png" id="16_0ebvu"]
+[ext_resource type="Texture2D" uid="uid://8l07qnrdi5ur" path="res://assets/ui/customization/eyes-hair-shirt_indicator.png" id="16_i7jon"]
+[ext_resource type="Texture2D" uid="uid://djtc2xormky3u" path="res://assets/ui/customization/skin_hover.png" id="17_3mutg"]
+[ext_resource type="Script" path="res://ui/customization/customization_color_button.gd" id="17_gvy2w"]
+[ext_resource type="Texture2D" uid="uid://bikml4kkq2urs" path="res://assets/ui/customization/skin_indicator.png" id="20_8sskv"]
+[ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/components/player_overhead.tscn" id="21_okk3y"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wvu8m"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3i64s"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w5734"]
+
+[sub_resource type="Theme" id="Theme_fyiln"]
+LineEdit/colors/caret_color = Color(0.94902, 0.94902, 0.94902, 0)
+LineEdit/styles/focus = SubResource("StyleBoxEmpty_wvu8m")
+LineEdit/styles/normal = SubResource("StyleBoxEmpty_3i64s")
+LineEdit/styles/read_only = SubResource("StyleBoxEmpty_w5734")
+
+[node name="Customization" type="CanvasLayer"]
+layer = 3
+script = ExtResource("1_bxejm")
+
+[node name="CharacterCustomizationPanel" type="Sprite2D" parent="."]
+position = Vector2(64, 34)
+texture = ExtResource("1_nihu6")
+centered = false
+
+[node name="NameInput" type="LineEdit" parent="CharacterCustomizationPanel"]
+offset_left = 35.0
+offset_top = 80.0
+offset_right = 101.0
+offset_bottom = 93.0
+theme = SubResource("Theme_fyiln")
+placeholder_text = "Enter Name"
+alignment = 1
+max_length = 8
+
+[node name="SubmitButton" type="TextureButton" parent="CharacterCustomizationPanel"]
+offset_left = 143.0
+offset_top = 81.0
+offset_right = 176.0
+offset_bottom = 96.0
+disabled = true
+texture_normal = ExtResource("2_73ks0")
+texture_pressed = ExtResource("3_xfta2")
+texture_hover = ExtResource("4_upgeb")
+texture_disabled = ExtResource("6_vxlxp")
+
+[node name="Bunton" type="TextureButton" parent="CharacterCustomizationPanel"]
+offset_left = 121.0
+offset_top = 76.0
+offset_right = 142.0
+offset_bottom = 103.0
+texture_normal = ExtResource("6_2p6qh")
+script = ExtResource("5_f4qv6")
+texture_selected = ExtResource("6_2p6qh")
+texture_selected_hover = ExtResource("7_eunp2")
+texture_selected_pressed = ExtResource("8_exlj5")
+texture_unselected = ExtResource("9_pvpht")
+texture_unselected_hover = ExtResource("10_yiuaq")
+texture_unselected_pressed = ExtResource("11_5q1lc")
+toggleable = true
+
+[node name="Eyes" type="Node2D" parent="CharacterCustomizationPanel"]
+position = Vector2(-64, -34)
+script = ExtResource("12_uoboa")
+customization_part = 1
+
+[node name="Colors" type="Node2D" parent="CharacterCustomizationPanel/Eyes"]
+
+[node name="Blue" type="TextureButton" parent="CharacterCustomizationPanel/Eyes/Colors"]
+modulate = Color(0.337255, 0.466667, 0.988235, 1)
+offset_left = 180.0
+offset_top = 48.0
+offset_right = 186.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+metadata/_edit_use_anchors_ = true
+
+[node name="Brown" type="TextureButton" parent="CharacterCustomizationPanel/Eyes/Colors"]
+modulate = Color(0.364706, 0.25098, 0.215686, 1)
+offset_left = 140.0
+offset_top = 48.0
+offset_right = 146.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Dark" type="TextureButton" parent="CharacterCustomizationPanel/Eyes/Colors"]
+modulate = Color(0.258824, 0.258824, 0.258824, 1)
+offset_left = 145.0
+offset_top = 48.0
+offset_right = 151.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Orange" type="TextureButton" parent="CharacterCustomizationPanel/Eyes/Colors"]
+modulate = Color(1, 0.341176, 0.133333, 1)
+offset_left = 150.0
+offset_top = 48.0
+offset_right = 156.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="Blonde" type="TextureButton" parent="CharacterCustomizationPanel/Eyes/Colors"]
+modulate = Color(1, 0.717647, 0.301961, 1)
+offset_left = 155.0
+offset_top = 48.0
+offset_right = 161.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 4
+metadata/_edit_use_anchors_ = true
+
+[node name="LightGreen" type="TextureButton" parent="CharacterCustomizationPanel/Eyes/Colors"]
+modulate = Color(0.611765, 0.8, 0.396078, 1)
+offset_left = 160.0
+offset_top = 48.0
+offset_right = 166.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="Green" type="TextureButton" parent="CharacterCustomizationPanel/Eyes/Colors"]
+modulate = Color(0.0196078, 0.435294, 0, 1)
+offset_left = 165.0
+offset_top = 48.0
+offset_right = 171.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 6
+metadata/_edit_use_anchors_ = true
+
+[node name="Teal" type="TextureButton" parent="CharacterCustomizationPanel/Eyes/Colors"]
+modulate = Color(0, 0.537255, 0.482353, 1)
+offset_left = 170.0
+offset_top = 48.0
+offset_right = 176.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 7
+metadata/_edit_use_anchors_ = true
+
+[node name="LightBlue" type="TextureButton" parent="CharacterCustomizationPanel/Eyes/Colors"]
+modulate = Color(0.0117647, 0.662745, 0.956863, 1)
+offset_left = 175.0
+offset_top = 48.0
+offset_right = 181.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 8
+metadata/_edit_use_anchors_ = true
+
+[node name="Purple" type="TextureButton" parent="CharacterCustomizationPanel/Eyes/Colors"]
+modulate = Color(0.494118, 0.341176, 0.760784, 1)
+offset_left = 185.0
+offset_top = 48.0
+offset_right = 191.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 9
+metadata/_edit_use_anchors_ = true
+
+[node name="Pink" type="TextureButton" parent="CharacterCustomizationPanel/Eyes/Colors"]
+modulate = Color(0.956863, 0.560784, 0.694118, 1)
+offset_left = 190.0
+offset_top = 48.0
+offset_right = 196.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 10
+metadata/_edit_use_anchors_ = true
+
+[node name="Red" type="TextureButton" parent="CharacterCustomizationPanel/Eyes/Colors"]
+modulate = Color(0.909804, 0.305882, 0.25098, 1)
+offset_left = 195.0
+offset_top = 48.0
+offset_right = 201.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 11
+metadata/_edit_use_anchors_ = true
+
+[node name="Indicator" type="Sprite2D" parent="CharacterCustomizationPanel/Eyes"]
+visible = false
+position = Vector2(143, 52)
+texture = ExtResource("16_i7jon")
+centered = false
+
+[node name="Hair" type="Node2D" parent="CharacterCustomizationPanel"]
+position = Vector2(-64, -17)
+script = ExtResource("12_uoboa")
+
+[node name="Colors" type="Node2D" parent="CharacterCustomizationPanel/Hair"]
+
+[node name="Brown" type="TextureButton" parent="CharacterCustomizationPanel/Hair/Colors"]
+modulate = Color(0.364706, 0.25098, 0.215686, 1)
+offset_left = 140.0
+offset_top = 48.0
+offset_right = 146.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Dark" type="TextureButton" parent="CharacterCustomizationPanel/Hair/Colors"]
+modulate = Color(0.258824, 0.258824, 0.258824, 1)
+offset_left = 145.0
+offset_top = 48.0
+offset_right = 151.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Orange" type="TextureButton" parent="CharacterCustomizationPanel/Hair/Colors"]
+modulate = Color(1, 0.341176, 0.133333, 1)
+offset_left = 150.0
+offset_top = 48.0
+offset_right = 156.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="Blonde" type="TextureButton" parent="CharacterCustomizationPanel/Hair/Colors"]
+modulate = Color(1, 0.717647, 0.301961, 1)
+offset_left = 155.0
+offset_top = 48.0
+offset_right = 161.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 4
+metadata/_edit_use_anchors_ = true
+
+[node name="LightGreen" type="TextureButton" parent="CharacterCustomizationPanel/Hair/Colors"]
+modulate = Color(0.611765, 0.8, 0.396078, 1)
+offset_left = 160.0
+offset_top = 48.0
+offset_right = 166.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="Green" type="TextureButton" parent="CharacterCustomizationPanel/Hair/Colors"]
+modulate = Color(0.0196078, 0.435294, 0, 1)
+offset_left = 165.0
+offset_top = 48.0
+offset_right = 171.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 6
+metadata/_edit_use_anchors_ = true
+
+[node name="Teal" type="TextureButton" parent="CharacterCustomizationPanel/Hair/Colors"]
+modulate = Color(0, 0.537255, 0.482353, 1)
+offset_left = 170.0
+offset_top = 48.0
+offset_right = 176.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 7
+metadata/_edit_use_anchors_ = true
+
+[node name="LightBlue" type="TextureButton" parent="CharacterCustomizationPanel/Hair/Colors"]
+modulate = Color(0.0117647, 0.662745, 0.956863, 1)
+offset_left = 175.0
+offset_top = 48.0
+offset_right = 181.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 8
+metadata/_edit_use_anchors_ = true
+
+[node name="Blue" type="TextureButton" parent="CharacterCustomizationPanel/Hair/Colors"]
+modulate = Color(0.337255, 0.466667, 0.988235, 1)
+offset_left = 180.0
+offset_top = 48.0
+offset_right = 186.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+metadata/_edit_use_anchors_ = true
+
+[node name="Purple" type="TextureButton" parent="CharacterCustomizationPanel/Hair/Colors"]
+modulate = Color(0.494118, 0.341176, 0.760784, 1)
+offset_left = 185.0
+offset_top = 48.0
+offset_right = 191.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 9
+metadata/_edit_use_anchors_ = true
+
+[node name="Pink" type="TextureButton" parent="CharacterCustomizationPanel/Hair/Colors"]
+modulate = Color(0.956863, 0.560784, 0.694118, 1)
+offset_left = 190.0
+offset_top = 48.0
+offset_right = 196.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 10
+metadata/_edit_use_anchors_ = true
+
+[node name="Red" type="TextureButton" parent="CharacterCustomizationPanel/Hair/Colors"]
+modulate = Color(0.909804, 0.305882, 0.25098, 1)
+offset_left = 195.0
+offset_top = 48.0
+offset_right = 201.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 11
+metadata/_edit_use_anchors_ = true
+
+[node name="Indicator" type="Sprite2D" parent="CharacterCustomizationPanel/Hair"]
+visible = false
+position = Vector2(143, 52)
+texture = ExtResource("16_i7jon")
+centered = false
+
+[node name="Shirt" type="Node2D" parent="CharacterCustomizationPanel"]
+position = Vector2(-64, 0)
+script = ExtResource("12_uoboa")
+customization_part = 2
+
+[node name="Colors" type="Node2D" parent="CharacterCustomizationPanel/Shirt"]
+
+[node name="Red" type="TextureButton" parent="CharacterCustomizationPanel/Shirt/Colors"]
+modulate = Color(0.909804, 0.305882, 0.25098, 1)
+offset_left = 195.0
+offset_top = 48.0
+offset_right = 201.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 11
+metadata/_edit_use_anchors_ = true
+
+[node name="Brown" type="TextureButton" parent="CharacterCustomizationPanel/Shirt/Colors"]
+modulate = Color(0.364706, 0.25098, 0.215686, 1)
+offset_left = 140.0
+offset_top = 48.0
+offset_right = 146.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Dark" type="TextureButton" parent="CharacterCustomizationPanel/Shirt/Colors"]
+modulate = Color(0.258824, 0.258824, 0.258824, 1)
+offset_left = 145.0
+offset_top = 48.0
+offset_right = 151.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Orange" type="TextureButton" parent="CharacterCustomizationPanel/Shirt/Colors"]
+modulate = Color(1, 0.341176, 0.133333, 1)
+offset_left = 150.0
+offset_top = 48.0
+offset_right = 156.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="Blonde" type="TextureButton" parent="CharacterCustomizationPanel/Shirt/Colors"]
+modulate = Color(1, 0.717647, 0.301961, 1)
+offset_left = 155.0
+offset_top = 48.0
+offset_right = 161.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 4
+metadata/_edit_use_anchors_ = true
+
+[node name="LightGreen" type="TextureButton" parent="CharacterCustomizationPanel/Shirt/Colors"]
+modulate = Color(0.611765, 0.8, 0.396078, 1)
+offset_left = 160.0
+offset_top = 48.0
+offset_right = 166.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="Green" type="TextureButton" parent="CharacterCustomizationPanel/Shirt/Colors"]
+modulate = Color(0.0196078, 0.435294, 0, 1)
+offset_left = 165.0
+offset_top = 48.0
+offset_right = 171.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 6
+metadata/_edit_use_anchors_ = true
+
+[node name="Teal" type="TextureButton" parent="CharacterCustomizationPanel/Shirt/Colors"]
+modulate = Color(0, 0.537255, 0.482353, 1)
+offset_left = 170.0
+offset_top = 48.0
+offset_right = 176.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 7
+metadata/_edit_use_anchors_ = true
+
+[node name="LightBlue" type="TextureButton" parent="CharacterCustomizationPanel/Shirt/Colors"]
+modulate = Color(0.0117647, 0.662745, 0.956863, 1)
+offset_left = 175.0
+offset_top = 48.0
+offset_right = 181.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 8
+metadata/_edit_use_anchors_ = true
+
+[node name="Blue" type="TextureButton" parent="CharacterCustomizationPanel/Shirt/Colors"]
+modulate = Color(0.337255, 0.466667, 0.988235, 1)
+offset_left = 180.0
+offset_top = 48.0
+offset_right = 186.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+metadata/_edit_use_anchors_ = true
+
+[node name="Purple" type="TextureButton" parent="CharacterCustomizationPanel/Shirt/Colors"]
+modulate = Color(0.494118, 0.341176, 0.760784, 1)
+offset_left = 185.0
+offset_top = 48.0
+offset_right = 191.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 9
+metadata/_edit_use_anchors_ = true
+
+[node name="Pink" type="TextureButton" parent="CharacterCustomizationPanel/Shirt/Colors"]
+modulate = Color(0.956863, 0.560784, 0.694118, 1)
+offset_left = 190.0
+offset_top = 48.0
+offset_right = 196.0
+offset_bottom = 56.0
+texture_normal = ExtResource("12_mdrkh")
+texture_pressed = ExtResource("13_bab10")
+texture_hover = ExtResource("14_7tyrj")
+script = ExtResource("17_gvy2w")
+customization_color = 10
+metadata/_edit_use_anchors_ = true
+
+[node name="Indicator" type="Sprite2D" parent="CharacterCustomizationPanel/Shirt"]
+visible = false
+position = Vector2(143, 52)
+texture = ExtResource("16_i7jon")
+centered = false
+
+[node name="Skin" type="Node2D" parent="CharacterCustomizationPanel"]
+position = Vector2(-64, -34)
+script = ExtResource("12_uoboa")
+customization_part = 3
+
+[node name="Colors" type="Node2D" parent="CharacterCustomizationPanel/Skin"]
+
+[node name="One" type="TextureButton" parent="CharacterCustomizationPanel/Skin/Colors"]
+modulate = Color(1, 0.670588, 0.568627, 1)
+offset_left = 140.0
+offset_top = 99.0
+offset_right = 149.0
+offset_bottom = 107.0
+texture_normal = ExtResource("15_nq6m6")
+texture_pressed = ExtResource("16_0ebvu")
+texture_hover = ExtResource("17_3mutg")
+script = ExtResource("17_gvy2w")
+customization_color = 12
+
+[node name="Two" type="TextureButton" parent="CharacterCustomizationPanel/Skin/Colors"]
+modulate = Color(0.976471, 0.835294, 0.729412, 1)
+offset_left = 148.0
+offset_top = 99.0
+offset_right = 157.0
+offset_bottom = 107.0
+texture_normal = ExtResource("15_nq6m6")
+texture_pressed = ExtResource("16_0ebvu")
+texture_hover = ExtResource("17_3mutg")
+script = ExtResource("17_gvy2w")
+customization_color = 13
+
+[node name="Three" type="TextureButton" parent="CharacterCustomizationPanel/Skin/Colors"]
+modulate = Color(0.894118, 0.643137, 0.486275, 1)
+offset_left = 156.0
+offset_top = 99.0
+offset_right = 165.0
+offset_bottom = 107.0
+texture_normal = ExtResource("15_nq6m6")
+texture_pressed = ExtResource("16_0ebvu")
+texture_hover = ExtResource("17_3mutg")
+script = ExtResource("17_gvy2w")
+customization_color = 14
+
+[node name="Four" type="TextureButton" parent="CharacterCustomizationPanel/Skin/Colors"]
+modulate = Color(0.827451, 0.545098, 0.34902, 1)
+offset_left = 164.0
+offset_top = 99.0
+offset_right = 173.0
+offset_bottom = 107.0
+texture_normal = ExtResource("15_nq6m6")
+texture_pressed = ExtResource("16_0ebvu")
+texture_hover = ExtResource("17_3mutg")
+script = ExtResource("17_gvy2w")
+customization_color = 15
+
+[node name="Five" type="TextureButton" parent="CharacterCustomizationPanel/Skin/Colors"]
+modulate = Color(0.682353, 0.419608, 0.247059, 1)
+offset_left = 172.0
+offset_top = 99.0
+offset_right = 181.0
+offset_bottom = 107.0
+texture_normal = ExtResource("15_nq6m6")
+texture_pressed = ExtResource("16_0ebvu")
+texture_hover = ExtResource("17_3mutg")
+script = ExtResource("17_gvy2w")
+customization_color = 16
+
+[node name="Six" type="TextureButton" parent="CharacterCustomizationPanel/Skin/Colors"]
+modulate = Color(0.498039, 0.298039, 0.192157, 1)
+offset_left = 180.0
+offset_top = 99.0
+offset_right = 189.0
+offset_bottom = 107.0
+texture_normal = ExtResource("15_nq6m6")
+texture_pressed = ExtResource("16_0ebvu")
+texture_hover = ExtResource("17_3mutg")
+script = ExtResource("17_gvy2w")
+customization_color = 17
+
+[node name="Seven" type="TextureButton" parent="CharacterCustomizationPanel/Skin/Colors"]
+modulate = Color(0.376471, 0.203922, 0.160784, 1)
+offset_left = 188.0
+offset_top = 99.0
+offset_right = 197.0
+offset_bottom = 107.0
+texture_normal = ExtResource("15_nq6m6")
+texture_pressed = ExtResource("16_0ebvu")
+texture_hover = ExtResource("17_3mutg")
+script = ExtResource("17_gvy2w")
+customization_color = 18
+
+[node name="Indicator" type="Sprite2D" parent="CharacterCustomizationPanel/Skin"]
+visible = false
+position = Vector2(143, 52)
+texture = ExtResource("20_8sskv")
+centered = false
+
+[node name="PlayerOverhead" parent="CharacterCustomizationPanel" instance=ExtResource("21_okk3y")]
+position = Vector2(45, 37)
+
+[node name="Camera2D" parent="CharacterCustomizationPanel/PlayerOverhead" index="0"]
+enabled = false
+
+[connection signal="pressed" from="CharacterCustomizationPanel/SubmitButton" to="." method="_on_submit_button_pressed"]
+[connection signal="state_changed" from="CharacterCustomizationPanel/Bunton" to="." method="_on_bunton_state_changed"]
+
+[editable path="CharacterCustomizationPanel/PlayerOverhead"]

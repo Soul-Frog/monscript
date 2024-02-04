@@ -14,11 +14,11 @@ func _ready() -> void:
 	Events.update_player_sprite.connect(update_sprite)
 
 func update_sprite():
-	SPRITE.material.set_shader_parameter("BITLEON_RECOLOR1", GameData.customization_colors[int(GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR))][0])
-	SPRITE.material.set_shader_parameter("BITLEON_RECOLOR2", GameData.customization_colors[int(GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR))][0])
-	SPRITE.material.set_shader_parameter("BITLEON_RECOLOR3", GameData.customization_colors[int(GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR))][0])
-	SPRITE.material.set_shader_parameter("BITLEON_RECOLOR4", GameData.customization_colors[int(GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR))][1])
-	SPRITE.material.set_shader_parameter("BITLEON_RECOLOR5", GameData.customization_colors[int(GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR))][1])
+	SPRITE.material.set_shader_parameter("BITLEON_RECOLOR1", GameData.bitleon_colors[int(GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR))][0])
+	SPRITE.material.set_shader_parameter("BITLEON_RECOLOR2", GameData.bitleon_colors[int(GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR))][1])
+	SPRITE.material.set_shader_parameter("BITLEON_RECOLOR3", GameData.bitleon_colors[int(GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR))][2])
+	SPRITE.material.set_shader_parameter("BITLEON_RECOLOR4", GameData.bitleon_colors[int(GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR))][3])
+	SPRITE.material.set_shader_parameter("BITLEON_RECOLOR5", GameData.bitleon_colors[int(GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR))][4])
 	
 func get_headshot() -> Texture2D:
 	assert($Sprite.sprite_frames.has_animation("headshot"))
@@ -60,7 +60,7 @@ func move_to_point(point: Vector2) -> void:
 	target_point = point
 
 func face_left() -> void:
-	SPRITE.flip_h = true
+	$Sprite.flip_h = true
 
 func face_right() -> void:
-	SPRITE.flip_h = false
+	$Sprite.flip_h = false
