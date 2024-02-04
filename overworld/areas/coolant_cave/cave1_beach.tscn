@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://clrokgdo0bo4a"]
+[gd_scene load_steps=10 format=3 uid="uid://clrokgdo0bo4a"]
 
 [ext_resource type="Script" path="res://overworld/areas/area.gd" id="1_4sj54"]
 [ext_resource type="Texture2D" uid="uid://cknrucl6hnncy" path="res://assets/maps/coolant_cave/cave1_beach/fence.png" id="2_r844y"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b6va77lju8lb7" path="res://assets/maps/coolant_cave/cave1_beach/waves.png" id="4_hsrq7"]
 [ext_resource type="PackedScene" uid="uid://dfrab43qku35w" path="res://decorators/move_decorator.tscn" id="5_46txx"]
 [ext_resource type="PackedScene" uid="uid://i0tisfi5mas0" path="res://overworld/components/player_overhead.tscn" id="6_nx2l3"]
+[ext_resource type="PackedScene" uid="uid://cty2bys7mmd6k" path="res://overworld/interactables/chest.tscn" id="7_qlgu0"]
 [ext_resource type="Script" path="res://overworld/components/warp.gd" id="9_a8npn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_80ub1"]
@@ -47,6 +48,12 @@ down = 1
 position = Vector2(32, 80)
 
 [node name="OverworldEncounters" type="Node2D" parent="Entities"]
+
+[node name="Chest" parent="Entities" instance=ExtResource("7_qlgu0")]
+position = Vector2(292, 36)
+chest_id = "cave1_bits"
+chest_type = 1
+bits = 10
 
 [node name="Data" type="Node2D" parent="."]
 z_index = 300

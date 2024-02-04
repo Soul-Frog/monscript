@@ -5,3 +5,12 @@ do Dialogue.ERROR("No corresponding tilde in dialogue file!")
 ~ save
 System: Saving your progress............\nSave successful!
 => END
+
+~ chest
+if Dialogue.IN0 == "Block":
+	Chest: You obtained the "{{Dialogue.IN1}}" script block!\nOpen the scripting interface to use it!
+elif Dialogue.IN0 == "Bits":
+	Chest: You obtained {{Dialogue.IN1}} Bits!
+elif Dialogue.IN0 == "Bugs":
+	Chest: You obtained {{Dialogue.IN2}} {{Dialogue.IN1}}!
+=> END

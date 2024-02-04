@@ -188,6 +188,8 @@ func _on_bugs_mouse_entered():
 	var tooltip = ""
 	for i in BugData.Type.size():
 		var bugType = BugData.Type.values()[i]
+		if bugType == BugData.Type.NONE:
+			continue
 		var bug = BugData.get_bug(bugType)
 		var texture_path = bug.sprite.resource_path
 		tooltip += line_format % [texture_path, GameData.bug_inventory[bugType]]
