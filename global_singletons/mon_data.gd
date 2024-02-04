@@ -248,7 +248,7 @@ class Mon:
 	
 	# how much bits this mon gives when defeated
 	func get_bits_for_defeating() -> int:
-		return ceil((10 + _level) * _base._bits_multiplier)
+		return ceil(2 * (_level + 1) * _base._bits_multiplier)
 	
 	# try to get a random bug drop; returns a Bug or null if no drop
 	func roll_bug_drop():

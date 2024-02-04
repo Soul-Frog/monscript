@@ -281,7 +281,7 @@ mon4Level = 0
 position = Vector2(545, 137)
 chest_id = 900
 chest_type = 2
-bits = 10
+bits = 64
 
 [node name="Data" type="Node2D" parent="."]
 

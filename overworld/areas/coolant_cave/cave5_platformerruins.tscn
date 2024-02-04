@@ -38,7 +38,6 @@ texture = ExtResource("4_g2yta")
 centered = false
 
 [node name="ForegroundElements" type="Node2D" parent="Base"]
-visible = false
 z_index = 210
 
 [node name="ForegroundElement" parent="Base/ForegroundElements" instance=ExtResource("4_rw0m6")]
@@ -108,17 +107,17 @@ mon3Level = 0
 mon4Type = 0
 mon4Level = 0
 
-[node name="Chest2" parent="Entities" instance=ExtResource("9_txfy8")]
+[node name="ChestBits1" parent="Entities" instance=ExtResource("9_txfy8")]
 position = Vector2(638, 277)
 chest_id = 500
 chest_type = 2
-bits = 10
+bits = 32
 
-[node name="Chest1" parent="Entities" instance=ExtResource("9_txfy8")]
+[node name="ChestToLowestDEFFoe" parent="Entities" instance=ExtResource("9_txfy8")]
 position = Vector2(1149, 101)
-chest_id = 500
-chest_type = 2
-bits = 10
+chest_id = 501
+chest_type = 1
+block = "LowestDEFFoe"
 
 [node name="Data" type="Node2D" parent="."]
 

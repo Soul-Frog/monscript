@@ -77,14 +77,14 @@ polygon = PackedVector2Array(110, 95, 110, 104, 156, 104, 156, 95)
 
 [node name="Chest2" parent="Data" instance=ExtResource("6_itmuu")]
 position = Vector2(481, 168)
-chest_id = 302
-chest_type = 2
-bits = 10
+chest_id = 1201
+chest_type = 1
+block = "Defend"
 
 [node name="Chest1" parent="Data" instance=ExtResource("6_itmuu")]
 position = Vector2(394, 168)
-chest_id = 302
+chest_id = 1200
 chest_type = 2
-bits = 10
+bits = 128
 
 [connection signal="body_entered" from="Data/CutsceneTriggers/LeviathanIntroCutscene" to="Data/CutsceneTriggers/LeviathanIntroCutscene" method="_on_body_entered"]

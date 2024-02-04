@@ -35,7 +35,7 @@ size = Vector2(79, 8)
 [sub_resource type="CircleShape2D" id="CircleShape2D_pim6k"]
 radius = 188.003
 
-[node name="Area2" type="Node2D"]
+[node name="Area" type="Node2D"]
 script = ExtResource("1_jvkfo")
 area_enum = 5
 battle_background = 2
@@ -359,19 +359,20 @@ polygon = PackedVector2Array(-14, -3, -11, -5, -6, -5, -6, -12, 8, -12, 8, -5, 1
 
 [node name="Chest1" parent="Entities" instance=ExtResource("16_4oqih")]
 position = Vector2(1066, 755)
-chest_id = 302
-chest_type = 2
-bits = 10
+chest_id = 601
+chest_type = 1
+block = "LowestHPFoe"
 
 [node name="Chest2" parent="Entities" instance=ExtResource("16_4oqih")]
 position = Vector2(131, 542)
 chest_id = 600
 chest_type = 2
-bits = 10
+bits = 24
 
 [node name="Data" type="Node2D" parent="."]
 
 [node name="MonCollision" type="StaticBody2D" parent="Data"]
+visible = false
 modulate = Color(0.278431, 1, 1, 1)
 z_index = 2000
 position = Vector2(-96, 150)
@@ -409,6 +410,7 @@ polygon = PackedVector2Array(265, 330, 235, 493, 300, 655, 182, 618, 191, 364)
 polygon = PackedVector2Array(1568, 644, 1651, 644, 1662, 744, 1570, 736)
 
 [node name="Collision" type="StaticBody2D" parent="Data"]
+visible = false
 modulate = Color(0, 1, 0, 1)
 position = Vector2(-96, 150)
 collision_layer = 4

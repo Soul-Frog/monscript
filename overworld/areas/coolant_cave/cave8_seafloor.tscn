@@ -37,7 +37,6 @@ texture = ExtResource("2_eo2i5")
 centered = false
 
 [node name="CanvasModulate" type="CanvasModulate" parent="Base/Map"]
-visible = false
 color = Color(0, 0, 0, 1)
 
 [node name="Entities" type="Node2D" parent="."]
@@ -53,7 +52,7 @@ texture = SubResource("GradientTexture2D_sn4if")
 [node name="OverworldEncounters" type="Node2D" parent="Entities"]
 
 [node name="Anglerphish" parent="Entities/OverworldEncounters" instance=ExtResource("4_cloe7")]
-position = Vector2(642, 177)
+position = Vector2(594, 121)
 script = ExtResource("5_pcifn")
 min_wander_range = 20
 max_wander_range = 60
@@ -69,8 +68,8 @@ mon4Type = 0
 mon4Level = 0
 
 [node name="Light" type="PointLight2D" parent="Entities/OverworldEncounters/Anglerphish"]
-position = Vector2(-11, -3)
-scale = Vector2(0.1, 0.1)
+position = Vector2(-10, -2.45)
+scale = Vector2(0.26875, 0.267188)
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_sn4if")
 
@@ -91,8 +90,8 @@ mon4Type = 0
 mon4Level = 0
 
 [node name="Light" type="PointLight2D" parent="Entities/OverworldEncounters/Anglerphish2"]
-position = Vector2(-11, -3)
-scale = Vector2(0.1, 0.1)
+position = Vector2(-10, -2.45)
+scale = Vector2(0.26875, 0.267188)
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_sn4if")
 
@@ -113,8 +112,8 @@ mon4Type = 0
 mon4Level = 0
 
 [node name="Light" type="PointLight2D" parent="Entities/OverworldEncounters/Mon3"]
-position = Vector2(-11, -3)
-scale = Vector2(0.1, 0.1)
+position = Vector2(-10, -2.45)
+scale = Vector2(0.26875, 0.267188)
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_sn4if")
 
@@ -189,17 +188,17 @@ text = "[center][E] Climb[/center]"
 [node name="ColPoly" parent="Entities/WarpInteractable" index="3"]
 polygon = PackedVector2Array(-11, -18, -11, -12, 3, -12, 3, -18)
 
-[node name="Chest1" parent="Entities" instance=ExtResource("9_qb7bn")]
+[node name="ChestIfSelfLeaky" parent="Entities" instance=ExtResource("9_qb7bn")]
 position = Vector2(566, 112)
 chest_id = 800
-chest_type = 2
-bits = 10
+chest_type = 1
+block = "SelfLeaky"
 
-[node name="Chest2" parent="Entities" instance=ExtResource("9_qb7bn")]
+[node name="ChestBits" parent="Entities" instance=ExtResource("9_qb7bn")]
 position = Vector2(193, 543)
 chest_id = 801
 chest_type = 2
-bits = 10
+bits = 64
 
 [node name="Data" type="Node2D" parent="."]
 

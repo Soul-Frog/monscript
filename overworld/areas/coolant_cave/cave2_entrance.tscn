@@ -218,12 +218,20 @@ mon3Level = 4
 mon4Type = 0
 mon4Level = 0
 
-[node name="Chest" parent="Entities" instance=ExtResource("18_nf2lw")]
+[node name="ChestBugs" parent="Entities" instance=ExtResource("18_nf2lw")]
 z_index = 125
-position = Vector2(495, 134)
+position = Vector2(441, 133)
+chest_id = 200
+chest_type = 3
+bug_type = 3
+bug_number = 5
+
+[node name="ChestBits" parent="Entities" instance=ExtResource("18_nf2lw")]
+z_index = 125
+position = Vector2(539, 306)
 chest_id = 200
 chest_type = 2
-bits = 10
+bits = 64
 
 [node name="Data" type="Node2D" parent="."]
 z_index = 300

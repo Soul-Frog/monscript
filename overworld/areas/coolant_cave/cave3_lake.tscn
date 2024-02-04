@@ -852,31 +852,37 @@ position = Vector2(1503, 685)
 y_sort_enabled = true
 position = Vector2(1759, 343)
 
-[node name="Chest1" parent="Entities" instance=ExtResource("30_l4lun")]
+[node name="ChestToHighestATK" parent="Entities" instance=ExtResource("30_l4lun")]
 position = Vector2(1193, 474)
 chest_id = 302
-chest_type = 2
-bits = 10
+chest_type = 1
+block = "HighestATKFoe"
 
-[node name="Chest2" parent="Entities" instance=ExtResource("30_l4lun")]
+[node name="ChestBits1" parent="Entities" instance=ExtResource("30_l4lun")]
 position = Vector2(1363, 322)
-chest_id = 301
+chest_id = 300
 chest_type = 2
 bits = 16
 
-[node name="Chest3" parent="Entities" instance=ExtResource("30_l4lun")]
+[node name="ChestBits4" parent="Entities" instance=ExtResource("30_l4lun")]
+position = Vector2(945, 273)
+chest_id = 304
+chest_type = 2
+bits = 24
+
+[node name="ChestBits3" parent="Entities" instance=ExtResource("30_l4lun")]
 z_index = 125
 position = Vector2(1756, 129)
-chest_id = 302
+chest_id = 303
 chest_type = 2
-bits = 10
+bits = 64
 
-[node name="ChestLowestHPFoe" parent="Entities" instance=ExtResource("30_l4lun")]
+[node name="ChestBits2" parent="Entities" instance=ExtResource("30_l4lun")]
 z_index = 125
 position = Vector2(439, 460)
-chest_id = 300
-chest_type = 1
-block = "LowestHPFoe"
+chest_id = 301
+chest_type = 2
+bits = 16
 
 [node name="Data" type="Node2D" parent="."]
 

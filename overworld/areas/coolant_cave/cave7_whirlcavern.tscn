@@ -91,11 +91,11 @@ position = Vector2(461, 105)
 [node name="OverworldEncounters" type="Node2D" parent="Entities"]
 
 [node name="Orchin1TODO" parent="Entities/OverworldEncounters" instance=ExtResource("4_aue2l")]
-position = Vector2(291, 492)
+position = Vector2(296, 470)
 collision_mask = 548
 script = ExtResource("5_py7nl")
 mon1Type = 5
-mon1Level = 3
+mon1Level = 8
 mon2Type = 0
 mon2Level = 0
 mon3Type = 0
@@ -103,30 +103,25 @@ mon3Level = 0
 mon4Type = 0
 mon4Level = 0
 
-[node name="Orchin1TODO2" parent="Entities/OverworldEncounters" instance=ExtResource("4_aue2l")]
-position = Vector2(546, 433)
-collision_mask = 548
-script = ExtResource("5_py7nl")
-mon1Type = 5
-mon1Level = 3
-mon2Type = 0
-mon2Level = 0
-mon3Type = 0
-mon3Level = 0
-mon4Type = 0
-mon4Level = 0
+[node name="ChestBugs1" parent="Entities" instance=ExtResource("16_fo8kf")]
+position = Vector2(288, 436)
+chest_id = 701
+chest_type = 3
+bug_type = 1
+bug_number = 3
 
-[node name="Chest1" parent="Entities" instance=ExtResource("16_fo8kf")]
-position = Vector2(282, 439)
+[node name="ChestBugs2" parent="Entities" instance=ExtResource("16_fo8kf")]
+position = Vector2(258, 483)
+chest_id = 702
+chest_type = 3
+bug_type = 2
+bug_number = 3
+
+[node name="ChestBits1" parent="Entities" instance=ExtResource("16_fo8kf")]
+position = Vector2(545, 414)
 chest_id = 700
 chest_type = 2
-bits = 10
-
-[node name="Chest2" parent="Entities" instance=ExtResource("16_fo8kf")]
-position = Vector2(545, 414)
-chest_id = 701
-chest_type = 2
-bits = 10
+bits = 24
 
 [node name="Data" type="Node2D" parent="."]
 
@@ -159,17 +154,17 @@ visible = false
 position = Vector2(461, 84)
 
 [node name="PushingZones" type="Node2D" parent="Data"]
-visible = false
+z_index = 1000
 
 [node name="PushDown" parent="Data/PushingZones" instance=ExtResource("12_dtqlw")]
+visible = false
 direction = 1
 force = 85
 
 [node name="CollisionPolygon2D" parent="Data/PushingZones/PushDown" index="0"]
-polygon = PackedVector2Array(192, 619, 195, -12, 513, -12, 517, 360, 454, 378, 430, 424, 430, 490, 434, 518, 441, 530, 458, 543, 486, 545, 517, 546, 519, 547, 513, -12, 1195, -12, 1195, 988, 773, 476, 773, 413, 770, 416, 762, 416, 758, 414, 750, 414, 743, 416, 726, 416, 714, 419, 709, 423, 706, 432, 706, 462, 708, 469, 715, 474, 725, 479, 748, 479, 766, 475, 773, 476, 1195, 988, 640, 988, 646, 772, 646, 788, 657, 809, 668, 817, 687, 823, 701, 822, 721, 812, 733, 792, 733, 761, 714, 739, 703, 733, 679, 733, 655, 750, 645, 771, 640, 988, 195, 988)
+polygon = PackedVector2Array(192, 619, 195, -12, 513, -12, 517, 360, 454, 378, 430, 424, 430, 490, 434, 518, 441, 530, 458, 543, 486, 545, 517, 544, 521, 538, 523, 512, 522, 438, 516, 428, 521, 426, 513, -12, 1195, -12, 1195, 988, 773, 476, 773, 413, 770, 416, 762, 416, 758, 414, 750, 414, 743, 416, 726, 416, 714, 419, 709, 423, 706, 432, 706, 462, 708, 469, 715, 474, 725, 479, 748, 479, 766, 475, 773, 476, 1195, 988, 640, 988, 646, 772, 646, 788, 657, 809, 668, 817, 687, 823, 701, 822, 721, 812, 733, 792, 733, 761, 714, 739, 703, 733, 679, 733, 655, 750, 645, 771, 640, 988, 195, 988)
 
 [node name="Upper" type="Node2D" parent="Data/PushingZones"]
-visible = false
 
 [node name="Right" parent="Data/PushingZones/Upper" instance=ExtResource("12_dtqlw")]
 direction = 3
@@ -194,7 +189,6 @@ position = Vector2(-186, -25)
 polygon = PackedVector2Array(649, 249, 656, 249, 655, 254, 649, 257)
 
 [node name="Right" type="Node2D" parent="Data/PushingZones"]
-visible = false
 
 [node name="Right" parent="Data/PushingZones/Right" instance=ExtResource("12_dtqlw")]
 direction = 3
@@ -219,7 +213,6 @@ position = Vector2(-104, 100)
 polygon = PackedVector2Array(648, 249, 663, 247, 663, 250, 655, 252, 649, 253)
 
 [node name="Left" type="Node2D" parent="Data/PushingZones"]
-visible = false
 
 [node name="Right" parent="Data/PushingZones/Left" instance=ExtResource("12_dtqlw")]
 direction = 3
@@ -245,7 +238,6 @@ position = Vector2(-250, 103)
 polygon = PackedVector2Array(650, 249, 656, 250, 659, 257, 656, 256, 655, 252, 650, 252)
 
 [node name="Down" type="Node2D" parent="Data/PushingZones"]
-visible = false
 
 [node name="Right" parent="Data/PushingZones/Down" instance=ExtResource("12_dtqlw")]
 direction = 3
@@ -270,7 +262,6 @@ position = Vector2(-179, 334)
 polygon = PackedVector2Array(650, 250, 653, 249, 654, 252, 650, 253)
 
 [node name="LeftWall" parent="Data/PushingZones" instance=ExtResource("12_dtqlw")]
-visible = false
 direction = 3
 force = 90
 
@@ -279,7 +270,6 @@ position = Vector2(-283, 389)
 polygon = PackedVector2Array(620, 246, 624, 256, 631, 269, 640, 278, 651, 289, 665, 294, 685, 301, 694, 309, 707, 344, 713, 365, 732, 409, 736, 418, 731, 411, 727, 401, 718, 381, 711, 365, 706, 349, 704, 343, 695, 315, 683, 303, 672, 300, 648, 292, 640, 282, 630, 270, 622, 256, 620, 249)
 
 [node name="LeftHelper" parent="Data/PushingZones" instance=ExtResource("12_dtqlw")]
-visible = false
 direction = 3
 force = 150
 
@@ -288,7 +278,6 @@ position = Vector2(250, 709)
 polygon = PackedVector2Array(181, 45, 194, 51, 197, 64, 201, 79, 213, 110, 199, 90, 190, 68)
 
 [node name="RightWall" parent="Data/PushingZones" instance=ExtResource("12_dtqlw")]
-visible = false
 force = 90
 
 [node name="CollisionPolygon2D" parent="Data/PushingZones/RightWall" index="0"]
@@ -296,7 +285,6 @@ position = Vector2(-83, 405)
 polygon = PackedVector2Array(698, 232, 702, 221, 705, 196, 706, 199, 703, 222, 699, 232, 695, 242, 692, 250, 687, 258, 685.607, 259.393, 682, 263, 671, 270, 651, 282, 627, 398, 626, 397, 631, 367, 632, 355, 633, 340, 639, 293, 643, 287, 650, 281, 670, 269, 680, 261, 683, 257, 689, 250)
 
 [node name="RightHelper" parent="Data/PushingZones" instance=ExtResource("12_dtqlw")]
-visible = false
 force = 150
 
 [node name="CollisionPolygon2D" parent="Data/PushingZones/RightHelper" index="0"]

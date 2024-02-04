@@ -190,30 +190,32 @@ offset_right = 64.0
 offset_bottom = -30.0
 text = "[center][E] Climb[/center]"
 
-[node name="ChestFloor" parent="Entities" instance=ExtResource("14_5xpxu")]
+[node name="ChestBug1" parent="Entities" instance=ExtResource("14_5xpxu")]
 z_index = 125
 position = Vector2(488, 975)
+chest_id = 1003
+chest_type = 3
+bug_type = 4
+bug_number = 5
+
+[node name="ChestToFirstFoe" parent="Entities" instance=ExtResource("14_5xpxu")]
+position = Vector2(146, 243)
 chest_id = 1000
-chest_type = 2
+chest_type = 1
+block = "FirstFoe"
 bits = 10
 
-[node name="ChestLeft" parent="Entities" instance=ExtResource("14_5xpxu")]
-position = Vector2(146, 243)
+[node name="ChestBits1" parent="Entities" instance=ExtResource("14_5xpxu")]
+position = Vector2(1020, 406)
 chest_id = 1001
 chest_type = 2
-bits = 10
+bits = 32
 
-[node name="ChestRight" parent="Entities" instance=ExtResource("14_5xpxu")]
-position = Vector2(1020, 406)
+[node name="ChestBits2" parent="Entities" instance=ExtResource("14_5xpxu")]
+position = Vector2(84, 784)
 chest_id = 1002
 chest_type = 2
-bits = 10
-
-[node name="ChestCave" parent="Entities" instance=ExtResource("14_5xpxu")]
-position = Vector2(84, 784)
-chest_id = 1003
-chest_type = 2
-bits = 10
+bits = 32
 
 [node name="Data" type="Node2D" parent="."]
 

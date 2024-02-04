@@ -36,29 +36,30 @@ func get_texture() -> Texture2D:
 	return $Sprite.sprite_frames.get_frame_texture("default", 0)
 
 func _physics_process(delta):
-	var input_direction = Vector2.ZERO
-	
-	if _target_point != null:
-		input_direction = Global.direction_towards_point(position, _target_point)
+	if _target_point != null: #todo hack
+		var input_direction = Vector2.ZERO
 		
-		if input_direction == Vector2.ZERO:
-			_on_reached_point()
-	
-	velocity = SPEED * input_direction
-	
-	if velocity.x != 0:
-		face_left() if velocity.x < 0 else face_right()
-	
-	var previous_position = position
-	move_and_slide()
-	
-	# if we're trying to move to a point but get stuck, give up after some time
-	if _target_point != null and previous_position == position:
-		_time_blocked += delta
-		if _time_blocked >= _TIME_BLOCKED_BEFORE_GIVE_UP:
-			_on_reached_point()
-		else:
-			_time_blocked = 0.0
+		if _target_point != null:
+			input_direction = Global.direction_towards_point(position, _target_point)
+			
+			if input_direction == Vector2.ZERO:
+				_on_reached_point()
+		
+		velocity = SPEED * input_direction
+		
+		if velocity.x != 0:
+			face_left() if velocity.x < 0 else face_right()
+		
+		var previous_position = position
+		move_and_slide()
+		
+		# if we're trying to move to a point but get stuck, give up after some time
+		if _target_point != null and previous_position == position:
+			_time_blocked += delta
+			if _time_blocked >= _TIME_BLOCKED_BEFORE_GIVE_UP:
+				_on_reached_point()
+			else:
+				_time_blocked = 0.0
 
 func _on_reached_point() -> void:
 	_target_point = null
