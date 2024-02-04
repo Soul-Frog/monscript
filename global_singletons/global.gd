@@ -141,3 +141,39 @@ func key_for_action(action: String) -> String:
 	# get the first key mapped to this action; split to remove anything but the key itself
 	# for example the E key as_text is "E (Physical)"; split to remove the (Physical)
 	return InputMap.action_get_events(action)[0].as_text().split(" ")[0]
+
+func to_leetspeak(string: String) -> String:
+	const _leetspeak_map = {
+		"A" : "4",
+		"E" : "3",
+		"I" : "1",
+		"O" : "0",
+		"S" : "$"
+	}
+	var leeted = ""
+	string = string.to_upper()
+	for c in string:
+		leeted += _leetspeak_map[c] if _leetspeak_map.has(c) else c
+	return leeted
+
+# returns a normalized direction vector pointing towards the given point, from the given pos
+# epsilon is the threshold of how close to get before considering to be at the correct x or y
+# retursn Vector2.ZERO if pos ~= point
+func direction_towards_point(pos: Vector2, destination: Vector2, epsilon = 2.0) -> Vector2:
+	var direction = Vector2.ZERO
+	
+	var at_correct_x = abs(pos.x - destination.x) <= epsilon
+	var at_correct_y = abs(pos.y - destination.y) <= epsilon
+	
+	if not at_correct_x:
+		if pos.x < destination.x:
+			direction.x = 1
+		else:
+			direction.x = -1
+	if not at_correct_y:
+		if pos.y < destination.y:
+			direction.y = 1
+		else:
+			direction.y = -1
+	
+	return direction.normalized()

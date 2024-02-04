@@ -2,6 +2,75 @@
 do Dialogue.ERROR("No corresponding tilde in dialogue file!")
 => END
 
+# TODO
+~ cave4_bitleon_sees_corruption
+Bitleon: Huh!? The way to the wire is competely blocked!
+{{GameData.get_var(GameData.PLAYER_NAME)}}: Woah. This spot looks... completely messed up.
+Bitleon: Hey, red guy! What's going on here?
+Red Hat: It's Red Hat, thank you very much. And given the circumstances, I'll overlook your rudeness this time.
+Red Hat: What you're seeing is data corruption. Seems to have been getting worse and worse as of late. :(
+Red Hat: Have you ran into any mons recently that look or behave strange?
+Bitleon: Yeah, a few. I took them down no problem!
+Red Hat: You were able to defeat corrupted mons? Not bad for a tiny mon like you.
+Bitleon: Hey! Watch who you call tiny!
+Red Hat: See? Now we're even.
+Red Hat: Getting back to the main topic, this particular patch of corruption just appeared recently.
+Red Hat: But as long as it's in the way, nobody can enter or exit this area... :(
+Red Hat: There must be something, or perhaps someone, that's causing all of this.
+???: {{Global.to_leetspeak("Gwahahaha! You rang?")}}
+Red Hat: What!?
+=> END
+
+~ cave4_leviathan_pre_fight
+Bitleon: You! Were you the one who made this corruption?
+{{Global.to_leetspeak("Leviathan")}}: {{Global.to_leetspeak("That's right! I, Leviathan, am the source of the corruption in Coolant Cave!")}}
+Bitleon: Grr... I'll take you down!
+{{Global.to_leetspeak("Leviathan")}}: {{Global.to_leetspeak("Gwahaha! I've been looking for a fight! Let's see how long you last!")}}
+Red Hat: Hey, wait!
+=> END
+
+~ cave4_leviathan_post_fight
+{{Global.to_leetspeak("Leviathan")}}: {{Global.to_leetspeak("Gwahahaha! Not so tough now, are you?")}}
+Bitleon: Ugh, this guy's tough!
+{{Global.to_leetspeak("Leviathan")}}: {{Global.to_leetspeak("I may not be able to reach you while you're on land...")}}
+{{Global.to_leetspeak("Leviathan")}}: {{Global.to_leetspeak("But as long as my corruption blocks the wire, you aren't going anywhere.")}}
+{{Global.to_leetspeak("Leviathan")}}: {{Global.to_leetspeak("What're you gonna do about it?")}}
+{{Global.to_leetspeak("Leviathan")}}: {{Global.to_leetspeak("If you want to clear the corruption... I'll be waiting at the bottom of Coolant Cave for a rematch.")}}
+do Dialogue.emit()
+Red Hat: Hey kid, are you alright?
+Bitleon: I didn't realize he would be so strong... I was completely powerless...
+- Cheer up, Bitleon. You did your best.
+	Bitleon: {{GameData.get_var(GameData.PLAYER_NAME)}}... thanks.
+- Yeah, you're pretty weak. I wish I had a stronger partner.
+	Red Hat: Was that really necessary?
+Red Hat: Listen, Bitleon, if you want to be stronger, I might have a way to help you with that.
+Red Hat: Forgive me for saying it, but your script seemed rather simplistic during that battle.
+Red Hat: {{GameData.get_var(GameData.PLAYER_NAME)}}, is there a reason you haven't written a more powerful script?
+{{GameData.get_var(GameData.PLAYER_NAME)}}: Write... a script?
+Red Hat: ...you've never written a script before, have you? You're a complete rookie! Lol!
+Red Hat: Ah well, I guess it can't be helped.
+Red Hat: I'll have to show you the ropes.
+Red Hat: Go ahead and open your COMP by pressing Q. 
+=> END
+
+
+~ cave12_leviathan_pre_fight
+Nobody: cave12_leviathan_pre_fight
+=> END
+
+~ cave12_leviathan_post_fight
+Nobody: cave12_leviathan_pre_fight
+=> END
+
+~ cave4_debrief
+Nobody: cave4_debrief
+=> END
+
+~ cave4_wire_to_the_city
+Nobody: cave4_wire_to_the_city
+=> END
+
+# DONE
 ~ cave1_intro_start
 ???: Hey, are you there?
 ???: Can you hear me?
@@ -31,9 +100,7 @@ Bitleon: Yeah, a defragger. You have memory problems, right?
 Bitleon: Some of the mons nearby have been acting weird. We should get out of here!
 Bitleon: Let's head back to Core City!
 Bitleon: Sound good?
-=> branch
-
-~ branch
+~ cave1_intro_branch
 Bitleon: Let's get going!
 - What are you?
 	Bitleon: I'm Bitleon!
@@ -42,17 +109,18 @@ Bitleon: Let's get going!
 	{{GameData.get_var(GameData.PLAYER_NAME)}}: No, I mean... like... WHAT is a Bitleon?
 	Bitleon: Weird question, but ok. I'm a mon! My home is Core City, but I like exploring more!
 	Bitleon: That's what I was doing when I found you here! It's a major discovery!
-	=> branch
+	=> cave1_intro_branch
 - Core City?
-	Bitleon: Yeah! It's where all the cool mons live! Everything else is connected to it.
+	Bitleon: Yeah! It's where all the cool mons live, like me! Everything else is connected to it.
+	Bitleon: There's loads of fun things to do there. It's an awesome place!
 	Bitleon: So why are we still standing here? 
-	=> branch
+	=> cave1_intro_branch
 - Defragger?
 	Bitleon: Yeah, a defragger! We talked about this already.
 	Bitleon: Your head must really hurt...
-	=> branch
+	=> cave1_intro_branch
 - Yeah... yeah, sure. I'll come with you.
-	Bitleon: Great! The way to the wire right through that cave. I'll be right behind you!
+	Bitleon: Great! The way to the wire is just through that cave. I'll be right behind you!
 => END
 
 ~ cave2_first_battle_before_battle

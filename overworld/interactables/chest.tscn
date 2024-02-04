@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://cty2bys7mmd6k"]
+[gd_scene load_steps=9 format=3 uid="uid://cty2bys7mmd6k"]
 
 [ext_resource type="PackedScene" uid="uid://cd6pj5homenki" path="res://overworld/interactables/interactable_base.tscn" id="1_8j4l1"]
 [ext_resource type="Script" path="res://overworld/interactables/chest.gd" id="2_anro5"]
-[ext_resource type="Texture2D" uid="uid://cxg76f1ffb4ri" path="res://assets/objects/chest.png" id="4_vw2bn"]
+[ext_resource type="Resource" uid="uid://c3v1m5f3j7tx0" path="res://dialogue/system.dialogue" id="3_3ehoq"]
+[ext_resource type="Texture2D" uid="uid://cxg76f1ffb4ri" path="res://assets/sprites/objects/chest.png" id="4_vw2bn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ncslg"]
 atlas = ExtResource("4_vw2bn")
@@ -35,11 +36,15 @@ animations = [{
 radius = 14.0
 
 [node name="Chest" instance=ExtResource("1_8j4l1")]
-z_index = 200
 script = ExtResource("2_anro5")
-chest_id = "NULL"
-dialogue_resource = null
-dialogue_start = "NULL"
+chest_id = null
+chest_type = null
+block = null
+bits = null
+bug_type = null
+bug_number = null
+dialogue_resource = ExtResource("3_3ehoq")
+dialogue_start = "chest"
 LABEL_TEXT = "Open"
 
 [node name="Sprite" parent="." index="0"]
@@ -48,19 +53,16 @@ sprite_frames = SubResource("SpriteFrames_uf0hs")
 animation = &"closed"
 centered = false
 
-[node name="Collision" parent="." index="1"]
-position = Vector2(0, 4)
-
-[node name="CollisionPolygon2D" parent="Collision" index="0"]
-polygon = PackedVector2Array(-53.3803, -13.2975, 22.5758, -13.2975, 22.5758, 18.9714, -53.3803, 18.9714)
-
 [node name="CollisionShape2D" parent="InteractionArea" index="0"]
 position = Vector2(2, 2)
 shape = SubResource("CircleShape2D_2xfpe")
 
-[node name="Label" parent="." index="3"]
+[node name="Label" parent="." index="2"]
 offset_left = -58.0
 offset_top = -27.0
 offset_right = 65.0
 offset_bottom = -4.0
 text = "[center][E] Open[/center]"
+
+[node name="ColPoly" parent="." index="3"]
+polygon = PackedVector2Array(-7, -5, -7, 10, 11, 10, 11, -5)

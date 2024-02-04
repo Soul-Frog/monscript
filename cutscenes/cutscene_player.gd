@@ -1,6 +1,6 @@
 extends Node2D
 
-signal _continue_tutorial
+signal _clicked
 
 var _ID_TO_CUTSCENE_MAP := {
 	Cutscene.ID.INTRO_OLD : _CUTSCENE_INTRODUCTION_OLD,
@@ -8,7 +8,13 @@ var _ID_TO_CUTSCENE_MAP := {
 	Cutscene.ID.CAVE2_FIRST_BATTLE : _CUTSCENE_CAVE2_FIRST_BATTLE,
 	Cutscene.ID.CAVE4_LEVIATHAN_MEETING : _CUTSCENE_CAVE4_LEVIATHAN_MEETING,
 	Cutscene.ID.BATTLE_TUTORIAL_FIRST_BATTLE : _CUTSCENE_BATTLE_TUTORIAL_FIRST_BATTLE,
-	Cutscene.ID.BATTLE_TUTORIAL_SPEED_AND_QUEUE : _CUTSCENE_BATTLE_TUTORIAL_SPEED_AND_QUEUE
+	Cutscene.ID.BATTLE_TUTORIAL_SPEED_AND_QUEUE : _CUTSCENE_BATTLE_TUTORIAL_SPEED_AND_QUEUE,
+	Cutscene.ID.BATTLE_TUTORIAL_ESCAPE : _CUTSCENE_BATTLE_TUTORIAL_ESCAPE,
+	Cutscene.ID.SCRIPT_TUTORIAL : _CUTSCENE_SCRIPT_TUTORIAL,
+	Cutscene.ID.CAVE12_LEVIATHAN_BOSS : _CUTSCENE_CAVE12_LEVIATHAN_BOSS,
+	Cutscene.ID.BATTLE_LEVIATHAN_BOSS_INJECT : _CUTSCENE_BATTLE_LEVIATHAN_BOSS_INJECT,
+	Cutscene.ID.CAVE4_POSTBOSS_DEBRIEF : _CUTSCENE_CAVE4_POSTBOSS_DEBRIEF,
+	Cutscene.ID.CAVE4_WIRE_TO_THE_CITY : _CUTSCENE_CAVE4_WIRE_TO_THE_CITY
 }
 
 const _DIALOGUE_FILE = preload("res://dialogue/cutscene.dialogue")
@@ -41,11 +47,11 @@ func _ready():
 
 func _input(event) -> void: 
 	if event is InputEventMouseButton and event.is_pressed() and _accepting_click:
-		emit_signal("_continue_tutorial")
+		emit_signal("_clicked")
 
 func _wait_for_click() -> void:
 	_accepting_click = true
-	await _continue_tutorial
+	await _clicked
 	_accepting_click = false
 
 func _fade_blocker_in() -> void:
@@ -102,15 +108,15 @@ func _move_camera(camera: Camera2D, offset: Vector2, time: float) -> void:
 	cam_tween.tween_property(camera, "position", camera.position + offset, time)
 	await cam_tween.finished
 
-func _move_actor(actor, point) -> void:
-	assert(actor is PlayerOverhead or actor is MonScene)
+func _move_actor(actor, point: Vector2) -> void:
+	assert(actor is PlayerOverhead or actor is MonScene or actor is NPC)
 	actor.move_to_point(point)
 	await actor.reached_point
 
 func _create_overworld_bitleon(area: Area) -> MonScene:
 	var bitleon = load("res://mons/bitleon.tscn").instantiate()
 	bitleon.position = area.PLAYER.position
-	area.add_child(bitleon)
+	area.call_deferred("add_child", bitleon)
 	bitleon.modulate.a = 0.0
 	bitleon.z_index = area.PLAYER.z_index - 1
 	create_tween().tween_property(bitleon, "modulate:a", 1.0, 0.1)
@@ -143,7 +149,6 @@ func play_cutscene(id: Cutscene.ID, node: Node):
 		node.PLAYER.disable_cutscene_mode()
 
 ### CUTSCENES ###
-
 func _CUTSCENE_CAVE1_INTRO(area: Area) -> void:
 	assert(area.area_enum == GameData.Area.COOLANT_CAVE1_BEACH)
 	
@@ -190,7 +195,7 @@ func _CUTSCENE_CAVE2_FIRST_BATTLE(area: Area) -> void:
 	gelif.position = area.POINTS.find_child("CutsceneFirstBattleGelif").position
 	area.OVERWORLD_ENCOUNTERS.call_deferred("add_child", gelif)
 	
-	await _move_actor(area.PLAYER, area.POINTS.find_child("CutsceneFirstBattlePlayerBeforeBattle"))
+	await _move_actor(area.PLAYER, area.POINTS.find_child("CutsceneFirstBattlePlayerBeforeBattle").position)
 	area.PLAYER.face_right()
 	
 	# create a bitleon and move him...
@@ -224,28 +229,74 @@ func _CUTSCENE_CAVE4_LEVIATHAN_MEETING(area: Area) -> void:
 	leviathan.mon1Type = MonData.MonType.LEVIATHAN
 	leviathan.mon1Level = 5
 	leviathan.position = area.POINTS.find_child("CutsceneLeviathan").position
+	leviathan.set_animation("submerged")
+	leviathan.modulate.a = 0.0
+	leviathan.disable_collisions()
 	area.call_deferred("add_child", leviathan)
 	
-	await _move_actor(area.PLAYER, area.POINTS.find_child("CutscenePlayer"))
-	area.PLAYER.face_left()
-	
-	# create a bitleon and move him...
+	# fetch the red hat, create a bitleon
+	var red_hat = area.get_entity("RedHat")
 	var bitleon = _create_overworld_bitleon(area)
-	await _move_actor(bitleon, area.POINTS.find_child("CutsceneBitleon").position)
-	bitleon.face_left()
+
+	# move player and bitleon towards corruption, then talk
+	_move_actor(area.PLAYER, area.POINTS.find_child("CutscenePlayerCorruption").position)
+	await _move_actor(bitleon, area.POINTS.find_child("CutsceneBitleonCorruption").position)
+	await Dialogue.play(_DIALOGUE_FILE, "cave4_bitleon_sees_corruption")
 	
-	await _move_camera(area.CAMERA, Vector2(-80, 0), 0.5)
+	# leviathan emerges! move everyone towards leviathan and talk
+	await create_tween().tween_property(leviathan, "modulate:a", 1.0, 0.5).finished
+	_move_actor(area.PLAYER, area.POINTS.find_child("CutscenePlayerLeviathan").position)
+	_move_actor(red_hat, area.POINTS.find_child("CutsceneRedHatLeviathan").position)
+	await _move_actor(bitleon, area.POINTS.find_child("CutsceneBitleonLeviathan").position)
+	await Dialogue.play(_DIALOGUE_FILE, "cave4_leviathan_pre_fight")
+	await _move_actor(bitleon, area.POINTS.find_child("CutsceneBitleonAttack").position)
 	
+	# fight!
 	#GameData.queue_battle_cutscene(Cutscene.ID.BATTLE_TUTORIAL_ESCAPE)
 	Events.emit_signal("battle_started", leviathan, leviathan.mons)
 	await Events.battle_ended
 	await Global.delay(0.5)
 	
-	leviathan.queue_free()
+	# todo - actually make everyone back off a bit
 	
-	_move_camera(area.CAMERA, Vector2(80, 0), 0.5)
+	Dialogue.play(_DIALOGUE_FILE, "cave4_leviathan_post_fight")
+	await Dialogue.dialogue_signal # fade leviathan mid dialogue
+	var tween = create_tween()
+	tween.tween_property(leviathan, "modulate:a", 0.0, 0.5)
+	tween.tween_callback(leviathan.queue_free)
+	await Dialogue.dialogue_ended
+	
+	# remove bitleon
 	await _move_actor(bitleon, area.PLAYER.position)
 	await _delete_bitleon(bitleon)
+
+func _CUTSCENE_CAVE12_LEVIATHAN_BOSS(area: Area) -> void:
+	assert(area.area_enum == GameData.Area.COOLANT_CAVE12_BOSSROOM)
+	# todo - add leviathan to the scene
+	# todo - create a bitleon
+	# todo - move player and bitleon towards leviathan
+	await Dialogue.play(_DIALOGUE_FILE, "cave12_leviathan_pre_fight")
+	# todo - fight leviathan!
+	# todo - leviathan defeated animation
+	await Dialogue.play(_DIALOGUE_FILE, "cave12_leviathan_post_fight")
+	# todo - remove bitleon
+
+func _CUTSCENE_CAVE4_POSTBOSS_DEBRIEF(area: Area) -> void:
+	assert(area.area_enum == GameData.Area.COOLANT_CAVE4_PLAZA)
+	await Dialogue.play(_DIALOGUE_FILE, "cave4_debrief")
+
+func _CUTSCENE_CAVE4_WIRE_TO_THE_CITY(area: Area) -> void:
+	assert(area.area_enum == GameData.Area.COOLANT_CAVE4_PLAZA)
+	await Dialogue.play(_DIALOGUE_FILE, "cave4_wire_to_the_city")
+
+func _CUTSCENE_SCRIPT_TUTORIAL(script: UIScriptMenu) -> void:
+	pass
+
+func _CUTSCENE_BATTLE_TUTORIAL_ESCAPE(battle: Battle) -> void:
+	pass
+
+func _CUTSCENE_BATTLE_LEVIATHAN_BOSS_INJECT(battle: Battle) -> void:
+	pass
 
 func _CUTSCENE_BATTLE_TUTORIAL_FIRST_BATTLE(battle: Battle) -> void:
 	# disable tooltips for this battle
@@ -267,7 +318,7 @@ func _CUTSCENE_BATTLE_TUTORIAL_FIRST_BATTLE(battle: Battle) -> void:
 	await _fade_blocker_in()
 	
 	# introduction at start of battle
-	await _popup_and_wait(_TOP_POPUP, "This is your first battle, right?\n[color=%s](click to continue)[/color]" % Color.LIGHT_YELLOW.to_html())
+	await _popup_and_wait(_TOP_POPUP, "This is your first battle, right?\n[color=%s](click to continue)[/color]" % Color.GOLD.to_html())
 	await _popup_and_wait(_TOP_POPUP, "Don't worry, I can teach you the basics!")
 	_bring_to_front_z(player_mon_blocks)
 	await _popup_and_wait(_MONBLOCK_POPUP, "The green bar here is my health points, or HP for short.")
@@ -366,7 +417,7 @@ func _CUTSCENE_BATTLE_TUTORIAL_FIRST_BATTLE(battle: Battle) -> void:
 	
 	UITooltip.enable_tooltips()
 
-func _CUTSCENE_BATTLE_TUTORIAL_SPEED_AND_QUEUE(battle: Battle):
+func _CUTSCENE_BATTLE_TUTORIAL_SPEED_AND_QUEUE(battle: Battle) -> void:
 	var speed_controls = battle._speed_controls
 	var queue = battle._mon_action_queue
 

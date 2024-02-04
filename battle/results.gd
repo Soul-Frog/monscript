@@ -151,7 +151,7 @@ func perform_results(battle_results: BattleData.BattleResult, bugs_earned: Array
 			bug_slot.visible = false
 	
 	for bugtype in _bugs_earned: # give bug drops to player
-		GameData.bug_inventory[bugtype] += 1
+		GameData.gain_bugs(bugtype, 1)
 	
 	# Gather a list of all unique mons to decompile to make bars
 	# and a list of all mons to decompile to grant progress later

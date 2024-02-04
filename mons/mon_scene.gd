@@ -7,7 +7,9 @@ extends CharacterBody2D
 @onready var SPRITE = $Sprite
 
 signal reached_point
-var target_point = null
+var _target_point = null
+var _time_blocked = 0.0
+const _TIME_BLOCKED_BEFORE_GIVE_UP = 0.5
 
 func _ready() -> void:
 	update_sprite()
@@ -19,6 +21,10 @@ func update_sprite():
 	SPRITE.material.set_shader_parameter("BITLEON_RECOLOR3", GameData.bitleon_colors[int(GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR))][2])
 	SPRITE.material.set_shader_parameter("BITLEON_RECOLOR4", GameData.bitleon_colors[int(GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR))][3])
 	SPRITE.material.set_shader_parameter("BITLEON_RECOLOR5", GameData.bitleon_colors[int(GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR))][4])
+
+func set_animation(animation: String) -> void:
+	assert($Sprite.sprite_frames.has_animation(animation))
+	$Sprite.play(animation)
 	
 func get_headshot() -> Texture2D:
 	assert($Sprite.sprite_frames.has_animation("headshot"))
@@ -31,33 +37,41 @@ func get_texture() -> Texture2D:
 func _physics_process(delta):
 	var input_direction = Vector2.ZERO
 	
-	if target_point != null:
-		# see if we've gotten 'close enough' to the target point
-		const THRESHOLD = 3.0
-		var at_correct_x = abs(position.x - target_point.x) <= THRESHOLD
-		var at_correct_y = abs(position.y - target_point.y) <= THRESHOLD
+	if _target_point != null:
+		input_direction = Global.direction_towards_point(position, _target_point)
 		
-		if at_correct_x and at_correct_y: # if we reached it, emit and set target to null
-			target_point = null
-			emit_signal("reached_point")
-		else: #otherwise move towards
-			if not at_correct_x:
-				if position.x < target_point.x:
-					input_direction.x = 1
-				else:
-					input_direction.x = -1
-			if not at_correct_y:
-				if position.y < target_point.y:
-					input_direction.y = 1
-				else:
-					input_direction.y = -1
+		if input_direction == Vector2.ZERO:
+			_on_reached_point()
 	
 	velocity = SPEED * input_direction
 	
+	if velocity.x != 0:
+		face_left() if velocity.x < 0 else face_right()
+	
+	var previous_position = position
 	move_and_slide()
+	
+	# if we're trying to move to a point but get stuck, give up after some time
+	if _target_point != null and previous_position == position:
+		_time_blocked += delta
+		if _time_blocked >= _TIME_BLOCKED_BEFORE_GIVE_UP:
+			_on_reached_point()
+		else:
+			_time_blocked = 0.0
+
+func _on_reached_point() -> void:
+	_target_point = null
+	emit_signal("reached_point")
+
+func disable_collisions() -> void:
+	$CollisionHitbox.disabled = true
+
+func enable_collisions() -> void:
+	$CollisionHitbox.disabled = false
 
 func move_to_point(point: Vector2) -> void:
-	target_point = point
+	_target_point = point
+	_time_blocked = 0.0
 
 func face_left() -> void:
 	$Sprite.flip_h = true

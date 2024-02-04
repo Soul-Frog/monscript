@@ -20,10 +20,4 @@ Blue Hat: [[Hi|Hello|Howdy]], this is a test dialogue. Select an option below:
 	Blue Hat: Goodbye!
 	=> END
 Blue Hat: You have successfully made a selection, goodbye!
-
 => END
-
-~ chest_test
-Chest: You found a thing!
-# code snippet to unlock the thing you found
-=>END

@@ -5,7 +5,7 @@
 # 3) override the _on_interact function.
 
 class_name Interactable
-extends Node2D
+extends CharacterBody2D
 
 @export var LABEL_TEXT = "Interact"
 
@@ -21,22 +21,40 @@ const _LABEL_FORMAT = "[center]%s %s[/center]"
 
 var _player_in_range = false
 
+var _is_interactable = true
+
 func _ready():
 	_LABEL.modulate.a = 0
 	InputMap.get_actions()
 	_LABEL.text = _LABEL_FORMAT % ["[%s]" % [Global.key_for_action("interact")], LABEL_TEXT]
 
 func _input(event):
-	if event.is_action_released("interact") and _player_in_range:
+	if event.is_action_released("interact") and _player_in_range and _is_interactable:
 		_on_interact()
 
 func _on_interact():
 	pass #no-op
 
 func _on_player_interaction_area_entered(area):
-	_LABEL_FADE.fade_in()
-	_player_in_range = true
+	if _is_interactable:
+		_fade_in_label()
+		_player_in_range = true
 
 func _on_player_interaction_area_exited(area):
-	_LABEL_FADE.fade_out()
+	_fade_out_label()
 	_player_in_range = false
+
+func _fade_out_label() -> void:
+	_LABEL_FADE.fade_out()
+
+func _fade_in_label() -> void:
+	_LABEL_FADE.fade_in()
+
+func disable_interaction() -> void:
+	_is_interactable = false
+	_fade_out_label()
+
+func enable_interaction() -> void:
+	_is_interactable = true
+	if _player_in_range:
+		_fade_in_label()

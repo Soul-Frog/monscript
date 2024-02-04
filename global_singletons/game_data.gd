@@ -234,7 +234,8 @@ func _ready():
 	
 	# populate the bug inventory map
 	for bugtype in BugData.Type.values():
-		bug_inventory[bugtype] = 0
+		if bugtype != BugData.Type.NONE:
+			bug_inventory[bugtype] = 0
 	
 	# populate the block unlock map
 	for block in ScriptData.IF_BLOCK_LIST:
@@ -412,3 +413,6 @@ func gain_bits(bit_amount: int) -> void:
 	GameData.add_to_var(GameData.BITS, bit_amount) # give bits to the player
 	if GameData.get_var(GameData.BITS) > MAX_BITS:
 		GameData.set_var(GameData.BITS, MAX_BITS)
+
+func gain_bugs(bug_type: BugData.Type, bug_amount: int) -> void:
+	bug_inventory[bug_type] += bug_amount

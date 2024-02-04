@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://iocmg1mqwuig"]
+
+[ext_resource type="Texture2D" uid="uid://d1hcbj2nsn2w5" path="res://assets/sprites/npcs/red_hat.png" id="1_xp7xn"]
+[ext_resource type="Script" path="res://walky.gd" id="2_vfm1i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e2xvf"]
+size = Vector2(13.5, 20)
+
+[node name="Node2D" type="CharacterBody2D"]
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_xp7xn")
+script = ExtResource("2_vfm1i")
+
+[node name="HopTimer" type="Timer" parent="Sprite"]
+wait_time = 0.1
+one_shot = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.25, 0)
+shape = SubResource("RectangleShape2D_e2xvf")
+
+[connection signal="timeout" from="Sprite/HopTimer" to="Sprite" method="_on_hop_timer_timeout"]
