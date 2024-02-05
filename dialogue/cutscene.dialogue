@@ -4,28 +4,26 @@ do Dialogue.ERROR("No corresponding tilde in dialogue file!")
 
 # TODO
 ~ cave4_bitleon_sees_corruption
-Bitleon: Huh!? The way to the wire is competely blocked!
-{{GameData.get_var(GameData.PLAYER_NAME)}}: Woah. This spot looks... completely messed up.
+Bitleon: Huh!? The way to the wire is completely blocked!
 Bitleon: Hey, red guy! What's going on here?
-Red Hat: It's Red Hat, thank you very much. And given the circumstances, I'll overlook your rudeness this time.
-Red Hat: What you're seeing is data corruption. Seems to have been getting worse and worse as of late. :(
-Red Hat: Have you ran into any mons recently that look or behave strange?
-Bitleon: Yeah, a few. I took them down no problem!
-Red Hat: You were able to defeat corrupted mons? Not bad for a tiny mon like you.
-Bitleon: Hey! Watch who you call tiny!
-Red Hat: See? Now we're even.
-Red Hat: Getting back to the main topic, this particular patch of corruption just appeared recently.
-Red Hat: But as long as it's in the way, nobody can enter or exit this area... :(
+Red Hat: It's Red *HAT*, thank you very much. But we've got a bigger problem here, so I'll let that slide.
+Red Hat: What you're seeing is data corruption, and it's been getting worse and worse lately.
+Red Hat: Notice any mons behaving strangely on your way here?
+Bitleon: Yeah, I took 'em down no problem!
+Red Hat: A pipsqueak like you was able to defeat corrupted mons? Impressive.
+Bitleon: Hey! Watch who you call a pipsqueak, you... you... robe... GUY!
+Red Hat: Nice one. Really hitting me where it hurts.
+Red Hat: But anyway, this particular patch of corruption just appeared a few moments ago.
+Red Hat: And I was just about to head back to Core City, too.
 Red Hat: There must be something, or perhaps someone, that's causing all of this.
-???: {{Global.to_leetspeak("Gwahahaha! You rang?")}}
+???: {{Global.to_leetspeak("Gwahahaha! Glad to see someone noticed all my hard work")}}
 Red Hat: What!?
 => END
 
 ~ cave4_leviathan_pre_fight
-Bitleon: You! Were you the one who made this corruption?
-{{Global.to_leetspeak("Leviathan")}}: {{Global.to_leetspeak("That's right! I, Leviathan, am the source of the corruption in Coolant Cave!")}}
-Bitleon: Grr... I'll take you down!
-{{Global.to_leetspeak("Leviathan")}}: {{Global.to_leetspeak("Gwahaha! I've been looking for a fight! Let's see how long you last!")}}
+Bitleon: You! Are you the one responsible for this?
+{{Global.to_leetspeak("Leviathan")}}: {{Global.to_leetspeak("Was that not clear, pipsqueak! I, Leviathan, am the source of the corruption in Coolant Cave!")}}
+Bitleon: Grrrr... nobody's calling me pipsqueak anymore!
 Red Hat: Hey, wait!
 => END
 
