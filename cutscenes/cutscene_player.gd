@@ -322,10 +322,10 @@ func _CUTSCENE_BATTLE_TUTORIAL_FIRST_BATTLE(battle: Battle) -> void:
 	await _popup_and_wait(_TOP_POPUP, "Don't worry, I can teach you the basics!")
 	_bring_to_front_z(player_mon_blocks)
 	await _popup_and_wait(_MONBLOCK_POPUP, "The green bar here is my health points, or HP for short.")
-	await _popup_and_wait(_MONBLOCK_POPUP, "If I ever hit 0 HP, I'll be terminated. That would be... not good.")
+	await _popup_and_wait(_MONBLOCK_POPUP, "If I ever hit 0 HP, I'll be terminated. That would be... NOT good!")
 	await _popup_and_wait(_MONBLOCK_POPUP, "This yellow bar is my action points, or AP!")
-	await _popup_and_wait(_MONBLOCK_POPUP, "My AP bar fills up automatically. Once it's full, I get to take a turn.")
-	await _popup_and_wait(_MONBLOCK_POPUP, "It might be easier for me to just show you.")
+	await _popup_and_wait(_MONBLOCK_POPUP, "My AP bar fills up automatically. Once it's full, I get to take my turn!")
+	await _popup_and_wait(_MONBLOCK_POPUP, "Here we go!")
 	await _fade_blocker_out()
 	_reset_to_normal_z(player_mon_blocks)
 	
@@ -337,12 +337,11 @@ func _CUTSCENE_BATTLE_TUTORIAL_FIRST_BATTLE(battle: Battle) -> void:
 	await _popup_and_wait(_MIDDLE_POPUP, "Did you see that? I just attacked that Gelif!")
 	# show the computer's damaged hp bar
 	_bring_to_front_z(computer_mon_blocks)
-	await _popup_and_wait(_MIDDLE_POPUP, "It's HP bar has taken damage, like you might expect.")
+	await _popup_and_wait(_MIDDLE_POPUP, "See how much damage I did?")
 	_bring_to_front_z(script_line_viewer)
-	await _popup_and_wait(_MIDDLE_POPUP, "You can see the script line I just executed, too.")
-	await _popup_and_wait(_MIDDLE_POPUP, "What's a script? Uh...  don't worry about that.")
-	await _popup_and_wait(_MIDDLE_POPUP, "You'll just have to wait for that part of the game to be explained later!")
-	await _popup_and_wait(_MIDDLE_POPUP, "In the meantime... let's get back to the battling!")
+	await _popup_and_wait(_MIDDLE_POPUP, "You can see the script line I just executed up there too.")
+	await _popup_and_wait(_MIDDLE_POPUP, "What's a script? Uh...  more on that later.")
+	await _popup_and_wait(_MIDDLE_POPUP, "Now let's get back to the battle!")
 	await _fade_blocker_out()
 	_reset_to_normal_z(computer_mon_blocks)
 	_reset_to_normal_z(script_line_viewer)
@@ -352,9 +351,8 @@ func _CUTSCENE_BATTLE_TUTORIAL_FIRST_BATTLE(battle: Battle) -> void:
 	await battle.turn_ended
 	battle._set_mon_speed(Battle.Speed.PAUSE_CUTSCENE)
 	await _fade_blocker_in()
-	await _popup_and_wait(_MIDDLE_POPUP, "Ouch! That wasn't very nice...\nAre you getting the hang of this now?")
-	await _popup_and_wait(_MIDDLE_POPUP, "Well, it should be pretty simple; you don't need to do anything at all!")
-	await _popup_and_wait(_MIDDLE_POPUP, "So sit back, and I'll finish off this Gelif! Here I go!")
+	await _popup_and_wait(_MIDDLE_POPUP, "Ouch! That wasn't very nice!")
+	await _popup_and_wait(_MIDDLE_POPUP, "I'm gonna take you down!")
 	await _fade_blocker_out()
 	
 	# hide the results continue button for now
@@ -368,8 +366,8 @@ func _CUTSCENE_BATTLE_TUTORIAL_FIRST_BATTLE(battle: Battle) -> void:
 	results._granting_decompile = false
 	
 	await _fade_blocker_in()
-	await _popup_and_wait(_RESULTS_POPUP, "Did you see that?\nI won!")
-	await _popup_and_wait(_RESULTS_POPUP, "After winning a battle, you'll get a few types of rewards!")
+	await _popup_and_wait(_RESULTS_POPUP, "Yay! Victory is mine!")
+	await _popup_and_wait(_RESULTS_POPUP, "And look, we got some rewards!")
 	
 	# show the Xp and level up
 	_bring_to_front_z(results.XP_PANEL)
@@ -379,6 +377,10 @@ func _CUTSCENE_BATTLE_TUTORIAL_FIRST_BATTLE(battle: Battle) -> void:
 	results._granting_xp = true
 	await results.done_granting_xp
 	await _popup_and_wait(_RESULTS_POPUP, "I leveled up! That increases my HP, ATK, DEF, and SPD!")
+	await _popup_and_wait(_RESULTS_POPUP, "HP is the amount of damage I can take.")
+	await _popup_and_wait(_RESULTS_POPUP, "ATK increases the damage I deal.")
+	await _popup_and_wait(_RESULTS_POPUP, "DEF decreases the damage I take.")
+	await _popup_and_wait(_RESULTS_POPUP, "And SPD makes my AP bar fill up faster.")
 	_reset_to_normal_z(player_mon_blocks)
 	_reset_to_normal_z(player_mons)
 	_reset_to_normal_z(results.XP_PANEL)
@@ -391,17 +393,18 @@ func _CUTSCENE_BATTLE_TUTORIAL_FIRST_BATTLE(battle: Battle) -> void:
 	
 	# show decompile
 	_bring_to_front_z(results.DECOMPILATION_PANEL)
-	await _popup_and_wait(_RESULTS_POPUP, "Over here is decompilation progress.")
-	await _popup_and_wait(_RESULTS_POPUP, "It's basically a measure of how much you know about this type of mon.") 
-	await _popup_and_wait(_RESULTS_POPUP, "Once this bar is full, you can view  information about this mon in the Database!")
+	await _popup_and_wait(_RESULTS_POPUP, "Down here is the decompilation progress.")
+	await _popup_and_wait(_RESULTS_POPUP, "These bars show how much data you've collected on this type of mon.") 
+	await _popup_and_wait(_RESULTS_POPUP, "Once the bar is full, you can view info about that mon in your Database...")
+	await _popup_and_wait(_RESULTS_POPUP, "...and word on the wire is you could even make your own copy of it, but that's just a rumor! ")
 	results._granting_decompile = true
 	await results.done_granting_decompile
 	_reset_to_normal_z(results.DECOMPILATION_PANEL)
 	
 	# show bugs
 	_bring_to_front_z(results.BUGS_PANEL)
-	await _popup_and_wait(_RESULTS_POPUP, "And lastly, bugs! I'm not quite sure what these are good for yet...")
-	await _popup_and_wait(_RESULTS_POPUP, "But it can't hurt to collect them, right?")
+	await _popup_and_wait(_RESULTS_POPUP, "And lastly, bugs! Mmm... delicious bugs.")
+	await _popup_and_wait(_RESULTS_POPUP, "If we come across a campsite, I'll show you to fry 'em up!")
 	_reset_to_normal_z(results.BUGS_PANEL)
 	
 	# show the full panel
@@ -430,7 +433,7 @@ func _CUTSCENE_BATTLE_TUTORIAL_SPEED_AND_QUEUE(battle: Battle) -> void:
 	
 	await _fade_blocker_in()
 	
-	await _popup_and_wait(_TOP_POPUP, "Listen... I can tell you're thinking these fights are taking a bit too long.")
+	await _popup_and_wait(_TOP_POPUP, "Hey, you wanna speed things up a bit?")
 	
 	# show the speed controls
 	_bring_to_front_z(speed_controls)
@@ -442,14 +445,14 @@ func _CUTSCENE_BATTLE_TUTORIAL_SPEED_AND_QUEUE(battle: Battle) -> void:
 	speed_controls._run_button.texture_disabled = null
 	speed_controls._pause_button.texture_disabled = null
 	speed_controls._speedup_button.texture_disabled = null
-	await _popup_and_wait(_SPEED_POPUP, "If so, here you go! Speed controls!")
+	await _popup_and_wait(_SPEED_POPUP, "Check this out! Speed controls!")
 	
 	# show the queue
 	_bring_to_front_z(queue)
 	battle.slide_in_queue()
 	await _popup_and_wait(_QUEUE_POPUP, "And, while we're at it, here's an turn queue too!")
-	await _popup_and_wait(_TOP_POPUP, "I'm pretty considerate, right?")
-	await _popup_and_wait(_TOP_POPUP, "Try giving those speed buttons a press sometime!")
+	await _popup_and_wait(_TOP_POPUP, "Pretty nifty, right?")
+	await _popup_and_wait(_TOP_POPUP, "Try giving these speed buttons a press sometime!")
 	
 	await _fade_blocker_out()
 	_reset_to_normal_z(speed_controls)

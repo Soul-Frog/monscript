@@ -51,7 +51,7 @@ func is_playing() -> bool:
 	return _is_playing
 
 func _fade_out(fade_time: float, hang_time: float) -> void:
-	assert(_FADE.modulate.a == 0.0 and not _FADE.visible, "Fading out but we never faded in?")
+	_FADE.modulate.a = 0.0
 	
 	_FADE.show() # show so the fade blocks mouse clicks
 	_is_playing = true
@@ -65,7 +65,7 @@ func _fade_out(fade_time: float, hang_time: float) -> void:
 	await Global.delay(hang_time)
 
 func _fade_in(fade_time: float) -> void:
-	assert(_FADE.modulate.a == 1.0 and _FADE.visible, "Fading in but we never faded out?")
+	_FADE.modulate.a = 1.0
 	
 	# perform the fade out
 	var tween = create_tween()

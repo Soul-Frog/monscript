@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://dm1epg70fkia2"]
 
 [ext_resource type="PackedScene" uid="uid://qd8gobfrvv8u" path="res://mons/mon.tscn" id="1_vg63d"]
-[ext_resource type="Texture2D" uid="uid://ca5ih1flogtvs" path="res://assets/mons/orchin.png" id="2_sbhac"]
+[ext_resource type="Texture2D" uid="uid://ca5ih1flogtvs" path="res://assets/sprites/mons/orchin.png" id="2_sbhac"]
 [ext_resource type="Shader" path="res://mons/mon.gdshader" id="2_urot1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bgidk"]
@@ -9,6 +9,12 @@ resource_local_to_scene = true
 shader = ExtResource("2_urot1")
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 shader_parameter/flash_modifier = 0.0
+shader_parameter/apply_recolor = false
+shader_parameter/BITLEON_RECOLOR1 = Vector3(1, 0, 0)
+shader_parameter/BITLEON_RECOLOR2 = Vector3(0, 1, 0)
+shader_parameter/BITLEON_RECOLOR3 = Vector3(0, 0, 1)
+shader_parameter/BITLEON_RECOLOR4 = Vector3(0.5, 0.5, 0)
+shader_parameter/BITLEON_RECOLOR5 = Vector3(0.75, 0, 0.75)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_15tp5"]
 atlas = ExtResource("2_sbhac")

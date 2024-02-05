@@ -58,8 +58,8 @@ func _physics_process(delta):
 			_time_blocked += delta
 			if _time_blocked >= _TIME_BLOCKED_BEFORE_GIVE_UP:
 				_on_reached_point()
-			else:
-				_time_blocked = 0.0
+		else:
+			_time_blocked = 0.0
 
 func _on_reached_point() -> void:
 	_target_point = null

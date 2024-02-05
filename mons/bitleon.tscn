@@ -44,7 +44,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wsujs"]
-size = Vector2(32, 32)
+size = Vector2(17, 11)
 
 [node name="Mon" instance=ExtResource("1_kkw55")]
 
@@ -53,6 +53,5 @@ material = SubResource("ShaderMaterial_xh1wq")
 sprite_frames = SubResource("SpriteFrames_4uhoi")
 
 [node name="CollisionHitbox" parent="." index="1"]
-visible = false
-position = Vector2(0, 0)
+position = Vector2(-0.5, 0.5)
 shape = SubResource("RectangleShape2D_wsujs")
