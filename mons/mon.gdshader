@@ -42,6 +42,6 @@ void fragment() {
 		}
 	}
 	
-	vec3 flash = mix(COLOR.rgb, flash_color.rgb, flash_modifier);
+	vec3 flash = mix(COLOR.rgb, flash_color.rgb, flash_modifier * 0.8);
 	COLOR.rgb = flash;
 }

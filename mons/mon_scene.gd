@@ -15,6 +15,7 @@ func _ready() -> void:
 	update_sprite()
 	Events.save_loaded.connect(update_sprite)
 	Events.update_player_sprite.connect(update_sprite)
+	set_animation("idle")
 
 func update_sprite():
 	SPRITE.material.set_shader_parameter("BITLEON_RECOLOR1", GameData.bitleon_colors[int(GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR))][0])
@@ -24,9 +25,16 @@ func update_sprite():
 	SPRITE.material.set_shader_parameter("BITLEON_RECOLOR5", GameData.bitleon_colors[int(GameData.get_var(GameData.SHIRT_CUSTOMIZATION_COLOR))][4])
 
 func set_animation(animation: String) -> void:
-	assert($Sprite.sprite_frames.has_animation(animation))
-	$Sprite.play(animation)
-	
+	# TODO remove debug code
+	if $Sprite.sprite_frames.has_animation(animation):
+		$Sprite.play(animation)
+	else:
+		print("Warning - did not have %s" % animation)
+	#assert($Sprite.sprite_frames.has_animation(animation))
+
+func get_animation() -> String:
+	return $Sprite.animation
+
 func get_headshot() -> Texture2D:
 	assert($Sprite.sprite_frames.has_animation("headshot"))
 	return $Sprite.sprite_frames.get_frame_texture("headshot", 0)
@@ -36,7 +44,9 @@ func get_texture() -> Texture2D:
 	return $Sprite.sprite_frames.get_frame_texture("default", 0)
 
 func _physics_process(delta):
-	if _target_point != null: #todo hack
+	if _target_point != null: 
+		set_animation("walk")
+		
 		var input_direction = Vector2.ZERO
 		
 		if _target_point != null:
@@ -60,9 +70,11 @@ func _physics_process(delta):
 				_on_reached_point()
 		else:
 			_time_blocked = 0.0
+			
 
 func _on_reached_point() -> void:
 	_target_point = null
+	set_animation("idle")
 	emit_signal("reached_point")
 
 func disable_collisions() -> void:

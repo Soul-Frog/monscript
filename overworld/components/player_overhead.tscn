@@ -176,7 +176,6 @@ position = Vector2(0, -3)
 sprite_frames = SubResource("SpriteFrames_3mqe6")
 animation = &"stand"
 autoplay = "stand"
-frame_progress = 0.0594639
 
 [node name="BunSprite" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_bg3pa")

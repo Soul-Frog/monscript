@@ -156,6 +156,8 @@ func _ready():
 	if team == Battle.Team.COMPUTER:
 		SPRITE.flip_h = true
 	super._ready()
+	
+	set_animation("idle")
 
 # Initializes this battle_mon with an underlying mon object
 func init_mon(mon: MonData.Mon, monTeam: Battle.Team) -> void:
@@ -243,8 +245,11 @@ func take_action(friends: Array, foes: Array, animator: BattleAnimator, escaping
 		_on_turn_over()
 		return
 	
-	# move forward,
+	set_animation("walk")
+	
 	await _move_forward()
+	
+	set_animation("attack")
 	
 	# execute our action, if an inject wasn't inputted
 	if is_action_canceled:
@@ -273,7 +278,11 @@ func _on_turn_over():
 		set_action_points(0.0)
 	reset_AP_after_action = true
 	
+	set_animation("walk")
+	
 	await _move_backward()
+	
+	set_animation("idle")
 	
 	script_line_viewer.hide_line()
 	
@@ -400,6 +409,8 @@ func take_damage(damage_taken: int, damage_type: MonData.DamageType) -> void:
 	current_health -= damage_taken
 	current_health = max(current_health, 0)
 	
+	
+	
 	var type_str = ""
 	var damage_color = Global.COLOR_WHITE
 	var flash_color = "white"
@@ -450,6 +461,11 @@ func take_damage(damage_taken: int, damage_type: MonData.DamageType) -> void:
 			emit_signal("zero_health", self)
 	
 	emit_signal("health_or_ap_changed")
+	
+	set_animation("damaged")
+	await Global.delay(0.4)
+	if get_animation() == "damaged":
+		set_animation("idle")
 
 func _display_next_text():
 	_active_text = null

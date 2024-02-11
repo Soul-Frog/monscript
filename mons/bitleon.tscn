@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bo77v3uohwvy1"]
+[gd_scene load_steps=15 format=3 uid="uid://bo77v3uohwvy1"]
 
 [ext_resource type="PackedScene" uid="uid://qd8gobfrvv8u" path="res://mons/mon.tscn" id="1_kkw55"]
 [ext_resource type="Texture2D" uid="uid://7f1xs6lh2wuf" path="res://assets/sprites/mons/bitleon.png" id="2_kygqj"]
@@ -9,12 +9,20 @@ resource_local_to_scene = true
 shader = ExtResource("2_ol340")
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 shader_parameter/flash_modifier = 0.0
-shader_parameter/apply_recolor = true
+shader_parameter/apply_recolor = false
 shader_parameter/BITLEON_RECOLOR1 = Vector3(0, 0, 0)
 shader_parameter/BITLEON_RECOLOR2 = Vector3(0, 0, 0)
 shader_parameter/BITLEON_RECOLOR3 = Vector3(0, 0, 0)
 shader_parameter/BITLEON_RECOLOR4 = Vector3(0, 0, 0)
 shader_parameter/BITLEON_RECOLOR5 = Vector3(0, 0, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kjsre"]
+atlas = ExtResource("2_kygqj")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vi4go"]
+atlas = ExtResource("2_kygqj")
+region = Rect2(160, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rj1by"]
 atlas = ExtResource("2_kygqj")
@@ -24,15 +32,47 @@ region = Rect2(32, 0, 32, 32)
 atlas = ExtResource("2_kygqj")
 region = Rect2(0, 0, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_8fjgr"]
+atlas = ExtResource("2_kygqj")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oj8nh"]
+atlas = ExtResource("2_kygqj")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kejhp"]
+atlas = ExtResource("2_kygqj")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0xueu"]
+atlas = ExtResource("2_kygqj")
+region = Rect2(96, 0, 32, 32)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_4uhoi"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kjsre")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vi4go")
+}],
+"loop": true,
+"name": &"damaged",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_rj1by")
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 1.5
 }, {
 "frames": [{
 "duration": 1.0,
@@ -40,6 +80,28 @@ animations = [{
 }],
 "loop": true,
 "name": &"headshot",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8fjgr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oj8nh")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 1.5
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kejhp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0xueu")
+}],
+"loop": true,
+"name": &"walk",
 "speed": 5.0
 }]
 
@@ -51,7 +113,10 @@ size = Vector2(17, 11)
 [node name="Sprite" parent="." index="0"]
 material = SubResource("ShaderMaterial_xh1wq")
 sprite_frames = SubResource("SpriteFrames_4uhoi")
+animation = &"damaged"
+autoplay = "default"
 
 [node name="CollisionHitbox" parent="." index="1"]
+visible = false
 position = Vector2(-0.5, 0.5)
 shape = SubResource("RectangleShape2D_wsujs")

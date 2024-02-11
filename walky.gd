@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends Sprite2D
 
 @onready var HOP_TIMER = $HopTimer
 
@@ -22,8 +22,6 @@ func _process(delta):
 	
 	if is_equal_approx(rotation_degrees, target_rotation):
 		target_rotation = -target_rotation
-		
-
 
 func _on_hop_timer_timeout():
 	position.x += 1
