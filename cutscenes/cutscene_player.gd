@@ -290,6 +290,104 @@ func _CUTSCENE_CAVE4_WIRE_TO_THE_CITY(area: Area) -> void:
 	await Dialogue.play(_DIALOGUE_FILE, "cave4_wire_to_the_city")
 
 func _CUTSCENE_SCRIPT_TUTORIAL(script: UIScriptMenu) -> void:
+	'''
+	
+	Block out files, make it an unlockable
+Block out the drawer at the start
+----------
+
+
+Red Hat - 
+"Alright, so here we have Bitleon's Script."
+Bitleon - "Wow! It's like I'm looking at the inside of my brain!"
+Red Hat - "Hmm, I thought it would be even emptier."
+"Anyway, during battle, a mon chooses what actions to perform based on their Script."
+"A Script contains Lines. Lines contain Blocks."
+"It looks like this Script contains one Line, which is made up of two Blocks."
+"This Line says that during Bitleon's turns, they will do an attack to a random foe."
+Bitleon - "This script is awesome! I just keep attacking!"
+
+"And the most part, that works. But as you saw with L3V14TH4N, this strategy has a few flaws."
+Bitlone - "Impossible! ...but go on."
+"Each mon has a different special action only they can use."
+"Bitleon's special action is Self-Repair, which heals them."
+Bitleon - "Whaaaat? I didn't even know I could do that!"
+Red Hat - "How have you managed to survive this long...?"
+"Let's go ahead modify this Script so that Bitleon uses Self-Repair when low on health."
+
+"First, we'll need to add a new Line."
+"Click the plus button here to add a new Line." (highlight +)
+
+"Now that we have a Line, we need to add some Blocks."
+"Down here is the Block drawer, which contains all the Blocks you have so far."
+"Here, I'll give you a new one."
+"(Obtained IfSelfLowHP)" (updates drawer with new block)
+
+"This is an IF Block. IF Blocks are triggered when their condition is met."
+"In this case, IfSelfLowHP will trigger if Bitleon's HP is below 30%."
+Bitleon - "Psh, like that'll ever happen!"
+Red Hat - "Bitleon, did you already forget that last fight...?"
+"Click on the Block to pick it up." (highlight)
+(after clicking)
+"Now that you're holding the Block, click on the highlighted area in the Line to place it."
+
+"Nice job. Next, we'll add the Self-Repair DO Block."
+"This way, when the condition of being low on health is met, Bitleon performs the Self-Repair action."
+"Click on the DO tab to switch drawers." (highlight)
+"Now, click on the Self-Repair Block to pick it up." (highlight)
+"Lastly, drop it into the Line after the IF Block."
+"And that's it for this Line!"
+Bitleon - "Hey, why doesn't this Line have a TO Block like the other one?"
+"Good question for once, Bitleon!"
+"In this case, a TO Block isn't necessary since Self-Repair doesn't require a target."
+"Self-Repair always heals just Bitleon."
+
+Bitleon - "Alright, I feel ready to fight some mons!"
+"Wait! There's still a small issue with this Script!"
+"Right now, the Script will never check the second line. 
+It will always just do an attack."
+"Try moving that second line up above the first line."
+"Click the line number to pick up the line." (prompt)
+"Now click the space above the first line."
+"So what we've done here is made it so that if Bitleon is low on HP, 
+it will perform a Self-Repair."
+"If it is not low on HP, it will go to the next Line in the Script instead."
+"Think of your Script like a checklist which always reads from top to bottom."
+"Is Bitleon's HP low? If it is, Bitleon heals with Self-Repair. 
+If not, the Script goes to the next Line and Bitleon attacks a random foe."
+
+Bitleon - "Awesome! Now my script is perfect! I'll never lose!"
+"...This script is alright for now, but don't get too cocky."
+"If you find any new blocks while exploring, try modifying your Script!"
+"Anyway, that's all you need to know for now."
+"If you want more details, come chat with me. I'll be right here at the beach."
+"Now get out there and take down L3V14TH4N!"
+
+
+
+(Questions for afterwards)
+Q: Can you tell me more about the structure of a script?
+A Script contains Lines. 
+A Line can start with an IF Block or a DO Block.
+An IF Block always leads into a DO Block.
+And a DO Block can lead into a TO BLock, if the DO Block need a target.
+
+Q: What determines which Line executes when my Script runs?
+When a Script runs, the Lines are evaluated from top to bottom.
+The first line evaluated with a true IF Block condition is executed.
+If the Script reached a Line that does not have an IF Block, that Line is always executed.
+Only one Line will be executed each time the Script runs.
+If the end of the Script is reached and no Lines were executed, a script error occurs.
+When a script error occurs, the mon simply skips their turn.
+
+Q: How do I get more blocks?
+You'll just find them while exploring!
+Chests, for example, can sometimes contain blocks. 
+You might also be able to buy them from certain mons.
+I think that Pascalican over here is looking to sell one. 
+
+	'''
+	
 	pass
 
 func _CUTSCENE_BATTLE_TUTORIAL_ESCAPE(battle: Battle) -> void:

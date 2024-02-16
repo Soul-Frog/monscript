@@ -290,9 +290,9 @@ var DO_BLOCK_LIST := [
 		return true
 		),
 		
-	Block.new(Block.Type.DO, "Repair", Block.Type.NONE, "Heal 40% of your own HP and clear status conditions.",
+	Block.new(Block.Type.DO, "Self-Repair", Block.Type.NONE, "Heal 40% of your own HP and clear status conditions.",
 	func(mon: BattleMon, friends: Array, foes: Array, target: BattleMon, battle_log: BattleLog, animator: BattleAnimator) -> bool:
-		battle_log.add_text("%s used Repair!" % battle_log.MON_NAME_PLACEHOLDER, mon)
+		battle_log.add_text("%s used Self-Repair!" % battle_log.MON_NAME_PLACEHOLDER, mon)
 		mon.heal_damage(int(mon.max_health * 0.4))
 		mon.heal_all_statuses()
 		return true

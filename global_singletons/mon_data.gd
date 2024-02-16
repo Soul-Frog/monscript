@@ -292,7 +292,7 @@ var _BITLEON_BASE = MonBase.new(MonType.BITLEON, "Bitleon", "res://mons/bitleon.
 	256, 128, 64, 96,
 	1, false,
 	1.0, 1.0, 1.0, 1.0,
-	ScriptData.get_block_by_name("Repair"),
+	ScriptData.get_block_by_name("Self-Repair"),
 	Passive.COURAGE,
 	[Color.WHITE, Color.WHITE_SMOKE, Color.LIGHT_GRAY],
 	2.0, 0.0, [BugData.Type.YELLOW_HP_BUG, BugData.Type.RED_ATK_BUG, BugData.Type.BLUE_DEF_BUG, BugData.Type.GREEN_SPD_BUG])
